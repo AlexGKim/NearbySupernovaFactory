@@ -1,0 +1,71 @@
+\documentclass[11pt, oneside]{article}   	% use "amsart" instead of "article" for AMSLaTeX format
+\usepackage{geometry}                		% See geometry.pdf to learn the layout options. There are lots.
+\geometry{letterpaper}                   		% ... or a4paper or a5paper or ... 
+%\geometry{landscape}                		% Activate for rotated page geometry
+%\usepackage[parfill]{parskip}    		% Activate to begin paragraphs with an empty line rather than an indent
+\usepackage{graphicx}				% Use pdf, png, jpg, or eps§ with pdflatex; use eps in DVI mode
+								% TeX will automatically convert eps --> pdf in pdflatex		
+\usepackage{amssymb}
+\usepackage{amsmath}
+
+\begin{document}
+A model for a single object is that its intrinsic properties (captured by equivalent width) are drawn from a Normal distribution
+\begin{equation}
+\left(
+\begin{matrix}
+EW_{Si}\\ EW_{Ca}
+\end{matrix}
+\right) \sim \mathcal{N}
+\left(
+\left(
+\begin{matrix}
+EW_{0, Si}\\ EW_{0, Ca}
+\end{matrix}
+\right)
+,C_{EW}
+\right),
+\end{equation}
+with global parameters $EW_{0, Si}$, $EW_{0, Ca}$, and the independent elements of $C_{EW}$.
+The colors, which depend on the intrinsic properties and the extrinsic effect of dust, are modeled as
+\begin{equation}
+\left(
+\begin{matrix}
+U-V\\B-V\\V-R\\V-I
+\end{matrix}
+\right) \sim \mathcal{N}
+\left(
+\left(
+\begin{matrix}
+c_0+\alpha_0 EW_{Si} + \beta_0 EW_{Ca} +\gamma_0 k+ E(U-V) \\
+c_1+\alpha_1 EW_{Si} + \beta_1 EW_{Ca}  +k +E(B-V) \\
+c_2+\alpha_2 EW_{Si} + \beta_2 EW_{Ca} +\gamma_2 k + E(V-R)\\
+c_3+\alpha_3 EW_{Si} + \beta_3 EW_{Ca} +\gamma_3 k +E(V-I)\\
+\end{matrix}
+\right)
+,C_c
+\right),
+\end{equation}
+where there are global parameters $\alpha_X$, $\beta_X$, $c_X$,  and the independent elements of $C_c$,
+while each supernova has independent parameters $E(X-V)$ and intrinsic color parameter $k$.
+
+The measurements are drawn from
+\begin{equation}
+\left(
+\begin{matrix}
+U-V\\B-V\\V-R\\V-I\\EW_{Si}\\ EW_{Ca}
+\end{matrix}
+\right)_o \sim \mathcal{N}
+\left(
+\left(
+\begin{matrix}
+U-V\\B-V\\V-R\\V-I\\EW_{Si}\\ EW_{Ca}
+\end{matrix}
+\right)
+,C_o
+\right),
+\end{equation}
+where $C_o$ is the observation covariance matrix.
+
+Given enough supernovae to constrain the global parameters, the observed colors of each supernova are used to determine its
+color excess parameters.
+\end{document} 
