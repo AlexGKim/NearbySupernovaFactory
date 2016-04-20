@@ -14,7 +14,7 @@ parameters {
   cholesky_factor_corr[2] L_Omega_EW;
   vector<lower=-5, upper=5>[2] EW[D];
 
-  vector<lower=-2, upper=2>[4] c;
+  vector<lower=-2, upper=2>[3] c;
   vector<lower=-10, upper=10>[4] alpha;
   vector<lower=-10, upper=10>[4] beta;
   vector<lower=-10, upper=10>[3] gamma;
@@ -24,23 +24,30 @@ parameters {
   real<lower=-5, upper=5> k[D];
   vector<lower=0, upper=5>[4] EXY[D];
   vector<lower=-5, upper=5>[4] colors[D];
+  vector<lower=0.5, upper = 100>[4] ebeta;
 }
 
-transformed parameters{
+model {
   vector[4] means[D];
   vector[4] gamma_;
+  vector[4] c_;
+
+  matrix[2,2] L_Sigma_EW;
+  matrix[4,4] L_Sigma_color;
+
   gamma_[1]<- gamma[1];
   gamma_[2] <- 1.;
   gamma_[3] <- gamma[2];
   gamma_[4] <- gamma[3];
-  for (d in 1:(D-1)) {
-      means[d] <- c + alpha*EW[d,1]  + beta*EW[d,2] + gamma_*k[d] + colors[d];
-  }
-}
 
-model {
-  matrix[2,2] L_Sigma_EW;
-  matrix[4,4] L_Sigma_color;
+  c_[1]<- c[1];
+  c_[2] <- 0.;
+  c_[3] <- c[2];
+  c_[4] <- c[3];
+
+  for (d in 1:(D-1)) {
+      means[d] <- c_ + alpha*EW[d,1]  + beta*EW[d,2] + gamma_*k[d] + EXY[d];
+  }
 
   L_sigma_EW ~ cauchy(0,2.5);
   L_Omega_EW ~ lkj_corr_cholesky(2.);
@@ -54,5 +61,14 @@ model {
     colors[d] ~ multi_normal_cholesky(means[d], L_Sigma_color);
     color_obs[d] ~ multi_normal(colors[d], color_cov[d]);
     EW_obs[d] ~ multi_normal(EW[d], EW_cov[d]);
+    EXY[d] ~ exponential(ebeta);
   }  
+}
+
+generated quantities {
+  corr_matrix[2] Omega_EW;
+  corr_matrix[4] Omega_color;
+
+  Omega_EW <- multiply_lower_tri_self_transpose(L_Omega_EW);
+  Omega_color <- multiply_lower_tri_self_transpose(L_Omega_color);
 }

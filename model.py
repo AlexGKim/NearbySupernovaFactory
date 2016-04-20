@@ -50,32 +50,13 @@ for i in xrange(nsne):
 data = {'D': nsne, 'N_colors': 4, 'N_EWs': 2, 'color_obs': color_renorm, \
     'EW_obs': EW_renorm, 'EW_cov': EW_cov_renorm, 'color_cov':color_cov_renorm}
 
-# init1 = {'EW0': numpy.zeros(2), 'EW':numpy.zeros((nsne,2)), 'c': \
-#     numpy.zeros(4), 'alpha': numpy.zeros(4), 'beta':numpy.zeros(4), \
-#     'gamma':1+numpy.zeros(3), 'k':numpy.zeros(nsne), 'EXY':numpy.zeros((nsne,4)), \
-#     'colors':numpy.zeros((nsne,4)), 'tau_color':numpy.random.uniform(.01,1,4), \
-#     'tau_EW':numpy.random.uniform(0.1,1,2)}
+sm = pystan.StanModel(file='gerard.stan')
+fit = sm.sampling(data=data, iter=500, chains=4)
 
-# init2 = {'EW0': numpy.zeros(2), 'EW':numpy.zeros((nsne,2)), 'c': \
-#     numpy.zeros(4), 'alpha': numpy.zeros(4), 'beta':numpy.zeros(4), \
-#     'gamma':1+numpy.zeros(3), 'k':numpy.zeros(nsne), 'EXY':numpy.zeros((nsne,4)), \
-#     'colors':numpy.zeros((nsne,4)), 'tau_color':numpy.random.uniform(.01,1,4), \
-#     'tau_EW':numpy.random.uniform(0.1,1,2)}
-
-# init3 = {'EW0': numpy.zeros(2), 'EW':numpy.zeros((nsne,2)), 'c': \
-#     numpy.zeros(4), 'alpha': numpy.zeros(4), 'beta':numpy.zeros(4), \
-#     'gamma':1+numpy.zeros(3), 'k':numpy.zeros(nsne), 'EXY':numpy.zeros((nsne,4)), \
-#     'colors':numpy.zeros((nsne,4)), 'tau_color':numpy.random.uniform(.01,1,4), \
-#     'tau_EW':numpy.random.uniform(0.1,1,2)}
-
-# init4 = {'EW0': numpy.zeros(2), 'EW':numpy.zeros((nsne,2)), 'c': \
-#     numpy.zeros(4), 'alpha': numpy.zeros(4), 'beta':numpy.zeros(4), \
-#     'gamma':1+numpy.zeros(3), 'k':numpy.zeros(nsne), 'EXY':numpy.zeros((nsne,4)), \
-#     'colors':numpy.zeros((nsne,4)), 'tau_color':numpy.random.uniform(.01,1,4), \
-#     'tau_EW':numpy.random.uniform(0.1,1,2)}
-
-fit = pystan.stan(file='gerard.stan',data=data, iter=1000, chains=4)
-
-output = open('out_pkl','wb')
-pickle.dump(fit, output)
+output = open('temp.pkl','wb')
+pickle.dump(fit.extract(), output)
 output.close()
+
+import matplotlib.pyplot as plt
+f = open('temp.pkl','rb')
+fit = pickle.load(f)
