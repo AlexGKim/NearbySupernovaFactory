@@ -2,6 +2,7 @@ import pickle
 import numpy
 import pystan
 
+
 pkl_file = open('gege_data.pkl', 'r')
 data = pickle.load(pkl_file)
 
@@ -51,12 +52,8 @@ data = {'D': nsne, 'N_colors': 4, 'N_EWs': 2, 'color_obs': color_renorm, \
     'EW_obs': EW_renorm, 'EW_cov': EW_cov_renorm, 'color_cov':color_cov_renorm}
 
 sm = pystan.StanModel(file='gerard.stan')
-fit = sm.sampling(data=data, iter=500, chains=4)
+fit = sm.sampling(data=data, iter=200, chains=4)
 
 output = open('temp.pkl','wb')
 pickle.dump(fit.extract(), output)
 output.close()
-
-import matplotlib.pyplot as plt
-f = open('temp.pkl','rb')
-fit = pickle.load(f)
