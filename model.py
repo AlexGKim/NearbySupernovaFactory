@@ -51,8 +51,10 @@ for i in xrange(nsne):
 data = {'D': nsne, 'N_colors': 4, 'N_EWs': 2, 'color_obs': color_renorm, \
     'EW_obs': EW_renorm, 'EW_cov': EW_cov_renorm, 'color_cov':color_cov_renorm}
 
+init1 = {'EW' : EW_renorm, 'c': numpy.zeros(4), 'alpha': numpy.zeros(4), 'beta':numpy.zeros(4), 'gamma':numpy.zeros(3), 'k':numpy.zeros(nsne-1)}
+
 sm = pystan.StanModel(file='gerard.stan')
-fit = sm.sampling(data=data, iter=200, chains=4)
+fit = sm.sampling(data=data, iter=200, chains=4,init=[init1,init1,init1,init1])
 
 output = open('temp.pkl','wb')
 pickle.dump(fit.extract(), output)

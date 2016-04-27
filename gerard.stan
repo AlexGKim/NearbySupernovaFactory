@@ -22,7 +22,7 @@ parameters {
 //  vector<lower=0.0, upper=.5>[4] L_sigma_color;
  // cholesky_factor_corr[4] L_Omega_color;
 #  real<lower=-4, upper=4> k[D];
-  real<lower=-2, upper=2> k[D];
+  real<lower=-2, upper=2> k[D-1];
 #  vector<lower=0, upper=4>[4] EXY[D];
 //  vector<lower=-5, upper=5>[4] colors[D];
 #  vector<lower=0.01, upper = 2>[4] ebeta_inv;
@@ -32,6 +32,7 @@ parameters {
 model {
   vector[4] means[D];
   vector[4] gamma_;
+  real k_[D];
   # vector[4] c_;
 
   //matrix[2,2] L_Sigma_EW;
@@ -47,9 +48,14 @@ model {
   # c_[3] <- c[2];
   # c_[4] <- c[3];
 
+  k_[1] <- 0;
+  for (d in 1:(D-2)) {
+    k_[1+d] <- k[d];
+  }
+
   for (d in 1:(D-1)) {
       # means[d] <- c_ + alpha*EW[d,1]  + beta*EW[d,2] + gamma_*k[d] + EXY[d];
-      means[d] <- c + alpha*EW[d,1]  + beta*EW[d,2] + gamma_*k[d];
+      means[d] <- c + alpha*EW[d,1]  + beta*EW[d,2] + gamma_*k_[d];
   }
 
   # L_sigma_EW ~ cauchy(0,2.5);
@@ -59,7 +65,6 @@ model {
 //  L_Omega_color ~ lkj_corr_cholesky(2.);
 //  L_Sigma_color <- diag_pre_multiply(L_sigma_color, L_Omega_color);
 
-  k[1] ~ normal(0,1e-8);
   for (d in 1:(D-1)) {
  //   EW[d] ~ multi_normal_cholesky(EW0,L_Sigma_EW);
   //  colors[d] ~ multi_normal_cholesky(means[d], L_Sigma_color);
