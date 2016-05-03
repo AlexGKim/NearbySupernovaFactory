@@ -6,6 +6,8 @@ import corner
 from matplotlib.backends.backend_pdf import PdfPages
 import numpy
 
+color_std=0.272560118531
+
 f = open('temp.pkl','rb')
 fit = pickle.load(f)
 
@@ -22,12 +24,12 @@ with PdfPages('multipage_pdf.pdf') as pdf:
     # pdf.savefig()
     # plt.close()
     
-    plt.plot(fit['EW'][:,:10,0])
+    plt.plot(fit['EW'][::10,:10,0])
     plt.title('EW - 0')
     pdf.savefig()
     plt.close()
     
-    plt.plot(fit['EW'][:,:10,1])
+    plt.plot(fit['EW'][::10,:10,1])
     plt.title('EW - 1')
     pdf.savefig()
     plt.close()
@@ -37,17 +39,17 @@ with PdfPages('multipage_pdf.pdf') as pdf:
     pdf.savefig()
     plt.close()
     
-    plt.plot(fit['alpha'])
+    plt.plot(fit['alpha'][::10],alpha=0.5)
     plt.title('alpha')
     pdf.savefig()
     plt.close()
     
-    plt.plot(fit['beta'])
+    plt.plot(fit['beta'][::10],alpha=0.5)
     plt.title('beta')
     pdf.savefig()
     plt.close()
     
-    plt.plot(fit['gamma']*3.1)
+    plt.plot(fit['gamma'])
     plt.title('gamma')
     pdf.savefig()
     plt.close()
@@ -58,7 +60,7 @@ with PdfPages('multipage_pdf.pdf') as pdf:
     # pdf.savefig()
     # plt.close()
     
-    plt.plot(fit['k'][:,:10]/3.1)
+    plt.plot(fit['k'][::10,:10])
     plt.title('k')
     pdf.savefig()
     plt.close()
@@ -82,11 +84,18 @@ with PdfPages('multipage_pdf.pdf') as pdf:
 # [3701, 4601, 5744, 6948, 8403]
     rc('text', usetex=True)
     dif = numpy.array([1.545252680138557- 0.9512179494794494, 1.251613863650247- 0.9512179494794494, 0.9512179494794494-0.7582486105024363, 0.9512179494794494-0.5429015873250165]) 
-    dif = dif/dif[1]*3.1
+    dif = dif/dif[1]
+
     dum = [dif[0], dif[2], dif[3]]
-    figure = corner.corner(fit['gamma']*3.1,labels=[r"${\gamma}_0$",r"${\gamma}_2$",r"${\gamma}_3$"],truths=dum)
+    figure = corner.corner(fit['gamma'],labels=[r"${\gamma}_0$",r"${\gamma}_2$",r"${\gamma}_3$"],truths=dum)
     pdf.savefig()
     plt.close()
+
+    for index in xrange(4):
+        dum = numpy.swapaxes(numpy.array([fit['alpha'][:,index]*color_std,fit['beta'][:,index]*color_std]),0,1)
+        figure = corner.corner(dum,labels=[r"$\alpha_{}$".format(index),r"$\beta_{}$".format(index)],truths=[0,0])
+        pdf.savefig()
+        plt.close()
 
     # plt.plot(fit['ebeta_inv'])
     # plt.title('ebeta_inv')
