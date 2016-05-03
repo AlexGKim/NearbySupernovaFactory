@@ -6,6 +6,8 @@ data {
   vector[N_EWs] EW_obs[D];
   matrix[N_colors, N_colors] color_cov[D];
   matrix[N_EWs, N_EWs] EW_cov[D];
+
+  real color_std;
 }
 
 parameters {
@@ -22,7 +24,7 @@ parameters {
 //  vector<lower=0.0, upper=.5>[4] L_sigma_color;
  // cholesky_factor_corr[4] L_Omega_color;
 #  real<lower=-4, upper=4> k[D];
-  real<lower=-2, upper=2> k[D-1];
+  real<lower=-5, upper=5> k[D-1];
 #  vector<lower=0, upper=4>[4] EXY[D];
 //  vector<lower=-5, upper=5>[4] colors[D];
 #  vector<lower=0.01, upper = 2>[4] ebeta_inv;
@@ -78,6 +80,12 @@ model {
 generated quantities {
   # corr_matrix[2] Omega_EW;
   //corr_matrix[4] Omega_color;
+
+  vector[4] c_unnorm;
+  # vector[3] gamma_unnorm;
+  c_unnorm <- c*color_std;
+
+  # gamma_unnorm <- gamma_unnorm*color_std;
 
   # Omega_EW <- multiply_lower_tri_self_transpose(L_Omega_EW);
   //Omega_color <- multiply_lower_tri_self_transpose(L_Omega_color);

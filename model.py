@@ -6,7 +6,7 @@ import pystan
 pkl_file = open('gege_data.pkl', 'r')
 data = pickle.load(pkl_file)
 
-#  The ordering is 'Ca','Si','U','B','V','R','I' 
+#  The ordering is 'Ca','Si','U','B','V','R','I'
 
 EW_obs = data['obs'][:,0:2]
 mag_obs = data['obs'][:,2:]
@@ -40,21 +40,21 @@ for i in xrange(nsne):
     EW_cov_renorm[i] = EW_cov_renorm[i] /EW_std[None,:] / EW_std[:,None]
 
 color_mn = color_obs.mean(axis=0)
-color_std = color_obs.std(axis=0)
+color_std = color_obs[1].std()
 
 color_renorm = (color_obs - color_mn)/color_std
 color_cov_renorm = numpy.array(color_cov)
 for i in xrange(nsne):
-    color_cov_renorm[i] = color_cov_renorm[i] /color_std[None,:] / color_std[:,None]
+    color_cov_renorm[i] = color_cov_renorm[i] /color_std**2
 
 
 data = {'D': nsne, 'N_colors': 4, 'N_EWs': 2, 'color_obs': color_renorm, \
-    'EW_obs': EW_renorm, 'EW_cov': EW_cov_renorm, 'color_cov':color_cov_renorm}
+    'EW_obs': EW_renorm, 'EW_cov': EW_cov_renorm, 'color_cov':color_cov_renorm, 'color_std':color_std.astype('float')}
 
-init1 = {'EW' : EW_renorm, 'c': numpy.zeros(4), 'alpha': numpy.zeros(4), 'beta':numpy.zeros(4), 'gamma':numpy.zeros(3), 'k':numpy.zeros(nsne-1)}
+init1 = {'EW' : EW_renorm, 'c': numpy.zeros(4), 'alpha': numpy.zeros(4), 'beta':numpy.zeros(4), 'gamma':numpy.zeros(3)+1, 'k':numpy.zeros(nsne-1)}#, 'L_sigma_color':numpy.zeros(4)+0.02,'L_Omega_color':numpy.zeros()}
 
 sm = pystan.StanModel(file='gerard.stan')
-fit = sm.sampling(data=data, iter=200, chains=4,init=[init1,init1,init1,init1])
+fit = sm.sampling(data=data, iter=10000, chains=4,init=[init1,init1,init1,init1])
 
 output = open('temp.pkl','wb')
 pickle.dump(fit.extract(), output)
