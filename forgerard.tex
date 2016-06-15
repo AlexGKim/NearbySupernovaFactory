@@ -30,7 +30,8 @@ EW_{Si}\\ EW_{Ca}
 ,C
 \right),
 \end{equation}
-The data are the colors and equivalent widths on the left side.  There are global parameters $c$, $\alpha$, $\beta$, and $\gamma$.  Each
+The data are the colors and equivalent widths on the left side, $C$ is the corresponding measurement
+covariance.  There are global parameters $c$, $\alpha$, $\beta$, and $\gamma$.  Each
 supernova has parameters $EW_{Si}$, $EW_{Ca}$, and $k$.  To constrain the problem $\gamma_1=1$ and one supernova is selected to have
 $k=0$.
 
@@ -39,7 +40,7 @@ $C_{c}$.  The model would then look like
 \begin{equation}
 \left(
 \begin{matrix}
-U-V\\B-V\\V-R\\V-I
+U-V\\B-V\\V-R\\V-I\\V
 \end{matrix}
 \right) \sim \mathcal{N}
 \left(
@@ -48,7 +49,8 @@ U-V\\B-V\\V-R\\V-I
 c_0+\alpha_0 EW_{Si} + \beta_0 EW_{Ca} \\
 c_1+\alpha_1 EW_{Si} + \beta_1 EW_{Ca}  \\
 c_2+\alpha_2 EW_{Si} + \beta_2 EW_{Ca} \\
-c_3+\alpha_3 EW_{Si} + \beta_3 EW_{Ca} 
+c_3+\alpha_3 EW_{Si} + \beta_3 EW_{Ca} \\
+c_4+\alpha_4 EW_{Si} + \beta_4 EW_{Ca}
 \end{matrix}
 \right)
 ,C_{c}
@@ -58,13 +60,13 @@ c_3+\alpha_3 EW_{Si} + \beta_3 EW_{Ca}
 \begin{equation}
 \left(
 \begin{matrix}
-U_o-V_o\\B_o-V_o\\V_o-R_o\\V_o-I_o\\EW_{Si, o}\\ EW_{Ca, o}
+U_o-V_o\\B_o-V_o\\V_o-R_o\\V_o-I_o\\V_o\\EW_{Si, o}\\ EW_{Ca, o}
 \end{matrix}
 \right) \sim \mathcal{N}
 \left(
 \left(
 \begin{matrix}
-U-V +\gamma_0 k \\B-V +\gamma_1 k \\V-R+\gamma_2 k\\V-I+\gamma_3 k\\
+U-V +\gamma_0 k \\B-V +\gamma_1 k \\V-R+\gamma_2 k\\V-I+\gamma_3 k\\V+\gamma_4 k\\
 EW_{Si}\\ EW_{Ca}
 \end{matrix}
 \right)
