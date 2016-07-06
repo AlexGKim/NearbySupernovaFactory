@@ -16,11 +16,11 @@ parameters {
   vector<lower=-100, upper=100>[2] EW[D];
   vector<lower=-2, upper=2>[N_mags] mag_int[D];
 
-  vector<lower=-0.3, upper=0.3>[5] c;
-  vector<lower=-0.05, upper=0.05>[5] alpha;
-  vector<lower=0.005, upper=0.1>[5] beta;
+  vector<lower=-0.6, upper=0.6>[5] c;
+  vector<lower=-0.02, upper=0.02>[5] alpha;
+  vector<lower=-0.05, upper=0.15>[5] beta;
   cholesky_factor_corr[N_mags] L_Omega;
-  vector<lower=0.02, upper = 0.2>[N_mags] L_sigma;
+  vector<lower=0.0, upper = 0.2>[N_mags] L_sigma;
 
   vector<lower=0.5, upper=1.8>[4] gamma;
   real<lower=-3, upper=3> k[D-1];
@@ -39,11 +39,11 @@ model {
   gamma_[5] <- gamma[4];
 
   k_[1] <- 0;
-  for (d in 1:(D-2)) {
+  for (d in 1:(D-1)) {
     k_[1+d] <- k[d];
   }
 
-  for (d in 1:(D-1)) {
+  for (d in 1:D) {
       means[d] <- c + alpha*EW[d,1]  + beta*EW[d,2];
   }
 
@@ -51,9 +51,9 @@ model {
   L_Omega ~ lkj_corr_cholesky(2.);
   L_Sigma <- diag_pre_multiply(L_sigma, L_Omega);
 
-  for (d in 1:(D-1)) {
+  for (d in 1:D) {
     mag_int[d] ~ multi_normal_cholesky(means[d], L_Sigma);
-    mag_obs[d] ~ multi_normal(mag_int[d]+gamma_*k[d], mag_cov[d]);
+    mag_obs[d] ~ multi_normal(mag_int[d]+gamma_*k_[d], mag_cov[d]);
     EW_obs[d] ~ multi_normal(EW[d], EW_cov[d]);
   }  
 }

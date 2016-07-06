@@ -20,7 +20,7 @@ with PdfPages('multipage_pdf.pdf') as pdf:
     # pdf.savefig()
     # plt.close()
 
-    lineobjects = plt.plot(fit['L_sigma'],label=[])
+    lineobjects = plt.plot(fit['L_sigma'][::10,:],label=[])
     plt.title(r'$L_\sigma$')
     plt.legend(iter(lineobjects),('U','B','V','R','I'))
     pdf.savefig()
@@ -36,7 +36,7 @@ with PdfPages('multipage_pdf.pdf') as pdf:
     pdf.savefig()
     plt.close()
 
-    lineobjects = plt.plot(fit['c'],label=['U','B','V','R','I'])
+    lineobjects = plt.plot(fit['c'][::10,:],label=['U','B','V','R','I'])
     plt.title('c')
     plt.legend(iter(lineobjects),('U','B','V','R','I'))
 
@@ -55,7 +55,7 @@ with PdfPages('multipage_pdf.pdf') as pdf:
     pdf.savefig()
     plt.close()
     
-    lineobjects = plt.plot(fit['gamma'],label=['U','B','R','I'])
+    lineobjects = plt.plot(fit['gamma'][::10],label=['U','B','R','I'])
     plt.title('gamma')
     plt.legend(iter(lineobjects),('U','B','R','I'))
     pdf.savefig()
@@ -83,6 +83,42 @@ with PdfPages('multipage_pdf.pdf') as pdf:
     # pdf.savefig()
     # plt.close()
 
+    # dif = numpy.array([1.545252680138557- 0.9512179494794494, 1.251613863650247- 0.9512179494794494, 0.9512179494794494-0.7582486105024363, 0.9512179494794494-0.5429015873250165,0.9512179494794494])
+    # dif = dif/dif[1]
+
+    figure = corner.corner(fit['c'],labels=[r"${c}_0$",r"${c}_1$",r"${c}_2$",r"${c}_3$",r"${c}_4$"])
+    pdf.savefig()
+    plt.close()
+
+    figure = corner.corner(fit['alpha'],labels=[r"${\alpha}_0$",r"${\alpha}_1$",r"${\alpha}_2$",r"${\alpha}_3$",r"${\alpha}_4$"])
+    pdf.savefig()
+    plt.close()
+
+    figure = corner.corner(fit['beta'],labels=[r"${\beta}_0$",r"${\beta}_1$",r"${\beta}_2$",r"${\beta}_3$",r"${\beta}_4$"])
+    pdf.savefig()
+    plt.close()
+
+    figure = corner.corner(fit['gamma'],labels=[r"${\gamma}_0$",r"${\gamma}_1$",r"${\gamma}_3$",r"${\gamma}_4$"])
+    pdf.savefig()
+    plt.close()
+
+    figure = corner.corner(fit['L_sigma'],labels=[r"${\sigma}_0$",r"${\sigma}_1$",r"${\sigma}_2$",r"${\sigma}_3$",r"${\sigma}_4$"])
+    pdf.savefig()
+    plt.close()
+
+    plt.hist(fit['k'].flatten())
+    pdf.savefig()
+    plt.close()
+
+    mega = numpy.array([fit['c'],fit['alpha'],fit['beta'],fit['L_sigma']])
+    mega = numpy.transpose(mega)
+
+    for index in xrange(5):
+        figure = corner.corner(mega[index,:,:],labels=[r"$c_{}$".format(index),r"$\alpha_{}$".format(index),\
+            r"$\beta_{}$".format(index),r"$\sigma_{}$".format(index)])
+        pdf.savefig()
+        plt.close()
+
     # filter wavelengths
     edges = numpy.array([[3300., 4102], [4102, 5100], [5200, 6289], [6289, 7607], [7607, 9200]])
     efflam = []
@@ -109,17 +145,7 @@ with PdfPages('multipage_pdf.pdf') as pdf:
     plt.legend()
     pdf.savefig()
     plt.close()
-    # dif = numpy.array([1.545252680138557- 0.9512179494794494, 1.251613863650247- 0.9512179494794494, 0.9512179494794494-0.7582486105024363, 0.9512179494794494-0.5429015873250165,0.9512179494794494])
-    # dif = dif/dif[1]
 
-    # dum = [dif[0], dif[2], dif[3], dif[4]]
-    figure = corner.corner(fit['gamma'],labels=[r"${\gamma}_0$",r"${\gamma}_1$",r"${\gamma}_3$",r"${\gamma}_4$"])
-    pdf.savefig()
-    plt.close()
-
-    figure = corner.corner(fit['L_sigma'],labels=[r"${L_\sigma}_0$",r"${L_\sigma}_1$",r"${L_\sigma}_2$",r"${L_\sigma}_3$",r"${L_\sigma}_4$"])
-    pdf.savefig()
-    plt.close()
 
     # for index in xrange(5):
     #     dum = numpy.swapaxes(numpy.array([fit['alpha'][:,index]*color_std,fit['beta'][:,index]*color_std]),0,1)
