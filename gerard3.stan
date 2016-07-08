@@ -34,9 +34,9 @@ parameters {
   real<lower=0, upper=pi()/2> phi_beta_4;
 
   cholesky_factor_corr[N_mags] L_Omega;
-  vector<lower=0.0, upper = 0.15>[N_mags] L_sigma;
+  vector<lower=0.0, upper = 0.2>[N_mags] L_sigma;
 
-  vector<lower=0.55, upper=1.55>[4] gamma;
+  vector<lower=0.5, upper=1.8>[4] gamma;
 
   simplex [D] k_simplex;
   real <lower = 0> k_scale;

@@ -64,7 +64,8 @@ init = [{'EW' : EW_renorm, 'c': numpy.random.normal(0,0.02,size=5),\
          'alpha': numpy.random.uniform(-0.01, 0.01, size= 5), 'beta':numpy.array([0.06,0.05,0.04,0.03,0.02])+numpy.random.normal(0,0.005,size=5),
          'gamma':numpy.array([1.4,1.2,0.85,0.7])+ numpy.random.normal(0,0.01,size=4), 'k_scale':0.1, 'k_simplex': k_simplex,
          'mag_int':
-         mag_renorm+numpy.random.normal(0,0.02,size=(nsne,5)), 'L_sigma':numpy.random.uniform(-0.02, 0.02,size=5)+0.1,'L_Omega':numpy.identity(5)}
+         mag_renorm+numpy.random.normal(0,0.02,size=(nsne,5)), 'L_sigma':numpy.random.uniform(-0.02, 0.02,size=5)+0.1,'L_Omega':numpy.identity(5), \
+         'Delta':numpy.zeros(nsne),'sigma_Delta': 0.08}
         for _ in range(4)]
 
 
@@ -76,7 +77,7 @@ init = [{'EW' : EW_renorm, 'c': numpy.random.normal(0,0.02,size=5),\
 sm = pystan.StanModel(file='gerard2.stan')
 # fit = sm.sampling(data=data, iter=200, chains=4,init=[init1,init1,init1,init1])
 control = {'stepsize':1.}
-fit = sm.sampling(data=data, iter=1000, chains=4,control=control,init=init, refresh = 10)
+fit = sm.sampling(data=data, iter=1000, chains=4,control=control,init=init)
 print fit
 
 output = open('temp2.pkl','wb')

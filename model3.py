@@ -83,7 +83,7 @@ init = [{'EW' : EW_renorm, \
 sm = pystan.StanModel(file='gerard3.stan')
 # fit = sm.sampling(data=data, iter=200, chains=4,init=[init1,init1,init1,init1])
 # control = {'stepsize':1.5}
-fit = sm.sampling(data=data, iter=400, chains=4,init=init)
+fit = sm.sampling(data=data, iter=200, chains=4,init=init)
 print fit
 
 output = open('temp3.pkl','wb')

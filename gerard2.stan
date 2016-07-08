@@ -16,7 +16,7 @@ parameters {
   vector<lower=-100, upper=100>[2] EW[D];
   vector<lower=-2, upper=2>[N_mags] mag_int[D];
 
-  vector<lower=-0.6, upper=0.6>[5] c;
+  vector<lower=-0.2, upper=0.2>[5] c;
   vector<lower=-0.02, upper=0.02>[5] alpha;
   vector<lower=-0.05, upper=0.15>[5] beta;
   cholesky_factor_corr[N_mags] L_Omega;
@@ -25,6 +25,9 @@ parameters {
   vector<lower=0.5, upper=1.8>[4] gamma;
   simplex [D] k_simplex;
   real <lower = 0> k_scale;
+
+  vector<lower=-5,upper=5> [D] Delta;
+  real <lower=0, upper=0.2> sigma_Delta;
 }
 
 
@@ -40,16 +43,18 @@ model {
   gamma_[4] <- gamma[3];
   gamma_[5] <- gamma[4];
 
-  k_ <- k_scale*k_simplex;
-  k_ <- k_ - mean(k_);
+  k_ <- k_scale*(k_simplex-1./D);
+  # k_ <- k_ - mean(k_);
 
   for (d in 1:D) {
-      means[d] <- c + alpha*EW[d,1]  + beta*EW[d,2];
+      means[d] <- Delta[d] + c + alpha*EW[d,1]  + beta*EW[d,2];
   }
 
   L_sigma ~ cauchy(0.1,2.5);
   L_Omega ~ lkj_corr_cholesky(2.);
   L_Sigma <- diag_pre_multiply(L_sigma, L_Omega);
+
+  Delta ~ normal(0,sigma_Delta);
 
   for (d in 1:D) {
     mag_int[d] ~ multi_normal_cholesky(means[d], L_Sigma);
