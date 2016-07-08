@@ -14,11 +14,11 @@ data {
 parameters {
 
   vector<lower=-100, upper=100>[2] EW[D];
-  vector<lower=-33, upper=-25>[N_mags] mag_int[D];
+  vector<lower=-3, upper=3>[N_mags] mag_int[D];
 
   # vector<lower=-0.4, upper=0.05>[5] c;
 
-  real<lower=25*sqrt(5), upper=33*sqrt(5)> r_c;
+  real<lower=sqrt(5)-.1, upper=sqrt(5)+.1> r_c;
   vector<lower=0, upper=pi()/2>[3] phi_c;
   real<lower=0, upper=pi()/2> phi_c_4;
 
@@ -34,10 +34,14 @@ parameters {
   real<lower=0, upper=pi()/2> phi_beta_4;
 
   cholesky_factor_corr[N_mags] L_Omega;
-  vector<lower=0.0, upper = 0.25>[N_mags] L_sigma;
+  vector<lower=0.0, upper = 0.15>[N_mags] L_sigma;
 
   vector<lower=0.55, upper=1.55>[4] gamma;
-  real<lower=-2, upper=2> k[D-1];
+
+  simplex [D] k_simplex;
+  real <lower = 0> k_scale;
+
+  # real<lower=-2, upper=2> k[D-1];
 }
 
 transformed parameters {
@@ -45,42 +49,44 @@ transformed parameters {
   vector[5] c;
   vector[5] beta;
 
-  real dum;
+  {
+    real dum;
 
-  dum <- r_c;
-  for (d in 1:3){
-    c[d] <- dum * cos(phi_c[d]);
-    dum <- dum *  sin(phi_c[d]);
-  }
-  c[4] <- dum * cos(phi_c_4);
-  dum <- dum *  sin(phi_c_4);
-  c[5] <- dum ;
-  c <- -c;
+    dum <- r_c;
+    for (d in 1:3){
+      c[d] <- dum * cos(phi_c[d]);
+      dum <- dum *  sin(phi_c[d]);
+    }
+    c[4] <- dum * cos(phi_c_4);
+    dum <- dum *  sin(phi_c_4);
+    c[5] <- dum ;
+    c <- c - 1;
 
-  dum <- r_alpha;
-  for (d in 1:3){
-    alpha[d] <- dum * cos(phi_alpha[d]);
-    dum <- dum *  sin(phi_alpha[d]);
-  }
-  alpha[4] <- dum * cos(phi_alpha_4);
-  dum <- dum *  sin(phi_alpha_4);
-  alpha[5] <- dum;
-  alpha <- alpha-1.;
+    dum <- r_alpha;
+    for (d in 1:3){
+      alpha[d] <- dum * cos(phi_alpha[d]);
+      dum <- dum *  sin(phi_alpha[d]);
+    }
+    alpha[4] <- dum * cos(phi_alpha_4);
+    dum <- dum *  sin(phi_alpha_4);
+    alpha[5] <- dum;
+    alpha <- alpha-1.;
 
-  dum <- r_beta;
-  for (d in 1:3){
-    beta[d] <- dum * cos(phi_beta[d]);
-    dum <- dum *  sin(phi_beta[d]);
+    dum <- r_beta;
+    for (d in 1:3){
+      beta[d] <- dum * cos(phi_beta[d]);
+      dum <- dum *  sin(phi_beta[d]);
+    }
+    beta[4] <- dum * cos(phi_beta_4);
+    dum <- dum *  sin(phi_beta_4);
+    beta[5] <- dum ;  
+    beta <- beta-1;
   }
-  beta[4] <- dum * cos(phi_beta_4);
-  dum <- dum *  sin(phi_beta_4);
-  beta[5] <- dum ;
-  beta <- beta-1;
 }
 
 model {
   vector[5] gamma_;
-  real k_[D];
+  vector[D] k_;
   matrix[5,5] L_Sigma;
 
   gamma_[1]<- gamma[1];
@@ -89,10 +95,9 @@ model {
   gamma_[4] <- gamma[3];
   gamma_[5] <- gamma[4];
 
-  k_[1] <- 0;
-  for (d in 1:(D-1)) {
-    k_[1+d] <- k[d];
-  }
+  k_ <- k_scale*(k_simplex-1./D);
+  # k_ <- k_ - mean(k_);
+
 
   L_sigma ~ cauchy(0.1,2.5);
   L_Omega ~ lkj_corr_cholesky(2.);

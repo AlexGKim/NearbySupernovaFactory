@@ -27,7 +27,10 @@ with PdfPages('multipage_pdf.pdf') as pdf:
     gamma_median = numpy.median(fit['gamma'],axis=0)
     gamma_median = numpy.insert(gamma_median,2,1.)
 
-    k_median =  numpy.append(0.,numpy.median(fit['k'],axis=0))
+    dum = fit['k_simplex']*fit['k_scale'][:,None]
+    dum = dum - dum.mean(axis=1)[:,None]
+
+    k_median =  numpy.median(dum,axis=0)
     EW_median = numpy.median(fit['EW'],axis=0)
     beta_median = numpy.median(fit['beta'],axis=0)
     alpha_median = numpy.median(fit['alpha'],axis=0)
@@ -101,10 +104,10 @@ with PdfPages('multipage_pdf.pdf') as pdf:
     # pdf.savefig()
     # plt.close()
     
-    plt.plot(fit['k'][::10,:10])
-    plt.title('k')
-    pdf.savefig()
-    plt.close()
+    # plt.plot(fit['k'][::10,:10])
+    # plt.title('k')
+    # pdf.savefig()
+    # plt.close()
     
 
     # plt.plot(fit['EXY'][:,:10,1])
@@ -140,11 +143,11 @@ with PdfPages('multipage_pdf.pdf') as pdf:
     pdf.savefig()
     plt.close()
 
-    dum = numpy.median(fit['k'],axis=0)
-    plt.hist(dum)
-    plt.title('k')
-    pdf.savefig()
-    plt.close()
+    # dum = numpy.median(fit['k'],axis=0)
+    # plt.hist(dum)
+    # plt.title('k')
+    # pdf.savefig()
+    # plt.close()
 
     c_con = numpy.concatenate((fit['r_c'][:,None],fit['phi_c'],fit['phi_c_4'][:,None]),axis=1)
     figure = corner.corner(c_con,labels=["r", r"$\phi_0$",r"$\phi_1$",r"$\phi_2$",r"$\phi_3$"])
