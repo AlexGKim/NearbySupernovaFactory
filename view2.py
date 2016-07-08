@@ -110,6 +110,11 @@ with PdfPages('multipage_pdf.pdf') as pdf:
     pdf.savefig()
     plt.close()
     
+    delta_median =  numpy.median(fit['Delta'],axis=0)
+    plt.hist(delta_median)
+    plt.title(r'$\Delta$')
+    pdf.savefig()
+    plt.close()
 
     # plt.plot(fit['EXY'][:,:10,1])
     # plt.title('EXY')
@@ -144,9 +149,9 @@ with PdfPages('multipage_pdf.pdf') as pdf:
     pdf.savefig()
     plt.close()
 
-    plt.hist(fit['k_simplex'].flatten())
-    pdf.savefig()
-    plt.close()
+    # plt.hist(fit['k_simplex'].flatten())
+    # pdf.savefig()
+    # plt.close()
 
     mega = numpy.array([fit['c'],fit['alpha'],fit['beta'],fit['L_sigma']])
     mega = numpy.transpose(mega)
