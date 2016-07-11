@@ -36,7 +36,7 @@ supernova has parameters $EW_{Si}$, $EW_{Ca}$, and $k$.  To constrain the proble
 $k=0$.
 
 The next level of complexity to add is intrinsic dispersion through stochastic parameters that describe the global  covariance matrices
-$C_{c}$.  The model would then look like
+$C_{c}$ and a grey dust $\Delta$.  The model would then look like
 \begin{equation*}
 \left(
 \begin{matrix}
@@ -77,6 +77,48 @@ EW_{Si}\\ EW_{Ca}
 \right).
 \end{equation*}
 For boundary conditions we set  $\langle k \rangle=0$ and we set $\gamma_2=1$.
+
+The next level of complexity to add an intrinsic color variation modeled with a single parameter $d$.  The model would then look like
+\begin{equation*}
+\left(
+\begin{matrix}
+U\\B\\V\\R\\I
+\end{matrix}
+\right) \sim \mathcal{N}
+\left(
+\Delta +
+\left(
+\begin{matrix}
+c_0+\alpha_0 EW_{Ca} + \beta_0 EW_{Si} + \delta_0 d \\
+c_1+\alpha_1 EW_{Ca} + \beta_1 EW_{Si} + \delta_1 d\\
+c_2+\alpha_2 EW_{Ca} + \beta_2 EW_{Si} + \delta_2 d\\
+c_3+\alpha_3 EW_{Ca} + \beta_3 EW_{Si} + \delta_3 d\\
+c_4+\alpha_4 EW_{Ca} + \beta_4 EW_{Si} + \delta_4 d
+\end{matrix}
+\right)
+,C_{c}
+\right),
+\end{equation*}
+
+\begin{equation*}
+\left(
+\begin{matrix}
+U_o\\B_o\\ V_o\\R_o\\I_o\\EW_{Si, o}\\ EW_{Ca, o}
+\end{matrix}
+\right) \sim \mathcal{N}
+\left(
+\left(
+\begin{matrix}
+U +\gamma_0 k \\B +\gamma_1 k \\V+\gamma_2 k\\R+\gamma_3 k\\I+\gamma_4 k\\
+EW_{Si}\\ EW_{Ca}
+\end{matrix}
+\right)
+,C
+\right).
+\end{equation*}
+For boundary conditions we set  $\langle k \rangle=0$,  $\langle \Delta \rangle=0$ and we set $\gamma_2=1$.
+
+
 %
 %
 %A model for a single object is that its intrinsic properties (captured by equivalent width) are drawn from a Normal distribution

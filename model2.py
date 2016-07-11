@@ -65,7 +65,7 @@ init = [{'EW' : EW_renorm, 'c': numpy.random.normal(0,0.02,size=5),\
          'gamma':numpy.array([1.4,1.2,0.85,0.7])+ numpy.random.normal(0,0.01,size=4), 'k_scale':0.1, 'k_simplex': k_simplex,
          'mag_int':
          mag_renorm+numpy.random.normal(0,0.02,size=(nsne,5)), 'L_sigma':numpy.random.uniform(-0.02, 0.02,size=5)+0.1,'L_Omega':numpy.identity(5), \
-         'Delta':numpy.zeros(nsne),'sigma_Delta': 0.08}
+         'Delta':k_simplex,'Delta_scale': 0.08}
         for _ in range(4)]
 
 

@@ -53,10 +53,10 @@ with PdfPages('multipage_pdf.pdf') as pdf:
     # pdf.savefig()
     # plt.close()
 
-    lineobjects = plt.plot(fit['sigma_Delta'][::10],label=[])
-    plt.title(r'$\sigma_\Delta$')
-    pdf.savefig()
-    plt.close()
+    # lineobjects = plt.plot(fit['sigma_Delta'][::10],label=[])
+    # plt.title(r'$\sigma_\Delta$')
+    # pdf.savefig()
+    # plt.close()
 
     lineobjects = plt.plot(fit['L_sigma'][::10,:],label=[])
     plt.title(r'$L_\sigma$')
@@ -68,16 +68,25 @@ with PdfPages('multipage_pdf.pdf') as pdf:
     plt.title('EW - 0')
     pdf.savefig()
     plt.close()
-    
+
     plt.plot(fit['EW'][::10,:10,1])
     plt.title('EW - 1')
+    pdf.savefig()
+    plt.close()
+    
+    plt.plot(fit['k_scale'][::10])
+    plt.title('k scale')
+    pdf.savefig()
+    plt.close()
+
+    plt.plot(fit['Delta_scale'][::10])
+    plt.title(r'$\Delta scale$')
     pdf.savefig()
     plt.close()
 
     lineobjects = plt.plot(fit['c'][::10,:],label=['U','B','V','R','I'])
     plt.title('c')
     plt.legend(iter(lineobjects),('U','B','V','R','I'))
-
     pdf.savefig()
     plt.close()
     
@@ -98,7 +107,7 @@ with PdfPages('multipage_pdf.pdf') as pdf:
     plt.legend(iter(lineobjects),('U','B','R','I'))
     pdf.savefig()
     plt.close()
-    
+ 
 
     # plt.plot(fit['L_sigma_color'])
     # plt.title('L_sigma_color')
@@ -106,11 +115,11 @@ with PdfPages('multipage_pdf.pdf') as pdf:
     # plt.close()
     
     plt.plot(fit['k_simplex'][::10,:10])
-    plt.title('k_simplex')
+    plt.title('k')
     pdf.savefig()
     plt.close()
     
-    delta_median =  numpy.median(fit['Delta'],axis=0)
+    delta_median =  numpy.median((fit['Delta']-1./fit['Delta'].shape[1])*fit['Delta_scale'][:,None],axis=0)
     plt.hist(delta_median)
     plt.title(r'$\Delta$')
     pdf.savefig()
