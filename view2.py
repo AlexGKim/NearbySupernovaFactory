@@ -21,32 +21,82 @@ mag_obs = data['obs'][:,2:]
 EW_cov = data['cov'][:,0:2,0:2]
 mag_cov = data['cov'][:,2:,2:]
 
+dum = numpy.zeros(5,5)
+for x1, x2 in zip(fit['L_Omega'], fit['L_sigma']):
+    dum= dum+ numpy.dot(x2[:,None],x2[None,:])*numpy.dot(x1,x1.T)
+
+dum/= len(fit['L_Omega'])
+print " \\\\\n".join([" & ".join(map('{0:.4f}'.format, line)) for line in dum])
+
+trans = [[1.,0,-1,0,0],[0.,1,-1,0,0],[0.,0,1,-1,0],[0.,0,1,0,-1]]
+trans = numpy.array(trans)
+color_cov = numpy.dot(trans,numpy.dot(dum, trans.T))
+print " \\\\\n".join([" & ".join(map('{0:.4f}'.format, line)) for line in color_cov])
+
+
+
+gamma_median = numpy.median(fit['gamma'],axis=0)
+gamma_median = numpy.insert(gamma_median,2,1.)
+
+dum = fit['k_simplex']*fit['k_scale'][:,None]
+dum = dum - dum.mean(axis=1)[:,None]
+
+k_median =  numpy.median(dum,axis=0)
+EW_median = numpy.median(fit['EW'],axis=0)
+beta_median = numpy.median(fit['beta'],axis=0)
+alpha_median = numpy.median(fit['alpha'],axis=0)
+
+filtname = ['U','B','V','R','I']
+
+for i, fi in enumerate(filtname):
+    plt.hist([mag_obs[:, i], mag_obs[:, i] - gamma_median[i]*k_median, \
+        mag_obs[:, i] - gamma_median[i]*k_median -beta_median[i]*EW_median[:,1], \
+        mag_obs[:, i] - gamma_median[i]*k_median -beta_median[i]*EW_median[:,1]-alpha_median[i]*EW_median[:,0]], \
+        label=[r'$M_o$', r'$M_o - \gamma k$', r'$M_o - \gamma k - \beta EW_{Si}$', \
+        r'$M_o - \gamma k - \beta EW_{Si} - \alpha EW_{Ca}$'])
+    plt.legend()
+    plt.title('Filter {}'.format(fi))
+    pp = PdfPages('output/magresidual_{}.pdf'.format(fi))
+    plt.savefig(pp, format='pdf')
+    pp.close()
+    plt.close()
+
+temp = (fit['Delta']-1./fit['Delta'].shape[1])*fit['Delta_scale'][:,None]
+# delta_median =  numpy.median(temp,axis=0)
+print temp.flatten().std()
+plt.hist(temp.flatten(),normed=True,bins=20)
+plt.title(r'$\Delta$')
+pp = PdfPages('output/Delta_hist.pdf')
+plt.savefig(pp,format='pdf')
+pp.close()
+plt.close()
+
+figure = corner.corner(fit['alpha'],labels=[r"${\alpha}_0$",r"${\alpha}_1$",r"${\alpha}_2$",r"${\alpha}_3$",r"${\alpha}_4$"])
+pp = PdfPages('output/alpha_corner.pdf')
+plt.savefig(pp,format='pdf')
+pp.close()
+plt.close()
+
+figure = corner.corner(fit['beta'],labels=[r"${\beta}_0$",r"${\beta}_1$",r"${\beta}_2$",r"${\beta}_3$",r"${\beta}_4$"])
+pp = PdfPages('output/beta_corner.pdf')
+plt.savefig(pp,format='pdf')
+pp.close()
+plt.close()
+
+figure = corner.corner(fit['gamma'],labels=[r"${\gamma}_0$",r"${\gamma}_1$",r"${\gamma}_3$",r"${\gamma}_4$"])
+pp = PdfPages('output/gamma_corner.pdf')
+plt.savefig(pp,format='pdf')
+pp.close()
+plt.close()
+
+mega = numpy.concatenate((fit['Delta_scale'][:,None],fit['L_sigma']),axis=1)
+figure = corner.corner(mega,labels=[r"$\Delta$ scale",r"${\sigma}_0$",r"${\sigma}_1$",r"${\sigma}_2$",r"${\sigma}_3$",r"${\sigma}_4$"])
+pp = PdfPages('output/sigma_corner.pdf')
+plt.savefig(pp,format='pdf')
+pp.close()
+plt.close()
 
 with PdfPages('multipage_pdf.pdf') as pdf:
-
-    gamma_median = numpy.median(fit['gamma'],axis=0)
-    gamma_median = numpy.insert(gamma_median,2,1.)
-
-    dum = fit['k_simplex']*fit['k_scale'][:,None]
-    dum = dum - dum.mean(axis=1)[:,None]
-
-    k_median =  numpy.median(dum,axis=0)
-    EW_median = numpy.median(fit['EW'],axis=0)
-    beta_median = numpy.median(fit['beta'],axis=0)
-    alpha_median = numpy.median(fit['alpha'],axis=0)
-
-    filtname = ['U','B','V','R','I']
-    for i, fi in enumerate(filtname):
-        plt.hist([mag_obs[:, i], mag_obs[:, i] - gamma_median[i]*k_median, \
-            mag_obs[:, i] - gamma_median[i]*k_median -beta_median[i]*EW_median[:,1], \
-            mag_obs[:, i] - gamma_median[i]*k_median -beta_median[i]*EW_median[:,1]-alpha_median[i]*EW_median[:,0]], \
-            label=[r'$M_o$', r'$M_o - \gamma k$', r'$M_o - \gamma k - \beta EW_{Si}$', \
-            r'$M_o - \gamma k - \beta EW_{Si} - \alpha EW_{Ca}$'])
-        plt.legend()
-        plt.title('Filter {}'.format(fi))
-        pdf.savefig()
-        plt.close()
-
 
     # plt.plot(fit['EW0'])
     # plt.title('EW0')
@@ -57,6 +107,12 @@ with PdfPages('multipage_pdf.pdf') as pdf:
     # plt.title(r'$\sigma_\Delta$')
     # pdf.savefig()
     # plt.close()
+    lineobjects = plt.plot(fit['lp__'][::10])
+    plt.title(r'log p')
+    pdf.savefig()
+    plt.close()
+
+
 
     lineobjects = plt.plot(fit['L_sigma'][::10,:],label=[])
     plt.title(r'$L_\sigma$')
@@ -119,11 +175,7 @@ with PdfPages('multipage_pdf.pdf') as pdf:
     pdf.savefig()
     plt.close()
     
-    delta_median =  numpy.median((fit['Delta']-1./fit['Delta'].shape[1])*fit['Delta_scale'][:,None],axis=0)
-    plt.hist(delta_median)
-    plt.title(r'$\Delta$')
-    pdf.savefig()
-    plt.close()
+
 
     # plt.plot(fit['EXY'][:,:10,1])
     # plt.title('EXY')
@@ -142,21 +194,7 @@ with PdfPages('multipage_pdf.pdf') as pdf:
     pdf.savefig()
     plt.close()
 
-    figure = corner.corner(fit['alpha'],labels=[r"${\alpha}_0$",r"${\alpha}_1$",r"${\alpha}_2$",r"${\alpha}_3$",r"${\alpha}_4$"])
-    pdf.savefig()
-    plt.close()
 
-    figure = corner.corner(fit['beta'],labels=[r"${\beta}_0$",r"${\beta}_1$",r"${\beta}_2$",r"${\beta}_3$",r"${\beta}_4$"])
-    pdf.savefig()
-    plt.close()
-
-    figure = corner.corner(fit['gamma'],labels=[r"${\gamma}_0$",r"${\gamma}_1$",r"${\gamma}_3$",r"${\gamma}_4$"])
-    pdf.savefig()
-    plt.close()
-
-    figure = corner.corner(fit['L_sigma'],labels=[r"${\sigma}_0$",r"${\sigma}_1$",r"${\sigma}_2$",r"${\sigma}_3$",r"${\sigma}_4$"])
-    pdf.savefig()
-    plt.close()
 
     # plt.hist(fit['k_simplex'].flatten())
     # pdf.savefig()
@@ -172,31 +210,36 @@ with PdfPages('multipage_pdf.pdf') as pdf:
         plt.close()
 
     # filter wavelengths
-    edges = numpy.array([[3300., 4102], [4102, 5100], [5200, 6289], [6289, 7607], [7607, 9200]])
-    efflam = []
-    for edge in edges:
-        efflam.append((edge[1]-edge[0])/2+edge[0])
+edges = numpy.array([[3300., 4102], [4102, 5100], [5200, 6289], [6289, 7607], [7607, 9200]])
+efflam = []
+for edge in edges:
+    efflam.append((edge[1]-edge[0])/2+edge[0])
 # [3701, 4601, 5744, 6948, 8403]
-    rc('text', usetex=True)
+rc('text', usetex=True)
 
-    lambdas = numpy.arange(3500.,9000,100)
-    rvs = [3.1,3.4]
-    for rv in rvs:
-        A_ = sncosmo._extinction.ccm89(lambdas, 1., rv)
-        norm  = sncosmo._extinction.ccm89(numpy.array([efflam[2]]), 1., rv)
-        A_ = A_/norm[0]
-        plt.plot(lambdas,A_,label=r"$R_V={:.1f}$".format(rv))
+lambdas = numpy.arange(3500.,9000,100)
+rvs = [2.8,3.1]
+for rv in rvs:
+    A_ = sncosmo._extinction.ccm89(lambdas, 1., rv)
+    norm  = sncosmo._extinction.ccm89(numpy.array([efflam[2]]), 1., rv)
+    A_ = A_/norm[0]
+    plt.plot(lambdas,A_,label=r"$R_V={:.1f}$".format(rv))
 
-    dum = (1-.68)/2
-    gamma_sort = numpy.sort(fit['gamma'],axis=0)
-    ngamma = gamma_sort.shape[0]
-    y = gamma_sort[ngamma/2,:]
-    ymin = gamma_sort[ngamma*dum,:]
-    ymax  = gamma_sort[ngamma*(1-dum),:]
-    plt.errorbar(numpy.delete(efflam,2),y,yerr=[y-ymin,ymax-y],fmt='o')
-    plt.legend()
-    pdf.savefig()
-    plt.close()
+dum = (1-.68)/2
+gamma_sort = numpy.sort(fit['gamma'],axis=0)
+ngamma = gamma_sort.shape[0]
+y = gamma_sort[ngamma/2,:]
+ymin = gamma_sort[ngamma*dum,:]
+ymax  = gamma_sort[ngamma*(1-dum),:]
+plt.errorbar(numpy.delete(efflam,2),y,yerr=[y-ymin,ymax-y],fmt='o')
+plt.legend()
+plt.xlabel(r'Wavelength (\AA)')
+pp = PdfPages('output/ccm.pdf')
+plt.savefig(pp,format='pdf')
+pp.close()
+plt.close()
+
+
 
 
     # for index in xrange(5):

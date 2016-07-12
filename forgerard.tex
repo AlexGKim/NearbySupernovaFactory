@@ -9,34 +9,7 @@
 \usepackage{amsmath}
 
 \begin{document}
-
-The simplified implemented model is
-\begin{equation}
-\left(
-\begin{matrix}
-U_o-V_o\\B_o-V_o\\V_o-R_o\\V_o-I_o\\EW_{Si, o}\\ EW_{Ca, o}
-\end{matrix}
-\right) \sim \mathcal{N}
-\left(
-\left(
-\begin{matrix}
-c_0+\alpha_0 EW_{Si} + \beta_0 EW_{Ca} +\gamma_0 k  \\
-c_1+\alpha_1 EW_{Si} + \beta_1 EW_{Ca}  +\gamma_1 k  \\
-c_2+\alpha_2 EW_{Si} + \beta_2 EW_{Ca} +\gamma_2 k\\
-c_3+\alpha_3 EW_{Si} + \beta_3 EW_{Ca} +\gamma_3 k\\
-EW_{Si}\\ EW_{Ca}
-\end{matrix}
-\right)
-,C
-\right),
-\end{equation}
-The data are the colors and equivalent widths on the left side, $C$ is the corresponding measurement
-covariance.  There are global parameters $c$, $\alpha$, $\beta$, and $\gamma$.  Each
-supernova has parameters $EW_{Si}$, $EW_{Ca}$, and $k$.  To constrain the problem $\gamma_1=1$ and one supernova is selected to have
-$k=0$.
-
-The next level of complexity to add is intrinsic dispersion through stochastic parameters that describe the global  covariance matrices
-$C_{c}$ and a grey dust $\Delta$.  The model would then look like
+The model for the intrinsic absolute magnitudes $U$, $B$, $V$, $R$, and $I$ is that they are drawn from a Normal distribution
 \begin{equation*}
 \left(
 \begin{matrix}
@@ -55,9 +28,16 @@ c_4+\alpha_4 EW_{Ca} + \beta_4 EW_{Si}
 \end{matrix}
 \right)
 ,C_{c}
-\right),
+\right).
 \end{equation*}
+The mean of the normal distribution linearly relates absolute magnitudes with
+individual spectral parameters  $EW_{Ca}$, and $EW_{Si}$ via the  global coefficients
+ $c_i$, $\alpha_i$, $\beta_i$.  Residual variations in absolute magnitude is described
+ by  $C_c$ the intrinsic dispersion of the Normal distribution.  To constrain the problem we
+ set $\langle \Delta \rangle=0$.
 
+The observed magnitudes  $U_o$, $B_o$, $V_o$, $R_o$, and $I_o$  and spectral features  $EW_{Ca,o}$, and $EW_{Si,o}$ are modeled
+as being drawn from a Normal distribution. 
 \begin{equation*}
 \left(
 \begin{matrix}
@@ -74,7 +54,106 @@ EW_{Si}\\ EW_{Ca}
 ,C
 \right).
 \end{equation*}
-For boundary conditions we set  $\langle k \rangle=0$, $\langle \Delta \rangle=0$ and we set $\gamma_2=1$.
+The mean of the normal distribution is the intrinsic magnitudes plus an extrinsic magnitude change described by a parameter for each individual supernova
+$k$ and global parameters $\gamma_i$.  
+To constrain the problem we set  $\langle k \rangle=0$.  We also set  $\gamma_2=1$ meaning that $k$ can be interpreted as $A_V$.
+
+As I perform an Bayesian analysis some mention of priors is required.  A flat prior is used for all parameters except
+for the covariance matrix $C_c$, which is constructed from a correlation matrix with  $\nu=2$  LKJ prior and standard
+deviations with
+ $\mu=0.1$, $\sigma=2.5$ Cauchy (Lorentz) distribution prior restricted to non-negative values.
+The nature of the LKJ prior is rather mysterious; one thing to note is that for $\nu=2$ the correlation prior is broad but
+approaches zero at the extremum.  The prior disfavors uniform correlations allowing grey offsets to be attributed to the $\Delta$ parameters.
+
+Figure~\ref{sigma:fig} shows the confidence regions for 
+ the overall scale off the grey offsets
+ ``$\Delta$ scale''
+and of the standard deviations of the $C_c$ diagonal.  This parameter subset is constrained and the  ``$\Delta$ scale'' parameter
+is not highly correlated with the others.  The average
+of the covariance matrix draws (there must be something better to use than this) is 
+\begin{equation}
+\begin{pmatrix}
+0.0050 & 0.0026 & 0.0017 & 0.0015 & 0.0010 \\
+0.0026 & 0.0038 & 0.0035 & 0.0029 & 0.0013 \\
+0.0017 & 0.0035 & 0.0052 & 0.0045 & 0.0032 \\
+0.0015 & 0.0029 & 0.0045 & 0.0046 & 0.0038 \\
+0.0010 & 0.0013 & 0.0032 & 0.0038 & 0.0055
+ \end{pmatrix}.
+ \end{equation}
+ In terms of colors $U-V$, $B-V$, $V-R$, and $V-I$ the covariance is
+\begin{equation}
+\begin{pmatrix}
+ 0.0068 & 0.0025 & -0.0005 & -0.0012 \\
+0.0025 & 0.0020 & -0.0000 & 0.0003 \\
+-0.0005 & -0.0000 & 0.0008 & 0.0012 \\
+-0.0012 & 0.0003 & 0.0012 & 0.0042
+  \end{pmatrix}.
+ \end{equation}
+These correlations indicate that intrinsic color parameters are available. 
+  
+\begin{figure}[htbp] %  figure placement: here, top, bottom, or page
+   \centering
+   \includegraphics[width=4in]{output/sigma_corner.pdf} 
+   \caption{Confidence regions for the parameter ``$\Delta$ scale'' that describes the overall scale off the $\Delta$'s
+and of the standard deviations of the diagonal of $C_c$.}
+   \label{sigma:fig}
+\end{figure}
+
+
+The ideogram for the grey offsets $\Delta$ for all supernovae is shown in Figure~\ref{Delta_hist:fig}.  The intrinsic dispersion
+is given by the standard deviation of $0.10$ mag.  The distribution has a broad tail; a model assumption of a normal intrinsic dispersion
+would have been inappropriate.
+\begin{figure}[htbp] %  figure placement: here, top, bottom, or page
+   \centering
+   \includegraphics[width=4in]{output/Delta_hist.pdf} 
+   \caption{Ideogram for the grey offset $\Delta$ for all supernovae.}
+   \label{Delta_hist:fig}
+\end{figure}
+
+
+To illustrate how the linear model reduces the dispersion in observed absolute magnitude, we take the
+observed $V_o$, and successive correction of $\gamma_2k$,  $\beta EW_{Si}$, and  $\alpha EW_{Ca}$, 
+where the 50\%-ile fit value (of the full model) is used for each parameter.  The histograms over the supernovae for these magnitudes are shown in
+Figure~\ref{magresidual:fig}.  The benefit of each  linear correction results in the reduction in dispersion.  The amount
+of successive reduction in dispersion is similar for all bands.  This is shown for illustration only: in my attempt to reproduce Gerard's previous
+work there were no supernovae reserved for out-of-sample model-comparison tests.  AIC and BIC can be computed.
+\begin{figure}[htbp] %  figure placement: here, top, bottom, or page
+   \centering
+   \includegraphics[width=4in]{output/magresidual_V.pdf} 
+   \caption{Distributions of $V$-band corrected magnitudes.}
+   \label{magresidual:fig}
+\end{figure}
+
+The best-fit distributions for the parameters $\alpha$ and $\beta$, which describe the linear relation between absolute magnitude
+and $EW_{Ca}$ and $EW_{Si}$ respectively, are shown in Figure~\ref{alphabeta:fig}.  The 1-$\sigma$ 
+credible intervals are $\alpha_0=3.0e-3 \pm 8.6e-4$,
+$\alpha_1 = 4.7e-4  \pm 7.2e-4$, $\alpha_2 = 5.3e-4  \pm 5.9e-4$, $\alpha_3 = 7.0e-4  \pm 5.0e-4$,
+$\alpha_4 = 2.1e-3  \pm 4.4e-4$,  $\beta_0=0.03  \pm 2.8e-3$,
+$\beta_1 =0.03  \pm 2.4e-3$, $\beta_2 = 0.03  \pm 2.0e-3$, $\beta_3 =0.02  \pm 1.8e-3$,
+$\beta_4 =0.02  \pm 1.6e-3$.
+\begin{figure}[htbp] %  figure placement: here, top, bottom, or page
+   \centering
+   \includegraphics[width=2.9in]{output/alpha_corner.pdf} 
+   \includegraphics[width=2.9in]{output/beta_corner.pdf} 
+   \caption{Distributions for $\alpha$ and $\beta$.}
+   \label{alphabeta:fig}
+\end{figure}
+
+The best-fit distribution for the parameters $\gamma$  and a comparison with the predictions for extrinsic
+magnitude changes being to CCM dust, are shown in Figure~\ref{gamma:fig}.  The 1-$\sigma$ 
+credible intervals are $\gamma_0=1.65 \pm 0.05$,
+$\gamma_1 = 1.33  \pm 0.03$, $\gamma_2 = 0.78  \pm 0.1$, $\gamma_3 = 0.57  \pm 0.3$.
+The CCM dust predictions are based 
+on the central wavelengths of the synthetic broad-band filters, and are expected to be shifted slightly.
+By eye the model fit results appear consistent with $R_V=3.1$, although $R_V=2.8$ appears to match better.
+\begin{figure}[htbp] %  figure placement: here, top, bottom, or page
+   \centering
+   \includegraphics[width=2.9in]{output/gamma_corner.pdf} 
+   \includegraphics[width=2.9in]{output/ccm.pdf} 
+   \caption{Best-fit distribution for the parameters $\gamma$ and $\beta$, and a comparison with the predictions for extrinsic
+magnitude changes being to CCM dust.}
+   \label{gamma:fig}
+\end{figure}
 
 
 %
