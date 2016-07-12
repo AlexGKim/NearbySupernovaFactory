@@ -93,7 +93,7 @@ These correlations indicate that intrinsic color parameters are available.
   
 \begin{figure}[htbp] %  figure placement: here, top, bottom, or page
    \centering
-   \includegraphics[width=4in]{output/sigma_corner.pdf} 
+   \includegraphics[width=4in]{output2/sigma_corner.pdf} 
    \caption{Confidence regions for the parameter ``$\Delta$ scale'' that describes the overall scale off the $\Delta$'s
 and of the standard deviations of the diagonal of $C_c$.}
    \label{sigma:fig}
@@ -105,7 +105,7 @@ is given by the standard deviation of $0.10$ mag.  The distribution has a broad 
 would have been inappropriate.
 \begin{figure}[htbp] %  figure placement: here, top, bottom, or page
    \centering
-   \includegraphics[width=4in]{output/Delta_hist.pdf} 
+   \includegraphics[width=4in]{output2/Delta_hist.pdf} 
    \caption{Ideogram for the grey offset $\Delta$ for all supernovae.}
    \label{Delta_hist:fig}
 \end{figure}
@@ -119,7 +119,7 @@ of successive reduction in dispersion is similar for all bands.  This is shown f
 work there were no supernovae reserved for out-of-sample model-comparison tests.  AIC and BIC can be computed.
 \begin{figure}[htbp] %  figure placement: here, top, bottom, or page
    \centering
-   \includegraphics[width=4in]{output/magresidual_V.pdf} 
+   \includegraphics[width=4in]{output2/magresidual_V.pdf} 
    \caption{Distributions of $V$-band corrected magnitudes.}
    \label{magresidual:fig}
 \end{figure}
@@ -133,8 +133,8 @@ $\beta_1 =0.03  \pm 2.4e-3$, $\beta_2 = 0.03  \pm 2.0e-3$, $\beta_3 =0.02  \pm 1
 $\beta_4 =0.02  \pm 1.6e-3$.
 \begin{figure}[htbp] %  figure placement: here, top, bottom, or page
    \centering
-   \includegraphics[width=2.9in]{output/alpha_corner.pdf} 
-   \includegraphics[width=2.9in]{output/beta_corner.pdf} 
+   \includegraphics[width=2.9in]{output2/alpha_corner.pdf} 
+   \includegraphics[width=2.9in]{output2/beta_corner.pdf} 
    \caption{Distributions for $\alpha$ and $\beta$.}
    \label{alphabeta:fig}
 \end{figure}
@@ -148,14 +148,61 @@ on the central wavelengths of the synthetic broad-band filters, and are expected
 By eye the model fit results appear consistent with $R_V=3.1$, although $R_V=2.8$ appears to match better.
 \begin{figure}[htbp] %  figure placement: here, top, bottom, or page
    \centering
-   \includegraphics[width=2.9in]{output/gamma_corner.pdf} 
-   \includegraphics[width=2.9in]{output/ccm.pdf} 
+   \includegraphics[width=2.9in]{output2/gamma_corner.pdf} 
+   \includegraphics[width=2.9in]{output2/ccm.pdf} 
    \caption{Best-fit distribution for the parameters $\gamma$ and $\beta$, and a comparison with the predictions for extrinsic
 magnitude changes being to CCM dust.}
    \label{gamma:fig}
 \end{figure}
 
+\begin{equation*}
+\left(
+\begin{matrix}
+U\\B\\V\\R\\I
+\end{matrix}
+\right) \sim \mathcal{N}
+\left(
+\Delta +
+\left(
+\begin{matrix}
+c_0+\alpha_0 EW_{Ca} + \beta_0 EW_{Si} +\delta_0 D \\
+c_1+\alpha_1 EW_{Ca} + \beta_1 EW_{Si} +\delta_1 D  \\
+c_2+\alpha_2 EW_{Ca} + \beta_2 EW_{Si} +\delta_2 D \\
+c_3+\alpha_3 EW_{Ca} + \beta_3 EW_{Si} +\delta_3 D \\
+c_4+\alpha_4 EW_{Ca} + \beta_4 EW_{Si}+\delta_4 D 
+\end{matrix}
+\right)
+,C_{c}
+\right).
+\end{equation*}
+\begin{equation*}
+D \sim \mathcal{N}(0,1)
+\end{equation*}
+\begin{equation*}
+\left(
+\begin{matrix}
+U_o\\B_o\\ V_o\\R_o\\I_o\\EW_{Si, o}\\ EW_{Ca, o}
+\end{matrix}
+\right) \sim \mathcal{N}
+\left(
+\left(
+\begin{matrix}
+U +\gamma_0 k \\B +\gamma_1 k \\V+\gamma_2 k\\R+\gamma_3 k\\I+\gamma_4 k\\
+EW_{Si}\\ EW_{Ca}
+\end{matrix}
+\right)
+,C
+\right).
+\end{equation*}
 
+\begin{equation*}
+\begin{pmatrix}
+0.0060 & 0.0024 & -0.0003 & -0.0008 \\
+0.0024 & 0.0017 & -0.0001 & 0.0001 \\
+-0.0003 & -0.0001 & 0.0006 & 0.0007 \\
+-0.0008 & 0.0001 & 0.0007 & 0.0022
+  \end{pmatrix}.
+ \end{equation*}
 %
 %
 %A model for a single object is that its intrinsic properties (captured by equivalent width) are drawn from a Normal distribution
