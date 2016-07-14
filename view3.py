@@ -9,7 +9,7 @@ import sncosmo
 
 color_std=0.272560118531
 
-f = open('temp2.pkl','rb')
+f = open('temp3.pkl','rb')
 fit = pickle.load(f)
 
 pkl_file = open('gege_data.pkl', 'r')
@@ -46,7 +46,6 @@ EW_median = numpy.median(fit['EW'],axis=0)
 beta_median = numpy.median(fit['beta'],axis=0)
 alpha_median = numpy.median(fit['alpha'],axis=0)
 
-
 filtname = ['U','B','V','R','I']
 
 for i, fi in enumerate(filtname):
@@ -57,7 +56,7 @@ for i, fi in enumerate(filtname):
         r'$M_o - \gamma k - \beta EW_{Si} - \alpha EW_{Ca}$'])
     plt.legend()
     plt.title('Filter {}'.format(fi))
-    pp = PdfPages('output2/magresidual_{}.pdf'.format(fi))
+    pp = PdfPages('output3/magresidual_{}.pdf'.format(fi))
     plt.savefig(pp, format='pdf')
     pp.close()
     plt.close()
@@ -67,45 +66,44 @@ temp = (fit['Delta']-1./fit['Delta'].shape[1])*fit['Delta_scale'][:,None]
 print temp.flatten().std()
 plt.hist(temp.flatten(),normed=True,bins=20)
 plt.title(r'$\Delta$')
-pp = PdfPages('output2/Delta_hist.pdf')
+pp = PdfPages('output3/Delta_hist.pdf')
 plt.savefig(pp,format='pdf')
 pp.close()
 plt.close()
 
 figure = corner.corner(fit['alpha'],labels=[r"${\alpha}_0$",r"${\alpha}_1$",r"${\alpha}_2$",r"${\alpha}_3$",r"${\alpha}_4$"])
-pp = PdfPages('output2/alpha_corner.pdf')
+pp = PdfPages('output3/alpha_corner.pdf')
 plt.savefig(pp,format='pdf')
 pp.close()
 plt.close()
 
 figure = corner.corner(fit['beta'],labels=[r"${\beta}_0$",r"${\beta}_1$",r"${\beta}_2$",r"${\beta}_3$",r"${\beta}_4$"])
-pp = PdfPages('output2/beta_corner.pdf')
+pp = PdfPages('output3/beta_corner.pdf')
 plt.savefig(pp,format='pdf')
 pp.close()
 plt.close()
 
 figure = corner.corner(fit['gamma'],labels=[r"${\gamma}_0$",r"${\gamma}_1$",r"${\gamma}_3$",r"${\gamma}_4$"])
-pp = PdfPages('output2/gamma_corner.pdf')
+pp = PdfPages('output3/gamma_corner.pdf')
+plt.savefig(pp,format='pdf')
+pp.close()
+plt.close()
+
+mega = numpy.concatenate((fit['rho0'][:,None],fit['rho']),axis=1)
+figure = corner.corner(mega,labels=[r"${\rho}_0$",r"${\rho}_1$",r"${\rho}_2$",r"${\rho}_3$"])
+pp = PdfPages('output3/rho_corner.pdf')
 plt.savefig(pp,format='pdf')
 pp.close()
 plt.close()
 
 mega = numpy.concatenate((fit['Delta_scale'][:,None],fit['L_sigma']),axis=1)
 figure = corner.corner(mega,labels=[r"$\Delta$ scale",r"${\sigma}_0$",r"${\sigma}_1$",r"${\sigma}_2$",r"${\sigma}_3$",r"${\sigma}_4$"])
-pp = PdfPages('output2/sigma_corner.pdf')
+pp = PdfPages('output3/sigma_corner.pdf')
 plt.savefig(pp,format='pdf')
 pp.close()
 plt.close()
 
-lineobjects = plt.plot(fit['lp__'][::10])
-plt.title(r'log p')
-pp = PdfPages('output2/likelihood.pdf')
-plt.savefig(pp,format='pdf')
-pp.close()
-plt.close()
-
-
-with PdfPages('output2/multipage_pdf.pdf') as pdf:
+with PdfPages('output3/multipage_pdf.pdf') as pdf:
 
     # plt.plot(fit['EW0'])
     # plt.title('EW0')
@@ -116,9 +114,18 @@ with PdfPages('output2/multipage_pdf.pdf') as pdf:
     # plt.title(r'$\sigma_\Delta$')
     # pdf.savefig()
     # plt.close()
+    lineobjects = plt.plot(fit['lp__'][::10])
+    plt.title(r'log p')
+    pdf.savefig()
+    plt.close()
 
 
-
+    mega = numpy.concatenate((fit['rho0'][:,None],fit['rho']),axis=1)
+    lineobjects = plt.plot(mega[::10,:])
+    plt.title(r'$\rho$')
+    plt.legend(iter(lineobjects),(r'$\rho_0$',r'$\rho_1$',r'$\rho_2$',r'$\rho_3$'))
+    pdf.savefig()
+    plt.close()
 
     lineobjects = plt.plot(fit['L_sigma'][::10,:],label=[])
     plt.title(r'$L_\sigma$')
@@ -220,74 +227,11 @@ edges = numpy.array([[3300., 4102], [4102, 5100], [5200, 6289], [6289, 7607], [7
 efflam = []
 for edge in edges:
     efflam.append((edge[1]-edge[0])/2+edge[0])
-
 # [3701, 4601, 5744, 6948, 8403]
 rc('text', usetex=True)
 
-
-fig, axes = plt.subplots(nrows=2, ncols=2)
-rvs = [1.8,3.1,4.1]
-#fig.subplots_adjust(hspace=1, vspace=0.5)
-
-axes[0,0].scatter(mag_obs[:, 1]-mag_obs[:, 2],mag_obs[:, 0])
-xl = numpy.array(axes[0,0].get_xlim()) * numpy.array([0.9, 0.6])
-yl = numpy.array(axes[0,0].get_ylim())
-for rv in rvs:
-    A_ = sncosmo._extinction.ccm89(numpy.array(efflam), 1., rv)
-    slope = A_[0]/(A_[1]-A_[2])
-    y0 = numpy.mean(mag_obs[:, 0] - slope*(mag_obs[:, 1]-mag_obs[:, 2]))
-    axes[0,0].plot(xl,slope*xl +y0,label=rv)
-    axes[0,0].legend(loc=4)
-    axes[0,0].set_xlabel(r'B-V')
-    axes[0,0].set_ylabel(r'U')
-
-axes[1,0].scatter(mag_obs[:, 1]-mag_obs[:, 2],mag_obs[:, 0]-beta_median[0]*EW_median[:,1]-alpha_median[0]*EW_median[:,0])
-xl = numpy.array(axes[1,0].get_xlim())* numpy.array([0.9, 0.6])
-yl = numpy.array(axes[1,0].get_ylim())
-for rv in rvs:
-    A_ = sncosmo._extinction.ccm89(numpy.array(efflam), 1., rv)
-    slope = A_[0]/(A_[1]-A_[2])
-    y0 = numpy.mean(mag_obs[:, 0] -beta_median[0]*EW_median[:,1]-alpha_median[0]*EW_median[:,0] - slope*(mag_obs[:, 1]-mag_obs[:, 2]))
-    axes[1,0].plot(xl,slope*xl +y0,label=rv)
-    axes[1,0].legend(loc=4)
-    axes[1,0].set_xlabel(r'B-V')
-    axes[1,0].set_ylabel(r'U + spec correction')
-
-
-axes[0,1].scatter(mag_obs[:, 1]-mag_obs[:, 2],mag_obs[:, 4])
-xl = numpy.array(axes[0,0].get_xlim())* numpy.array([0.9, 0.6])
-yl = numpy.array(axes[0,0].get_ylim())
-
-for rv in rvs:
-    A_ = sncosmo._extinction.ccm89(numpy.array(efflam), 1., rv)
-    slope = A_[4]/(A_[1]-A_[2])
-    y0 = numpy.mean(mag_obs[:, 4] - slope*(mag_obs[:, 1]-mag_obs[:, 2]))
-    axes[0,1].plot(xl,slope*xl +y0,label=rv)
-    axes[0,1].legend(loc=4)
-    axes[0,1].set_xlabel(r'B-V')
-    axes[0,1].set_ylabel(r'I')
-
-axes[1,1].scatter(mag_obs[:, 1]-mag_obs[:, 2],mag_obs[:, 4]-beta_median[4]*EW_median[:,1]-alpha_median[4]*EW_median[:,0])
-xl = numpy.array(axes[1,1].get_xlim())* numpy.array([0.9, 0.6])
-yl = numpy.array(axes[1,1].get_ylim())
-
-for rv in rvs:
-    A_ = sncosmo._extinction.ccm89(numpy.array(efflam), 1., rv)
-    slope = A_[4]/(A_[1]-A_[2])
-    y0 = numpy.mean(mag_obs[:, 4] -beta_median[4]*EW_median[:,1]-alpha_median[4]*EW_median[:,0] - slope*(mag_obs[:, 1]-mag_obs[:, 2]))
-    axes[1,1].plot(xl,slope*xl +y0,label=rv)
-    axes[1,1].legend(loc=4)
-    axes[1,1].set_xlabel(r'B-V')
-    axes[1,1].set_ylabel(r'I + spec correction')
-
-plt.tight_layout()
-pp = PdfPages('output2/colormag.pdf')
-plt.savefig(pp,format='pdf')
-pp.close()
-plt.close()
-
-
 lambdas = numpy.arange(3500.,9000,100)
+rvs = [2.8,3.1]
 for rv in rvs:
     A_ = sncosmo._extinction.ccm89(lambdas, 1., rv)
     norm  = sncosmo._extinction.ccm89(numpy.array([efflam[2]]), 1., rv)
@@ -303,7 +247,7 @@ ymax  = gamma_sort[ngamma*(1-dum),:]
 plt.errorbar(numpy.delete(efflam,2),y,yerr=[y-ymin,ymax-y],fmt='o')
 plt.legend()
 plt.xlabel(r'Wavelength (\AA)')
-pp = PdfPages('output2/ccm.pdf')
+pp = PdfPages('output3/ccm.pdf')
 plt.savefig(pp,format='pdf')
 pp.close()
 plt.close()

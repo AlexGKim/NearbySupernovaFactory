@@ -17,12 +17,12 @@ parameters {
   vector<lower=-2, upper=2>[N_mags] mag_int[D];
 
   vector<lower=-0.2, upper=0.2>[5] c;
-  vector<lower=-0.02, upper=0.02>[5] alpha;
-  vector<lower=-0.05, upper=0.15>[5] beta;
+  # vector<lower=-0.02, upper=0.02>[5] alpha;
+  # vector<lower=-0.05, upper=0.15>[5] beta;
   cholesky_factor_corr[N_mags] L_Omega;
   vector<lower=0.0, upper = 0.2>[N_mags] L_sigma;
 
-  vector<lower=0.2, upper=1.8>[4] gamma;
+  vector<lower=0.5, upper=1.8>[4] gamma;
   simplex [D] k_simplex;
   real <lower = 0, upper=D> k_scale;
 
@@ -40,6 +40,21 @@ model {
   vector [D] k_;
   vector[D] Delta_;
   matrix[5,5] L_Sigma;
+
+  vector[5] alpha;
+  vector[5] beta;
+
+  alpha[1]<- -0.00231161999432;
+  alpha[2] <- -0.00297378271501;
+  alpha[3] <- -0.00297378271501;
+  alpha[4] <- -0.00190071067994;
+  alpha[5] <- 1.64673204586e-05;
+
+  beta[1]<- 0.0104725591984;
+  beta[2] <- 0.00755481955216;
+  beta[3] <- 0.00755481955216;
+  beta[4] <- 0.00586289167038;
+  beta[5] <- 0.00567749109938;
 
   gamma_[1]<- gamma[1];
   gamma_[2] <- gamma[2];
