@@ -9,7 +9,7 @@ import sncosmo
 
 color_std=0.272560118531
 
-f = open('temp3.pkl','rb')
+f = open('temp5.pkl','rb')
 fit = pickle.load(f)
 
 pkl_file = open('gege_data.pkl', 'r')
@@ -42,7 +42,8 @@ dum = fit['k_simplex']*fit['k_scale'][:,None]
 dum = dum - dum.mean(axis=1)[:,None]
 
 k_median =  numpy.median(dum,axis=0)
-rho_median = numpy.median(fit['rho'],axis=0)
+rho0_median = numpy.median(fit['rho0'],axis=0)
+rho1_median = numpy.median(fit['rho1'],axis=0)
 R_median = numpy.median(fit['R'],axis=0)
 EW_median = numpy.median(fit['EW'],axis=0)
 beta_median = numpy.median(fit['beta'],axis=0)
@@ -58,7 +59,7 @@ for i, fi in enumerate(filtname):
         r'$M_o - \gamma k - \beta EW_{Si} - \alpha EW_{Ca}$'])
     plt.legend()
     plt.title('Filter {}'.format(fi))
-    pp = PdfPages('output3/magresidual_{}.pdf'.format(fi))
+    pp = PdfPages('output5/magresidual_{}.pdf'.format(fi))
     plt.savefig(pp, format='pdf')
     pp.close()
     plt.close()
@@ -68,44 +69,51 @@ temp = (fit['Delta']-1./fit['Delta'].shape[1])*fit['Delta_scale'][:,None]
 print temp.flatten().std()
 plt.hist(temp.flatten(),normed=True,bins=20)
 plt.title(r'$\Delta$')
-pp = PdfPages('output3/Delta_hist.pdf')
+pp = PdfPages('output5/Delta_hist.pdf')
 plt.savefig(pp,format='pdf')
 pp.close()
 plt.close()
 
 figure = corner.corner(fit['alpha'],labels=[r"${\alpha}_0$",r"${\alpha}_1$",r"${\alpha}_2$",r"${\alpha}_3$",r"${\alpha}_4$"])
-pp = PdfPages('output3/alpha_corner.pdf')
+pp = PdfPages('output5/alpha_corner.pdf')
 plt.savefig(pp,format='pdf')
 pp.close()
 plt.close()
 
 figure = corner.corner(fit['beta'],labels=[r"${\beta}_0$",r"${\beta}_1$",r"${\beta}_2$",r"${\beta}_3$",r"${\beta}_4$"])
-pp = PdfPages('output3/beta_corner.pdf')
+pp = PdfPages('output5/beta_corner.pdf')
 plt.savefig(pp,format='pdf')
 pp.close()
 plt.close()
 
 figure = corner.corner(fit['gamma'],labels=[r"${\gamma}_0$",r"${\gamma}_1$",r"${\gamma}_3$",r"${\gamma}_4$"])
-pp = PdfPages('output3/gamma_corner.pdf')
+pp = PdfPages('output5/gamma_corner.pdf')
 plt.savefig(pp,format='pdf')
 pp.close()
 plt.close()
 
-mega = numpy.concatenate((fit['rho0'][:,None],fit['rho']),axis=1)
-figure = corner.corner(mega,labels=[r"${\rho}_0$",r"${\rho}_1$",r"${\rho}_2$",r"${\rho}_3$"])
-pp = PdfPages('output3/rho_corner.pdf')
+figure = corner.corner(fit['rho0'],labels=[r"${\rho 0}_0$",r"${\rho 0}_1$",r"${\rho 0}_2$",r"${\rho 0}_3$"])
+pp = PdfPages('output5/rho0_corner.pdf')
 plt.savefig(pp,format='pdf')
 pp.close()
 plt.close()
+
+figure = corner.corner(fit['rho1'],labels=[r"${\rho 1}_0$",r"${\rho 1}_1$",r"${\rho 1}_2$",r"${\rho 1}_3$"])
+pp = PdfPages('output5/rho1_corner.pdf')
+plt.savefig(pp,format='pdf')
+pp.close()
+plt.close()
+
+
 
 mega = numpy.concatenate((fit['Delta_scale'][:,None],fit['L_sigma']),axis=1)
 figure = corner.corner(mega,labels=[r"$\Delta$ scale",r"${\sigma}_0$",r"${\sigma}_1$",r"${\sigma}_2$",r"${\sigma}_3$",r"${\sigma}_4$"])
-pp = PdfPages('output3/sigma_corner.pdf')
+pp = PdfPages('output5/sigma_corner.pdf')
 plt.savefig(pp,format='pdf')
 pp.close()
 plt.close()
 
-with PdfPages('output3/multipage_pdf.pdf') as pdf:
+with PdfPages('output5/multipage_pdf.pdf') as pdf:
 
     # plt.plot(fit['EW0'])
     # plt.title('EW0')
@@ -122,10 +130,20 @@ with PdfPages('output3/multipage_pdf.pdf') as pdf:
     plt.close()
 
 
-    mega = numpy.concatenate((fit['rho0'][:,None],fit['rho']),axis=1)
-    lineobjects = plt.plot(mega[::10,:])
-    plt.title(r'$\rho$')
+    lineobjects = plt.plot(fit['rho0'][::10,:])
+    plt.title(r'$\rho_0$ ')
     plt.legend(iter(lineobjects),(r'$\rho_0$',r'$\rho_1$',r'$\rho_2$',r'$\rho_3$'))
+    pdf.savefig()
+    plt.close()
+
+    lineobjects = plt.plot(fit['rho1'][::10,:])
+    plt.title(r'$\rho_1$')
+    plt.legend(iter(lineobjects),(r'$\rho_0$',r'$\rho_1$',r'$\rho_2$',r'$\rho_3$'))
+    pdf.savefig()
+    plt.close()
+
+    plt.plot(fit['R_mn'][::10])
+    plt.title(r'R_mn')
     pdf.savefig()
     plt.close()
 
@@ -190,6 +208,11 @@ with PdfPages('output3/multipage_pdf.pdf') as pdf:
     pdf.savefig()
     plt.close()
     
+    plt.plot(fit['R'][::10,:10])
+    plt.title('R')
+    pdf.savefig()
+    plt.close()
+    
 
 
     # plt.plot(fit['EXY'][:,:10,1])
@@ -235,7 +258,7 @@ rc('text', usetex=True)
 
 
 fig, axes = plt.subplots(nrows=2, ncols=2)
-rvs = [1.8,3.1,4.1]
+rvs = [1.,3.1,4.1]
 #fig.subplots_adjust(hspace=1, vspace=0.5)
 
 axes[0,0].scatter(mag_obs[:, 1]-mag_obs[:, 2],mag_obs[:, 0])
@@ -250,13 +273,13 @@ for rv in rvs:
     axes[0,0].set_xlabel(r'B-V')
     axes[0,0].set_ylabel(r'U')
 
-axes[1,0].scatter(mag_obs[:, 1]-mag_obs[:, 2],mag_obs[:, 0]-beta_median[0]*EW_median[:,1]-alpha_median[0]*EW_median[:,0]-rho_median[0]*R_median)
+axes[1,0].scatter(mag_obs[:, 1]-mag_obs[:, 2],mag_obs[:, 0]-beta_median[0]*EW_median[:,1]-alpha_median[0]*EW_median[:,0]-rho0_median[0]*R_median-rho1_median[0]*R_median**2)
 xl = numpy.array(axes[1,0].get_xlim())* numpy.array([0.9, 0.6])
 yl = numpy.array(axes[1,0].get_ylim())
 for rv in rvs:
     A_ = sncosmo._extinction.ccm89(numpy.array(efflam), 1., rv)
     slope = A_[0]/(A_[1]-A_[2])
-    y0 = numpy.mean(mag_obs[:, 0] -beta_median[0]*EW_median[:,1]-alpha_median[0]*EW_median[:,0] -rho_median[0]*R_median - slope*(mag_obs[:, 1]-mag_obs[:, 2]))
+    y0 = numpy.mean(mag_obs[:, 0] -beta_median[0]*EW_median[:,1]-alpha_median[0]*EW_median[:,0] -rho0_median[0]*R_median -rho1_median[0]*R_median**2- slope*(mag_obs[:, 1]-mag_obs[:, 2]))
     axes[1,0].plot(xl,slope*xl +y0,label=rv)
     axes[1,0].legend(loc=4)
     axes[1,0].set_xlabel(r'B-V')
@@ -289,7 +312,7 @@ for rv in rvs:
     axes[1,1].set_ylabel(r'I + spec correction')
 
 plt.tight_layout()
-pp = PdfPages('output3/colormag.pdf')
+pp = PdfPages('output5/colormag.pdf')
 plt.savefig(pp,format='pdf')
 pp.close()
 plt.close()
@@ -297,7 +320,6 @@ plt.close()
 
 
 lambdas = numpy.arange(3500.,9000,100)
-rvs = [2.8,3.1]
 for rv in rvs:
     A_ = sncosmo._extinction.ccm89(lambdas, 1., rv)
     norm  = sncosmo._extinction.ccm89(numpy.array([efflam[2]]), 1., rv)
@@ -313,7 +335,7 @@ ymax  = gamma_sort[ngamma*(1-dum),:]
 plt.errorbar(numpy.delete(efflam,2),y,yerr=[y-ymin,ymax-y],fmt='o')
 plt.legend()
 plt.xlabel(r'Wavelength (\AA)')
-pp = PdfPages('output3/ccm.pdf')
+pp = PdfPages('output5/ccm.pdf')
 plt.savefig(pp,format='pdf')
 pp.close()
 plt.close()

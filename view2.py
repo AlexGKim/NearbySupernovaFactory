@@ -21,6 +21,9 @@ mag_obs = data['obs'][:,2:]
 EW_cov = data['cov'][:,0:2,0:2]
 mag_cov = data['cov'][:,2:,2:]
 
+nsne = len(mag_obs)
+nlinks = len(fit['L_sigma'])
+
 dum = numpy.zeros((5,5))
 for x1, x2 in zip(fit['L_Omega'], fit['L_sigma']):
     dum= dum+ numpy.dot(x2[:,None],x2[None,:])*numpy.dot(x1,x1.T)
@@ -205,13 +208,14 @@ with PdfPages('output2/multipage_pdf.pdf') as pdf:
     # plt.hist(fit['k_simplex'].flatten())
     # pdf.savefig()
     # plt.close()
+    dumgamma = numpy.concatenate((fit['gamma'][:,0:2],numpy.random.normal(1,0.0001,size=(nlinks,1)),fit['gamma'][:,2:]),axis=1)
 
-    mega = numpy.array([fit['c'],fit['alpha'],fit['beta'],fit['L_sigma']])
+    mega = numpy.array([fit['c'],fit['alpha'],fit['beta'],dumgamma,fit['L_sigma']])
     mega = numpy.transpose(mega)
 
     for index in xrange(5):
         figure = corner.corner(mega[index,:,:],labels=[r"$c_{}$".format(index),r"$\alpha_{}$".format(index),\
-            r"$\beta_{}$".format(index),r"$\sigma_{}$".format(index)])
+            r"$\beta_{}$".format(index),r"$\gamma_{}$".format(index),r"$\sigma_{}$".format(index)])
         pdf.savefig()
         plt.close()
 
@@ -253,7 +257,6 @@ for rv in rvs:
     axes[1,0].set_xlabel(r'B-V')
     axes[1,0].set_ylabel(r'U + spec correction')
 
-
 axes[0,1].scatter(mag_obs[:, 1]-mag_obs[:, 2],mag_obs[:, 4])
 xl = numpy.array(axes[0,0].get_xlim())* numpy.array([0.9, 0.6])
 yl = numpy.array(axes[0,0].get_ylim())
@@ -284,6 +287,87 @@ plt.tight_layout()
 pp = PdfPages('output2/colormag.pdf')
 plt.savefig(pp,format='pdf')
 pp.close()
+plt.close()
+
+fig, axes = plt.subplots(ncols=2)
+outliers = (mag_obs[:, 0]-alpha_median[0]*EW_median[:,0] -gamma_median[0]*k_median - (-28.9+EW_median[:,1]*0.03)) > 0
+print numpy.array(data['snlist'])[outliers]
+axes[0].scatter(EW_median[:,1],mag_obs[:, 0]-alpha_median[0]*EW_median[:,0] -gamma_median[0]*k_median)
+axes[0].scatter(EW_median[outliers,1],mag_obs[outliers, 0]-alpha_median[0]*EW_median[outliers,0] -gamma_median[0]*k_median[outliers],color='red')
+
+x=numpy.array([-15,20])
+axes[0].plot(x,-28.9+x*.03)
+axes[0].legend(loc=4)
+axes[0].set_xlabel(r'$EW_{Si}$')
+axes[0].set_ylabel(r'U + spec correction')
+
+axes[1].scatter(EW_median[:,1],mag_obs[:, 4]-alpha_median[4]*EW_median[:,0]-gamma_median[0]*k_median)
+axes[1].scatter(EW_median[outliers,1],mag_obs[outliers, 4]-alpha_median[4]*EW_median[outliers,0]-gamma_median[4]*k_median[outliers],color='red')
+axes[1].legend(loc=4)
+axes[1].set_xlabel(r'$EW_{Si}$')
+axes[1].set_ylabel(r'I + spec correction')
+
+plt.tight_layout()
+pp = PdfPages('output2/simag.pdf')
+plt.savefig(pp,format='pdf')
+pp.close()
+plt.close()
+
+fig, axes = plt.subplots(ncols=2)
+axes[0].scatter(EW_median[:,1],mag_obs[:, 0]-beta_median[0]*EW_median[:,1] -gamma_median[0]*k_median)
+axes[0].scatter(EW_median[outliers,1],mag_obs[outliers, 0]-beta_median[0]*EW_median[outliers,1] -gamma_median[0]*k_median[outliers],color='red')
+axes[0].legend(loc=4)
+axes[0].set_xlabel(r'$EW_{Ca}$')
+axes[0].set_ylabel(r'U + spec correction')
+
+axes[1].scatter(EW_median[:,1],mag_obs[:, 4]-beta_median[4]*EW_median[:,1]-gamma_median[0]*k_median)
+axes[1].scatter(EW_median[outliers,1],mag_obs[outliers, 4]-beta_median[4]*EW_median[outliers,1]-gamma_median[4]*k_median[outliers],color='red')
+axes[1].legend(loc=4)
+axes[1].set_xlabel(r'$EW_{Ca}$')
+axes[1].set_ylabel(r'I + spec correction')
+
+plt.tight_layout()
+pp = PdfPages('output2/camag.pdf')
+plt.savefig(pp,format='pdf')
+pp.close()
+plt.close()
+
+fig, axes = plt.subplots(ncols=4)
+
+axes[0].plot(fit['k_simplex'][::10,outliers])
+axes[0].set_xlabel('k')
+
+axes[1].plot(fit['EW'][::10,outliers,0])
+axes[1].set_xlabel(r'$EW_{Ca}$')
+
+axes[2].plot(fit['EW'][::10,outliers,1])
+axes[2].set_xlabel(r'$EW_{Si}$')
+
+axes[3].plot(fit['Delta'][::10,outliers])
+axes[3].set_xlabel(r'$\Delta$')
+plt.tight_layout()
+pp = PdfPages('output2/outliers.pdf')
+plt.savefig(pp,format='pdf')
+pp.close()
+plt.close()
+
+fig, axes = plt.subplots(ncols=2)
+axes[0].scatter(k_median,mag_obs[:, 0]-beta_median[0]*EW_median[:,1]-gamma_median[0]*k_median - alpha_median[0]*EW_median[:,0])
+#axes[0].scatter(k_median[outliers],mag_obs[outliers, 0]-beta_median[0]*EW_median[outliers,1]-gamma_median[0]*k_median[outliers] - alpha_median[0]*EW_median[outliers,0],color='red')
+
+axes[1].scatter(k_median,mag_obs[:, 4]-beta_median[4]*EW_median[:,1]-gamma_median[4]*k_median - alpha_median[4]*EW_median[:,0])
+#axes[1].scatter(k_median[outliers],mag_obs[outliers, 4]-beta_median[4]*EW_median[outliers,1]-gamma_median[4]*k_median[outliers] - alpha_median[4]*EW_median[outliers,0],color='red')
+
+plt.close()
+
+det = numpy.array([numpy.linalg.det(m) for m in EW_cov])
+fig, axes = plt.subplots(ncols=2)
+axes[0].scatter(det,mag_obs[:, 0]-beta_median[0]*EW_median[:,1]-gamma_median[0]*k_median - alpha_median[0]*EW_median[:,0])
+axes[0].scatter(det[outliers],mag_obs[outliers, 0]-beta_median[0]*EW_median[outliers,1]-gamma_median[0]*k_median[outliers] - alpha_median[0]*EW_median[outliers,0],color='red')
+#axes[0].set_xscale('log')
+axes[1].scatter(det,mag_obs[:, 4]-beta_median[4]*EW_median[:,1]-gamma_median[4]*k_median - alpha_median[4]*EW_median[:,0])
+axes[1].scatter(det[outliers],mag_obs[outliers, 4]-beta_median[4]*EW_median[outliers,1]-gamma_median[4]*k_median[outliers] - alpha_median[4]*EW_median[outliers,0],color='red')
+#axes[1].set_xscale('log')
 plt.close()
 
 
