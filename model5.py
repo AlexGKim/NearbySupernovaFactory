@@ -62,10 +62,10 @@ k_simplex /= sum(k_simplex)
 
 init = [{'EW' : EW_renorm, 'c': numpy.random.normal(0,0.02,size=5),\
          'alpha': numpy.random.uniform(-0.01, 0.01, size= 5), 'beta':numpy.array([0.06,0.05,0.04,0.03,0.02])+numpy.random.normal(0,0.005,size=5),
-         'gamma':numpy.array([1.4,1.2,0.85,0.7])+ numpy.random.normal(0,0.01,size=4), 'k_scale':0.1, 'k_simplex': k_simplex,
-         'mag_int':
-         mag_renorm+numpy.random.normal(0,0.02,size=(nsne,5)), 'L_sigma':numpy.random.uniform(-0.02, 0.02,size=5)+0.1,'L_Omega':numpy.identity(5), \
-         'Delta':k_simplex,'Delta_scale': 15, 'R':numpy.zeros(nsne),'R_scale':15,'rho0':numpy.zeros(4),'rho1':numpy.zeros(4),'R_mn':0}
+         'gamma0':1, 'gamma_': numpy.random.uniform(.9,1.1,size=4), 'k_simplex': k_simplex, \
+         'mag_int': mag_renorm+numpy.random.normal(0,0.02,size=(nsne,5)), 'L_sigma':numpy.random.uniform(-0.02, 0.02,size=5)+0.1, \
+         'L_Omega':numpy.identity(5), 
+         'Delta_simplex':k_simplex,'Delta_scale': 15, 'R_simplex':k_simplex, 'rho00':1, 'rho0_':numpy.zeros(4),'rho1':numpy.zeros(5)}
         for _ in range(4)]
 
 
@@ -77,7 +77,7 @@ init = [{'EW' : EW_renorm, 'c': numpy.random.normal(0,0.02,size=5),\
 sm = pystan.StanModel(file='gerard5.stan')
 # fit = sm.sampling(data=data, iter=200, chains=4,init=[init1,init1,init1,init1])
 control = {'stepsize':1.}
-fit = sm.sampling(data=data, iter=250, chains=4,control=control,init=init)
+fit = sm.sampling(data=data, iter=200, chains=4,control=control,init=init)
 print fit
 
 output = open('temp5.pkl','wb')
