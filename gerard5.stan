@@ -33,8 +33,8 @@ parameters {
   simplex [D] Delta_simplex;
   real <lower = 0, upper = D> Delta_scale;
 
-  simplex [D] k_simplex;
-  simplex [D] R_simplex;
+  vector<lower=-10, upper=10> [D-2] k_;
+  vector<lower=-10, upper=10> [D-2] R_;
   # real <lower = 0, upper=D> k_scale;
 
 
@@ -70,10 +70,32 @@ transformed parameters {
 
 
   Delta <- Delta_scale*(Delta_simplex - 1./D);
-  k <- (k_simplex-1./D);
-  k <- k/sqrt(sum(k .* k)/D);
-  R <- (R_simplex-1./D);
-  R <- R/sqrt(sum(R .* R)*D);
+
+  for (d in 1:D-2){
+    k[d] <- k_[d];
+    R[d] <- R_[d];
+  }
+
+  {
+    real mean_;
+    real variance_;
+    real term;
+    mean_ <- sum(k_);
+    variance_ <- sum(k_ .* k_);
+    term <- 0.5*sqrt(2*D + 2*variance_ - mean_*mean_);
+    k[D-1] <- -0.5*mean_ + term;
+    k[D] <- -0.5*mean_ - term;
+
+    mean_ <- sum(R_);
+    variance_ <- sum(R_ .* R_);
+    term <- 0.5*sqrt(2*D + 2*variance_ - mean_*mean_);
+    R[D-1] <- -0.5*mean_ + term;
+    R[D] <- -0.5*mean_ - term;
+  }
+  # k <- (k_simplex-1./D);
+  # k <- k/sqrt(sum(k .* k)/D);
+  # R <- (R_simplex-1./D);
+  # R <- R/sqrt(sum(R .* R)*D);
 }
 
 model {
