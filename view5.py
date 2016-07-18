@@ -39,13 +39,12 @@ gamma_median = numpy.median(fit['gamma'],axis=0)
 rho0_median = numpy.median(fit['rho0'],axis=0)
 rho1_median = numpy.median(fit['rho1'],axis=0)
 
-R_median = numpy.median(fit['R'],axis=0)
 EW_median = numpy.median(fit['EW'],axis=0)
 beta_median = numpy.median(fit['beta'],axis=0)
 alpha_median = numpy.median(fit['alpha'],axis=0)
-k_median =  numpy.median(fit['k'],axis=0)
+# k_median =  numpy.median(fit['k'],axis=0)
+# R_median = numpy.median(fit['R'],axis=0)
 Delta_median =  numpy.median(fit['Delta'],axis=0)
-R_median =  numpy.median(fit['R'],axis=0)
 
 # filtname = ['U','B','V','R','I']
 
@@ -85,7 +84,7 @@ plt.savefig(pp,format='pdf')
 pp.close()
 plt.close()
 
-figure = corner.corner(fit['gamma'],labels=[r"${\gamma}_0$",r"${\gamma}_1$",r"${\gamma}_2$",r"${\gamma}_3$",r"${\gamma}_4$"])
+figure = corner.corner(fit['gamma_'],labels=[r"${\gamma}_0$",r"${\gamma}_1$",r"${\gamma}_3$",r"${\gamma}_4$"])
 pp = PdfPages('output5/gamma_corner.pdf')
 plt.savefig(pp,format='pdf')
 pp.close()
@@ -200,10 +199,10 @@ with PdfPages('output5/multipage_pdf.pdf') as pdf:
     # pdf.savefig()
     # plt.close()
     
-    plt.plot(fit['R'][::10,:10])
-    plt.title('R')
-    pdf.savefig()
-    plt.close()
+    # plt.plot(fit['R'][::10,:10])
+    # plt.title('R')
+    # pdf.savefig()
+    # plt.close()
     
 
 
@@ -248,89 +247,89 @@ for edge in edges:
 rc('text', usetex=True)
 
 
-
-fig, axes = plt.subplots(nrows=2, ncols=2)
 rvs = [1.,3.1,4.1]
-#fig.subplots_adjust(hspace=1, vspace=0.5)
+# fig, axes = plt.subplots(nrows=2, ncols=2)
 
-axes[0,0].scatter(mag_obs[:, 1]-mag_obs[:, 2],mag_obs[:, 0])
-xl = numpy.array(axes[0,0].get_xlim()) * numpy.array([0.9, 0.6])
-yl = numpy.array(axes[0,0].get_ylim())
-for rv in rvs:
-    A_ = sncosmo._extinction.ccm89(numpy.array(efflam), 1., rv)
-    slope = A_[0]/(A_[1]-A_[2])
-    y0 = numpy.mean(mag_obs[:, 0] - slope*(mag_obs[:, 1]-mag_obs[:, 2]))
-    axes[0,0].plot(xl,slope*xl +y0,label=rv)
-    axes[0,0].legend(loc=4)
-    axes[0,0].set_xlabel(r'B-V')
-    axes[0,0].set_ylabel(r'U')
+# #fig.subplots_adjust(hspace=1, vspace=0.5)
 
-axes[1,0].scatter(mag_obs[:, 1]-mag_obs[:, 2],mag_obs[:, 0]-beta_median[0]*EW_median[:,1]-alpha_median[0]*EW_median[:,0]-rho0_median[0]*R_median-rho1_median[0]*R_median**2)
-xl = numpy.array(axes[1,0].get_xlim())* numpy.array([0.9, 0.6])
-yl = numpy.array(axes[1,0].get_ylim())
-for rv in rvs:
-    A_ = sncosmo._extinction.ccm89(numpy.array(efflam), 1., rv)
-    slope = A_[0]/(A_[1]-A_[2])
-    y0 = numpy.mean(mag_obs[:, 0] -beta_median[0]*EW_median[:,1]-alpha_median[0]*EW_median[:,0] -rho0_median[0]*R_median -rho1_median[0]*R_median**2- slope*(mag_obs[:, 1]-mag_obs[:, 2]))
-    axes[1,0].plot(xl,slope*xl +y0,label=rv)
-    axes[1,0].legend(loc=4)
-    axes[1,0].set_xlabel(r'B-V')
-    axes[1,0].set_ylabel(r'U + spec correction')
-
-axes[0,1].scatter(mag_obs[:, 1]-mag_obs[:, 2],mag_obs[:, 4])
-xl = numpy.array(axes[0,0].get_xlim())* numpy.array([0.9, 0.6])
-yl = numpy.array(axes[0,0].get_ylim())
-
-for rv in rvs:
-    A_ = sncosmo._extinction.ccm89(numpy.array(efflam), 1., rv)
-    slope = A_[4]/(A_[1]-A_[2])
-    y0 = numpy.mean(mag_obs[:, 4] - slope*(mag_obs[:, 1]-mag_obs[:, 2]))
-    axes[0,1].plot(xl,slope*xl +y0,label=rv)
-    axes[0,1].legend(loc=4)
-    axes[0,1].set_xlabel(r'B-V')
-    axes[0,1].set_ylabel(r'I')
-
-axes[1,1].scatter(mag_obs[:, 1]-mag_obs[:, 2],mag_obs[:, 4]-beta_median[4]*EW_median[:,1]-alpha_median[4]*EW_median[:,0])
-xl = numpy.array(axes[1,1].get_xlim())* numpy.array([0.9, 0.6])
-yl = numpy.array(axes[1,1].get_ylim())
-
-for rv in rvs:
-    A_ = sncosmo._extinction.ccm89(numpy.array(efflam), 1., rv)
-    slope = A_[4]/(A_[1]-A_[2])
-    y0 = numpy.mean(mag_obs[:, 4] -beta_median[4]*EW_median[:,1]-alpha_median[4]*EW_median[:,0] - slope*(mag_obs[:, 1]-mag_obs[:, 2]))
-    axes[1,1].plot(xl,slope*xl +y0,label=rv)
-    axes[1,1].legend(loc=4)
-    axes[1,1].set_xlabel(r'B-V')
-    axes[1,1].set_ylabel(r'I + spec correction')
-
-plt.tight_layout()
-pp = PdfPages('output5/colormag.pdf')
-plt.savefig(pp,format='pdf')
-pp.close()
-plt.close()
-
-
-
-# lambdas = numpy.arange(3500.,9000,100)
+# axes[0,0].scatter(mag_obs[:, 1]-mag_obs[:, 2],mag_obs[:, 0])
+# xl = numpy.array(axes[0,0].get_xlim()) * numpy.array([0.9, 0.6])
+# yl = numpy.array(axes[0,0].get_ylim())
 # for rv in rvs:
-#     A_ = sncosmo._extinction.ccm89(lambdas, 1., rv)
-#     norm  = sncosmo._extinction.ccm89(numpy.array([efflam[2]]), 1., rv)
-#     A_ = A_/norm[0]
-#     plt.plot(lambdas,A_,label=r"$R_V={:.1f}$".format(rv))
+#     A_ = sncosmo._extinction.ccm89(numpy.array(efflam), 1., rv)
+#     slope = A_[0]/(A_[1]-A_[2])
+#     y0 = numpy.mean(mag_obs[:, 0] - slope*(mag_obs[:, 1]-mag_obs[:, 2]))
+#     axes[0,0].plot(xl,slope*xl +y0,label=rv)
+#     axes[0,0].legend(loc=4)
+#     axes[0,0].set_xlabel(r'B-V')
+#     axes[0,0].set_ylabel(r'U')
 
-# dum = (1-.68)/2
-# gamma_sort = numpy.sort(fit['gamma'],axis=0)
-# ngamma = gamma_sort.shape[0]
-# y = gamma_sort[ngamma/2,:]
-# ymin = gamma_sort[ngamma*dum,:]
-# ymax  = gamma_sort[ngamma*(1-dum),:]
-# plt.errorbar(numpy.delete(efflam,2),y,yerr=[y-ymin,ymax-y],fmt='o')
-# plt.legend()
-# plt.xlabel(r'Wavelength (\AA)')
-# pp = PdfPages('output5/ccm.pdf')
+# axes[1,0].scatter(mag_obs[:, 1]-mag_obs[:, 2],mag_obs[:, 0]-beta_median[0]*EW_median[:,1]-alpha_median[0]*EW_median[:,0]-rho0_median[0]*R_median-rho1_median[0]*R_median**2)
+# xl = numpy.array(axes[1,0].get_xlim())* numpy.array([0.9, 0.6])
+# yl = numpy.array(axes[1,0].get_ylim())
+# for rv in rvs:
+#     A_ = sncosmo._extinction.ccm89(numpy.array(efflam), 1., rv)
+#     slope = A_[0]/(A_[1]-A_[2])
+#     y0 = numpy.mean(mag_obs[:, 0] -beta_median[0]*EW_median[:,1]-alpha_median[0]*EW_median[:,0] -rho0_median[0]*R_median -rho1_median[0]*R_median**2- slope*(mag_obs[:, 1]-mag_obs[:, 2]))
+#     axes[1,0].plot(xl,slope*xl +y0,label=rv)
+#     axes[1,0].legend(loc=4)
+#     axes[1,0].set_xlabel(r'B-V')
+#     axes[1,0].set_ylabel(r'U + spec correction')
+
+# axes[0,1].scatter(mag_obs[:, 1]-mag_obs[:, 2],mag_obs[:, 4])
+# xl = numpy.array(axes[0,0].get_xlim())* numpy.array([0.9, 0.6])
+# yl = numpy.array(axes[0,0].get_ylim())
+
+# for rv in rvs:
+#     A_ = sncosmo._extinction.ccm89(numpy.array(efflam), 1., rv)
+#     slope = A_[4]/(A_[1]-A_[2])
+#     y0 = numpy.mean(mag_obs[:, 4] - slope*(mag_obs[:, 1]-mag_obs[:, 2]))
+#     axes[0,1].plot(xl,slope*xl +y0,label=rv)
+#     axes[0,1].legend(loc=4)
+#     axes[0,1].set_xlabel(r'B-V')
+#     axes[0,1].set_ylabel(r'I')
+
+# axes[1,1].scatter(mag_obs[:, 1]-mag_obs[:, 2],mag_obs[:, 4]-beta_median[4]*EW_median[:,1]-alpha_median[4]*EW_median[:,0])
+# xl = numpy.array(axes[1,1].get_xlim())* numpy.array([0.9, 0.6])
+# yl = numpy.array(axes[1,1].get_ylim())
+
+# for rv in rvs:
+#     A_ = sncosmo._extinction.ccm89(numpy.array(efflam), 1., rv)
+#     slope = A_[4]/(A_[1]-A_[2])
+#     y0 = numpy.mean(mag_obs[:, 4] -beta_median[4]*EW_median[:,1]-alpha_median[4]*EW_median[:,0] - slope*(mag_obs[:, 1]-mag_obs[:, 2]))
+#     axes[1,1].plot(xl,slope*xl +y0,label=rv)
+#     axes[1,1].legend(loc=4)
+#     axes[1,1].set_xlabel(r'B-V')
+#     axes[1,1].set_ylabel(r'I + spec correction')
+
+# plt.tight_layout()
+# pp = PdfPages('output5/colormag.pdf')
 # plt.savefig(pp,format='pdf')
 # pp.close()
 # plt.close()
+
+
+
+lambdas = numpy.arange(3500.,9000,100)
+for rv in rvs:
+    A_ = sncosmo._extinction.ccm89(lambdas, 1., rv)
+    norm  = sncosmo._extinction.ccm89(numpy.array([efflam[2]]), 1., rv)
+    A_ = A_/norm[0]
+    plt.plot(lambdas,A_,label=r"$R_V={:.1f}$".format(rv))
+
+dum = (1-.68)/2
+gamma_sort = numpy.sort(fit['gamma']/(fit['gamma'][:,2])[:,None],axis=0)
+ngamma = gamma_sort.shape[0]
+y = gamma_sort[ngamma/2,:]
+ymin = gamma_sort[ngamma*dum,:]
+ymax  = gamma_sort[ngamma*(1-dum),:]
+plt.errorbar(efflam,y,yerr=[y-ymin,ymax-y],fmt='o')
+plt.legend()
+plt.xlabel(r'Wavelength (\AA)')
+pp = PdfPages('output5/ccm.pdf')
+plt.savefig(pp,format='pdf')
+pp.close()
+plt.close()
 
 
 
