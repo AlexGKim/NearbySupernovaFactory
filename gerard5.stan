@@ -34,22 +34,21 @@ transformed data{
 
 parameters {
 
-  vector<lower=-100, upper=100>[2] EW[D];
+  vector[2] EW[D];
   vector[N_mags] mag_int[D];
 
-  vector[5] c;
-  vector<lower=-0.02, upper=0.02>[5] alpha;
-  vector<lower=-0.05, upper=0.15>[5] beta;
+  vector<lower=-5, upper=5>[5] c;
+  vector<lower=-0.2, upper=0.2>[5] alpha;
+  vector<lower=-0.5, upper=0.5>[5] beta;
 
   # real<lower=0> gamma0;
-  vector[4] gamma_;
+  vector<lower=-1, upper=10>[4] gamma_;
   # real rho00;
-  vector[5] rho0;
-  
-  vector[5] rho1;
+  vector<lower=-1., upper=1.>[5] rho0;
+  vector<lower=-1, upper=1>[5] rho1;
 
-  # cholesky_factor_corr[N_mags] L_Omega;
-  vector<lower=0.0, upper = 0.2>[N_mags] L_sigma;
+  cholesky_factor_corr[N_mags] L_Omega;
+  vector<lower=0.0, upper = 0.12>[N_mags] L_sigma;
 
   simplex [D] Delta_simplex;
   real <lower = 0, upper = D> Delta_scale;
@@ -72,6 +71,10 @@ parameters {
 transformed parameters {
   vector[D] Delta;
   vector[5] gamma;
+  vector[D] R;
+  vector[D] k;
+
+
   # vector[5] rho0;
 
   # rho0[1] <-  rho0_[1];
@@ -90,6 +93,34 @@ transformed parameters {
   Delta <- Delta_scale*(Delta_simplex - 1./D);
 
 
+  for (d in 1:D-1) {
+    k[d] <- k_unit[d];
+  }
+  k[D] <- -sum(k_unit);
+
+  # real m1;
+  # real v1;
+  # real term;
+
+  # m1 <- sum(R_unit);
+  # v1 <- sum(R_unit .* R_unit);
+  # term <- 0.5 * sqrt(2*D - 2*v1 - m1*m1);
+
+  # for (d in 1:D-2) {
+  #   R[d] <- R_unit[d];
+  # }
+  # R[D-1] <- -0.5*m1 - term;
+  # R[D] <- -0.5*m1 + term;
+
+  for (d in 1:D-2) {
+    R[d] <- R_unit[d];
+  }
+  R[D-1] <- -1.;
+  R[D] <- 1.;
+  R <- rotation * R;
+
+  R <- R - sum(R)/D;
+  R <- R / sqrt(sum(R .* R)/D);
 }
 
 model {
@@ -98,48 +129,20 @@ model {
 
   # vector[D] Delta_;
   # vector[D] R_;
-  # matrix[5,5] L_Sigma;
-
-  vector[D] k;
-  vector[D] R;
-
-  for (d in 1:D-1) {
-    k[d] <- k_unit[d];
-  }
-  k[D] <- -sum(k_unit);
-
-  {
-  
-    real m1;
-    real v1;
-    real term;
-
-    m1 <- sum(R_unit);
-    v1 <- sum(R_unit .* R_unit);
-    term <- 0.5 * sqrt(2*D - 2*v1 - m1*m1);
-
-    for (d in 1:D-2) {
-      R[d] <- R_unit[d];
-    }
-    R[D-1] <- -0.5*m1 - term;
-    R[D] <- -0.5*m1 + term;
-    R <- rotation * R;
-    print (sum(R)," ",sum(R .* R))/D;
-  }
-
+  matrix[5,5] L_Sigma;
 
   for (d in 1:D) {
       means[d] <- Delta[d] + c + alpha*EW[d,1]  + beta*EW[d,2] + rho0*R[d] + rho1*pow(R[d],2);
   }
 
   L_sigma ~ cauchy(0.1,2.5);
-  # L_Omega ~ lkj_corr_cholesky(2.);
-  # L_Sigma <- diag_pre_multiply(L_sigma, L_Omega);
+  L_Omega ~ lkj_corr_cholesky(2.);
+  L_Sigma <- diag_pre_multiply(L_sigma, L_Omega);
 
 
   for (d in 1:D) {
-    # mag_int[d] ~ multi_normal_cholesky(means[d], L_Sigma);
-    mag_int[d] ~ normal(means[d], L_sigma);
+    mag_int[d] ~ multi_normal_cholesky(means[d], L_Sigma);
+    # mag_int[d] ~ normal(means[d], L_sigma);
 
     mag_obs[d] ~ multi_normal(mag_int[d]+gamma*k[d], mag_cov[d]);
     EW_obs[d] ~ multi_normal(EW[d], EW_cov[d]);

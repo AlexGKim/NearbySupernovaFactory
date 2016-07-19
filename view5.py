@@ -46,6 +46,14 @@ alpha_median = numpy.median(fit['alpha'],axis=0)
 # R_median = numpy.median(fit['R'],axis=0)
 Delta_median =  numpy.median(fit['Delta'],axis=0)
 
+correction = [ fit['c'][:,i][:,None] + fit['alpha'][:,i][:,None]*fit['EW'][:,:, 0] \
+    + fit['beta'][:,i][:,None]*fit['EW'][:,:, 1] \
+    + fit['rho0'][:,i][:,None]*fit['R'] + fit['rho1'][:,i][:,None]*fit['R']**2 + fit['gamma'][:,i][:,None]*fit['k'] \
+    for i in xrange(5)]
+
+correction = numpy.array(correction)
+correction_median = numpy.median(correction,axis=1)
+
 # filtname = ['U','B','V','R','I']
 
 # for i, fi in enumerate(filtname):
@@ -248,11 +256,11 @@ rc('text', usetex=True)
 
 
 rvs = [1.,3.1,4.1]
-# fig, axes = plt.subplots(nrows=2, ncols=2)
+fig, axes = plt.subplots(nrows=2, ncols=2)
 
-# #fig.subplots_adjust(hspace=1, vspace=0.5)
+#fig.subplots_adjust(hspace=1, vspace=0.5)
 
-# axes[0,0].scatter(mag_obs[:, 1]-mag_obs[:, 2],mag_obs[:, 0])
+axes[0,0].scatter(mag_obs[:, 1]-mag_obs[:, 2],mag_obs[:, 0])
 # xl = numpy.array(axes[0,0].get_xlim()) * numpy.array([0.9, 0.6])
 # yl = numpy.array(axes[0,0].get_ylim())
 # for rv in rvs:
@@ -260,11 +268,11 @@ rvs = [1.,3.1,4.1]
 #     slope = A_[0]/(A_[1]-A_[2])
 #     y0 = numpy.mean(mag_obs[:, 0] - slope*(mag_obs[:, 1]-mag_obs[:, 2]))
 #     axes[0,0].plot(xl,slope*xl +y0,label=rv)
-#     axes[0,0].legend(loc=4)
-#     axes[0,0].set_xlabel(r'B-V')
-#     axes[0,0].set_ylabel(r'U')
+# axes[0,0].legend(loc=4)
+axes[0,0].set_xlabel(r'B-V')
+axes[0,0].set_ylabel(r'U')
 
-# axes[1,0].scatter(mag_obs[:, 1]-mag_obs[:, 2],mag_obs[:, 0]-beta_median[0]*EW_median[:,1]-alpha_median[0]*EW_median[:,0]-rho0_median[0]*R_median-rho1_median[0]*R_median**2)
+axes[1,0].scatter(mag_obs[:, 1]-mag_obs[:, 2],mag_obs[:, 0]-correction_median[0,:])
 # xl = numpy.array(axes[1,0].get_xlim())* numpy.array([0.9, 0.6])
 # yl = numpy.array(axes[1,0].get_ylim())
 # for rv in rvs:
@@ -272,24 +280,23 @@ rvs = [1.,3.1,4.1]
 #     slope = A_[0]/(A_[1]-A_[2])
 #     y0 = numpy.mean(mag_obs[:, 0] -beta_median[0]*EW_median[:,1]-alpha_median[0]*EW_median[:,0] -rho0_median[0]*R_median -rho1_median[0]*R_median**2- slope*(mag_obs[:, 1]-mag_obs[:, 2]))
 #     axes[1,0].plot(xl,slope*xl +y0,label=rv)
-#     axes[1,0].legend(loc=4)
-#     axes[1,0].set_xlabel(r'B-V')
-#     axes[1,0].set_ylabel(r'U + spec correction')
+# axes[1,0].legend(loc=4)
+axes[1,0].set_xlabel(r'B-V')
+axes[1,0].set_ylabel(r'U + spec correction')
 
-# axes[0,1].scatter(mag_obs[:, 1]-mag_obs[:, 2],mag_obs[:, 4])
+axes[0,1].scatter(mag_obs[:, 1]-mag_obs[:, 2],mag_obs[:, 4])
 # xl = numpy.array(axes[0,0].get_xlim())* numpy.array([0.9, 0.6])
 # yl = numpy.array(axes[0,0].get_ylim())
-
 # for rv in rvs:
 #     A_ = sncosmo._extinction.ccm89(numpy.array(efflam), 1., rv)
 #     slope = A_[4]/(A_[1]-A_[2])
 #     y0 = numpy.mean(mag_obs[:, 4] - slope*(mag_obs[:, 1]-mag_obs[:, 2]))
 #     axes[0,1].plot(xl,slope*xl +y0,label=rv)
-#     axes[0,1].legend(loc=4)
-#     axes[0,1].set_xlabel(r'B-V')
-#     axes[0,1].set_ylabel(r'I')
+# axes[0,1].legend(loc=4)
+axes[0,1].set_xlabel(r'B-V')
+axes[0,1].set_ylabel(r'I')
 
-# axes[1,1].scatter(mag_obs[:, 1]-mag_obs[:, 2],mag_obs[:, 4]-beta_median[4]*EW_median[:,1]-alpha_median[4]*EW_median[:,0])
+axes[1,1].scatter(mag_obs[:, 1]-mag_obs[:, 2],mag_obs[:, 4]-correction_median[4,:])
 # xl = numpy.array(axes[1,1].get_xlim())* numpy.array([0.9, 0.6])
 # yl = numpy.array(axes[1,1].get_ylim())
 
@@ -299,16 +306,132 @@ rvs = [1.,3.1,4.1]
 #     y0 = numpy.mean(mag_obs[:, 4] -beta_median[4]*EW_median[:,1]-alpha_median[4]*EW_median[:,0] - slope*(mag_obs[:, 1]-mag_obs[:, 2]))
 #     axes[1,1].plot(xl,slope*xl +y0,label=rv)
 #     axes[1,1].legend(loc=4)
-#     axes[1,1].set_xlabel(r'B-V')
-#     axes[1,1].set_ylabel(r'I + spec correction')
+axes[1,1].set_xlabel(r'B-V')
+axes[1,1].set_ylabel(r'I + spec correction')
 
-# plt.tight_layout()
-# pp = PdfPages('output5/colormag.pdf')
-# plt.savefig(pp,format='pdf')
-# pp.close()
-# plt.close()
+plt.tight_layout()
+pp = PdfPages('output5/colormag.pdf')
+plt.savefig(pp,format='pdf')
+pp.close()
+plt.close()
 
+fig, axes = plt.subplots(nrows=2, ncols=2)
 
+#fig.subplots_adjust(hspace=1, vspace=0.5)
+
+axes[0,0].scatter(EW_obs[:,1],mag_obs[:, 0])
+# xl = numpy.array(axes[0,0].get_xlim()) * numpy.array([0.9, 0.6])
+# yl = numpy.array(axes[0,0].get_ylim())
+# for rv in rvs:
+#     A_ = sncosmo._extinction.ccm89(numpy.array(efflam), 1., rv)
+#     slope = A_[0]/(A_[1]-A_[2])
+#     y0 = numpy.mean(mag_obs[:, 0] - slope*(mag_obs[:, 1]-mag_obs[:, 2]))
+#     axes[0,0].plot(xl,slope*xl +y0,label=rv)
+# axes[0,0].legend(loc=4)
+axes[0,0].set_xlabel(r'EW(Si)')
+axes[0,0].set_ylabel(r'U')
+
+axes[1,0].scatter(EW_obs[:,1],mag_obs[:, 0]-correction_median[0,:])
+# xl = numpy.array(axes[1,0].get_xlim())* numpy.array([0.9, 0.6])
+# yl = numpy.array(axes[1,0].get_ylim())
+# for rv in rvs:
+#     A_ = sncosmo._extinction.ccm89(numpy.array(efflam), 1., rv)
+#     slope = A_[0]/(A_[1]-A_[2])
+#     y0 = numpy.mean(mag_obs[:, 0] -beta_median[0]*EW_median[:,1]-alpha_median[0]*EW_median[:,0] -rho0_median[0]*R_median -rho1_median[0]*R_median**2- slope*(mag_obs[:, 1]-mag_obs[:, 2]))
+#     axes[1,0].plot(xl,slope*xl +y0,label=rv)
+# axes[1,0].legend(loc=4)
+axes[1,0].set_xlabel(r'EW(Si)')
+axes[1,0].set_ylabel(r'U + spec correction')
+
+axes[0,1].scatter(EW_obs[:,1],mag_obs[:, 4])
+# xl = numpy.array(axes[0,0].get_xlim())* numpy.array([0.9, 0.6])
+# yl = numpy.array(axes[0,0].get_ylim())
+# for rv in rvs:
+#     A_ = sncosmo._extinction.ccm89(numpy.array(efflam), 1., rv)
+#     slope = A_[4]/(A_[1]-A_[2])
+#     y0 = numpy.mean(mag_obs[:, 4] - slope*(mag_obs[:, 1]-mag_obs[:, 2]))
+#     axes[0,1].plot(xl,slope*xl +y0,label=rv)
+# axes[0,1].legend(loc=4)
+axes[0,1].set_xlabel(r'EW(Si)')
+axes[0,1].set_ylabel(r'I')
+
+axes[1,1].scatter(EW_obs[:,1],mag_obs[:, 4]-correction_median[4,:])
+# xl = numpy.array(axes[1,1].get_xlim())* numpy.array([0.9, 0.6])
+# yl = numpy.array(axes[1,1].get_ylim())
+
+# for rv in rvs:
+#     A_ = sncosmo._extinction.ccm89(numpy.array(efflam), 1., rv)
+#     slope = A_[4]/(A_[1]-A_[2])
+#     y0 = numpy.mean(mag_obs[:, 4] -beta_median[4]*EW_median[:,1]-alpha_median[4]*EW_median[:,0] - slope*(mag_obs[:, 1]-mag_obs[:, 2]))
+#     axes[1,1].plot(xl,slope*xl +y0,label=rv)
+#     axes[1,1].legend(loc=4)
+axes[1,1].set_xlabel(r'EW(Si)')
+axes[1,1].set_ylabel(r'I + spec correction')
+
+plt.tight_layout()
+pp = PdfPages('output5/specsimag.pdf')
+plt.savefig(pp,format='pdf')
+pp.close()
+plt.close()
+
+fig, axes = plt.subplots(nrows=2, ncols=2)
+
+#fig.subplots_adjust(hspace=1, vspace=0.5)
+
+axes[0,0].scatter(EW_obs[:,0],mag_obs[:, 0])
+# xl = numpy.array(axes[0,0].get_xlim()) * numpy.array([0.9, 0.6])
+# yl = numpy.array(axes[0,0].get_ylim())
+# for rv in rvs:
+#     A_ = sncosmo._extinction.ccm89(numpy.array(efflam), 1., rv)
+#     slope = A_[0]/(A_[1]-A_[2])
+#     y0 = numpy.mean(mag_obs[:, 0] - slope*(mag_obs[:, 1]-mag_obs[:, 2]))
+#     axes[0,0].plot(xl,slope*xl +y0,label=rv)
+# axes[0,0].legend(loc=4)
+axes[0,0].set_xlabel(r'EW(Ca)')
+axes[0,0].set_ylabel(r'U')
+
+axes[1,0].scatter(EW_obs[:,0],mag_obs[:, 0]-correction_median[0,:])
+# xl = numpy.array(axes[1,0].get_xlim())* numpy.array([0.9, 0.6])
+# yl = numpy.array(axes[1,0].get_ylim())
+# for rv in rvs:
+#     A_ = sncosmo._extinction.ccm89(numpy.array(efflam), 1., rv)
+#     slope = A_[0]/(A_[1]-A_[2])
+#     y0 = numpy.mean(mag_obs[:, 0] -beta_median[0]*EW_median[:,1]-alpha_median[0]*EW_median[:,0] -rho0_median[0]*R_median -rho1_median[0]*R_median**2- slope*(mag_obs[:, 1]-mag_obs[:, 2]))
+#     axes[1,0].plot(xl,slope*xl +y0,label=rv)
+# axes[1,0].legend(loc=4)
+axes[1,0].set_xlabel(r'EW(Ca)')
+axes[1,0].set_ylabel(r'U + spec correction')
+
+axes[0,1].scatter(EW_obs[:,0],mag_obs[:, 4])
+# xl = numpy.array(axes[0,0].get_xlim())* numpy.array([0.9, 0.6])
+# yl = numpy.array(axes[0,0].get_ylim())
+# for rv in rvs:
+#     A_ = sncosmo._extinction.ccm89(numpy.array(efflam), 1., rv)
+#     slope = A_[4]/(A_[1]-A_[2])
+#     y0 = numpy.mean(mag_obs[:, 4] - slope*(mag_obs[:, 1]-mag_obs[:, 2]))
+#     axes[0,1].plot(xl,slope*xl +y0,label=rv)
+# axes[0,1].legend(loc=4)
+axes[0,1].set_xlabel(r'EW(Ca)')
+axes[0,1].set_ylabel(r'I')
+
+axes[1,1].scatter(EW_obs[:,0],mag_obs[:, 4]-correction_median[4,:])
+# xl = numpy.array(axes[1,1].get_xlim())* numpy.array([0.9, 0.6])
+# yl = numpy.array(axes[1,1].get_ylim())
+
+# for rv in rvs:
+#     A_ = sncosmo._extinction.ccm89(numpy.array(efflam), 1., rv)
+#     slope = A_[4]/(A_[1]-A_[2])
+#     y0 = numpy.mean(mag_obs[:, 4] -beta_median[4]*EW_median[:,1]-alpha_median[4]*EW_median[:,0] - slope*(mag_obs[:, 1]-mag_obs[:, 2]))
+#     axes[1,1].plot(xl,slope*xl +y0,label=rv)
+#     axes[1,1].legend(loc=4)
+axes[1,1].set_xlabel(r'EW(Ca)')
+axes[1,1].set_ylabel(r'I + spec correction')
+
+plt.tight_layout()
+pp = PdfPages('output5/speccamag.pdf')
+plt.savefig(pp,format='pdf')
+pp.close()
+plt.close()
 
 lambdas = numpy.arange(3500.,9000,100)
 for rv in rvs:

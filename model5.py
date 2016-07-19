@@ -69,7 +69,7 @@ init = [{'EW' : EW_renorm, 'c': numpy.random.normal(0,0.02,size=5),\
          'k_unit': (-1.)**numpy.arange(nsne-1)/numpy.sqrt(nsne-1),\
          'mag_int': mag_renorm+numpy.random.normal(0,0.02,size=(nsne,5)), \
          'L_sigma':numpy.random.uniform(0.02, 0.06,size=5), \
-         # 'L_Omega':numpy.identity(5), 
+         'L_Omega':numpy.identity(5), 
          'Delta_simplex':k_simplex,'Delta_scale': 15, \
          'R_unit':(-1.)**numpy.arange(nsne-2)/numpy.sqrt(nsne-2), \
          'rho0':numpy.zeros(5),'rho1':numpy.zeros(5)}
