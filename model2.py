@@ -57,19 +57,19 @@ mag_renorm  = mag_obs-mag_mn
 #     'EW_obs': EW_renorm, 'EW_cov': EW_cov_renorm, 'color_cov':color_cov_renorm, 'color_std':color_std.astype('float'), 'color_mn':color_mn}
 data = {'D': nsne, 'N_mags': 5, 'N_EWs': 2, 'mag_obs': mag_renorm, 'EW_obs': EW_renorm, 'EW_cov': EW_cov, 'mag_cov':mag_cov}
 
-# k_simplex = numpy.random.random(size = nsne)
-# k_simplex /= sum(k_simplex)
+k_simplex = numpy.random.random(size = nsne)
+k_simplex /= sum(k_simplex)
 
-init = [{'EW' : EW_renorm, 'c': numpy.random.normal(0,0.02,size=5),\
+init = [{'EW' : EW_renorm, 'c': numpy.zeros(5),\
          'alpha': numpy.random.uniform(-0.01, 0.01, size= 5), \
          'beta':numpy.array([0.06,0.05,0.04,0.03,0.02])+numpy.random.normal(0,0.005,size=5),
          'gamma_': numpy.random.uniform(.9,1.1,size=4), \
-         'k_unit': (-1.)**numpy.arange(nsne-1)/numpy.sqrt(nsne-1),\
          'mag_int': mag_renorm+numpy.random.normal(0,0.02,size=(nsne,5)), \
          'L_sigma':numpy.random.uniform(0.02, 0.06,size=5), \
-         # 'L_Omega':numpy.identity(5), 
+         'L_Omega':numpy.identity(5), 
          # 'Delta_simplex':k_simplex,'Delta_scale': 15
-         'Delta_unit':numpy.mean(mag_renorm,axis=1)[:-1]}
+         'Delta_unit':k_simplex, 'Delta_scale': 1,\
+         'k_unit': k_simplex, 'k_scale':1}
         for _ in range(4)]
 
 sm = pystan.StanModel(file='gerard2.stan')

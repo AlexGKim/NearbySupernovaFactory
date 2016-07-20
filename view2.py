@@ -47,11 +47,11 @@ correction = [ fit['c'][:,i][:,None] + fit['alpha'][:,i][:,None]*fit['EW'][:,:, 
 correction = numpy.array(correction)
 correction_median = numpy.median(correction,axis=1)
 
-# outlier  = numpy.where((mag_obs[:, 4]-correction_median[4,:]) > -27)[0]
-# print data['snlist'][outlier[0]]
+# outlier  = numpy.where((mag_obs[:, 4]-correction_median[4,:]) < -27.8)
+# print data['snlist'][outlier]
 
-# outlier  = numpy.where((mag_obs[:, 0]-correction_median[0,:]) > -28.6)[0]
-# print data['snlist'][outlier[0]]
+# outlier  = numpy.where((mag_obs[:, 0]-correction_median[0,:]) < -29.35)
+# print data['snlist'][outlier]
 
 
 # print 'Delta', numpy.median(fit['Delta'][:,outlier[0]],axis=0)
