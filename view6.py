@@ -7,7 +7,7 @@ from matplotlib.backends.backend_pdf import PdfPages
 import numpy
 import sncosmo
 
-f = open('temp2.pkl','rb')
+f = open('temp6.pkl','rb')
 fit = pickle.load(f)
 
 for key in fit.keys():
@@ -62,32 +62,32 @@ correction_median = numpy.median(correction,axis=1)
 print fit['Delta'].flatten().std()
 plt.hist(fit['Delta'].flatten(),normed=True,bins=20)
 plt.title(r'$\Delta$')
-pp = PdfPages('output2/Delta_hist.pdf')
+pp = PdfPages('output6/Delta_hist.pdf')
 plt.savefig(pp,format='pdf')
 pp.close()
 plt.close()
 
 figure = corner.corner(fit['alpha'],labels=[r"${\alpha}_0$",r"${\alpha}_1$",r"${\alpha}_2$",r"${\alpha}_3$",r"${\alpha}_4$"])
-pp = PdfPages('output2/alpha_corner.pdf')
+pp = PdfPages('output6/alpha_corner.pdf')
 plt.savefig(pp,format='pdf')
 pp.close()
 plt.close()
 
 figure = corner.corner(fit['beta'],labels=[r"${\beta}_0$",r"${\beta}_1$",r"${\beta}_2$",r"${\beta}_3$",r"${\beta}_4$"])
-pp = PdfPages('output2/beta_corner.pdf')
+pp = PdfPages('output6/beta_corner.pdf')
 plt.savefig(pp,format='pdf')
 pp.close()
 plt.close()
 
 figure = corner.corner(fit['gamma_'],labels=[r"${\gamma}_0$",r"${\gamma}_1$",r"${\gamma}_3$",r"${\gamma}_4$"])
-pp = PdfPages('output2/gamma_corner.pdf')
+pp = PdfPages('output6/gamma_corner.pdf')
 plt.savefig(pp,format='pdf')
 pp.close()
 plt.close()
 
 # mega = numpy.concatenate((fit['Delta_scale'][:,None],fit['L_sigma']),axis=1)
 figure = corner.corner(fit['L_sigma'],labels=[r"${\sigma}_0$",r"${\sigma}_1$",r"${\sigma}_2$",r"${\sigma}_3$",r"${\sigma}_4$"])
-pp = PdfPages('output2/sigma_corner.pdf')
+pp = PdfPages('output6/sigma_corner.pdf')
 plt.savefig(pp,format='pdf')
 pp.close()
 plt.close()
@@ -98,7 +98,7 @@ plt.savefig(pp,format='pdf')
 pp.close()
 plt.close()
 
-with PdfPages('output2/multipage_pdf.pdf') as pdf:
+with PdfPages('output6/multipage_pdf.pdf') as pdf:
 
     lineobjects = plt.plot(fit['lp__'][::10])
     plt.title(r'log p')
@@ -189,7 +189,7 @@ for i in xrange(len(filts)):
 
 
 plt.tight_layout()
-pp = PdfPages('output2/colormag.pdf')
+pp = PdfPages('output6/colormag.pdf')
 plt.savefig(pp,format='pdf')
 pp.close()
 plt.close()
@@ -205,7 +205,7 @@ for i in xrange(len(filts)):
     axes[1,i].set_ylabel(r'{} + correction'.format(filts[i]))
 
 plt.tight_layout()
-pp = PdfPages('output2/specsimag.pdf')
+pp = PdfPages('output6/specsimag.pdf')
 plt.savefig(pp,format='pdf')
 pp.close()
 plt.close()
@@ -225,7 +225,7 @@ for i in xrange(len(filts)):
 
 
 plt.tight_layout()
-pp = PdfPages('output2/speccamag.pdf')
+pp = PdfPages('output6/speccamag.pdf')
 plt.savefig(pp,format='pdf')
 pp.close()
 plt.close()
@@ -246,7 +246,7 @@ ymax  = gamma_sort[ngamma*(1-dum),:]
 plt.errorbar(efflam,y,yerr=[y-ymin,ymax-y],fmt='o')
 plt.legend()
 plt.xlabel(r'Wavelength (\AA)')
-pp = PdfPages('output2/ccm.pdf')
+pp = PdfPages('output6/ccm.pdf')
 plt.savefig(pp,format='pdf')
 pp.close()
 plt.close()

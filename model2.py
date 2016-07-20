@@ -2,6 +2,7 @@ import pickle
 import numpy
 import pystan
 
+# one color parameter model
 
 pkl_file = open('gege_data.pkl', 'r')
 data = pickle.load(pkl_file)

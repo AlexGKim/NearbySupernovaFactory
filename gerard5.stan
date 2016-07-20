@@ -11,52 +11,60 @@ data {
   # vector[N_mags] mag_mn;
 }
 
-transformed data{
-  matrix[D,D] rotation;
-  {
-    int a;
-    int b;
-    int c; 
-    a <-64072;
-    b <-46363;
+# transformed data{
+#   matrix[D,D] rotation;
+#   {
+#     int a;
+#     int b;
+#     int c; 
+#     a <-64072;
+#     b <-46363;
 
-    for (i in 1:D) {
-      for (j in 1:D){
-        c <- (a+b) % 10000;
-        rotation[i,j] <- .001 * c;
-        a <- b;
-        b <- c;
-      }
-    }
-  }
-  rotation <- qr_Q(rotation);
-}
+#     for (i in 1:D) {
+#       for (j in 1:D){
+#         c <- (a+b) % 10000;
+#         rotation[i,j] <- .001 * c;
+#         a <- b;
+#         b <- c;
+#       }
+#     }
+#   }
+#   rotation <- qr_Q(rotation);
+# }
 
 parameters {
 
-  vector[2] EW[D];
-  vector[N_mags] mag_int[D];
+  vector<lower=-500, upper=500>[2] EW[D];
+  vector<lower=-5, upper=5>[N_mags] mag_int[D];
 
   vector<lower=-5, upper=5>[5] c;
-  vector<lower=-0.2, upper=0.2>[5] alpha;
-  vector<lower=-0.5, upper=0.5>[5] beta;
+  vector<lower=-0.02, upper=0.02>[5] alpha;
+  vector<lower=-0.2, upper=0.2>[5] beta;
 
   # real<lower=0> gamma0;
-  vector<lower=-1, upper=10>[4] gamma_;
+  vector<lower=0, upper=10>[4] gamma_;
   # real rho00;
   vector<lower=-1., upper=1.>[5] rho0;
-  vector<lower=-1, upper=1>[5] rho1;
+  vector<lower=-.2, upper=0.2>[5] rho1;
 
   cholesky_factor_corr[N_mags] L_Omega;
   vector<lower=0.0, upper = 0.12>[N_mags] L_sigma;
 
-  simplex [D] Delta_simplex;
-  real <lower = 0, upper = D> Delta_scale;
-
-  vector [D-1] k_unit;
-  vector [D-2] R_unit;
+  # simplex [D] Delta_simplex;
+  # real <lower = 0, upper = D> Delta_scale;
+  # vector [D-1] Delta_unit;
+  # vector [D-1] k_unit;
+  # vector [D-2] R_unit;
   # real <lower = 0, upper=D> k_scale;
 
+
+  simplex[D] Delta_unit;
+  real <lower = 0, upper = D/2.> Delta_scale;
+
+  simplex[D] k_unit;
+  real <lower = 0, upper = D/2.> k_scale;
+
+  simplex[D] R_unit;
 
   # real<lower=0, upper=5> rho00;
 
@@ -90,13 +98,21 @@ transformed parameters {
   gamma[5] <- gamma_[4];
 
 
-  Delta <- Delta_scale*(Delta_simplex - 1./D);
+  Delta <- Delta_scale*(Delta_unit - 1./D);
+  k <- k_scale*(k_unit - 1./D);
 
+  R <- (R_unit - mean(R_unit));
+  R <- R / sqrt(sum(R .* R)/D);
 
-  for (d in 1:D-1) {
-    k[d] <- k_unit[d];
-  }
-  k[D] <- -sum(k_unit);
+  # for (d in 1:D-1) {
+  #   k[d] <- k_unit[d];
+  # }
+  # k[D] <- -sum(k_unit);
+
+  # for (d in 1:D-1) {
+  #   Delta[d] <- Delta_unit[d];
+  # }
+  # Delta[D] <- -sum(Delta_unit);
 
   # real m1;
   # real v1;
@@ -112,15 +128,15 @@ transformed parameters {
   # R[D-1] <- -0.5*m1 - term;
   # R[D] <- -0.5*m1 + term;
 
-  for (d in 1:D-2) {
-    R[d] <- R_unit[d];
-  }
-  R[D-1] <- -1.;
-  R[D] <- 1.;
-  R <- rotation * R;
+  # for (d in 1:D-2) {
+  #   R[d] <- R_unit[d];
+  # }
+  # R[D-1] <- -1.;
+  # R[D] <- 1.;
+  # R <- rotation * R;
 
-  R <- R - sum(R)/D;
-  R <- R / sqrt(sum(R .* R)/D);
+  # R <- R - sum(R)/D;
+  # R <- R / sqrt(sum(R .* R)/D);
 }
 
 model {
