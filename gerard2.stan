@@ -20,7 +20,7 @@ parameters {
   vector<lower=0., upper=3>[4] gamma_;
 
   cholesky_factor_corr[N_mags] L_Omega;
-  vector<lower=0.0, upper = 0.1>[N_mags] L_sigma;
+  vector<lower=0.0, upper = 0.12>[N_mags] L_sigma;
 
   simplex[D] Delta_unit;
   real <lower = 0, upper = 3*D/4.> Delta_scale;
