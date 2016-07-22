@@ -38,7 +38,7 @@ EW_renorm = (EW_obs - EW_mn)
 # color_cov = numpy.dot(trans,numpy.dot(dum, trans.T))
 # print " \\\\\n".join([" & ".join(map('{0:.4f}'.format, line)) for line in color_cov])
 
-correction = [ fit['c'][:,i][:,None] + fit['alpha'][:,i][:,None]*fit['EW'][:,:, 0] \
+correction = [ fit['alpha'][:,i][:,None]*fit['EW'][:,:, 0] \
     + fit['beta'][:,i][:,None]*fit['EW'][:,:, 1] \
     + fit['gamma'][:,i][:,None]*fit['k'] \
     + fit['Delta'] \
@@ -92,11 +92,6 @@ plt.savefig(pp,format='pdf')
 pp.close()
 plt.close()
 
-figure = corner.corner(fit['c'],labels=[r"${c}_0$",r"${c}_1$",r"${c}_2$",r"${c}_3$",r"${c}_4$"])
-pp = PdfPages('output5/c_corner.pdf')
-plt.savefig(pp,format='pdf')
-pp.close()
-plt.close()
 
 with PdfPages('output2/multipage_pdf.pdf') as pdf:
 
@@ -130,12 +125,6 @@ with PdfPages('output2/multipage_pdf.pdf') as pdf:
     plt.title(r'$\Delta$ scale')
     pdf.savefig()
     plt.close()
-
-    lineobjects = plt.plot(fit['c'][::10,:],label=['U','B','V','R','I'])
-    plt.title('c')
-    plt.legend(iter(lineobjects),('U','B','V','R','I'))
-    pdf.savefig()
-    plt.close()
     
     lineobjects = plt.plot(fit['alpha'][::10],alpha=0.5,label=['U','B','V','R','I'])
     plt.title('alpha')
@@ -161,14 +150,14 @@ with PdfPages('output2/multipage_pdf.pdf') as pdf:
     # pdf.savefig()
     # plt.close()
 
-    mega = numpy.array([fit['c'],fit['alpha'],fit['beta'],fit['L_sigma']])
-    mega = numpy.transpose(mega)
+    # mega = numpy.array([fit['c'],fit['alpha'],fit['beta'],fit['L_sigma']])
+    # mega = numpy.transpose(mega)
 
-    for index in xrange(5):
-        figure = corner.corner(mega[index,:,:],labels=[r"$c_{}$".format(index),r"$\alpha_{}$".format(index),\
-            r"$\beta_{}$".format(index),r"$\sigma_{}$".format(index)])
-        pdf.savefig()
-        plt.close()
+    # for index in xrange(5):
+    #     figure = corner.corner(mega[index,:,:],labels=[r"$c_{}$".format(index),r"$\alpha_{}$".format(index),\
+    #         r"$\beta_{}$".format(index),r"$\sigma_{}$".format(index)])
+    #     pdf.savefig()
+    #     plt.close()
 
     # filter wavelengths
 edges = numpy.array([[3300., 4102], [4102, 5100], [5200, 6289], [6289, 7607], [7607, 9200]])
