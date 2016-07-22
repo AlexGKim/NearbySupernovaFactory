@@ -137,6 +137,15 @@ with PdfPages('output5/multipage_pdf.pdf') as pdf:
     pdf.savefig()
     plt.close()
 
+    plt.plot(fit['k_scale'][::10])
+    plt.title('k_scale')
+    pdf.savefig()
+    plt.close()
+
+    plt.plot(fit['Delta_scale'][::10])
+    plt.title(r'$\Delta$_scale')
+    pdf.savefig()
+    plt.close()
     # plt.plot(fit['Delta_scale'][::10])
     # plt.title(r'$\Delta scale$')
     # pdf.savefig()
@@ -177,6 +186,13 @@ with PdfPages('output5/multipage_pdf.pdf') as pdf:
     plt.legend(iter(lineobjects),('U','B','V','R','I'))
     pdf.savefig()
     plt.close()
+
+    lineobjects = plt.plot(fit['L_sigma'][::10],label=['U','B','V','R','I'])
+    plt.title(r'$\sigma$')
+    plt.legend(iter(lineobjects),('U','B','V','R','I'))
+    pdf.savefig()
+    plt.close()
+
     # plt.plot(fit['R'][::10,:10])
     # plt.title('R')
     # pdf.savefig()
@@ -266,12 +282,8 @@ for rv in rvs:
     A_ = A_/norm[0]
     plt.plot(lambdas,A_,label=r"$R_V={:.1f}$".format(rv))
 
-dum = (1-.68)/2
-gamma_sort = numpy.sort(fit['gamma']/(fit['gamma'][:,2])[:,None],axis=0)
-ngamma = gamma_sort.shape[0]
-y = gamma_sort[ngamma/2,:]
-ymin = gamma_sort[ngamma*dum,:]
-ymax  = gamma_sort[ngamma*(1-dum),:]
+(y, ymin, ymax) = numpy.percentile(fit['gamma'],(50,32,64),axis=0)
+
 plt.errorbar(efflam,y,yerr=[y-ymin,ymax-y],fmt='o')
 plt.legend()
 plt.xlabel(r'Wavelength (\AA)')

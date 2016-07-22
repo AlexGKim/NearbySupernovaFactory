@@ -17,10 +17,22 @@ pkl_file = open('gege_data.pkl', 'r')
 data = pickle.load(pkl_file)
 pkl_file.close()
 
+
 EW_obs = data['obs'][:,0:2]
 mag_obs = data['obs'][:,2:]
 EW_cov = data['cov'][:,0:2,0:2]
 mag_cov = data['cov'][:,2:,2:]
+
+
+
+med = numpy.median(mag_obs[:,1]-mag_obs[:,2])
+red = (mag_obs[:,1]-mag_obs[:,2]) > med
+
+EW_obs = EW_obs[red,:]
+mag_obs = mag_obs[red,:]
+EW_cov = EW_cov[red,:,:]
+mag_cov = mag_cov[red,:,:]
+
 
 # # renormalize the data
 EW_mn = EW_obs.mean(axis=0)
@@ -237,13 +249,7 @@ for rv in rvs:
     A_ = A_/norm[0]
     plt.plot(lambdas,A_,label=r"$R_V={:.1f}$".format(rv))
 
-dum = (1-.68)/2
-gamma_sort = numpy.sort(fit['gamma']/(fit['gamma'][:,2])[:,None],axis=0)
-ngamma = gamma_sort.shape[0]
-y = gamma_sort[ngamma/2,:]
-ymin = gamma_sort[ngamma*dum,:]
-ymax  = gamma_sort[ngamma*(1-dum),:]
-plt.errorbar(efflam,y,yerr=[y-ymin,ymax-y],fmt='o')
+(y, ymin, ymax) = numpy.percentile(fit['gamma'],(50,32,64),axis=0)plt.errorbar(efflam,y,yerr=[y-ymin,ymax-y],fmt='o')
 plt.legend()
 plt.xlabel(r'Wavelength (\AA)')
 pp = PdfPages('output6/ccm.pdf')

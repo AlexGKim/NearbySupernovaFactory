@@ -87,6 +87,6 @@ control = {'stepsize':1.}
 fit = sm.sampling(data=data, iter=1000, chains=4,control=control,init=init)
 print fit
 
-output = open('temp2.pkl','wb')
+output = open('temp6.pkl','wb')
 pickle.dump(fit.extract(), output)
 output.close()

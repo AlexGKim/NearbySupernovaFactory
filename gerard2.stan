@@ -62,16 +62,22 @@ model {
       means[d] <- Delta[d] + c + alpha*EW[d,1]  + beta*EW[d,2];
   }
 
-  L_sigma ~ cauchy(0.1,2.5);
-  L_Omega ~ lkj_corr_cholesky(2.);
+  increment_log_prob(cauchy_log(L_sigma, 0.1,2.5));
+  increment_log_prob(lkj_corr_cholesky_log(L_Omega, 2.));
+  # L_sigma ~ cauchy(0.1,2.5);
+  # L_Omega ~ lkj_corr_cholesky(2.);
+
   L_Sigma <- diag_pre_multiply(L_sigma, L_Omega);
 
 
   for (d in 1:D) {
-    mag_int[d] ~ multi_normal_cholesky(means[d], L_Sigma);
-    # mag_int[d] ~ normal(means[d], L_sigma);
 
-    mag_obs[d] ~ multi_normal(mag_int[d]+gamma*k[d], mag_cov[d]);
-    EW_obs[d] ~ multi_normal(EW[d], EW_cov[d]);
+    increment_log_prob(multi_normal_cholesky_log(mag_int[d], means[d], L_Sigma));
+    increment_log_prob(multi_normal_log(mag_obs[d],mag_int[d]+gamma*k[d], mag_cov[d]));
+    increment_log_prob(multi_normal_log(EW_obs[d],EW[d], EW_cov[d]));
+
+    # mag_int[d] ~ multi_normal_cholesky(means[d], L_Sigma);
+    # mag_obs[d] ~ multi_normal(mag_int[d]+gamma*k[d], mag_cov[d]);
+    # EW_obs[d] ~ multi_normal(EW[d], EW_cov[d]);
   }  
 }
