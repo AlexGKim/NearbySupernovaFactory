@@ -7,7 +7,7 @@ from matplotlib.backends.backend_pdf import PdfPages
 import numpy
 import sncosmo
 
-f = open('temp6.pkl','rb')
+f = open('temp7.pkl','rb')
 fit = pickle.load(f)
 
 for key in fit.keys():
@@ -21,17 +21,6 @@ EW_obs = data['obs'][:,0:2]
 mag_obs = data['obs'][:,2:]
 EW_cov = data['cov'][:,0:2,0:2]
 mag_cov = data['cov'][:,2:,2:]
-
-
-med = numpy.percentile(mag_obs[:,1]-mag_obs[:,2],50)
-blue = (mag_obs[:,1]-mag_obs[:,2]) < med
- 
-EW_obs = EW_obs[blue,:]
-mag_obs = mag_obs[blue,:]
-EW_cov = EW_cov[blue,:,:]
-mag_cov = mag_cov[blue,:,:]
-
-
 
 # # renormalize the data
 EW_mn = EW_obs.mean(axis=0)
@@ -73,45 +62,45 @@ correction_median = numpy.median(correction,axis=1)
 print fit['Delta'].flatten().std()
 plt.hist(fit['Delta'].flatten(),normed=True,bins=20)
 plt.title(r'$\Delta$')
-pp = PdfPages('output6/Delta_hist.pdf')
+pp = PdfPages('output7/Delta_hist.pdf')
 plt.savefig(pp,format='pdf')
 pp.close()
 plt.close()
 
 figure = corner.corner(fit['alpha'],labels=[r"${\alpha}_0$",r"${\alpha}_1$",r"${\alpha}_2$",r"${\alpha}_3$",r"${\alpha}_4$"])
-pp = PdfPages('output6/alpha_corner.pdf')
+pp = PdfPages('output7/alpha_corner.pdf')
 plt.savefig(pp,format='pdf')
 pp.close()
 plt.close()
 
 figure = corner.corner(fit['beta'],labels=[r"${\beta}_0$",r"${\beta}_1$",r"${\beta}_2$",r"${\beta}_3$",r"${\beta}_4$"])
-pp = PdfPages('output6/beta_corner.pdf')
+pp = PdfPages('output7/beta_corner.pdf')
 plt.savefig(pp,format='pdf')
 pp.close()
 plt.close()
 
 figure = corner.corner(fit['gamma'],labels=[r"${\gamma}_0$",r"${\gamma}_1$",r"${\gamma}_2$",r"${\gamma}_3$",r"${\gamma}_4$"])
-pp = PdfPages('output6/gamma_corner.pdf')
+pp = PdfPages('output7/gamma_corner.pdf')
 plt.savefig(pp,format='pdf')
 pp.close()
 plt.close()
 
 # mega = numpy.concatenate((fit['Delta_scale'][:,None],fit['L_sigma']),axis=1)
 figure = corner.corner(fit['L_sigma'],labels=[r"${\sigma}_0$",r"${\sigma}_1$",r"${\sigma}_2$",r"${\sigma}_3$",r"${\sigma}_4$"])
-pp = PdfPages('output6/sigma_corner.pdf')
+pp = PdfPages('output7/sigma_corner.pdf')
 plt.savefig(pp,format='pdf')
 pp.close()
 plt.close()
 
 plt.hist(fit['lp__'],cumulative=True) #
 plt.xlabel(r'$\ln{p}$')
-pp = PdfPages('output6/lp.pdf')
+pp = PdfPages('output7/lp.pdf')
 plt.savefig(pp,format='pdf')
 pp.close()
 plt.close()
 
 
-with PdfPages('output6/multipage_pdf.pdf') as pdf:
+with PdfPages('output7/multipage_pdf.pdf') as pdf:
 
     lineobjects = plt.plot(fit['lp__'][::10])
     plt.title(r'log p')
@@ -134,10 +123,10 @@ with PdfPages('output6/multipage_pdf.pdf') as pdf:
     pdf.savefig()
     plt.close()
 
-    plt.plot(fit['k_scale'][::10])
-    plt.title('k_scale')
-    pdf.savefig()
-    plt.close()
+    # plt.plot(fit['k_scale'][::10])
+    # plt.title('k_scale')
+    # pdf.savefig()
+    # plt.close()
 
     plt.plot(fit['Delta_scale'][::10])
     plt.title(r'$\Delta$ scale')
@@ -203,7 +192,7 @@ for i in xrange(len(filts)):
         ,color='black',linewidth=2)
 axes[len(filts)-1].set_xlabel(r'EW(Ca)')
 fig.subplots_adjust(hspace=0.001)
-pp = PdfPages('output6/speccamag.pdf')
+pp = PdfPages('output7/speccamag.pdf')
 plt.savefig(pp,format='pdf')
 pp.close()
 plt.close()
@@ -221,7 +210,7 @@ for i in xrange(len(filts)):
         ,color='black',linewidth=2)
 axes[len(filts)-1].set_xlabel(r'EW(Si)')
 fig.subplots_adjust(hspace=0.001)
-pp = PdfPages('output6/specsimag.pdf')
+pp = PdfPages('output7/specsimag.pdf')
 plt.savefig(pp,format='pdf')
 pp.close()
 plt.close()
@@ -240,7 +229,7 @@ for i in xrange(len(filts)):
         ,color='black',linewidth=2)
 axes[len(filts)-1].set_xlabel(r'B-V')
 fig.subplots_adjust(hspace=0.001)
-pp = PdfPages('output6/colormag.pdf')
+pp = PdfPages('output7/colormag.pdf')
 plt.savefig(pp,format='pdf')
 pp.close()
 plt.close()
@@ -251,12 +240,12 @@ for rv in rvs:
     norm  = sncosmo._extinction.ccm89(numpy.array([efflam[2]]), 1., rv)
     A_ = A_/norm[0]
     plt.plot(lambdas,A_,label=r"$R_V={:.1f}$".format(rv))
-(y, ymin, ymax) = numpy.percentile(fit['gamma'],(50,50-34,50+34),axis=0)
+(y, ymin, ymax) = numpy.percentile(fit['gamma']/fit['gamma'][:,2][:,None],(50,50-34,50+34),axis=0)
 
 plt.errorbar(efflam,y,yerr=[y-ymin,ymax-y],fmt='o')
 plt.legend()
 plt.xlabel(r'Wavelength (\AA)')
-pp = PdfPages('output6/ccm.pdf')
+pp = PdfPages('output7/ccm.pdf')
 plt.savefig(pp,format='pdf')
 pp.close()
 plt.close()
