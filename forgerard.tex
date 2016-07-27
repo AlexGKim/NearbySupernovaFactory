@@ -20,11 +20,11 @@ U\\B\\V\\R\\I
 \Delta +
 \left(
 \begin{matrix}
-c_0+\alpha_0 EW_{Ca} + \beta_0 EW_{Si} \\
-c_1+\alpha_1 EW_{Ca} + \beta_1 EW_{Si}  \\
-c_2+\alpha_2 EW_{Ca} + \beta_2 EW_{Si} \\
-c_3+\alpha_3 EW_{Ca} + \beta_3 EW_{Si} \\
-c_4+\alpha_4 EW_{Ca} + \beta_4 EW_{Si}
+\alpha_0 EW_{Ca} + \beta_0 EW_{Si} \\
+\alpha_1 EW_{Ca} + \beta_1 EW_{Si}  \\
+\alpha_2 EW_{Ca} + \beta_2 EW_{Si} \\
+\alpha_3 EW_{Ca} + \beta_3 EW_{Si} \\
+\alpha_4 EW_{Ca} + \beta_4 EW_{Si}
 \end{matrix}
 \right)
 ,C_{c}
@@ -32,7 +32,7 @@ c_4+\alpha_4 EW_{Ca} + \beta_4 EW_{Si}
 \end{equation*}
 The mean of the normal distribution linearly relates absolute magnitudes with
 individual spectral parameters  $EW_{Ca}$, and $EW_{Si}$ via the  global coefficients
- $c_i$, $\alpha_i$, $\beta_i$.  Residual variations in absolute magnitude is described
+ $\alpha_i$, $\beta_i$.  Residual variations in absolute magnitude is described
  by  $C_c$ the intrinsic dispersion of the Normal distribution.  To constrain the problem we
  set $\langle \Delta \rangle=0$.
 
@@ -41,8 +41,7 @@ as being drawn from a Normal distribution.
 \begin{equation*}
 \left(
 \begin{matrix}
-U_o\\B_o\\ V_o\\R_o\\I_o\\EW_{Si, o}\\ EW_{Ca, o}
-\end{matrix}
+U_o -\langle U_o \rangle \\B_o-\langle B_o \rangle\\ V_o-\langle V_o \rangle\\R_o-\langle R_o \rangle\\I_o-\langle I_o \rangle\\EW_{Si, o}-\langle EW_{Si, o} \rangle\\ EW_{Ca, o}-\langle EW_{Ca, o} \end{matrix}
 \right) \sim \mathcal{N}
 \left(
 \left(
@@ -56,7 +55,7 @@ EW_{Si}\\ EW_{Ca}
 \end{equation*}
 The mean of the normal distribution is the intrinsic magnitudes plus an extrinsic magnitude change described by a parameter for each individual supernova
 $k$ and global parameters $\gamma_i$.  
-To constrain the problem we set  $\langle k \rangle=0$.  We also set  $\gamma_2=1$ meaning that $k$ can be interpreted as $A_V$.
+To constrain the problem we set  $\langle k \rangle=0$, $\langle k^2 \rangle=1$, $\gamma_0 \ge 0$.
 
 As I perform an Bayesian analysis some mention of priors is required.  A flat prior is used for all parameters except
 for the covariance matrix $C_c$, which is constructed from a correlation matrix with  $\nu=2$  LKJ prior and standard
@@ -93,7 +92,7 @@ These correlations indicate that intrinsic color parameters are available.
   
 \begin{figure}[htbp] %  figure placement: here, top, bottom, or page
    \centering
-   \includegraphics[width=4in]{output2/sigma_corner.pdf} 
+   \includegraphics[width=4in]{output7/sigma_corner.pdf} 
    \caption{Confidence regions for the parameter ``$\Delta$ scale'' that describes the overall scale off the $\Delta$'s
 and of the standard deviations of the diagonal of $C_c$.}
    \label{sigma:fig}
@@ -105,7 +104,7 @@ is given by the standard deviation of $0.10$ mag.  The distribution has a broad 
 would have been inappropriate.
 \begin{figure}[htbp] %  figure placement: here, top, bottom, or page
    \centering
-   \includegraphics[width=4in]{output2/Delta_hist.pdf} 
+   \includegraphics[width=4in]{output7/Delta_hist.pdf} 
    \caption{Ideogram for the grey offset $\Delta$ for all supernovae.}
    \label{Delta_hist:fig}
 \end{figure}
@@ -119,7 +118,7 @@ of successive reduction in dispersion is similar for all bands.  This is shown f
 work there were no supernovae reserved for out-of-sample model-comparison tests.  AIC and BIC can be computed.
 \begin{figure}[htbp] %  figure placement: here, top, bottom, or page
    \centering
-   \includegraphics[width=4in]{output2/magresidual_V.pdf} 
+   \includegraphics[width=4in]{output7/colormag.pdf} 
    \caption{Distributions of $V$-band corrected magnitudes.}
    \label{magresidual:fig}
 \end{figure}
@@ -133,8 +132,8 @@ $\beta_1 =0.03  \pm 2.4e-3$, $\beta_2 = 0.03  \pm 2.0e-3$, $\beta_3 =0.02  \pm 1
 $\beta_4 =0.02  \pm 1.6e-3$.
 \begin{figure}[htbp] %  figure placement: here, top, bottom, or page
    \centering
-   \includegraphics[width=2.9in]{output2/alpha_corner.pdf} 
-   \includegraphics[width=2.9in]{output2/beta_corner.pdf} 
+   \includegraphics[width=2.9in]{output7/alpha_corner.pdf} 
+   \includegraphics[width=2.9in]{output7/beta_corner.pdf} 
    \caption{Distributions for $\alpha$ and $\beta$.}
    \label{alphabeta:fig}
 \end{figure}
@@ -148,8 +147,8 @@ on the central wavelengths of the synthetic broad-band filters, and are expected
 By eye the model fit results appear consistent with $R_V=3.1$, although $R_V=2.8$ appears to match better.
 \begin{figure}[htbp] %  figure placement: here, top, bottom, or page
    \centering
-   \includegraphics[width=2.9in]{output2/gamma_corner.pdf} 
-   \includegraphics[width=2.9in]{output2/ccm.pdf} 
+   \includegraphics[width=2.9in]{output7/gamma_corner.pdf} 
+   \includegraphics[width=2.9in]{output7/ccm.pdf} 
    \caption{Best-fit distribution for the parameters $\gamma$ and $\beta$, and a comparison with the predictions for extrinsic
 magnitude changes being to CCM dust.}
    \label{gamma:fig}
@@ -165,11 +164,11 @@ U\\B\\V\\R\\I
 \Delta +
 \left(
 \begin{matrix}
-c_0+\alpha_0 EW_{Ca} + \beta_0 EW_{Si} +\delta_{00} D +\delta_{10} D^2\\
-c_1+\alpha_1 EW_{Ca} + \beta_1 EW_{Si} +\delta_{01} D  +\delta_{11} D^2\\
-c_2+\alpha_2 EW_{Ca} + \beta_2 EW_{Si} +\delta_{02} D +\delta_{12} D^2\\
-c_3+\alpha_3 EW_{Ca} + \beta_3 EW_{Si} +\delta_{03} D +\delta_{13} D^2\\
-c_4+\alpha_4 EW_{Ca} + \beta_4 EW_{Si}+\delta_{04} D +\delta_{14} D^2
+\alpha_0 EW_{Ca} + \beta_0 EW_{Si} +\delta_{00} D +\delta_{10} D^2\\
+\alpha_1 EW_{Ca} + \beta_1 EW_{Si} +\delta_{01} D  +\delta_{11} D^2\\
+\alpha_2 EW_{Ca} + \beta_2 EW_{Si} +\delta_{02} D +\delta_{12} D^2\\
+\alpha_3 EW_{Ca} + \beta_3 EW_{Si} +\delta_{03} D +\delta_{13} D^2\\
+\alpha_4 EW_{Ca} + \beta_4 EW_{Si}+\delta_{04} D +\delta_{14} D^2
 \end{matrix}
 \right)
 ,C_{c}
@@ -181,7 +180,7 @@ c_4+\alpha_4 EW_{Ca} + \beta_4 EW_{Si}+\delta_{04} D +\delta_{14} D^2
 \begin{equation*}
 \left(
 \begin{matrix}
-U_o\\B_o\\ V_o\\R_o\\I_o\\EW_{Si, o}\\ EW_{Ca, o}
+U_o -\langle U_o \rangle \\B_o-\langle B_o \rangle\\ V_o-\langle V_o \rangle\\R_o-\langle R_o \rangle\\I_o-\langle I_o \rangle\\EW_{Si, o}-\langle EW_{Si, o} \rangle\\ EW_{Ca, o}-\langle EW_{Ca, o} 
 \end{matrix}
 \right) \sim \mathcal{N}
 \left(
@@ -194,8 +193,9 @@ EW_{Si}\\ EW_{Ca}
 ,C
 \right).
 \end{equation*}
-$\langle \Delta \rangle=0$, $\langle k \rangle=0$, $\gamma_2=1$, $\langle D \rangle=0$, $\langle D^2 \rangle=1$.
-
+\begin{equation*}
+\langle \Delta \rangle=0, \langle k \rangle=0, \langle k^2 \rangle=1, \langle D \rangle=0, \langle D^2 \rangle=1, \gamma_0 \ge 0, \delta_{04}\ge0.
+\end{equation*}
 %
 %
 %A model for a single object is that its intrinsic properties (captured by equivalent width) are drawn from a Normal distribution

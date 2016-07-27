@@ -13,9 +13,9 @@ fit = pickle.load(f)
 for key in fit.keys():
     print key, fit[key].min(), fit[key].max()
 
-flip = fit['rho0'][:,4] <0
-for i in xrange(5):
-    fit['rho0'][flip,i] *= -1
+# flip = fit['rho0'][:,4] <0
+# for i in xrange(5):
+#     fit['rho0'][flip,i] *= -1
 
 pkl_file = open('gege_data.pkl', 'r')
 data = pickle.load(pkl_file)
@@ -42,10 +42,13 @@ EW_renorm = (EW_obs - EW_mn)
 # color_cov = numpy.dot(trans,numpy.dot(dum, trans.T))
 # print " \\\\\n".join([" & ".join(map('{0:.4f}'.format, line)) for line in color_cov])
 
-correction = [ fit['c'][:,i][:,None] + fit['alpha'][:,i][:,None]*fit['EW'][:,:, 0] \
+correction = [  fit['alpha'][:,i][:,None]*fit['EW'][:,:, 0] \
     + fit['beta'][:,i][:,None]*fit['EW'][:,:, 1] \
     + fit['gamma'][:,i][:,None]*fit['k'] \
     + fit['Delta'] \
+    + fit['rho0'][:,i][:,None]*fit['R'] \
+    + fit['rho1'][:,i][:,None]*fit['R']**2 \
+    - fit['rho1'][:,i][:,None] \
     for i in xrange(5)]
 
 correction = numpy.array(correction)
@@ -108,11 +111,11 @@ plt.savefig(pp,format='pdf')
 pp.close()
 plt.close()
 
-figure = corner.corner(fit['c'],labels=[r"${c}_0$",r"${c}_1$",r"${c}_2$",r"${c}_3$",r"${c}_4$"])
-pp = PdfPages('output5/c_corner.pdf')
-plt.savefig(pp,format='pdf')
-pp.close()
-plt.close()
+# figure = corner.corner(fit['c'],labels=[r"${c}_0$",r"${c}_1$",r"${c}_2$",r"${c}_3$",r"${c}_4$"])
+# pp = PdfPages('output5/c_corner.pdf')
+# plt.savefig(pp,format='pdf')
+# pp.close()
+# plt.close()
 
 with PdfPages('output5/multipage_pdf.pdf') as pdf:
 
@@ -137,11 +140,6 @@ with PdfPages('output5/multipage_pdf.pdf') as pdf:
     pdf.savefig()
     plt.close()
 
-    plt.plot(fit['k_scale'][::10])
-    plt.title('k_scale')
-    pdf.savefig()
-    plt.close()
-
     plt.plot(fit['Delta_scale'][::10])
     plt.title(r'$\Delta$_scale')
     pdf.savefig()
@@ -151,11 +149,11 @@ with PdfPages('output5/multipage_pdf.pdf') as pdf:
     # pdf.savefig()
     # plt.close()
 
-    lineobjects = plt.plot(fit['c'][::10,:],label=['U','B','V','R','I'])
-    plt.title('c')
-    plt.legend(iter(lineobjects),('U','B','V','R','I'))
-    pdf.savefig()
-    plt.close()
+    # lineobjects = plt.plot(fit['c'][::10,:],label=['U','B','V','R','I'])
+    # plt.title('c')
+    # plt.legend(iter(lineobjects),('U','B','V','R','I'))
+    # pdf.savefig()
+    # plt.close()
     
     lineobjects = plt.plot(fit['alpha'][::10],alpha=0.5,label=['U','B','V','R','I'])
     plt.title('alpha')
@@ -200,14 +198,20 @@ with PdfPages('output5/multipage_pdf.pdf') as pdf:
     
 
 
-    # mega = numpy.array([fit['c'],fit['alpha'],fit['beta'],fit['L_sigma']))])
-    # mega = numpy.transpose(mega)
+nlinks = fit['gamma'].shape[0]
+dum = numpy.concatenate((fit['gamma'][:,0:2], numpy.random.normal(1.,0.01,size=(nlinks,1)),fit['gamma'][:,3:]),axis=1)
+mega = numpy.array([fit['alpha'],fit['beta'],dum,fit['rho0'],fit['rho1'],fit['L_sigma']])
+mega = numpy.transpose(mega)
 
-    # for index in xrange(5):
-    #     figure = corner.corner(mega[index,:,:],labels=[r"$c_{}$".format(index),r"$\alpha_{}$".format(index),\
-    #         r"$\beta_{}$".format(index),r"$\sigma_{}$".format(index)])
-    #     pdf.savefig()
-    #     plt.close()
+for index in xrange(5):
+    figure = corner.corner(mega[index,:,:],labels=[r"$\alpha_{}$".format(index),\
+                    r"$\beta_{}$".format(index),r"$\gamma_{}$".format(index),\
+                    r"$\rho_{{0{}}}$".format(index),r"$\rho_{{1{}}}$".format(index),r"$\sigma_{}$".format(index)])
+    pp = PdfPages('output5/coeff{}.pdf'.format(index))
+    plt.savefig(pp,format='pdf')
+    pp.close()
+    plt.close()
+
 
     # filter wavelengths
 edges = numpy.array([[3300., 4102], [4102, 5100], [5200, 6289], [6289, 7607], [7607, 9200]])
@@ -218,7 +222,7 @@ for edge in edges:
 rc('text', usetex=True)
 
 
-rvs = [1.,3.1,4.1]
+rvs = [1.7,3.1,4.1]
 filts = ['U','B','V','R','I']
 
 fig, axes = plt.subplots(nrows=2, ncols=len(filts))
@@ -255,21 +259,18 @@ plt.savefig(pp,format='pdf')
 pp.close()
 plt.close()
 
-fig, axes = plt.subplots(nrows=2, ncols=len(filts))
+fig, axes = plt.subplots(nrows=len(filts),sharex=True)
 for i in xrange(len(filts)):
-
-
-    axes[0,i].scatter(EW_obs[:,0],mag_obs[:, i])
-    axes[0,i].set_xlabel(r'EW(Ca)')
-    axes[0,i].set_ylabel(r'{}'.format(filts[i]))
-
-    axes[1,i].scatter(EW_obs[:,0],mag_obs[:, i]-correction_median[i,:])
-    axes[1,i].set_xlabel(r'EW(Ca)')
-    axes[1,i].set_ylabel(r'{} + correction'.format(filts[i]))
-
-
-
-plt.tight_layout()
+    r = numpy.array( [numpy.argmin(EW_obs[:,0]), numpy.argmax(EW_obs[:,0])])
+    yerr= numpy.sqrt(mag_cov[:,i,i])
+    xerr = numpy.sqrt(EW_cov[:,0,0])
+    axes[i].errorbar(EW_obs[:,0],mag_obs[:, i], \
+        xerr=[xerr,xerr], yerr=[yerr,yerr],fmt='.')
+    axes[i].set_ylabel(r'{}'.format(filts[i]))
+    axes[i].plot(EW_obs[r,0],numpy.mean(mag_obs[:, i])+numpy.median(fit['alpha'][:,i],axis=0)*EW_renorm[r,0] \
+        ,color='black')
+axes[len(filts)-1].set_xlabel(r'EW(Ca)')
+fig.subplots_adjust(hspace=0.001)
 pp = PdfPages('output5/speccamag.pdf')
 plt.savefig(pp,format='pdf')
 pp.close()
@@ -281,10 +282,10 @@ for rv in rvs:
     norm  = sncosmo._extinction.ccm89(numpy.array([efflam[2]]), 1., rv)
     A_ = A_/norm[0]
     plt.plot(lambdas,A_,label=r"$R_V={:.1f}$".format(rv))
-
-(y, ymin, ymax) = numpy.percentile(fit['gamma'],(50,32,64),axis=0)
+(y, ymin, ymax) = numpy.percentile(fit['gamma']/fit['gamma'][:,2][:,None],(50,50-34,50+34),axis=0)
 
 plt.errorbar(efflam,y,yerr=[y-ymin,ymax-y],fmt='o')
+
 plt.legend()
 plt.xlabel(r'Wavelength (\AA)')
 pp = PdfPages('output5/ccm.pdf')

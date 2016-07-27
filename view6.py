@@ -134,11 +134,6 @@ with PdfPages('output6/multipage_pdf.pdf') as pdf:
     pdf.savefig()
     plt.close()
 
-    plt.plot(fit['k_scale'][::10])
-    plt.title('k_scale')
-    pdf.savefig()
-    plt.close()
-
     plt.plot(fit['Delta_scale'][::10])
     plt.title(r'$\Delta$ scale')
     pdf.savefig()
@@ -200,7 +195,7 @@ for i in xrange(len(filts)):
     axes[i].set_ylabel(r'{}'.format(filts[i]))
     offset  = numpy.mean(mag_obs[:, i] - numpy.median(fit['alpha'][:,i][:,None]*fit['EW'][:,:,0],axis=0))
     axes[i].plot(EW_obs[r,0],offset+numpy.median(fit['alpha'][:,i],axis=0)*EW_renorm[r,0] \
-        ,color='black',linewidth=2)
+        ,color='red',linewidth=2)
 axes[len(filts)-1].set_xlabel(r'EW(Ca)')
 fig.subplots_adjust(hspace=0.001)
 pp = PdfPages('output6/speccamag.pdf')
@@ -218,7 +213,7 @@ for i in xrange(len(filts)):
     axes[i].set_ylabel(r'{}'.format(filts[i]))
     offset  = numpy.mean(mag_obs[:, i] - numpy.median(fit['beta'][:,i][:,None]*fit['EW'][:,:,1],axis=0))
     axes[i].plot(EW_obs[r,1],offset+numpy.median(fit['beta'][:,i],axis=0)*EW_renorm[r,1] \
-        ,color='black',linewidth=2)
+        ,color='red',linewidth=2)
 axes[len(filts)-1].set_xlabel(r'EW(Si)')
 fig.subplots_adjust(hspace=0.001)
 pp = PdfPages('output6/specsimag.pdf')
@@ -237,7 +232,7 @@ for i in xrange(len(filts)):
     slope = numpy.median(fit['gamma'][:,i] / (fit['gamma'][:,1]-fit['gamma'][:,2]),axis=0)
     offset  = numpy.mean(mag_obs[:, i] - numpy.median(slope*(mag_obs[:,1]-mag_obs[:,2])))
     axes[i].plot(mag_obs[r,1]-mag_obs[r,2],offset+slope*(mag_obs[r,1]-mag_obs[r,2]) \
-        ,color='black',linewidth=2)
+        ,color='red',linewidth=2)
 axes[len(filts)-1].set_xlabel(r'B-V')
 fig.subplots_adjust(hspace=0.001)
 pp = PdfPages('output6/colormag.pdf')

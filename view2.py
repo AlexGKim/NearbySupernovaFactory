@@ -175,7 +175,7 @@ for edge in edges:
 rc('text', usetex=True)
 
 
-rvs = [1.,3.1,4.1]
+rvs = [1.7,3.1,4.1]
 filts = ['U','B','V','R','I']
 
 

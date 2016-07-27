@@ -13,6 +13,14 @@ fit = pickle.load(f)
 for key in fit.keys():
     print key, fit[key].min(), fit[key].max()
 
+for i in xrange(5):
+    dum = numpy.percentile(fit['alpha'][:,i],(50,50-34,50+34))
+    print '$\\alpha_{} = {:6.4f}^{{{:6.4f}}}_{{{:6.4f}}}$'.format(i, dum[0], dum[2]-dum[0],dum[1]-dum[0] )
+
+for i in xrange(5):    
+    dum = numpy.percentile(fit['beta'][:,i],(50,50-34,50+34))
+    print '$\\beta_{} = {:5.3f}^{{{:5.3f}}}_{{{:5.3f}}}$'.format(i, dum[0], dum[2]-dum[0],dum[1]-dum[0] )
+
 pkl_file = open('gege_data.pkl', 'r')
 data = pickle.load(pkl_file)
 pkl_file.close()
@@ -189,7 +197,7 @@ for i in xrange(len(filts)):
     axes[i].set_ylabel(r'{}'.format(filts[i]))
     offset  = numpy.mean(mag_obs[:, i] - numpy.median(fit['alpha'][:,i][:,None]*fit['EW'][:,:,0],axis=0))
     axes[i].plot(EW_obs[r,0],offset+numpy.median(fit['alpha'][:,i],axis=0)*EW_renorm[r,0] \
-        ,color='black',linewidth=2)
+        ,color='red',linewidth=2)
 axes[len(filts)-1].set_xlabel(r'EW(Ca)')
 fig.subplots_adjust(hspace=0.001)
 pp = PdfPages('output7/speccamag.pdf')
@@ -207,7 +215,7 @@ for i in xrange(len(filts)):
     axes[i].set_ylabel(r'{}'.format(filts[i]))
     offset  = numpy.mean(mag_obs[:, i] - numpy.median(fit['beta'][:,i][:,None]*fit['EW'][:,:,1],axis=0))
     axes[i].plot(EW_obs[r,1],offset+numpy.median(fit['beta'][:,i],axis=0)*EW_renorm[r,1] \
-        ,color='black',linewidth=2)
+        ,color='red',linewidth=2)
 axes[len(filts)-1].set_xlabel(r'EW(Si)')
 fig.subplots_adjust(hspace=0.001)
 pp = PdfPages('output7/specsimag.pdf')
@@ -226,7 +234,7 @@ for i in xrange(len(filts)):
     slope = numpy.median(fit['gamma'][:,i] / (fit['gamma'][:,1]-fit['gamma'][:,2]),axis=0)
     offset  = numpy.mean(mag_obs[:, i] - numpy.median(slope*(mag_obs[:,1]-mag_obs[:,2])))
     axes[i].plot(mag_obs[r,1]-mag_obs[r,2],offset+slope*(mag_obs[r,1]-mag_obs[r,2]) \
-        ,color='black',linewidth=2)
+        ,color='red',linewidth=2)
 axes[len(filts)-1].set_xlabel(r'B-V')
 fig.subplots_adjust(hspace=0.001)
 pp = PdfPages('output7/colormag.pdf')
