@@ -30,7 +30,7 @@ Delta_simplex = numpy.zeros(nsne)+1./nsne
 k_simplex = ((-1.)**numpy.arange(nsne)*.25 + .5)*2./nsne
 
 init = [{'EW' : EW_renorm, \
-         # 'c': numpy.zeros(5),\
+         'c': numpy.zeros(5),\
          'alpha': numpy.zeros(5), \
          'beta':numpy.zeros(5), \
          'gamma0': 0.1,\

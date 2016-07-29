@@ -74,6 +74,13 @@ plt.savefig(pp,format='pdf')
 pp.close()
 plt.close()
 
+figure = corner.corner(fit['c'],labels=[r"${c}_0$",r"${c}_1$",r"${c}_2$",r"${c}_3$",r"${c}_4$"])
+pp = PdfPages('output5/c_corner.pdf')
+plt.savefig(pp,format='pdf')
+pp.close()
+plt.close()
+
+
 figure = corner.corner(fit['alpha'],labels=[r"${\alpha}_0$",r"${\alpha}_1$",r"${\alpha}_2$",r"${\alpha}_3$",r"${\alpha}_4$"])
 pp = PdfPages('output5/alpha_corner.pdf')
 plt.savefig(pp,format='pdf')

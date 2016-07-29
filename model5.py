@@ -32,22 +32,22 @@ k_simplex = ((-1.)**numpy.arange(nsne)*.25 + .5)*2./nsne
 
 
 init = [{'EW' : EW_renorm, \
-         # 'c': numpy.zeros(5),\
+         'c': numpy.zeros(5),\
          'alpha': numpy.zeros(5), \
          'beta':numpy.zeros(5), \
          'gamma0': 0.1, 'gamma_': numpy.zeros(4), \
          'mag_int': mag_renorm, \
          'L_sigma': numpy.zeros(5)+0.03, \
-         # 'L_Omega': numpy.identity(5), \
+         'L_Omega': numpy.identity(5), \
          'Delta_unit':Delta_simplex, 'Delta_scale': nsne/8.,\
          'k_unit': k_simplex, \
          'R_unit':k_simplex, \
-         'rho00':0.1,'rho0_':numpy.zeros(4),'rho1':numpy.zeros(5)} \
+         'rho00':0.1,'rho0_':numpy.zeros(4),'rho1':numpy.zeros(5)-0.01} \
         for _ in range(4)]
 
 sm = pystan.StanModel(file='gerard5.stan')
-control = {'stepsize':2}
-fit = sm.sampling(data=data, iter=12000, chains=4,control=control,init=init, thin=6)
+control = {'stepsize':1}
+fit = sm.sampling(data=data, iter=2000, chains=4,control=control,init=init, thin=1)
 print fit
 
 output = open('temp5.pkl','wb')

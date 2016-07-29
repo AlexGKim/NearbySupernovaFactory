@@ -13,7 +13,7 @@ parameters {
   vector<lower=-150, upper=150>[2] EW[D];
   vector<lower=-2, upper=2>[N_mags] mag_int[D];
 
-  # vector<lower=-0.2, upper=0.2>[5] c;
+  vector<lower=-0.2, upper=0.2>[5] c;
   vector<lower=-0.01, upper=0.01>[5] alpha;
   vector<lower=-0.1, upper=0.1>[5] beta;
 
@@ -51,7 +51,7 @@ model {
 
   for (d in 1:D) {
       # means[d] <- Delta[d] + c + alpha*EW[d,1]  + beta*EW[d,2];
-      means[d] <- Delta[d] + alpha*EW[d,1]  + beta*EW[d,2];
+      means[d] <- Delta[d] + c+ alpha*EW[d,1]  + beta*EW[d,2];
   }
 
   increment_log_prob(cauchy_log(L_sigma, 0.1,2.5));

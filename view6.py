@@ -78,6 +78,13 @@ plt.savefig(pp,format='pdf')
 pp.close()
 plt.close()
 
+figure = corner.corner(fit['c'],labels=[r"${c}_0$",r"${c}_1$",r"${c}_2$",r"${c}_3$",r"${c}_4$"])
+pp = PdfPages('output6/c_corner.pdf')
+plt.savefig(pp,format='pdf')
+pp.close()
+plt.close()
+
+
 figure = corner.corner(fit['alpha'],labels=[r"${\alpha}_0$",r"${\alpha}_1$",r"${\alpha}_2$",r"${\alpha}_3$",r"${\alpha}_4$"])
 pp = PdfPages('output6/alpha_corner.pdf')
 plt.savefig(pp,format='pdf')
@@ -229,10 +236,11 @@ for i in xrange(len(filts)):
     axes[i].errorbar(mag_obs[:,1]-mag_obs[:,2],mag_obs[:, i], \
         xerr=[xerr,xerr], yerr=[yerr,yerr],fmt='.')
     axes[i].set_ylabel(r'{}'.format(filts[i]))
-    slope = numpy.median(fit['gamma'][:,i] / (fit['gamma'][:,1]-fit['gamma'][:,2]),axis=0)
+    (slope,smin,smax) = numpy.percentile(fit['gamma'][:,i] / (fit['gamma'][:,1]-fit['gamma'][:,2]),(50,50-34,50+34),axis=0)
     offset  = numpy.mean(mag_obs[:, i] - numpy.median(slope*(mag_obs[:,1]-mag_obs[:,2])))
     axes[i].plot(mag_obs[r,1]-mag_obs[r,2],offset+slope*(mag_obs[r,1]-mag_obs[r,2]) \
         ,color='red',linewidth=2)
+
 axes[len(filts)-1].set_xlabel(r'B-V')
 fig.subplots_adjust(hspace=0.001)
 pp = PdfPages('output6/colormag.pdf')
@@ -246,7 +254,7 @@ for rv in rvs:
     norm  = sncosmo._extinction.ccm89(numpy.array([efflam[2]]), 1., rv)
     A_ = A_/norm[0]
     plt.plot(lambdas,A_,label=r"$R_V={:.1f}$".format(rv))
-(y, ymin, ymax) = numpy.percentile(fit['gamma'],(50,50-34,50+34),axis=0)
+(y, ymin, ymax) = numpy.percentile(fit['gamma']/fit['gamma'][:,2][:,None],(50,50-34,50+34),axis=0)
 
 plt.errorbar(efflam,y,yerr=[y-ymin,ymax-y],fmt='o')
 plt.legend()
