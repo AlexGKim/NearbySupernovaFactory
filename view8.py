@@ -7,7 +7,7 @@ from matplotlib.backends.backend_pdf import PdfPages
 import numpy
 import sncosmo
 
-f = open('temp5.pkl','rb')
+f = open('temp8.pkl','rb')
 fit = pickle.load(f)
 
 for key in fit.keys():
@@ -46,9 +46,9 @@ correction = [  fit['alpha'][:,i][:,None]*fit['EW'][:,:, 0] \
     + fit['beta'][:,i][:,None]*fit['EW'][:,:, 1] \
     + fit['gamma'][:,i][:,None]*fit['k'] \
     + fit['Delta'] \
-    + fit['rho0'][:,i][:,None]*fit['R'] \
+    # + fit['rho0'][:,i][:,None]*fit['R'] \
     + fit['rho1'][:,i][:,None]*fit['R']**2 \
-    - fit['rho1'][:,i][:,None] \
+    # - fit['rho1'][:,i][:,None] \
     for i in xrange(5)]
 
 correction = numpy.array(correction)
@@ -69,62 +69,62 @@ correction_median = numpy.median(correction,axis=1)
 print fit['Delta'].flatten().std()
 plt.hist(fit['Delta'].flatten(),normed=True,bins=20)
 plt.title(r'$\Delta$')
-pp = PdfPages('output5/Delta_hist.pdf')
+pp = PdfPages('output8/Delta_hist.pdf')
 plt.savefig(pp,format='pdf')
 pp.close()
 plt.close()
 
 figure = corner.corner(fit['c'],labels=[r"${c}_0$",r"${c}_1$",r"${c}_2$",r"${c}_3$",r"${c}_4$"])
-pp = PdfPages('output5/c_corner.pdf')
+pp = PdfPages('output8/c_corner.pdf')
 plt.savefig(pp,format='pdf')
 pp.close()
 plt.close()
 
 
 figure = corner.corner(fit['alpha'],labels=[r"${\alpha}_0$",r"${\alpha}_1$",r"${\alpha}_2$",r"${\alpha}_3$",r"${\alpha}_4$"])
-pp = PdfPages('output5/alpha_corner.pdf')
+pp = PdfPages('output8/alpha_corner.pdf')
 plt.savefig(pp,format='pdf')
 pp.close()
 plt.close()
 
 figure = corner.corner(fit['beta'],labels=[r"${\beta}_0$",r"${\beta}_1$",r"${\beta}_2$",r"${\beta}_3$",r"${\beta}_4$"])
-pp = PdfPages('output5/beta_corner.pdf')
+pp = PdfPages('output8/beta_corner.pdf')
 plt.savefig(pp,format='pdf')
 pp.close()
 plt.close()
 
 figure = corner.corner(fit['gamma_'],labels=[r"${\gamma}_0$",r"${\gamma}_1$",r"${\gamma}_3$",r"${\gamma}_4$"])
-pp = PdfPages('output5/gamma_corner.pdf')
+pp = PdfPages('output8/gamma_corner.pdf')
 plt.savefig(pp,format='pdf')
 pp.close()
 plt.close()
 
 # mega = numpy.concatenate((fit['Delta_scale'][:,None],fit['L_sigma']),axis=1)
 figure = corner.corner(fit['L_sigma'],labels=[r"${\sigma}_0$",r"${\sigma}_1$",r"${\sigma}_2$",r"${\sigma}_3$",r"${\sigma}_4$"])
-pp = PdfPages('output5/sigma_corner.pdf')
+pp = PdfPages('output8/sigma_corner.pdf')
 plt.savefig(pp,format='pdf')
 pp.close()
 plt.close()
 
-figure = corner.corner(fit['rho0'],labels=[r"${\delta}_{00}$",r"${\delta}_{01}$",r"${\delta}_{02}$",r"${\delta}_{03}$",r"${\delta}_{04}$"])
-pp = PdfPages('output5/delta0_corner.pdf')
-plt.savefig(pp,format='pdf')
-pp.close()
-plt.close()
+# figure = corner.corner(fit['rho0'],labels=[r"${\delta}_{00}$",r"${\delta}_{01}$",r"${\delta}_{02}$",r"${\delta}_{03}$",r"${\delta}_{04}$"])
+# pp = PdfPages('output8/delta0_corner.pdf')
+# plt.savefig(pp,format='pdf')
+# pp.close()
+# plt.close()
 
 figure = corner.corner(fit['rho1'],labels=[r"${\delta}_{10}$",r"${\delta}_{11}$",r"${\delta}_{12}$",r"${\delta}_{13}$",r"${\delta}_{14}$"])
-pp = PdfPages('output5/delta1_corner.pdf')
+pp = PdfPages('output8/delta1_corner.pdf')
 plt.savefig(pp,format='pdf')
 pp.close()
 plt.close()
 
 # figure = corner.corner(fit['c'],labels=[r"${c}_0$",r"${c}_1$",r"${c}_2$",r"${c}_3$",r"${c}_4$"])
-# pp = PdfPages('output5/c_corner.pdf')
+# pp = PdfPages('output8/c_corner.pdf')
 # plt.savefig(pp,format='pdf')
 # pp.close()
 # plt.close()
 
-with PdfPages('output5/multipage_pdf.pdf') as pdf:
+with PdfPages('output8/multipage_pdf.pdf') as pdf:
 
     lineobjects = plt.plot(fit['lp__'][::10])
     plt.title(r'log p')
@@ -180,11 +180,11 @@ with PdfPages('output5/multipage_pdf.pdf') as pdf:
     pdf.savefig()
     plt.close()
  
-    lineobjects = plt.plot(fit['rho0'][::10],label=['U','B','V','R','I'])
-    plt.title(r'$\delta0$')
-    plt.legend(iter(lineobjects),('U','B','V','R','I'))
-    pdf.savefig()
-    plt.close()
+    # lineobjects = plt.plot(fit['rho0'][::10],label=['U','B','V','R','I'])
+    # plt.title(r'$\delta0$')
+    # plt.legend(iter(lineobjects),('U','B','V','R','I'))
+    # pdf.savefig()
+    # plt.close()
 
     lineobjects = plt.plot(fit['rho1'][::10],label=['U','B','V','R','I'])
     plt.title(r'$\delta1$')
@@ -207,14 +207,14 @@ with PdfPages('output5/multipage_pdf.pdf') as pdf:
 
 nlinks = fit['gamma'].shape[0]
 dum = numpy.concatenate((fit['gamma'][:,0:2], numpy.random.normal(1.,0.01,size=(nlinks,1)),fit['gamma'][:,3:]),axis=1)
-mega = numpy.array([fit['c'],fit['alpha'],fit['beta'],dum,fit['rho0'],fit['rho1'],fit['L_sigma']])
+mega = numpy.array([fit['c'],fit['alpha'],fit['beta'],dum,fit['rho1'],fit['L_sigma']])
 mega = numpy.transpose(mega)
 
 for index in xrange(5):
     figure = corner.corner(mega[index,:,:],labels=[r"$c_{}$".format(index), r"$\alpha_{}$".format(index),\
                     r"$\beta_{}$".format(index),r"$\gamma_{}$".format(index),\
-                    r"$\delta_{{0{}}}$".format(index),r"$\delta_{{1{}}}$".format(index),r"$\sigma_{}$".format(index)])
-    pp = PdfPages('output5/coeff{}.pdf'.format(index))
+                    r"$\delta_{{1{}}}$".format(index),r"$\sigma_{}$".format(index)])
+    pp = PdfPages('output8/coeff{}.pdf'.format(index))
     plt.savefig(pp,format='pdf')
     pp.close()
     plt.close()
@@ -245,7 +245,7 @@ for i in xrange(len(filts)):
 
 
 plt.tight_layout()
-pp = PdfPages('output5/colormag.pdf')
+pp = PdfPages('output8/colormag.pdf')
 plt.savefig(pp,format='pdf')
 pp.close()
 plt.close()
@@ -261,7 +261,7 @@ for i in xrange(len(filts)):
     axes[1,i].set_ylabel(r'{} + correction'.format(filts[i]))
 
 plt.tight_layout()
-pp = PdfPages('output5/specsimag.pdf')
+pp = PdfPages('output8/specsimag.pdf')
 plt.savefig(pp,format='pdf')
 pp.close()
 plt.close()
@@ -278,7 +278,7 @@ for i in xrange(len(filts)):
         ,color='black')
 axes[len(filts)-1].set_xlabel(r'EW(Ca)')
 fig.subplots_adjust(hspace=0.001)
-pp = PdfPages('output5/speccamag.pdf')
+pp = PdfPages('output8/speccamag.pdf')
 plt.savefig(pp,format='pdf')
 pp.close()
 plt.close()
@@ -295,7 +295,7 @@ plt.errorbar(efflam,y,yerr=[y-ymin,ymax-y],fmt='o')
 
 plt.legend()
 plt.xlabel(r'Wavelength (\AA)')
-pp = PdfPages('output5/ccm.pdf')
+pp = PdfPages('output8/ccm.pdf')
 plt.savefig(pp,format='pdf')
 pp.close()
 plt.close()

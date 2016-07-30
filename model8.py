@@ -2,7 +2,7 @@ import pickle
 import numpy
 import pystan
 
-# two color parameter model
+# two color parameter model but no linear term for second
 
 pkl_file = open('gege_data.pkl', 'r')
 data = pickle.load(pkl_file)
@@ -38,18 +38,19 @@ init = [{'EW' : EW_renorm, \
          'gamma0': 0.1, 'gamma_': numpy.zeros(4), \
          'mag_int': mag_renorm, \
          'L_sigma': numpy.zeros(5)+0.03, \
-         # 'L_Omega': numpy.identity(5), \
+         'L_Omega': numpy.identity(5), \
          'Delta_unit':Delta_simplex, 'Delta_scale': nsne/8.,\
          'k_unit': k_simplex, \
          'R_unit':k_simplex, \
-         'rho00':0.3,'rho0_':numpy.zeros(4),'rho1':numpy.zeros(5)-0.05} \
+         # 'rho00':0.3,'rho0_':numpy.zeros(4),\
+         'rho1':numpy.zeros(5)} \
         for _ in range(4)]
 
-sm = pystan.StanModel(file='gerard5.stan')
+sm = pystan.StanModel(file='gerard8.stan')
 control = {'stepsize':1}
 fit = sm.sampling(data=data, iter=1000, chains=4,control=control,init=init, thin=1)
 print fit
 
-output = open('temp5.pkl','wb')
+output = open('temp8.pkl','wb')
 pickle.dump(fit.extract(), output)
 output.close()
