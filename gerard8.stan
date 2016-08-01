@@ -23,7 +23,7 @@ parameters {
   simplex[D] k_unit;
 
   cholesky_factor_corr[N_mags] L_Omega;
-  vector<lower=0.0, upper = 0.12>[N_mags] L_sigma;
+  vector<lower=0.0, upper = 0.1>[N_mags] L_sigma;
 
   simplex[D] Delta_unit;
   real <lower = 0, upper = D/4.> Delta_scale;
@@ -31,7 +31,7 @@ parameters {
   simplex[D] R_unit;
   # real<lower=0, upper=0.5> rho00;
   # vector<lower=-0.4, upper=0.5>[4] rho0_;
-  vector<lower=-0.05, upper=0.05>[5] rho1;
+  vector<lower=-0.035, upper=0.035>[5] rho1;
 }
 
 transformed parameters {

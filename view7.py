@@ -251,14 +251,15 @@ plt.close()
 lambdas = numpy.arange(3500.,9000,100)
 for rv in rvs:
     A_ = sncosmo._extinction.ccm89(lambdas, 1., rv)
-    norm  = sncosmo._extinction.ccm89(numpy.array([efflam[2]]), 1., rv)
+    norm  = sncosmo._extinction.ccm89(numpy.array([efflam[1]]), 1., rv)-sncosmo._extinction.ccm89(numpy.array([efflam[2]]), 1., rv)
     A_ = A_/norm[0]
     plt.plot(lambdas,A_,label=r"$R_V={:.1f}$".format(rv))
-(y, ymin, ymax) = numpy.percentile(fit['gamma']/fit['gamma'][:,2][:,None],(50,50-34,50+34),axis=0)
+(y, ymin, ymax) = numpy.percentile(fit['gamma']/((fit['gamma'][:,1]-fit['gamma'][:,2])[:,None]),(50,50-34,50+34),axis=0)
 
 plt.errorbar(efflam,y,yerr=[y-ymin,ymax-y],fmt='o')
 plt.legend()
 plt.xlabel(r'Wavelength (\AA)')
+plt.ylabel(r'$\frac{\gamma_X}{\gamma_1-\gamma_2} = \frac{A_X}{A_B-A_V}$')
 pp = PdfPages('output7/ccm.pdf')
 plt.savefig(pp,format='pdf')
 pp.close()
