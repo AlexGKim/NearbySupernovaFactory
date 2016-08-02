@@ -13,14 +13,6 @@ fit = pickle.load(f)
 for key in fit.keys():
     print key, fit[key].min(), fit[key].max()
 
-for i in xrange(5):
-    dum = numpy.percentile(fit['alpha'][:,i],(50,50-34,50+34))
-    print '$\\alpha_{} = {:6.4f}^{{{:6.4f}}}_{{{:6.4f}}}$'.format(i, dum[0], dum[2]-dum[0],dum[1]-dum[0] )
-
-for i in xrange(5):    
-    dum = numpy.percentile(fit['beta'][:,i],(50,50-34,50+34))
-    print '$\\beta_{} = {:5.3f}^{{{:5.3f}}}_{{{:5.3f}}}$'.format(i, dum[0], dum[2]-dum[0],dum[1]-dum[0] )
-
 pkl_file = open('gege_data.pkl', 'r')
 data = pickle.load(pkl_file)
 pkl_file.close()
@@ -67,10 +59,16 @@ correction_median = numpy.median(correction,axis=1)
 # print 'EW0', numpy.median(fit['EW'][:,outlier[0],0],axis=0), EW_renorm[outlier[0],0] 
 # print 'EW1', numpy.median(fit['EW'][:,outlier[0],1],axis=0), EW_renorm[outlier[0],1]
 
-print fit['Delta'].flatten().std()
 plt.hist(fit['Delta'].flatten(),normed=True,bins=20)
 plt.title(r'$\Delta$')
 pp = PdfPages('output7/Delta_hist.pdf')
+plt.savefig(pp,format='pdf')
+pp.close()
+plt.close()
+
+plt.hist(fit['k'].flatten(),normed=True,bins=20)
+plt.title(r'$k$')
+pp = PdfPages('output7/k_hist.pdf')
 plt.savefig(pp,format='pdf')
 pp.close()
 plt.close()
@@ -187,6 +185,22 @@ for edge in edges:
     efflam.append((edge[1]-edge[0])/2+edge[0])
 # [3701, 4601, 5744, 6948, 8403]
 rc('text', usetex=True)
+
+
+
+
+nlinks = fit['gamma'].shape[0]
+mega = numpy.array([fit['c'],fit['alpha'],fit['beta'],fit['gamma'],fit['L_sigma']])
+mega = numpy.transpose(mega)
+
+for index in xrange(5):
+    figure = corner.corner(mega[index,:,:],labels=[r"$c_{}$".format(index), r"$\alpha_{}$".format(index),\
+                    r"$\beta_{}$".format(index),r"$\gamma_{}$".format(index),\
+                    r"$\sigma_{}$".format(index)])
+    pp = PdfPages('output7/coeff{}.pdf'.format(index))
+    plt.savefig(pp,format='pdf')
+    pp.close()
+    plt.close()
 
 
 rvs = [1.7,3.1,4.1]
