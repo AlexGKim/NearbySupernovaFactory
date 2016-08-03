@@ -169,19 +169,27 @@ We find a small but significant non-zero values for $\alpha_0$ and $\alpha_4$, i
 magnitudes.  All bands show larger and significant non-zero values for $\beta$.  This confirms the part of our hypothesis that spectral indicators
 are tracers of supernova absolute magnitude.
 
-The best-fit distribution for the parameters $\gamma$  and our measurement of
-$\frac{\gamma_X}{\gamma_1-\gamma_2}$  compared with the predictions of CCM dust are shown in Figure~\ref{gamma:fig}:
+The best-fit distribution for the parameters $\gamma$ are shown in Figure~\ref{gamma:fig}.  Our measurement of
+$\frac{\gamma_X}{\gamma_1-\gamma_2}$ and $\frac{\gamma_X}{\gamma_2}$  compared with the predictions of CCM dust:
 our fit values for $\gamma$ are consistent with the  $R_V=3.1$ CCM model.  The uncertainties in the 5 measurements
-of $\frac{\gamma_X}{\gamma_1-\gamma_2}$ are correlated: measurements of $\gamma_X/\gamma_2$ has significantly smaller
+of $\frac{\gamma_X}{\gamma_1-\gamma_2}$ are correlated: measurements of $\gamma_X/\gamma_2$ have significantly smaller
 uncertainties and are consistent with $R_V=3.1$.
 
 \begin{figure}[htbp] %  figure placement: here, top, bottom, or page
    \centering
-   \includegraphics[width=2.4in]{output7/gamma_corner.pdf} 
-   \includegraphics[width=3.3in]{output7/ccm.pdf} 
-   \caption{Left: Best-fit distribution for the parameters $\gamma$.  Right: 68\% measurements of $\frac{\gamma_X}{\gamma_1-\gamma_2}$ and CCM
+   \includegraphics[width=3in]{output7/gamma_corner.pdf} 
+   \caption{Best-fit distribution for the parameters $\gamma$.  68\% measurements of $\frac{\gamma_X}{\gamma_1-\gamma_2}$ and CCM
    predictions for different values of $R_V$.}
    \label{gamma:fig}
+\end{figure}
+
+\begin{figure}[htbp] %  figure placement: here, top, bottom, or page
+   \centering
+   \includegraphics[width=2.8in]{output7/ccm.pdf}
+      \includegraphics[width=2.8in]{output7/ccm2.pdf} 
+   \caption{68\% measurements of $\frac{\gamma_X}{\gamma_1-\gamma_2}$ (left) and $\frac{\gamma_X}{\gamma_2}$ (right).  CCM
+   predictions for these parameters are overlaid for different values of $R_V$.}
+   \label{ccm:fig}
 \end{figure}
 
 Non-trivial residual magnitude dispersions are captured in $C_c$.   Figure~\ref{sigma:fig} shows the confidence regions for the
@@ -248,56 +256,56 @@ and that our one-color linear model could be improved upon.
 Some equivalent widths go positive.  Is this an emission?
 
 Add Si line velocity.
-
-\subsection{Two-Color Model}
-Motivated by the indication that the one-parameter linear model does not fully describe the color-magnitude data, we develop a new model.
-Considering that dust does predict a linear extinction in magnitudes, we preserve $k$ as a color parameter and the $\gamma k$ relation
-with magnitude.   A second color parameter $D$ is introduced to be quadratically related with magnitude.  Practically I have found
-that the data are not sufficient to constrain both the linear and quadratic terms of $D$, so only the latter is considered.
-
-\subsubsection{Setup}
-\begin{equation*}
-\left(
-\begin{matrix}
-U\\B\\V\\R\\I
-\end{matrix}
-\right) \sim \mathcal{N}
-\left(
-\Delta +
-\left(
-\begin{matrix}
-c_0+\alpha_0 EW_{Ca} + \beta_0 EW_{Si} +\delta_{10} D^2\\
-c_1+\alpha_1 EW_{Ca} + \beta_1 EW_{Si} +\delta_{11} D^2\\
-c_2+\alpha_2 EW_{Ca} + \beta_2 EW_{Si} +\delta_{12} D^2\\
-c_3+\alpha_3 EW_{Ca} + \beta_3 EW_{Si} +\delta_{13} D^2\\
-c_4+\alpha_4 EW_{Ca} + \beta_4 EW_{Si} +\delta_{14} D^2
-\end{matrix}
-\right)
-,C_{c}
-\right).
-\end{equation*}
+%
+%\subsection{Two-Color Model}
+%Motivated by the indication that the one-parameter linear model does not fully describe the color-magnitude data, we develop a new model.
+%Considering that dust does predict a linear extinction in magnitudes, we preserve $k$ as a color parameter and the $\gamma k$ relation
+%with magnitude.   A second color parameter $D$ is introduced to be quadratically related with magnitude.  Practically I have found
+%that the data are not sufficient to constrain both the linear and quadratic terms of $D$, so only the latter is considered.
+%
+%\subsubsection{Setup}
 %\begin{equation*}
-%D \sim \mathcal{N}(\bar{D},1)
+%\left(
+%\begin{matrix}
+%U\\B\\V\\R\\I
+%\end{matrix}
+%\right) \sim \mathcal{N}
+%\left(
+%\Delta +
+%\left(
+%\begin{matrix}
+%c_0+\alpha_0 EW_{Ca} + \beta_0 EW_{Si} +\delta_{10} D^2\\
+%c_1+\alpha_1 EW_{Ca} + \beta_1 EW_{Si} +\delta_{11} D^2\\
+%c_2+\alpha_2 EW_{Ca} + \beta_2 EW_{Si} +\delta_{12} D^2\\
+%c_3+\alpha_3 EW_{Ca} + \beta_3 EW_{Si} +\delta_{13} D^2\\
+%c_4+\alpha_4 EW_{Ca} + \beta_4 EW_{Si} +\delta_{14} D^2
+%\end{matrix}
+%\right)
+%,C_{c}
+%\right).
 %\end{equation*}
-\begin{equation*}
-\left(
-\begin{matrix}
-U_o  \\B_o\\ V_o\\R_o\\I_o\\EW_{Si, o}\\ EW_{Ca, o}
-\end{matrix}
-\right) \sim \mathcal{N}
-\left(
-\left(
-\begin{matrix}
-U +\gamma_0 k \\B +\gamma_1 k \\V+\gamma_2 k\\R+\gamma_3 k\\I+\gamma_4 k\\
-EW_{Si}\\ EW_{Ca}
-\end{matrix}
-\right)
-,C
-\right).
-\end{equation*}
-\begin{equation*}
-\langle \Delta \rangle=0, \langle k \rangle=0, \langle k^2 \rangle=1, \langle (D-\bar{D})^2 \rangle=1, \gamma_0 \ge 0.
-\end{equation*}
+%%\begin{equation*}
+%%D \sim \mathcal{N}(\bar{D},1)
+%%\end{equation*}
+%\begin{equation*}
+%\left(
+%\begin{matrix}
+%U_o  \\B_o\\ V_o\\R_o\\I_o\\EW_{Si, o}\\ EW_{Ca, o}
+%\end{matrix}
+%\right) \sim \mathcal{N}
+%\left(
+%\left(
+%\begin{matrix}
+%U +\gamma_0 k \\B +\gamma_1 k \\V+\gamma_2 k\\R+\gamma_3 k\\I+\gamma_4 k\\
+%EW_{Si}\\ EW_{Ca}
+%\end{matrix}
+%\right)
+%,C
+%\right).
+%\end{equation*}
+%\begin{equation*}
+%\langle \Delta \rangle=0, \langle k \rangle=0, \langle k^2 \rangle=1, \langle (D-\bar{D})^2 \rangle=1, \gamma_0 \ge 0.
+%\end{equation*}
 
 %
 %
