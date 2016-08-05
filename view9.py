@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+
 import pickle
 import pystan
 import matplotlib.pyplot as plt
@@ -85,8 +87,25 @@ plt.savefig(pp,format='pdf')
 pp.close()
 plt.close()
 
+mega = fit['alpha']-fit['alpha'][:,4][:,None]
+
+figure = corner.corner(mega[:,:4],labels=[r"${\alpha}_0$",r"${\alpha}_1$",r"${\alpha}_2$",r"${\alpha}_3$"])
+pp = PdfPages('output9/alpham4_corner.pdf')
+plt.savefig(pp,format='pdf')
+pp.close()
+plt.close()
+
+
 figure = corner.corner(fit['beta'],labels=[r"${\beta}_0$",r"${\beta}_1$",r"${\beta}_2$",r"${\beta}_3$",r"${\beta}_4$"])
 pp = PdfPages('output9/beta_corner.pdf')
+plt.savefig(pp,format='pdf')
+pp.close()
+plt.close()
+
+mega = fit['beta']-fit['beta'][:,4][:,None]
+
+figure = corner.corner(mega[:,:4],labels=[r"${\beta}_0$",r"${\beta}_1$",r"${\beta}_2$",r"${\beta}_3$"])
+pp = PdfPages('output9/betam4_corner.pdf')
 plt.savefig(pp,format='pdf')
 pp.close()
 plt.close()
@@ -99,6 +118,34 @@ plt.close()
 
 figure = corner.corner(fit['gamma1'],labels=[r"${\gamma}_{10}$",r"${\gamma}_{11}$",r"${\gamma}_{12}$",r"${\gamma}_{13}$",r"${\gamma}_{14}$"])
 pp = PdfPages('output9/gamma1_corner.pdf')
+plt.savefig(pp,format='pdf')
+pp.close()
+plt.close()
+
+mega = fit['gamma']/((fit['gamma'][:,1]-fit['gamma'][:,2]))[:,None]
+
+figure = corner.corner(mega,labels=[r"$R_0$",r"$R_1$",r"$R_2$",r"$R_3$",r"$R_4$"])
+pp = PdfPages('output9/rx_corner.pdf')
+plt.savefig(pp,format='pdf')
+pp.close()
+plt.close()
+
+mega = fit['gamma']/((fit['gamma'][:,1]-fit['gamma'][:,2]))[:,None]
+
+mega = mega-mega[:,2][:,None]
+mega = numpy.delete(mega,2,axis=1)
+mega = numpy.delete(mega,1,axis=1)
+figure = corner.corner(mega,labels=[r"$R_0$",r"$R_3$",r"$R_4$"])
+pp = PdfPages('output9/rx-rv_corner.pdf')
+plt.savefig(pp,format='pdf')
+pp.close()
+plt.close()
+
+
+mega = fit['gamma1']/((fit['gamma1'][:,1]-fit['gamma1'][:,2]))[:,None]
+
+figure = corner.corner(mega,labels=[r"$R_{20}$",r"$R_{21}$",r"$R_{22}$",r"$R_{23}$",r"$R_{24}$"])
+pp = PdfPages('output9/rx1_corner.pdf')
 plt.savefig(pp,format='pdf')
 pp.close()
 plt.close()
@@ -117,6 +164,12 @@ plt.savefig(pp,format='pdf')
 pp.close()
 plt.close()
 
+plt.hist(fit['prob0']) #
+plt.xlabel(r'prob0')
+pp = PdfPages('output9/prob0.pdf')
+plt.savefig(pp,format='pdf')
+pp.close()
+plt.close()
 
 with PdfPages('output9/multipage_pdf.pdf') as pdf:
 
@@ -163,6 +216,9 @@ with PdfPages('output9/multipage_pdf.pdf') as pdf:
     pdf.savefig()
     plt.close()
     
+
+
+
     lineobjects = plt.plot(fit['gamma'][::10],label=['U','B','V','R','I'])
     plt.title('gamma')
     plt.legend(iter(lineobjects),('U','B','V','R','I'))
@@ -206,12 +262,12 @@ rc('text', usetex=True)
 
 
 nlinks = fit['gamma'].shape[0]
-mega = numpy.array([fit['c'],fit['alpha'],fit['beta'],fit['gamma'],fit['L_sigma']])
+mega = numpy.array([fit['c'],fit['alpha'],fit['beta'],fit['gamma'],fit['gamma1'],fit['L_sigma']])
 mega = numpy.transpose(mega)
 
 for index in xrange(5):
     figure = corner.corner(mega[index,:,:],labels=[r"$c_{}$".format(index), r"$\alpha_{}$".format(index),\
-                    r"$\beta_{}$".format(index),r"$\gamma_{}$".format(index),\
+                    r"$\beta_{}$".format(index),r"$\gamma_{}$".format(index),r"$\gamma_{{1{}}}$".format(index),\
                     r"$\sigma_{}$".format(index)])
     pp = PdfPages('output9/coeff{}.pdf'.format(index))
     plt.savefig(pp,format='pdf')
@@ -289,7 +345,7 @@ for rv in rvs:
 plt.errorbar(efflam,y,yerr=[y-ymin,ymax-y],fmt='o')
 plt.legend()
 plt.xlabel(r'Wavelength (\AA)')
-plt.ylabel(r'$\frac{\gamma_X}{\gamma_1-\gamma_2} = \frac{A_X}{A_B-A_V}$')
+plt.ylabel(r'$R_X=\frac{\gamma_X}{\gamma_1-\gamma_2}$')
 pp = PdfPages('output9/ccm.pdf')
 plt.savefig(pp,format='pdf')
 pp.close()
@@ -310,6 +366,39 @@ pp = PdfPages('output9/ccm2.pdf')
 plt.savefig(pp,format='pdf')
 pp.close()
 plt.close()
+
+for rv in rvs:
+    A_ = sncosmo._extinction.ccm89(lambdas, 1., rv)
+    norm  = sncosmo._extinction.ccm89(numpy.array([efflam[1]]), 1., rv)-sncosmo._extinction.ccm89(numpy.array([efflam[2]]), 1., rv)
+    A_ = A_/norm[0]
+    plt.plot(lambdas,A_,label=r"$R_V={:.1f}$".format(rv))
+(y, ymin, ymax) = numpy.percentile(fit['gamma1']/((fit['gamma1'][:,1]-fit['gamma1'][:,2])[:,None]),(50,50-34,50+34),axis=0)
+
+plt.errorbar(efflam,y,yerr=[y-ymin,ymax-y],fmt='o')
+plt.legend()
+plt.xlabel(r'Wavelength (\AA)')
+plt.ylabel(r'$R_{2X}=\frac{\gamma_{2X}}{\gamma_{21}-\gamma_{22}} $')
+pp = PdfPages('output9/ccm12.pdf')
+plt.savefig(pp,format='pdf')
+pp.close()
+plt.close()
+
+for rv in rvs:
+    A_ = sncosmo._extinction.ccm89(lambdas, 1., rv)
+    norm  = sncosmo._extinction.ccm89(numpy.array([efflam[2]]), 1., rv)
+    A_ = A_/norm[0]
+    plt.plot(lambdas,A_,label=r"$R_V={:.1f}$".format(rv))
+(y, ymin, ymax) = numpy.percentile(fit['gamma1']/fit['gamma1'][:,2][:,None],(50,50-34,50+34),axis=0)
+
+plt.errorbar(efflam,y,yerr=[y-ymin,ymax-y],fmt='o')
+plt.legend()
+plt.xlabel(r'Wavelength (\AA)')
+plt.ylabel(r'$\frac{\gamma_{2X}}{\gamma_{22}}$')
+pp = PdfPages('output9/ccm22.pdf')
+plt.savefig(pp,format='pdf')
+pp.close()
+plt.close()
+
 
 
 # for index in xrange(5):

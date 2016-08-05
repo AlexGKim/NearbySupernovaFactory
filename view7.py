@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+
 import pickle
 import pystan
 import matplotlib.pyplot as plt
@@ -85,14 +87,52 @@ plt.savefig(pp,format='pdf')
 pp.close()
 plt.close()
 
+mega = fit['alpha']-fit['alpha'][:,4][:,None]
+
+figure = corner.corner(mega[:,:4],labels=[r"${\alpha}_0$",r"${\alpha}_1$",r"${\alpha}_2$",r"${\alpha}_3$"])
+pp = PdfPages('output7/alpham4_corner.pdf')
+plt.savefig(pp,format='pdf')
+pp.close()
+plt.close()
+
+
+
 figure = corner.corner(fit['beta'],labels=[r"${\beta}_0$",r"${\beta}_1$",r"${\beta}_2$",r"${\beta}_3$",r"${\beta}_4$"])
 pp = PdfPages('output7/beta_corner.pdf')
 plt.savefig(pp,format='pdf')
 pp.close()
 plt.close()
 
+mega = fit['beta']-fit['beta'][:,4][:,None]
+
+figure = corner.corner(mega[:,:4],labels=[r"${\beta}_0$",r"${\beta}_1$",r"${\beta}_2$",r"${\beta}_3$"])
+pp = PdfPages('output7/betam4_corner.pdf')
+plt.savefig(pp,format='pdf')
+pp.close()
+plt.close()
+
+
 figure = corner.corner(fit['gamma'],labels=[r"${\gamma}_0$",r"${\gamma}_1$",r"${\gamma}_2$",r"${\gamma}_3$",r"${\gamma}_4$"])
 pp = PdfPages('output7/gamma_corner.pdf')
+plt.savefig(pp,format='pdf')
+pp.close()
+plt.close()
+
+mega = fit['gamma']/((fit['gamma'][:,1]-fit['gamma'][:,2]))[:,None]
+
+figure = corner.corner(mega,labels=[r"$R_0$",r"$R_1$",r"$R_2$",r"$R_3$",r"$R_4$"])
+pp = PdfPages('output7/rx_corner.pdf')
+plt.savefig(pp,format='pdf')
+pp.close()
+plt.close()
+
+mega = fit['gamma']/((fit['gamma'][:,1]-fit['gamma'][:,2]))[:,None]
+
+mega = mega-mega[:,2][:,None]
+mega = numpy.delete(mega,2,axis=1)
+mega = numpy.delete(mega,1,axis=1)
+figure = corner.corner(mega,labels=[r"$R_0$",r"$R_3$",r"$R_4$"])
+pp = PdfPages('output7/rx-rv_corner.pdf')
 plt.savefig(pp,format='pdf')
 pp.close()
 plt.close()
@@ -270,7 +310,7 @@ for rv in rvs:
 plt.errorbar(efflam,y,yerr=[y-ymin,ymax-y],fmt='o')
 plt.legend()
 plt.xlabel(r'Wavelength (\AA)')
-plt.ylabel(r'$\frac{\gamma_X}{\gamma_1-\gamma_2} = \frac{A_X}{A_B-A_V}$')
+plt.ylabel(r'$R_X=\frac{\gamma_X}{\gamma_1-\gamma_2}$')
 pp = PdfPages('output7/ccm.pdf')
 plt.savefig(pp,format='pdf')
 pp.close()

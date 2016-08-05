@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+
 import pickle
 import numpy
 import pystan
@@ -30,17 +32,31 @@ Delta_simplex = numpy.zeros(nsne)+1./nsne
 k_simplex = numpy.zeros(nsne)
 
 init = [{'EW' : EW_renorm, \
-         'c': numpy.zeros(5),\
-         'alpha': numpy.zeros(5), \
-         'beta':numpy.zeros(5), \
-         'gamma_': numpy.zeros(4)+1., \
-         'gamma1_': numpy.zeros(4)+1., \
-         'prob0': 0.75,\
+         'c': numpy.zeros(5)-.1,\
+         # 'alpha': numpy.array([0.0031, 0.0005,0.0006,0.0007,0.0021]), \
+         'alpha1': 0.001,\
+         'alpha2': -0.0016,\
+         'alpha3': -0.0015,\
+         'alpha4': -0.0015,\
+         'alpha5': 0.0021,\
+         # 'beta':numpy.array([0.0345, 0.0274, 0.0274, 0.0223, 0.0213]), \
+         'beta1': 0.0125,\
+         'beta2': 0.0055,\
+         'beta3': 0.006,\
+         'beta4': 0.001,\
+         'beta5': 0.0213,\
+         # 'gamma_': numpy.array([5.0,3.1,2.4,1.8]), \
+         'gamma01': 1.95,\
+         'gamma02': 3.1,\
+         'gamma03': -0.7,\
+         'gamma04': -1.3,\
+         'gamma1_': numpy.zeros(4)+2., \
+         'prob0': 0.5,\
          'mag_int': mag_renorm, \
-         'L_sigma': numpy.zeros(5)+0.05, \
+         'L_sigma': numpy.zeros(5)+0.06, \
          'L_Omega': numpy.identity(5), \
          'Delta_unit':Delta_simplex, 'Delta_scale': nsne/8.,\
-         'k_unit': k_simplex} \
+         'k': k_simplex} \
         for _ in range(4)]
 
 sm = pystan.StanModel(file='gerard9.stan')
