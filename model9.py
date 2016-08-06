@@ -51,10 +51,10 @@ init = [{'EW' : EW_renorm, \
          'gamma03': -0.7,\
          'gamma04': -1.3,\
          'gamma1_': numpy.zeros(4)+2., \
-         'prob0': 0.5,\
+         'prob0': 0.3,\
          'mag_int': mag_renorm, \
-         'L_sigma': numpy.zeros(5)+0.06, \
-         'L_Omega': numpy.identity(5), \
+         'L_sigma': numpy.zeros(5)+0.05, \
+         # 'L_Omega': numpy.identity(5), \
          'Delta_unit':Delta_simplex, 'Delta_scale': nsne/8.,\
          'k': k_simplex} \
         for _ in range(4)]

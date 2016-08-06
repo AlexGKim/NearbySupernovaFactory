@@ -16,7 +16,8 @@ inferred by redshift.
 The data was provided by Manu Gangler.
 
 \section{Model Fits}
-\subsection{One-Color Model}
+\subsection{One-Color, One-Dust Model}
+\label{onecolor:sec}
 We hypothesize that Type Ia supernova spectral features are predictive of intrinsic
 magnitudes.  The intrinsic magnitudes are not perfectly deterministic, but have some intrinsic dispersion.
 An extrinsic physical process common to all supernovae can influence the propagation
@@ -29,7 +30,7 @@ with residual Gaussian dispersion with covariance $C_c$.  A grey magnitude offse
 to capture grey intrinsic dispersion and distance errors introduced in the normalization of the photometry.
 The  extrinsic process is also assumed to be linear.  The observables
 $U_o, B_o, V_o, R_o, I_o$, $EW_{Ca,o}$ and $EW_{Si,o}$ have Gaussian uncertainty with covariance $C$.  The model can be expressed
-\begin{equation*}
+\begin{equation}
 \left(
 \begin{matrix}
 U\\B\\V\\R\\I
@@ -48,8 +49,9 @@ c_4+\alpha_4 EW_{Ca} + \beta_4 EW_{Si}
 \right)
 ,C_{c}
 \right)
-\end{equation*}
-\begin{equation*}
+\label{ew:eqn}
+\end{equation}
+\begin{equation}
 \left(
 \begin{matrix}
 U_o\\B_o\\ V_o\\R_o\\I_o\\EW_{Si, o}\\ EW_{Ca, o}\end{matrix}
@@ -62,8 +64,9 @@ EW_{Si}\\ EW_{Ca}
 \end{matrix}
 \right)
 ,C
-\right)
-\end{equation*}
+\right).
+\label{dust:eqn}
+\end{equation}
 The global parameters $c$, $\alpha$, and $\beta$ are the intercepts and slopes of the bilinear relationships between equivalent widths
 and intrinsic magnitudes.  The extrinsic piece is split into the properties $\gamma$ of the physical process and the per-supernova 
 parameters $k$ that indicate how much of that process each object undergoes.  To break the degeneracies inherent in the model we impose
@@ -169,25 +172,24 @@ We find a small but significant non-zero values for $\alpha_0$ and $\alpha_4$, i
 magnitudes.  All bands show larger and significant non-zero values for $\beta$.  This confirms the part of our hypothesis that spectral indicators
 are tracers of supernova absolute magnitude.
 
-The best-fit distribution for the parameters $\gamma$ are shown in Figure~\ref{gamma:fig}.  Our measurement of
-$\frac{\gamma_X}{\gamma_1-\gamma_2}$ and $\frac{\gamma_X}{\gamma_2}$  compared with the predictions of CCM dust:
+The best-fit distribution for $R_X=\frac{\gamma_X}{\gamma_1-\gamma_2}$ are shown in Figure~\ref{rx:fig}.  Our measurement of
+$R_X$ and $\frac{\gamma_X}{\gamma_2}$  compared with the predictions of CCM dust:
 our fit values for $\gamma$ are consistent with the  $R_V=3.1$ CCM model.  The uncertainties in the 5 measurements
-of $\frac{\gamma_X}{\gamma_1-\gamma_2}$ are correlated: measurements of $\gamma_X/\gamma_2$ have significantly smaller
+of $R_X$ are correlated: measurements of $\gamma_X/\gamma_2$ have significantly smaller
 uncertainties and are consistent with $R_V=3.1$.
 
 \begin{figure}[htbp] %  figure placement: here, top, bottom, or page
    \centering
-   \includegraphics[width=3in]{output7/gamma_corner.pdf} 
-   \caption{Best-fit distribution for the parameters $\gamma$.  68\% measurements of $\frac{\gamma_X}{\gamma_1-\gamma_2}$ and CCM
-   predictions for different values of $R_V$.}
-   \label{gamma:fig}
+   \includegraphics[width=3in]{output7/rx_corner.pdf} 
+   \caption{Best-fit distribution for the   $R_X=\frac{\gamma_X}{\gamma_1-\gamma_2}$.
+   \label{rx:fig}}
 \end{figure}
 
 \begin{figure}[htbp] %  figure placement: here, top, bottom, or page
    \centering
    \includegraphics[width=2.8in]{output7/ccm.pdf}
       \includegraphics[width=2.8in]{output7/ccm2.pdf} 
-   \caption{68\% measurements of $\frac{\gamma_X}{\gamma_1-\gamma_2}$ (left) and $\frac{\gamma_X}{\gamma_2}$ (right).  CCM
+   \caption{68\% measurements of $R_X=\frac{\gamma_X}{\gamma_1-\gamma_2}$ (left) and $\frac{\gamma_X}{\gamma_2}$ (right).  CCM
    predictions for these parameters are overlaid for different values of $R_V$.}
    \label{ccm:fig}
 \end{figure}
@@ -256,6 +258,73 @@ and that our one-color linear model could be improved upon.
 Some equivalent widths go positive.  Is this an emission?
 
 Add Si line velocity.
+
+\subsection{Two-Dust Model}
+
+Motivated by the consistency of the external extinction with CCV $R_V=3.1$ dust, and the hint of the color-magnitude
+diagrams in Figure~\ref{magresidual:fig}  not following single slopes, we develop a new model in which
+each supernova encounters one of two sources of external extinction.
+
+\subsubsection{Setup}
+The model is identical to that of \S\ref{onecolor:sec} except with the addition of an alternative extrinsic source of extinction.
+The intrinsic magnitudes of the supernova are determined by the spectral properties expressed as Eqn.~\ref{ew:eqn}.
+One extrinsic source of extinction is modeled as before with Eqn.~\ref{dust:eqn};
+the second source of extinction
+is modeled similarly but with the introduction of new parameters $\gamma_{2X}$
+\begin{equation}
+\left(
+\begin{matrix}
+U_o\\B_o\\ V_o\\R_o\\I_o\\EW_{Si, o}\\ EW_{Ca, o}\end{matrix}
+\right) \sim \mathcal{N}
+\left(
+\left(
+\begin{matrix}
+U +\gamma_{20} k \\B +\gamma_{21} k \\V+\gamma_{22} k\\R+\gamma_{23} k\\I+\gamma_{24} k\\
+EW_{Si}\\ EW_{Ca}
+\end{matrix}
+\right)
+,C
+\right).
+\label{dust2:eqn}
+\end{equation}
+The probability that a supernova experiences the first source of extinction is given by the free parameter $p_0$,
+the probability of the second is $1-p_0$.  
+The same $k$ parameters are used to describe supernovae in both extinction sources.  In order to do this we change
+some of the conditions that constrain the degeneracies of the model
+\begin{equation*}
+\langle \Delta \rangle=0, \gamma_1 = 1+\gamma_2, \gamma_{21}=1+\gamma_{22}.
+\end{equation*}
+These conditions are useful for interpreting the extinction as being due to dust, as $R_X = \gamma_X$,
+the color excess $E(B-V) \equiv (\gamma_1-\gamma_2)k =k$.
+The $c$ parameters  are fit such that both extinction models
+revert to the same intrinsic magnitudes for $k=0$: the $\langle k \rangle=0$ condition is removed. 
+
+To alleviate the degeneracies inherent to mixture models, we set the range of $\gamma$'s for the first extinction source to be within
+a range of CCM possibilities.  No such restriction is placed on the $\gamma_{2X}$'s of the second source.
+
+\subsubsection{Results}
+
+\begin{figure}[htbp] %  figure placement: here, top, bottom, or page
+   \centering
+   \includegraphics[width=2.8in]{output9/rx_corner.pdf}
+      \includegraphics[width=2.8in]{output9/rx1_corner.pdf} 
+   \caption{Best-fit distribution for the first extinction source  $R_X=\frac{\gamma_X}{\gamma_1-\gamma_2}$ (left) and
+   the second extinction source
+   $R_{2X}=\frac{\gamma_{2X}}{\gamma_{21}-\gamma_{22}}$ (right).
+   \label{rx:fig}}
+\end{figure}
+
+\begin{figure}[htbp] %  figure placement: here, top, bottom, or page
+   \centering
+   \includegraphics[width=2.8in]{output9/ccm.pdf}
+      \includegraphics[width=2.8in]{output9/ccm2.pdf} 
+         \includegraphics[width=2.8in]{output9/ccm12.pdf}
+      \includegraphics[width=2.8in]{output9/ccm22.pdf} 
+   \caption{68\% measurements of $R_X=\frac{\gamma_X}{\gamma_1-\gamma_2}$ (left) and $\frac{\gamma_X}{\gamma_2}$ (right).  CCM
+   predictions for these parameters are overlaid for different values of $R_V$.}
+   \label{ccm:fig}
+\end{figure}
+
 %
 %\subsection{Two-Color Model}
 %Motivated by the indication that the one-parameter linear model does not fully describe the color-magnitude data, we develop a new model.
