@@ -11,40 +11,44 @@ data {
 parameters {
 
   vector<lower=-150, upper=150>[2] EW[D];
-  vector<lower=-1.9, upper=2.2>[N_mags] mag_int[D];
+  vector<lower=-1.9, upper=2.1>[N_mags] mag_int[D];
 
-  vector<lower=-0.5, upper=0.15>[5] c;
+  vector<lower=-0.1, upper=0.16>[5] c;
   # vector<lower=-0.002, upper=0.006>[5] alpha;
-  real<lower=-0.002, upper=0.007> alpha1;
-  real<lower=-0.003, upper=0.004> alpha2;
-  real<lower=-0.002, upper=0.002> alpha3;
-  real<lower=-0.003, upper=-0.0002> alpha4;
-  real<lower=-0.001, upper=0.005> alpha5;
+
+  real<lower=0, upper=0.015> alpha1;
+  real<lower=0.00, upper=0.008> alpha2;
+  real<lower=0., upper=0.005> alpha3;
+  real<lower=0.0, upper=0.004> alpha4;
+  real<lower=0.0, upper=0.004> alpha5;
 
   # vector<lower=0.01, upper=0.045>[5] beta;
-  real<lower=0.00, upper=0.02> beta1;
-  real<lower=-0.005, upper=0.01> beta2;
-  real<lower=-0.005, upper=0.01> beta3;
-  real<lower=-0.003, upper=0.004> beta4;
-  real<lower=0.01, upper=0.032> beta5;
+  real<lower=0.005, upper=0.045> beta1;
+  real<lower=0.005, upper=0.035> beta2;
+  real<lower=0.01, upper=0.04> beta3;
+  real<lower=0.01, upper=0.03> beta4;
+  real<lower=0.01, upper=0.035> beta5;
 
   # vector<lower=1., upper=6>[4] gamma_;
-  real<lower=1.65, upper=2.2> gamma01;
-  real<lower=1.8, upper=4.0> gamma02;
-  real<lower=-0.82, upper=-.54> gamma03;
-  real<lower=-1.7, upper=-.95> gamma04;
+  real<lower=4.1, upper=6.2> gamma01;
+  real<lower=2.3, upper=4.3> gamma02;
+  real<lower=1.8, upper=3.8> gamma03;
+  real<lower=1., upper=3> gamma04;
 
-  vector<lower=-0.3, upper=6>[4] gamma1_;
+  real<lower=1.2, upper=3.> gamma11;
+  real<lower=-0.1, upper=1.4> gamma12;
+  real<lower=-0.5, upper=1.> gamma13;
+  real<lower=-1, upper=.6> gamma14;
 
   # cholesky_factor_corr[N_mags] L_Omega;
   vector<lower=0.0, upper = 0.08>[N_mags] L_sigma;
 
   simplex[D] Delta_unit;
-  real <lower = 0, upper = 3*D/4.> Delta_scale;
+  real <lower = 15, upper = 45> Delta_scale;
 
   real <lower=0.0, upper=1.> prob0;
 
-  vector <lower=-0.5, upper=1.>[D] k;
+  vector <lower=-0.4, upper=.8>[D] k;
 }
 
 transformed parameters {
@@ -55,28 +59,28 @@ transformed parameters {
   vector[5] beta;
   # vector[D] k;
 
-  gamma[1] <- gamma01+gamma02;
+  gamma[1] <- gamma01;
   gamma[2] <- 1.+gamma02;
   gamma[3] <- gamma02;
-  gamma[4] <- gamma03+gamma02;
-  gamma[5] <- gamma04+gamma02;
+  gamma[4] <- gamma03;
+  gamma[5] <- gamma04;
 
-  gamma1[1] <- gamma1_[1];
-  gamma1[2] <- 1.+gamma1_[2];
-  gamma1[3] <- gamma1_[2];
-  gamma1[4] <- gamma1_[3];
-  gamma1[5] <- gamma1_[4];
+  gamma1[1] <- gamma11;
+  gamma1[2] <- 1.+gamma12;
+  gamma1[3] <- gamma12;
+  gamma1[4] <- gamma13;
+  gamma1[5] <- gamma14;
 
-  alpha[1] <- alpha1+alpha5;
-  alpha[2] <- alpha2+alpha5;
-  alpha[3] <- alpha3+alpha5;
-  alpha[4] <- alpha4+alpha5;
+  alpha[1] <- alpha1;
+  alpha[2] <- alpha2;
+  alpha[3] <- alpha3;
+  alpha[4] <- alpha4;
   alpha[5] <- alpha5;
 
-  beta[1] <- beta1+beta5;
-  beta[2] <- beta2+beta5;
-  beta[3] <- beta3+beta5;
-  beta[4] <- beta4+beta5;
+  beta[1] <- beta1;
+  beta[2] <- beta2;
+  beta[3] <- beta3;
+  beta[4] <- beta4;
   beta[5] <- beta5;
 
   Delta <- Delta_scale*(Delta_unit - 1./D);

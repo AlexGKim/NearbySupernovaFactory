@@ -40,14 +40,14 @@ EW_renorm = (EW_obs - EW_mn)
 # color_cov = numpy.dot(trans,numpy.dot(dum, trans.T))
 # print " \\\\\n".join([" & ".join(map('{0:.4f}'.format, line)) for line in color_cov])
 
-correction = [ fit['alpha'][:,i][:,None]*fit['EW'][:,:, 0] \
-    + fit['beta'][:,i][:,None]*fit['EW'][:,:, 1] \
-    + fit['gamma'][:,i][:,None]*fit['k'] \
-    + fit['Delta'] \
-    for i in xrange(5)]
+# correction = [ fit['alpha'][:,i][:,None]*fit['EW'][:,:, 0] \
+#     + fit['beta'][:,i][:,None]*fit['EW'][:,:, 1] \
+#     + fit['gamma'][:,i][:,None]*fit['k'] \
+#     + fit['Delta'] \
+#     for i in xrange(5)]
 
-correction = numpy.array(correction)
-correction_median = numpy.median(correction,axis=1)
+# correction = numpy.array(correction)
+# correction_median = numpy.median(correction,axis=1)
 
 # outlier  = numpy.where((mag_obs[:, 4]-correction_median[4,:]) < -27.8)
 # print data['snlist'][outlier]
@@ -87,13 +87,13 @@ plt.savefig(pp,format='pdf')
 pp.close()
 plt.close()
 
-mega = fit['alpha']-fit['alpha'][:,4][:,None]
+# mega = fit['alpha']-fit['alpha'][:,4][:,None]
 
-figure = corner.corner(mega[:,:4],labels=[r"${\alpha}_0$",r"${\alpha}_1$",r"${\alpha}_2$",r"${\alpha}_3$"])
-pp = PdfPages('output9/alpham4_corner.pdf')
-plt.savefig(pp,format='pdf')
-pp.close()
-plt.close()
+# figure = corner.corner(mega[:,:4],labels=[r"${\alpha}_0$",r"${\alpha}_1$",r"${\alpha}_2$",r"${\alpha}_3$"])
+# pp = PdfPages('output9/alpham4_corner.pdf')
+# plt.savefig(pp,format='pdf')
+# pp.close()
+# plt.close()
 
 
 figure = corner.corner(fit['beta'],labels=[r"${\beta}_0$",r"${\beta}_1$",r"${\beta}_2$",r"${\beta}_3$",r"${\beta}_4$"])
@@ -102,13 +102,13 @@ plt.savefig(pp,format='pdf')
 pp.close()
 plt.close()
 
-mega = fit['beta']-fit['beta'][:,4][:,None]
+# mega = fit['beta']-fit['beta'][:,4][:,None]
 
-figure = corner.corner(mega[:,:4],labels=[r"${\beta}_0$",r"${\beta}_1$",r"${\beta}_2$",r"${\beta}_3$"])
-pp = PdfPages('output9/betam4_corner.pdf')
-plt.savefig(pp,format='pdf')
-pp.close()
-plt.close()
+# figure = corner.corner(mega[:,:4],labels=[r"${\beta}_0$",r"${\beta}_1$",r"${\beta}_2$",r"${\beta}_3$"])
+# pp = PdfPages('output9/betam4_corner.pdf')
+# plt.savefig(pp,format='pdf')
+# pp.close()
+# plt.close()
 
 figure = corner.corner(fit['gamma'],labels=[r"${\gamma}_0$",r"${\gamma}_1$",r"${\gamma}_2$",r"${\gamma}_3$",r"${\gamma}_4$"])
 pp = PdfPages('output9/gamma_corner.pdf')
@@ -122,24 +122,24 @@ plt.savefig(pp,format='pdf')
 pp.close()
 plt.close()
 
-mega = fit['gamma']/((fit['gamma'][:,1]-fit['gamma'][:,2]))[:,None]
+# mega = fit['gamma']/((fit['gamma'][:,1]-fit['gamma'][:,2]))[:,None]
 
-figure = corner.corner(mega,labels=[r"$R_0$",r"$R_1$",r"$R_2$",r"$R_3$",r"$R_4$"])
-pp = PdfPages('output9/rx_corner.pdf')
-plt.savefig(pp,format='pdf')
-pp.close()
-plt.close()
+# figure = corner.corner(mega,labels=[r"$R_0$",r"$R_1$",r"$R_2$",r"$R_3$",r"$R_4$"])
+# pp = PdfPages('output9/rx_corner.pdf')
+# plt.savefig(pp,format='pdf')
+# pp.close()
+# plt.close()
 
-mega = fit['gamma']/((fit['gamma'][:,1]-fit['gamma'][:,2]))[:,None]
+# mega = fit['gamma']/((fit['gamma'][:,1]-fit['gamma'][:,2]))[:,None]
 
-mega = mega-mega[:,2][:,None]
-mega = numpy.delete(mega,2,axis=1)
-mega = numpy.delete(mega,1,axis=1)
-figure = corner.corner(mega,labels=[r"$R_0$",r"$R_3$",r"$R_4$"])
-pp = PdfPages('output9/rx-rv_corner.pdf')
-plt.savefig(pp,format='pdf')
-pp.close()
-plt.close()
+# mega = mega-mega[:,2][:,None]
+# mega = numpy.delete(mega,2,axis=1)
+# mega = numpy.delete(mega,1,axis=1)
+# figure = corner.corner(mega,labels=[r"$R_0$",r"$R_3$",r"$R_4$"])
+# pp = PdfPages('output9/rx-rv_corner.pdf')
+# plt.savefig(pp,format='pdf')
+# pp.close()
+# plt.close()
 
 
 mega = fit['gamma1']/((fit['gamma1'][:,1]-fit['gamma1'][:,2]))[:,None]
@@ -165,7 +165,7 @@ pp.close()
 plt.close()
 
 plt.hist(fit['prob0']) #
-plt.xlabel(r'prob0')
+plt.xlabel(r'$p_0$')
 pp = PdfPages('output9/prob0.pdf')
 plt.savefig(pp,format='pdf')
 pp.close()
@@ -216,7 +216,6 @@ with PdfPages('output9/multipage_pdf.pdf') as pdf:
     pdf.savefig()
     plt.close()
     
-
 
 
     lineobjects = plt.plot(fit['gamma'][::10],label=['U','B','V','R','I'])
