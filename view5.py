@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 import pickle
 import pystan
 import matplotlib.pyplot as plt
@@ -42,17 +43,17 @@ EW_renorm = (EW_obs - EW_mn)
 # color_cov = numpy.dot(trans,numpy.dot(dum, trans.T))
 # print " \\\\\n".join([" & ".join(map('{0:.4f}'.format, line)) for line in color_cov])
 
-correction = [  fit['alpha'][:,i][:,None]*fit['EW'][:,:, 0] \
-    + fit['beta'][:,i][:,None]*fit['EW'][:,:, 1] \
-    + fit['gamma'][:,i][:,None]*fit['k'] \
-    + fit['Delta'] \
-    + fit['rho0'][:,i][:,None]*fit['R'] \
-    + fit['rho1'][:,i][:,None]*fit['R']**2 \
-    - fit['rho1'][:,i][:,None] \
-    for i in xrange(5)]
+# correction = [  fit['alpha'][:,i][:,None]*fit['EW'][:,:, 0] \
+#     + fit['beta'][:,i][:,None]*fit['EW'][:,:, 1] \
+#     + fit['gamma'][:,i][:,None]*fit['k'] \
+#     + fit['Delta'] \
+#     + fit['rho0'][:,i][:,None]*fit['R'] \
+#     + fit['rho1'][:,i][:,None]*fit['R']**2 \
+#     - fit['rho1'][:,i][:,None] \
+#     for i in xrange(5)]
 
-correction = numpy.array(correction)
-correction_median = numpy.median(correction,axis=1)
+# correction = numpy.array(correction)
+# correction_median = numpy.median(correction,axis=1)
 
 # outlier  = numpy.where((mag_obs[:, 4]-correction_median[4,:]) < -27.8)
 # print data['snlist'][outlier]
@@ -70,6 +71,13 @@ print fit['Delta'].flatten().std()
 plt.hist(fit['Delta'].flatten(),normed=True,bins=20)
 plt.title(r'$\Delta$')
 pp = PdfPages('output5/Delta_hist.pdf')
+plt.savefig(pp,format='pdf')
+pp.close()
+plt.close()
+
+plt.hist(fit['R'].flatten(),normed=True,bins=20)
+plt.title(r'$D$')
+pp = PdfPages('output5/D_hist.pdf')
 plt.savefig(pp,format='pdf')
 pp.close()
 plt.close()
@@ -93,7 +101,7 @@ plt.savefig(pp,format='pdf')
 pp.close()
 plt.close()
 
-figure = corner.corner(fit['gamma_'],labels=[r"${\gamma}_0$",r"${\gamma}_1$",r"${\gamma}_3$",r"${\gamma}_4$"])
+figure = corner.corner(fit['gamma'],labels=[r"${\gamma}_0$",r"${\gamma}_1$",r"${\gamma}_2$",r"${\gamma}_3$",r"${\gamma}_4$"])
 pp = PdfPages('output5/gamma_corner.pdf')
 plt.savefig(pp,format='pdf')
 pp.close()
@@ -231,51 +239,17 @@ rc('text', usetex=True)
 
 rvs = [1.7,3.1,4.1]
 filts = ['U','B','V','R','I']
-
-fig, axes = plt.subplots(nrows=2, ncols=len(filts))
-for i in xrange(len(filts)):
-
-    axes[0,i].scatter(mag_obs[:, 1]-mag_obs[:, 2],mag_obs[:, i])
-    axes[0,i].set_xlabel(r'B-V')
-    axes[0,i].set_ylabel(r'{}'.format(filts[i]))
-
-    axes[1,i].scatter(mag_obs[:, 1]-mag_obs[:, 2],mag_obs[:, i]-correction_median[i,:])
-    axes[1,i].set_xlabel(r'B-V')
-    axes[1,i].set_ylabel(r'{} + correction'.format(filts[i]))
-
-
-plt.tight_layout()
-pp = PdfPages('output5/colormag.pdf')
-plt.savefig(pp,format='pdf')
-pp.close()
-plt.close()
-
-fig, axes = plt.subplots(nrows=2, ncols=len(filts))
-for i in xrange(len(filts)):
-    axes[0,i].scatter(EW_obs[:,1],mag_obs[:, i])
-    axes[0,i].set_xlabel(r'EW(Si)')
-    axes[0,i].set_ylabel(r'{}'.format(filts[i]))
-
-    axes[1,i].scatter(EW_obs[:,1],mag_obs[:, i]-correction_median[i,:])
-    axes[1,i].set_xlabel(r'EW(Si)')
-    axes[1,i].set_ylabel(r'{} + correction'.format(filts[i]))
-
-plt.tight_layout()
-pp = PdfPages('output5/specsimag.pdf')
-plt.savefig(pp,format='pdf')
-pp.close()
-plt.close()
-
 fig, axes = plt.subplots(nrows=len(filts),sharex=True)
+xerr = numpy.sqrt(EW_cov[:,0,0]) 
 for i in xrange(len(filts)):
     r = numpy.array( [numpy.argmin(EW_obs[:,0]), numpy.argmax(EW_obs[:,0])])
     yerr= numpy.sqrt(mag_cov[:,i,i])
-    xerr = numpy.sqrt(EW_cov[:,0,0])
     axes[i].errorbar(EW_obs[:,0],mag_obs[:, i], \
         xerr=[xerr,xerr], yerr=[yerr,yerr],fmt='.')
     axes[i].set_ylabel(r'{}'.format(filts[i]))
-    axes[i].plot(EW_obs[r,0],numpy.mean(mag_obs[:, i])+numpy.median(fit['alpha'][:,i],axis=0)*EW_renorm[r,0] \
-        ,color='black')
+    offset  = numpy.mean(mag_obs[:, i] - numpy.median(fit['alpha'][:,i][:,None]*fit['EW'][:,:,0],axis=0))
+    axes[i].plot(EW_obs[r,0],offset+numpy.median(fit['alpha'][:,i],axis=0)*EW_renorm[r,0] \
+        ,color='red',linewidth=2)
 axes[len(filts)-1].set_xlabel(r'EW(Ca)')
 fig.subplots_adjust(hspace=0.001)
 pp = PdfPages('output5/speccamag.pdf')
@@ -283,7 +257,60 @@ plt.savefig(pp,format='pdf')
 pp.close()
 plt.close()
 
+fig, axes = plt.subplots(nrows=len(filts),sharex=True)
+xerr = numpy.sqrt(EW_cov[:,1,1])
+for i in xrange(len(filts)):
+    r = numpy.array( [numpy.argmin(EW_obs[:,1]), numpy.argmax(EW_obs[:,1])])
+    yerr= numpy.sqrt(mag_cov[:,i,i])
+    axes[i].errorbar(EW_obs[:,1],mag_obs[:, i], \
+        xerr=[xerr,xerr], yerr=[yerr,yerr],fmt='.')
+    axes[i].set_ylabel(r'{}'.format(filts[i]))
+    offset  = numpy.mean(mag_obs[:, i] - numpy.median(fit['beta'][:,i][:,None]*fit['EW'][:,:,1],axis=0))
+    axes[i].plot(EW_obs[r,1],offset+numpy.median(fit['beta'][:,i],axis=0)*EW_renorm[r,1] \
+        ,color='red',linewidth=2)
+axes[len(filts)-1].set_xlabel(r'EW(Si)')
+fig.subplots_adjust(hspace=0.001)
+pp = PdfPages('output5/specsimag.pdf')
+plt.savefig(pp,format='pdf')
+pp.close()
+plt.close()
+fig, axes = plt.subplots(nrows=len(filts),sharex=True)
+xerr = numpy.sqrt(mag_cov[:,1,1]+ mag_cov[:,2,2] - 2*mag_cov[:,1,2])
+for i in xrange(len(filts)):
+    r = numpy.array( [numpy.argmin(mag_obs[:,1]-mag_obs[:,2]), numpy.argmax(mag_obs[:,1]-mag_obs[:,2])])
+    yerr= numpy.sqrt(mag_cov[:,i,i])
+    axes[i].errorbar(mag_obs[:,1]-mag_obs[:,2],mag_obs[:, i], \
+        xerr=[xerr,xerr], yerr=[yerr,yerr],fmt='.')
+    axes[i].set_ylabel(r'{}'.format(filts[i]))
+    slope = numpy.median(fit['gamma'][:,i] / (fit['gamma'][:,1]-fit['gamma'][:,2]),axis=0)
+    offset  = numpy.mean(mag_obs[:, i] - numpy.median(slope*(mag_obs[:,1]-mag_obs[:,2])))
+    axes[i].plot(mag_obs[r,1]-mag_obs[r,2],offset+slope*(mag_obs[r,1]-mag_obs[r,2]) \
+        ,color='red',linewidth=2)
+axes[len(filts)-1].set_xlabel(r'B-V')
+fig.subplots_adjust(hspace=0.001)
+pp = PdfPages('output5/colormag.pdf')
+plt.savefig(pp,format='pdf')
+pp.close()
+plt.close()
+
+
 lambdas = numpy.arange(3500.,9000,100)
+for rv in rvs:
+    A_ = sncosmo._extinction.ccm89(lambdas, 1., rv)
+    norm  = sncosmo._extinction.ccm89(numpy.array([efflam[1]]), 1., rv)-sncosmo._extinction.ccm89(numpy.array([efflam[2]]), 1., rv)
+    A_ = A_/norm[0]
+    plt.plot(lambdas,A_,label=r"$R_V={:.1f}$".format(rv))
+(y, ymin, ymax) = numpy.percentile(fit['gamma']/((fit['gamma'][:,1]-fit['gamma'][:,2])[:,None]),(50,50-34,50+34),axis=0)
+
+plt.errorbar(efflam,y,yerr=[y-ymin,ymax-y],fmt='o')
+plt.legend()
+plt.xlabel(r'Wavelength (\AA)')
+plt.ylabel(r'$R_X=\frac{\gamma_X}{\gamma_1-\gamma_2}$')
+pp = PdfPages('output5/ccm.pdf')
+plt.savefig(pp,format='pdf')
+pp.close()
+plt.close()
+
 for rv in rvs:
     A_ = sncosmo._extinction.ccm89(lambdas, 1., rv)
     norm  = sncosmo._extinction.ccm89(numpy.array([efflam[2]]), 1., rv)
@@ -292,13 +319,14 @@ for rv in rvs:
 (y, ymin, ymax) = numpy.percentile(fit['gamma']/fit['gamma'][:,2][:,None],(50,50-34,50+34),axis=0)
 
 plt.errorbar(efflam,y,yerr=[y-ymin,ymax-y],fmt='o')
-
 plt.legend()
 plt.xlabel(r'Wavelength (\AA)')
-pp = PdfPages('output5/ccm.pdf')
+plt.ylabel(r'$\frac{\gamma_X}{\gamma_2}$')
+pp = PdfPages('output5/ccm2.pdf')
 plt.savefig(pp,format='pdf')
 pp.close()
 plt.close()
+
 
 
 # for index in xrange(5):
