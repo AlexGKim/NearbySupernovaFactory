@@ -33,23 +33,23 @@ k_simplex = numpy.zeros(nsne)
 
 init = [{'EW' : EW_renorm, \
          'c': numpy.array([0.06, 0.05,0.01,0.01,-0.01]),\
-         # 'alpha': numpy.array([0.0031, 0.0005,0.0006,0.0007,0.0021]), \
-         'alpha1': 0.0007,\
-         'alpha2': 0.004,\
-         'alpha3': 0.0025,\
-         'alpha4': 0.0025,\
-         'alpha5': 0.003,\
-         # 'beta':numpy.array([0.0345, 0.0274, 0.0274, 0.0223, 0.0213]), \
-         'beta1': 0.024,\
-         'beta2': 0.02,\
-         'beta3': 0.022,\
-         'beta4': 0.02,\
-         'beta5': 0.02,\
-         # 'gamma_': numpy.array([5.0,3.1,2.4,1.8]), \
+         # roughly the peak of one-color
+         'alpha1': 0.003,\
+         'alpha2': 0.001,\
+         'alpha3': 0.0007,\
+         'alpha4': 0.0008,\
+         'alpha5': 0.0022,\
+         # roughly the peak of one-color
+         'beta1': 0.034,\
+         'beta2': 0.028,\
+         'beta3': 0.027,\
+         'beta4': 0.023,\
+         'beta5': 0.022,\
+         # roughly the peak of one-color
          'gamma01': 5.,\
-         'gamma02': 3.2,\
-         'gamma03': 2.8,\
-         'gamma04': 1.9,\
+         'gamma02': 3.1,\
+         'gamma03': 2.4,\
+         'gamma04': 1.8,\
 
          'gamma11': 2.3,\
          'gamma12': 0.6,\
