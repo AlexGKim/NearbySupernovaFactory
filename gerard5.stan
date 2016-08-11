@@ -11,54 +11,83 @@ data {
 parameters {
 
   vector<lower=-150, upper=150>[2] EW[D];
-  vector<lower=-2, upper=2>[N_mags] mag_int[D];
+  vector<lower=-3, upper=5>[N_mags] mag_int[D];
 
-  vector<lower=-10, upper=10>[5] c;
-  vector<lower=-0.01, upper=0.01>[5] alpha;
-  vector<lower=-0.1, upper=0.1>[5] beta;
+  vector<lower=-5, upper=5>[5] c;
 
-  real<lower=0,upper=.5> gamma0;
-  vector<lower=-0.5, upper=0.5>[4] gamma_;
 
-  simplex[D] k_unit;
+  real<lower=-0.02, upper=0.02> alpha1;
+  real<lower=-0.02, upper=0.02> alpha2;
+  real<lower=-0.02, upper=0.02> alpha3;
+  real<lower=-0.02, upper=0.02> alpha4;
+  real<lower=-0.02, upper=0.02> alpha5;
+
+  # vector<lower=0.01, upper=0.045>[5] beta;
+  real<lower=-0.01, upper=0.1> beta1;
+  real<lower=-0.01, upper=0.08> beta2;
+  real<lower=-0.01, upper=0.08> beta3;
+  real<lower=0.00, upper=0.08> beta4;
+  real<lower=0.00, upper=0.08> beta5;
+
+  # edges appear to give good separation, 2.3 better than 2.0
+  real<lower=4.9882-2.3*0.3031, upper=6.9882+5*0.3399> gamma01;
+  real<lower=3.0604-2.3*0.2142, upper=3.0604+5*0.2355> gamma02;
+  real<lower=2.387-2.3*0.1858, upper=2.387+5*0.2009> gamma03;
+  real<lower=1.7696-2.3*0.1713, upper=1.7696+5*0.1833> gamma04;
+
+  real<lower=3, upper=4.9882-2.2*0.3031> rho11;
+  real<lower=1, upper=3.0604-2.2*0.2142> rho12;
+  real<lower=1, upper=2.387-2.2*0.1858> rho13;
+  real<lower=0, upper=1.7696-2.2*0.17131> rho14;
+
+  vector <lower=-2, upper=3.>[D] k_unit;
 
   # cholesky_factor_corr[N_mags] L_Omega;
   vector<lower=0.0, upper = 0.08>[N_mags] L_sigma;
 
   simplex[D] Delta_unit;
-  real <lower = 0, upper = D/4.> Delta_scale;
+  real <lower = 10, upper = 40> Delta_scale;
 
-  simplex[D] R_unit;
-  real<lower=0, upper=0.5> rho00;
-  vector<lower=-0.4, upper=0.5>[4] rho0_;
-  vector<lower=-0.15, upper=0.02>[5] rho1;
+  vector <lower=0, upper=2>[D] R;
 }
 
 transformed parameters {
   vector[D] Delta;
   vector[5] gamma;
-  vector[5] rho0;
-  vector[D] R;
+  vector[5] alpha;
+  vector[5] beta;
+  vector[5] rho1;
   vector[D] k;
 
-  gamma[1] <- gamma0;
-  gamma[2] <- gamma_[1];
-  gamma[3] <- gamma_[2];
-  gamma[4] <- gamma_[3];
-  gamma[5] <- gamma_[4];
 
-  rho0[1] <- rho0_[1];
-  rho0[2] <- rho0_[2];
-  rho0[3] <- rho0_[3];
-  rho0[4] <- rho0_[4];
-  rho0[5] <- rho00;
+  gamma[1] <- gamma01;
+  gamma[2] <- 1.+gamma02;
+  gamma[3] <- gamma02;
+  gamma[4] <- gamma03;
+  gamma[5] <- gamma04;
 
+  alpha[1] <- alpha1;
+  alpha[2] <- alpha2;
+  alpha[3] <- alpha3;
+  alpha[4] <- alpha4;
+  alpha[5] <- alpha5;
+
+  beta[1] <- beta1;
+  beta[2] <- beta2;
+  beta[3] <- beta3;
+  beta[4] <- beta4;
+  beta[5] <- beta5;
+
+  rho1[1] <- rho11;
+  rho1[2] <- 1+rho12;
+  rho1[3] <- rho12;
+  rho1[4] <- rho13;
+  rho1[5] <- rho14;
 
   Delta <- Delta_scale*(Delta_unit - 1./D);
-  k <- (k_unit - 1./D);
-  k <- k / sqrt(sum(k .* k)/D);
-  R <- (R_unit - mean(R_unit));
-  R <- R_unit / sqrt(sum(R .* R)/D);
+  k <- (k_unit - mean(k_unit));
+  # R <- (R_unit - mean(R_unit));
+  # R <- R_unit / sqrt(sum(R .* R)/D);
 }
 
 model {
@@ -66,7 +95,7 @@ model {
   # matrix[5,5] L_Sigma;
 
   for (d in 1:D) {
-      means[d] <- Delta[d] + c+ alpha*EW[d,1] + beta*EW[d,2] + rho0*R[d] + rho1*(pow(R[d],2));
+      means[d] <- Delta[d] + c+ alpha*EW[d,1] + beta*EW[d,2] + rho1/2.*(pow(R[d],2));
   }
 
   increment_log_prob(cauchy_log(L_sigma, 0.,1));

@@ -36,19 +36,19 @@ k_simplex = numpy.zeros(nsne)
 
 init = [{'EW' : EW_renorm, \
          'c': numpy.zeros(5),\
-         # 'alpha': numpy.array([0.0031, 0.0005,0.0006,0.0007,0.0021]), \
-         'alpha1': 0.0025,\
-         'alpha2': 0.0005,\
-         'alpha3': 0.0005,\
+         # roughly the peak of one-color
+         'alpha1': 0.003,\
+         'alpha2': 0.001,\
+         'alpha3': 0.0007,\
          'alpha4': 0.0008,\
-         'alpha5': 0.0021,\
-         # 'beta':numpy.array([0.0345, 0.0274, 0.0274, 0.0223, 0.0213]), \
-         'beta1': 0.024,\
-         'beta2': 0.02,\
-         'beta3': 0.021,\
-         'beta4': 0.02,\
-         'beta5': 0.0213,\
-         # 'gamma_': numpy.array([5.0,3.1,2.4,1.8]), \
+         'alpha5': 0.0022,\
+         # roughly the peak of one-color
+         'beta1': 0.034,\
+         'beta2': 0.028,\
+         'beta3': 0.027,\
+         'beta4': 0.023,\
+         'beta5': 0.022,\
+         # roughly the peak of one-color
          'gamma01': 5.,\
          'gamma02': 3.1,\
          'gamma03': 2.4,\
@@ -62,17 +62,18 @@ init = [{'EW' : EW_renorm, \
          # 'L_Omega': numpy.identity(5), \
          'Delta_unit':Delta_simplex, 'Delta_scale': nsne/8.,\
          'k_unit': k_simplex, \
-         'R':k_simplex, \
-         'rho01': 3.6,\
-         'rho02': 1.8,\
-         'rho03': 1.4,\
-         'rho04': 0.9, \
-         'rho1':numpy.zeros(5)} \
+         'R':k_simplex+0.1, \
+         'rho11': 3.6,\
+         'rho12': 1.8,\
+         'rho13': 1.4,\
+         'rho14': 0.9
+         # 'rho1':numpy.zeros(5)\
+         } \
         for _ in range(4)]
 
 sm = pystan.StanModel(file='gerard5.stan')
 control = {'stepsize':1}
-fit = sm.sampling(data=data, iter=10000, chains=4,control=control,init=init, thin=5)
+fit = sm.sampling(data=data, iter=2000, chains=4,control=control,init=init, thin=1)
 print fit
 
 output = open('temp5.pkl','wb')
