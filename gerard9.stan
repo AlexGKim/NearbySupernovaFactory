@@ -13,16 +13,16 @@ data {
 parameters {
 
   vector<lower=-150, upper=150>[2] EW[D];
-  vector<lower=-1.9, upper=2.1>[N_mags] mag_int[D];
+  vector<lower=-2, upper=2.>[N_mags] mag_int[D];
 
-  vector<lower=-0.1, upper=0.16>[5] c;
+  vector<lower=-0.5, upper=0.5>[5] c;
   # vector<lower=-0.002, upper=0.006>[5] alpha;
 
-  real<lower=0, upper=0.0031+5*0.0008> alpha1;
-  real<lower=0.00, upper=0.0005+5*0.0007> alpha2;
-  real<lower=-0.002, upper=0.0006+5*0.0006> alpha3;
-  real<lower=-0.002, upper=0.0007+5*0.0005> alpha4;
-  real<lower=-0.002, upper=0.0021+5*0.0004> alpha5;
+  real<lower=0.0031-5*0.0009, upper=0.0031+10*0.0008> alpha1;
+  real<lower=0.0005-5*0.0007, upper=0.0005+10*0.0007> alpha2;
+  real<lower=0.0006-5*0.0006, upper=0.0006+10*0.0006> alpha3;
+  real<lower=0.0007-5*0.0005, upper=0.0007+10*0.0005> alpha4;
+  real<lower=0.0021-5*0.0004, upper=0.0021+10*0.0004> alpha5;
 
   # vector<lower=0.01, upper=0.045>[5] beta;
   real<lower=0.0345-5*0.0029, upper=0.0345+5*0.0027> beta1;
@@ -32,15 +32,15 @@ parameters {
   real<lower=0.0213-5*0.0017, upper=0.0213+5*0.0016> beta5;
 
   # vector<lower=1., upper=6>[4] gamma_;
-  real<lower=4.9882-3*0.3031, upper=4.9882+4*0.3399> gamma01;
-  real<lower=3.0604-3*0.2142, upper=3.0604+4*0.2355> gamma02;
-  real<lower=2.387-3*0.1858, upper=2.387+4*0.2009> gamma03;
-  real<lower=1.7696-3*0.1713, upper=1.7696+4*0.1833> gamma04;
+  real<lower=4.9882-5*0.3031, upper=4.9882+5*0.3399> gamma01;
+  real<lower=3.0604-5*0.2142, upper=3.0604+5*0.2355> gamma02;
+  real<lower=2.387-5*0.1858, upper=2.387+5*0.2009> gamma03;
+  real<lower=1.7696-5*0.1713, upper=1.7696+5*0.1833> gamma04;
 
-  real<lower=1.2, upper=3.> gamma11;
-  real<lower=-0.1, upper=1.4> gamma12;
-  real<lower=-0.5, upper=1.> gamma13;
-  real<lower=-1, upper=.6> gamma14;
+  real<lower=1., upper=4.> gamma11;
+  real<lower=-0.4, upper=2> gamma12;
+  real<lower=-0.7, upper=1.5> gamma13;
+  real<lower=-1.2, upper=1.> gamma14;
 
   # cholesky_factor_corr[N_mags] L_Omega;
   vector<lower=0.0, upper = 0.08>[N_mags] L_sigma;
@@ -50,7 +50,7 @@ parameters {
 
   real <lower=0.0, upper=1.> prob0;
 
-  vector <lower=-0.4, upper=.8>[D] k;
+  vector <lower=-0.5, upper=.8>[D] k;
 }
 
 transformed parameters {

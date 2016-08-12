@@ -11,44 +11,45 @@ data {
 parameters {
 
   vector<lower=-150, upper=150>[2] EW[D];
-  vector<lower=-3, upper=5>[N_mags] mag_int[D];
+  vector<lower=-10, upper=10>[N_mags] mag_int[D];
 
-  vector<lower=-5, upper=5>[5] c;
+  vector<lower=-10, upper=10>[5] c;
 
 
-  real<lower=-0.02, upper=0.02> alpha1;
-  real<lower=-0.02, upper=0.02> alpha2;
-  real<lower=-0.02, upper=0.02> alpha3;
-  real<lower=-0.02, upper=0.02> alpha4;
-  real<lower=-0.02, upper=0.02> alpha5;
+  real<lower=0.0031-10*0.0009, upper=0.0031+10*0.0008> alpha1;
+  real<lower=0.0005-10*0.0007, upper=0.0005+10*0.0007> alpha2;
+  real<lower=0.0006-10*0.0006, upper=0.0006+10*0.0006> alpha3;
+  real<lower=0.0007-10*0.0005, upper=0.0007+10*0.0005> alpha4;
+  real<lower=0.0021-10*0.0004, upper=0.0021+10*0.0004> alpha5;
+
 
   # vector<lower=0.01, upper=0.045>[5] beta;
-  real<lower=-0.01, upper=0.1> beta1;
-  real<lower=-0.01, upper=0.08> beta2;
-  real<lower=-0.01, upper=0.08> beta3;
-  real<lower=0.00, upper=0.08> beta4;
-  real<lower=0.00, upper=0.08> beta5;
+  real<lower=0.0345-5*0.0029, upper=0.0345+5*0.0027> beta1;
+  real<lower=0.0274-5*0.0025, upper=0.0274+5*0.0022> beta2;
+  real<lower=0.0274-5*0.0021, upper=0.0274+5*0.0021> beta3;
+  real<lower=0.0223-5*0.0018, upper=0.0223+5*0.0018> beta4;
+  real<lower=0.0213-5*0.0017, upper=0.0213+5*0.0016> beta5;
 
   # edges appear to give good separation, 2.3 better than 2.0
-  real<lower=4.9882-2.3*0.3031, upper=6.9882+5*0.3399> gamma01;
-  real<lower=3.0604-2.3*0.2142, upper=3.0604+5*0.2355> gamma02;
-  real<lower=2.387-2.3*0.1858, upper=2.387+5*0.2009> gamma03;
-  real<lower=1.7696-2.3*0.1713, upper=1.7696+5*0.1833> gamma04;
+  real<lower=4.9882-2.7*0.3031, upper=6.9882+5*0.3399> gamma01;
+  real<lower=3.0604-2.7*0.2142, upper=3.0604+5*0.2355> gamma02;
+  real<lower=2.387-2.7*0.1858, upper=2.387+5*0.2009> gamma03;
+  real<lower=1.7696-2.7*0.1713, upper=1.7696+5*0.1833> gamma04;
 
   real<lower=3, upper=4.9882-2.2*0.3031> rho11;
   real<lower=1, upper=3.0604-2.2*0.2142> rho12;
   real<lower=1, upper=2.387-2.2*0.1858> rho13;
   real<lower=0, upper=1.7696-2.2*0.17131> rho14;
 
-  vector <lower=-2, upper=3.>[D] k_unit;
+  vector <lower=-4, upper=4.>[D] k_unit;
 
   # cholesky_factor_corr[N_mags] L_Omega;
   vector<lower=0.0, upper = 0.08>[N_mags] L_sigma;
 
   simplex[D] Delta_unit;
-  real <lower = 10, upper = 40> Delta_scale;
+  real <lower = 10, upper = 30> Delta_scale;
 
-  vector <lower=0, upper=2>[D] R;
+  vector <lower=0, upper=5>[D] R;
 }
 
 transformed parameters {
