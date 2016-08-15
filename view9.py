@@ -142,13 +142,13 @@ plt.close()
 # plt.close()
 
 
-mega = fit['gamma1']/((fit['gamma1'][:,1]-fit['gamma1'][:,2]))[:,None]
+# mega = fit['gamma1']/((fit['gamma1'][:,1]-fit['gamma1'][:,2]))[:,None]
 
-figure = corner.corner(mega,labels=[r"$R_{20}$",r"$R_{21}$",r"$R_{22}$",r"$R_{23}$",r"$R_{24}$"])
-pp = PdfPages('output9/rx1_corner.pdf')
-plt.savefig(pp,format='pdf')
-pp.close()
-plt.close()
+# figure = corner.corner(mega,labels=[r"$R_{20}$",r"$R_{21}$",r"$R_{22}$",r"$R_{23}$",r"$R_{24}$"])
+# pp = PdfPages('output9/rx1_corner.pdf')
+# plt.savefig(pp,format='pdf')
+# pp.close()
+# plt.close()
 
 # mega = numpy.concatenate((fit['Delta_scale'][:,None],fit['L_sigma']),axis=1)
 figure = corner.corner(fit['L_sigma'],labels=[r"${\sigma}_0$",r"${\sigma}_1$",r"${\sigma}_2$",r"${\sigma}_3$",r"${\sigma}_4$"])
@@ -170,6 +170,14 @@ pp = PdfPages('output9/prob0.pdf')
 plt.savefig(pp,format='pdf')
 pp.close()
 plt.close()
+
+plt.hist(fit['Delta_scale']) #
+plt.xlabel(r'$\Delta$ scale')
+pp = PdfPages('output9/dscale.pdf')
+plt.savefig(pp,format='pdf')
+pp.close()
+plt.close()
+
 
 with PdfPages('output9/multipage_pdf.pdf') as pdf:
 
@@ -250,14 +258,15 @@ with PdfPages('output9/multipage_pdf.pdf') as pdf:
     #     plt.close()
 
     # filter wavelengths
-edges = numpy.array([[3300., 4102], [4102, 5100], [5200, 6289], [6289, 7607], [7607, 9200]])
+r = numpy.log(8635./3276.)
+edges= 3276.*numpy.exp(numpy.arange(6)*r/5.)
+# edges = numpy.array([[3300., 4102], [4102, 5100], [5200, 6289], [6289, 7607], [7607, 9200]])
 efflam = []
-for edge in edges:
-    efflam.append((edge[1]-edge[0])/2+edge[0])
+for i in xrange(5):
+    efflam.append((edges[i+1]-edges[i])/2+edges[i])
+
 # [3701, 4601, 5744, 6948, 8403]
 rc('text', usetex=True)
-
-
 
 
 nlinks = fit['gamma'].shape[0]

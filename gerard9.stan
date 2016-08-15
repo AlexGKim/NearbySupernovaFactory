@@ -15,42 +15,56 @@ parameters {
   vector<lower=-150, upper=150>[2] EW[D];
   vector<lower=-2, upper=2.>[N_mags] mag_int[D];
 
-  vector<lower=-0.5, upper=0.5>[5] c;
+  real<lower=-0.15, upper=0.12> c1;
+  real<lower=-0.1, upper=0.1> c2;
+  real<lower=-0.1, upper=0.06> c3;
+  real<lower=-0.1, upper=0.04> c4;
+  real<lower=-0.1, upper=0.03> c5;
   # vector<lower=-0.002, upper=0.006>[5] alpha;
 
-  real<lower=0.0031-5*0.0009, upper=0.0031+10*0.0008> alpha1;
-  real<lower=0.0005-5*0.0007, upper=0.0005+10*0.0007> alpha2;
-  real<lower=0.0006-5*0.0006, upper=0.0006+10*0.0006> alpha3;
-  real<lower=0.0007-5*0.0005, upper=0.0007+10*0.0005> alpha4;
-  real<lower=0.0021-5*0.0004, upper=0.0021+10*0.0004> alpha5;
+  # +10 seems to pick up too much.  truncate
+  # make it gradated with highest at 0 lowest at 5
+  # lower limit of -5 is too low.  make it -4
+  real<lower=0.0031-4*0.0009, upper=0.0031+12*0.0008> alpha1;
+  real<lower=0.0005-4*0.0007, upper=0.0005+11*0.0007> alpha2;
+  real<lower=0.0006-4*0.0006, upper=0.0006+11*0.0006> alpha3;
+  real<lower=0.0007-4*0.0005, upper=0.0007+7*0.0005> alpha4;
+  real<lower=0.0021-4*0.0004, upper=0.0021+7*0.0004> alpha5;
 
   # vector<lower=0.01, upper=0.045>[5] beta;
-  real<lower=0.0345-5*0.0029, upper=0.0345+5*0.0027> beta1;
-  real<lower=0.0274-5*0.0025, upper=0.0274+5*0.0022> beta2;
-  real<lower=0.0274-5*0.0021, upper=0.0274+5*0.0021> beta3;
-  real<lower=0.0223-5*0.0018, upper=0.0223+5*0.0018> beta4;
-  real<lower=0.0213-5*0.0017, upper=0.0213+5*0.0016> beta5;
+  # looks shifted negative relative to -5 5
+  # -8 looks too far out though
+  # +4 looks like a good upper bound
+  real<lower=0.0345-8*0.0029, upper=0.0345+4*0.0027> beta1;
+  real<lower=0.0274-7*0.0025, upper=0.0274+4*0.0022> beta2;
+  real<lower=0.0274-5*0.0021, upper=0.0274+4*0.0021> beta3;
+  real<lower=0.0223-5*0.0018, upper=0.0223+4*0.0018> beta4;
+  real<lower=0.0213-5*0.0017, upper=0.0213+4*0.0016> beta5;
 
   # vector<lower=1., upper=6>[4] gamma_;
-  real<lower=4.9882-5*0.3031, upper=4.9882+5*0.3399> gamma01;
-  real<lower=3.0604-5*0.2142, upper=3.0604+5*0.2355> gamma02;
-  real<lower=2.387-5*0.1858, upper=2.387+5*0.2009> gamma03;
-  real<lower=1.7696-5*0.1713, upper=1.7696+5*0.1833> gamma04;
+  # +5 looks too big
+  # +4 looks too small
+  # go up to 4.7; go up to 4.9
+  # -4 looks like a good lower bound
+  real<lower=4.9882-4*0.3031, upper=4.9882+4.1*0.3399> gamma01;
+  real<lower=3.0604-4*0.2142, upper=3.0604+4.9*0.2355> gamma02;
+  real<lower=2.387-4*0.1858, upper=2.387+4.9*0.2009> gamma03;
+  real<lower=1.7696-4*0.1713, upper=1.7696+4.9*0.1833> gamma04;
 
-  real<lower=1., upper=4.> gamma11;
-  real<lower=-0.4, upper=2> gamma12;
-  real<lower=-0.7, upper=1.5> gamma13;
-  real<lower=-1.2, upper=1.> gamma14;
+  real<lower=1.4, upper=3.5> gamma11;
+  real<lower=-0.1, upper=1,5> gamma12;
+  real<lower=-0.4, upper=1.2> gamma13;
+  real<lower=-0.8, upper=0.8> gamma14;
 
   # cholesky_factor_corr[N_mags] L_Omega;
   vector<lower=0.0, upper = 0.08>[N_mags] L_sigma;
 
   simplex[D] Delta_unit;
-  real <lower = 15, upper = 45> Delta_scale;
+  real <lower = 20, upper = 45> Delta_scale;
 
   real <lower=0.0, upper=1.> prob0;
 
-  vector <lower=-0.5, upper=.8>[D] k;
+  vector <lower=-0.4, upper=.8>[D] k;
 }
 
 transformed parameters {
@@ -59,6 +73,8 @@ transformed parameters {
   vector[5] gamma1;
   vector[5] alpha;
   vector[5] beta;
+  vector[5] c;
+
   # vector[D] k;
 
   gamma[1] <- gamma01;
@@ -84,6 +100,12 @@ transformed parameters {
   beta[3] <- beta3;
   beta[4] <- beta4;
   beta[5] <- beta5;
+
+  c[1] <- c1;
+  c[2] <- c2;
+  c[3] <- c3;
+  c[4] <- c4;
+  c[5] <- c5;
 
   Delta <- Delta_scale*(Delta_unit - 1./D);
   # k <- k_unit - mean(k_unit);
