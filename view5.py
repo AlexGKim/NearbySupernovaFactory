@@ -114,11 +114,11 @@ plt.savefig(pp,format='pdf')
 pp.close()
 plt.close()
 
-figure = corner.corner(fit['rho0'],labels=[r"${\delta}_{00}$",r"${\delta}_{01}$",r"${\delta}_{02}$",r"${\delta}_{03}$",r"${\delta}_{04}$"])
-pp = PdfPages('output5/delta0_corner.pdf')
-plt.savefig(pp,format='pdf')
-pp.close()
-plt.close()
+# figure = corner.corner(fit['rho0'],labels=[r"${\delta}_{00}$",r"${\delta}_{01}$",r"${\delta}_{02}$",r"${\delta}_{03}$",r"${\delta}_{04}$"])
+# pp = PdfPages('output5/delta0_corner.pdf')
+# plt.savefig(pp,format='pdf')
+# pp.close()
+# plt.close()
 
 figure = corner.corner(fit['rho1'],labels=[r"${\delta}_{10}$",r"${\delta}_{11}$",r"${\delta}_{12}$",r"${\delta}_{13}$",r"${\delta}_{14}$"])
 pp = PdfPages('output5/delta1_corner.pdf')
@@ -188,11 +188,11 @@ with PdfPages('output5/multipage_pdf.pdf') as pdf:
     pdf.savefig()
     plt.close()
  
-    lineobjects = plt.plot(fit['rho0'][::10],label=['U','B','V','R','I'])
-    plt.title(r'$\delta0$')
-    plt.legend(iter(lineobjects),('U','B','V','R','I'))
-    pdf.savefig()
-    plt.close()
+    # lineobjects = plt.plot(fit['rho0'][::10],label=['U','B','V','R','I'])
+    # plt.title(r'$\delta0$')
+    # plt.legend(iter(lineobjects),('U','B','V','R','I'))
+    # pdf.savefig()
+    # plt.close()
 
     lineobjects = plt.plot(fit['rho1'][::10],label=['U','B','V','R','I'])
     plt.title(r'$\delta1$')
@@ -215,13 +215,13 @@ with PdfPages('output5/multipage_pdf.pdf') as pdf:
 
 nlinks = fit['gamma'].shape[0]
 dum = numpy.concatenate((fit['gamma'][:,0:2], numpy.random.normal(1.,0.01,size=(nlinks,1)),fit['gamma'][:,3:]),axis=1)
-mega = numpy.array([fit['c'],fit['alpha'],fit['beta'],dum,fit['rho0'],fit['rho1'],fit['L_sigma']])
+mega = numpy.array([fit['c'],fit['alpha'],fit['beta'],dum,fit['rho1'],fit['L_sigma']])
 mega = numpy.transpose(mega)
 
 for index in xrange(5):
     figure = corner.corner(mega[index,:,:],labels=[r"$c_{}$".format(index), r"$\alpha_{}$".format(index),\
                     r"$\beta_{}$".format(index),r"$\gamma_{}$".format(index),\
-                    r"$\delta_{{0{}}}$".format(index),r"$\delta_{{1{}}}$".format(index),r"$\sigma_{}$".format(index)])
+                    r"$\delta_{{1{}}}$".format(index),r"$\sigma_{}$".format(index)])
     pp = PdfPages('output5/coeff{}.pdf'.format(index))
     plt.savefig(pp,format='pdf')
     pp.close()
@@ -229,10 +229,13 @@ for index in xrange(5):
 
 
     # filter wavelengths
-edges = numpy.array([[3300., 4102], [4102, 5100], [5200, 6289], [6289, 7607], [7607, 9200]])
+r = numpy.log(8635./3276.)
+edges= 3276.*numpy.exp(numpy.arange(6)*r/5.)
+# edges = numpy.array([[3300., 4102], [4102, 5100], [5200, 6289], [6289, 7607], [7607, 9200]])
 efflam = []
-for edge in edges:
-    efflam.append((edge[1]-edge[0])/2+edge[0])
+for i in xrange(5):
+    efflam.append((edges[i+1]-edges[i])/2+edges[i])
+    
 # [3701, 4601, 5744, 6948, 8403]
 rc('text', usetex=True)
 

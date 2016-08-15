@@ -51,8 +51,8 @@ parameters {
   real<lower=2.387-4*0.1858, upper=2.387+4.9*0.2009> gamma03;
   real<lower=1.7696-4*0.1713, upper=1.7696+4.9*0.1833> gamma04;
 
-  real<lower=1.4, upper=3.5> gamma11;
-  real<lower=-0.1, upper=1,5> gamma12;
+  real<lower=-0.1, upper=3.5> gamma11;
+  real<lower=-0.1, upper=1.5> gamma12;
   real<lower=-0.4, upper=1.2> gamma13;
   real<lower=-0.8, upper=0.8> gamma14;
 

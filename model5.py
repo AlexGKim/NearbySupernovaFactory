@@ -35,7 +35,11 @@ k_simplex = numpy.zeros(nsne)
 
 
 init = [{'EW' : EW_renorm, \
-         'c': numpy.zeros(5),\
+         'c1': -3.2,\
+         'c2': -2.8,\
+         'c3': -1.8,\
+         'c4': -1.5,\
+         'c5': -1.1,\
          # roughly the peak of one-color
          'alpha1': 0.003,\
          'alpha2': 0.001,\
@@ -73,7 +77,7 @@ init = [{'EW' : EW_renorm, \
 
 sm = pystan.StanModel(file='gerard5.stan')
 control = {'stepsize':1}
-fit = sm.sampling(data=data, iter=2000, chains=4,control=control,init=init, thin=1)
+fit = sm.sampling(data=data, iter=8000, chains=4,control=control,init=init, thin=4)
 print fit
 
 output = open('temp5.pkl','wb')
