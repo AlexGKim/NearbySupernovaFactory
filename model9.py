@@ -32,7 +32,13 @@ Delta_simplex = numpy.zeros(nsne)+1./nsne
 k_simplex = numpy.zeros(nsne)
 
 init = [{'EW' : EW_renorm, \
-         'c': numpy.array([0.06, 0.05,0.01,0.01,-0.01]),\
+         # 'c': numpy.array([0.06, 0.05,0.01,0.01,-0.01]),\
+         # roughly the peak of one-color
+         'c1': 0.003,\
+         'c2': 0.001,\
+         'c3': 0.0007,\
+         'c4': 0.0008,\
+         'c5': 0.0022,\
          # roughly the peak of one-color
          'alpha1': 0.003,\
          'alpha2': 0.001,\
@@ -51,10 +57,10 @@ init = [{'EW' : EW_renorm, \
          'gamma03': 2.4,\
          'gamma04': 1.8,\
 
-         'gamma11': 2.3,\
-         'gamma12': 0.6,\
-         'gamma13': 0.3,\
-         'gamma14': -0.2,\
+         'gamma11': 2.5,\
+         'gamma12': 0.8,\
+         'gamma13': 0.5,\
+         'gamma14': 0.1,\
          # 'gamma1_': numpy.zeros(4)+2., \
          'prob0': 0.3,\
          'mag_int': mag_renorm, \

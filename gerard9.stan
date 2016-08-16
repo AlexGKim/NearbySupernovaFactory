@@ -15,21 +15,20 @@ parameters {
   vector<lower=-150, upper=150>[2] EW[D];
   vector<lower=-2, upper=2.>[N_mags] mag_int[D];
 
-  real<lower=-0.15, upper=0.12> c1;
-  real<lower=-0.1, upper=0.1> c2;
-  real<lower=-0.1, upper=0.06> c3;
-  real<lower=-0.1, upper=0.04> c4;
-  real<lower=-0.1, upper=0.03> c5;
+  real<lower=-0.1, upper=0.15> c1;
+  real<lower=-0.06, upper=0.1> c2;
+  real<lower=-0.06, upper=0.07> c3;
+  real<lower=-0.06, upper=0.05> c4;
+  real<lower=-0.06, upper=0.03> c5;
   # vector<lower=-0.002, upper=0.006>[5] alpha;
 
-  # +10 seems to pick up too much.  truncate
-  # make it gradated with highest at 0 lowest at 5
-  # lower limit of -5 is too low.  make it -4
-  real<lower=0.0031-4*0.0009, upper=0.0031+12*0.0008> alpha1;
-  real<lower=0.0005-4*0.0007, upper=0.0005+11*0.0007> alpha2;
-  real<lower=0.0006-4*0.0006, upper=0.0006+11*0.0006> alpha3;
-  real<lower=0.0007-4*0.0005, upper=0.0007+7*0.0005> alpha4;
-  real<lower=0.0021-4*0.0004, upper=0.0021+7*0.0004> alpha5;
+
+  # lower limit of -4 is too low.  make it -3
+  real<lower=0.0031-3*0.0009, upper=0.0031+13*0.0008> alpha1;
+  real<lower=0.0005-3*0.0007, upper=0.0005+11*0.0007> alpha2;
+  real<lower=0.0006-3*0.0006, upper=0.0006+11*0.0006> alpha3;
+  real<lower=0.0007-3*0.0005, upper=0.0007+8*0.0005> alpha4;
+  real<lower=0.0021-3*0.0004, upper=0.0021+8*0.0004> alpha5;
 
   # vector<lower=0.01, upper=0.045>[5] beta;
   # looks shifted negative relative to -5 5
@@ -47,8 +46,8 @@ parameters {
   # go up to 4.7; go up to 4.9
   # -4 looks like a good lower bound
   real<lower=4.9882-4*0.3031, upper=4.9882+4.1*0.3399> gamma01;
-  real<lower=3.0604-4*0.2142, upper=3.0604+4.9*0.2355> gamma02;
-  real<lower=2.387-4*0.1858, upper=2.387+4.9*0.2009> gamma03;
+  real<lower=3.0604-4*0.2142, upper=3.0604+5.2*0.2355> gamma02;
+  real<lower=2.387-4*0.1858, upper=2.387+5.4*0.2009> gamma03;
   real<lower=1.7696-4*0.1713, upper=1.7696+4.9*0.1833> gamma04;
 
   real<lower=-0.1, upper=3.5> gamma11;
