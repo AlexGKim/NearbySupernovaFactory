@@ -65,10 +65,10 @@ parameters {
   # real<lower=3.0604-3*0.2142, upper=3.0604+4.*0.2355> gamma02;
   # real<lower=2.387-3*0.1858, upper=2.387+4.*0.2009> gamma03;
   # real<lower=1.7696-3*0.1713, upper=1.7696+4.*0.1833> gamma04;
-  real<lower=4.9882-2.2*0.3031, upper=4.9882+2.7*0.3399> gamma01;
-  real<lower=3.0604-1.6*0.2142, upper=3.0604+4.1*0.2355> gamma02;
-  real<lower=2.387-1.4*0.1858, upper=2.387+4.4*0.2009> gamma03;
-  real<lower=1.7696-2.0*0.1713, upper=1.7696+4.7*0.1833> gamma04;
+  real<lower=4.9882-1.7*0.3031, upper=4.9882+3.0*0.3399> gamma01;
+  real<lower=3.0604-1.1*0.2142, upper=3.0604+4.4*0.2355> gamma02;
+  real<lower=2.387-0.9*0.1858, upper=2.387+4.7*0.2009> gamma03;
+  real<lower=1.7696-1.7*0.1713, upper=1.7696+4.8*0.1833> gamma04;
 
   real<lower=-0.1, upper=4> gamma11;
   real<lower=-1., upper=2> gamma12;
@@ -139,7 +139,7 @@ model {
       means[d] <- Delta[d] + c+ alpha*EW[d,1]  + beta*EW[d,2];
   }
 
-  increment_log_prob(cauchy_log(L_sigma, 0.08,0.2));
+  increment_log_prob(cauchy_log(L_sigma, 0.0,1));
   # increment_log_prob(lkj_corr_cholesky_log(L_Omega, 2.));
   # L_Sigma <- diag_pre_multiply(L_sigma, L_Omega);
 
