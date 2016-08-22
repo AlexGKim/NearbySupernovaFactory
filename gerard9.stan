@@ -13,15 +13,15 @@ data {
 parameters {
 
   vector<lower=-125, upper=125>[2] EW[D];
-  vector<lower=-1.75, upper=2.>[N_mags] mag_int[D];
-  vector <lower=-0.4, upper=.7>[D] k;
-  real <lower = 20, upper = 41> Delta_scale;
+  vector<lower=-5, upper=5.>[N_mags] mag_int[D];
+  vector <lower=-0.5, upper=1>[D] k;
+  real <lower = 15, upper = 45> Delta_scale;
 
-  real<lower=-0.2, upper=0.2> c1;
+  real<lower=-0.3, upper=0.3> c1;
   real<lower=-0.2, upper=0.2> c2;
-  real<lower=-0.2, upper=0.2> c3;
-  real<lower=-0.2, upper=0.1> c4;
-  real<lower=-0.2, upper=0.1> c5;
+  real<lower=-0.15, upper=0.15> c3;
+  real<lower=-0.1, upper=0.1> c4;
+  real<lower=-0.1, upper=0.1> c5;
   # vector<lower=-0.002, upper=0.006>[5] alpha;
 
 
@@ -32,11 +32,11 @@ parameters {
   # real<lower=0.0007-3*0.0005, upper=0.0007+4*0.0005> alpha4;
   # real<lower=0.0021-3*0.0004, upper=0.0021+4*0.0004> alpha5;
 
-  real<lower=0.0031-0.*0.0009, upper=0.0031+9.0*0.0008> alpha1;
-  real<lower=0.0005-0.*0.0007, upper=0.0005+8.5*0.0007> alpha2;
-  real<lower=0.0006-0.*0.0006, upper=0.0006+6.0*0.0006> alpha3;
-  real<lower=0.0007-0.0*0.0005, upper=0.0007+6.0*0.0005> alpha4;
-  real<lower=0.0021-0.5*0.0004, upper=0.0021+6.0*0.0004> alpha5;
+  real<lower=-0.0001, upper=0.015> alpha1;
+  real<lower=-0.0025, upper=0.006> alpha2;
+  real<lower=-0.002, upper=0.0045> alpha3;
+  real<lower=-0.002, upper=0.0035> alpha4;
+  real<lower=-0.002, upper=0.0045> alpha5;
 
   # vector<lower=0.01, upper=0.045>[5] beta;
   # looks shifted negative relative to -5 5
@@ -49,11 +49,11 @@ parameters {
   # real<lower=0.0223-5*0.0018, upper=0.0223+4*0.0018> beta4;
   # real<lower=0.0213-5*0.0017, upper=0.0213+4*0.0016> beta5;
 
-  real<lower=0.0345-5.5*0.0029, upper=0.0345+1.0*0.0027> beta1;
-  real<lower=0.0274-5.0*0.0025, upper=0.0274+1.0*0.0022> beta2;
-  real<lower=0.0274-4.0*0.0021, upper=0.0274+1.5*0.0021> beta3;
-  real<lower=0.0223-3.5*0.0018, upper=0.0223+2.0*0.0018> beta4;
-  real<lower=0.0213-3.0*0.0017, upper=0.0213+3.0*0.0016> beta5;
+  real<lower=0.0, upper=0.5> beta1;
+  real<lower=0.0, upper=0.5> beta2;
+  real<lower=0.010, upper=0.5> beta3;
+  real<lower=0.010, upper=0.5> beta4;
+  real<lower=0.010, upper=0.5> beta5;
 
   # vector<lower=1., upper=6>[4] gamma_;
   # +5 looks too big
@@ -65,15 +65,15 @@ parameters {
   # real<lower=3.0604-3*0.2142, upper=3.0604+4.*0.2355> gamma02;
   # real<lower=2.387-3*0.1858, upper=2.387+4.*0.2009> gamma03;
   # real<lower=1.7696-3*0.1713, upper=1.7696+4.*0.1833> gamma04;
-  real<lower=4.9882-1.7*0.3031, upper=4.9882+3.0*0.3399> gamma01;
-  real<lower=3.0604-1.1*0.2142, upper=3.0604+4.4*0.2355> gamma02;
-  real<lower=2.387-0.9*0.1858, upper=2.387+4.7*0.2009> gamma03;
-  real<lower=1.7696-1.7*0.1713, upper=1.7696+4.8*0.1833> gamma04;
+  real<lower=4.9882-3.5*0.3031, upper=4.9882+2.5*0.3399> gamma01;
+  real<lower=3.0604-3.5*0.2142, upper=3.0604+2.5*0.2355> gamma02;
+  real<lower=2.3870-3.5*0.1858, upper=2.387+2.5*0.2009> gamma03;
+  real<lower=1.7696-3.5*0.1713, upper=1.7696+2.5*0.1833> gamma04;
 
-  real<lower=-0.1, upper=4> gamma11;
-  real<lower=-1., upper=2> gamma12;
-  real<lower=-1., upper=2> gamma13;
-  real<lower=-2.0, upper=1> gamma14;
+  real<lower=0, upper=5> gamma11;
+  real<lower=-1, upper=5> gamma12;
+  real<lower=-2, upper=5> gamma13;
+  real<lower=-2, upper=5> gamma14;
 
   # cholesky_factor_corr[N_mags] L_Omega;
   vector<lower=0.0, upper = 0.08>[N_mags] L_sigma;
@@ -139,7 +139,7 @@ model {
       means[d] <- Delta[d] + c+ alpha*EW[d,1]  + beta*EW[d,2];
   }
 
-  increment_log_prob(cauchy_log(L_sigma, 0.0,1));
+  increment_log_prob(cauchy_log(L_sigma, 0.08,0.2));
   # increment_log_prob(lkj_corr_cholesky_log(L_Omega, 2.));
   # L_Sigma <- diag_pre_multiply(L_sigma, L_Omega);
 

@@ -40,26 +40,31 @@ init = [{'EW' : EW_renorm, \
          'c4': 0.0008,\
          'c5': 0.0022,\
          # roughly the peak of one-color
-         'alpha1': 0.0031+0.0001,\
-         'alpha2': 0.0005+0.0001,\
-         'alpha3': 0.0006+0.0001,\
-         'alpha4': 0.0007+0.0001,\
-         'alpha5': 0.0021+0.0001,\
+         # 'alpha1': 0.0031+0.0001,\
+         # 'alpha2': 0.0005+0.0001,\
+         # 'alpha3': 0.0006+0.0001,\
+         # 'alpha4': 0.0007+0.0001,\
+         # 'alpha5': 0.0021+0.0001,\
+         'alpha1': 0.000,\
+         'alpha2': 0.000,\
+         'alpha3': 0.000,\
+         'alpha4': 0.000,\
+         'alpha5': 0.000,\
          # roughly the peak of one-color
-         'beta1': 0.0345,\
-         'beta2': 0.0274,\
-         'beta3': 0.0274,\
-         'beta4': 0.0223,\
-         'beta5': 0.0213,\
+         'beta1': 0.024,\
+         'beta2': 0.020,\
+         'beta3': 0.024,\
+         'beta4': 0.020,\
+         'beta5': 0.020,\
          # roughly the peak of one-color
          # 'gamma01': 4.9882,\
          # 'gamma02': 3.0604,\
          # 'gamma03': 2.387,\
          # 'gamma04': 1.7696,\
-         'gamma01': 5.4,\
-         'gamma02': 3.7,\
-         'gamma03': 2.9,\
-         'gamma04': 2.1,\
+         'gamma01': 4.9882,\
+         'gamma02': 3.0604,\
+         'gamma03': 2.387,\
+         'gamma04': 1.7696,\
          # from init the best values for gamma 1
          'gamma11': 2.4,\
          'gamma12': 0.7,\
