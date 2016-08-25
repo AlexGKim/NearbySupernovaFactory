@@ -86,7 +86,7 @@ init = [{'EW' : EW_renorm, \
          'gamma03': 3.1,\
          'gamma04': 2.4,\
          'gamma05': 1.8,\
-         'mag_int': mag_renorm, \
+         'mag_int_raw': mag_renorm, \
          'L_sigma': numpy.zeros(5)+0.05, \
          'L_Omega': numpy.identity(5), \
          'Delta_unit':Delta_simplex, 'Delta_scale': nsne/8.,\
@@ -95,7 +95,7 @@ init = [{'EW' : EW_renorm, \
 
 sm = pystan.StanModel(file='gerard10.stan')
 control = {'stepsize':1.}
-fit = sm.sampling(data=data, iter=1000, chains=4,control=control,init=init,thin=1)
+fit = sm.sampling(data=data, iter=2000, chains=4,control=control,init=init,thin=1)
 print fit
 
 output = open('temp10.pkl','wb')

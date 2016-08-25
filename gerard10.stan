@@ -28,7 +28,7 @@ parameters {
   real gamma05;
 
   cholesky_factor_corr[N_mags] L_Omega;
-  vector<lower=0.0>[N_mags] L_sigma;
+  vector<lower=0.0, upper=0.12>[N_mags] L_sigma;
 
   simplex[D] Delta_unit;
   simplex[D] k_unit;
@@ -49,6 +49,7 @@ transformed parameters {
   Delta = Delta_scale*(Delta_unit - 1./D);
   k = k_scale*(k_unit - 1./D);
 
+  # non-centered parameterization
   {
     matrix[5,5] L_Sigma;
     L_Sigma = diag_pre_multiply(L_sigma, L_Omega);
@@ -59,23 +60,21 @@ transformed parameters {
 }
 
 model {
+
+  # Centered parameterization
   # vector[5] means[D];
   # matrix[5,5] L_Sigma;
-
   # for (d in 1:D) {
   #     means[d] = Delta[d] + c+ alpha*EW[d,1]  + beta*EW[d,2] + eta*sivel[d];
   # }
+  # L_Sigma = diag_pre_multiply(L_sigma, L_Omega);
 
   target += (cauchy_lpdf(L_sigma | 0.1,0.1));
   target += (lkj_corr_cholesky_lpdf(L_Omega | 2.));
-  # L_Sigma = diag_pre_multiply(L_sigma, L_Omega);
 
   for (d in 1:D) {
     # target += (multi_normal_cholesky_lpdf(mag_int[d] | means[d], L_Sigma));
-    #target += (multi_normal_cholesky_lpdf(mag_int_raw[d] | zeros, L_Omega));
-    target += normal_lpdf(mag_int_raw[d] | 0, 1);
-
-    # target += (normal_lpdf(mag_int[d], means[d], L_sigma));
+    target += normal_lpdf(mag_int_raw[d] | 0, 1); # non-centered parameterization
     target += (multi_normal_lpdf(mag_obs[d] | mag_int[d]+gamma*k[d], mag_cov[d]));
     target += (multi_normal_lpdf(EW_obs[d] | EW[d], EW_cov[d]));
   } 
