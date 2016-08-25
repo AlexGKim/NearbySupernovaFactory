@@ -10,122 +10,86 @@ data {
 
 parameters {
 
-  vector<lower=-150, upper=150>[2] EW[D];
-  vector<lower=-10, upper=50>[N_mags] mag_int[D];
+  vector[2] EW[D];
+  vector[N_mags] mag_int_raw[D];
+  vector[5] c;
+  vector[5] alpha;
+  vector[5] beta;
 
-  real<lower=-4.2, upper=0.1> c1;
-  real<lower=-3.5, upper=0.1> c2;
-  real<lower=-2.6, upper=0.1> c3;
-  real<lower=-2.1, upper=0.1> c4;
-  real<lower=-1.5, upper=0.1> c5;
+  real gamma01;
+  real gamma03;
+  real gamma04;
+  real gamma05;
 
+  real rho11;
+  real rho13;
+  real rho14;
+  real rho15;
 
-  real<lower=0.0031-7*0.0009, upper=0.0031+8*0.0008> alpha1;
-  real<lower=0.0005-7*0.0007, upper=0.0005+8*0.0007> alpha2;
-  real<lower=0.0006-7*0.0006, upper=0.0006+8*0.0006> alpha3;
-  real<lower=0.0007-7*0.0005, upper=0.0007+8*0.0005> alpha4;
-  real<lower=0.0021-7*0.0004, upper=0.0021+8*0.0004> alpha5;
-
-
-  # vector<lower=0.01, upper=0.045>[5] beta;
-  real<lower=0.0345-5*0.0029, upper=0.0345+7*0.0027> beta1;
-  real<lower=0.0274-5*0.0025, upper=0.0274+7*0.0022> beta2;
-  real<lower=0.0274-5*0.0021, upper=0.0274+7*0.0021> beta3;
-  real<lower=0.0223-5*0.0018, upper=0.0223+7*0.0018> beta4;
-  real<lower=0.0213-5*0.0017, upper=0.0213+7*0.0016> beta5;
-
-  # edges appear to give good separation, 2.3 better than 2.0
-  # -2.7 too much
-  # -2.3 seems too much
-  # -2.2 seems too much
-  real<lower=4.9882-1.5*0.3031, upper=6.9882+5*0.3399> gamma01;
-  real<lower=3.0604-1.5*0.2142, upper=3.0604+5*0.2355> gamma02;
-  real<lower=2.387-1.5*0.1858, upper=2.387+5*0.2009> gamma03;
-  real<lower=1.7696-1.5*0.1713, upper=1.7696+5*0.1833> gamma04;
-
-  # max of -2.2 not high enough 
-  # try to get more overlap with lower gamma range.  -1.5 and -2
-
-  real<lower=0, upper=4.9882-1.0*0.3031> rho11;
-  real<lower=0, upper=3.0604-1.0*0.2142> rho12;
-  real<lower=0, upper=2.387-1.0*0.1858> rho13;
-  real<lower=0, upper=1.7696-1.0*0.17131> rho14;
-
-  vector <lower=-20, upper=20.>[D] k_unit;
-
-  # cholesky_factor_corr[N_mags] L_Omega;
-  vector<lower=0.0, upper = 0.08>[N_mags] L_sigma;
+  cholesky_factor_corr[N_mags] L_Omega;
+  vector<lower=0.0>[N_mags] L_sigma;
 
   simplex[D] Delta_unit;
-  real <lower = 10, upper = 35> Delta_scale;
-
-  vector <lower=0, upper=6>[D] R;
+  simplex [D] k_unit;
+  simplex [D] R_unit;
+  real<lower=0> Delta_scale;
+  real <lower = 0> k_scale;
+  real <lower = 0> R_scale;
 }
 
 transformed parameters {
   vector[D] Delta;
   vector[5] gamma;
-  vector[5] alpha;
-  vector[5] beta;
   vector[5] rho1;
   vector[D] k;
-  vector[5] c;
+  vector[D] R;
 
-  gamma[1] <- gamma01;
-  gamma[2] <- 1.+gamma02;
-  gamma[3] <- gamma02;
-  gamma[4] <- gamma03;
-  gamma[5] <- gamma04;
+  vector[N_mags] mag_int[D];
 
-  alpha[1] <- alpha1;
-  alpha[2] <- alpha2;
-  alpha[3] <- alpha3;
-  alpha[4] <- alpha4;
-  alpha[5] <- alpha5;
+  gamma[1] = gamma01;
+  gamma[2]= 1+gamma03;
+  gamma[3] = gamma03;
+  gamma[4] = gamma04;
+  gamma[5] = gamma05;
 
-  beta[1] <- beta1;
-  beta[2] <- beta2;
-  beta[3] <- beta3;
-  beta[4] <- beta4;
-  beta[5] <- beta5;
+  rho1[1] = rho11;
+  rho1[2] = 1+rho13;
+  rho1[3] = rho13;
+  rho1[4] = rho14;
+  rho1[5] = rho15;
+  
+  Delta = Delta_scale*(Delta_unit - 1./D);
+  k = k_scale*(k_unit - 1./D);
+  R = R_scale*(R_unit - 1./D);
+  # R = R_unit / sqrt(sum(R .* R)/D);
 
-  rho1[1] <- rho11;
-  rho1[2] <- 1+rho12;
-  rho1[3] <- rho12;
-  rho1[4] <- rho13;
-  rho1[5] <- rho14;
-
-  c[1] <- c1;
-  c[2] <- c2;
-  c[3] <- c3;
-  c[4] <- c4;
-  c[5] <- c5;
-
-
-  Delta <- Delta_scale*(Delta_unit - 1./D);
-  k <- (k_unit - mean(k_unit));
-  # R <- (R_unit - mean(R_unit));
-  # R <- R_unit / sqrt(sum(R .* R)/D);
+    # non-centered parameterization
+  {
+    matrix[5,5] L_Sigma;
+    L_Sigma = diag_pre_multiply(L_sigma, L_Omega);
+    for (d in 1:D) {
+      mag_int[d] = Delta[d] + c+ alpha*EW[d,1]  + beta*EW[d,2]  + rho1*R[d] + L_Sigma * mag_int_raw[d];
+    }
+  }
 }
 
 model {
-  vector[5] means[D];
+  # vector[5] means[D];
   # matrix[5,5] L_Sigma;
 
+  # for (d in 1:D) {
+  #     means[d] = Delta[d] + c+ alpha*EW[d,1] + beta*EW[d,2] + rho1*R[d];
+  #           # means[d] = Delta[d] + c+ alpha*EW[d,1] + beta*EW[d,2] + rho1/2.*(pow(R[d],2));
+  # }
+
+  target += cauchy_lpdf(L_sigma | 0.08,0.1);
+  # increment_lpdf_prob(lkj_corr_cholesky_lpdf(L_Omega, 4.));
+  # L_Sigma = diag_pre_multiply(L_sigma, L_Omega);
+
   for (d in 1:D) {
-      means[d] <- Delta[d] + c+ alpha*EW[d,1] + beta*EW[d,2] + rho1/2.*(pow(R[d],2));
-  }
-
-  increment_log_prob(cauchy_log(L_sigma, 0.,1));
-  # increment_log_prob(lkj_corr_cholesky_log(L_Omega, 4.));
-  # L_Sigma <- diag_pre_multiply(L_sigma, L_Omega);
-
-  for (d in 1:D) {
-
-    # increment_log_prob(multi_normal_cholesky_log(mag_int[d], means[d], L_Sigma));
-    increment_log_prob(normal_log(mag_int[d], means[d], L_sigma));
-    increment_log_prob(multi_normal_log(mag_obs[d],mag_int[d]+gamma*k[d], mag_cov[d]));
-    increment_log_prob(multi_normal_log(EW_obs[d],EW[d], EW_cov[d]));
+    target += normal_lpdf(mag_int_raw[d]| 0, 1);
+    target += multi_normal_lpdf(mag_obs[d] | mag_int[d]+gamma*k[d], mag_cov[d]);
+    target += multi_normal_lpdf(EW_obs[d] | EW[d], EW_cov[d]);
 
   }  
 }

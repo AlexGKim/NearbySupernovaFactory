@@ -12,29 +12,14 @@ data {
 
 parameters {
   vector[2] EW[D];
-  vector[N_mags] mag_int[D];
+  vector[N_mags] mag_int_raw[D];
+  vector[5] c;
+  vector[5] alpha;
+  vector[5] beta;
 
   real <lower = 0> Delta_scale;
   real <lower = 0> k_scale;
   real k_zero;
-
-  real c1;
-  real c2;
-  real c3;
-  real c4;
-  real c5;
-
-  real alpha1;
-  real alpha2;
-  real alpha3;
-  real alpha4;
-  real alpha5;
-
-  real beta1;
-  real beta2;
-  real beta3;
-  real beta4;
-  real beta5;
 
   real gamma01;
   real gamma03;
@@ -42,27 +27,25 @@ parameters {
   real gamma05;
 
   real gamma11;
-  real gamma12;
   real gamma13;
   real gamma14;
   real gamma15;
 
-  # cholesky_factor_corr[N_mags] L_Omega;
-  vector<lower=0.0>[N_mags] L_sigma;
+  cholesky_factor_corr[N_mags] L_Omega;
+  vector<lower=0.0, upper=0.12>[N_mags] L_sigma;
   simplex[D] k_unit;
   simplex[D] Delta_unit;
 
-  real <lower=0.0, upper=1.> prob0;
+  simplex[2] prob0;
 }
 
 transformed parameters {
   vector[D] Delta;
   vector[5] gamma;
   vector[5] gamma1;
-  vector[5] alpha;
-  vector[5] beta;
-  vector[5] c;
   vector[D] k;
+  vector[N_mags] mag_int[D];
+
 
   gamma[1] = gamma01;
   gamma[2] = gamma03+1;
@@ -72,53 +55,46 @@ transformed parameters {
 
 
   gamma1[1] = gamma11;
-  gamma1[2] = gamma12;
+  gamma1[2] = gamma13+1;
   gamma1[3] = gamma13;
   gamma1[4] = gamma14;
   gamma1[5] = gamma15;
 
-  alpha[1] = alpha1;
-  alpha[2] = alpha2;
-  alpha[3] = alpha3;
-  alpha[4] = alpha4;
-  alpha[5] = alpha5;
-
-  beta[1] = beta1;
-  beta[2] = beta2;
-  beta[3] = beta3;
-  beta[4] = beta4;
-  beta[5] = beta5;
-
-  c[1] = c1;
-  c[2] = c2;
-  c[3] = c3;
-  c[4] = c4;
-  c[5] = c5;
-
   Delta = Delta_scale*(Delta_unit - 1./D);
   k = k_scale*(k_unit - k_zero);
+
+
+  # non-centered parameterization
+  {
+    matrix[5,5] L_Sigma;
+    L_Sigma = diag_pre_multiply(L_sigma, L_Omega);
+    for (d in 1:D) {
+      mag_int[d] = Delta[d] + c+ alpha*EW[d,1]  + beta*EW[d,2] + L_sigma .* mag_int_raw[d];
+    }
+  }
 }
 
 model {
-  vector[5] means[D];
+  # vector[5] means[D];
   # matrix[5,5] L_Sigma;
 
   real logprob0;
   real otherlog;
 
-  for (d in 1:D) {
-      means[d] = Delta[d] + c+ alpha*EW[d,1]  + beta*EW[d,2];
-  }
+  # for (d in 1:D) {
+  #     means[d] = Delta[d] + c+ alpha*EW[d,1]  + beta*EW[d,2];
+  # }
 
-  target += cauchy_lpdf(L_sigma | 0.08,0.2);
+  target += cauchy_lpdf(L_sigma | 0.08,0.1);
   # target += lkj_corr_cholesky_log(L_Omega, 2.));
   # L_Sigma = diag_pre_multiply(L_sigma, L_Omega);
 
-  logprob0 = log(prob0);
-  otherlog = log(1-prob0);
+  logprob0 = log(prob0[1]);
+  otherlog = log(prob0[2]);
   for (d in 1:D) {
     # target += multi_normal_cholesky_log(mag_int[d], means[d], L_Sigma));
-    target += normal_lpdf(mag_int[d] | means[d], L_sigma);
+    # target += normal_lpdf(mag_int[d] | means[d], L_sigma);
+    target += normal_lpdf(mag_int_raw[d] | 0, 1);
 
     target += log_sum_exp(logprob0+multi_normal_lpdf(mag_obs[d] | mag_int[d]+gamma*k[d], mag_cov[d]),
      otherlog+multi_normal_lpdf(mag_obs[d] | mag_int[d]+gamma1*k[d], mag_cov[d]));
