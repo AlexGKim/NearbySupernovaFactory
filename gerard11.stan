@@ -23,7 +23,7 @@ parameters {
   real<lower=0> gamma04;
   real<lower=0> gamma05;
 
-  real<lower=0> rho11;
+  real<upper=0> rho11;
   real rho12;
   real rho13;
   real rho14;
@@ -59,7 +59,7 @@ transformed parameters {
   c = c_raw/1e2;
   alpha = alpha_raw/5e2;
   beta = beta_raw/2e2;
-  eta = eta_raw/2e2;
+  eta = eta_raw/6e2;
   L_sigma = L_sigma_raw/100.;
   
   Delta = Delta_scale*(Delta_unit-1./D);
