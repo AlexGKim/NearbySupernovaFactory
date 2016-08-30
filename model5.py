@@ -49,7 +49,7 @@ init = [{'EW' : EW_renorm, \
          'gamma04': 2./5,\
          'gamma05': 1./5,\
          'mag_int_raw': mag_renorm, \
-         # 'L_Omega': numpy.identity(5), \
+         'L_Omega': numpy.identity(5), \
          'Delta_unit':R_simplex, \
          'Delta_scale': 2.5, \
          'k_unit': R_simplex, \

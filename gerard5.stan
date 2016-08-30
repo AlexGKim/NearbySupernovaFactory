@@ -27,7 +27,7 @@ parameters {
   real rho15;
 
   real <lower=0> Delta_scale;
-  # cholesky_factor_corr[N_mags] L_Omega;
+  cholesky_factor_corr[N_mags] L_Omega;
 
   vector[2] EW[D];
   vector[N_mags] mag_int_raw[D];
@@ -84,10 +84,10 @@ transformed parameters {
 
     # non-centered parameterization
   {
-    # matrix[5,5] L_Sigma;
-    # L_Sigma = diag_pre_multiply(L_sigma, L_Omega);
+    matrix[5,5] L_Sigma;
+    L_Sigma = diag_pre_multiply(L_sigma, L_Omega);
     for (d in 1:D) {
-      mag_int[d] = Delta[d] + c+ alpha*EW[d,1]  + beta*EW[d,2]  + rho1*R[d] + L_sigma .* mag_int_raw[d];
+      mag_int[d] = Delta[d] + c+ alpha*EW[d,1]  + beta*EW[d,2]  + rho1*R[d] + L_Sigma * mag_int_raw[d];
     }
   }
 }
@@ -103,7 +103,7 @@ model {
   # L_Sigma = diag_pre_multiply(L_sigma, L_Omega);
 
   target += cauchy_lpdf(L_sigma | 0.1,0.1);
-  # target += lkj_corr_cholesky_lpdf(L_Omega | 4.);
+  target += lkj_corr_cholesky_lpdf(L_Omega | 4.);
 
   for (d in 1:D) {
     target += normal_lpdf(mag_int_raw[d]| 0, 1);
