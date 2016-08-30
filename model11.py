@@ -84,12 +84,6 @@ init = [{'EW' : EW_renorm, \
          'beta_raw' : numpy.zeros(5), \
          'eta_raw' : numpy.zeros(5), \
          'L_sigma_raw': numpy.zeros(5)+0.03*100, \
-         # roughly the peak of one-color
-         # 'gamma01': 5.2*1.,\
-         # 'gamma03': 3.4*1.,\
-         # 'gamma03': 3.4*1.,\
-         # 'gamma04': 3.0*1.,\
-         # 'gamma05': 2.4*1.,\
          'gamma01': 6./5,\
          'gamma02': 4./5,\
          'gamma03': 3./5,\
@@ -98,27 +92,20 @@ init = [{'EW' : EW_renorm, \
          'mag_int_raw': mag_renorm, \
          'L_Omega': numpy.identity(5), \
          'Delta_unit':R_simplex, \
-         'Delta_scale': 2.5, \
+         'Delta_scale': 15./4, \
          'k_unit': R_simplex, \
-         # 'k_scale': 20, \
          'R_unit': R_simplex, \
-         # 'R_scale': 20, \
-         # 'rho11': 4.4/100.,\
-         # 'rho13': 2.6/100.,\
-         # 'rho14': 2.2/100.,\
-         # 'rho15': 1.8/100.,\
          'rho11': -17./5,\
          'rho12': 0.*3./5,\
          'rho13': 0./5,\
          'rho14': 0.*3./5,\
          'rho15': 0.*3./5,\
-         # 'rho1':numpy.zeros(5)\
          } \
         for _ in range(4)]
 
 sm = pystan.StanModel(file='gerard11.stan')
 control = {'stepsize':1}
-fit = sm.sampling(data=data, iter=2000, chains=4,control=control,init=init, thin=1)
+fit = sm.sampling(data=data, iter=4000, chains=4,control=control,init=init, thin=2)
 
 
 output = open('temp11.pkl','wb')

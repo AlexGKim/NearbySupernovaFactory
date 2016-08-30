@@ -75,6 +75,32 @@ plt.savefig(pp,format='pdf')
 pp.close()
 plt.close()
 
+plt.hist(fit['R'].flatten(),normed=True,bins=20)
+plt.title(r'$D$')
+pp = PdfPages('output11/D_hist.pdf')
+plt.savefig(pp,format='pdf')
+pp.close()
+plt.close()
+
+plt.hist([(fit['gamma'][:,1]-fit['gamma'][:,2])[:,None]*fit['R'], (fit['rho1'][:,1]-fit['rho1'][:,2])[:,None]*fit['R']],normed=True,bins=20,
+    label=[r'$E(B-V)$',r'$E_\delta(B-V)$'],range=(-0.1,0.4))
+# plt.title(r'$E(B-V)$')
+plt.legend()
+pp = PdfPages('output11/ebv.pdf')
+plt.savefig(pp,format='pdf')
+pp.close()
+plt.close()
+
+ab = fit['gamma'][:,1][:,None]*fit['R'] + fit['rho1'][:,1][:,None]*fit['R']
+av = fit['gamma'][:,2][:,None]*fit['R'] + fit['rho1'][:,2][:,None]*fit['R']
+rv = av/(ab-av)
+plt.hist(rv)
+pp = PdfPages('output11/Rveff.pdf')
+plt.xlabel(r'$R_{V,eff}$')
+plt.savefig(pp,format='pdf')
+pp.close()
+plt.close()
+
 figure = corner.corner(fit['c'],labels=[r"${c}_0$",r"${c}_1$",r"${c}_2$",r"${c}_3$",r"${c}_4$"])
 pp = PdfPages('output11/c_corner.pdf')
 plt.savefig(pp,format='pdf')
@@ -213,9 +239,10 @@ with PdfPages('output11/multipage_pdf.pdf') as pdf:
     pp.close()
     plt.close()
 
-    mega = fit['rho1']/((fit['rho1'][:,0]-fit['rho1'][:,2]))[:,None]
+    mega = fit['rho1']/((fit['rho1'][:,1]-fit['rho1'][:,2]))[:,None]
 
-    figure = corner.corner(mega,labels=[r"$R_{\delta 0}$",r"$R_{\delta 1}$",r"$R_{\delta 2}$",r"$R_{\delta 3}$",r"$R_{\delta 4}$"])
+    figure = corner.corner(mega,labels=[r"$R_{\delta 0}$",r"$R_{\delta 1}$",r"$R_{\delta 2}$",r"$R_{\delta 3}$",r"$R_{\delta 4}$"], \
+        range=[[-8.,0.5] for x in xrange(5)])
     pp = PdfPages('output11/rxdelta_corner.pdf')
     plt.savefig(pp,format='pdf')
     pp.close()
@@ -264,7 +291,7 @@ for index in xrange(5):
     plt.close()
 
 
-rvs = [2.7,3.1,4.1]
+rvs = [1.7,3.1,4.1]
 filts = ['U','B','V','R','I']
 
 lambdas = numpy.arange(3000.,9000,100)

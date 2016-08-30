@@ -62,7 +62,7 @@ transformed parameters {
   eta = eta_raw/6e2;
   L_sigma = L_sigma_raw/100.;
   
-  Delta = Delta_scale*(Delta_unit-1./D);
+  Delta = 4.*Delta_scale*(Delta_unit-1./D);
   k=(k_unit-1./D);
   R=(R_unit-1./D);
 

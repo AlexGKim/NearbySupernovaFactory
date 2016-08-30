@@ -10,26 +10,36 @@
 
 \begin{document}
 \section{Data}
-The data set consists of synthetic $UBVRI$ peak brightnesses and Si and Ca equivalent widths at peak
+The data set consists of synthetic $UBVRI$ (whether SNF or Nico system yet to be elucidated)
+peak brightnesses and Si and Ca equivalent widths at peak
 of 172 SNf supernovae.  The photometry is normalized to place all supernovae at a common distance, as
 inferred by redshift.
 The data was provided by Manu Gangler.
 
+The SiII$\lambda6355$ velocity within 3-days of peak brightness is taken from the file phrenology\_2016\_12\_01\_CABALLOv1.pkl.
+We use the weighted sum for supernovae with multiple velocity measurements.  A subset of 163
+supernovae have this velocity measurement.
+
 \section{Model Fits}
-\subsection{One Dust}
-\label{onecolor:sec}
+
 We hypothesize that Type Ia supernova spectral features are predictive of intrinsic
-magnitudes.  The intrinsic magnitudes are not perfectly deterministic, but have some intrinsic dispersion.
+magnitudes.  We use feature statistics that are insensitive to broad-band reddening.
+The intrinsic magnitudes are not perfectly deterministic, but have some intrinsic dispersion.
 An extrinsic physical process common to all supernovae can influence the propagation
-of light along the line of sight to influence apparent magnitudes. 
+of light along the line of sight to influence apparent magnitudes.
+We allow for additional color variation left unaccounted for by the spectral features and external extinction.
 
-\subsubsection{Setup}
-Specifically, we assume a linear relationship between the equivalent widths of the Ca and Si spectral features
-$EW_{Ca}$ and $EW_{Si}$, and the intrinsic $UBVRI$ magnitudes
-with residual Gaussian dispersion with covariance $C_c$.  A grey magnitude offset $\Delta$ is included for each supernova
+\subsection{Setup}
+We assume 
+that  intrinsic $UBVRI$ magnitudes are linearly dependent
+on the equivalent widths of the Ca and Si spectral features
+$EW_{Ca}$, $EW_{Si}$,
+the SiII$\lambda6355$ velocity $v_{Si}$, and an intrinsic color-variation parameter $D$.
+Residual Gaussian dispersion is described by covariance $C_c$.  A grey magnitude offset $\Delta$ is included for each supernova
 to capture grey intrinsic dispersion and distance errors introduced in the normalization of the photometry.
-The  extrinsic process is also assumed to be linear.  The observables
-$U_o, B_o, V_o, R_o, I_o$, $EW_{Ca,o}$ and $EW_{Si,o}$ have Gaussian uncertainty with covariance $C$.  The model can be expressed
+The observed magnitudes are linearly dependent on an
+extrinsic color-variation parameter $k$  parameter.  The observables
+$U_o, B_o, V_o, R_o, I_o$, $EW_{Ca,o}$, $EW_{Si,o}$, $v_{Si,o}$ have Gaussian uncertainty with covariance $C$.  The model is written as
 \begin{equation}
 \left(
 \begin{matrix}
@@ -40,246 +50,11 @@ U\\B\\V\\R\\I
 \Delta +
 \left(
 \begin{matrix}
-c_0+\alpha_0 EW_{Ca} + \beta_0 EW_{Si} \\
-c_1+\alpha_1 EW_{Ca} + \beta_1 EW_{Si}  \\
-c_2+\alpha_2 EW_{Ca} + \beta_2 EW_{Si} \\
-c_3+\alpha_3 EW_{Ca} + \beta_3 EW_{Si} \\
-c_4+\alpha_4 EW_{Ca} + \beta_4 EW_{Si}
-\end{matrix}
-\right)
-,C_{c}
-\right)
-\label{ew:eqn}
-\end{equation}
-\begin{equation}
-\left(
-\begin{matrix}
-U_o\\B_o\\ V_o\\R_o\\I_o\\EW_{Si, o}\\ EW_{Ca, o}\end{matrix}
-\right) \sim \mathcal{N}
-\left(
-\left(
-\begin{matrix}
-U +\gamma_0 k \\B +\gamma_1 k \\V+\gamma_2 k\\R+\gamma_3 k\\I+\gamma_4 k\\
-EW_{Si}\\ EW_{Ca}
-\end{matrix}
-\right)
-,C
-\right).
-\label{dust:eqn}
-\end{equation}
-The global parameters $c$, $\alpha$, and $\beta$ are the intercepts and slopes of the bilinear relationships between equivalent widths
-and intrinsic magnitudes.  The extrinsic piece is split into the properties $\gamma$ of the physical process and the per-supernova 
-parameters $k$ that indicate how much of that process each object undergoes.  To break the degeneracies inherent in the model we impose
-\begin{equation*}
-\langle \Delta \rangle=0, \langle k \rangle=0, \langle k^2 \rangle=1, \gamma_0 \ge 0.
-\end{equation*}
-
-Having the intrinsic dispersion $C_c$ as fit parameters seemingly introduces degeneracy in the model, as magnitude and color variation
-ascribed to $\Delta$ and $\gamma k$ could also be attributed to intrinsic dispersion.  There are several features of the model
-that drives the assignation of variations away from $C_c$:  The probability distribution functions decrease
-with increasing $\det{C_c}$ so growing $C_c$ is disfavored; The distributions of $\Delta$ and $k$ are turn out to
-be non-Gaussian, and so are not well described by a Normal covariance; The Bayesian prior selected for $C_c$ disfavors
-grey offsets.
-
-If interpreted as being due to dust, the extrinsic term could be associated with extinction $A_X = \gamma_X k$.  In
-this parlance $E(B-V) = (\gamma_1-\gamma_2) k$ and $R_X = \frac{\gamma_X}{\gamma_1-\gamma_2}$.
-Note that these values of $A_X$, $E(B-V)$, and $R_X$ do not depend on the normalization condition $ \langle k^2 \rangle$, i.e.\
-are independent of the transformation $\gamma \rightarrow a\gamma$, $k \rightarrow a^{-1} k$.
-
-As I perform an Bayesian analysis some mention of priors is required.  A flat prior is used for all parameters except
-for the covariance matrix $C_c$, which is constructed from a correlation matrix with  $\nu=2$  LKJ prior and standard
-deviations with
- $\mu=0$, $\sigma=1$ Cauchy (Lorentz) distribution prior restricted to non-negative values.
-The nature of the LKJ prior is rather mysterious; one thing to note is that for $\nu=2$ the correlation prior is broad but
-approaches zero at the extremum.
-
-\subsubsection{Results}
-The 68\% intervals for the global parameters $\alpha$, $\beta$, $R$, and $\sigma = \sqrt{C_{c,ii}}$  are given in Table~\ref{global:tab}.
-The two dimensional contours for the parameters of each filter are shown in Figure~\ref{global:fig}.  The Table does not show
-the results for $c$ as their values are not significant for the aims of this analysis, the Figure does show $c$ to indicate the convergence
-and correlations of these parameters in the fit.
-
-\begin{table}
-\centering
-\begin{tabular}{|c|c|c|c|c|c|}
-\hline
-& $X=0$ &1&2&3&4\\ \hline
-$\alpha_X$
-&
-$0.0031^{0.0008}_{-0.0009}$
-&
-$0.0005^{0.0007}_{-0.0007}$
-&
-$0.0006^{0.0006}_{-0.0006}$
-&
-$0.0007^{0.0005}_{-0.0005}$
-&
-$0.0021^{0.0004}_{-0.0004}$
-\\
-$\beta_X$
-&
-$0.0345^{0.0027}_{-0.0029}$
-&
-$0.0274^{0.0022}_{-0.0025}$
-&
-$0.0274^{0.0021}_{-0.0021}$
-&
-$0.0223^{0.0018}_{-0.0018}$
-&
-$0.0213^{0.0016}_{-0.0017}$
-\\
-$R_X$
-&
-$4.9882^{0.3399}_{-0.3031}$
-&
-$4.0593^{0.2807}_{-0.2509}$
-&
-$3.0604^{0.2355}_{-0.2142}$
-&
-$2.3870^{0.2009}_{-0.1858}$
-&
-$1.7696^{0.1833}_{-0.1713}$
-\\
-$\sigma_X$
-&
-$0.0693^{0.0157}_{-0.0152}$
-&
-$0.0575^{0.0099}_{-0.0089}$
-&
-$0.0679^{0.0083}_{-0.0080}$
-&
-$0.0639^{0.0073}_{-0.0069}$
-&
-$0.0703^{0.0075}_{-0.0075}$
-\\
-\hline
-\end{tabular}
-\caption{68\% Intervals for Global Fit Parameters for the One-Dust Model \label{global:tab}}
-\end{table}
-
-\begin{figure}[htbp] %  figure placement: here, top, bottom, or page
-   \centering
-   \includegraphics[width=2.5in]{output7/coeff0.pdf} 
-   \includegraphics[width=2.5in]{output7/coeff1.pdf} 
-   \includegraphics[width=2.5in]{output7/coeff2.pdf} 
-      \includegraphics[width=2.5in]{output7/coeff3.pdf} 
-         \includegraphics[width=2.5in]{output7/coeff4.pdf} 
-            \caption{Distributions for $c$, $\alpha$, $\beta$, $\gamma$, and $\sigma$ in each of the 5 bands.}
-   \label{global:fig}
-\end{figure}
-
-We find a small but significant non-zero values for $\alpha_0$ and $\alpha_4$, indicating that $EW_{Ca}$ is an indicator of $U$ and $I$
-magnitudes.  All bands show larger and significant non-zero values for $\beta$.  This confirms the part of our hypothesis that spectral indicators
-are tracers of supernova absolute magnitude.
-
-The best-fit distribution for $R_X=\frac{\gamma_X}{\gamma_1-\gamma_2}$ are shown in Figure~\ref{rx:fig}.  Our measurement of
-$R_X$ and $\frac{\gamma_X}{\gamma_2}$  compared with the predictions of CCM dust:
-our fit values for $\gamma$ are consistent with the  $R_V=3.1$ CCM model.  The uncertainties in the 5 measurements
-of $R_X$ are correlated: measurements of $\gamma_X/\gamma_2$ have significantly smaller
-uncertainties and are consistent with $R_V=3.1$.
-
-\begin{figure}[htbp] %  figure placement: here, top, bottom, or page
-   \centering
-   \includegraphics[width=3in]{output7/rx_corner.pdf} 
-   \caption{Best-fit distribution for the   $R_X=\frac{\gamma_X}{\gamma_1-\gamma_2}$.
-   \label{rx:fig}}
-\end{figure}
-
-\begin{figure}[htbp] %  figure placement: here, top, bottom, or page
-   \centering
-   \includegraphics[width=2.8in]{output7/ccm.pdf}
-      \includegraphics[width=2.8in]{output7/ccm2.pdf} 
-   \caption{68\% measurements of $R_X=\frac{\gamma_X}{\gamma_1-\gamma_2}$ (left) and $\frac{\gamma_X}{\gamma_2}$ (right).  CCM
-   predictions for these parameters are overlaid for different values of $R_V$.}
-   \label{ccm:fig}
-\end{figure}
-
-Non-trivial residual magnitude dispersions are captured in $C_c$.   Figure~\ref{sigma:fig} shows the confidence regions for the
-square root of the diagonal elements of $C_c$.
-A representative example is given by the matrix comprised by the average of each element in the Monte Carlo chain.
-For $UBVRI$ the matrix is
-\begin{equation}
-\begin{pmatrix}
-0.0050 & 0.0026 & 0.0017 & 0.0014 & 0.0009 \\
-0.0026 & 0.0034 & 0.0032 & 0.0026 & 0.0011 \\
-0.0017 & 0.0032 & 0.0047 & 0.0041 & 0.0029 \\
-0.0014 & 0.0026 & 0.0041 & 0.0042 & 0.0035 \\
-0.0009 & 0.0011 & 0.0029 & 0.0035 & 0.0050
- \end{pmatrix}.
- \end{equation}
- In terms of colors $U-V$, $B-V$, $V-R$, and $V-I$ the covariance is
-\begin{equation}
-\begin{pmatrix}
-0.0064 & 0.0025 & -0.0004 & -0.0010 \\
-0.0025 & 0.0018 & -0.0000 & 0.0003 \\
--0.0004 & -0.0000 & 0.0007 & 0.0011 \\
--0.0010 & 0.0003 & 0.0011 & 0.0039
-  \end{pmatrix}.
- \end{equation}
- The $B-V$ and $V-R$ colors have small standard deviations of  0.04 mag and 0.03 mag with no correlation.  The
- residuals not accounted by the
- model are stronger in the $U-V$ and $V-I$ bands.
- 
- \begin{figure}[htbp] %  figure placement: here, top, bottom, or page
-   \centering
-   \includegraphics[width=2.4in]{output7/sigma_corner.pdf} 
-   \caption{Best-fit distribution for the parameters $\sigma$, the square root of the diagonal elements of $C_c$.}
-   \label{sigma:fig}
-\end{figure}
-
-The ideogram for the grey offsets $\Delta$ for all supernovae is shown in Figure~\ref{hist:fig}.  The intrinsic dispersion
-is given by the standard deviation of $0.10$ mag.  The distribution is non-Gaussian, with a broad tail. 
-\begin{figure}[htbp] %  figure placement: here, top, bottom, or page
-   \centering
-   \includegraphics[width=2.8in]{output7/Delta_hist.pdf} 
-   \includegraphics[width=2.8in]{output7/k_hist.pdf} 
-   \caption{Ideograms for Left: the grey offset $\Delta$; Right: the color term $k$ for all supernovae.}
-   \label{hist:fig}
-\end{figure}
-
-The ideogram for the color term  $k$ for all supernovae is shown in Figure~\ref{hist:fig}.The distribution is non-Gaussian, with a broad tail. 
-
-To illustrate how the linear model reduces the dispersion in observed absolute magnitude, plot the observed colors as a
-function of the observed  $EW_{Ca, o}$, $EW_{Si,o}$ and $B_o-V_o$ in Fig.~\ref{magresidual:fig}.  Overplotted are lines with the
-best-fit slope.  The data in the color magnitude diagram indicate that the slope at bluer colors is different from that at redder colors
-and that our one-color linear model could be improved upon.
-
-\begin{figure}[htbp] %  figure placement: here, top, bottom, or page
-   \centering
-   \includegraphics[width=2.8in]{output7/speccamag.pdf} 
-      \includegraphics[width=2.8in]{output7/specsimag.pdf} 
-   \includegraphics[width=2.8in]{output7/colormag.pdf} 
-   \caption{Observed $UBVRI$ as a function of observed   $EW_{Ca, o}$ (top left), $EW_{Si,o}$ (top right) and $B_o-V_o$ (bottom).
-   Overplotted are lines with the best-fit slope from the model fit.}
-   \label{magresidual:fig}
-\end{figure}
-
-\subsubsection{Notes}
-Some equivalent widths go positive.  Is this an emission?
-
-
-\subsection{One Dust With Si Velocity}
-\label{onecolor_si:sec}
-Sil$\lambda3655$ velocity is spectral indicator that has been identified to correlated with peak brightness.  The analysis is expanded to include
-this line. We use the weighted mean of all spectral measurements within 3 days of peak brightness.  A handful of supernovae do not have a
-spectrum that close to peak.
-\subsubsection{Setup}
-With the inclusion of SiII$\lambda3655$ velocity  $v_{Si}$ the model looks like
-\begin{equation}
-\left(
-\begin{matrix}
-U\\B\\V\\R\\I
-\end{matrix}
-\right) \sim \mathcal{N}
-\left(
-\Delta +
-\left(
-\begin{matrix}
-c_0+\alpha_0 EW_{Ca} + \beta_0 EW_{Si} + \eta_0 v_{Si}\\
-c_1+\alpha_1 EW_{Ca} + \beta_1 EW_{Si} + \eta_1 v_{Si} \\
-c_2+\alpha_2 EW_{Ca} + \beta_2 EW_{Si} + \eta_2 v_{Si}\\
-c_3+\alpha_3 EW_{Ca} + \beta_3 EW_{Si} + \eta_3 v_{Si}\\
-c_4+\alpha_4 EW_{Ca} + \beta_4 EW_{Si}+ \eta_4 v_{Si}
+c_0+\alpha_0 EW_{Ca} + \beta_0 EW_{Si} + \eta_0 v_{Si} + \delta_0 D\\
+c_1+\alpha_1 EW_{Ca} + \beta_1 EW_{Si} + \eta_1 v_{Si} + \delta_1 D \\
+c_2+\alpha_2 EW_{Ca} + \beta_2 EW_{Si} + \eta_2 v_{Si} + \delta_2 D\\
+c_3+\alpha_3 EW_{Ca} + \beta_3 EW_{Si} + \eta_3 v_{Si} + \delta_3 D\\
+c_4+\alpha_4 EW_{Ca} + \beta_4 EW_{Si}+ \eta_4 v_{Si} + \delta_4 D
 \end{matrix}
 \right)
 ,C_{c}
@@ -302,197 +77,43 @@ EW_{Si}\\ EW_{Ca} \\ v_{Si}
 \right).
 \label{dust:eqn}
 \end{equation}
-The global parameters $\eta$ are the slopes of the linear relationships between Si velocity
-and intrinsic magnitudes. 
-
-\subsubsection{Results}
-The 68\% intervals for the global parameters $\alpha$, $\beta$, $\eta$, $R$, and $\sigma = \sqrt{C_{c,ii}}$  are given in Table~\ref{globalvsi:tab}.
-The two dimensional contours for the parameters of each filter are shown in Figure~\ref{globalvsi:fig}.  
-All bands show large and significant non-zero values for $\eta$ with some non-trivial changes to $\beta$ and a lowering
-if $\sigma$.  The values
-of $\alpha$ are unchanged.
-
-\begin{table}
-\centering
-\begin{tabular}{|c|c|c|c|c|c|}
-\hline
-& $X=0$ &1&2&3&4\\ \hline
-$\alpha_X$
-&
-$0.0031^{0.0009}_{-0.0009}$
-&
-$0.0005^{0.0008}_{-0.0007}$
-&
-$0.0006^{0.0006}_{-0.0006}$
-&
-$0.0008^{0.0005}_{-0.0005}$
-&
-$0.0020^{0.0005}_{-0.0004}$
-\\
-$\beta_X$
-&
-$0.0375^{0.0030}_{-0.0030}$
-&
-$0.0303^{0.0026}_{-0.0025}$
-&
-$0.0298^{0.0023}_{-0.0021}$
-&
-$0.0243^{0.0020}_{-0.0019}$
-&
-$0.0224^{0.0017}_{-0.0017}$
-\\
-$\eta_X$
-&
-$0.0032^{0.0011}_{-0.0011}$
-&
-$0.0024^{0.0009}_{-0.0009}$
-&
-$0.0022^{0.0008}_{-0.0008}$
-&
-$0.0019^{0.0007}_{-0.0007}$
-&
-$0.0011^{0.0006}_{-0.0006}$
-\\
-$R_X$
-&
-$5.1004^{0.2929}_{-0.2517}$
-&
-$4.1677^{0.2656}_{-0.2272}$
-&
-$3.1677^{0.2656}_{-0.2272}$
-&
-$2.4828^{0.2327}_{-0.1964}$
-&
-$1.8320^{0.2050}_{-0.1838}$
-\\
-$\sigma_X$
-&
-$0.0537^{0.0162}_{-0.0185}$
-&
-$0.0405^{0.0107}_{-0.0131}$
-&
-$0.0565^{0.0093}_{-0.0109}$
-&
-$0.0538^{0.0084}_{-0.0084}$
-&
-$0.0636^{0.0076}_{-0.0079}$
-\\
-\hline
-\end{tabular}
-\caption{68\% Intervals for Global Fit Parameters for the One-Dust Model with $v_{Si}$  \label{globalvsi:tab}}
-\end{table}
-
-\begin{figure}[htbp] %  figure placement: here, top, bottom, or page
-   \centering
-   \includegraphics[width=2.5in]{output10/coeff0.pdf} 
-   \includegraphics[width=2.5in]{output10/coeff1.pdf} 
-   \includegraphics[width=2.5in]{output10/coeff2.pdf} 
-      \includegraphics[width=2.5in]{output10/coeff3.pdf} 
-         \includegraphics[width=2.5in]{output10/coeff4.pdf} 
-            \caption{Distributions for $c$, $\alpha$, $\beta$, $\eta$, $\gamma$, and $\sigma$ in each of the 5 bands.}
-   \label{globalvsi:fig}
-\end{figure}
-
-
-
-The best-fit distribution for $R_X=\frac{\gamma_X}{\gamma_1-\gamma_2}$ are shown in Figure~\ref{rxsiv:fig}.  Our measurement of
-$R_X$ and $\frac{\gamma_X}{\gamma_2}$  compared with the predictions of CCM dust:
-our fit values for $\gamma$ are consistent with the  $R_V=3.1$ CCM model.
-
-\begin{figure}[htbp] %  figure placement: here, top, bottom, or page
-   \centering
-   \includegraphics[width=3in]{output10/gamma_corner.pdf} 
-   \caption{Best-fit distribution for the   $R_X=\frac{\gamma_X}{\gamma_1-\gamma_2}$.
-   \label{rxsiv:fig}}
-\end{figure}
-
-\begin{figure}[htbp] %  figure placement: here, top, bottom, or page
-   \centering
-   \includegraphics[width=2.8in]{output10/ccm.pdf}
-      \includegraphics[width=2.8in]{output10/ccm2.pdf} 
-   \caption{68\% measurements of $R_X=\frac{\gamma_X}{\gamma_1-\gamma_2}$ (left) and $\frac{\gamma_X}{\gamma_2}$ (right).  CCM
-   predictions for these parameters are overlaid for different values of $R_V$.}
-   \label{ccmsiv:fig}
-\end{figure}
-
- \begin{figure}[htbp] %  figure placement: here, top, bottom, or page
-   \centering
-   \includegraphics[width=2.4in]{output10/sigma_corner.pdf} 
-   \caption{Best-fit distribution for the parameters $\sigma$, the square root of the diagonal elements of $C_c$.}
-   \label{sigmasiv:fig}
-\end{figure}
-
-The ideogram for the grey offsets $\Delta$ for all supernovae is shown in Figure~\ref{histsiv:fig}.  The intrinsic dispersion
-is given by the standard deviation of $0.09$ mag.  The distribution is non-Gaussian, with a broad tail. 
-\begin{figure}[htbp] %  figure placement: here, top, bottom, or page
-   \centering
-   \includegraphics[width=2.8in]{output10/Delta_hist.pdf} 
-   \includegraphics[width=2.8in]{output10/k_hist.pdf} 
-   \caption{Ideograms for Left: the grey offset $\Delta$; Right: the color term $k$ for all supernovae.}
-   \label{histsiv:fig}
-\end{figure}
-
-\subsection{Two Dust}
-
-Motivated by the consistency of the external extinction with CCV $R_V=3.1$ dust, and the hint of the color-magnitude
-diagrams in Figure~\ref{magresidual:fig}  not following single slopes, we develop a new model in which
-each supernova encounters one of two sources of external extinction.
-
-\subsubsection{Setup}
-The model is identical to that of \S\ref{onecolor:sec} except with the addition of an alternative extrinsic source of extinction.
-The intrinsic magnitudes of the supernova are determined by the spectral properties expressed as Eqn.~\ref{ew:eqn}.
-One extrinsic source of extinction  (Dust 1) is modeled as before with Eqn.~\ref{dust:eqn};
-the second source of extinction (Dust 2)
-is modeled similarly but with the introduction of new parameters $\gamma_{2X}$
-\begin{equation}
-\left(
-\begin{matrix}
-U_o\\B_o\\ V_o\\R_o\\I_o\\EW_{Si, o}\\ EW_{Ca, o}\end{matrix}
-\right) \sim \mathcal{N}
-\left(
-\left(
-\begin{matrix}
-U +\gamma_{20} k \\B +\gamma_{21} k \\V+\gamma_{22} k\\R+\gamma_{23} k\\I+\gamma_{24} k\\
-EW_{Si}\\ EW_{Ca}
-\end{matrix}
-\right)
-,C
-\right).
-\label{dust2:eqn}
-\end{equation}
-The probability that a supernova experiences  Dust 1 is given by the free parameter $p_0$,
-the probability of Dust 2 is $1-p_0$.  
-The same $k$ parameters are used to describe supernovae in both extinction sources.  In order to do this we change
-some of the conditions that constrain the degeneracies of the model:
+The global parameters $c$, $\alpha$, $\beta$, $\eta$, and $\delta$  are the intercepts and slopes of the bilinear relationships between the spectral
+features and intrinsic color with intrinsic magnitudes.  The extrinsic piece is split into the properties $\gamma$ of the physical process and the per-supernova 
+parameters $k$.  To break the degeneracies inherent in the model we impose
 \begin{equation*}
-\langle \Delta \rangle=0, \gamma_1 = 1+\gamma_2, \gamma_{21}=1+\gamma_{22}.
+\langle \Delta \rangle=0, \langle k \rangle=0, \langle D \rangle=0, \gamma_0 \ge 0, \delta_0\le0.
 \end{equation*}
-These conditions are useful for interpreting the extinction as being due to dust, as $R_X = \gamma_X$,
-the color excess $E(B-V) \equiv (\gamma_1-\gamma_2)k =k$.
-The $c$ parameters  are fit such that both extinction models
-revert to the same intrinsic magnitudes for $k=0$: the $\langle k \rangle=0$ condition is removed. 
 
-To alleviate the degeneracies inherent to mixture models, we restrict the range of $\alpha$, $\beta$, and $\gamma$ (the parameters for Dust 1)
-to be in the neighborhood of the pdf's of \S\ref{onecolor:sec}.  The one-dust model is embedded in the two-dust model when $p_0=1$.
-We therefore do not claim to find the global optimum of the parameter
-pdf, but we can conclude whether the two-dust model is preferred over the one-dust model.
-The intrinsic covariance $C_c$ is taken to be diagonal.
+Having the intrinsic dispersion $C_c$ as fit parameters seemingly introduces degeneracy in the model, as magnitude and color variation
+ascribed to $\Delta$, $\delta D$, and $\gamma k$ could also be attributed to intrinsic dispersion.  There are several features of the model
+that drives the assignation of variations away from $C_c$:  The probability distribution functions decrease
+with increasing $\det{C_c}$ so growing $C_c$ is disfavored; The distributions of $\Delta$ and $k$ are turn out to
+be non-Gaussian, and so are not well described by a Normal covariance; The Bayesian prior selected for $C_c$ disfavors
+grey offsets.
+
+If interpreted as being due to dust, the extrinsic term could be associated with extinction $A_X = \gamma_X k$.  In
+this parlance the color excess
+is $E(B-V) = (\gamma_1-\gamma_2) k$ and $R_X = \frac{\gamma_X}{\gamma_1-\gamma_2}$.
+Similarly we introduce for the intrinsic color term $E_\delta(B-V) = (\delta_1-\delta_2) D$ and $R_{\delta X} = \frac{\delta_X}{\delta_1-\delta_2}$.
+
+As I perform an Bayesian analysis some mention of priors is required.  A flat prior is used for all parameters except
+for the covariance matrix $C_c$, which is constructed from a correlation matrix with  $\nu=4$  LKJ prior and standard
+deviations with
+ $\mu=0.1 $, $\sigma=0.1$ Cauchy (Lorentz) distribution prior restricted to non-negative values.
+The nature of the LKJ prior is rather mysterious; one thing to note is that for $\nu=4$ the correlation prior is broad but
+approaches zero at the extremum.
 
 \subsubsection{Results}
+STAN is used to determine the parameter posteriors.  Visual inspection of the posterior and the $\hat{R}$ and $N_{eff}$ statistics
+show no signs for non-convergence or sparse sampling.
+The $\hat{R}$ statistic is equal to $1.00$ for almost all the parameters, the largest value is $1.03$ for one of the parameters describing the covariance matrix $C_c$;  $N_{eff} \gg 100$ for all parameters, as recommended.
 
-The probability of an object experiencing the first dust is   $p_0=0.3334^{0.0532}_{-0.0721}$,
-with the pdf shown in Figure~\ref{prob0:fig}.
-A single dust with properties centered around the one-dust parameter optimum is not only disfavored, but is most likely the
-minority component.  
-\begin{figure}[htbp] %  figure placement: here, top, bottom, or page
-   \centering
-   \includegraphics[width=3.3in]{output9/prob0.pdf}
-   \caption{pdf of $p_0$, the probability that a supernova experiences Dust 1.  \label{prob0:fig}}
-\end{figure}
+The 68\% intervals for the global parameters $\alpha$, $\beta$, $\eta$, $R$, $R_\delta$, and $\sigma = \sqrt{C_{c,ii}}$
+for each of the five filters are given in Table~\ref{global:tab}.
+The two dimensional contours for the parameters, grouped by filter, are shown in Figure~\ref{global:fig}.  The Table does not show
+the results for $c$ as their values are not significant for the aims of this analysis, the Figure does show $c$ to indicate the convergence
+and correlations of these parameters in the fit.
 
-
-The 68\% intervals for the global parameters $\alpha$, $\beta$, $R$, $R_2$ and $\sigma = \sqrt{C_{c,ii}}$  are given in Table~\ref{global2:tab}.
-The two dimensional contours for the parameters of each filter are shown in Figure~\ref{global2:fig}.  
 \begin{table}
 \centering
 \begin{tabular}{|c|c|c|c|c|c|}
@@ -500,245 +121,551 @@ The two dimensional contours for the parameters of each filter are shown in Figu
 & $X=0$ &1&2&3&4\\ \hline
 $\alpha_{X}$
 &
-$0.0077^{0.0014}_{-0.0018}$
+$0.0042^{0.0009}_{-0.0009}$
 &
-$0.0040^{0.0011}_{-0.0013}$
+$0.0014^{0.0007}_{-0.0008}$
 &
-$0.0025^{0.0008}_{-0.0008}$
+$0.0014^{0.0006}_{-0.0006}$
 &
-$0.0020^{0.0006}_{-0.0007}$
+$0.0014^{0.0005}_{-0.0005}$
 &
-$0.0027^{0.0006}_{-0.0006}$
+$0.0025^{0.0005}_{-0.0005}$
 \\
 $\beta_{X}$
 &
-$0.0276^{0.0048}_{-0.0053}$
+$0.0335^{0.0031}_{-0.0031}$
 &
-$0.0225^{0.0037}_{-0.0042}$
+$0.0267^{0.0025}_{-0.0026}$
 &
-$0.0249^{0.0025}_{-0.0026}$
+$0.0266^{0.0022}_{-0.0022}$
 &
-$0.0213^{0.0019}_{-0.0020}$
+$0.0214^{0.0019}_{-0.0019}$
 &
-$0.0216^{0.0015}_{-0.0016}$
+$0.0200^{0.0018}_{-0.0017}$
+\\
+$\eta_{X}$
+&
+$0.0010^{0.0012}_{-0.0013}$
+&
+$0.0006^{0.0010}_{-0.0011}$
+&
+$0.0008^{0.0008}_{-0.0009}$
+&
+$0.0008^{0.0007}_{-0.0008}$
+&
+$0.0002^{0.0006}_{-0.0007}$
 \\
 $R_{X}$
 &
-$5.0878^{0.4233}_{-0.4082}$
+$4.8715^{0.4826}_{-0.4296}$
 &
-$4.3163^{0.3615}_{-0.3327}$
+$3.9642^{0.3953}_{-0.3528}$
 &
-$3.3163^{0.3615}_{-0.3327}$
+$2.9644^{0.3118}_{-0.2801}$
 &
-$2.6600^{0.2685}_{-0.2691}$
+$2.2869^{0.2559}_{-0.2322}$
 &
-$1.9355^{0.2604}_{-0.2474}$
+$1.6395^{0.2112}_{-0.1939}$
 \\
-$R_{2X}$
+$R_{\delta X}$
 &
-$2.2199^{0.2110}_{-0.2301}$
+$-2.6978^{1.3200}_{-2.4424}$
 &
-$1.5919^{0.1801}_{-0.2246}$
+$-3.4586^{1.2929}_{-2.6501}$
 &
-$0.5919^{0.1801}_{-0.2246}$
+$-4.4569^{1.4269}_{-3.1109}$
 &
-$0.2486^{0.1650}_{-0.1788}$
+$-4.2020^{1.3152}_{-2.8944}$
 &
-$-0.1484^{0.1802}_{-0.1472}$
+$-3.8012^{1.2005}_{-2.6141}$
 \\
 $\sigma_{X}$
 &
-$0.0570^{0.0042}_{-0.0040}$
+$0.0592^{0.0124}_{-0.0112}$
 &
-$0.0103^{0.0059}_{-0.0048}$
+$0.0315^{0.0069}_{-0.0073}$
 &
-$0.0229^{0.0021}_{-0.0018}$
+$0.0201^{0.0041}_{-0.0055}$
 &
-$0.0094^{0.0031}_{-0.0039}$
+$0.0127^{0.0069}_{-0.0079}$
 &
-$0.0418^{0.0031}_{-0.0030}$
+$0.0425^{0.0051}_{-0.0044}$
 \\
 \hline
 \end{tabular}
-\caption{68\% Intervals for Global Fit Parameters for the Two-Dust Model \label{global2:tab}}
+\caption{68\% Intervals for Global Fit Parameters for the One-Dust Model \label{global:tab}}
 \end{table}
 
 \begin{figure}[htbp] %  figure placement: here, top, bottom, or page
    \centering
-   \includegraphics[width=2.5in]{output9/coeff0.pdf} 
-   \includegraphics[width=2.5in]{output9/coeff1.pdf} 
-   \includegraphics[width=2.5in]{output9/coeff2.pdf} 
-      \includegraphics[width=2.5in]{output9/coeff3.pdf} 
-         \includegraphics[width=2.5in]{output9/coeff4.pdf} 
-            \caption{Distributions for $c$, $\alpha$, $\beta$, $\gamma$, $\gamma_2$, and $\sigma$ in each of the 5 bands.}
-   \label{global2:fig}
+   \includegraphics[width=2.5in]{output11/coeff0.pdf} 
+   \includegraphics[width=2.5in]{output11/coeff1.pdf} 
+   \includegraphics[width=2.5in]{output11/coeff2.pdf} 
+      \includegraphics[width=2.5in]{output11/coeff3.pdf} 
+         \includegraphics[width=2.5in]{output11/coeff4.pdf} 
+            \caption{Distributions for $c$, $\alpha$, $\beta$, $\eta$, $\gamma$, $\delta$, and $\sigma$ in each of the 5 bands.   \label{global:fig}}
+
 \end{figure}
 
-Our determinations of $R$ and $R_2$ are compared to the expectations of CCM dust in Figure~\ref{ccm2:fig}.
-Within the context of this model there are two distinct types of dust: Dust 1 behaves similarly to $R_V=3.1$ CCM dust.
-In contrast, Dust 2 is more consistent with extremely low values of $R_V$.  Negative values of $R_V$ are unphysical.
-\begin{figure}[htbp] %  figure placement: here, top, bottom, or page
-   \centering
-   \includegraphics[width=2.8in]{output9/ccm.pdf}
-      \includegraphics[width=2.8in]{output9/ccm2.pdf} 
-         \includegraphics[width=2.8in]{output9/ccm12.pdf}
-      \includegraphics[width=2.8in]{output9/ccm22.pdf} 
-   \caption{68\% measurements of $R_X=\frac{\gamma_X}{\gamma_1-\gamma_2}$ (left) and $\frac{\gamma_X}{\gamma_2}$ (right)
-   for Dust 1 (top row) and Dust 2 (bottom row).  CCM
-   predictions for these parameters are overlaid for different values of $R_V$.}
-   \label{ccm2:fig}
-\end{figure}
+We find a small but significant non-zero values for $\alpha_0$ and $\alpha_4$, indicating that $EW_{Ca}$ is an indicator of $U$ and $I$
+magnitudes.  All bands show larger and significant non-zero values for $\beta$.  This confirms the part of our hypothesis that spectral indicators
+are tracers of supernova absolute magnitude.  On the other hand, the values of $\eta$ are consistent with zero within one sigma.
 
-While the values for $\beta$ are consistent between the one- and two-dust models, the $\alpha$ values change significantly.
-This implies a correlation between $EW_{Ca}$ and the dust environment.
-
-
-\subsection{One Dust, Intrinsic Color}
-Another viable model is to assign each supernova an intrinsic color parameter $D$ to describe color variation not attributed to spectral features,
-in addition to the external source of extinction.
-
-\subsubsection{Setup}
-
-A second color parameter $D$ is introduced to be quadratically related with magnitude. 
-
-\begin{equation*}
-\left(
-\begin{matrix}
-U\\B\\V\\R\\I
-\end{matrix}
-\right) \sim \mathcal{N}
-\left(
-\Delta +
-\left(
-\begin{matrix}
-c_0+\alpha_0 EW_{Ca} + \beta_0 EW_{Si}  +0.5 \delta_{10} D^2\\
-c_1+\alpha_1 EW_{Ca} + \beta_1 EW_{Si}  +0.5 \delta_{11} D^2\\
-c_2+\alpha_2 EW_{Ca} + \beta_2 EW_{Si} +0.5 \delta_{12} D^2\\
-c_3+\alpha_3 EW_{Ca} + \beta_3 EW_{Si}  +0.5 \delta_{13} D^2\\
-c_4+\alpha_4 EW_{Ca} + \beta_4 EW_{Si}  +0.5 \delta_{14} D^2
-\end{matrix}
-\right)
-,C_{c}
-\right).
-\end{equation*}
-%\begin{equation*}
-%D \sim \mathcal{N}(\bar{D},1)
-%\end{equation*}
-\begin{equation*}
-\left(
-\begin{matrix}
-U_o  \\B_o\\ V_o\\R_o\\I_o\\EW_{Si, o}\\ EW_{Ca, o}
-\end{matrix}
-\right) \sim \mathcal{N}
-\left(
-\left(
-\begin{matrix}
-U +\gamma_0 k \\B +\gamma_1 k \\V+\gamma_2 k\\R+\gamma_3 k\\I+\gamma_4 k\\
-EW_{Si}\\ EW_{Ca}
-\end{matrix}
-\right)
-,C
-\right).
-\end{equation*}
-The choice of the $\delta$'s are such that $0.5 \delta_{1X} D^2 \sim \delta_{1X} D$ to first order.
-No linear dependence on $D$ is included as it nearly degenerate with the linear dependence on the external $k$ parameters.
-The intrinsic covariance $C_c$ is taken to be diagonal.
-Degeneracies are constrained by the boundary conditions
-\begin{equation*}
-\langle \Delta \rangle=0, \langle k \rangle=0, \gamma_1=1+\gamma_2, \delta_{11}=1+\delta_{12},
-\end{equation*}
-making the light assumption that $\delta_{11} \ne \delta_{12}$ which is later seen to be borne out in the fits.
-
-As the intrinsic and extrinsic colors can be similar, we restrict ourselves to probing regions of $\alpha$, $\beta$, and $\gamma$
-in the area of the optimum of the one-dust model.
-
-\subsubsection{Results}
-
-
-The 68\% intervals for the global parameters $\alpha$, $\beta$, $R$, $R_2$ and $\sigma = \sqrt{C_{c,ii}}$  are given in Table~\ref{global3:tab}.
-The two dimensional contours for the parameters of each filter are shown in Figure~\ref{global3:fig}.  
-
-\begin{table}
-\centering
-\begin{tabular}{|c|c|c|c|c|c|}
-\hline
-& $X=0$ &1&2&3&4\\ \hline
-
-\hline
-\end{tabular}
-\caption{68\% Intervals for Global Fit Parameters for the Two-Dust Model \label{global3:tab}}
-\end{table}
+The best-fit distributions for $R_X=\frac{\gamma_X}{\gamma_1-\gamma_2}$ are shown in Figure~\ref{rx:fig}.  Our measurement of
+$R_X$ and $\frac{\gamma_X}{\gamma_2}$  compared with the predictions of CCM dust:
+the $R_X$ are consistent with the  $R_V=3.1$ CCM model (assuming we are using
+SNf synthetic magnitudes).  The uncertainties in the 5 measurements
+of $R_X$ are correlated: measurements of $\gamma_X/\gamma_2$ have significantly smaller
+uncertainties and are also consistent with $R_V=3.1$.
 
 \begin{figure}[htbp] %  figure placement: here, top, bottom, or page
    \centering
-   \includegraphics[width=2.5in]{output5/coeff0.pdf} 
-   \includegraphics[width=2.5in]{output5/coeff1.pdf} 
-   \includegraphics[width=2.5in]{output5/coeff2.pdf} 
-      \includegraphics[width=2.5in]{output5/coeff3.pdf} 
-         \includegraphics[width=2.5in]{output5/coeff4.pdf} 
-            \caption{Distributions for $c$, $\alpha$, $\beta$, $\gamma$, $\delta$, and $\sigma$ in each of the 5 bands.}
-   \label{global3:fig}
+   \includegraphics[width=2.8in]{output11/rx_corner.pdf}
+      \includegraphics[width=2.8in]{output11/rxdelta_corner.pdf} 
+   \caption{Best-fit distribution for (left)  $R_X=\frac{\gamma_X}{\gamma_1-\gamma_2}$ and (right)  $R_{\rho X}=\frac{\delta_X}{\delta_1-\delta_2}$.
+   \label{rx:fig}}
+\end{figure}
+
+\begin{figure}[htbp] %  figure placement: here, top, bottom, or page
+   \centering
+   \includegraphics[width=2.8in]{output11/ccm.pdf}
+      \includegraphics[width=2.8in]{output11/ccm2.pdf} 
+   \caption{68\% measurements of $R_X=\frac{\gamma_X}{\gamma_1-\gamma_2}$ (left) and $\frac{\gamma_X}{\gamma_2}$ (right).  CCM
+   predictions for these parameters are overlaid for different values of $R_V$.
+   \label{ccm:fig}}
+\end{figure}
+
+The best-fit distribution for $R_{\rho X}=\frac{\delta_X}{\delta_1-\delta_2}$ are shown in Figure~\ref{rx:fig}.
+Although the posteriors of $\delta$ are fairly circular, $\delta_1-\delta_2$ can get close to zero, resulting in the
+elongated tail in negative  $R_{\rho X}$.
+All values are inconsistent with zero and negative: a color excess in $B-V$ produces a brightening of the supernova.
+The smallest (most negative) value is for the $V$ band with  values increasing in both bluer and redder directions; an
+example consequence is that
+a reddening in $B-V$ comes with a blueing in $V-R$.
+These are not the behaviors expected from normal dust or a blackbody in the Raleigh-Jeans tail and so may be indicative of
+more complicated underlying physics.
+
+The distribution of color excess $E(B-V) =(\gamma_1-\gamma_2)k$ and
+ $E_\rho(B-V) = (\delta_1-\delta_2)D$ are shown in Figure~\ref{ebv:fig}.
+Recall that given our boundary conditions the means of both distributions are equal to zero. 
+The standard deviation of $E(B-V)$ is 0.074 mag while that of $E_\rho(B-V)$ is 0.019 mag.
+Both distributions are non-Gaussian extended tails in the red.
+\begin{figure}[htbp] %  figure placement: here, top, bottom, or page
+   \centering
+   \includegraphics[width=3.2in]{output11/ebv.pdf}
+   \caption{Histograms of $E(B-V) =(\gamma_1-\gamma_2)k$ and
+   $E_\rho(B-V) = (\delta_1-\delta_2)D$.
+   \label{ebv:fig}}
+\end{figure}
+
+Let us conflate the two separate color effects into a single effective extinction with
+\begin{equation}
+R_{V,eff}  = \frac{\gamma_1 k + \delta_1 D}{(\gamma_1-\gamma_2) k + (\delta_1-\delta_2)R}.
+\end{equation}
+The distribution for $R_{V,eff}$ is shown in Figure~\ref{rveff:fig}
+\begin{figure}[htbp] %  figure placement: here, top, bottom, or page
+   \centering
+   \includegraphics[width=3.2in]{output11/rveff.pdf}
+   \caption{The effective dust law of the two color terms combined $R_{V,eff}  = \frac{\gamma_1 k + \delta_1 D}{(\gamma_1-\gamma_2) k + (\delta_1-\delta_2)R}$,
+   \label{rveff:fig}}
+\end{figure}
+with  $R_{V,eff}  = 1.52 \pm 0.24$.  This may explain why previous analyses have produced low $R_V$ values.
+
+Non-trivial residual magnitude dispersions are captured in $C_c$.   Figure~\ref{sigma:fig} shows the confidence regions for the
+square root of the diagonal elements of $C_c$.  The residual intrinsic dispersion is quite small, ranging from 0.01 to 0.06 mag.
+
+%A representative example is given by the matrix comprised by the average of each element in the Monte Carlo chain.
+%For $UBVRI$ the matrix is
+%\begin{equation}
+%\begin{pmatrix}
+%0.0050 & 0.0026 & 0.0017 & 0.0014 & 0.0009 \\
+%0.0026 & 0.0034 & 0.0032 & 0.0026 & 0.0011 \\
+%0.0017 & 0.0032 & 0.0047 & 0.0041 & 0.0029 \\
+%0.0014 & 0.0026 & 0.0041 & 0.0042 & 0.0035 \\
+%0.0009 & 0.0011 & 0.0029 & 0.0035 & 0.0050
+% \end{pmatrix}.
+% \end{equation}
+% In terms of colors $U-V$, $B-V$, $V-R$, and $V-I$ the covariance is
+%\begin{equation}
+%\begin{pmatrix}
+%0.0064 & 0.0025 & -0.0004 & -0.0010 \\
+%0.0025 & 0.0018 & -0.0000 & 0.0003 \\
+%-0.0004 & -0.0000 & 0.0007 & 0.0011 \\
+%-0.0010 & 0.0003 & 0.0011 & 0.0039
+%  \end{pmatrix}.
+% \end{equation}
+% The $B-V$ and $V-R$ colors have small standard deviations of  0.04 mag and 0.03 mag with no correlation.  The
+% residuals not accounted by the
+% model are stronger in the $U-V$ and $V-I$ bands.
+ 
+ \begin{figure}[htbp] %  figure placement: here, top, bottom, or page
+   \centering
+   \includegraphics[width=3.2in]{output11/sigma_corner.pdf} 
+   \caption{Best-fit distribution for the parameters $\sigma$, the square root of the diagonal elements of $C_c$.
+   \label{sigma:fig}}
+\end{figure}
+
+The ideogram for the grey offsets $\Delta$ for all supernovae is shown in Figure~\ref{hist:fig}.  The intrinsic dispersion
+is given by the standard deviation of $0.096$ mag.  The distribution is non-Gaussian, with a broad tail. 
+\begin{figure}[htbp] %  figure placement: here, top, bottom, or page
+   \centering
+   \includegraphics[width=3.2in]{output11/Delta_hist.pdf} 
+   \caption{Ideogram for the grey offset $\Delta$.
+   \label{hist:fig}}
 \end{figure}
 
 %
+%To illustrate how the linear model reduces the dispersion in observed absolute magnitude, plot the observed colors as a
+%function of the observed  $EW_{Ca, o}$, $EW_{Si,o}$ and $B_o-V_o$ in Fig.~\ref{magresidual:fig}.  Overplotted are lines with the
+%best-fit slope.  The data in the color magnitude diagram indicate that the slope at bluer colors is different from that at redder colors
+%and that our one-color linear model could be improved upon.
 %
-%A model for a single object is that its intrinsic properties (captured by equivalent width) are drawn from a Normal distribution
+%\begin{figure}[htbp] %  figure placement: here, top, bottom, or page
+%   \centering
+%   \includegraphics[width=2.8in]{output7/speccamag.pdf} 
+%      \includegraphics[width=2.8in]{output7/specsimag.pdf} 
+%   \includegraphics[width=2.8in]{output7/colormag.pdf} 
+%   \caption{Observed $UBVRI$ as a function of observed   $EW_{Ca, o}$ (top left), $EW_{Si,o}$ (top right) and $B_o-V_o$ (bottom).
+%   Overplotted are lines with the best-fit slope from the model fit.}
+%   \label{magresidual:fig}
+%\end{figure}
+%
+%\subsubsection{Notes}
+%Some equivalent widths go positive.  Is this an emission?
+%
+%
+%\subsection{One Dust With Si Velocity}
+%\label{onecolor_si:sec}
+%Sil$\lambda3655$ velocity is spectral indicator that has been identified to correlated with peak brightness.  The analysis is expanded to include
+%this line. We use the weighted mean of all spectral measurements within 3 days of peak brightness.  A handful of supernovae do not have a
+%spectrum that close to peak.
+%\subsubsection{Setup}
+%With the inclusion of SiII$\lambda3655$ velocity  $v_{Si}$ the model looks like
 %\begin{equation}
 %\left(
 %\begin{matrix}
+%U\\B\\V\\R\\I
+%\end{matrix}
+%\right) \sim \mathcal{N}
+%\left(
+%\Delta +
+%\left(
+%\begin{matrix}
+%c_0+\alpha_0 EW_{Ca} + \beta_0 EW_{Si} + \eta_0 v_{Si}\\
+%c_1+\alpha_1 EW_{Ca} + \beta_1 EW_{Si} + \eta_1 v_{Si} \\
+%c_2+\alpha_2 EW_{Ca} + \beta_2 EW_{Si} + \eta_2 v_{Si}\\
+%c_3+\alpha_3 EW_{Ca} + \beta_3 EW_{Si} + \eta_3 v_{Si}\\
+%c_4+\alpha_4 EW_{Ca} + \beta_4 EW_{Si}+ \eta_4 v_{Si}
+%\end{matrix}
+%\right)
+%,C_{c}
+%\right)
+%\label{ewsiv:eqn}
+%\end{equation}
+%\begin{equation}
+%\left(
+%\begin{matrix}
+%U_o\\B_o\\ V_o\\R_o\\I_o\\EW_{Si, o}\\ EW_{Ca, o} \\ v_{Si, o}\end{matrix}
+%\right) \sim \mathcal{N}
+%\left(
+%\left(
+%\begin{matrix}
+%U +\gamma_0 k \\B +\gamma_1 k \\V+\gamma_2 k\\R+\gamma_3 k\\I+\gamma_4 k\\
+%EW_{Si}\\ EW_{Ca} \\ v_{Si}
+%\end{matrix}
+%\right)
+%,C
+%\right).
+%\label{dust:eqn}
+%\end{equation}
+%The global parameters $\eta$ are the slopes of the linear relationships between Si velocity
+%and intrinsic magnitudes. 
+%
+%\subsubsection{Results}
+%The 68\% intervals for the global parameters $\alpha$, $\beta$, $\eta$, $R$, and $\sigma = \sqrt{C_{c,ii}}$  are given in Table~\ref{globalvsi:tab}.
+%The two dimensional contours for the parameters of each filter are shown in Figure~\ref{globalvsi:fig}.  
+%All bands show large and significant non-zero values for $\eta$ with some non-trivial changes to $\beta$ and a lowering
+%if $\sigma$.  The values
+%of $\alpha$ are unchanged.
+%
+%\begin{table}
+%\centering
+%\begin{tabular}{|c|c|c|c|c|c|}
+%\hline
+%& $X=0$ &1&2&3&4\\ \hline
+%$\alpha_X$
+%&
+%$0.0031^{0.0009}_{-0.0009}$
+%&
+%$0.0005^{0.0008}_{-0.0007}$
+%&
+%$0.0006^{0.0006}_{-0.0006}$
+%&
+%$0.0008^{0.0005}_{-0.0005}$
+%&
+%$0.0020^{0.0005}_{-0.0004}$
+%\\
+%$\beta_X$
+%&
+%$0.0375^{0.0030}_{-0.0030}$
+%&
+%$0.0303^{0.0026}_{-0.0025}$
+%&
+%$0.0298^{0.0023}_{-0.0021}$
+%&
+%$0.0243^{0.0020}_{-0.0019}$
+%&
+%$0.0224^{0.0017}_{-0.0017}$
+%\\
+%$\eta_X$
+%&
+%$0.0032^{0.0011}_{-0.0011}$
+%&
+%$0.0024^{0.0009}_{-0.0009}$
+%&
+%$0.0022^{0.0008}_{-0.0008}$
+%&
+%$0.0019^{0.0007}_{-0.0007}$
+%&
+%$0.0011^{0.0006}_{-0.0006}$
+%\\
+%$R_X$
+%&
+%$5.1004^{0.2929}_{-0.2517}$
+%&
+%$4.1677^{0.2656}_{-0.2272}$
+%&
+%$3.1677^{0.2656}_{-0.2272}$
+%&
+%$2.4828^{0.2327}_{-0.1964}$
+%&
+%$1.8320^{0.2050}_{-0.1838}$
+%\\
+%$\sigma_X$
+%&
+%$0.0537^{0.0162}_{-0.0185}$
+%&
+%$0.0405^{0.0107}_{-0.0131}$
+%&
+%$0.0565^{0.0093}_{-0.0109}$
+%&
+%$0.0538^{0.0084}_{-0.0084}$
+%&
+%$0.0636^{0.0076}_{-0.0079}$
+%\\
+%\hline
+%\end{tabular}
+%\caption{68\% Intervals for Global Fit Parameters for the One-Dust Model with $v_{Si}$  \label{globalvsi:tab}}
+%\end{table}
+%
+%\begin{figure}[htbp] %  figure placement: here, top, bottom, or page
+%   \centering
+%   \includegraphics[width=2.5in]{output10/coeff0.pdf} 
+%   \includegraphics[width=2.5in]{output10/coeff1.pdf} 
+%   \includegraphics[width=2.5in]{output10/coeff2.pdf} 
+%      \includegraphics[width=2.5in]{output10/coeff3.pdf} 
+%         \includegraphics[width=2.5in]{output10/coeff4.pdf} 
+%            \caption{Distributions for $c$, $\alpha$, $\beta$, $\eta$, $\gamma$, and $\sigma$ in each of the 5 bands.}
+%   \label{globalvsi:fig}
+%\end{figure}
+%
+%
+%
+%The best-fit distribution for $R_X=\frac{\gamma_X}{\gamma_1-\gamma_2}$ are shown in Figure~\ref{rxsiv:fig}.  Our measurement of
+%$R_X$ and $\frac{\gamma_X}{\gamma_2}$  compared with the predictions of CCM dust:
+%our fit values for $\gamma$ are consistent with the  $R_V=3.1$ CCM model.
+%
+%\begin{figure}[htbp] %  figure placement: here, top, bottom, or page
+%   \centering
+%   \includegraphics[width=3in]{output10/gamma_corner.pdf} 
+%   \caption{Best-fit distribution for the   $R_X=\frac{\gamma_X}{\gamma_1-\gamma_2}$.
+%   \label{rxsiv:fig}}
+%\end{figure}
+%
+%\begin{figure}[htbp] %  figure placement: here, top, bottom, or page
+%   \centering
+%   \includegraphics[width=2.8in]{output10/ccm.pdf}
+%      \includegraphics[width=2.8in]{output10/ccm2.pdf} 
+%   \caption{68\% measurements of $R_X=\frac{\gamma_X}{\gamma_1-\gamma_2}$ (left) and $\frac{\gamma_X}{\gamma_2}$ (right).  CCM
+%   predictions for these parameters are overlaid for different values of $R_V$.}
+%   \label{ccmsiv:fig}
+%\end{figure}
+%
+% \begin{figure}[htbp] %  figure placement: here, top, bottom, or page
+%   \centering
+%   \includegraphics[width=2.4in]{output10/sigma_corner.pdf} 
+%   \caption{Best-fit distribution for the parameters $\sigma$, the square root of the diagonal elements of $C_c$.}
+%   \label{sigmasiv:fig}
+%\end{figure}
+%
+%The ideogram for the grey offsets $\Delta$ for all supernovae is shown in Figure~\ref{histsiv:fig}.  The intrinsic dispersion
+%is given by the standard deviation of $0.09$ mag.  The distribution is non-Gaussian, with a broad tail. 
+%\begin{figure}[htbp] %  figure placement: here, top, bottom, or page
+%   \centering
+%   \includegraphics[width=2.8in]{output10/Delta_hist.pdf} 
+%   \includegraphics[width=2.8in]{output10/k_hist.pdf} 
+%   \caption{Ideograms for Left: the grey offset $\Delta$; Right: the color term $k$ for all supernovae.}
+%   \label{histsiv:fig}
+%\end{figure}
+%
+%\subsection{Two Dust}
+%
+%Motivated by the consistency of the external extinction with CCV $R_V=3.1$ dust, and the hint of the color-magnitude
+%diagrams in Figure~\ref{magresidual:fig}  not following single slopes, we develop a new model in which
+%each supernova encounters one of two sources of external extinction.
+%
+%\subsubsection{Setup}
+%The model is identical to that of \S\ref{onecolor:sec} except with the addition of an alternative extrinsic source of extinction.
+%The intrinsic magnitudes of the supernova are determined by the spectral properties expressed as Eqn.~\ref{ew:eqn}.
+%One extrinsic source of extinction  (Dust 1) is modeled as before with Eqn.~\ref{dust:eqn};
+%the second source of extinction (Dust 2)
+%is modeled similarly but with the introduction of new parameters $\gamma_{2X}$
+%\begin{equation}
+%\left(
+%\begin{matrix}
+%U_o\\B_o\\ V_o\\R_o\\I_o\\EW_{Si, o}\\ EW_{Ca, o}\end{matrix}
+%\right) \sim \mathcal{N}
+%\left(
+%\left(
+%\begin{matrix}
+%U +\gamma_{20} k \\B +\gamma_{21} k \\V+\gamma_{22} k\\R+\gamma_{23} k\\I+\gamma_{24} k\\
 %EW_{Si}\\ EW_{Ca}
 %\end{matrix}
-%\right) \sim \mathcal{N}
-%\left(
-%\left(
-%\begin{matrix}
-%EW_{0, Si}\\ EW_{0, Ca}
-%\end{matrix}
 %\right)
-%,C_{EW}
-%\right),
+%,C
+%\right).
+%\label{dust2:eqn}
 %\end{equation}
-%with global parameters $EW_{0, Si}$, $EW_{0, Ca}$, and the independent elements of $C_{EW}$.
-%The colors, which depend on the intrinsic properties and the extrinsic effect of dust, are modeled as
-%\begin{equation}
-%\left(
-%\begin{matrix}
-%U-V\\B-V\\V-R\\V-I
-%\end{matrix}
-%\right) \sim \mathcal{N}
-%\left(
-%\left(
-%\begin{matrix}
-%c_0+\alpha_0 EW_{Si} + \beta_0 EW_{Ca} +\gamma_0 k+ E(U-V) \\
-%c_1+\alpha_1 EW_{Si} + \beta_1 EW_{Ca}  +k +E(B-V) \\
-%c_2+\alpha_2 EW_{Si} + \beta_2 EW_{Ca} +\gamma_2 k + E(V-R)\\
-%c_3+\alpha_3 EW_{Si} + \beta_3 EW_{Ca} +\gamma_3 k +E(V-I)\\
-%\end{matrix}
-%\right)
-%,C_c
-%\right),
-%\end{equation}
-%where there are global parameters $\alpha_X$, $\beta_X$, $c_X$,  and the independent elements of $C_c$,
-%while each supernova has independent parameters $E(X-V)$ and intrinsic color parameter $k$.
+%The probability that a supernova experiences  Dust 1 is given by the free parameter $p_0$,
+%the probability of Dust 2 is $1-p_0$.  
+%The same $k$ parameters are used to describe supernovae in both extinction sources.  In order to do this we change
+%some of the conditions that constrain the degeneracies of the model:
+%\begin{equation*}
+%\langle \Delta \rangle=0, \gamma_1 = 1+\gamma_2, \gamma_{21}=1+\gamma_{22}.
+%\end{equation*}
+%These conditions are useful for interpreting the extinction as being due to dust, as $R_X = \gamma_X$,
+%the color excess $E(B-V) \equiv (\gamma_1-\gamma_2)k =k$.
+%The $c$ parameters  are fit such that both extinction models
+%revert to the same intrinsic magnitudes for $k=0$: the $\langle k \rangle=0$ condition is removed. 
 %
-%The measurements are drawn from
-%\begin{equation}
-%\left(
-%\begin{matrix}
-%U-V\\B-V\\V-R\\V-I\\EW_{Si}\\ EW_{Ca}
-%\end{matrix}
-%\right)_o \sim \mathcal{N}
-%\left(
-%\left(
-%\begin{matrix}
-%U-V\\B-V\\V-R\\V-I\\EW_{Si}\\ EW_{Ca}
-%\end{matrix}
-%\right)
-%,C_o
-%\right),
-%\end{equation}
-%where $C_o$ is the observation covariance matrix.
+%To alleviate the degeneracies inherent to mixture models, we restrict the range of $\alpha$, $\beta$, and $\gamma$ (the parameters for Dust 1)
+%to be in the neighborhood of the pdf's of \S\ref{onecolor:sec}.  The one-dust model is embedded in the two-dust model when $p_0=1$.
+%We therefore do not claim to find the global optimum of the parameter
+%pdf, but we can conclude whether the two-dust model is preferred over the one-dust model.
+%The intrinsic covariance $C_c$ is taken to be diagonal.
 %
-%Given enough supernovae to constrain the global parameters, the observed colors of each supernova are used to determine its
-%color excess parameters.
+%\subsubsection{Results}
+%
+%The probability of an object experiencing the first dust is   $p_0=0.3334^{0.0532}_{-0.0721}$,
+%with the pdf shown in Figure~\ref{prob0:fig}.
+%A single dust with properties centered around the one-dust parameter optimum is not only disfavored, but is most likely the
+%minority component.  
+%\begin{figure}[htbp] %  figure placement: here, top, bottom, or page
+%   \centering
+%   \includegraphics[width=3.3in]{output9/prob0.pdf}
+%   \caption{pdf of $p_0$, the probability that a supernova experiences Dust 1.  \label{prob0:fig}}
+%\end{figure}
+%
+%
+%The 68\% intervals for the global parameters $\alpha$, $\beta$, $R$, $R_2$ and $\sigma = \sqrt{C_{c,ii}}$  are given in Table~\ref{global2:tab}.
+%The two dimensional contours for the parameters of each filter are shown in Figure~\ref{global2:fig}.  
+%\begin{table}
+%\centering
+%\begin{tabular}{|c|c|c|c|c|c|}
+%\hline
+%& $X=0$ &1&2&3&4\\ \hline
+%$\alpha_{X}$
+%&
+%$0.0077^{0.0014}_{-0.0018}$
+%&
+%$0.0040^{0.0011}_{-0.0013}$
+%&
+%$0.0025^{0.0008}_{-0.0008}$
+%&
+%$0.0020^{0.0006}_{-0.0007}$
+%&
+%$0.0027^{0.0006}_{-0.0006}$
+%\\
+%$\beta_{X}$
+%&
+%$0.0276^{0.0048}_{-0.0053}$
+%&
+%$0.0225^{0.0037}_{-0.0042}$
+%&
+%$0.0249^{0.0025}_{-0.0026}$
+%&
+%$0.0213^{0.0019}_{-0.0020}$
+%&
+%$0.0216^{0.0015}_{-0.0016}$
+%\\
+%$R_{X}$
+%&
+%$5.0878^{0.4233}_{-0.4082}$
+%&
+%$4.3163^{0.3615}_{-0.3327}$
+%&
+%$3.3163^{0.3615}_{-0.3327}$
+%&
+%$2.6600^{0.2685}_{-0.2691}$
+%&
+%$1.9355^{0.2604}_{-0.2474}$
+%\\
+%$R_{2X}$
+%&
+%$2.2199^{0.2110}_{-0.2301}$
+%&
+%$1.5919^{0.1801}_{-0.2246}$
+%&
+%$0.5919^{0.1801}_{-0.2246}$
+%&
+%$0.2486^{0.1650}_{-0.1788}$
+%&
+%$-0.1484^{0.1802}_{-0.1472}$
+%\\
+%$\sigma_{X}$
+%&
+%$0.0570^{0.0042}_{-0.0040}$
+%&
+%$0.0103^{0.0059}_{-0.0048}$
+%&
+%$0.0229^{0.0021}_{-0.0018}$
+%&
+%$0.0094^{0.0031}_{-0.0039}$
+%&
+%$0.0418^{0.0031}_{-0.0030}$
+%\\
+%\hline
+%\end{tabular}
+%\caption{68\% Intervals for Global Fit Parameters for the Two-Dust Model \label{global2:tab}}
+%\end{table}
+%
+%\begin{figure}[htbp] %  figure placement: here, top, bottom, or page
+%   \centering
+%   \includegraphics[width=2.5in]{output9/coeff0.pdf} 
+%   \includegraphics[width=2.5in]{output9/coeff1.pdf} 
+%   \includegraphics[width=2.5in]{output9/coeff2.pdf} 
+%      \includegraphics[width=2.5in]{output9/coeff3.pdf} 
+%         \includegraphics[width=2.5in]{output9/coeff4.pdf} 
+%            \caption{Distributions for $c$, $\alpha$, $\beta$, $\gamma$, $\gamma_2$, and $\sigma$ in each of the 5 bands.}
+%   \label{global2:fig}
+%\end{figure}
+%
+%Our determinations of $R$ and $R_2$ are compared to the expectations of CCM dust in Figure~\ref{ccm2:fig}.
+%Within the context of this model there are two distinct types of dust: Dust 1 behaves similarly to $R_V=3.1$ CCM dust.
+%In contrast, Dust 2 is more consistent with extremely low values of $R_V$.  Negative values of $R_V$ are unphysical.
+%\begin{figure}[htbp] %  figure placement: here, top, bottom, or page
+%   \centering
+%   \includegraphics[width=2.8in]{output9/ccm.pdf}
+%      \includegraphics[width=2.8in]{output9/ccm2.pdf} 
+%         \includegraphics[width=2.8in]{output9/ccm12.pdf}
+%      \includegraphics[width=2.8in]{output9/ccm22.pdf} 
+%   \caption{68\% measurements of $R_X=\frac{\gamma_X}{\gamma_1-\gamma_2}$ (left) and $\frac{\gamma_X}{\gamma_2}$ (right)
+%   for Dust 1 (top row) and Dust 2 (bottom row).  CCM
+%   predictions for these parameters are overlaid for different values of $R_V$.}
+%   \label{ccm2:fig}
+%\end{figure}
+%
+%While the values for $\beta$ are consistent between the one- and two-dust models, the $\alpha$ values change significantly.
+%This implies a correlation between $EW_{Ca}$ and the dust environment.
+%
 \end{document} 
