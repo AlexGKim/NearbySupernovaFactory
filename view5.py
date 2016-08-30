@@ -9,7 +9,7 @@ import numpy
 import sncosmo
 
 f = open('temp5.pkl','rb')
-fit = pickle.load(f)
+(fit,_) = pickle.load(f)
 
 for key in fit.keys():
     print key, fit[key].min(), fit[key].max()
@@ -76,11 +76,26 @@ pp.close()
 plt.close()
 
 plt.hist(fit['R'].flatten(),normed=True,bins=20)
-plt.title(r'$D$')
+plt.title(r'$\delta$')
 pp = PdfPages('output5/D_hist.pdf')
 plt.savefig(pp,format='pdf')
 pp.close()
 plt.close()
+
+plt.hist(fit['R'].flatten(),normed=True,bins=20)
+plt.title(r'$k$')
+pp = PdfPages('output5/k_hist.pdf')
+plt.savefig(pp,format='pdf')
+pp.close()
+plt.close()
+
+
+# plt.hist(fit['R_scale'].flatten(),normed=True,bins=20)
+# plt.title(r'R_scale')
+# pp = PdfPages('output5/Rscale_hist.pdf')
+# plt.savefig(pp,format='pdf')
+# pp.close()
+# plt.close()
 
 figure = corner.corner(fit['c'],labels=[r"${c}_0$",r"${c}_1$",r"${c}_2$",r"${c}_3$",r"${c}_4$"])
 pp = PdfPages('output5/c_corner.pdf')
@@ -132,6 +147,20 @@ plt.close()
 # pp.close()
 # plt.close()
 
+mega = fit['gamma']/((fit['gamma'][:,1]-fit['gamma'][:,2]))[:,None]
+figure = corner.corner(mega,labels=[r"$R_0$",r"$R_1$",r"$R_2$",r"$R_3$",r"$R_4$"])
+pp = PdfPages('output5/rx_corner.pdf')
+plt.savefig(pp,format='pdf')
+pp.close()
+plt.close()
+
+mega = fit['rho1']/((fit['rho1'][:,1]-fit['rho1'][:,2]))[:,None]
+figure = corner.corner(mega,labels=[r"$R_{\rho 0}$",r"$R_{\rho 1}$",r"$R_{\rho 2}$",r"$R_{\rho 3}$",r"$R_{\rho 4}$"])
+pp = PdfPages('output5/rx2_corner.pdf')
+plt.savefig(pp,format='pdf')
+pp.close()
+plt.close()
+
 with PdfPages('output5/multipage_pdf.pdf') as pdf:
 
     lineobjects = plt.plot(fit['lp__'][::10])
@@ -155,10 +184,10 @@ with PdfPages('output5/multipage_pdf.pdf') as pdf:
     pdf.savefig()
     plt.close()
 
-    plt.plot(fit['Delta_scale'][::10])
-    plt.title(r'$\Delta$_scale')
-    pdf.savefig()
-    plt.close()
+    # plt.plot(fit['Delta_scale'][::10])
+    # plt.title(r'$\Delta$_scale')
+    # pdf.savefig()
+    # plt.close()
     # plt.plot(fit['Delta_scale'][::10])
     # plt.title(r'$\Delta scale$')
     # pdf.savefig()
@@ -329,8 +358,6 @@ pp = PdfPages('output5/ccm2.pdf')
 plt.savefig(pp,format='pdf')
 pp.close()
 plt.close()
-
-
 
 # for index in xrange(5):
 #     dum = numpy.swapaxes(numpy.array([fit['alpha'][:,index]*color_std,fit['beta'][:,index]*color_std]),0,1)

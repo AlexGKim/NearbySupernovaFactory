@@ -27,29 +27,44 @@ mag_renorm  = mag_obs-mag_mn
 
 data = {'D': nsne, 'N_mags': 5, 'N_EWs': 2, 'mag_obs': mag_renorm, 'EW_obs': EW_renorm, 'EW_cov': EW_cov, 'mag_cov':mag_cov}
 
-Delta_simplex = numpy.zeros(nsne)+1./nsne
-k_simplex = numpy.zeros(nsne)
+Delta_simplex = numpy.zeros(nsne-1)
+# Delta_simplex = numpy.zeros(nsne)+1./nsne
+# k_simplex = numpy.zeros(nsne)
 R_simplex = ((-1.)**numpy.arange(nsne)*.25 + .5)*2./nsne
 
 init = [{'EW' : EW_renorm, \
-         'c' : numpy.zeros(5), \
-         'alpha' : numpy.zeros(5), \
-         'beta' : numpy.zeros(5), \
+         'c_raw' : numpy.zeros(5), \
+         'alpha_raw' : numpy.zeros(5), \
+         'beta_raw' : numpy.zeros(5), \
+         'L_sigma_raw': numpy.zeros(5)+0.03*100, \
          # roughly the peak of one-color
-         'gamma01': 4.9882,\
-         'gamma03': 3.0604,\
-         'gamma04': 2.387,\
-         'gamma05': 1.7696,\
+         # 'gamma01': 5.2*1.,\
+         # 'gamma03': 3.4*1.,\
+         # 'gamma03': 3.4*1.,\
+         # 'gamma04': 3.0*1.,\
+         # 'gamma05': 2.4*1.,\
+         'gamma01': 6.*20,\
+         'gamma02': 4.*20,\
+         'gamma03': 3.*20,\
+         'gamma04': 2.*20,\
+         'gamma05': 1.*20,\
          'mag_int_raw': mag_renorm, \
-         'L_sigma': numpy.zeros(5)+0.03, \
-         'L_Omega': numpy.identity(5), \
-         'Delta_unit':Delta_simplex, 'Delta_scale': nsne/8.,\
-         'k_unit': Delta_simplex,  'k_scale': nsne/8.,\
-         'R_unit': Delta_simplex,  'R_scale': nsne/8., \
-         'rho11': 2.4,\
-         'rho13': 0.3,\
-         'rho14': -0.2,\
-         'rho15': -0.2,\
+         # 'L_Omega': numpy.identity(5), \
+         'Delta_unit':R_simplex, \
+         'Delta_scale': 20, \
+         'k_unit': R_simplex, \
+         # 'k_scale': 20, \
+         'R_unit': R_simplex, \
+         # 'R_scale': 20, \
+         # 'rho11': 4.4/100.,\
+         # 'rho13': 2.6/100.,\
+         # 'rho14': 2.2/100.,\
+         # 'rho15': 1.8/100.,\
+         'rho11': 3.*20,\
+         'rho12': 3.*20,\
+         'rho13': 3.*20,\
+         'rho14': 3.*20,\
+         'rho15': 3.*20,\
          # 'rho1':numpy.zeros(5)\
          } \
         for _ in range(4)]
@@ -57,8 +72,8 @@ init = [{'EW' : EW_renorm, \
 sm = pystan.StanModel(file='gerard5.stan')
 control = {'stepsize':1}
 fit = sm.sampling(data=data, iter=2000, chains=4,control=control,init=init, thin=1)
-print fit
 
 output = open('temp5.pkl','wb')
 pickle.dump((fit.extract(),fit.get_sampler_params()), output, protocol=2)
 output.close()
+print fit
