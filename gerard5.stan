@@ -15,15 +15,14 @@ parameters {
   vector<lower=0.0>[N_mags] L_sigma_raw;
 
   real<lower=0> gamma01;
-  real gamma05;
-  real gamma02;
-  real gamma03;
-  real gamma04;
+  real<lower=0>  gamma05;
+  real<lower=0>  gamma02;
+  real<lower=0>  gamma03;
+  real<lower=0>  gamma04;
 
-
-  real rho11;
+  real<lower=0>  rho11;
   real rho12;
-  real<lower=0> rho13;
+  real rho13;
   real rho14;
   real rho15;
 
@@ -62,7 +61,7 @@ transformed parameters {
   beta = beta_raw/2e2;
   L_sigma = L_sigma_raw/100.;
 
-  Delta = Delta_scale*(Delta_unit-1./D);
+  Delta = 10*Delta_scale*(Delta_unit-1./D);
   # k=k_scale*(k_unit-1./D);
   # R=R_scale*(R_unit-1./D);
 
@@ -74,14 +73,14 @@ transformed parameters {
   gamma[4] = gamma04;
   gamma[5] = gamma05;
   gamma[2] = gamma02;
-  gamma = gamma/20;
+  gamma = gamma*5;
 
   rho1[1] = rho11;
   rho1[3] = rho13;
   rho1[4] = rho14;
   rho1[5] = rho15;
   rho1[2] = rho12;
-  rho1 = rho1/20;
+  rho1 = rho1*5;
 
     # non-centered parameterization
   {

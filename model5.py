@@ -43,15 +43,15 @@ init = [{'EW' : EW_renorm, \
          # 'gamma03': 3.4*1.,\
          # 'gamma04': 3.0*1.,\
          # 'gamma05': 2.4*1.,\
-         'gamma01': 6.*20,\
-         'gamma02': 4.*20,\
-         'gamma03': 3.*20,\
-         'gamma04': 2.*20,\
-         'gamma05': 1.*20,\
+         'gamma01': 6./5,\
+         'gamma02': 4./5,\
+         'gamma03': 3./5,\
+         'gamma04': 2./5,\
+         'gamma05': 1./5,\
          'mag_int_raw': mag_renorm, \
          # 'L_Omega': numpy.identity(5), \
          'Delta_unit':R_simplex, \
-         'Delta_scale': 20, \
+         'Delta_scale': 2.5, \
          'k_unit': R_simplex, \
          # 'k_scale': 20, \
          'R_unit': R_simplex, \
@@ -60,11 +60,11 @@ init = [{'EW' : EW_renorm, \
          # 'rho13': 2.6/100.,\
          # 'rho14': 2.2/100.,\
          # 'rho15': 1.8/100.,\
-         'rho11': 3.*20,\
-         'rho12': 3.*20,\
-         'rho13': 3.*20,\
-         'rho14': 3.*20,\
-         'rho15': 3.*20,\
+         'rho11': 17./5,\
+         'rho12': 0.*3./5,\
+         'rho13': 0./5,\
+         'rho14': 0.*3./5,\
+         'rho15': 0.*3./5,\
          # 'rho1':numpy.zeros(5)\
          } \
         for _ in range(4)]
