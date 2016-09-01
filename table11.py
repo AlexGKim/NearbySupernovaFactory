@@ -68,3 +68,14 @@ mega = numpy.array([fit['Delta'].flatten(),fit['EW'][:,:,0].flatten(),fit['EW'][
 
 dum = numpy.corrcoef(mega)
 print " \\\\\n".join([" & ".join(map('{0:.3f}'.format, line)) for line in dum])
+
+
+pars = ['gamma','rho1']
+pars_n = ['R_{','R_{\\delta ']
+sigfig = [3,3]
+for p,pn, s in zip(pars,pars_n,sigfig):
+    print '${}X}}$'.format(pn)
+    for i in xrange(5):
+        dum = numpy.percentile(fit[p][:,i]/fit[p][:,2]-1,(50,50-34,50+34))            
+        print  '${1:6.{0}f}^{{{2:6.{0}f}}}_{{{3:6.{0}f}}}$'.format(s,dum[0], dum[2]-dum[0],dum[1]-dum[0] )
+    print '\\\\'
