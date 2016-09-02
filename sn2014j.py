@@ -44,13 +44,14 @@ g = numpy.array([sum(exv*gammam1/e_exv), sum(exv*deltam1/e_exv)])
 ans = numpy.dot(u,g)
 print ans, u
 
-
+fiterr = numpy.sqrt(gammam1**2 * u[0,0] + 2*deltam1*gammam1*u[0,1] + deltam1**2 * u[1,1])
 
 import sncosmo
 
 
 plt.errorbar(elam,exv,yerr=[e_exv,e_exv],fmt='.',label='SN2014J',color='black')
-plt.scatter(elam, gammam1*ans[0]+deltam1*ans[1],label='Best-fit Model',color='red')
+plt.errorbar(elam, gammam1*ans[0]+deltam1*ans[1],yerr=[fiterr,fiterr],label='Best-fit Model',color='red',fmt='.')
+print  gammam1*ans[0], deltam1*ans[1]
 
 lambdas = numpy.arange(3500.,8000,100)
 rvs=[1.4, 3.1]

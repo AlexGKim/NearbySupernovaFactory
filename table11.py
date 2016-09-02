@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import pickle
+import cPickle
 import numpy
 
 
@@ -31,8 +32,8 @@ dum/= len(fit['L_Omega'])
 # color_cov = numpy.dot(trans,numpy.dot(dum, trans.T))
 print " \\\\\n".join([" & ".join(map('{0:.4f}'.format, line)) for line in dum])
 
-pars = ['alpha','alpha','beta','beta','eta','eta','gamma','rho1','L_sigma']
-pars_n = ['\\alpha_{','{\\alpha ','\\beta_{','{\\beta ','\\eta_{','{\\eta ','R_{','R_{\\delta ','\\sigma_{']
+pars = ['alpha','alpha','beta','beta','eta','eta','gamma','gamma','rho1','rho1','L_sigma']
+pars_n = ['\\alpha_{','{\\alpha ','\\beta_{','{\\beta ','\\eta_{','{\\eta ', '{\\frac{\\gamma}','R_{', '{\\frac{\\delta}','R_{\\delta ','\\sigma_{']
 sigfig = [4,1,3,2,4,2,2,2,3]
 for p,pn, s in zip(pars,pars_n,sigfig):
     print '${}X}}$'.format(pn)
@@ -79,3 +80,60 @@ for p,pn, s in zip(pars,pars_n,sigfig):
         dum = numpy.percentile(fit[p][:,i]/fit[p][:,2]-1,(50,50-34,50+34))            
         print  '${1:6.{0}f}^{{{2:6.{0}f}}}_{{{3:6.{0}f}}}$'.format(s,dum[0], dum[2]-dum[0],dum[1]-dum[0] )
     print '\\\\'
+
+
+
+pkl_file = open('gege_data.pkl', 'r')
+data = pickle.load(pkl_file)
+pkl_file.close()
+
+dic_phreno=cPickle.load(open("phrenology_2016_12_01_CABALLOv1.pkl"))
+
+dic_meta=cPickle.load(open("META.pkl"))
+
+sivel=[]
+sivel_err=[]
+for sn in data['snlist']:
+   if sn in dic_meta.keys() and sn in dic_phreno.keys():
+      meta = dic_meta[sn]
+      vSiII_6355_lbd=0.
+      vSiII_6355_lbd_err=0.
+      counter  = 0
+      for sp in dic_phreno[sn]["spectra"]:
+         if sp in meta['spectra'].keys() and  numpy.abs(meta['spectra'][sp]['salt2.phase'] < 3):
+            vSiII_6355_lbd += dic_phreno[sn]["spectra"][sp]["phrenology.vSiII_6355_lbd"]/dic_phreno[sn]['spectra'][sp]["phrenology.vSiII_6355_lbd.err"]**2
+            vSiII_6355_lbd_err += 1/dic_phreno[sn]['spectra'][sp]["phrenology.vSiII_6355_lbd.err"]**2
+            counter +=1
+      if counter !=0:
+         sivel.append(vSiII_6355_lbd / vSiII_6355_lbd_err)
+         sivel_err.append(1./numpy.sqrt(vSiII_6355_lbd_err))
+      else:
+         sivel.append(float('nan'))
+         sivel_err.append(float('nan'))
+   else:
+      sivel.append(float('nan'))
+      sivel_err.append(float('nan'))
+
+sivel = numpy.array(sivel)
+sivel_err = numpy.array(sivel_err)
+
+use = numpy.isfinite(sivel)
+
+#  The ordering is 'Ca','Si','U','B','V','R','I'
+
+EW_obs = data['obs'][:,0:2]
+mag_obs = data['obs'][:,2:]
+EW_cov = data['cov'][:,0:2,0:2]
+mag_cov = data['cov'][:,2:,2:]
+
+sivel=sivel[use]
+sivel_err = sivel_err[use]
+EW_obs=EW_obs[use]
+mag_obs=mag_obs[use]
+EW_cov= EW_cov[use]
+mag_cov=mag_cov[use]
+
+for i in xrange(len(sivel)):
+    print '{0} & ${1:5.1f} \pm {2:3.1f}$ & ${3:5.1f} \pm {4:3.1f}$& ${7:5.0f} \pm {8:3.0f}$ & ${5[0]:6.2f} \pm {6[0]:6.2f}$ & ${5[1]:6.2f} \pm {6[1]:6.2f}$& ${5[2]:6.2f} \pm {6[2]:6.2f}$& ${5[3]:6.2f} \pm {6[3]:6.2f}$& ${5[4]:6.2f} \pm {6[4]:6.2f}$ \\\\'.format(i, EW_obs[i,0], numpy.sqrt(EW_cov[i,0,0]),
+        EW_obs[i,1], numpy.sqrt(EW_cov[i,1,1]), mag_obs[i,:], numpy.sqrt(numpy.diagonal(mag_cov[i,:,:])),sivel[i],sivel_err[i])
+

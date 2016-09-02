@@ -262,14 +262,17 @@ with PdfPages('output11/multipage_pdf.pdf') as pdf:
     #     pdf.savefig()
     #     plt.close()
 
-    # filter wavelengthsr = numpy.log(8635./3276.)
-#edges= 3276.*numpy.exp(numpy.arange(6)*r/5.)
-edges = numpy.array([[3300., 4102], [4102, 5100], [5200, 6289], [6289, 7607], [7607, 9200]])
-efflam = []
-for i in xrange(5):
-    # efflam.append((edges[i+1]-edges[i])/2+edges[i])
-    efflam.append((edges[i][1]-edges[i][0])/2+edges[i][0])
+    # filter wavelengths
+# r = numpy.log(8635./3276.)
+# edges= 3276.*numpy.exp(numpy.arange(6)*r/5.)
+# # edges = numpy.array([[3300., 4102], [4102, 5100], [5200, 6289], [6289, 7607], [7607, 9200]])
+# efflam = []
+# for i in xrange(5):
+#     efflam.append((edges[i+1]-edges[i])/2+edges[i])
+#     # efflam.append((edges[i][1]-edges[i][0])/2+edges[i][0])
 
+#from manu
+efflam = numpy.array([ 3693.16777627,  4369.37505509,  5287.48667023,  6319.19906153,7610.89305298])
 # [3701, 4601, 5744, 6948, 8403]
 rc('text', usetex=True)
 
@@ -281,7 +284,7 @@ nlinks = fit['gamma'].shape[0]
 mega = numpy.array([fit['c'],fit['alpha'],fit['beta'],fit['eta'],fit['gamma'],fit['rho1'],fit['L_sigma']])
 mega = numpy.transpose(mega)
 
-rvs = [1.7,3.1,4.1]
+rvs = [1.5,2.5,3.1]
 filts = ['U','B','V','R','I']
 
 
@@ -299,10 +302,18 @@ for index in xrange(5):
 
 lambdas = numpy.arange(3000.,9000,100)
 for rv in rvs:
-    A_ = sncosmo._extinction.ccm89(lambdas, 1., rv)
-    norm  = sncosmo._extinction.ccm89(numpy.array([efflam[1]]), 1., rv)-sncosmo._extinction.ccm89(numpy.array([efflam[2]]), 1., rv)
+
+    f99 = sncosmo.F99Dust(r_v =rv)
+    f99.set(ebv=1.37)
+    A_ = f99.propagate(lambdas,1.)
+    A_=-2.5*numpy.log10(A_)
+
+    norm = f99.propagate([efflam[1]],1.) / f99.propagate(numpy.array([efflam[2]]),1.)
+    norm  = -2.5*numpy.log10(norm)
+    # A_ = sncosmo._extinction.ccm89(lambdas, 1., rv)
+    # norm  = sncosmo._extinction.ccm89(numpy.array([efflam[1]]), 1., rv)-sncosmo._extinction.ccm89(numpy.array([efflam[2]]), 1., rv)
     A_ = A_/norm[0]
-    plt.plot(lambdas,A_,label=r"$R_V={:.1f}$".format(rv))
+    plt.plot(lambdas,A_,label=r"$R^F_V={:.1f}$".format(rv))
 
 (y, ymin, ymax) = numpy.percentile(fit['gamma']/((fit['gamma'][:,1]-fit['gamma'][:,2])[:,None]),(50,50-34,50+34),axis=0)
 plt.errorbar(efflam,y,yerr=[y-ymin,ymax-y],fmt='o')
@@ -315,10 +326,17 @@ pp.close()
 plt.close()
 
 for rv in rvs:
-    A_ = sncosmo._extinction.ccm89(lambdas, 1., rv)
-    norm  = sncosmo._extinction.ccm89(numpy.array([efflam[2]]), 1., rv)
-    A_ = A_/norm[0]
-    plt.plot(lambdas,A_,label=r"$R_V={:.1f}$".format(rv))
+
+    f99 = sncosmo.F99Dust(r_v =rv)
+    f99.set(ebv=1.37)
+    A_ = f99.propagate(lambdas,1.)
+
+    norm  = f99.propagate(numpy.array([efflam[2]]),1.) 
+    # A_ = sncosmo._extinction.ccm89(lambdas, 1., rv)
+    # norm  = sncosmo._extinction.ccm89(numpy.array([efflam[2]]), 1., rv)
+    # A_ = A_/norm[0]
+    A_ = numpy.log10(A_)/numpy.log10(norm)
+    plt.plot(lambdas,A_,label=r"$R^F_V={:.1f}$".format(rv))
 
 (y, ymin, ymax) = numpy.percentile(fit['gamma']/fit['gamma'][:,2][:,None],(50,50-34,50+34),axis=0)
 plt.errorbar(efflam,y,yerr=[y-ymin,ymax-y],fmt='o')
