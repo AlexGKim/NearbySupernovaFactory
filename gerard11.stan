@@ -18,10 +18,10 @@ parameters {
   vector[5] eta_raw;
 
   real<lower=0> gamma01;
-  real<lower=0> gamma02;
-  real<lower=0> gamma03;
-  real<lower=0> gamma04;
-  real<lower=0> gamma05;
+  real gamma02;
+  real gamma03;
+  real gamma04;
+  real gamma05;
 
   real<upper=0> rho11;
   real rho12;
