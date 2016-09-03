@@ -181,7 +181,7 @@ and allow for the possibility of there being two further color parameters, one i
 extrinsic.  The data used in this analysis are described in \S\ref{data:sec}.  Our supernova model is presented in
 \S\ref{model:sec} and results are given in \S\ref{results:sec}.  In \S\ref{sn2014j:sec} our results are applied to the out-of-sample
 supernova SN2014J that has been previously identified as having extreme color properties.
-We finish with conclusions in \S\ref{conclusions:sec}.
+We finish with a discussion of our findings in \S\ref{discussion:sec}.
 
 
 \section{Data}
@@ -738,30 +738,7 @@ the effective and true $R$ values are not separated by local posterior extrema.
    \label{rveff:fig}}
 \end{figure}
 
-%A representative example is given by the matrix comprised by the average of each element in the Monte Carlo chain.
-%For $UBVRI$ the matrix is
-%\begin{equation}
-%\begin{pmatrix}
-%0.0050 & 0.0026 & 0.0017 & 0.0014 & 0.0009 \\
-%0.0026 & 0.0034 & 0.0032 & 0.0026 & 0.0011 \\
-%0.0017 & 0.0032 & 0.0047 & 0.0041 & 0.0029 \\
-%0.0014 & 0.0026 & 0.0041 & 0.0042 & 0.0035 \\
-%0.0009 & 0.0011 & 0.0029 & 0.0035 & 0.0050
-% \end{pmatrix}.
-% \end{equation}
-% In terms of colors $U-V$, $B-V$, $V-R$, and $V-I$ the covariance is
-%\begin{equation}
-%\begin{pmatrix}
-%0.0064 & 0.0025 & -0.0004 & -0.0010 \\
-%0.0025 & 0.0018 & -0.0000 & 0.0003 \\
-%-0.0004 & -0.0000 & 0.0007 & 0.0011 \\
-%-0.0010 & 0.0003 & 0.0011 & 0.0039
-%  \end{pmatrix}.
-% \end{equation}
-% The $B-V$ and $V-R$ colors have small standard deviations of  0.04 mag and 0.03 mag with no correlation.  The
-% residuals not accounted by the
-% model are stronger in the $U-V$ and $V-I$ bands.
- 
+
 
 
 The ideogram for the grey offsets $\Delta$ for all supernovae is shown in Figure~\ref{hist:fig}.  The intrinsic dispersion
@@ -777,7 +754,32 @@ is given by the standard deviation of $0.096$ mag.  The distribution is non-Gaus
 Non-trivial residual magnitude dispersions are captured in $C_c$.   Figure~\ref{sigma:fig} shows the confidence regions for the
 square root of the diagonal elements of $C_c$.  The residual intrinsic dispersion ranges from 0.01 to 0.06 mag, significantly smaller
 than the dispersion in $\Delta$.
-
+The off-diagonal elements of $C_c$ are parameterized by the Cholesky factors of a correlation matrix: selecting new Cholesky factors baased
+on their distributions generally will not satisfy the condition of representing a correlation matrix.  
+As a representation of a typical posterior draw of $C_c$ we present a matrix that element-by-element
+is the mean of all covariance realizations.
+For $UBVRI$ the matrix is
+\begin{equation}
+\begin{pmatrix}
+0.0037 & 0.0010 & -0.0001 & -0.0001 & 0.0003 \\
+0.0010 & 0.0010 & 0.0002 & -0.0000 & -0.0004 \\
+-0.0001 & 0.0002 & 0.0004 & 0.0001 & -0.0001 \\
+-0.0001 & -0.0000 & 0.0001 & 0.0002 & 0.0002 \\
+0.0003 & -0.0004 & -0.0001 & 0.0002 & 0.0019
+ \end{pmatrix} \text{mag}^2.
+ \end{equation}
+Similarly the typical color covariance, in terms of colors $U-V$, $B-V$, $V-R$, and $V-I$, can
+be expressed as having standard deviations $(0.066 , 0.033 , 0.022 , 0.050)$ mag with
+ correlations
+ \begin{equation}
+\begin{pmatrix}
+1.000 & 0.634 & -0.256 & -0.300 \\
+0.634 & 1.000 & -0.203 & 0.032 \\
+-0.256 & -0.203 & 1.000 & 0.604 \\
+-0.300 & 0.032 & 0.604 & 1.000
+  \end{pmatrix}.
+ \end{equation}
+ 
  \begin{figure}[htbp] %  figure placement: here, top, bottom, or page
    \centering
    \includegraphics[width=3.2in]{output11/sigma_corner.pdf} 
@@ -839,16 +841,24 @@ of \citet{2014ApJ...788L..21A}, following their prescription of taking the avera
    \label{sn2014j:fig}}
 \end{figure}
 
-\section{Conclusions}
-\label{conclusions:sec}
+\section{Discussion}
+\label{discussion:sec}
+The model favors spectral features as indicating supernova magnitude and color, and the existence of an internal supernova parameter
+that affects colors, in addition to external (dust) colors.
 
-Large $E(B-V)$ does not mean extinction.
+The extrinsic dust gives $R^F_V=2.5$. Intrinsic cannot be associated with dust.
+
+Could affect distance determinations.  Large $E(B-V)$ does not mean extinction.
 
 \citet{2009ApJ...699L.139W, 2011ApJ...729...55F} $v_{Si}$.
 
-$R^F_V=2.5$.
+Getting $R_V=1.5$ not surprising.
 
 \citet{2014ApJ...789...32B, 2015MNRAS.453.3300A}  $R_V=1.4$ to $R_V=3$.
+
+Room for more color effects.  Dispersion in $R_V$.   With negative and positive correlations can't be explained by dust.
+
+Anti-connection between $EW(Ca)$ and $v_{Si}$.  Intermediate mass
 
 Standard candle.
 \acknowledgments

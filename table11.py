@@ -32,6 +32,12 @@ dum/= len(fit['L_Omega'])
 # color_cov = numpy.dot(trans,numpy.dot(dum, trans.T))
 print " \\\\\n".join([" & ".join(map('{0:.4f}'.format, line)) for line in dum])
 
+dumsig = numpy.sqrt(numpy.diag(dum))
+print [" , ".join(map('{0:.3f}'.format, dumsig))]
+dumcor =  dum/ numpy.dot(dumsig[:,None],dumsig[None,:])
+print " \\\\\n".join([" & ".join(map('{0:.3f}'.format, line)) for line in dumcor])
+
+
 pars = ['alpha','alpha','beta','beta','eta','eta','gamma','gamma','rho1','rho1','L_sigma']
 pars_n = ['\\alpha_{','{\\alpha ','\\beta_{','{\\beta ','\\eta_{','{\\eta ', '{\\frac{\\gamma}','R_{', '{\\frac{\\delta}','R_{\\delta ','\\sigma_{']
 sigfig = [4,1,3,2,4,2,2,2,3]
