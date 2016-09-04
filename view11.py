@@ -84,7 +84,7 @@ plt.close()
 
 plt.hist([(fit['gamma'][:,1]-fit['gamma'][:,2])[:,None]*fit['k'], (fit['rho1'][:,1]-fit['rho1'][:,2])[:,None]*fit['R']],normed=True,bins=20,
     label=[r'$E(B-V)$',r'$E_\delta(B-V)$'],range=(-0.1,0.4))
-plt.xlabel(r'$E(B-V)$')
+plt.xlabel(r'$E(X-V)$')
 plt.legend()
 pp = PdfPages('output11/ebv.pdf')
 plt.savefig(pp,format='pdf')

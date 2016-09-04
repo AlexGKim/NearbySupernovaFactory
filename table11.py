@@ -40,7 +40,7 @@ print " \\\\\n".join([" & ".join(map('{0:.3f}'.format, line)) for line in dumcor
 
 pars = ['alpha','alpha','beta','beta','eta','eta','gamma','gamma','rho1','rho1','L_sigma']
 pars_n = ['\\alpha_{','{\\alpha ','\\beta_{','{\\beta ','\\eta_{','{\\eta ', '{\\frac{\\gamma}','R_{', '{\\frac{\\delta}','R_{\\delta ','\\sigma_{']
-sigfig = [4,1,3,2,4,2,2,2,3]
+sigfig = [4,1,3,2,4,2,2,2,2,2,3]
 for p,pn, s in zip(pars,pars_n,sigfig):
     print '${}X}}$'.format(pn)
     for i in xrange(5):
