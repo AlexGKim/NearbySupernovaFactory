@@ -12,21 +12,21 @@ import sncosmo
 f = open('temp11.pkl','rb')
 (fit,_) = pickle.load(f)
 
-for key in fit.keys():
-    print key, fit[key].min(), fit[key].max()
+# for key in fit.keys():
+#     print key, fit[key].min(), fit[key].max()
 
-pkl_file = open('gege_data.pkl', 'r')
-data = pickle.load(pkl_file)
-pkl_file.close()
+# pkl_file = open('gege_data.pkl', 'r')
+# data = pickle.load(pkl_file)
+# pkl_file.close()
 
-EW_obs = data['obs'][:,0:2]
-mag_obs = data['obs'][:,2:]
-EW_cov = data['cov'][:,0:2,0:2]
-mag_cov = data['cov'][:,2:,2:]
+# EW_obs = data['obs'][:,0:2]
+# mag_obs = data['obs'][:,2:]
+# EW_cov = data['cov'][:,0:2,0:2]
+# mag_cov = data['cov'][:,2:,2:]
 
-# # renormalize the data
-EW_mn = EW_obs.mean(axis=0)
-EW_renorm = (EW_obs - EW_mn)
+# # # renormalize the data
+# EW_mn = EW_obs.mean(axis=0)
+# EW_renorm = (EW_obs - EW_mn)
 
 # dum = numpy.zeros((5,5))
 # for x1, x2 in zip(fit['L_Omega'], fit['L_sigma']):
@@ -40,14 +40,14 @@ EW_renorm = (EW_obs - EW_mn)
 # color_cov = numpy.dot(trans,numpy.dot(dum, trans.T))
 # print " \\\\\n".join([" & ".join(map('{0:.4f}'.format, line)) for line in color_cov])
 
-correction = [ fit['alpha'][:,i][:,None]*fit['EW'][:,:, 0] \
-    + fit['beta'][:,i][:,None]*fit['EW'][:,:, 1] \
-    + fit['gamma'][:,i][:,None]*fit['k'] \
-    + fit['Delta'] \
-    for i in xrange(5)]
+# correction = [ fit['alpha'][:,i][:,None]*fit['EW'][:,:, 0] \
+#     + fit['beta'][:,i][:,None]*fit['EW'][:,:, 1] \
+#     + fit['gamma'][:,i][:,None]*fit['k'] \
+#     + fit['Delta'] \
+#     for i in xrange(5)]
 
-correction = numpy.array(correction)
-correction_median = numpy.median(correction,axis=1)
+# correction = numpy.array(correction)
+# correction_median = numpy.median(correction,axis=1)
 
 # outlier  = numpy.where((mag_obs[:, 4]-correction_median[4,:]) < -27.8)
 # print data['snlist'][outlier]
@@ -83,23 +83,52 @@ pp.close()
 plt.close()
 
 plt.hist([(fit['gamma'][:,1]-fit['gamma'][:,2])[:,None]*fit['k'], (fit['rho1'][:,1]-fit['rho1'][:,2])[:,None]*fit['R']],normed=True,bins=20,
-    label=[r'$E(B-V)$',r'$E_\delta(B-V)$'],range=(-0.1,0.4))
-plt.xlabel(r'$E(X-V)$')
+    label=[r'$E_\gamma(B-V)$',r'$E_\delta(B-V)$'],range=(-0.1,0.4))
+plt.xlabel(r'$E(B-V)$')
 plt.legend()
 pp = PdfPages('output11/ebv.pdf')
 plt.savefig(pp,format='pdf')
 pp.close()
 plt.close()
 
-ab = fit['gamma'][:,1][:,None]*fit['R'] + fit['rho1'][:,1][:,None]*fit['R']
-av = fit['gamma'][:,2][:,None]*fit['R'] + fit['rho1'][:,2][:,None]*fit['R']
-rv = av/(ab-av)
-plt.hist(rv)
+ab = fit['gamma'][:,1][:,None]*fit['k'] + fit['rho1'][:,1][:,None]*fit['R']
+av = fit['gamma'][:,2][:,None]*fit['k'] + fit['rho1'][:,2][:,None]*fit['R']
+rv = av/(ab-av+0.2)
+(x, xmin, xmax) = numpy.percentile(ab-av,(50,50-34,50+34),axis=0) + 0.018
+(y, ymin, ymax) = numpy.percentile(ab,(50,50-34,50+34),axis=0)
+plt.errorbar(x,y,xerr=[x-xmin,xmax-x],yerr=[y-ymin,ymax-y],fmt='o')
+x_=numpy.array([-0.08,0.36])
+plt.plot(x_,3.96*x_)
+plt.xlim((-0.1,0.4))
+plt.xlabel(r'$E_{eff}(B-V)+const$')
+plt.ylabel(r'$A_{\eff V}$')
 pp = PdfPages('output11/Rveff.pdf')
-plt.xlabel(r'$R_{V,eff}$')
 plt.savefig(pp,format='pdf')
 pp.close()
 plt.close()
+
+plt.errorbar(x,y-3.96*x,xerr=[x-xmin,xmax-x],yerr=[(y-ymin),(ymax-y)],fmt='o')
+plt.xlabel(r'$E_{eff}(B-V)+const$')
+plt.ylabel(r'$A_{eff, V}-2.96 (E_{eff}(B-V)+const)$')
+plt.ylim((-0.8,0.1))
+pp = PdfPages('output11/Rveffres.pdf')
+plt.savefig(pp,format='pdf')
+pp.close()
+plt.close()
+# plt.hist(rv)
+# pp = PdfPages('output11/Rveff.pdf')
+# plt.xlabel(r'$R_{V,eff}$')
+# plt.savefig(pp,format='pdf')
+# pp.close()
+# plt.close()
+
+# plt.scatter(numpy.median(ab-av,axis=0), numpy.median(rv,axis=0))
+# plt.xlabel(r'$E^o(B-V)$')
+# plt.ylabel(r'$R_{V,eff}$')
+# pp = PdfPages('output11/EVRveff.pdf')
+# plt.savefig(pp,format='pdf')
+# pp.close()
+# plt.close()
 
 figure = corner.corner(fit['c'],labels=[r"${c}_0$",r"${c}_1$",r"${c}_2$",r"${c}_3$",r"${c}_4$"])
 pp = PdfPages('output11/c_corner.pdf')
@@ -353,7 +382,7 @@ mega = numpy.array([fit['Delta'].flatten(),fit['EW'][:,:,0].flatten(),fit['EW'][
 
 mega = numpy.transpose(mega)
 
-figure = corner.corner(mega,labels=[r"$\Delta$",r"$EW_{Ca}$",r"$EW_{Si}$",r"$v_{Si}$",r"$E(B-V)$",r"$E_\delta(B-V)$"],range=numpy.zeros(6)+1.)
+figure = corner.corner(mega,labels=[r"$\Delta$",r"$EW_{Ca}$",r"$EW_{Si}$",r"$v_{Si}$",r"$E_\gamma(B-V)$",r"$E_\delta(B-V)$"],range=numpy.zeros(6)+1.)
 pp = PdfPages('output11/perobject_corner.pdf')
 plt.savefig(pp,format='pdf')
 pp.close()
