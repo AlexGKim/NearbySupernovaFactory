@@ -91,7 +91,7 @@ for rv in rvs:
 plt.legend()
 plt.xlim((3200,8000))
 plt.ylim((-2,3))
-plt.ylabel(r'$E^o(X-V)$')
+plt.ylabel(r'$E_o(X-V)$')
 plt.xlabel(r'Wavelength (\AA)')
 pp = PdfPages('output11/sn2014j.pdf')
 plt.savefig(pp,format='pdf')

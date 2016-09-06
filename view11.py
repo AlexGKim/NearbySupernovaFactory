@@ -8,6 +8,8 @@ import corner
 from matplotlib.backends.backend_pdf import PdfPages
 import numpy
 import sncosmo
+import scipy
+
 
 f = open('temp11.pkl','rb')
 (fit,_) = pickle.load(f)
@@ -101,7 +103,7 @@ x_=numpy.array([-0.08,0.36])
 plt.plot(x_,3.96*x_)
 plt.xlim((-0.1,0.4))
 plt.xlabel(r'$E_{eff}(B-V)+const$')
-plt.ylabel(r'$A_{eff, V}$')
+plt.ylabel(r'$A_{eff, B}$')
 pp = PdfPages('output11/Rveff.pdf')
 plt.savefig(pp,format='pdf')
 pp.close()
@@ -109,14 +111,14 @@ plt.close()
 
 plt.errorbar(x,y-3.96*x,xerr=[x-xmin,xmax-x],yerr=[(y-ymin),(ymax-y)],fmt='o')
 plt.xlabel(r'$E_{eff}(B-V)+const$')
-plt.ylabel(r'$A_{eff, V}-2.96 (E_{eff}(B-V)+const)$')
+plt.ylabel(r'$\Delta A_B  = A_{eff, B}-3.96 (E_{eff}(B-V)+const)$')
 plt.ylim((-0.8,0.1))
 pp = PdfPages('output11/Rveffres.pdf')
 plt.savefig(pp,format='pdf')
 pp.close()
 plt.close()
 
-print numpy.corrcoef(numpy.array([x,y-3.96*x]))
+print scipy.stats.linregress(x,y-3.96*x)
 # plt.hist(rv)
 # pp = PdfPages('output11/Rveff.pdf')
 # plt.xlabel(r'$R_{V,eff}$')
