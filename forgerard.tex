@@ -51,7 +51,6 @@
     D.~Rubin,\altaffilmark{1,14}
     K.~Runge,\altaffilmark{1}
     C.~Saunders,\altaffilmark{1,3}
-   R.~Scalzo,\altaffilmark{8}
     C.~Sofiatti,\altaffilmark{1,3} 
     N.~Suzuki,\altaffilmark{1}
     S.~Taubenberger,\altaffilmark{16}
@@ -94,12 +93,6 @@
     Tsinghua Center for Astrophysics, Tsinghua University, Beijing 100084, China 
 }
 
-\altaffiltext{8}
-{
-    Research School of Astronomy and Astrophysics,
-    Australian National University,
-    Canberra, ACT 2611, Australia
-}
 \altaffiltext{9}
 {
     Institut fur Physik,  Humboldt-Universitat zu Berlin,
@@ -151,7 +144,7 @@ is inferred to have origins intrinsic to supernovae.  Our model explains feature
 SNe~Ia, the low  $R_V$ of redder supernovae, the colors of SN~2014J, and the color-dependent residuals in Hubble diagrams.
 \end{abstract}
 
-\keywords{supernovae: general}
+\keywords{supernovae: genera; supernovae:SN 2014J}
 
 \section{Introduction}
 Type~Ia supernovae (SNe~Ia) form a homogenous set of exploding stars and as such were early recognized and utilized as a powerful distance indicator 
@@ -262,7 +255,7 @@ for in the analysis; only the variance is included in the table.
 \tablecaption{Supernova Spectral-Feature and Peak-Magnitude Datat\label{data:tab}}
 \tablehead{
 \colhead{$n$} & \colhead{$EW_{Ca}$} & \colhead{$EW_{Si}$} & \colhead{$v_{Si}$} & \colhead{$U$} & \colhead{$B$} & \colhead{$V$} & \colhead{$R$} & \colhead{$I$} \\
-\multicolumn{3}{c}{} &  \colhead{(km s$^{-1}$)} & \multicolumn{5}{c}{}
+ & (\AA) & (\AA)&  \colhead{(km s$^{-1}$)} & \multicolumn{5}{c}{}
 }
 \startdata
 0 & $109.7 \pm 5.9$ & $ 17.5 \pm 0.7$& $ 6101 \pm   3$ & $-29.31 \pm   0.01$ & $-29.12 \pm   0.01$& $-28.60 \pm   0.01$& $-28.35 \pm   0.01$& $-27.60 \pm   0.01$ \\
@@ -752,7 +745,8 @@ a consequence
 of which is that
 a reddening in $B-V$ comes with a blueing in $V-R$.
 These are not the behaviors expected from normal dust,
-circumstellar dust suggested as a source of SN extinction \citep{2005ApJ...635L..33W,2008ApJ...686L.103G}, or a blackbody in the Raleigh-Jeans tail, and so may be indicative of
+circumstellar dust suggested as a source of SN extinction \citep{2005ApJ...635L..33W,2008ApJ...686L.103G,
+2015ApJ...807L..26G}, or a blackbody in the Raleigh-Jeans tail, and so may be indicative of
 more complicated underlying supernova physics.
 
 The distribution of both sources of color excess $E_\gamma(B-V) =(\gamma_1-\gamma_2)k$ and
@@ -791,7 +785,7 @@ observed compared to the expected extinction from extrinsic dust for the corresp
 Over all effective color excesses the difference is capped by the ridge line, except for extremely
 blue supernovae that lie slightly but noticeably above the ridge line.
 However, with increasing effective color excess there is a broadening of the distribution toward lower observed extinctions.
-A linear fit between $E_{eff}(B-V)$  and $\Delta A_B$ gives a slope of $-0.33$.
+A linear fit between $E_{eff}(B-V)$  and $\Delta A_B$ gives a slope of $-0.45 \pm 0.11$.
 
 \begin{figure}[htbp] %  figure placement: here, top, bottom, or page
    \centering
@@ -896,10 +890,16 @@ this low correlation, and the broad distribution in $E_\delta(B-V)$ for low $E_\
 indeed is not related to extrinsic dust.
 An extensive analysis of the correlations between the spectral features of the SNfactory data set can be found in \citet{chotard:thesis}.
 
+The range of SiII equivalent widths is $\pm 20$~\AA\ whereas the width of the $B$-band is 851~\AA.  
+The implied span in $B$ magnitude based on $\beta_1$ is 0.54~mag.  Therefore $\beta_1$ cannot wholly be attributed to the line itself.
+Similarly, the CaII equivalent widths have range $\pm 50$~\AA, while the width of the $U$ band is
+701~\AA.  The implied span in $U$ magnitude is is 0.21~mag, so $\alpha_0$ cannot be completely due to the line iteslf.
+
 \section{SN 2014J in the Context of Our Model}
 \label{sn2014j:sec}
 
-SN~2014J   is one of several SNe~Ia that exhibits colors that imply a low $R_V<2.0$ \citep{2014ApJ...788L..21A, 2014MNRAS.443.2887F, 2015ApJ...805...74B}.
+SN~2014J   is one of several SNe~Ia that exhibits colors that imply a low $R_V<2.0$ \citep{2014ApJ...788L..21A, 2014MNRAS.443.2887F, 
+2014ApJ...795L...4K, 2015ApJ...805...74B}.
 The colors of this supernova can be studied in comparison to SN~2011fe, an object with similar
 spectral evolution that 
 suffers low Galactic and host reddening
@@ -971,7 +971,8 @@ The trend in Figure~\ref{rveff:fig} showing an increased range of brighter-than-
 be compared
 to Figure~\ref{betoule:fig}, which shows the $B$-band  Hubble residuals as a function of the color $C$ parameter (directly
 comparable to $E(B-V)$) from the Hubble diagram analysis of \citet{2014A&A...568A..22B}.
-A linear fit for the relationship between color and Hubble residual has a significant slope ($-0.67$), as expected.
+A linear fit for the relationship between color and Hubble residual has a significant slope ($-0.57 \pm 0.07$), consistent with the slope
+found for the SNfactory data.
 
 \begin{figure}[htbp] %  figure placement: here, top, bottom, or page
    \centering

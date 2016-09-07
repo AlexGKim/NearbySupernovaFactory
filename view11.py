@@ -118,7 +118,25 @@ plt.savefig(pp,format='pdf')
 pp.close()
 plt.close()
 
-print scipy.stats.linregress(x,y-3.96*x)
+
+
+
+# IMPORTANT TO KEEP THIS
+# import scipy.odr.odrpack as odrpack
+# dcolor = numpy.std(ab-av,axis=0)
+# dmu = numpy.std(ab,axis=0)
+
+# def f(B, x):
+#     return B[0]*x + B[1]
+# linear = odrpack.Model(f)
+# # mydata = odrpack.Data(x, y, wd=1./np.power(sx,2), we=1./np.power(sy,2))
+# mydata = odrpack.RealData(x, y-3.96*x, sx=dcolor, sy=dmu)
+
+# myodr = odrpack.ODR(mydata, linear, beta0=[1., 2.])
+# myoutput = myodr.run()
+# myoutput.pprint()
+
+
 # plt.hist(rv)
 # pp = PdfPages('output11/Rveff.pdf')
 # plt.xlabel(r'$R_{V,eff}$')
@@ -386,7 +404,7 @@ mega = numpy.array([fit['Delta'].flatten(),fit['EW'][:,:,0].flatten(),fit['EW'][
 
 mega = numpy.transpose(mega)
 
-figure = corner.corner(mega,labels=[r"$\Delta$",r"$EW_{Ca}$",r"$EW_{Si}$",r"$v_{Si}$",r"$E_\gamma(B-V)$",r"$E_\delta(B-V)$"],range=numpy.zeros(6)+1.)
+figure = corner.corner(mega,labels=[r"$\Delta$",r"$EW_{Ca}-109$\AA",r"$EW_{Si}-14$\AA",r"$v_{Si}$",r"$E_\gamma(B-V)$",r"$E_\delta(B-V)$"],range=numpy.zeros(6)+1.)
 pp = PdfPages('output11/perobject_corner.pdf')
 plt.savefig(pp,format='pdf')
 pp.close()
