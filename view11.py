@@ -9,6 +9,7 @@ from matplotlib.backends.backend_pdf import PdfPages
 import numpy
 import sncosmo
 import scipy
+import cPickle
 
 
 f = open('temp11.pkl','rb')
@@ -17,18 +18,65 @@ f = open('temp11.pkl','rb')
 # for key in fit.keys():
 #     print key, fit[key].min(), fit[key].max()
 
-# pkl_file = open('gege_data.pkl', 'r')
-# data = pickle.load(pkl_file)
-# pkl_file.close()
+pkl_file = open('gege_data.pkl', 'r')
+data = pickle.load(pkl_file)
+pkl_file.close()
 
-# EW_obs = data['obs'][:,0:2]
-# mag_obs = data['obs'][:,2:]
-# EW_cov = data['cov'][:,0:2,0:2]
-# mag_cov = data['cov'][:,2:,2:]
+dic_phreno=cPickle.load(open("phrenology_2016_12_01_CABALLOv1.pkl"))
 
-# # # renormalize the data
-# EW_mn = EW_obs.mean(axis=0)
-# EW_renorm = (EW_obs - EW_mn)
+dic_meta=cPickle.load(open("META.pkl"))
+
+sivel=[]
+sivel_err=[]
+for sn in data['snlist']:
+   if sn in dic_meta.keys() and sn in dic_phreno.keys():
+      meta = dic_meta[sn]
+      vSiII_6355_lbd=0.
+      vSiII_6355_lbd_err=0.
+      counter  = 0
+      for sp in dic_phreno[sn]["spectra"]:
+         if sp in meta['spectra'].keys() and  numpy.abs(meta['spectra'][sp]['salt2.phase'] < 3):
+            vSiII_6355_lbd += dic_phreno[sn]["spectra"][sp]["phrenology.vSiII_6355_lbd"]/dic_phreno[sn]['spectra'][sp]["phrenology.vSiII_6355_lbd.err"]**2
+            vSiII_6355_lbd_err += 1/dic_phreno[sn]['spectra'][sp]["phrenology.vSiII_6355_lbd.err"]**2
+            counter +=1
+      if counter !=0:
+         sivel.append(vSiII_6355_lbd / vSiII_6355_lbd_err)
+         sivel_err.append(1./numpy.sqrt(vSiII_6355_lbd_err))
+      else:
+         sivel.append(float('nan'))
+         sivel_err.append(float('nan'))
+   else:
+      sivel.append(float('nan'))
+      sivel_err.append(float('nan'))
+
+sivel = numpy.array(sivel)
+sivel_err = numpy.array(sivel_err)
+
+use = numpy.isfinite(sivel)
+
+#  The ordering is 'Ca','Si','U','B','V','R','I'
+
+EW_obs = data['obs'][:,0:2]
+mag_obs = data['obs'][:,2:]
+EW_cov = data['cov'][:,0:2,0:2]
+mag_cov = data['cov'][:,2:,2:]
+
+sivel=sivel[use]
+sivel_err = sivel_err[use]
+EW_obs=EW_obs[use]
+mag_obs=mag_obs[use]
+EW_cov= EW_cov[use]
+mag_cov=mag_cov[use]
+
+EW_mn = EW_obs.mean(axis=0)
+EW_renorm = (EW_obs - EW_mn)
+
+mag_mn = mag_obs.mean(axis=0)
+mag_renorm  = mag_obs-mag_mn
+
+sivel_mn = sivel.mean()
+sivel_renorm = sivel-sivel_mn
+
 
 # dum = numpy.zeros((5,5))
 # for x1, x2 in zip(fit['L_Omega'], fit['L_sigma']):
@@ -84,6 +132,55 @@ plt.savefig(pp,format='pdf')
 pp.close()
 plt.close()
 
+plt.scatter(numpy.median((fit['gamma'][:,1]-fit['gamma'][:,2])[:,None]*fit['k'],axis=0),mag_obs[:,1]-mag_obs[:,2])
+plt.xlabel(r'$E_\gamma(B-V)$')
+plt.ylabel(r'$B_o-V_o$')
+pp = PdfPages('output11/ebvvsobs.pdf')
+plt.savefig(pp,format='pdf')
+pp.close()
+plt.close()
+
+plt.scatter(numpy.median((fit['gamma'][:,1]-fit['gamma'][:,2])[:,None]*fit['k'],axis=0),mag_obs[:,1],color='red',label=r'$E_\gamma(B-V)$')
+plt.plot(numpy.array([-0.07,0.36]), -29. + 3.96*numpy.array([-0.08,0.36]))
+plt.xlabel(r'$E_\gamma(B-V)$')
+plt.ylabel(r'$B_o$')
+pp = PdfPages('output11/g1.pdf')
+plt.savefig(pp,format='pdf')
+pp.close()
+plt.close()
+
+plt.scatter(numpy.median((fit['gamma'][:,1]-fit['gamma'][:,2])[:,None]*fit['k'],axis=0),mag_obs[:,0],color='red',label=r'$E_\gamma(B-V)$')
+plt.plot(numpy.array([-0.07,0.36]), -29.2 + 4.87*numpy.array([-0.08,0.36]))
+plt.xlabel(r'$E_\gamma(B-V)$')
+plt.ylabel(r'$U_o$')
+pp = PdfPages('output11/g1u.pdf')
+plt.savefig(pp,format='pdf')
+pp.close()
+plt.close()
+
+plt.scatter(numpy.median((fit['gamma'][:,1]-fit['gamma'][:,2])[:,None]*fit['k'],axis=0), \
+    mag_obs[:,0]- numpy.median(fit['alpha'][:,0][:,None]*fit['EW'][:,:,0]) - numpy.median(fit['beta'][:,0][:,None]*fit['EW'][:,:,1])\
+    ,color='red',label=r'$E_\gamma(B-V)$')
+plt.plot(numpy.array([-0.07,0.36]), -29.2 + 4.87*numpy.array([-0.08,0.36]))
+plt.xlabel(r'$E_\gamma(B-V)$')
+plt.ylabel(r'$U_o - \alpha_0 EW_{Ca} - \beta_0 EW_{Si}$')
+pp = PdfPages('output11/g2uc.pdf')
+plt.savefig(pp,format='pdf')
+pp.close()
+plt.close()
+
+
+plt.scatter(numpy.median((fit['rho1'][:,1]-fit['rho1'][:,2])[:,None]*fit['R'],axis=0),mag_obs[:,1]-3.96*numpy.median((fit['gamma'][:,1]-fit['gamma'][:,2])[:,None]*fit['k'],axis=0),color='blue')
+plt.plot(numpy.array([-0.015,0.08]), -29 - 3.46*numpy.array([-0.015,0.08]))
+plt.xlabel(r'$E_\delta(B-V)$')
+plt.ylabel(r'$B_o - \gamma_1 E_\gamma(B-V)$')
+pp = PdfPages('output11/g2.pdf')
+plt.savefig(pp,format='pdf')
+pp.close()
+plt.close()
+
+
+
 plt.hist([(fit['gamma'][:,1]-fit['gamma'][:,2])[:,None]*fit['k'], (fit['rho1'][:,1]-fit['rho1'][:,2])[:,None]*fit['R']],normed=True,bins=20,
     label=[r'$E_\gamma(B-V)$',r'$E_\delta(B-V)$'],range=(-0.1,0.4))
 plt.xlabel(r'$E(B-V)$')
@@ -96,15 +193,37 @@ plt.close()
 ab = fit['gamma'][:,1][:,None]*fit['k'] + fit['rho1'][:,1][:,None]*fit['R']
 av = fit['gamma'][:,2][:,None]*fit['k'] + fit['rho1'][:,2][:,None]*fit['R']
 rv = av/(ab-av+0.2)
-(x, xmin, xmax) = numpy.percentile(ab-av,(50,50-34,50+34),axis=0) + 0.018
-(y, ymin, ymax) = numpy.percentile(ab,(50,50-34,50+34),axis=0)
+(x, xmin, xmax) = numpy.percentile(ab-av,(50,50-34,50+34),axis=0) + 0.08
+(y, ymin, ymax) = numpy.percentile(av,(50,50-34,50+34),axis=0)+0.15
 plt.errorbar(x,y,xerr=[x-xmin,xmax-x],yerr=[y-ymin,ymax-y],fmt='o')
-x_=numpy.array([-0.08,0.36])
-plt.plot(x_,3.96*x_)
-plt.xlim((-0.1,0.4))
-plt.xlabel(r'$E_{eff}(B-V)+const$')
-plt.ylabel(r'$A_{eff, B}$')
+x_=numpy.array([-0.03,0.45])
+plt.plot(x_,2.96*x_)
+plt.xlim((-0.04,0.5))
+plt.xlabel(r'$E_{eff}(B-V)$')
+plt.ylabel(r'$A_{eff, V}$')
 pp = PdfPages('output11/Rveff.pdf')
+plt.savefig(pp,format='pdf')
+pp.close()
+plt.close()
+
+(x, xmin, xmax) = numpy.percentile(ab-av,(50,50-34,50+34),axis=0) + 0.08
+(y, ymin, ymax) = numpy.percentile((av+0.15)/(ab-av+0.08),(50,50-34,50+34),axis=0)
+plt.errorbar(x,y,xerr=[x-xmin,xmax-x],yerr=[y-ymin,ymax-y],fmt='o')
+plt.xlim((-0.04,0.5))
+plt.xlabel(r'$E_{eff}(B-V)$')
+plt.ylabel(r'$R_{eff, V} = A_{eff, V}/E_{eff}(B-V)$')
+pp = PdfPages('output11/Rveff2.pdf')
+plt.savefig(pp,format='pdf')
+pp.close()
+plt.close()
+
+(x, xmin, xmax) = numpy.percentile(ab-av,(50,50-34,50+34),axis=0) + 0.08
+(y, ymin, ymax) = numpy.percentile((av+0.15)/(ab-av+0.08),(50,50-34,50+34),axis=0)
+plt.errorbar(x,y/(ymax-ymin)*2,xerr=[x-xmin,xmax-x],fmt='o')
+plt.xlim((-0.04,0.5))
+plt.xlabel(r'$E_{eff}(B-V)$')
+plt.ylabel(r'$S/N(R_{eff, V})$')
+pp = PdfPages('output11/Rveff3.pdf')
 plt.savefig(pp,format='pdf')
 pp.close()
 plt.close()
@@ -117,6 +236,26 @@ pp = PdfPages('output11/Rveffres.pdf')
 plt.savefig(pp,format='pdf')
 pp.close()
 plt.close()
+
+(y, ymin, ymax) = numpy.percentile((fit['gamma'][:,1]-fit['gamma'][:,2])[:,None]*fit['k'] ,(50,50-34,50+34),axis=0)
+plt.errorbar(x,y,xerr=[x-xmin,xmax-x],yerr=[y-ymin,ymax-y],fmt='o')
+(y, ymin, ymax) = numpy.percentile((fit['rho1'][:,1]-fit['rho1'][:,2])[:,None]*fit['R'] ,(50,50-34,50+34),axis=0)
+plt.errorbar(x,y,xerr=[x-xmin,xmax-x],yerr=[y-ymin,ymax-y],fmt='o')
+plt.xlim((-0.1,0.1))
+plt.show()
+(y, ymin, ymax) = numpy.percentile((fit['gamma'][:,1]-fit['gamma'][:,2])[:,None]*fit['k']- ((fit['rho1'][:,1]-fit['rho1'][:,2])[:,None]*fit['R']) ,(50,50-34,50+34),axis=0)
+plt.errorbar(x,y,xerr=[x-xmin,xmax-x],yerr=[y-ymin,ymax-y],fmt='o')
+plt.show()
+x_=numpy.array([-0.08,0.36])
+plt.plot(x_,3.96*x_)
+plt.xlim((-0.1,0.4))
+plt.xlabel(r'$E_{eff}(B-V)+const$')
+plt.ylabel(r'$A_{eff, B}$')
+pp = PdfPages('output11/ebvebv.pdf')
+plt.savefig(pp,format='pdf')
+pp.close()
+plt.close()
+
 
 
 
@@ -404,7 +543,7 @@ mega = numpy.array([fit['Delta'].flatten(),fit['EW'][:,:,0].flatten(),fit['EW'][
 
 mega = numpy.transpose(mega)
 
-figure = corner.corner(mega,labels=[r"$\Delta$",r"$EW_{Ca}-109$\AA",r"$EW_{Si}-14$\AA",r"$v_{Si}$",r"$E_\gamma(B-V)$",r"$E_\delta(B-V)$"],range=numpy.zeros(6)+1.)
+figure = corner.corner(mega,labels=[r"$\Delta$",r"$EW_{Ca}-109$\AA",r"$EW_{Si}-14$\AA",r"$\lambda_{Si}$",r"$E_\gamma(B-V)$",r"$E_\delta(B-V)$"],range=numpy.zeros(6)+1.)
 pp = PdfPages('output11/perobject_corner.pdf')
 plt.savefig(pp,format='pdf')
 pp.close()
