@@ -77,6 +77,103 @@ mag_renorm  = mag_obs-mag_mn
 sivel_mn = sivel.mean()
 sivel_renorm = sivel-sivel_mn
 
+nsne, nmags = mag_obs.shape
+color_obs = numpy.zeros((nsne,nmags-1))
+color_obs[:,0] = mag_renorm[:,0]- mag_renorm[:,2]
+color_obs[:,1] = mag_renorm[:,1]- mag_renorm[:,2]
+color_obs[:,2] = mag_renorm[:,3]- mag_renorm[:,2]
+color_obs[:,3] = mag_renorm[:,4]- mag_renorm[:,2]
+
+EW_cov = data['cov'][:,0:2,0:2]
+mag_cov = data['cov'][:,2:,2:]
+
+pkl_file.close()
+
+trans = [[1.,0,-1,0,0],[0.,1,-1,0,0],[0.,0,1,-1,0],[0.,0,1,0,-1]]
+trans = numpy.array(trans)
+color_cov = numpy.zeros((nsne,4,4))
+for i in xrange(nsne):
+    color_cov[i] = numpy.dot(trans,numpy.dot(mag_cov[i], trans.T))
+
+
+correction = [fit['c'][:,i][:,None] + fit['alpha'][:,i][:,None]*fit['EW'][:,:, 0] \
+    + fit['beta'][:,i][:,None]*fit['EW'][:,:, 1] + fit['eta'][:,i][:,None]*fit['sivel']\
+    + fit['gamma'][:,i][:,None]*fit['k'] \
+    for i in xrange(5)]
+
+correction = numpy.array(correction)
+correction = correction - correction[2,:,:]
+# correction_median = numpy.median(correction,axis=1)
+
+cind=[0,1,3,4]
+cname = ['U','B','R','I']
+fig, axes = plt.subplots(nrows=4)
+for i in xrange(4):
+    (y, ymin, ymax) = numpy.percentile(correction[cind[i],:,:],(50,50-34,50+34),axis=0)
+    err = numpy.sqrt(color_cov[:,i,i] + ((ymax-ymin)/2)**2)
+    axes[i].errorbar(y+mag_mn[cind[i]]-mag_mn[2],color_obs[:,i]-y,xerr=[y-ymin,ymax-y], yerr=[err,err],fmt='.')
+    axes[i].set_xlabel(r'$({0}-V)_{{model}}$'.format(cname[i]))
+    lname = r'$({0}_o-V_o) - ({0}-V)_{{model}}$'.format(cname[i])
+    axes[i].set_ylabel(lname)
+    axes[i].axhline(y=0,linestyle=':')
+fig.subplots_adjust(hspace=.3)
+fig.set_size_inches(8,11)
+filename = 'output11/residual.pdf'
+pp = PdfPages(filename)
+plt.savefig(pp,format='pdf')
+pp.close()
+plt.clf()
+
+offset = -0.001
+au = fit['gamma'][:,0][:,None]*fit['k'] + fit['rho1'][:,0][:,None]*fit['R']
+ab = fit['gamma'][:,1][:,None]*fit['k'] + fit['rho1'][:,1][:,None]*fit['R']
+av = fit['gamma'][:,2][:,None]*fit['k'] + fit['rho1'][:,2][:,None]*fit['R']
+(x, xmin, xmax) = numpy.percentile(ab-av,(50,50-34,50+34),axis=0)
+(y, ymin, ymax) = numpy.percentile(au-av,(50,50-34,50+34),axis=0)
+x=x-x.min()-offset
+y=y-y.min()-offset
+plt.scatter(x,y)
+# x_=numpy.array([-0.03,0.45])
+# plt.plot(x_,(4.87-2.96)*x_)
+plt.xlim((0,0.5))
+plt.ylim((0,1))
+plt.xlabel(r'$E_{eff}(B-V)$')
+plt.ylabel(r'$E_{eff}(U-V)$')
+pp = PdfPages("output11/Rveff.pdf")
+plt.savefig(pp,format='pdf')
+pp.close()
+plt.close()
+
+(y, ymin, ymax) = numpy.percentile((au-av-y.min()-offset)/(ab-av-x.min()-offset),(50,50-34,50+34),axis=0)
+plt.scatter(x,y)
+# plt.ylim((1.8,2.3))
+plt.xlim((0,0.5))
+plt.xlabel(r'$E_{eff}(B-V)$')
+plt.ylabel(r'$R_{eff,U} - R_{eff,V}$')
+pp = PdfPages("output11/Rveff2.pdf")
+plt.savefig(pp,format='pdf')
+pp.close()
+plt.close()
+
+temp = (fit['gamma'][:,1][:,None]*fit['k']-fit['gamma'][:,2][:,None]*fit['k'] ) /\
+ (fit['rho1'][:,1][:,None]*fit['R'] - fit['rho1'][:,2][:,None]*fit['R'])
+(x, xmin, xmax) = numpy.percentile(temp,(50,50-34,50+34),axis=0)
+plt.scatter(x,y)
+# plt.ylim((1.8,2.3))
+plt.xlabel(r'$E_\gamma(B-V)/E_\rho(B-V)$')
+plt.ylabel(r'$R_{eff,U} - R_{eff,V}$')
+pp = PdfPages("output11/Rveff3.pdf")
+plt.savefig(pp,format='pdf')
+pp.close()
+plt.close()
+
+
+
+# plt.scatter(numpy.median((fit['gamma'][:,1]-fit['gamma'][:,2])[:,None]*fit['k'],axis=0), mag_obs[:,2])
+# x=numpy.array([-0.08, 0.37])
+# plt.plot(x,-28.6+x*3.96)
+# plt.show()
+
 
 # dum = numpy.zeros((5,5))
 # for x1, x2 in zip(fit['L_Omega'], fit['L_sigma']):
@@ -190,71 +287,84 @@ plt.savefig(pp,format='pdf')
 pp.close()
 plt.close()
 
-ab = fit['gamma'][:,1][:,None]*fit['k'] + fit['rho1'][:,1][:,None]*fit['R']
+
+au = fit['gamma'][:,0][:,None]*fit['k'] + fit['rho1'][:,0][:,None]*fit['R']+0.16
+ab = fit['gamma'][:,1][:,None]*fit['k'] + fit['rho1'][:,1][:,None]*fit['R']+0.08
 av = fit['gamma'][:,2][:,None]*fit['k'] + fit['rho1'][:,2][:,None]*fit['R']
-rv = av/(ab-av+0.2)
-(x, xmin, xmax) = numpy.percentile(ab-av,(50,50-34,50+34),axis=0) + 0.08
-(y, ymin, ymax) = numpy.percentile(av,(50,50-34,50+34),axis=0)+0.15
+(x, xmin, xmax) = numpy.percentile(ab-av,(50,50-34,50+34),axis=0)
+(y, ymin, ymax) = numpy.percentile(au-av,(50,50-34,50+34),axis=0)
 plt.errorbar(x,y,xerr=[x-xmin,xmax-x],yerr=[y-ymin,ymax-y],fmt='o')
 x_=numpy.array([-0.03,0.45])
-plt.plot(x_,2.96*x_)
+plt.plot(x_,(4.87-2.96)*x_)
 plt.xlim((-0.04,0.5))
 plt.xlabel(r'$E_{eff}(B-V)$')
-plt.ylabel(r'$A_{eff, V}$')
-pp = PdfPages('output11/Rveff.pdf')
+plt.ylabel(r'$E_{eff}(U-V)$')
+pp = PdfPages("output11/Rveff.pdf")
 plt.savefig(pp,format='pdf')
 pp.close()
 plt.close()
 
-(x, xmin, xmax) = numpy.percentile(ab-av,(50,50-34,50+34),axis=0) + 0.08
-(y, ymin, ymax) = numpy.percentile((av+0.15)/(ab-av+0.08),(50,50-34,50+34),axis=0)
+(y, ymin, ymax) = numpy.percentile((au-av)/(ab-av),(50,50-34,50+34),axis=0)
 plt.errorbar(x,y,xerr=[x-xmin,xmax-x],yerr=[y-ymin,ymax-y],fmt='o')
+plt.ylim((1.8,2.3))
 plt.xlim((-0.04,0.5))
 plt.xlabel(r'$E_{eff}(B-V)$')
-plt.ylabel(r'$R_{eff, V} = A_{eff, V}/E_{eff}(B-V)$')
-pp = PdfPages('output11/Rveff2.pdf')
+plt.ylabel(r'$R_{eff,U} - R_{eff,V} = E_{eff}(U-V) /E_{eff}(U-V)$')
+pp = PdfPages("output11/Rveff2.pdf")
 plt.savefig(pp,format='pdf')
 pp.close()
 plt.close()
 
-(x, xmin, xmax) = numpy.percentile(ab-av,(50,50-34,50+34),axis=0) + 0.08
-(y, ymin, ymax) = numpy.percentile((av+0.15)/(ab-av+0.08),(50,50-34,50+34),axis=0)
-plt.errorbar(x,y/(ymax-ymin)*2,xerr=[x-xmin,xmax-x],fmt='o')
-plt.xlim((-0.04,0.5))
-plt.xlabel(r'$E_{eff}(B-V)$')
-plt.ylabel(r'$S/N(R_{eff, V})$')
-pp = PdfPages('output11/Rveff3.pdf')
-plt.savefig(pp,format='pdf')
-pp.close()
-plt.close()
 
-plt.errorbar(x,y-3.96*x,xerr=[x-xmin,xmax-x],yerr=[(y-ymin),(ymax-y)],fmt='o')
-plt.xlabel(r'$E_{eff}(B-V)+const$')
-plt.ylabel(r'$\Delta A_B  = A_{eff, B}-3.96 (E_{eff}(B-V)+const)$')
-plt.ylim((-0.8,0.1))
-pp = PdfPages('output11/Rveffres.pdf')
-plt.savefig(pp,format='pdf')
-pp.close()
-plt.close()
+# (x, xmin, xmax) = numpy.percentile(ab-av,(50,50-34,50+34),axis=0) + 0.08
+# (y, ymin, ymax) = numpy.percentile((av+0.15)/(ab-av+0.08),(50,50-34,50+34),axis=0)
+# plt.errorbar(x,y,xerr=[x-xmin,xmax-x],yerr=[y-ymin,ymax-y],fmt='o')
+# plt.xlim((-0.04,0.5))
+# plt.xlabel(r'$E_{eff}(B-V)$')
+# plt.ylabel(r'$R_{eff, V} = A_{eff, V}/E_{eff}(B-V)$')
+# pp = PdfPages('output11/Rveff2.pdf')
+# plt.savefig(pp,format='pdf')
+# pp.close()
+# plt.close()
 
-(y, ymin, ymax) = numpy.percentile((fit['gamma'][:,1]-fit['gamma'][:,2])[:,None]*fit['k'] ,(50,50-34,50+34),axis=0)
-plt.errorbar(x,y,xerr=[x-xmin,xmax-x],yerr=[y-ymin,ymax-y],fmt='o')
-(y, ymin, ymax) = numpy.percentile((fit['rho1'][:,1]-fit['rho1'][:,2])[:,None]*fit['R'] ,(50,50-34,50+34),axis=0)
-plt.errorbar(x,y,xerr=[x-xmin,xmax-x],yerr=[y-ymin,ymax-y],fmt='o')
-plt.xlim((-0.1,0.1))
-plt.show()
-(y, ymin, ymax) = numpy.percentile((fit['gamma'][:,1]-fit['gamma'][:,2])[:,None]*fit['k']- ((fit['rho1'][:,1]-fit['rho1'][:,2])[:,None]*fit['R']) ,(50,50-34,50+34),axis=0)
-plt.errorbar(x,y,xerr=[x-xmin,xmax-x],yerr=[y-ymin,ymax-y],fmt='o')
-plt.show()
-x_=numpy.array([-0.08,0.36])
-plt.plot(x_,3.96*x_)
-plt.xlim((-0.1,0.4))
-plt.xlabel(r'$E_{eff}(B-V)+const$')
-plt.ylabel(r'$A_{eff, B}$')
-pp = PdfPages('output11/ebvebv.pdf')
-plt.savefig(pp,format='pdf')
-pp.close()
-plt.close()
+# (x, xmin, xmax) = numpy.percentile(ab-av,(50,50-34,50+34),axis=0) + 0.08
+# (y, ymin, ymax) = numpy.percentile((av+0.15)/(ab-av+0.08),(50,50-34,50+34),axis=0)
+# plt.errorbar(x,y/(ymax-ymin)*2,xerr=[x-xmin,xmax-x],fmt='o')
+# plt.xlim((-0.04,0.5))
+# plt.xlabel(r'$E_{eff}(B-V)$')
+# plt.ylabel(r'$S/N(R_{eff, V})$')
+# pp = PdfPages('output11/Rveff3.pdf')
+# plt.savefig(pp,format='pdf')
+# pp.close()
+# plt.close()
+
+# plt.errorbar(x,y-3.96*x,xerr=[x-xmin,xmax-x],yerr=[(y-ymin),(ymax-y)],fmt='o')
+# plt.xlabel(r'$E_{eff}(B-V)+const$')
+# plt.ylabel(r'$\Delta A_B  = A_{eff, B}-3.96 (E_{eff}(B-V)+const)$')
+# plt.ylim((-0.8,0.1))
+# pp = PdfPages('output11/Rveffres.pdf')
+# plt.savefig(pp,format='pdf')
+# pp.close()
+# plt.close()
+
+# (y, ymin, ymax) = numpy.percentile((fit['gamma'][:,1]-fit['gamma'][:,2])[:,None]*fit['k'] ,(50,50-34,50+34),axis=0)
+# plt.errorbar(x,y,xerr=[x-xmin,xmax-x],yerr=[y-ymin,ymax-y],fmt='o')
+# (y, ymin, ymax) = numpy.percentile((fit['rho1'][:,1]-fit['rho1'][:,2])[:,None]*fit['R'] ,(50,50-34,50+34),axis=0)
+# plt.errorbar(x,y,xerr=[x-xmin,xmax-x],yerr=[y-ymin,ymax-y],fmt='o')
+# plt.xlim((-0.1,0.1))
+# plt.show()
+# (y, ymin, ymax) = numpy.percentile((fit['gamma'][:,1]-fit['gamma'][:,2])[:,None]*fit['k']- ((fit['rho1'][:,1]-fit['rho1'][:,2])[:,None]*fit['R']) ,(50,50-34,50+34),axis=0)
+# plt.errorbar(x,y,xerr=[x-xmin,xmax-x],yerr=[y-ymin,ymax-y],fmt='o')
+# plt.show()
+# x_=numpy.array([-0.08,0.36])
+# plt.plot(x_,3.96*x_)
+# plt.xlim((-0.1,0.4))
+# plt.xlabel(r'$E_{eff}(B-V)+const$')
+# plt.ylabel(r'$A_{eff, B}$')
+# pp = PdfPages('output11/ebvebv.pdf')
+# plt.savefig(pp,format='pdf')
+# pp.close()
+# plt.close()
 
 
 

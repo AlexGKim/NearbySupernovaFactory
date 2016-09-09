@@ -10,6 +10,7 @@
 \usepackage{natbib}
 \usepackage{lineno}
 
+\usepackage{color}
 \linenumbers
 
 
@@ -142,9 +143,10 @@ is applied to the supernova sample of the Nearby Supernova Factory.  The peak ma
 dependent on the spectral equivalent widths, and two independent color parameters with better than 0.999 confidence.
 One parameter, interpreted as due to extrinsic host-galaxy
 dust extinction, is consistent with an $R_V=2.5$  \citet{1999PASP..111...63F} dust model.  The second parameter is inconsistent with dust and
-is inferred to have origins intrinsic to supernovae.  Our model explains features of external data: the wide range and
-the low values of inferred $R_V$ among
-SNe~Ia, and the colors of SN~2014J.
+is inferred to have origins intrinsic to supernovae.  Our model explains features of external data: 
+\textcolor{red}{
+the wide range of inferred $R_V$ among
+SNe~Ia, the systematically lower $R_V$ of redder supernovae relative to the upper bound of the full population,} and the colors of SN~2014J.
 \end{abstract}
 
 \keywords{supernovae: general; supernovae: SN 2014J}
@@ -558,7 +560,20 @@ remain consistent within uncertainty.
             enclosed probability.  \label{global:fig}}
 \end{figure}
 
+\color{red}
 
+The differences between observed colors and the colors predicted from the analysis are shown in Figure~\ref{residual:fig}.
+There are no apparent systematic trends over the span of colors.  The intrinsic color dispersions from our model are described
+later in our discussion of the inferred $C_c$.
+\begin{figure}[htbp] %  figure placement: here, top, bottom, or page
+   \centering
+   \includegraphics[width=5in]{output11/residual.pdf} 
+            \caption{\textcolor{red}{Differences between observed colors and the colors predicted from the analysis, as a function
+            of predicted colors.  For reference a dotted line is plotted at zero difference.}
+            \label{residual:fig}}
+\end{figure}
+
+\color{black}
 
 For each of the five filters, the 68\%  equal-tailed credible intervals for the global parameters $\alpha$, $\beta$, $\eta$, $R$, $R_\delta$, and $\sigma$
 (and other interesting derived parameters)
@@ -781,33 +796,7 @@ with the expectation for extinction due to host-galaxy dust \citep{1998ApJ...502
    \label{ebv:fig}}
 \end{figure}
 
-Our model predicts that internal and external effects for each supernova  conflate into an effective color excess
-$E_{eff}(B-V) = E_\gamma(B-V) + E_\delta(B-V)$ and $B$-band ``extinction''
-$A_{V, eff} = \gamma_1 k + \delta_1D$.
-Recall that in our model the colors where $E_\gamma(B-V)=0$,  $E_\delta(B-V)=0$ are free and arbitrary
-fixed using the  boundary conditions $\langle \Delta \rangle = 0$, $\langle k \rangle = 0$.
-Our model does not provide a unique value for the statistic $R_{V,eff} = A_{V, eff} /E_{eff}(B-V)$, as it depends on the choice of  boundary condition.
 
-To impose specificity for qualitative discussion, we add offsets to $A_{B, eff}$ and $E_{eff}(B-V)$ to  set the
-blue/bright corner of the distribution to roughly $E_{eff}(B-V)=0$ and $A_{B, eff}=0$  as shown in Figure~\ref{rveff:fig}.
-Overplotted is the expected extinction due to a pure extrinsic extinction with slope equal to $\gamma_2$.
-The right plot of Figure~\ref{rveff:fig} shows 
-the effective total-to-selective extinction $R_{V,eff} = A_{V, eff}/E_{eff}(B-V)$.
-Over all effective color-excess, $R_{V,eff}$ is bounded by a maximum value.  At blue colors there is a wide range of $R_{eff,V}$
-but with large uncertainties.  At redder colors, the spread in $R_{eff,V}$ decreases but the uncertainties also decrease to 
-show a number of per-supernova
-inconsistencies with the maximum bound.
-
-\begin{figure}[htbp] %  figure placement: here, top, bottom, or page
-   \centering
-   \includegraphics[width=2.8in]{output11/rveff.pdf}
-   \includegraphics[width=2.8in]{output11/rveff2.pdf}
-   \caption{Left: Effective color excess $E_{eff}(B-V) = E_\gamma(B-V) + E_\delta(B-V)$ and effective $B$-band ``extinction''
-$A_{V, eff} = \gamma_1 k + \delta_1D$ for the SNfactory sample.  Overplotted is the expected relationship for color-excess
-purely due to the intrinsic $\gamma$ term. 
-Right:  The inferred $R_{V,eff} = A_{V, eff}/E_{eff}(B-V)$.
-   \label{rveff:fig}}
-\end{figure}
 
 
 The ideogram for the grey offsets $\Delta$ for all supernovae is shown in Figure~\ref{hist:fig}.  The distribution is non-Gaussian, 
@@ -970,14 +959,49 @@ whereas the internal color parameter is inconsistent with dust or a blackbody.  
 describing SN~2014J, a supernova not used in the training that has atypical colors.
 
 \citet{2014ApJ...789...32B, 2015MNRAS.453.3300A} deduce a wide range of dust behavior $1.5<R^F_V<3$ encountered by the SN~Ia population.
-Our model predicts an observed range of effective $R_V$ from a single form of extrinsic dust, as is borne out by the
-SNf sample shown in Figure~\ref{rveff:fig}. 
 \citet{2011ApJ...731..120M, 2011ApJ...729...55F} and the above authors
 find that supernovae with large $E_o(B-V)$ 
 preferentially exhibit low $R^F_V$. 
-Our model does predict low effective $R_V$ in the red, though less so then in the blue.  
-We remark though that for fixed measurement uncertainty, the highest color-excess supernovae have the highest signal-to-noise
-in the measurement of $R_V$.
+\color{red}
+In our model internal and external effects for each supernova  conflate into an effective color excess
+$E_{eff}(X-V) = E_\gamma(X-V) + E_\delta(X-V)$ and effective $V$ extinction $A_{eff,V} = \gamma_2 k  + \delta_2 D$ 
+Recall that the colors where $E_\gamma(B-V)=0$,  $E_\delta(B-V)=0$ are free and arbitrarily
+fixed using the  boundary conditions $\langle \Delta \rangle = 0$, $\langle k \rangle = 0$:
+there is no unique value for the statistic $R_{eff,V} = A_{eff,V} /E_{eff}(B-V)$, as it depends on the choice of  boundary condition.
+For specificity in the current qualitative discussion, 
+let us consider a set of SNe~Ia  with parameters set to the median fit values of the SNfactory sample.
+We specify   $E_{eff}(U-V)$  and $E_{eff}(B-V)$ by
+assigning the blue-extreme colors of this set close to  zero color excess, 
+as shown in bottom-left corner in the left plot of Figure~\ref{rveff:fig}.
+For this choice of color zeropoints,
+$R_{eff,U} - R_{eff,V} = E_{eff}(U-V) /E_{eff}(B-V)$ is plotted
+in the right of Figure~\ref{rveff:fig}.
+At extreme blue effective color there is a tight range of  $R_{eff,U} - R_{eff,V}$ values.  The distribution spreads to significantly 
+lower   $R_{eff,U} - R_{eff,V}$ as supernovae appear redder but
+then reconverge to higher, tighter values at extreme red effective color.
+The variation in  $R_{eff,U} - R_{eff,V}$ is attributed to the varying contributions of internal and external color excess: the bottom plot of
+Figure~\ref{rveff:fig} shows that the shift to lower values occurs when the effective color excess is dominated by the internal contribution. 
+Since the standard deviation of the $E_\delta(B-V)$ distribution is  narrow compared to that of
+ $E_\gamma(B-V)$, low values of $R_{eff,U} - R_{eff,V}$ can only occur
+at low $E_{eff}(X-V)$.
+ The  \citet{1999PASP..111...63F} dust model interprets
+ low values of $R_{eff,U} - R_{eff,V}$ as implying high values of $R_V$ (see Figure~\ref{ebv:fig}),   and would hence infer a
+ broad range of  $R_V$ at bluer colors, and a narrow range of low $R_V$  for the reddest supernovae.
+
+\begin{figure}[htbp] %  figure placement: here, top, bottom, or page
+   \centering
+   \includegraphics[width=2.8in]{output11/rveff.pdf}
+   \includegraphics[width=2.8in]{output11/rveff2.pdf}
+   \includegraphics[width=2.8in]{output11/rveff3.pdf}
+      \caption{\textcolor{red}{Left: Effective color excess $E_{eff}(B-V)$ versus $E_{eff}(U-V)$
+   where $E_{eff}(X-V)   = E_\gamma(X-V) + E_\delta(X-V) - z_X$
+   for a set of SNe with parameters set to those of the medians of the objects in our analysis.
+   The $z_X$ represents a choice of colors at zero color-excess so that the lower left corner points have values approaching zero. 
+Right:  The inferred $R_{eff,U}- R_{eff,V} = E_{eff}(U-V)/E_{eff}(B-V)$.
+Bottom:  $R_{eff,U}- R_{eff,V}$ as a function of the relative contributions of extrinsic and intrinsic color effects $E_\gamma(B-V)/E_\delta(B-V)$.}
+   \label{rveff:fig}}
+\end{figure}
+\color{black}
 
 %The trend in Figure~\ref{rveff:fig} showing an increased range of brighter-than-expected magnitudes  with increasing $E_{eff}(B-V)$  can
 %be compared
