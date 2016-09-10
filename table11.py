@@ -4,6 +4,27 @@ import pickle
 import cPickle
 import numpy
 
+import sncosmo
+
+efflam = numpy.array([ 3693.16777627,  4369.37505509,  5287.48667023,  6319.19906153,7610.89305298])
+
+f99 = sncosmo.F99Dust(r_v =3.1)
+f99.set(ebv=1.37)
+A_ = f99.propagate(efflam,1.)
+A_ = -2.5*numpy.log10(A_)
+print (A_[0]-A_[2])/(A_[1]-A_[2])
+
+f99 = sncosmo.F99Dust(r_v =2.5)
+f99.set(ebv=1.37)
+A_ = f99.propagate(efflam,1.)
+A_ = -2.5*numpy.log10(A_)
+print (A_[0]-A_[2])/(A_[1]-A_[2])
+
+f99 = sncosmo.F99Dust(r_v =1.5)
+f99.set(ebv=1.37)
+A_ = f99.propagate(efflam,1.)
+A_ = -2.5*numpy.log10(A_)
+print (A_[0]-A_[2])/(A_[1]-A_[2])
 
 f = open('temp11.pkl','rb')
 (fit, _) = pickle.load(f)
@@ -62,13 +83,6 @@ for i in xrange(5):
             numpy.std((fit['gamma'][:,i]-fit['gamma'][:,j])[:,None]*fit['k']),numpy.std((fit['rho1'][:,i]-fit['rho1'][:,j])[:,None]*fit['R']))
 # print numpy.std(temp[0]),numpy.std(temp[1])
 
-ab = fit['gamma'][:,1][:,None]*fit['R'] + fit['rho1'][:,1][:,None]*fit['R']
-av = fit['gamma'][:,2][:,None]*fit['R'] + fit['rho1'][:,2][:,None]*fit['R']
-rv = av/(ab-av)
-
-print rv.mean(), rv.std()
-
-
 
 mega = numpy.array([fit['Delta'].flatten(),fit['EW'][:,:,0].flatten(),fit['EW'][:,:,1].flatten(),fit['sivel'].flatten(), \
     ((fit['gamma'][:,1] - fit['gamma'][:,2])[:,None]*fit['k']).flatten(),((fit['rho1'][:,1] - fit['rho1'][:,2])[:,None]*fit['R']).flatten()])
@@ -88,7 +102,14 @@ for p,pn, s in zip(pars,pars_n,sigfig):
     print '\\\\'
 
 
+ebvdelta  = (fit['rho1'][:,1]-fit['rho1'][:,2])[:,None] * fit['D']
+(y,ymin,ymax) = numpy.percentile(ebvdelta,(50,50-34,50+34))
+wmax = numpy.argmax(y)
+wmin = numpy.armgin(y)
 
+print "{:6.3}_{{{:6.3}}}^{+} {{{:6.3}}}".format(y[wmax],ymin[wmax]-y[wmax],ymax[wmax]-y[wmax])
+
+wefwef
 pkl_file = open('gege_data.pkl', 'r')
 data = pickle.load(pkl_file)
 pkl_file.close()
