@@ -28,6 +28,8 @@ dic_meta=cPickle.load(open("META.pkl"))
 
 sivel=[]
 sivel_err=[]
+x1 = []
+x1_err = []
 for sn in data['snlist']:
    if sn in dic_meta.keys() and sn in dic_phreno.keys():
       meta = dic_meta[sn]
@@ -45,12 +47,18 @@ for sn in data['snlist']:
       else:
          sivel.append(float('nan'))
          sivel_err.append(float('nan'))
+      x1.append(meta['salt2.X1'])
+      x1_err.append(numpy.sqrt(meta['salt2.CovX1X1']))
    else:
       sivel.append(float('nan'))
       sivel_err.append(float('nan'))
+      x1.append(float('nan'))
+      x1_err.append(float('nan'))
 
 sivel = numpy.array(sivel)
 sivel_err = numpy.array(sivel_err)
+x1 = numpy.array(x1)
+x1_err = numpy.array(x1_err)
 
 use = numpy.isfinite(sivel)
 
@@ -63,6 +71,8 @@ mag_cov = data['cov'][:,2:,2:]
 
 sivel=sivel[use]
 sivel_err = sivel_err[use]
+x1=x1[use]
+x1_err = x1_err[use]
 EW_obs=EW_obs[use]
 mag_obs=mag_obs[use]
 EW_cov= EW_cov[use]
@@ -95,48 +105,38 @@ color_cov = numpy.zeros((nsne,4,4))
 for i in xrange(nsne):
     color_cov[i] = numpy.dot(trans,numpy.dot(mag_cov[i], trans.T))
 
-
-correction = [fit['c'][:,i][:,None] + fit['alpha'][:,i][:,None]*fit['EW'][:,:, 0] \
-    + fit['beta'][:,i][:,None]*fit['EW'][:,:, 1] + fit['eta'][:,i][:,None]*fit['sivel']\
-    + fit['gamma'][:,i][:,None]*fit['k'] \
-    for i in xrange(5)]
-
-correction = numpy.array(correction)
-correction = correction - correction[2,:,:]
-# correction_median = numpy.median(correction,axis=1)
-
-cind=[0,1,3,4]
-cname = ['U','B','R','I']
-fig, axes = plt.subplots(nrows=4)
-for i in xrange(4):
-    (y, ymin, ymax) = numpy.percentile(correction[cind[i],:,:],(50,50-34,50+34),axis=0)
-    err = numpy.sqrt(color_cov[:,i,i] + ((ymax-ymin)/2)**2)
-    axes[i].errorbar(y+mag_mn[cind[i]]-mag_mn[2],color_obs[:,i]-y,xerr=[y-ymin,ymax-y], yerr=[err,err],fmt='.')
-    axes[i].set_xlabel(r'$({0}-V)_{{model}}$'.format(cname[i]))
-    lname = r'$({0}_o-V_o) - ({0}-V)_{{model}}$'.format(cname[i])
-    axes[i].set_ylabel(lname)
-    axes[i].axhline(y=0,linestyle=':')
-fig.subplots_adjust(hspace=.3)
-fig.set_size_inches(8,11)
-filename = 'output11/residual.pdf'
-pp = PdfPages(filename)
+(y, ymin, ymax) = numpy.percentile(fit['EW'][:,:,1],(50,50-34,50+34),axis=0)
+plt.errorbar(x1, y, xerr=[x1_err,x1_err],yerr=[y-ymin,ymax-ymin],fmt='o')
+plt.xlabel(r'$X_1$')
+plt.ylabel(r'$EW_{Si}$')
+pp = PdfPages("output11/x1si.pdf")
 plt.savefig(pp,format='pdf')
 pp.close()
-plt.clf()
+plt.close()
 
-offset = -0.001
+(y, ymin, ymax) = numpy.percentile((fit['rho1'][:,1]-fit['rho1'][:,2])[:,None]*fit['R'][:,:],(50,50-34,50+34),axis=0)
+plt.errorbar(x1, y, xerr=[x1_err,x1_err],yerr=[y-ymin,ymax-ymin],fmt='o')
+plt.xlabel(r'$X_1$')
+plt.ylabel(r'$E_\delta(B-V)$')
+pp = PdfPages("output11/x1D.pdf")
+plt.savefig(pp,format='pdf')
+pp.close()
+plt.close()
+
+
+offset = 0.01
 au = fit['gamma'][:,0][:,None]*fit['k'] + fit['rho1'][:,0][:,None]*fit['R']
 ab = fit['gamma'][:,1][:,None]*fit['k'] + fit['rho1'][:,1][:,None]*fit['R']
 av = fit['gamma'][:,2][:,None]*fit['k'] + fit['rho1'][:,2][:,None]*fit['R']
 (x, xmin, xmax) = numpy.percentile(ab-av,(50,50-34,50+34),axis=0)
 (y, ymin, ymax) = numpy.percentile(au-av,(50,50-34,50+34),axis=0)
-x=x-x.min()-offset
+x=x-x.min()-offset*1.3
 y=y-y.min()-offset
 plt.scatter(x,y)
 # x_=numpy.array([-0.03,0.45])
 # plt.plot(x_,(4.87-2.96)*x_)
-plt.xlim((0,0.5))
-plt.ylim((0,1))
+plt.xlim((-0.04,0.5))
+plt.ylim((-0.04,1))
 plt.xlabel(r'$E_{eff}(B-V)$')
 plt.ylabel(r'$E_{eff}(U-V)$')
 pp = PdfPages("output11/Rveff.pdf")
@@ -147,7 +147,7 @@ plt.close()
 (y, ymin, ymax) = numpy.percentile((au-av-y.min()-offset)/(ab-av-x.min()-offset),(50,50-34,50+34),axis=0)
 plt.scatter(x,y)
 # plt.ylim((1.8,2.3))
-plt.xlim((0,0.5))
+#plt.xlim((0,0.5))
 plt.xlabel(r'$E_{eff}(B-V)$')
 plt.ylabel(r'$R_{eff,U} - R_{eff,V}$')
 pp = PdfPages("output11/Rveff2.pdf")
@@ -166,8 +166,6 @@ pp = PdfPages("output11/Rveff3.pdf")
 plt.savefig(pp,format='pdf')
 pp.close()
 plt.close()
-
-
 
 # plt.scatter(numpy.median((fit['gamma'][:,1]-fit['gamma'][:,2])[:,None]*fit['k'],axis=0), mag_obs[:,2])
 # x=numpy.array([-0.08, 0.37])
@@ -578,14 +576,39 @@ rc('text', usetex=True)
 
 
 
+filts = ['U','B','V','R','I']
+lambdas = numpy.arange(3000.,9000,100)
+rvs=[3.06]
+avs = [11.73]
+for rv,av in zip(rvs,avs):
+  f99 = sncosmo.F99Dust(r_v =rv)
+  f99.set(ebv=av)
+  A_ = f99.propagate(lambdas,1)
+  A_=-2.5*numpy.log10(A_)
+
+  # norm = f99.propagate([efflam[1]],1.) / f99.propagate(numpy.array([efflam[2]]),1.)
+  # norm  = -2.5*numpy.log10(norm)
+  # A_ = sncosmo._extinction.ccm89(lambdas, 1., rv)
+  # norm  = sncosmo._extinction.ccm89(numpy.array([efflam[1]]), 1., rv)-sncosmo._extinction.ccm89(numpy.array([efflam[2]]), 1., rv)
+  # A_ = A_/norm[0]
+  plt.plot(lambdas,A_,label=r"$R^F_V={:.2f}$".format(rv))
+
+(y, ymin, ymax) = numpy.percentile(fit['gamma'],(50,50-34,50+34),axis=0)
+plt.errorbar(efflam,y,yerr=[y-ymin,ymax-y],fmt='o')
+plt.legend()
+plt.xlabel(r'Wavelength (\AA)')
+plt.ylabel(r'$\gamma_X$')
+pp = PdfPages('output11/fitz.pdf')
+plt.savefig(pp,format='pdf')
+pp.close()
+plt.close()
 
 
 nlinks = fit['gamma'].shape[0]
 mega = numpy.array([fit['c'],fit['alpha'],fit['beta'],fit['eta'],fit['gamma'],fit['rho1'],fit['L_sigma']])
 mega = numpy.transpose(mega)
 
-rvs = [1.5,2.5,3.1]
-filts = ['U','B','V','R','I']
+
 
 
 for index in xrange(5):
@@ -601,19 +624,19 @@ for index in xrange(5):
 
 
 lambdas = numpy.arange(3000.,9000,100)
-for rv in rvs:
+# for rv in rvs:
 
-    f99 = sncosmo.F99Dust(r_v =rv)
-    f99.set(ebv=1.37)
-    A_ = f99.propagate(lambdas,1.)
-    A_=-2.5*numpy.log10(A_)
+#     f99 = sncosmo.F99Dust(r_v =rv)
+#     f99.set(ebv=1.37)
+#     A_ = f99.propagate(lambdas,1.)
+#     A_=-2.5*numpy.log10(A_)
 
-    norm = f99.propagate([efflam[1]],1.) / f99.propagate(numpy.array([efflam[2]]),1.)
-    norm  = -2.5*numpy.log10(norm)
-    # A_ = sncosmo._extinction.ccm89(lambdas, 1., rv)
-    # norm  = sncosmo._extinction.ccm89(numpy.array([efflam[1]]), 1., rv)-sncosmo._extinction.ccm89(numpy.array([efflam[2]]), 1., rv)
-    A_ = A_/norm[0]
-    plt.plot(lambdas,A_,label=r"$R^F_V={:.1f}$".format(rv))
+#     norm = f99.propagate([efflam[1]],1.) / f99.propagate(numpy.array([efflam[2]]),1.)
+#     norm  = -2.5*numpy.log10(norm)
+#     # A_ = sncosmo._extinction.ccm89(lambdas, 1., rv)
+#     # norm  = sncosmo._extinction.ccm89(numpy.array([efflam[1]]), 1., rv)-sncosmo._extinction.ccm89(numpy.array([efflam[2]]), 1., rv)
+#     A_ = A_/norm[0]
+#     plt.plot(lambdas,A_,label=r"$R^F_V={:.2f}$".format(rv))
 
 (y, ymin, ymax) = numpy.percentile(fit['gamma']/((fit['gamma'][:,1]-fit['gamma'][:,2])[:,None]),(50,50-34,50+34),axis=0)
 plt.errorbar(efflam,y,yerr=[y-ymin,ymax-y],fmt='o')
@@ -625,18 +648,18 @@ plt.savefig(pp,format='pdf')
 pp.close()
 plt.close()
 
-for rv in rvs:
+# for rv in rvs:
 
-    f99 = sncosmo.F99Dust(r_v =rv)
-    f99.set(ebv=1.37)
-    A_ = f99.propagate(lambdas,1.)
+#     f99 = sncosmo.F99Dust(r_v =rv)
+#     f99.set(ebv=1.37)
+#     A_ = f99.propagate(lambdas,1.)
 
-    norm  = f99.propagate(numpy.array([efflam[2]]),1.) 
-    # A_ = sncosmo._extinction.ccm89(lambdas, 1., rv)
-    # norm  = sncosmo._extinction.ccm89(numpy.array([efflam[2]]), 1., rv)
-    # A_ = A_/norm[0]
-    A_ = numpy.log10(A_)/numpy.log10(norm)
-    plt.plot(lambdas,A_,label=r"$R^F_V={:.1f}$".format(rv))
+#     norm  = f99.propagate(numpy.array([efflam[2]]),1.) 
+#     # A_ = sncosmo._extinction.ccm89(lambdas, 1., rv)
+#     # norm  = sncosmo._extinction.ccm89(numpy.array([efflam[2]]), 1., rv)
+#     # A_ = A_/norm[0]
+#     A_ = numpy.log10(A_)/numpy.log10(norm)
+#     plt.plot(lambdas,A_,label=r"$R^F_V={:.1f}$".format(rv))
 
 (y, ymin, ymax) = numpy.percentile(fit['gamma']/fit['gamma'][:,2][:,None],(50,50-34,50+34),axis=0)
 plt.errorbar(efflam,y,yerr=[y-ymin,ymax-y],fmt='o')
@@ -659,6 +682,34 @@ plt.savefig(pp,format='pdf')
 pp.close()
 plt.close()
 
+
+correction = [fit['c'][:,i][:,None] + fit['alpha'][:,i][:,None]*fit['EW'][:,:, 0] \
+    + fit['beta'][:,i][:,None]*fit['EW'][:,:, 1] + fit['eta'][:,i][:,None]*fit['sivel']\
+    + fit['gamma'][:,i][:,None]*fit['k'] \
+    for i in xrange(5)]
+
+correction = numpy.array(correction)
+correction = correction - correction[2,:,:]
+# correction_median = numpy.median(correction,axis=1)
+
+cind=[0,1,3,4]
+cname = ['U','B','R','I']
+fig, axes = plt.subplots(nrows=4)
+for i in xrange(4):
+    (y, ymin, ymax) = numpy.percentile(correction[cind[i],:,:],(50,50-34,50+34),axis=0)
+    err = numpy.sqrt(color_cov[:,i,i] + ((ymax-ymin)/2)**2)
+    axes[i].errorbar(y+mag_mn[cind[i]]-mag_mn[2],color_obs[:,i]-y,xerr=[y-ymin,ymax-y], yerr=[err,err],fmt='.')
+    axes[i].set_xlabel(r'$({0}-V)_{{model}}$'.format(cname[i]))
+    lname = r'$({0}_o-V_o) - ({0}-V)_{{model}}$'.format(cname[i])
+    axes[i].set_ylabel(lname)
+    axes[i].axhline(y=0,linestyle=':')
+fig.subplots_adjust(hspace=.3)
+fig.set_size_inches(8,11)
+filename = 'output11/residual.pdf'
+pp = PdfPages(filename)
+plt.savefig(pp,format='pdf')
+pp.close()
+plt.clf()
 # fig, axes = plt.subplots(nrows=len(filts),sharex=True)
 # xerr = numpy.sqrt(EW_cov[:,0,0]) 
 # for i in xrange(len(filts)):

@@ -8,7 +8,7 @@ import sncosmo
 
 efflam = numpy.array([ 3693.16777627,  4369.37505509,  5287.48667023,  6319.19906153,7610.89305298])
 
-f99 = sncosmo.F99Dust(r_v =3.1)
+f99 = sncosmo.F99Dust(r_v =3.06)
 f99.set(ebv=1.37)
 A_ = f99.propagate(efflam,1.)
 A_ = -2.5*numpy.log10(A_)
@@ -30,8 +30,41 @@ f = open('temp11.pkl','rb')
 (fit, _) = pickle.load(f)
 f.close()
 
+wefwe
 for key in fit.keys():
     print key, fit[key].min(), fit[key].max()
+
+
+print 'fit data to Fitzpatrick'
+gamma =  fit['gamma']
+gammacov = numpy.cov(gamma,rowvar=False)
+gamma = numpy.mean(gamma,axis=0)
+gammainvcov = numpy.linalg.inv(gammacov)
+
+def lnprob(p, x, y ,yerr):
+  # p is ebv and r_v
+  f99 = sncosmo.F99Dust(r_v =p[1])
+  f99.set(ebv=p[0])
+  A_ = f99.propagate(x,1.)
+  A_ = -2.5*numpy.log10(A_)
+  dum = y-A_
+  ans = -0.5*numpy.dot(dum, numpy.dot(yerr, dum))
+  return ans
+
+efflam = numpy.array([ 3693.16777627,  4369.37505509,  5287.48667023,  6319.19906153,7610.89305298])
+ndim, nwalkers = 2, 100
+pos = [numpy.array([12., 2.5]) + 1e-4*numpy.random.randn(ndim) for i in range(nwalkers)]
+import emcee
+sampler = emcee.EnsembleSampler(nwalkers, ndim, lnprob, args=(efflam, gamma, gammainvcov))
+sampler.run_mcmc(pos,1000)
+samples = sampler.chain[:, 100:, :].reshape((-1, ndim))
+(y,ymin,ymax)  = numpy.percentile(samples[:,1],(50,50-34,50+34)) 
+print y, y-ymin, ymax-y
+(y,ymin,ymax)  = numpy.percentile(samples[:,0],(50,50-34,50+34)) 
+print y, y-ymin, ymax-y
+
+
+wefwe
 
 print fit['Delta'].flatten().std()
 
@@ -57,6 +90,8 @@ dumsig = numpy.sqrt(numpy.diag(dum))
 print [" , ".join(map('{0:.3f}'.format, dumsig))]
 dumcor =  dum/ numpy.dot(dumsig[:,None],dumsig[None,:])
 print " \\\\\n".join([" & ".join(map('{0:.3f}'.format, line)) for line in dumcor])
+
+
 
 
 pars = ['alpha','alpha','beta','beta','eta','eta','gamma','gamma','rho1','rho1','L_sigma']
@@ -102,12 +137,22 @@ for p,pn, s in zip(pars,pars_n,sigfig):
     print '\\\\'
 
 
-ebvdelta  = (fit['rho1'][:,1]-fit['rho1'][:,2])[:,None] * fit['D']
-(y,ymin,ymax) = numpy.percentile(ebvdelta,(50,50-34,50+34))
+ebvdelta  = (fit['rho1'][:,1]-fit['rho1'][:,2])[:,None] * fit['R']
+(y,ymin,ymax) = numpy.percentile(ebvdelta,(50,50-34,50+34),axis=0)
 wmax = numpy.argmax(y)
-wmin = numpy.armgin(y)
+wmin = numpy.argmin(y)
+print 'Extreme values of E_delta(B-V)'
 
-print "{:6.3}_{{{:6.3}}}^{+} {{{:6.3}}}".format(y[wmax],ymin[wmax]-y[wmax],ymax[wmax]-y[wmax])
+print "{:6.2f}_{{{:6.2f}}}^{{+{:6.2f}}}".format(y[wmax],ymin[wmax]-y[wmax],ymax[wmax]-y[wmax])
+print "{:6.2f}_{{{:6.2f}}}^{{+{:6.2f}}}".format(y[wmin],ymin[wmin]-y[wmin],ymax[wmin]-y[wmin])
+
+ebvdelta  = (fit['gamma'][:,1]-fit['gamma'][:,2])[:,None] * fit['k']
+(y,ymin,ymax) = numpy.percentile(ebvdelta,(50,50-34,50+34),axis=0)
+wmax = numpy.argmax(y)
+wmin = numpy.argmin(y)
+print 'Extreme values of E_gamma(B-V)'
+print "{:6.2f}_{{{:6.2f}}}^{{+{:6.2f}}}".format(y[wmax],ymin[wmax]-y[wmax],ymax[wmax]-y[wmax])
+print "{:6.2f}_{{{:6.2f}}}^{{+{:6.2f}}}".format(y[wmin],ymin[wmin]-y[wmin],ymax[wmin]-y[wmin])
 
 wefwef
 pkl_file = open('gege_data.pkl', 'r')
