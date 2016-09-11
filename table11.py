@@ -30,12 +30,14 @@ f = open('temp11.pkl','rb')
 (fit, _) = pickle.load(f)
 f.close()
 
-wefwe
+
 for key in fit.keys():
     print key, fit[key].min(), fit[key].max()
 
 
-print 'fit data to Fitzpatrick'
+
+
+# print 'fit data to Fitzpatrick'
 gamma =  fit['gamma']
 gammacov = numpy.cov(gamma,rowvar=False)
 gamma = numpy.mean(gamma,axis=0)
@@ -64,7 +66,6 @@ print y, y-ymin, ymax-y
 print y, y-ymin, ymax-y
 
 
-wefwe
 
 print fit['Delta'].flatten().std()
 
@@ -141,6 +142,7 @@ ebvdelta  = (fit['rho1'][:,1]-fit['rho1'][:,2])[:,None] * fit['R']
 (y,ymin,ymax) = numpy.percentile(ebvdelta,(50,50-34,50+34),axis=0)
 wmax = numpy.argmax(y)
 wmin = numpy.argmin(y)
+ydelta = y
 print 'Extreme values of E_delta(B-V)'
 
 print "{:6.2f}_{{{:6.2f}}}^{{+{:6.2f}}}".format(y[wmax],ymin[wmax]-y[wmax],ymax[wmax]-y[wmax])
@@ -154,7 +156,8 @@ print 'Extreme values of E_gamma(B-V)'
 print "{:6.2f}_{{{:6.2f}}}^{{+{:6.2f}}}".format(y[wmax],ymin[wmax]-y[wmax],ymax[wmax]-y[wmax])
 print "{:6.2f}_{{{:6.2f}}}^{{+{:6.2f}}}".format(y[wmin],ymin[wmin]-y[wmin],ymax[wmin]-y[wmin])
 
-wefwef
+
+
 pkl_file = open('gege_data.pkl', 'r')
 data = pickle.load(pkl_file)
 pkl_file.close()

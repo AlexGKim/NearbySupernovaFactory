@@ -740,18 +740,6 @@ Both $EW_{Ca}$ and $EW_{Ca}$ are associated with color changes though not in $B-
 We do not detect a significant association between
 $\lambda_{Si}$ and color.
 
-\color{red}
-The 68\% credible intervals of $\gamma$ are shown in Figure~\ref{fitz:fig}.
-A fit of the output $\gamma$ parameters to the dust model of \citet{1999PASP..111...63F} gives $R^F_V=3.06\pm 0.18$.
-\color{black}
-
-\begin{figure}[htbp] %  figure placement: here, top, bottom, or page
-   \centering
-   \includegraphics[width=3.2in]{output11/fitz.pdf}
-   \caption{\textcolor{red}{68\% credible intervals of $\gamma_X$ and the best-fit to the  \citet{1999PASP..111...63F}  model $R^F_V=3.06$.}
-   \label{fitz:fig}}
-\end{figure}
-
 %
 %The best-fit distributions for $R_X=\frac{\gamma_X}{\gamma_1-\gamma_2}$ are shown in Figure~\ref{rx:fig}.  
 %Our measurements of
@@ -812,22 +800,6 @@ with the expectation for extinction due to host-galaxy dust \citep{1998ApJ...502
    \label{ebv:fig}}
 \end{figure}
 
-\color{red}
-The correlation between $EW_{Si}$ and the SALT2 $X_1$ light-curve shape parameter is verified
-for our sample, as shown in Figure~\ref{x1:fig}.
-On the other hand, there is no such correlation seen between $E_\delta(B-V)$ and $X_1$.  We conclude that the
-intrinsic parameter does not arise to compensate for the fact that light-curve shape is not explicitly
-contained in our model.
-\begin{figure}[htbp] %  figure placement: here, top, bottom, or page
-   \centering
-   \includegraphics[width=2.8in]{output11/x1si.pdf}
-   \includegraphics[width=2.8in]{output11/x1D.pdf}
-    \caption{\textcolor{red}{Left: SALT2 $X_1$ versus $EW_{Si}$.  Right: $X_1$ versus $E_\delta(B-V)$.}
-   \label{x1:fig}}
-\end{figure}
-
-\color{black}
-
 
 
 The ideogram for the grey offsets $\Delta$ for all supernovae is shown in Figure~\ref{hist:fig}.  The distribution is non-Gaussian, 
@@ -857,6 +829,7 @@ For $UBVRI$ the matrix is
 -0.0001 & -0.0000 & 0.0001 & 0.0002 & 0.0002 \\
 0.0003 & -0.0004 & -0.0001 & 0.0002 & 0.0019
  \end{pmatrix} \text{mag}^2.
+ \label{mag_cov:eqn}
  \end{equation}
 The  covariance of the colors $U-V$, $B-V$, $V-R$, and $V-I$ is
 expressed as the standard deviations and
@@ -994,6 +967,53 @@ affect supernova magnitudes and colors.  The external color parameter has behavi
 whereas the internal color parameter is inconsistent with dust or a blackbody.  This model  does an excellent job in
 describing SN~2014J, a supernova not used in the training that has atypical colors.
 
+\color{red}
+Our model does not explicitly include light-curve shape, which is known to track SN~Ia diversity.
+The correlation between $EW_{Si}$ and the SALT2 $X_1$ light-curve shape parameter is verified
+for our sample, as shown in Figure~\ref{x1:fig}.
+On the other hand, there is no such correlation seen between $E_\delta(B-V)$ and $X_1$. 
+Our magnitude residuals  given in Eqn.~\ref{mag_cov:eqn} are comparable to those of SALT2
+\citep[Fig.\ 8 of][]{2010A&A...523A...7G}, showing no obvious disadvantage from not using $X_1$.
+Figure~\ref{x1res:fig} shows the difference between observed and model-predicted colors,
+as a function of $X_1$.  For all colors, there appear non-linear correlations between $X_1$ and color residuals,
+with a negative slope for $X_1<0$ and positive slope for $X_1>0$.
+The SN~Ia time evolution does convey information not captured by the peak-magnitude spectral features used in
+the current analysis, and  a linear model may be incapable of doing so.
+\begin{figure}[htbp] %  figure placement: here, top, bottom, or page
+   \centering
+   \includegraphics[width=2.8in]{output11/x1si.pdf}
+   \includegraphics[width=2.8in]{output11/x1D.pdf}
+    \caption{\textcolor{red}{Left: SALT2 $X_1$ versus $EW_{Si}$.  Right: $X_1$ versus $E_\delta(B-V)$.}
+   \label{x1:fig}}
+\end{figure}
+
+\begin{figure}[htbp] %  figure placement: here, top, bottom, or page
+   \centering
+   \includegraphics[width=5in]{output11/residualx1.pdf}
+    \caption{\textcolor{red}{Differences between observed colors and the colors predicted from the analysis, as a function
+            of the SALT2 light-curve shape parameter $X_1$.  For reference a dotted line is plotted at zero difference.}
+   \label{x1res:fig}}
+\end{figure}
+
+\color{black}
+
+\color{red}
+The extrinsic parameters $\gamma$ attributed to dust are fit for without reference to a specific dust model.
+The posteriors of $\gamma$ are fit to the dust model of \citet{1999PASP..111...63F}, giving
+$R^F_V=3.06\pm 0.18$;  Figure~\ref{fitz:fig} shows the   68\% credible intervals of $\gamma$ and the
+result of the fit.  Note that  unlike the $R_V$ posteriors, 
+the posteriors of $\gamma$ are well-approximated by a normal distribution, which is used for the fit.
+\color{black}
+
+\begin{figure}[htbp] %  figure placement: here, top, bottom, or page
+   \centering
+   \includegraphics[width=3.2in]{output11/fitz.pdf}
+   \caption{\textcolor{red}{68\% credible intervals of $\gamma_X$ and the best-fit to the  \citet{1999PASP..111...63F}  model $R^F_V=3.06$.}
+   \label{fitz:fig}}
+\end{figure}
+
+
+
 \citet{2014ApJ...789...32B, 2015MNRAS.453.3300A} deduce a wide range of dust behavior $1.5<R^F_V<3$ encountered by the SN~Ia population.
 \citet{2011ApJ...731..120M, 2011ApJ...729...55F} and the above authors
 find that supernovae with large $E_o(B-V)$ 
@@ -1065,7 +1085,8 @@ surprising as they
 are strong features in the $B$ band.
 Recall that we find a correlation between $\lambda_{Si}$ and $EW_{Ca}$
 Removing from our model the dependence on equivalent widths (eliminating the  $\alpha$ and $\beta$ parameters), we recover
-non-zero $\eta$ values at  $\gtrsim 2\sigma$.  We conclude that $v_{Si}$ is correlated with color, just not as strongly as the equivalent widths,
+non-zero $\eta$ values at  $\gtrsim 2\sigma$.  We conclude that $v_{Si}$ is correlated with color, 
+\textcolor{red}{but the equivalent-width corrections are preferred as they give lower residual dispersions $C_c$},
 and  anticipate that in the previous analysis the equivalent widths of CaII and 
 SiII would also have shown correlations with color.
 

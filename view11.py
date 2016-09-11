@@ -710,6 +710,26 @@ pp = PdfPages(filename)
 plt.savefig(pp,format='pdf')
 pp.close()
 plt.clf()
+
+cind=[0,1,3,4]
+cname = ['U','B','R','I']
+fig, axes = plt.subplots(nrows=4)
+for i in xrange(4):
+    (y, ymin, ymax) = numpy.percentile(correction[cind[i],:,:],(50,50-34,50+34),axis=0)
+    err = numpy.sqrt(color_cov[:,i,i] + ((ymax-ymin)/2)**2)
+    axes[i].errorbar(x1,color_obs[:,i]-y,xerr=[x1_err,x1_err], yerr=[err,err],fmt='.')
+    axes[i].set_xlabel(r'$X_1$'.format(cname[i]))
+    lname = r'$({0}_o-V_o) - ({0}-V)_{{model}}$'.format(cname[i])
+    axes[i].set_ylabel(lname)
+    axes[i].axhline(y=0,linestyle=':')
+fig.subplots_adjust(hspace=.3)
+fig.set_size_inches(8,11)
+filename = 'output11/residualx1.pdf'
+pp = PdfPages(filename)
+plt.savefig(pp,format='pdf')
+pp.close()
+plt.clf()
+
 # fig, axes = plt.subplots(nrows=len(filts),sharex=True)
 # xerr = numpy.sqrt(EW_cov[:,0,0]) 
 # for i in xrange(len(filts)):
