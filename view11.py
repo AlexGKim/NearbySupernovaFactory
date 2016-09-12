@@ -105,6 +105,55 @@ color_cov = numpy.zeros((nsne,4,4))
 for i in xrange(nsne):
     color_cov[i] = numpy.dot(trans,numpy.dot(mag_cov[i], trans.T))
 
+
+
+correction = [fit['c'][:,i][:,None] + fit['alpha'][:,i][:,None]*fit['EW'][:,:, 0] \
+    + fit['beta'][:,i][:,None]*fit['EW'][:,:, 1] + fit['eta'][:,i][:,None]*fit['sivel']\
+    + fit['gamma'][:,i][:,None]*fit['k'] \
+    for i in xrange(5)]
+
+correction = numpy.array(correction)
+correction = correction - correction[2,:,:]
+# correction_median = numpy.median(correction,axis=1)
+
+cind=[0,1,3,4]
+cname = ['U','B','R','I']
+fig, axes = plt.subplots(nrows=4)
+for i in xrange(4):
+    (y, ymin, ymax) = numpy.percentile(correction[cind[i],:,:],(50,50-34,50+34),axis=0)
+    err = numpy.sqrt(color_cov[:,i,i] + ((ymax-ymin)/2)**2)
+    axes[i].errorbar(y+mag_mn[cind[i]]-mag_mn[2],color_obs[:,i]-y,xerr=[y-ymin,ymax-y], yerr=[err,err],fmt='.')
+    axes[i].set_xlabel(r'$({0}-V)_{{model}}$'.format(cname[i]))
+    lname = r'$({0}_o-V_o) - ({0}-V)_{{model}}$'.format(cname[i])
+    axes[i].set_ylabel(lname)
+    axes[i].axhline(y=0,linestyle=':')
+fig.subplots_adjust(hspace=.3)
+fig.set_size_inches(8,11)
+filename = 'output11/residual.pdf'
+pp = PdfPages(filename)
+plt.savefig(pp,format='pdf')
+pp.close()
+plt.clf()
+
+cind=[0,1,3,4]
+cname = ['U','B','R','I']
+fig, axes = plt.subplots(nrows=4)
+for i in xrange(4):
+    (y, ymin, ymax) = numpy.percentile(correction[cind[i],:,:],(50,50-34,50+34),axis=0)
+    err = numpy.sqrt(color_cov[:,i,i] + ((ymax-ymin)/2)**2)
+    axes[i].errorbar(x1,color_obs[:,i]-y,xerr=[x1_err,x1_err], yerr=[err,err],fmt='.')
+    axes[i].set_xlabel(r'$X_1$'.format(cname[i]))
+    lname = r'$({0}_o-V_o) - ({0}-V)_{{model}}$'.format(cname[i])
+    axes[i].set_ylabel(lname)
+    axes[i].axhline(y=0,linestyle=':')
+fig.subplots_adjust(hspace=.3)
+fig.set_size_inches(8,11)
+filename = 'output11/residualx1.pdf'
+pp = PdfPages(filename)
+plt.savefig(pp,format='pdf')
+pp.close()
+plt.clf()
+
 (y, ymin, ymax) = numpy.percentile(fit['EW'][:,:,1],(50,50-34,50+34),axis=0)
 plt.errorbar(x1, y, xerr=[x1_err,x1_err],yerr=[y-ymin,ymax-ymin],fmt='o')
 plt.xlabel(r'$X_1$')
@@ -142,8 +191,6 @@ pp = PdfPages("output11/Rveff4.pdf")
 plt.savefig(pp,format='pdf')
 pp.close()
 plt.close()
-
-wefew
 
 
 x=x-x.min()-offset*1.3
@@ -304,32 +351,32 @@ pp.close()
 plt.close()
 
 
-au = fit['gamma'][:,0][:,None]*fit['k'] + fit['rho1'][:,0][:,None]*fit['R']+0.16
-ab = fit['gamma'][:,1][:,None]*fit['k'] + fit['rho1'][:,1][:,None]*fit['R']+0.08
-av = fit['gamma'][:,2][:,None]*fit['k'] + fit['rho1'][:,2][:,None]*fit['R']
-(x, xmin, xmax) = numpy.percentile(ab-av,(50,50-34,50+34),axis=0)
-(y, ymin, ymax) = numpy.percentile(au-av,(50,50-34,50+34),axis=0)
-plt.errorbar(x,y,xerr=[x-xmin,xmax-x],yerr=[y-ymin,ymax-y],fmt='o')
-x_=numpy.array([-0.03,0.45])
-plt.plot(x_,(4.87-2.96)*x_)
-plt.xlim((-0.04,0.5))
-plt.xlabel(r'$E_{eff}(B-V)$')
-plt.ylabel(r'$E_{eff}(U-V)$')
-pp = PdfPages("output11/Rveff.pdf")
-plt.savefig(pp,format='pdf')
-pp.close()
-plt.close()
+# au = fit['gamma'][:,0][:,None]*fit['k'] + fit['rho1'][:,0][:,None]*fit['R']+0.16
+# ab = fit['gamma'][:,1][:,None]*fit['k'] + fit['rho1'][:,1][:,None]*fit['R']+0.08
+# av = fit['gamma'][:,2][:,None]*fit['k'] + fit['rho1'][:,2][:,None]*fit['R']
+# (x, xmin, xmax) = numpy.percentile(ab-av,(50,50-34,50+34),axis=0)
+# (y, ymin, ymax) = numpy.percentile(au-av,(50,50-34,50+34),axis=0)
+# plt.errorbar(x,y,xerr=[x-xmin,xmax-x],yerr=[y-ymin,ymax-y],fmt='o')
+# x_=numpy.array([-0.03,0.45])
+# plt.plot(x_,(4.87-2.96)*x_)
+# plt.xlim((-0.04,0.5))
+# plt.xlabel(r'$E_{eff}(B-V)$')
+# plt.ylabel(r'$E_{eff}(U-V)$')
+# pp = PdfPages("output11/Rveff.pdf")
+# plt.savefig(pp,format='pdf')
+# pp.close()
+# plt.close()
 
-(y, ymin, ymax) = numpy.percentile((au-av)/(ab-av),(50,50-34,50+34),axis=0)
-plt.errorbar(x,y,xerr=[x-xmin,xmax-x],yerr=[y-ymin,ymax-y],fmt='o')
-plt.ylim((1.8,2.3))
-plt.xlim((-0.04,0.5))
-plt.xlabel(r'$E_{eff}(B-V)$')
-plt.ylabel(r'$R_{eff,U} - R_{eff,V} = E_{eff}(U-V) /E_{eff}(U-V)$')
-pp = PdfPages("output11/Rveff2.pdf")
-plt.savefig(pp,format='pdf')
-pp.close()
-plt.close()
+# (y, ymin, ymax) = numpy.percentile((au-av)/(ab-av),(50,50-34,50+34),axis=0)
+# plt.errorbar(x,y,xerr=[x-xmin,xmax-x],yerr=[y-ymin,ymax-y],fmt='o')
+# plt.ylim((1.8,2.3))
+# plt.xlim((-0.04,0.5))
+# plt.xlabel(r'$E_{eff}(B-V)$')
+# plt.ylabel(r'$R_{eff,U} - R_{eff,V} = E_{eff}(U-V) /E_{eff}(U-V)$')
+# pp = PdfPages("output11/Rveff2.pdf")
+# plt.savefig(pp,format='pdf')
+# pp.close()
+# plt.close()
 
 
 # (x, xmin, xmax) = numpy.percentile(ab-av,(50,50-34,50+34),axis=0) + 0.08
@@ -701,115 +748,3 @@ pp.close()
 plt.close()
 
 
-correction = [fit['c'][:,i][:,None] + fit['alpha'][:,i][:,None]*fit['EW'][:,:, 0] \
-    + fit['beta'][:,i][:,None]*fit['EW'][:,:, 1] + fit['eta'][:,i][:,None]*fit['sivel']\
-    + fit['gamma'][:,i][:,None]*fit['k'] \
-    for i in xrange(5)]
-
-correction = numpy.array(correction)
-correction = correction - correction[2,:,:]
-# correction_median = numpy.median(correction,axis=1)
-
-cind=[0,1,3,4]
-cname = ['U','B','R','I']
-fig, axes = plt.subplots(nrows=4)
-for i in xrange(4):
-    (y, ymin, ymax) = numpy.percentile(correction[cind[i],:,:],(50,50-34,50+34),axis=0)
-    err = numpy.sqrt(color_cov[:,i,i] + ((ymax-ymin)/2)**2)
-    axes[i].errorbar(y+mag_mn[cind[i]]-mag_mn[2],color_obs[:,i]-y,xerr=[y-ymin,ymax-y], yerr=[err,err],fmt='.')
-    axes[i].set_xlabel(r'$({0}-V)_{{model}}$'.format(cname[i]))
-    lname = r'$({0}_o-V_o) - ({0}-V)_{{model}}$'.format(cname[i])
-    axes[i].set_ylabel(lname)
-    axes[i].axhline(y=0,linestyle=':')
-fig.subplots_adjust(hspace=.3)
-fig.set_size_inches(8,11)
-filename = 'output11/residual.pdf'
-pp = PdfPages(filename)
-plt.savefig(pp,format='pdf')
-pp.close()
-plt.clf()
-
-cind=[0,1,3,4]
-cname = ['U','B','R','I']
-fig, axes = plt.subplots(nrows=4)
-for i in xrange(4):
-    (y, ymin, ymax) = numpy.percentile(correction[cind[i],:,:],(50,50-34,50+34),axis=0)
-    err = numpy.sqrt(color_cov[:,i,i] + ((ymax-ymin)/2)**2)
-    axes[i].errorbar(x1,color_obs[:,i]-y,xerr=[x1_err,x1_err], yerr=[err,err],fmt='.')
-    axes[i].set_xlabel(r'$X_1$'.format(cname[i]))
-    lname = r'$({0}_o-V_o) - ({0}-V)_{{model}}$'.format(cname[i])
-    axes[i].set_ylabel(lname)
-    axes[i].axhline(y=0,linestyle=':')
-fig.subplots_adjust(hspace=.3)
-fig.set_size_inches(8,11)
-filename = 'output11/residualx1.pdf'
-pp = PdfPages(filename)
-plt.savefig(pp,format='pdf')
-pp.close()
-plt.clf()
-
-# fig, axes = plt.subplots(nrows=len(filts),sharex=True)
-# xerr = numpy.sqrt(EW_cov[:,0,0]) 
-# for i in xrange(len(filts)):
-#     r = numpy.array( [numpy.argmin(EW_obs[:,0]), numpy.argmax(EW_obs[:,0])])
-#     yerr= numpy.sqrt(mag_cov[:,i,i])
-#     axes[i].errorbar(EW_obs[:,0],mag_obs[:, i], \
-#         xerr=[xerr,xerr], yerr=[yerr,yerr],fmt='.')
-#     axes[i].set_ylabel(r'{}'.format(filts[i]))
-#     offset  = numpy.mean(mag_obs[:, i] - numpy.median(fit['alpha'][:,i][:,None]*fit['EW'][:,:,0],axis=0))
-#     axes[i].plot(EW_obs[r,0],offset+numpy.median(fit['alpha'][:,i],axis=0)*EW_renorm[r,0] \
-#         ,color='red',linewidth=2)
-# axes[len(filts)-1].set_xlabel(r'EW(Ca)')
-# fig.subplots_adjust(hspace=0.001)
-# pp = PdfPages('output11/speccamag.pdf')
-# plt.savefig(pp,format='pdf')
-# pp.close()
-# plt.close()
-
-# fig, axes = plt.subplots(nrows=len(filts),sharex=True)
-# xerr = numpy.sqrt(EW_cov[:,1,1])
-# for i in xrange(len(filts)):
-#     r = numpy.array( [numpy.argmin(EW_obs[:,1]), numpy.argmax(EW_obs[:,1])])
-#     yerr= numpy.sqrt(mag_cov[:,i,i])
-#     axes[i].errorbar(EW_obs[:,1],mag_obs[:, i], \
-#         xerr=[xerr,xerr], yerr=[yerr,yerr],fmt='.')
-#     axes[i].set_ylabel(r'{}'.format(filts[i]))
-#     offset  = numpy.mean(mag_obs[:, i] - numpy.median(fit['beta'][:,i][:,None]*fit['EW'][:,:,1],axis=0))
-#     axes[i].plot(EW_obs[r,1],offset+numpy.median(fit['beta'][:,i],axis=0)*EW_renorm[r,1] \
-#         ,color='red',linewidth=2)
-# axes[len(filts)-1].set_xlabel(r'EW(Si)')
-# fig.subplots_adjust(hspace=0.001)
-# pp = PdfPages('output11/specsimag.pdf')
-# plt.savefig(pp,format='pdf')
-# pp.close()
-# plt.close()
-
-# fig, axes = plt.subplots(nrows=len(filts),sharex=True)
-# xerr = numpy.sqrt(mag_cov[:,1,1]+ mag_cov[:,2,2] - 2*mag_cov[:,1,2])
-# for i in xrange(len(filts)):
-#     r = numpy.array( [numpy.argmin(mag_obs[:,1]-mag_obs[:,2]), numpy.argmax(mag_obs[:,1]-mag_obs[:,2])])
-#     yerr= numpy.sqrt(mag_cov[:,i,i])
-#     axes[i].errorbar(mag_obs[:,1]-mag_obs[:,2],mag_obs[:, i], \
-#         xerr=[xerr,xerr], yerr=[yerr,yerr],fmt='.')
-#     axes[i].set_ylabel(r'{}'.format(filts[i]))
-#     slope = numpy.median(fit['gamma'][:,i] / (fit['gamma'][:,1]-fit['gamma'][:,2]),axis=0)
-#     offset  = numpy.mean(mag_obs[:, i] - numpy.median(slope*(mag_obs[:,1]-mag_obs[:,2])))
-#     axes[i].plot(mag_obs[r,1]-mag_obs[r,2],offset+slope*(mag_obs[r,1]-mag_obs[r,2]) \
-#         ,color='red',linewidth=2)
-# axes[len(filts)-1].set_xlabel(r'B-V')
-# fig.subplots_adjust(hspace=0.001)
-# pp = PdfPages('output11/colormag.pdf')
-# plt.savefig(pp,format='pdf')
-# pp.close()
-# plt.close()
-
-# for index in xrange(5):
-#     dum = numpy.swapaxes(numpy.array([fit['alpha'][:,index]*color_std,fit['beta'][:,index]*color_std]),0,1)
-#     figure = corner.corner(dum,labels=[r"$\alpha_{}$".format(index),r"$\beta_{}$".format(index)],truths=[0,0])
-#     pdf.savefig()
-#     plt.close()
-
-# plt.plot(fit['ebeta_inv'])
-# plt.title('ebeta_inv')
-# pdf.savefig()
-# plt.close()

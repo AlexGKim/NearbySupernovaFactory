@@ -146,7 +146,7 @@ dust extinction, is consistent with an $R_V=3.06$  \citet{1999PASP..111...63F} d
 is inferred to have origins intrinsic to supernovae.  Our model explains features of external data: 
 \textcolor{red}{
 the wide range of inferred $R_V$ among
-SNe~Ia, the systematically lower $R_V$ of redder supernovae relative to the upper bound of the full population,} and the colors of SN~2014J.
+SNe~Ia, the systematically lower inferred $R_V$ of redder supernovae relative to the upper bound of the full population,} and the colors of SN~2014J.
 \end{abstract}
 
 \keywords{supernovae: general; supernovae: SN 2014J}
@@ -239,9 +239,15 @@ distances expected for the supernova redshifts given a flat
 $\Lambda$CDM cosmology with $\Omega_M = 0.28$ (with an arbitrarily selected
 $H_0$ since the current analysis does not depend on the absolute magnitude scale).
 
-Supernova-frame synthetic photometry is generated for the top-hat filter system
-described in \citet{2011A&A...529L...4C}, which is comprised of five logarithmically-spaced bands spanning
-3276--8635 \AA; the bands have approximate correspondence to $UBVRI$ and are thus referred to as such.
+Supernova-frame synthetic photometry is generated for a top-hat filter system
+comprised of five 
+\color{red}
+bands with the following wavelength ranges: $U$ $[3300.00 - 3978.02]$\AA;
+$B$ $[3978.02-4795.35]$\AA;
+$V$ $[4795.35-5780.60]$\AA;
+$R$ $[5780.60-6968.29]$\AA;
+$I$ $[6968.29-8400.00]$\AA.
+\color{black}
 For each supernova, the magnitudes at peak brightness are determined using single-band SALT2 fits.
 The equivalent widths of SiII$\lambda 4141$ and the CaII H\&K features are computed as
 in \citet{2008A&A...477..717B} and the  velocity of SiII$\lambda 6355$ (expressed as the
@@ -499,22 +505,29 @@ The global parameters $c$, $\alpha$, $\beta$, $\eta$, and $\delta$  are the inte
 relate intrinsic magnitudes with the spectral-feature parameters and intrinsic-color parameter.
 (In this article we freely interchange the parameter indices with  $01234$ or $UBVRI$.)
 The global parameters $\gamma$ are the slopes that connect the extrinsic-color
-parameter and observed magnitudes.  To constrain the degrees of freedom and degeneracies inherent in the model we impose
+parameter and observed magnitudes.  To constrain the degrees of freedom and degeneracies inherent in the model we impose that
+\color{red}
+each of the vectors $k+1/N$ and $D+1/N$ are simplexes, where $N$ are the number of objects in our sample: these
+conditions break the 
+degeneracies  $\gamma \rightarrow a\gamma$, $k \rightarrow a^{-1}k$ and $\delta \rightarrow a\delta$, $D \rightarrow a^{-1}D$.
+Furthermore we impose
+\color{black} 
 \begin{equation}
 \langle \Delta \rangle=0, \langle k \rangle=0, \langle D \rangle=0, \gamma_0 > 0, \delta_0 < 0.
 \end{equation}
 The first two specify the definition of zero color relative to which the color excess is measured.    The latter two exclude degenerate posterior space
 associated
 with  simultaneous sign flips of
-$\delta$--$D$ and $\gamma$--$k$.
+$\delta$--$D$ and $\gamma$--$k$
 \color{red}
-We assign $k$ and $D$ identical initial conditions, so the difference in the signs of $\gamma_0$ and $\delta_0$ is non-trivial.
+(when running our fits, $k$ and $D$ are set to
+identical initial conditions, so the difference in the signs of $\gamma_0$ and $\delta_0$ is non-trivial.)
 Although not formally a degeneracy in the model, practically the parameter pairs  $\delta$--$D$ and $\gamma$--$k$ are degenerate with
 each other, as is apparent after 
 running the Monte Carlo with exchange of the initial  and boundary conditions of $\delta$ and $\gamma$.
 The different initial and boundary conditions for $\gamma_0$ and $\delta_0$ break the degeneracy of our mixture model;
-otherwise identical initial conditions for $\gamma$, $\delta$ give them identical posteriors
-with broader credible intervals and lower maximum likelihood than when the initial conditions are different.
+otherwise identical initial conditions for $\gamma$, $\delta$ produce indistinguishable posteriors
+with relatively broader credible intervals and lower maximum likelihood.
 \color{black}
 As the model cannot distinguish which effect is intrinsic or extrinsic, we do so
 by assigning the parameters whose values are consistent with dust to $\gamma$ and the others to $\delta$.
@@ -569,13 +582,14 @@ remain consistent within uncertainty.
 
 \color{red}
 
-The differences between observed colors and the colors predicted from the analysis are shown in Figure~\ref{residual:fig}.
-There are no apparent systematic trends over the span of colors.  The intrinsic color dispersions from our model are described
-later in our discussion of the inferred $C_c$.
+The differences between observed and model-predicted supernova colors are shown in Figure~\ref{residual:fig}:
+no systematic trends are apparent (in \S\ref{discussion:sec} we look for trends with light-curve shape.) 
+The scatters in the plots, i.e.\ the residual intrinsic color dispersions from our model, are described
+later when we discuss the inferred $C_c$.
 \begin{figure}[htbp] %  figure placement: here, top, bottom, or page
    \centering
    \includegraphics[width=5in]{output11/residual.pdf} 
-            \caption{\textcolor{red}{Differences between observed colors and the colors predicted from the analysis, as a function
+            \caption{\textcolor{red}{Differences between observed and  model-predicted supernova colors  as a function
             of predicted colors.  For reference a dotted line is plotted at zero difference.}
             \label{residual:fig}}
 \end{figure}
@@ -690,15 +704,15 @@ $  1.64^{  0.21}_{ -0.19}$
 \\
 $\delta_X/\delta_2-1$
 &
-$-0.393^{ 0.182}_{-0.208}$
+$ -0.39^{  0.18}_{ -0.21}$
 &
-$-0.224^{ 0.101}_{-0.117}$
+$ -0.22^{  0.10}_{ -0.12}$
 &
 0
 &
-$-0.056^{ 0.051}_{-0.046}$
+$ -0.06^{  0.05}_{ -0.05}$
 &
-$-0.147^{ 0.096}_{-0.089}$
+$ -0.15^{  0.10}_{ -0.09}$
 \\
 $R_{\delta X}$
 &
@@ -956,7 +970,7 @@ and for $E_\delta(B-V)$ $-0.01 \pm 0.01$  and
 $  0.07 \pm 0.03$ 
 \color{black}
 (see Figure~\ref{ebv:fig}).
-\textcolor{red}{In both parameters (which are relative to SN~2011fe), SN~2014J lives well outside the 
+\textcolor{red}{The deduced parameters for SN~2014J, which are relative to SN~2011fe, live well outside the 
 span} of supernovae used to train the coefficients of the model.
 
 \section{Discussion}
@@ -972,13 +986,19 @@ Our model does not explicitly include light-curve shape, which is known to track
 The correlation between $EW_{Si}$ and the SALT2 $X_1$ light-curve shape parameter is verified
 for our sample, as shown in Figure~\ref{x1:fig}.
 On the other hand, there is no such correlation seen between $E_\delta(B-V)$ and $X_1$. 
-Our magnitude residuals  given in Eqn.~\ref{mag_cov:eqn} are comparable to those of SALT2
-\citep[Fig.\ 8 of][]{2010A&A...523A...7G}, showing no obvious disadvantage from not using $X_1$.
+Our magnitude residuals $\sigma_X$ are comparable to those of SALT2
+\citep{2010A&A...523A...7G}, suffering no  disadvantage from the neglect of $X_1$.
 Figure~\ref{x1res:fig} shows the difference between observed and model-predicted colors,
-as a function of $X_1$.  For all colors, there appear non-linear correlations between $X_1$ and color residuals,
+as a function of $X_1$: for all colors, there appear non-linear correlations 
 with a negative slope for $X_1<0$ and positive slope for $X_1>0$.
-The SN~Ia time evolution does convey information not captured by the peak-magnitude spectral features used in
-the current analysis, and  a linear model may be incapable of doing so.
+We  run an extension of our model to include light-curve shape by adding a new linear term $\zeta X_1$; the credible intervals
+from this analysis are given in Table~\ref{globalx1:tab}.  
+The $\sigma_X$ values decrease at the per-mil level and there $<1\sigma$
+shifts in parameters as compared to the previous results. 
+The light-curve shape is not a strong predictor of supernova magnitude relative to the spectral features: the most significant non-zero values for
+$\zeta$ are in the $V$ and $I$ bands at less than $1.5 \sigma$, while the $\alpha$'s and $\beta$'s remain significantly
+non-zero.  This finding could be due to a deficiency of our model, 
+as it  is incapable of capturing the non-linear trends in $X_1$ in Figure~\ref{x1res:fig}.
 \begin{figure}[htbp] %  figure placement: here, top, bottom, or page
    \centering
    \includegraphics[width=2.8in]{output11/x1si.pdf}
@@ -995,14 +1015,186 @@ the current analysis, and  a linear model may be incapable of doing so.
    \label{x1res:fig}}
 \end{figure}
 
+
+\begin{table}
+\centering
+\begin{tabular}{|c|c|c|c|c|c|}
+\hline
+& $X=0$ &1&2&3&4\\ \hline
+$\alpha_{X}$
+&
+$0.0039^{0.0010}_{-0.0010}$
+&
+$0.0013^{0.0008}_{-0.0008}$
+&
+$0.0015^{0.0007}_{-0.0007}$
+&
+$0.0014^{0.0006}_{-0.0006}$
+&
+$0.0026^{0.0005}_{-0.0005}$
+\\
+${\alpha_X/\alpha_2-1}$
+&
+$   1.6^{   1.1}_{  -0.5}$
+&
+$  -0.1^{   0.2}_{  -0.3}$
+&
+0
+&
+$  -0.1^{   0.1}_{  -0.1}$
+&
+$   0.8^{   0.9}_{  -0.4}$
+\\
+$\beta_{X}$
+&
+$ 0.036^{ 0.005}_{-0.005}$
+&
+$ 0.027^{ 0.004}_{-0.004}$
+&
+$ 0.023^{ 0.004}_{-0.004}$
+&
+$ 0.020^{ 0.003}_{-0.003}$
+&
+$ 0.017^{ 0.003}_{-0.003}$
+\\
+${\beta_X/\beta_2-1}$
+&
+$  0.56^{  0.12}_{ -0.10}$
+&
+$  0.18^{  0.06}_{ -0.06}$
+&
+0
+&
+$ -0.13^{  0.03}_{ -0.02}$
+&
+$ -0.29^{  0.06}_{ -0.06}$
+\\
+$\eta_{X}$
+&
+$0.0013^{0.0012}_{-0.0012}$
+&
+$0.0009^{0.0010}_{-0.0010}$
+&
+$0.0011^{0.0008}_{-0.0008}$
+&
+$0.0010^{0.0007}_{-0.0007}$
+&
+$0.0004^{0.0006}_{-0.0006}$
+\\
+${\eta_X/\eta_2-1}$
+&
+$  0.23^{  0.49}_{ -0.51}$
+&
+$ -0.10^{  0.26}_{ -0.43}$
+&
+0
+&
+$ -0.10^{  0.17}_{ -0.12}$
+&
+$ -0.58^{  0.28}_{ -0.49}$
+\\
+$\zeta_{X}$
+&
+$ 0.012^{ 0.040}_{-0.040}$
+&
+$-0.002^{ 0.033}_{-0.034}$
+&
+$-0.032^{ 0.028}_{-0.028}$
+&
+$-0.014^{ 0.024}_{-0.025}$
+&
+$-0.029^{ 0.021}_{-0.022}$
+\\
+${\zeta_X-\zeta_2-1}$
+&
+$  -0.9^{   0.8}_{  -2.2}$
+&
+$  -0.7^{   0.5}_{  -1.4}$
+&
+0
+&
+$  -0.4^{   0.2}_{  -0.5}$
+&
+$  -0.1^{   0.5}_{  -0.4}$
+
+\\
+${\gamma_X/\gamma_2-1}$
+&
+$  0.61^{  0.05}_{ -0.05}$
+&
+$  0.33^{  0.03}_{ -0.03}$
+&
+0
+&
+$ -0.23^{  0.01}_{ -0.01}$
+&
+$ -0.45^{  0.03}_{ -0.03}$
+\\
+$R_{X}$
+&
+$  4.93^{  0.52}_{ -0.46}$
+&
+$  4.06^{  0.43}_{ -0.38}$
+&
+$  3.06^{  0.34}_{ -0.30}$
+&
+$  2.35^{  0.28}_{ -0.25}$
+&
+$  1.67^{  0.23}_{ -0.20}$
+\\
+${\delta_X/\delta_2-1}$
+&
+$ -0.45^{  0.17}_{ -0.19}$
+&
+$ -0.29^{  0.10}_{ -0.11}$
+&
+0
+&
+$ -0.05^{  0.05}_{ -0.04}$
+&
+$ -0.13^{  0.10}_{ -0.08}$
+\\
+$R_{\delta X}$
+&
+$ -1.92^{  0.90}_{ -1.30}$
+&
+$ -2.48^{  0.82}_{ -1.30}$
+&
+$ -3.48^{  0.90}_{ -1.52}$
+&
+$ -3.30^{  0.83}_{ -1.42}$
+&
+$ -3.03^{  0.78}_{ -1.31}$
+\\
+$\sigma_{X}$
+&
+$ 0.058^{ 0.012}_{-0.011}$
+&
+$ 0.030^{ 0.007}_{-0.007}$
+&
+$ 0.017^{ 0.004}_{-0.007}$
+&
+$ 0.013^{ 0.006}_{-0.008}$
+&
+$ 0.042^{ 0.005}_{-0.004}$
+\\
+\hline
+\end{tabular}
+\caption{68\% credible Intervals for the Global Fit Parameters including $X_1$ \label{globalx1:tab}}
+\end{table}
+
+
+
 \color{black}
 
 \color{red}
-The extrinsic parameters $\gamma$ attributed to dust are fit for without reference to a specific dust model.
-The posteriors of $\gamma$ are fit to the dust model of \citet{1999PASP..111...63F}, giving
-$R^F_V=3.06\pm 0.18$;  Figure~\ref{fitz:fig} shows the   68\% credible intervals of $\gamma$ and the
-result of the fit.  Note that  unlike the $R_V$ posteriors, 
-the posteriors of $\gamma$ are well-approximated by a normal distribution, which is used for the fit.
+The extrinsic parameters $\gamma$ attributed to dust are fit for without reference to a specific dust model
+we now do so in a fit to the 
+model of \citet{1999PASP..111...63F},
+assuming the fixed 3693,  4369,  5287,  6319, 7611 \AA\  for the effective wavelengths of the supernova flux through the bands.
+Figure~\ref{fitz:fig} shows the   68\% credible intervals of $\gamma$ and our result
+$R^F_V=3.06\pm 0.18$.  
+We do the analysis in $\gamma$, as opposed to $R_V$ say, because the posteriors of $\gamma$ are well-approximated by a normal distribution that is used for the fit.
 \color{black}
 
 \begin{figure}[htbp] %  figure placement: here, top, bottom, or page
@@ -1011,7 +1203,6 @@ the posteriors of $\gamma$ are well-approximated by a normal distribution, which
    \caption{\textcolor{red}{68\% credible intervals of $\gamma_X$ and the best-fit to the  \citet{1999PASP..111...63F}  model $R^F_V=3.06$.}
    \label{fitz:fig}}
 \end{figure}
-
 
 
 \citet{2014ApJ...789...32B, 2015MNRAS.453.3300A} deduce a wide range of dust behavior $1.5<R^F_V<3$ encountered by the SN~Ia population.
@@ -1024,6 +1215,7 @@ $E_{eff}(X-V) = E_\gamma(X-V) + E_\delta(X-V)$ and effective $V$ extinction $A_{
 Recall that the colors where $E_\gamma(B-V)=0$,  $E_\delta(B-V)=0$ are free and arbitrarily
 fixed using the  boundary conditions $\langle \Delta \rangle = 0$, $\langle k \rangle = 0$:
 there is no unique value for the statistic $R_{eff,V} = A_{eff,V} /E_{eff}(B-V)$, as it depends on the choice of  boundary condition.
+
 For specificity in the current qualitative discussion, 
 let us consider a set of SNe~Ia  with parameters set to the median fit values of the SNfactory sample.
 We specify   $E_{eff}(U-V)$  and $E_{eff}(B-V)$ by
@@ -1032,8 +1224,8 @@ as shown in bottom-left corner in the left plot of Figure~\ref{rveff:fig}.
 For this choice of color zeropoints,
 $R_{eff,U} - R_{eff,V} = E_{eff}(U-V) /E_{eff}(B-V)$ is plotted
 in the right of Figure~\ref{rveff:fig}.
-Around $E_{eff}(B-V) \sim 0$ the $R_{eff,U} - R_{eff,V}$ values are high, but this is also the regime where their observational  uncertainties 
-blow up due to a division of a number close to zero.
+Around $E_{eff}(B-V) \sim 0$ the $R_{eff,U} - R_{eff,V}$ values are high, but this is also the regime where their  uncertainties 
+blow up due to a division of an uncertain quantity with value close to zero.
 The distribution spreads to significantly 
 lower   $R_{eff,U} - R_{eff,V}$ as supernovae appear redder but
 then reconverge to higher, tighter values red effective color, with asymptote  $R_{eff,U} - R_{eff,V} >1.8$.
@@ -1068,8 +1260,8 @@ An alternative way to specify $R_V$ is to consider colors relative to a canonica
 R_{eff, V} = \frac{\gamma_1  (k-k_0) + \delta_1 (D-D_0) }{(\gamma_1-\gamma_2) (k-k_0) + (\delta_1-\delta_2) (D-D_0) },
 \end{equation}
 where $k_0$ and $D_0$ are the parameter values of the canonical supernova.
-If $D = D_0$, the $R_V = \gamma_1/(\gamma_1-\gamma_2)$ of the extrinsic contribution is recovered:
-this is not the case when $D \ne D_0$.  Again considering a set of SNe~Ia  with parameters set to the median fit values of the SNfactory sample,
+If $D = D_0$, the $R_V = \gamma_1/(\gamma_1-\gamma_2)$ of the extrinsic contribution is recovered, but this does not hold true
+when $D \ne D_0$.  Again considering a set of SNe~Ia  with parameters equal to the median fit values of the SNfactory sample,
 the values for $R_{eff,V}$ choosing a canonical supernova with $k_0=0$, $\delta_0=0$  is shown in Figure~\ref{rv4:fig}.
 The reddest supernovae exhibit a range of $1.5< R_{eff,V}<3.5$. 
 
@@ -1078,7 +1270,7 @@ The reddest supernovae exhibit a range of $1.5< R_{eff,V}<3.5$.
    \includegraphics[width=3.2in]{output11/rveff4.pdf}
       \caption{\textcolor{red}{Effective total-to-selective extinction $R_{eff, V}$
       with color excess defined relative to  a
-      $k_0=0$, $\delta_0=0$ supernove,  for  a set of SNe~Ia  with parameters set to the median fit values of the SNfactory sample.}
+      $k_0=0$, $\delta_0=0$ supernove,  for  a set of SNe~Ia  with parameters equal to the median fit values of the SNfactory sample.}
    \label{rv4:fig}}
 \end{figure}
 
