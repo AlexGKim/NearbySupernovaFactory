@@ -128,8 +128,24 @@ offset = 0.01
 au = fit['gamma'][:,0][:,None]*fit['k'] + fit['rho1'][:,0][:,None]*fit['R']
 ab = fit['gamma'][:,1][:,None]*fit['k'] + fit['rho1'][:,1][:,None]*fit['R']
 av = fit['gamma'][:,2][:,None]*fit['k'] + fit['rho1'][:,2][:,None]*fit['R']
+
+
 (x, xmin, xmax) = numpy.percentile(ab-av,(50,50-34,50+34),axis=0)
 (y, ymin, ymax) = numpy.percentile(au-av,(50,50-34,50+34),axis=0)
+
+plt.scatter(x ,numpy.median(av/(ab-av),axis=0))
+plt.ylim((-2,6))
+plt.xlim((-0.1,.4))
+plt.ylabel(r'$R_{eff,V}$')
+plt.xlabel(r'$E_{eff}(B-V)$')
+pp = PdfPages("output11/Rveff4.pdf")
+plt.savefig(pp,format='pdf')
+pp.close()
+plt.close()
+
+wefew
+
+
 x=x-x.min()-offset*1.3
 y=y-y.min()-offset
 plt.scatter(x,y)
@@ -166,6 +182,8 @@ pp = PdfPages("output11/Rveff3.pdf")
 plt.savefig(pp,format='pdf')
 pp.close()
 plt.close()
+
+
 
 # plt.scatter(numpy.median((fit['gamma'][:,1]-fit['gamma'][:,2])[:,None]*fit['k'],axis=0), mag_obs[:,2])
 # x=numpy.array([-0.08, 0.37])
