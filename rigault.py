@@ -6,7 +6,7 @@ from matplotlib import rc
 import pickle
 import cPickle
 
-f = open('lsSFR.txt', 'r')
+f = open('forAlex_tmp14sept2016_localhost_parameters.dat', 'r')
 for i in xrange(1):
     f.readline()
 
@@ -17,20 +17,38 @@ rnames=[]
 lsSFR = []
 mlsSFR = []
 plsSFR = []
-
+mass = []
+pmass = []
+mmass = []
+sfr = []
+psfr=[]
+msfr=[]
+pdelay =[]
 
 for d in data:
-    rnames.append(d[0].translate(None, "'[(,])'"))
-    lsSFR.append(float(d[1].translate(None, '[(,])')))
-    mlsSFR.append(float(d[3].translate(None, '[(,])')))
-    plsSFR.append(float(d[2].translate(None, '[(,])')))
-
+    rnames.append(d[0])
+    lsSFR.append(float(d[1]))
+    mlsSFR.append(float(d[3]))
+    plsSFR.append(float(d[2]))
+    mass.append(float(d[4]))
+    mmass.append(float(d[6]))
+    pmass.append(float(d[5]))
+    sfr.append(float(d[7]))
+    msfr.append(float(d[9]))
+    psfr.append(float(d[8]))
+    pdelay.append(float(d[10]))
 
 rnames = numpy.array(rnames)
 lsSFR = numpy.array(lsSFR)
 mlsSFR=numpy.array(mlsSFR)
 plsSFR = numpy.array(plsSFR)
-
+mass = numpy.array(mass)
+mmass=numpy.array(mmass)
+pmass = numpy.array(pmass)
+sfr = numpy.array(sfr)
+msfr=numpy.array(msfr)
+psfr = numpy.array(psfr)
+pdelay = numpy.array(pdelay)
 
 f = open('temp11.pkl','rb')
 (fit, _) = pickle.load(f)
@@ -84,11 +102,24 @@ for j in xrange(len(i)):
     inda[j] = numpy.where(names == i[j])[0]
     indr[j] = numpy.where(rnames == i[j])[0]
 
+
 (x, xmin, xmax) = numpy.percentile(((fit['rho1'][:,1]-fit['rho1'][:,2])[:,None])*fit['R'],(50,50-34,50+34),axis=0)
-plt.errorbar(lsSFR[indr],x[inda],xerr=[mlsSFR[indr], plsSFR[indr]], yerr=[x[inda]-xmin[inda],xmax[inda]-x[inda]],fmt='o')
-plt.ylabel(r'$E_\delta(B-V)$')
-plt.xlabel(r'lsSFR')
-pp = PdfPages("output11/lsSFR.pdf")
+fig, axes = plt.subplots(nrows=4)
+axes[0].errorbar(lsSFR[indr],x[inda],xerr=[mlsSFR[indr], plsSFR[indr]], yerr=[x[inda]-xmin[inda],xmax[inda]-x[inda]],fmt='o')
+axes[0].set_ylabel(r'$E_\delta(B-V)$')
+axes[0].set_xlabel(r'lsSFR')
+axes[1].errorbar(mass[indr],x[inda],xerr=[mmass[indr], pmass[indr]], yerr=[x[inda]-xmin[inda],xmax[inda]-x[inda]],fmt='o')
+axes[1].set_ylabel(r'$E_\delta(B-V)$')
+axes[1].set_xlabel(r'mass')
+axes[2].errorbar(sfr[indr],x[inda],xerr=[msfr[indr], psfr[indr]], yerr=[x[inda]-xmin[inda],xmax[inda]-x[inda]],fmt='o')
+axes[2].set_ylabel(r'$E_\delta(B-V)$')
+axes[2].set_xlabel(r'sfr')
+axes[3].errorbar(pdelay[indr],x[inda], yerr=[x[inda]-xmin[inda],xmax[inda]-x[inda]],fmt='o')
+axes[3].set_ylabel(r'$E_\delta(B-V)$')
+axes[3].set_xlabel(r'pdelay')
+fig.subplots_adjust(hspace=.3)
+fig.set_size_inches(8,11)
+pp = PdfPages("output11/rigault.pdf")
 plt.savefig(pp,format='pdf')
 pp.close()
 plt.close()

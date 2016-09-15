@@ -146,7 +146,11 @@ dust extinction, is consistent with an $R_V=3.06$  \citet{1999PASP..111...63F} d
 is inferred to have origins intrinsic to supernovae.  Our model explains features of external data: 
 \textcolor{red}{
 the wide range of inferred $R_V$ among
-SNe~Ia, the systematically lower inferred $R_V$ of redder supernovae relative to the upper bound of the full population,} and the colors of SN~2014J.
+SNe~Ia, the systematically lower inferred $R_V$ of redder supernovae relative to the upper bound of the full population,}
+and the colors of SN~2014J,.
+\textcolor{red}{
+The emergence of a new parameter previously accounted for 
+provides an avenue to interpret current Hubble-residual correlations with host-galaxy properties,}
 \end{abstract}
 
 \keywords{supernovae: general; supernovae: SN 2014J}
@@ -560,7 +564,11 @@ deviations $\sigma_i = \sqrt{C_{c,ii}}$ with a  Cauchy distribution prior with l
 \label{results:sec}
 The posterior of the model parameters is evaluated using Hamiltonian Monte Carlo as implemented in
 STAN \citep{stan}. STAN provides output statistics to assess
-the convergence of the output Markov chains.  The output gives $\hat{R} \sim 1.0$ for all parameters, meaning there is no evidence for non-convergence.  The
+the convergence of the output Markov chains.
+\textcolor{red}{
+Define the statistics.
+}
+The output gives $\hat{R} \sim 1.0$ for all parameters, meaning there is no evidence for non-convergence.  The
 output also gives  $N_{eff} \gg 100$ for all parameters, indicating that are all densely sampled.
 Empirically, the confidence regions are localized and unimodal as is seen in  Figure~\ref{global:fig}.  We find no evidence that
 the Monte Carlo chains have not converged to the stationary posterior distribution.
@@ -999,6 +1007,8 @@ The light-curve shape is not a strong predictor of supernova magnitude relative 
 $\zeta$ are in the $V$ and $I$ bands at less than $1.5 \sigma$, while the $\alpha$'s and $\beta$'s remain significantly
 non-zero.  This finding could be due to a deficiency of our model, 
 as it  is incapable of capturing the non-linear trends in $X_1$ in Figure~\ref{x1res:fig}.
+Note that as we use Monte Carlo methods (as opposed to linear algebra) to evaluate our model, 
+it is straightforward to add and analyze non-linear terms to the model.
 \begin{figure}[htbp] %  figure placement: here, top, bottom, or page
    \centering
    \includegraphics[width=2.8in]{output11/x1si.pdf}
@@ -1304,6 +1314,19 @@ non-zero $\eta$ values at  $\gtrsim 2\sigma$.  We conclude that $v_{Si}$ is corr
 and  anticipate that in the previous analysis the equivalent widths of CaII and 
 SiII would also have shown correlations with color.
 
+
+51 supernova in Childress
+$  -0.0061 \pm    0.0017$
+$  -0.0052 \pm    0.0015$
+
+\begin{figure}[htbp] %  figure placement: here, top, bottom, or page
+   \centering
+   \includegraphics[width=3.2in]{output11/childress.pdf}
+      \caption{\textcolor{red}{Effective total-to-selective extinction $R_{eff, V}$
+      with color excess defined relative to  a
+      $k_0=0$, $\delta_0=0$ supernove,  for  a set of SNe~Ia  with parameters equal to the median fit values of the SNfactory sample.}
+   \label{childress:fig}}
+\end{figure}
 
 We find an intrinsic supernova parameter that does not have a monotonic influence on supernova magnitudes as a function
 of wavelength but rather has an inflection in the $V$ band.  In addition, red $B-V$ colors imply brighter magnitudes.  Line opacities
