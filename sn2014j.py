@@ -5,6 +5,10 @@ from matplotlib.backends.backend_pdf import PdfPages
 from matplotlib import rc
 import pickle
 
+pkl_file = open('gege_data.pkl', 'r')
+data = pickle.load(pkl_file)
+pkl_file.close()
+
 rc('text', usetex=True)
 
 
@@ -40,14 +44,20 @@ filts=['U','B','R','i']
 for i in xrange(4):
     print "$E({}-V) = {:6.2f} \pm {:6.2f}$".format(filts[i],exv[i],e_exv[i])
 
+f = open('temp11.pkl','rb')
+(fit, _) = pickle.load(f)
+f.close()
 
-gammam1 = numpy.array([0.643, 0.336,-0.228,-.447])
-deltam1 = numpy.array([-.393, -.224, -.056, -0.147])
+gammam1 = numpy.median(fit['gamma']/(fit['gamma'][:,2][:,None]) -1,axis=0)
+gammam1= numpy.delete(gammam1,2)
+deltam1 = numpy.median(fit['rho1']/(fit['rho1'][:,2] [:,None])-1,axis=0)
+deltam1 = numpy.delete(deltam1,2)
 
 fisher = numpy.array([[sum(gammam1**2/e_exv), sum(gammam1*deltam1/e_exv)],[sum(gammam1*deltam1/e_exv), sum(deltam1**2/e_exv)]])
 u=numpy.linalg.inv(fisher)
 g = numpy.array([sum(exv*gammam1/e_exv), sum(exv*deltam1/e_exv)])
 ans = numpy.dot(u,g)
+print 'best fit parameters'
 print '${0[0]:6.2f}$, ${0[1]:6.2f}$'.format(ans)
 print " \\\\\n".join([" & ".join(map('{0:.3f}'.format, line)) for line in u])
 
@@ -62,9 +72,13 @@ f = open('temp11.pkl','rb')
 (fit, _) = pickle.load(f)
 f.close()
 dum = numpy.percentile((fit['gamma'][:,1]-fit['gamma'][:,2])[:,None]*fit['k'],(50,50-34,50+34),axis=0)
+imax = numpy.argmin(dum,axis=1)[0]
+print '${:6.2f}^{{{:6.2f}}}_{{{:6.2f}}}$'.format(dum[0][imax],dum[2][imax]-dum[0][imax],dum[1][imax]-dum[0][imax])
 imax = numpy.argmax(dum,axis=1)[0]
 print '${:6.2f}^{{{:6.2f}}}_{{{:6.2f}}}$'.format(dum[0][imax],dum[2][imax]-dum[0][imax],dum[1][imax]-dum[0][imax])
 dum = numpy.percentile((fit['rho1'][:,1]-fit['rho1'][:,2])[:,None]*fit['R'],(50,50-34,50+34),axis=0)
+imax = numpy.argmin(dum,axis=1)[0]
+print '${:6.2f}^{{{:6.2f}}}_{{{:6.2f}}}$'.format(dum[0][imax],dum[2][imax]-dum[0][imax],dum[1][imax]-dum[0][imax])
 imax = numpy.argmax(dum,axis=1)[0]
 print '${:6.2f}^{{{:6.2f}}}_{{{:6.2f}}}$'.format(dum[0][imax],dum[2][imax]-dum[0][imax],dum[1][imax]-dum[0][imax])
 

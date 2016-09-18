@@ -37,7 +37,7 @@ for sn in data['snlist']:
       vSiII_6355_lbd_err=0.
       counter  = 0
       for sp in dic_phreno[sn]["spectra"]:
-         if sp in meta['spectra'].keys() and  numpy.abs(meta['spectra'][sp]['salt2.phase'] < 3):
+         if sp in meta['spectra'].keys() and  numpy.abs(meta['spectra'][sp]['salt2.phase']) < 2.5:
             vSiII_6355_lbd += dic_phreno[sn]["spectra"][sp]["phrenology.vSiII_6355_lbd"]/dic_phreno[sn]['spectra'][sp]["phrenology.vSiII_6355_lbd.err"]**2
             vSiII_6355_lbd_err += 1/dic_phreno[sn]['spectra'][sp]["phrenology.vSiII_6355_lbd.err"]**2
             counter +=1
@@ -643,8 +643,8 @@ rc('text', usetex=True)
 
 filts = ['U','B','V','R','I']
 lambdas = numpy.arange(3000.,9000,100)
-rvs=[3.06]
-avs = [11.73]
+rvs=[2.97]
+avs = [12.25]
 for rv,av in zip(rvs,avs):
   f99 = sncosmo.F99Dust(r_v =rv)
   f99.set(ebv=av)
@@ -740,6 +740,7 @@ mega = numpy.array([fit['Delta'].flatten(),fit['EW'][:,:,0].flatten(),fit['EW'][
     ((fit['gamma'][:,1] - fit['gamma'][:,2])[:,None]*fit['k']).flatten(),((fit['rho1'][:,1] - fit['rho1'][:,2])[:,None]*fit['R']).flatten()])
 
 mega = numpy.transpose(mega)
+mega=mega[::50,:]
 
 figure = corner.corner(mega,labels=[r"$\Delta$",r"$EW_{Ca}-109$\AA",r"$EW_{Si}-14$\AA",r"$\lambda_{Si}$",r"$E_\gamma(B-V)$",r"$E_\delta(B-V)$"],range=numpy.zeros(6)+1.)
 pp = PdfPages('output11/perobject_corner.pdf')

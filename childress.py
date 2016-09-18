@@ -70,7 +70,7 @@ emass= numpy.array(emass)
 
 plt.errorbar(mass,x[inda],xerr=[emass, emass], yerr=[x[inda]-xmin[inda],xmax[inda]-x[inda]],fmt='o')
 plt.ylabel(r'$E_\delta(B-V)$')
-plt.xlabel(r'mass')
+plt.xlabel(r'$\log{(M_{host}/M_{\odot})}$')
 
 
 ux = numpy.array([6.,10])
@@ -102,3 +102,22 @@ pp = PdfPages("output11/childress.pdf")
 plt.savefig(pp,format='pdf')
 pp.close()
 plt.close()
+
+wm = numpy.where(mass < 10)[0]
+low = (((fit['rho1'][:,1]-fit['rho1'][:,2])[:,None])*fit['R'][:,wm]).flatten()
+wm = numpy.where(mass > 10)[0]
+hig = (((fit['rho1'][:,1]-fit['rho1'][:,2])[:,None])*fit['R'][:,wm]).flatten()
+
+import scipy.stats
+ans= scipy.stats.ks_2samp(hig,low)
+
+plt.hist([low,hig],label=['low mass','high mass'],normed=True,range=[-0.05,0.15])
+plt.xlabel(r'$E_\delta(B-V)$')
+plt.legend()
+pp = PdfPages("output11/childress2.pdf")
+plt.savefig(pp,format='pdf')
+pp.close()
+plt.close()
+
+
+

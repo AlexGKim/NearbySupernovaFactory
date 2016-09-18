@@ -24,7 +24,7 @@ for sn in data['snlist']:
       vSiII_6355_lbd_err=0.
       counter  = 0
       for sp in dic_phreno[sn]["spectra"]:
-         if sp in meta['spectra'].keys() and  numpy.abs(meta['spectra'][sp]['salt2.phase'] < 3):
+         if sp in meta['spectra'].keys() and  numpy.abs(meta['spectra'][sp]['salt2.phase']) < 2.5:
             vSiII_6355_lbd += dic_phreno[sn]["spectra"][sp]["phrenology.vSiII_6355_lbd"]/dic_phreno[sn]['spectra'][sp]["phrenology.vSiII_6355_lbd.err"]**2
             vSiII_6355_lbd_err += 1/dic_phreno[sn]['spectra'][sp]["phrenology.vSiII_6355_lbd.err"]**2
             counter +=1
@@ -37,7 +37,7 @@ for sn in data['snlist']:
    else:
       sivel.append(float('nan'))
       sivel_err.append(float('nan'))
-
+wefwee
 sivel = numpy.array(sivel)
 sivel_err = numpy.array(sivel_err)
 
@@ -105,7 +105,7 @@ init = [{'EW' : EW_renorm, \
 
 sm = pystan.StanModel(file='gerard11.stan')
 control = {'stepsize':1}
-fit = sm.sampling(data=data, iter=4000, chains=4,control=control,init=init, thin=2)
+fit = sm.sampling(data=data, iter=10000, chains=4,control=control,init=init, thin=1)
 
 
 output = open('temp11.pkl','wb')
