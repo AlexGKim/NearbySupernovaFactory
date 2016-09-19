@@ -10,7 +10,7 @@ import numpy
 import sncosmo
 import scipy
 import cPickle
-
+import matplotlib as mpl
 
 f = open('temp11.pkl','rb')
 (fit,_) = pickle.load(f)
@@ -107,53 +107,6 @@ for i in xrange(nsne):
 
 
 
-correction = [fit['c'][:,i][:,None] + fit['alpha'][:,i][:,None]*fit['EW'][:,:, 0] \
-    + fit['beta'][:,i][:,None]*fit['EW'][:,:, 1] + fit['eta'][:,i][:,None]*fit['sivel']\
-    + fit['gamma'][:,i][:,None]*fit['k'] \
-    for i in xrange(5)]
-
-correction = numpy.array(correction)
-correction = correction - correction[2,:,:]
-# correction_median = numpy.median(correction,axis=1)
-
-cind=[0,1,3,4]
-cname = ['U','B','R','I']
-fig, axes = plt.subplots(nrows=4)
-for i in xrange(4):
-    (y, ymin, ymax) = numpy.percentile(correction[cind[i],:,:],(50,50-34,50+34),axis=0)
-    err = numpy.sqrt(color_cov[:,i,i] + ((ymax-ymin)/2)**2)
-    axes[i].errorbar(y+mag_mn[cind[i]]-mag_mn[2],color_obs[:,i]-y,xerr=[y-ymin,ymax-y], yerr=[err,err],fmt='.')
-    axes[i].set_xlabel(r'$({0}-V)_{{model}}$'.format(cname[i]))
-    lname = r'$({0}_o-V_o) - ({0}-V)_{{model}}$'.format(cname[i])
-    axes[i].set_ylabel(lname)
-    axes[i].axhline(y=0,linestyle=':')
-fig.subplots_adjust(hspace=.3)
-fig.set_size_inches(8,11)
-filename = 'output11/residual.pdf'
-pp = PdfPages(filename)
-plt.savefig(pp,format='pdf')
-pp.close()
-plt.clf()
-
-cind=[0,1,3,4]
-cname = ['U','B','R','I']
-fig, axes = plt.subplots(nrows=4)
-for i in xrange(4):
-    (y, ymin, ymax) = numpy.percentile(correction[cind[i],:,:],(50,50-34,50+34),axis=0)
-    err = numpy.sqrt(color_cov[:,i,i] + ((ymax-ymin)/2)**2)
-    axes[i].errorbar(x1,color_obs[:,i]-y,xerr=[x1_err,x1_err], yerr=[err,err],fmt='.')
-    axes[i].set_xlabel(r'$X_1$'.format(cname[i]))
-    lname = r'$({0}_o-V_o) - ({0}-V)_{{model}}$'.format(cname[i])
-    axes[i].set_ylabel(lname)
-    axes[i].axhline(y=0,linestyle=':')
-fig.subplots_adjust(hspace=.3)
-fig.set_size_inches(8,11)
-filename = 'output11/residualx1.pdf'
-pp = PdfPages(filename)
-plt.savefig(pp,format='pdf')
-pp.close()
-plt.clf()
-
 (y, ymin, ymax) = numpy.percentile(fit['EW'][:,:,1],(50,50-34,50+34),axis=0)
 plt.errorbar(x1, y, xerr=[x1_err,x1_err],yerr=[y-ymin,ymax-ymin],fmt='o')
 plt.xlabel(r'$X_1$')
@@ -232,6 +185,52 @@ plt.close()
 
 
 
+correction = [fit['c'][:,i][:,None] + fit['alpha'][:,i][:,None]*fit['EW'][:,:, 0] \
+    + fit['beta'][:,i][:,None]*fit['EW'][:,:, 1] + fit['eta'][:,i][:,None]*fit['sivel']\
+    + fit['gamma'][:,i][:,None]*fit['k'] \
+    for i in xrange(5)]
+
+correction = numpy.array(correction)
+correction = correction - correction[2,:,:]
+# correction_median = numpy.median(correction,axis=1)
+
+cind=[0,1,3,4]
+cname = ['U','B','R','I']
+fig, axes = plt.subplots(nrows=4)
+for i in xrange(4):
+    (y, ymin, ymax) = numpy.percentile(correction[cind[i],:,:],(50,50-34,50+34),axis=0)
+    err = numpy.sqrt(color_cov[:,i,i] + ((ymax-ymin)/2)**2)
+    axes[i].errorbar(y+mag_mn[cind[i]]-mag_mn[2],color_obs[:,i]-y,xerr=[y-ymin,ymax-y], yerr=[err,err],fmt='.')
+    axes[i].set_xlabel(r'$({0}-V)_{{model}}$'.format(cname[i]))
+    lname = r'$({0}_o-V_o) - ({0}-V)_{{model}}$'.format(cname[i])
+    axes[i].set_ylabel(lname)
+    axes[i].axhline(y=0,linestyle=':')
+fig.subplots_adjust(hspace=.3)
+fig.set_size_inches(8,11)
+filename = 'output11/residual.pdf'
+pp = PdfPages(filename)
+plt.savefig(pp,format='pdf')
+pp.close()
+
+cind=[0,1,3,4]
+cname = ['U','B','R','I']
+fig, axes = plt.subplots(nrows=4)
+for i in xrange(4):
+    (y, ymin, ymax) = numpy.percentile(correction[cind[i],:,:],(50,50-34,50+34),axis=0)
+    err = numpy.sqrt(color_cov[:,i,i] + ((ymax-ymin)/2)**2)
+    axes[i].errorbar(x1,color_obs[:,i]-y,xerr=[x1_err,x1_err], yerr=[err,err],fmt='.')
+    axes[i].set_xlabel(r'$X_1$'.format(cname[i]))
+    lname = r'$({0}_o-V_o) - ({0}-V)_{{model}}$'.format(cname[i])
+    axes[i].set_ylabel(lname)
+    axes[i].axhline(y=0,linestyle=':')
+fig.subplots_adjust(hspace=.3)
+fig.set_size_inches(8,11)
+filename = 'output11/residualx1.pdf'
+pp = PdfPages(filename)
+plt.savefig(pp,format='pdf')
+pp.close()
+plt.close()
+
 # plt.scatter(numpy.median((fit['gamma'][:,1]-fit['gamma'][:,2])[:,None]*fit['k'],axis=0), mag_obs[:,2])
 # x=numpy.array([-0.08, 0.37])
 # plt.plot(x,-28.6+x*3.96)
@@ -270,7 +269,7 @@ plt.close()
 # print 'k', numpy.median(fit['k'][:,outlier[0]],axis=0)
 # print 'EW0', numpy.median(fit['EW'][:,outlier[0],0],axis=0), EW_renorm[outlier[0],0] 
 # print 'EW1', numpy.median(fit['EW'][:,outlier[0],1],axis=0), EW_renorm[outlier[0],1]
-
+fig, axes = plt.subplots()
 plt.hist(fit['Delta'].flatten(),normed=True,bins=20)
 plt.xlabel(r'$\Delta$')
 pp = PdfPages('output11/Delta_hist.pdf')
