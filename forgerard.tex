@@ -1,4 +1,4 @@
-\documentclass{aastex}   	% use "amsart" instead of "article" for AMSLaTeX format
+\documentclass{aastex61}   	% use "amsart" instead of "article" for AMSLaTeX format
 \usepackage{geometry}                		% See geometry.pdf to learn the layout options. There are lots.
 \geometry{letterpaper}                   		% ... or a4paper or a5paper or ... 
 %\geometry{landscape}                		% Activate for rotated page geometry
@@ -17,141 +17,185 @@
 \begin{document}
 
 \title{Detection of an Intrinsic Color Parameter within the Type~Ia Supernovae of the Nearby Supernova Factory}
-\author
-{
-    A.~G.~Kim,\altaffilmark{1}
-    G.~Smadja,\altaffilmark{2} 
-    G.~Aldering,\altaffilmark{1}
-    P.~Antilogus,\altaffilmark{3}
-    S.~Bailey,\altaffilmark{1}
-    C.~Baltay,\altaffilmark{4}
-    K.~Barbary,\altaffilmark{5}
-    D.~Baugh,\altaffilmark{6}
-    K.~Boone,\altaffilmark{1,5}
-    S.~Bongard,\altaffilmark{3}
-    C.~Buton,\altaffilmark{2}
-    J.~Chen,\altaffilmark{6}
-    N.~Chotard,\altaffilmark{2}
-    Y.~Copin,\altaffilmark{2}
-    P.~Fagrelius,\altaffilmark{1,5}
-    H.~K.~Fakhouri,\altaffilmark{1,5}
-    U.~Feindt,\altaffilmark{7}
-    D.~Fouchez,\altaffilmark{8}
-    E.~Gangler,\altaffilmark{9}  
-    B.~Hayden,\altaffilmark{1}
-    W.~Hillebrandt,\altaffilmark{10}
-    M.~Kowalski,\altaffilmark{11,12}
-    P.-F.~Leget,\altaffilmark{9}
-    S.~Lombardo,\altaffilmark{11}
-    J.~Nordin,\altaffilmark{11}
-    R.~Pain,\altaffilmark{3} 
-    E.~Pecontal,\altaffilmark{13}
-    R.~Pereira,\altaffilmark{2}
-    S.~Perlmutter,\altaffilmark{1,5}
-    D.~Rabinowitz,\altaffilmark{4}
-    M.~Rigault,\altaffilmark{11} 
-    D.~Rubin,\altaffilmark{1,14}
-    K.~Runge,\altaffilmark{1}
-    C.~Saunders,\altaffilmark{1,5}
-    C.~Sofiatti,\altaffilmark{1,5} 
-    N.~Suzuki,\altaffilmark{1}
-    S.~Taubenberger,\altaffilmark{10}
-    C.~Tao,\altaffilmark{6,8}
-    R.~C.~Thomas,\altaffilmark{15} \\
-    (The Nearby Supernova Factory)
-}
+\author{A.~G.~Kim}
+\affiliation{    Physics Division, Lawrence Berkeley National Laboratory, 
+    1 Cyclotron Road, Berkeley, CA, 94720}
+    
+\author{     G.~Smadja}
+\affiliation{    Universit\'e de Lyon, F-69622, Lyon, France ; Universit\'e de Lyon 1, Villeurbanne ; 
+    CNRS/IN2P3, Institut de Physique Nucl\'eaire de Lyon}
 
+\author{     G.~Aldering}
+\affiliation{    Physics Division, Lawrence Berkeley National Laboratory, 
+    1 Cyclotron Road, Berkeley, CA, 94720}
 
-\altaffiltext{1}
-{
-    Physics Division, Lawrence Berkeley National Laboratory, 
-    1 Cyclotron Road, Berkeley, CA, 94720
-}
-
-\altaffiltext{2}
-{
-    Universit\'e de Lyon, F-69622, Lyon, France ; Universit\'e de Lyon 1, Villeurbanne ; 
-    CNRS/IN2P3, Institut de Physique Nucl\'eaire de Lyon.
-}
-
-\altaffiltext{3}
-{
-    Laboratoire de Physique Nucl\'eaire et des Hautes \'Energies,
+\author{     P.~Antilogus}
+\affiliation{    Laboratoire de Physique Nucl\'eaire et des Hautes \'Energies,
     Universit\'e Pierre et Marie Curie Paris 6, Universit\'e Paris Diderot Paris 7, CNRS-IN2P3, 
-    4 place Jussieu, 75252 Paris Cedex 05, France
-}
+    4 place Jussieu, 75252 Paris Cedex 05, France}
+    
+\author{     S.~Bailey}
+\affiliation{    Physics Division, Lawrence Berkeley National Laboratory, 
+    1 Cyclotron Road, Berkeley, CA, 94720}
 
+\author{     C.~Baltay}
+\affiliation{    Department of Physics, Yale University, 
+    New Haven, CT, 06250-8121}
 
-\altaffiltext{4}
-{
-    Department of Physics, Yale University, 
-    New Haven, CT, 06250-8121
-}
-
-\altaffiltext{5}
-{
+\author{     K.~Barbary}
+\affiliation{
     Department of Physics, University of California Berkeley,
-    366 LeConte Hall MC 7300, Berkeley, CA, 94720-7300
-}
+    366 LeConte Hall MC 7300, Berkeley, CA, 94720-7300}
 
+\author{    D.~Baugh}
+\affiliation{   Tsinghua Center for Astrophysics, Tsinghua University, Beijing 100084, China }
 
+\author{     K.~Boone}
+\affiliation{    Physics Division, Lawrence Berkeley National Laboratory, 
+    1 Cyclotron Road, Berkeley, CA, 94720}
+\affiliation{
+    Department of Physics, University of California Berkeley,
+    366 LeConte Hall MC 7300, Berkeley, CA, 94720-7300}
 
-\altaffiltext{6}
-{
-    Tsinghua Center for Astrophysics, Tsinghua University, Beijing 100084, China 
-}
+\author{     S.~Bongard}
+\affiliation{    Laboratoire de Physique Nucl\'eaire et des Hautes \'Energies,
+    Universit\'e Pierre et Marie Curie Paris 6, Universit\'e Paris Diderot Paris 7, CNRS-IN2P3, 
+    4 place Jussieu, 75252 Paris Cedex 05, France}
 
-\altaffiltext{7}
-{
-The Oskar Klein Centre, Department of Physics, AlbaNova, Stockholm University, SE-106 91 Stockholm, Sweden
-}
+\author{     C.~Buton}
+\affiliation{    Universit\'e de Lyon, F-69622, Lyon, France ; Universit\'e de Lyon 1, Villeurbanne ; 
+    CNRS/IN2P3, Institut de Physique Nucl\'eaire de Lyon}
+    
+\author{     J.~Chen}
+\affiliation{   Tsinghua Center for Astrophysics, Tsinghua University, Beijing 100084, China }
 
-\altaffiltext{8}
-{
-    Centre de Physique des Particules de Marseille, 
+\author{     N.~Chotard}
+\affiliation{    Universit\'e de Lyon, F-69622, Lyon, France ; Universit\'e de Lyon 1, Villeurbanne ; 
+    CNRS/IN2P3, Institut de Physique Nucl\'eaire de Lyon}
+    
+\author{     Y.~Copin}
+\affiliation{    Universit\'e de Lyon, F-69622, Lyon, France ; Universit\'e de Lyon 1, Villeurbanne ; 
+    CNRS/IN2P3, Institut de Physique Nucl\'eaire de Lyon}
+    
+\author{     P.~Fagrelius}
+\affiliation{    Physics Division, Lawrence Berkeley National Laboratory, 
+    1 Cyclotron Road, Berkeley, CA, 94720}
+\affiliation{
+    Department of Physics, University of California Berkeley,
+    366 LeConte Hall MC 7300, Berkeley, CA, 94720-7300}
+
+\author{     H.~K.~Fakhouri}
+\affiliation{    Physics Division, Lawrence Berkeley National Laboratory, 
+    1 Cyclotron Road, Berkeley, CA, 94720}
+  \affiliation{
+    Department of Physics, University of California Berkeley,
+    366 LeConte Hall MC 7300, Berkeley, CA, 94720-7300}
+
+\author{     U.~Feindt}
+\affiliation{The Oskar Klein Centre, Department of Physics, AlbaNova, Stockholm University, SE-106 91 Stockholm, Sweden}
+
+\author{     D.~Fouchez}
+\affiliation{    Centre de Physique des Particules de Marseille, 
     Aix-Marseille Universit\'e , CNRS/IN2P3, 
-    163 avenue de Luminy - Case 902 - 13288 Marseille Cedex 09, France
-}
+    163 avenue de Luminy - Case 902 - 13288 Marseille Cedex 09, France}
+    
+\author{     E.~Gangler}  
+\affiliation{    Clermont Universit\'e, Universit\'e Blaise Pascal, CNRS/IN2P3, Laboratoire de Physique Corpusculaire,
+    BP 10448, F-63000 Clermont-Ferrand, France}
+    
+\author{     B.~Hayden}
+\affiliation{    Physics Division, Lawrence Berkeley National Laboratory, 
+    1 Cyclotron Road, Berkeley, CA, 94720}
 
+\author{     W.~Hillebrandt}
+\affiliation{    Max-Planck-Institut f\"ur Astrophysik, Karl-Schwarzschild-Str. 1,
+D-85748 Garching, Germany}
 
-\altaffiltext{9}
-{
-    Clermont Universit\'e, Universit\'e Blaise Pascal, CNRS/IN2P3, Laboratoire de Physique Corpusculaire,
-    BP 10448, F-63000 Clermont-Ferrand, France
-}
+\author{     M.~Kowalski}
+\affiliation{    Institut fur Physik,  Humboldt-Universitat zu Berlin,
+    Newtonstr. 15, 12489 Berlin}
+\affiliation{ DESY, D-15735 Zeuthen, Germany}
 
+\author{     P.-F.~Leget}
+\affiliation{    Clermont Universit\'e, Universit\'e Blaise Pascal, CNRS/IN2P3, Laboratoire de Physique Corpusculaire,
+    BP 10448, F-63000 Clermont-Ferrand, France}
+    
+\author{     S.~Lombardo}
+\affiliation{    Institut fur Physik,  Humboldt-Universitat zu Berlin,
+    Newtonstr. 15, 12489 Berlin}
+    
+\author{     J.~Nordin}
+\affiliation{    Institut fur Physik,  Humboldt-Universitat zu Berlin,
+    Newtonstr. 15, 12489 Berlin}
+    
+\author{     R.~Pain}
+\affiliation{    Laboratoire de Physique Nucl\'eaire et des Hautes \'Energies,
+    Universit\'e Pierre et Marie Curie Paris 6, Universit\'e Paris Diderot Paris 7, CNRS-IN2P3, 
+    4 place Jussieu, 75252 Paris Cedex 05, France}
+     
+\author{     E.~Pecontal}
+\affiliation{   Centre de Recherche Astronomique de Lyon, Universit\'e Lyon 1,
+    9 Avenue Charles Andr\'e, 69561 Saint Genis Laval Cedex, France}
+    
+\author{    R.~Pereira}
+ \affiliation{    Universit\'e de Lyon, F-69622, Lyon, France ; Universit\'e de Lyon 1, Villeurbanne ; 
+    CNRS/IN2P3, Institut de Physique Nucl\'eaire de Lyon}
+ 
+ \author{    S.~Perlmutter}
+ \affiliation{    Physics Division, Lawrence Berkeley National Laboratory, 
+    1 Cyclotron Road, Berkeley, CA, 94720} 
+\affiliation{
+    Department of Physics, University of California Berkeley,
+    366 LeConte Hall MC 7300, Berkeley, CA, 94720-7300}
+    
+ \author{    D.~Rabinowitz}
+ \affiliation{    Department of Physics, Yale University, 
+    New Haven, CT, 06250-8121}
+    
+ \author{    M.~Rigault} 
+\affiliation{    Institut fur Physik,  Humboldt-Universitat zu Berlin,
+    Newtonstr. 15, 12489 Berlin}
+     
+ \author{    D.~Rubin}
+ \affiliation{    Physics Division, Lawrence Berkeley National Laboratory, 
+    1 Cyclotron Road, Berkeley, CA, 94720}
+    \affiliation{    Department of Physics, Florida State University,
+    315 Keen Building, Tallahassee, FL 32306-4350}
+ 
+ \author{    K.~Runge}
+ \affiliation{    Physics Division, Lawrence Berkeley National Laboratory, 
+    1 Cyclotron Road, Berkeley, CA, 94720}
+ 
+ \author{    C.~Saunders}
+ \affiliation{    Physics Division, Lawrence Berkeley National Laboratory, 
+    1 Cyclotron Road, Berkeley, CA, 94720}
 
-\altaffiltext{10}
-{
-    Institut fur Physik,  Humboldt-Universitat zu Berlin,
-    Newtonstr. 15, 12489 Berlin
-}
+\author{    C.~Sofiatti}
+\affiliation{    Physics Division, Lawrence Berkeley National Laboratory, 
+    1 Cyclotron Road, Berkeley, CA, 94720} 
+\affiliation{
+    Department of Physics, University of California Berkeley,
+    366 LeConte Hall MC 7300, Berkeley, CA, 94720-7300}
 
-\altaffiltext{11}
-{
-    Max-Planck-Institut f\"ur Astrophysik, Karl-Schwarzschild-Str. 1,
-D-85748 Garching, Germany
-}
+\author{    N.~Suzuki}
+\affiliation{    Physics Division, Lawrence Berkeley National Laboratory, 
+    1 Cyclotron Road, Berkeley, CA, 94720}
 
-\altaffiltext{12}
-{
-    DESY, D-15735 Zeuthen, Germany
-}
-\altaffiltext{13}
-{
-    Centre de Recherche Astronomique de Lyon, Universit\'e Lyon 1,
-    9 Avenue Charles Andr\'e, 69561 Saint Genis Laval Cedex, France
-}
-\altaffiltext{14}
-{
-    Department of Physics, Florida State University,
-    315 Keen Building, Tallahassee, FL 32306-4350
-}
-\altaffiltext{15}
-{
-    Computational Cosmology Center, Computational Research Division, Lawrence Berkeley National Laboratory, 
-    1 Cyclotron Road MS 50B-4206, Berkeley, CA, 94720
-}
+\author{     S.~Taubenberger}
+\affiliation{    Max-Planck-Institut f\"ur Astrophysik, Karl-Schwarzschild-Str. 1,
+D-85748 Garching, Germany}
+
+\author{     C.~Tao}
+\affiliation{   Tsinghua Center for Astrophysics, Tsinghua University, Beijing 100084, China }
+\affiliation{    Centre de Physique des Particules de Marseille, 
+    Aix-Marseille Universit\'e , CNRS/IN2P3, 
+    163 avenue de Luminy - Case 902 - 13288 Marseille Cedex 09, France}
+    
+\author{     R.~C.~Thomas}
+\affiliation{    Computational Cosmology Center, Computational Research Division, Lawrence Berkeley National Laboratory, 
+    1 Cyclotron Road MS 50B-4206, Berkeley, CA, 94720}
+    
+\collaboration{(The Nearby Supernova Factory)}
 
 
 \begin{abstract}
@@ -165,7 +209,7 @@ confidence.
 One parameter, interpreted as due to extrinsic host-galaxy
 dust extinction, is consistent with a \citet{1999PASP..111...63F} dust model with
 %-----
-$R_V=2.97\ \pm 0.18$.
+$R_V=2.97^{+0.18}_{-0.17}$.
 %------
  The second parameter is inconsistent with dust and
 is inferred to have origins intrinsic to supernovae.  Our model explains features of external data: 
@@ -315,181 +359,182 @@ The data are given in Table~\ref{data:tab}.
 The peak magnitude uncertainties do have covariance, which are accounted
 for in the analysis; only the standard deviation is included in the table.
 
+\startlongtable
 \begin{deluxetable}{ccccccccc}
 \tabletypesize{\tiny}
-\tablecaption{Supernova Spectral-Feature and Peak-Magnitude Datat\label{data:tab}}
+\tablecaption{Supernova Spectral-Feature and Peak-Magnitude Data\label{data:tab}}
 \tablehead{
-\colhead{$n$} & \colhead{$EW_{Ca}$} & \colhead{$EW_{Si}$} & \colhead{$\lambda_{Si}$} & \colhead{$U$} & \colhead{$B$} & \colhead{$V$} & \colhead{$R$} & \colhead{$I$} \\
- & (\AA) & (\AA)&  \colhead{(\AA)} & \multicolumn{5}{c}{}
+\colhead{Name} & \colhead{$EW_{Ca}$ (\AA)} & \colhead{$EW_{Si}$ (\AA)} & \colhead{$\lambda_{Si}$ (\AA)} & \colhead{$U$} & \colhead{$B$} & \colhead{$V$} & \colhead{$R$} & \colhead{$I$}
 }
 \startdata
-0 & $109.7 \pm 5.9$ & $ 17.5 \pm 0.7$& $ 6098 \pm   4$ & $-29.31 \pm   0.01$ & $-29.12 \pm   0.01$& $-28.60 \pm   0.01$& $-28.35 \pm   0.01$& $-27.60 \pm   0.01$ \\
-1 & $149.7 \pm 1.2$ & $ 14.3 \pm 0.6$& $ 6150 \pm   3$ & $-28.61 \pm   0.02$ & $-28.69 \pm   0.02$& $-28.32 \pm   0.02$& $-28.08 \pm   0.02$& $-27.40 \pm   0.02$ \\
-2 & $ 63.8 \pm 21.5$ & $ 27.6 \pm 3.8$& $ 6132 \pm   6$ & $-29.04 \pm   0.07$ & $-28.79 \pm   0.07$& $-28.32 \pm   0.07$& $-28.12 \pm   0.07$& $-27.41 \pm   0.07$ \\
-3 & $129.9 \pm 0.9$ & $  9.5 \pm 0.7$& $ 6093 \pm   3$ & $-29.23 \pm   0.01$ & $-29.07 \pm   0.01$& $-28.72 \pm   0.01$& $-28.44 \pm   0.01$& $-27.69 \pm   0.01$ \\
-4 & $114.4 \pm 0.9$ & $  8.4 \pm 0.4$& $ 6129 \pm   6$ & $-29.26 \pm   0.01$ & $-28.99 \pm   0.01$& $-28.50 \pm   0.01$& $-28.20 \pm   0.01$& $-27.44 \pm   0.01$ \\
-5 & $ 64.9 \pm 4.5$ & $ 16.5 \pm 0.7$& $ 6098 \pm   4$ & $-29.55 \pm   0.02$ & $-29.19 \pm   0.02$& $-28.68 \pm   0.02$& $-28.48 \pm   0.02$& $-27.93 \pm   0.02$ \\
-6 & $151.4 \pm 3.0$ & $ 13.9 \pm 1.1$& $ 6142 \pm   5$ & $-28.63 \pm   0.02$ & $-28.57 \pm   0.01$& $-28.20 \pm   0.01$& $-27.99 \pm   0.01$& $-27.34 \pm   0.01$ \\
-7 & $151.9 \pm 1.5$ & $  7.9 \pm 0.7$& $ 6116 \pm  10$ & $-29.37 \pm   0.01$ & $-29.14 \pm   0.01$& $-28.71 \pm   0.01$& $-28.40 \pm   0.01$& $-27.64 \pm   0.01$ \\
-8 & $108.2 \pm 6.0$ & $ 20.6 \pm 1.9$& $ 6122 \pm   5$ & $-29.02 \pm   0.06$ & $-28.80 \pm   0.06$& $-28.40 \pm   0.06$& $-28.20 \pm   0.06$& $-27.50 \pm   0.06$ \\
-9 & $123.7 \pm 6.6$ & $ 16.4 \pm 4.3$& $ 6101 \pm   4$ & $-28.26 \pm   0.02$ & $-28.20 \pm   0.02$& $-27.93 \pm   0.02$& $-27.74 \pm   0.02$& $-27.22 \pm   0.04$ \\
-10 & $101.7 \pm 1.1$ & $  7.7 \pm 0.7$& $ 6150 \pm   8$ & $-29.77 \pm   0.02$ & $-29.43 \pm   0.02$& $-28.97 \pm   0.02$& $-28.64 \pm   0.02$& $-27.93 \pm   0.02$ \\
-11 & $119.8 \pm 7.4$ & $ 14.2 \pm 2.7$& $ 6120 \pm  10$ & $-28.94 \pm   0.02$ & $-28.75 \pm   0.02$& $-28.32 \pm   0.02$& $-28.07 \pm   0.02$& $-27.31 \pm   0.02$ \\
-12 & $157.5 \pm 7.5$ & $ 16.7 \pm 1.8$& $ 6115 \pm   5$ & $-28.97 \pm   0.02$ & $-28.96 \pm   0.01$& $-28.61 \pm   0.01$& $-28.37 \pm   0.01$& $-27.62 \pm   0.01$ \\
-13 & $ 57.1 \pm 0.4$ & $ 17.9 \pm 0.3$& $ 6127 \pm   3$ & $-29.20 \pm   0.01$ & $-28.84 \pm   0.01$& $-28.47 \pm   0.01$& $-28.23 \pm   0.01$& $-27.73 \pm   0.04$ \\
-14 & $ 90.0 \pm 16.5$ & $ 26.5 \pm 1.5$& $ 6112 \pm   5$ & $-29.11 \pm   0.02$ & $-28.82 \pm   0.01$& $-28.42 \pm   0.01$& $-28.19 \pm   0.01$& $-27.54 \pm   0.01$ \\
-15 & $165.6 \pm 10.7$ & $ 12.7 \pm 2.8$& $ 6150 \pm  10$ & $-28.76 \pm   0.01$ & $-28.76 \pm   0.01$& $-28.40 \pm   0.01$& $-28.17 \pm   0.01$& $-27.45 \pm   0.02$ \\
-16 & $ 38.7 \pm 9.9$ & $  7.2 \pm 8.7$& $ 6141 \pm   5$ & $-27.93 \pm   0.38$ & $-27.76 \pm   0.38$& $-27.73 \pm   0.38$& $-27.59 \pm   0.38$& $-27.21 \pm   0.38$ \\
-17 & $ 83.2 \pm 0.7$ & $ 19.4 \pm 0.6$& $ 6131 \pm   3$ & $-29.30 \pm   0.01$ & $-28.95 \pm   0.01$& $-28.44 \pm   0.01$& $-28.17 \pm   0.01$& $-27.49 \pm   0.01$ \\
-18 & $129.2 \pm 2.8$ & $  9.1 \pm 1.3$& $ 6156 \pm   4$ & $-29.14 \pm   0.02$ & $-28.98 \pm   0.01$& $-28.56 \pm   0.01$& $-28.28 \pm   0.01$& $-27.61 \pm   0.01$ \\
-19 & $125.4 \pm 5.1$ & $ 26.9 \pm 1.6$& $ 6128 \pm   3$ & $-29.04 \pm   0.04$ & $-28.81 \pm   0.04$& $-28.38 \pm   0.04$& $-28.16 \pm   0.04$& $-27.57 \pm   0.04$ \\
-20 & $104.8 \pm 0.9$ & $ 12.7 \pm 0.3$& $ 6138 \pm   3$ & $-28.58 \pm   0.02$ & $-28.36 \pm   0.02$& $-27.98 \pm   0.02$& $-27.77 \pm   0.02$& $-27.17 \pm   0.02$ \\
-21 & $109.0 \pm 0.3$ & $  8.6 \pm 0.1$& $ 6138 \pm   2$ & $-28.35 \pm   0.01$ & $-28.15 \pm   0.01$& $-27.79 \pm   0.01$& $-27.58 \pm   0.01$& $-26.97 \pm   0.01$ \\
-22 & $100.1 \pm 2.1$ & $ 13.7 \pm 1.1$& $ 6158 \pm   3$ & $-29.46 \pm   0.01$ & $-29.19 \pm   0.01$& $-28.71 \pm   0.01$& $-28.39 \pm   0.01$& $-27.77 \pm   0.01$ \\
-23 & $ 21.1 \pm 78.0$ & $ -1.8 \pm 8.9$& $ 6090 \pm  14$ & $-28.32 \pm   0.02$ & $-28.24 \pm   0.02$& $-28.03 \pm   0.02$& $-27.79 \pm   0.02$& $-27.05 \pm   0.04$ \\
-24 & $106.4 \pm 2.1$ & $ 23.0 \pm 1.0$& $ 6120 \pm   5$ & $-29.05 \pm   0.17$ & $-28.92 \pm   0.17$& $-28.41 \pm   0.17$& $-28.14 \pm   0.17$& $-27.30 \pm   0.17$ \\
-25 & $106.1 \pm 10.4$ & $ 17.0 \pm 0.9$& $ 6149 \pm   4$ & $-29.54 \pm   0.02$ & $-29.28 \pm   0.01$& $-28.76 \pm   0.01$& $-28.42 \pm   0.01$& $-27.74 \pm   0.04$ \\
-26 & $122.9 \pm 1.7$ & $ 11.4 \pm 0.8$& $ 6119 \pm   4$ & $-29.62 \pm   0.07$ & $-29.39 \pm   0.07$& $-28.95 \pm   0.07$& $-28.64 \pm   0.07$& $-27.91 \pm   0.07$ \\
-27 & $105.1 \pm 2.2$ & $  8.6 \pm 1.3$& $ 6121 \pm   4$ & $-29.34 \pm   0.01$ & $-29.10 \pm   0.01$& $-28.73 \pm   0.01$& $-28.46 \pm   0.01$& $-27.82 \pm   0.01$ \\
-28 & $158.3 \pm 3.3$ & $ 16.3 \pm 1.7$& $ 6102 \pm   5$ & $-28.90 \pm   0.01$ & $-28.81 \pm   0.01$& $-28.45 \pm   0.01$& $-28.22 \pm   0.01$& $-27.52 \pm   0.01$ \\
-29 & $105.8 \pm 2.3$ & $  6.5 \pm 1.0$& $ 6124 \pm   3$ & $-29.38 \pm   0.01$ & $-29.07 \pm   0.01$& $-28.68 \pm   0.01$& $-28.37 \pm   0.01$& $-27.69 \pm   0.01$ \\
-30 & $116.5 \pm 1.2$ & $ 19.8 \pm 0.9$& $ 6138 \pm   2$ & $-29.02 \pm   0.07$ & $-28.84 \pm   0.07$& $-28.40 \pm   0.07$& $-28.14 \pm   0.07$& $-27.52 \pm   0.07$ \\
-31 & $116.2 \pm 14.9$ & $ 15.5 \pm 0.7$& $ 6138 \pm   6$ & $-29.30 \pm   0.01$ & $-29.15 \pm   0.01$& $-28.64 \pm   0.01$& $-28.35 \pm   0.01$& $-27.63 \pm   0.01$ \\
-32 & $149.1 \pm 1.4$ & $ 14.9 \pm 0.7$& $ 6131 \pm   3$ & $-29.11 \pm   0.01$ & $-28.97 \pm   0.01$& $-28.50 \pm   0.01$& $-28.22 \pm   0.01$& $-27.46 \pm   0.01$ \\
-33 & $ 42.8 \pm 1.2$ & $  4.0 \pm 3.1$& $ 6108 \pm   4$ & $-29.76 \pm   0.02$ & $-29.40 \pm   0.02$& $-29.04 \pm   0.02$& $-28.74 \pm   0.02$& $-28.11 \pm   0.02$ \\
-34 & $ 30.2 \pm 4.4$ & $  4.0 \pm 3.0$& $ 6139 \pm   5$ & $-29.47 \pm   0.02$ & $-29.10 \pm   0.01$& $-28.75 \pm   0.01$& $-28.45 \pm   0.01$& $-27.87 \pm   0.01$ \\
-35 & $117.6 \pm 2.7$ & $  9.1 \pm 1.0$& $ 6116 \pm   3$ & $-29.44 \pm   0.03$ & $-29.21 \pm   0.03$& $-28.72 \pm   0.03$& $-28.42 \pm   0.03$& $-27.68 \pm   0.03$ \\
-36 & $104.6 \pm 2.4$ & $ 26.6 \pm 3.2$& $ 6114 \pm   9$ & $-29.16 \pm   0.02$ & $-28.82 \pm   0.02$& $-28.43 \pm   0.02$& $-28.20 \pm   0.02$& $-27.55 \pm   0.02$ \\
-37 & $126.7 \pm 1.8$ & $ 21.1 \pm 1.1$& $ 6118 \pm   7$ & $-29.22 \pm   0.01$ & $-29.10 \pm   0.01$& $-28.63 \pm   0.01$& $-28.34 \pm   0.01$& $-27.62 \pm   0.01$ \\
-38 & $111.4 \pm 2.3$ & $ 10.6 \pm 1.5$& $ 6138 \pm   5$ & $-29.54 \pm   0.01$ & $-29.23 \pm   0.01$& $-28.80 \pm   0.01$& $-28.46 \pm   0.01$& $-27.82 \pm   0.01$ \\
-39 & $ 95.3 \pm 3.5$ & $ 23.3 \pm 1.5$& $ 6129 \pm   5$ & $-29.22 \pm   0.08$ & $-28.96 \pm   0.08$& $-28.50 \pm   0.08$& $-28.26 \pm   0.08$& $-27.56 \pm   0.08$ \\
-40 & $ 31.5 \pm 3.7$ & $  4.5 \pm 1.3$& $ 6168 \pm   6$ & $-29.50 \pm   0.45$ & $-29.25 \pm   0.45$& $-28.89 \pm   0.45$& $-28.61 \pm   0.45$& $-27.97 \pm   0.45$ \\
-41 & $135.7 \pm 1.1$ & $ 11.2 \pm 1.5$& $ 6090 \pm   4$ & $-29.13 \pm   0.02$ & $-28.99 \pm   0.01$& $-28.59 \pm   0.01$& $-28.31 \pm   0.01$& $-27.55 \pm   0.01$ \\
-42 & $ 95.4 \pm 18.8$ & $ 24.1 \pm 1.0$& $ 6120 \pm   5$ & $-29.01 \pm   0.03$ & $-28.78 \pm   0.03$& $-28.35 \pm   0.03$& $-28.17 \pm   0.03$& $-27.54 \pm   0.03$ \\
-43 & $115.6 \pm 2.8$ & $ 13.5 \pm 6.9$& $ 6069 \pm   5$ & $-29.33 \pm   0.02$ & $-29.12 \pm   0.02$& $-28.84 \pm   0.02$& $-28.49 \pm   0.02$& $-27.77 \pm   0.02$ \\
-44 & $ 93.3 \pm 2.6$ & $  8.3 \pm 2.2$& $ 6104 \pm   3$ & $-28.58 \pm   0.01$ & $-28.47 \pm   0.01$& $-28.29 \pm   0.01$& $-28.05 \pm   0.01$& $-27.50 \pm   0.01$ \\
-45 & $101.1 \pm 1.6$ & $  7.4 \pm 1.0$& $ 6129 \pm   4$ & $-28.01 \pm   0.01$ & $-28.00 \pm   0.01$& $-27.85 \pm   0.01$& $-27.77 \pm   0.01$& $-27.31 \pm   0.01$ \\
-46 & $166.8 \pm 1.8$ & $ 21.8 \pm 1.2$& $ 6175 \pm   4$ & $-28.67 \pm   0.20$ & $-28.74 \pm   0.20$& $-28.30 \pm   0.20$& $-28.05 \pm   0.20$& $-27.28 \pm   0.20$ \\
-47 & $110.6 \pm 1.0$ & $  8.0 \pm 1.3$& $ 6101 \pm   2$ & $-29.88 \pm   0.76$ & $-29.58 \pm   0.76$& $-29.09 \pm   0.76$& $-28.71 \pm   0.76$& $-27.91 \pm   0.76$ \\
-48 & $ 94.1 \pm 1.3$ & $  6.7 \pm 0.6$& $ 6153 \pm   3$ & $-29.72 \pm   0.01$ & $-29.39 \pm   0.01$& $-28.97 \pm   0.01$& $-28.64 \pm   0.01$& $-27.96 \pm   0.01$ \\
-49 & $105.9 \pm 5.4$ & $ 18.3 \pm 1.8$& $ 6124 \pm   4$ & $-29.23 \pm   0.02$ & $-29.04 \pm   0.01$& $-28.63 \pm   0.01$& $-28.35 \pm   0.01$& $-27.62 \pm   0.01$ \\
-50 & $109.6 \pm 1.3$ & $  8.9 \pm 0.7$& $ 6143 \pm   3$ & $-28.54 \pm   0.01$ & $-28.40 \pm   0.01$& $-28.11 \pm   0.01$& $-27.89 \pm   0.01$& $-27.31 \pm   0.01$ \\
-51 & $105.0 \pm 3.2$ & $  6.9 \pm 1.1$& $ 6124 \pm   7$ & $-27.89 \pm   0.02$ & $-27.82 \pm   0.02$& $-27.69 \pm   0.02$& $-27.63 \pm   0.02$& $-27.16 \pm   0.04$ \\
-52 & $ 88.0 \pm 2.7$ & $ 32.2 \pm 1.9$& $ 6111 \pm   7$ & $-28.37 \pm   0.03$ & $-28.26 \pm   0.03$& $-27.92 \pm   0.03$& $-27.77 \pm   0.03$& $-27.13 \pm   0.03$ \\
-53 & $108.9 \pm 3.5$ & $ 17.1 \pm 1.0$& $ 6131 \pm   6$ & $-29.25 \pm   0.02$ & $-29.02 \pm   0.02$& $-28.56 \pm   0.02$& $-28.32 \pm   0.01$& $-27.65 \pm   0.02$ \\
-54 & $143.5 \pm 2.2$ & $ 10.2 \pm 0.9$& $ 6143 \pm   3$ & $-29.38 \pm   0.01$ & $-29.17 \pm   0.01$& $-28.69 \pm   0.01$& $-28.40 \pm   0.01$& $-27.62 \pm   0.01$ \\
-55 & $150.5 \pm 8.9$ & $ 46.3 \pm 8.6$& $ 6110 \pm  21$ & $-28.70 \pm   0.02$ & $-28.61 \pm   0.02$& $-28.16 \pm   0.02$& $-27.91 \pm   0.02$& $-27.07 \pm   0.04$ \\
-56 & $114.7 \pm 2.8$ & $  9.4 \pm 0.9$& $ 6145 \pm   5$ & $-28.53 \pm   0.02$ & $-28.41 \pm   0.01$& $-28.11 \pm   0.01$& $-27.99 \pm   0.01$& $-27.38 \pm   0.01$ \\
-57 & $ 85.0 \pm 1.1$ & $  6.0 \pm 0.4$& $ 6150 \pm   5$ & $-29.73 \pm   0.01$ & $-29.43 \pm   0.01$& $-29.04 \pm   0.01$& $-28.72 \pm   0.01$& $-28.07 \pm   0.01$ \\
-58 & $ 95.1 \pm 28.5$ & $ 21.7 \pm 0.7$& $ 6077 \pm   5$ & $-28.85 \pm   0.01$ & $-28.74 \pm   0.01$& $-28.41 \pm   0.01$& $-28.20 \pm   0.01$& $-27.47 \pm   0.01$ \\
-59 & $134.8 \pm 15.7$ & $ 19.7 \pm 3.7$& $ 6100 \pm   6$ & $-28.56 \pm   0.02$ & $-28.63 \pm   0.01$& $-28.32 \pm   0.01$& $-28.13 \pm   0.01$& $-27.42 \pm   0.01$ \\
-60 & $129.6 \pm 5.6$ & $ 31.1 \pm 23.8$& $ 6146 \pm   5$ & $-27.88 \pm   0.02$ & $-28.12 \pm   0.01$& $-28.02 \pm   0.01$& $-27.86 \pm   0.01$& $-27.24 \pm   0.03$ \\
-61 & $122.1 \pm 1.7$ & $  8.3 \pm 0.5$& $ 6125 \pm   3$ & $-29.63 \pm   0.01$ & $-29.38 \pm   0.01$& $-28.92 \pm   0.01$& $-28.60 \pm   0.01$& $-27.88 \pm   0.01$ \\
-62 & $110.8 \pm 10.7$ & $ 20.4 \pm 1.0$& $ 6145 \pm   6$ & $-29.16 \pm   0.01$ & $-28.99 \pm   0.01$& $-28.59 \pm   0.01$& $-28.29 \pm   0.01$& $-27.61 \pm   0.01$ \\
-63 & $ 87.0 \pm 1.4$ & $ 20.7 \pm 0.7$& $ 6136 \pm   3$ & $-28.78 \pm   0.01$ & $-28.66 \pm   0.01$& $-28.30 \pm   0.01$& $-28.08 \pm   0.01$& $-27.41 \pm   0.01$ \\
-64 & $102.4 \pm 13.4$ & $ 19.2 \pm 0.6$& $ 6116 \pm   4$ & $-29.46 \pm   0.01$ & $-29.17 \pm   0.01$& $-28.71 \pm   0.01$& $-28.47 \pm   0.01$& $-27.83 \pm   0.01$ \\
-65 & $141.1 \pm 3.4$ & $ 11.7 \pm 1.2$& $ 6131 \pm   6$ & $-29.28 \pm   0.15$ & $-29.16 \pm   0.15$& $-28.72 \pm   0.15$& $-28.41 \pm   0.15$& $-27.65 \pm   0.15$ \\
-66 & $129.6 \pm 2.7$ & $ 17.3 \pm 1.0$& $ 6102 \pm   2$ & $-28.91 \pm   0.01$ & $-28.84 \pm   0.01$& $-28.46 \pm   0.01$& $-28.18 \pm   0.01$& $-27.43 \pm   0.01$ \\
-67 & $146.8 \pm 3.5$ & $  7.5 \pm 2.5$& $ 6110 \pm   5$ & $-28.79 \pm   0.02$ & $-28.65 \pm   0.02$& $-28.35 \pm   0.02$& $-28.12 \pm   0.02$& $-27.46 \pm   0.02$ \\
-68 & $117.4 \pm 2.2$ & $  9.0 \pm 1.2$& $ 6127 \pm  10$ & $-29.50 \pm   0.01$ & $-29.23 \pm   0.01$& $-28.80 \pm   0.01$& $-28.47 \pm   0.01$& $-27.74 \pm   0.01$ \\
-69 & $159.1 \pm 0.7$ & $ 15.7 \pm 0.8$& $ 6144 \pm   2$ & $-29.37 \pm   0.02$ & $-29.16 \pm   0.02$& $-28.68 \pm   0.02$& $-28.41 \pm   0.02$& $-27.69 \pm   0.02$ \\
-70 & $ 91.5 \pm 10.9$ & $ 15.6 \pm 0.5$& $ 6128 \pm   3$ & $-29.43 \pm   0.02$ & $-29.09 \pm   0.02$& $-28.60 \pm   0.01$& $-28.30 \pm   0.01$& $-27.62 \pm   0.04$ \\
-71 & $107.8 \pm 14.1$ & $ 20.0 \pm 0.7$& $ 6132 \pm   4$ & $-28.82 \pm   0.02$ & $-28.78 \pm   0.01$& $-28.32 \pm   0.01$& $-28.09 \pm   0.01$& $-27.39 \pm   0.01$ \\
-72 & $ 92.1 \pm 16.5$ & $ 21.1 \pm 0.7$& $ 6121 \pm   2$ & $-29.28 \pm   0.02$ & $-28.95 \pm   0.02$& $-28.46 \pm   0.02$& $-28.20 \pm   0.02$& $-27.62 \pm   0.04$ \\
-73 & $128.6 \pm 2.8$ & $ 15.6 \pm 1.7$& $ 6153 \pm   5$ & $-29.35 \pm   0.02$ & $-29.11 \pm   0.02$& $-28.61 \pm   0.02$& $-28.32 \pm   0.02$& $-27.67 \pm   0.02$ \\
-74 & $102.6 \pm 2.8$ & $ 15.6 \pm 1.1$& $ 6141 \pm   8$ & $-29.16 \pm   0.07$ & $-29.04 \pm   0.06$& $-28.56 \pm   0.06$& $-28.30 \pm   0.06$& $-27.63 \pm   0.06$ \\
-75 & $120.0 \pm 1.1$ & $  7.3 \pm 0.6$& $ 6123 \pm   3$ & $-29.64 \pm   0.02$ & $-29.41 \pm   0.02$& $-28.99 \pm   0.02$& $-28.70 \pm   0.02$& $-28.00 \pm   0.02$ \\
-76 & $130.0 \pm 1.0$ & $  6.1 \pm 4.2$& $ 6111 \pm   3$ & $-29.42 \pm   0.01$ & $-29.24 \pm   0.01$& $-28.84 \pm   0.01$& $-28.52 \pm   0.01$& $-27.76 \pm   0.01$ \\
-77 & $111.9 \pm 1.3$ & $  9.8 \pm 0.7$& $ 6144 \pm   3$ & $-29.63 \pm   0.01$ & $-29.36 \pm   0.01$& $-28.88 \pm   0.01$& $-28.54 \pm   0.01$& $-27.81 \pm   0.01$ \\
-78 & $135.2 \pm 1.4$ & $  5.6 \pm 1.6$& $ 6085 \pm   3$ & $-29.44 \pm   0.02$ & $-29.19 \pm   0.02$& $-28.79 \pm   0.02$& $-28.49 \pm   0.02$& $-27.74 \pm   0.02$ \\
-79 & $ 65.8 \pm 4.1$ & $ 10.2 \pm 0.9$& $ 6137 \pm   3$ & $-29.53 \pm   0.02$ & $-29.30 \pm   0.02$& $-28.89 \pm   0.02$& $-28.56 \pm   0.02$& $-27.90 \pm   0.02$ \\
-80 & $ 87.8 \pm 7.2$ & $ 21.5 \pm 0.9$& $ 6141 \pm   4$ & $-29.00 \pm   0.22$ & $-28.82 \pm   0.22$& $-28.37 \pm   0.22$& $-28.13 \pm   0.22$& $-27.43 \pm   0.22$ \\
-81 & $138.1 \pm 2.1$ & $ 11.7 \pm 0.7$& $ 6138 \pm   3$ & $-29.40 \pm   0.02$ & $-29.23 \pm   0.02$& $-28.77 \pm   0.01$& $-28.45 \pm   0.02$& $-27.68 \pm   0.02$ \\
-82 & $119.9 \pm 10.4$ & $ 16.4 \pm 1.7$& $ 6131 \pm   6$ & $-29.05 \pm   0.07$ & $-28.92 \pm   0.07$& $-28.50 \pm   0.07$& $-28.22 \pm   0.07$& $-27.55 \pm   0.07$ \\
-83 & $101.8 \pm 2.6$ & $ 12.4 \pm 1.0$& $ 6158 \pm   5$ & $-29.46 \pm   0.02$ & $-29.27 \pm   0.02$& $-28.87 \pm   0.02$& $-28.60 \pm   0.02$& $-27.96 \pm   0.02$ \\
-84 & $128.5 \pm 1.4$ & $ 10.6 \pm 1.0$& $ 6098 \pm   4$ & $-29.48 \pm   0.02$ & $-29.31 \pm   0.02$& $-28.87 \pm   0.01$& $-28.54 \pm   0.01$& $-27.77 \pm   0.02$ \\
-85 & $114.4 \pm 1.2$ & $ 12.6 \pm 0.6$& $ 6136 \pm   3$ & $-29.59 \pm   0.23$ & $-29.34 \pm   0.23$& $-28.91 \pm   0.23$& $-28.58 \pm   0.23$& $-27.87 \pm   0.23$ \\
-86 & $ 93.7 \pm 1.0$ & $  7.8 \pm 0.4$& $ 6171 \pm   3$ & $-29.38 \pm   0.02$ & $-29.12 \pm   0.01$& $-28.74 \pm   0.01$& $-28.44 \pm   0.01$& $-27.78 \pm   0.01$ \\
-87 & $ 79.4 \pm 3.2$ & $ 12.6 \pm 0.7$& $ 6146 \pm   3$ & $-28.90 \pm   0.02$ & $-28.62 \pm   0.01$& $-28.27 \pm   0.01$& $-28.08 \pm   0.01$& $-27.54 \pm   0.01$ \\
-88 & $ 39.0 \pm 22.2$ & $  4.5 \pm 0.2$& $ 6139 \pm   8$ & $-29.46 \pm   0.02$ & $-29.06 \pm   0.02$& $-28.75 \pm   0.02$& $-28.49 \pm   0.02$& $-27.93 \pm   0.02$ \\
-89 & $ 75.6 \pm 1.1$ & $  2.2 \pm 0.4$& $ 6148 \pm   4$ & $-29.92 \pm   0.32$ & $-29.49 \pm   0.32$& $-29.02 \pm   0.32$& $-28.63 \pm   0.32$& $-27.90 \pm   0.32$ \\
-90 & $ 98.8 \pm 12.1$ & $ 25.9 \pm 0.7$& $ 6114 \pm   7$ & $-29.14 \pm   0.02$ & $-28.91 \pm   0.02$& $-28.44 \pm   0.02$& $-28.21 \pm   0.02$& $-27.49 \pm   0.02$ \\
-91 & $ 81.3 \pm 2.3$ & $  6.3 \pm 0.9$& $ 6142 \pm   5$ & $-29.89 \pm   0.02$ & $-29.46 \pm   0.02$& $-28.97 \pm   0.02$& $-28.62 \pm   0.02$& $-27.97 \pm   0.02$ \\
-92 & $129.5 \pm 5.6$ & $  6.3 \pm 2.5$& $ 6110 \pm   6$ & $-29.53 \pm   0.02$ & $-29.31 \pm   0.02$& $-28.95 \pm   0.02$& $-28.60 \pm   0.02$& $-27.96 \pm   0.02$ \\
-93 & $106.5 \pm 1.8$ & $ 21.4 \pm 1.7$& $ 6163 \pm   7$ & $-28.98 \pm   0.02$ & $-28.92 \pm   0.02$& $-28.66 \pm   0.02$& $-28.42 \pm   0.02$& $-27.77 \pm   0.02$ \\
-94 & $109.1 \pm 9.4$ & $ 15.0 \pm 0.6$& $ 6137 \pm   3$ & $-29.36 \pm   0.02$ & $-29.14 \pm   0.01$& $-28.69 \pm   0.01$& $-28.41 \pm   0.01$& $-27.70 \pm   0.01$ \\
-95 & $ 97.7 \pm 2.8$ & $ 12.6 \pm 1.4$& $ 6141 \pm   6$ & $-29.50 \pm   0.02$ & $-29.11 \pm   0.02$& $-28.61 \pm   0.02$& $-28.34 \pm   0.02$& $-27.71 \pm   0.02$ \\
-96 & $102.7 \pm 1.8$ & $ 11.9 \pm 1.0$& $ 6142 \pm   5$ & $-29.28 \pm   0.02$ & $-29.14 \pm   0.02$& $-28.74 \pm   0.02$& $-28.46 \pm   0.01$& $-27.76 \pm   0.03$ \\
-97 & $133.6 \pm 2.1$ & $  6.9 \pm 0.9$& $ 6131 \pm   6$ & $-29.09 \pm   0.01$ & $-28.93 \pm   0.01$& $-28.59 \pm   0.01$& $-28.31 \pm   0.01$& $-27.55 \pm   0.03$ \\
-98 & $127.8 \pm 2.5$ & $ 15.8 \pm 1.3$& $ 6124 \pm   6$ & $-28.80 \pm   0.02$ & $-28.68 \pm   0.02$& $-28.37 \pm   0.02$& $-28.18 \pm   0.02$& $-27.55 \pm   0.02$ \\
-99 & $134.2 \pm 0.5$ & $  7.4 \pm 0.2$& $ 6102 \pm   1$ & $-29.91 \pm   0.01$ & $-29.70 \pm   0.01$& $-29.31 \pm   0.01$& $-28.94 \pm   0.01$& $-28.10 \pm   0.01$ \\
-100 & $100.2 \pm 2.8$ & $ 13.4 \pm 1.1$& $ 6107 \pm   8$ & $-29.33 \pm   0.02$ & $-29.11 \pm   0.02$& $-28.77 \pm   0.02$& $-28.52 \pm   0.02$& $-27.80 \pm   0.02$ \\
-101 & $ 88.4 \pm 1.2$ & $  5.4 \pm 0.4$& $ 6169 \pm   3$ & $-29.33 \pm   0.01$ & $-29.05 \pm   0.01$& $-28.68 \pm   0.01$& $-28.40 \pm   0.01$& $-27.79 \pm   0.01$ \\
-102 & $125.2 \pm 4.6$ & $ 17.1 \pm 2.0$& $ 6124 \pm  11$ & $-28.58 \pm   0.02$ & $-28.54 \pm   0.02$& $-28.19 \pm   0.02$& $-27.99 \pm   0.02$& $-27.31 \pm   0.02$ \\
-103 & $141.7 \pm 2.6$ & $  7.7 \pm 1.0$& $ 6140 \pm   9$ & $-29.38 \pm   0.02$ & $-29.20 \pm   0.02$& $-28.77 \pm   0.02$& $-28.46 \pm   0.02$& $-27.67 \pm   0.02$ \\
-104 & $ 22.7 \pm 21.4$ & $  0.9 \pm 0.6$& $ 6157 \pm  27$ & $-29.87 \pm   0.01$ & $-29.43 \pm   0.01$& $-29.04 \pm   0.01$& $-28.74 \pm   0.01$& $-28.11 \pm   0.01$ \\
-105 & $127.2 \pm 1.9$ & $ 21.7 \pm 1.2$& $ 6136 \pm   4$ & $-29.14 \pm   0.01$ & $-29.00 \pm   0.01$& $-28.59 \pm   0.01$& $-28.35 \pm   0.01$& $-27.65 \pm   0.01$ \\
-106 & $162.3 \pm 9.8$ & $ 19.6 \pm 1.4$& $ 6085 \pm   8$ & $-28.86 \pm   0.02$ & $-28.87 \pm   0.01$& $-28.42 \pm   0.01$& $-28.19 \pm   0.01$& $-27.50 \pm   0.03$ \\
-107 & $138.5 \pm 4.0$ & $ 14.0 \pm 2.0$& $ 6112 \pm   2$ & $-27.59 \pm   0.02$ & $-27.78 \pm   0.01$& $-27.73 \pm   0.01$& $-27.71 \pm   0.01$& $-27.19 \pm   0.02$ \\
-108 & $ 88.4 \pm 21.6$ & $ 22.3 \pm 1.1$& $ 6145 \pm   5$ & $-29.11 \pm   0.01$ & $-28.89 \pm   0.01$& $-28.45 \pm   0.01$& $-28.23 \pm   0.01$& $-27.60 \pm   0.01$ \\
-109 & $109.4 \pm 2.2$ & $ 11.5 \pm 1.7$& $ 6142 \pm   6$ & $-29.35 \pm   0.13$ & $-29.17 \pm   0.13$& $-28.68 \pm   0.13$& $-28.38 \pm   0.13$& $-27.56 \pm   0.13$ \\
-110 & $103.7 \pm 17.0$ & $ 23.1 \pm 0.4$& $ 6125 \pm   3$ & $-28.67 \pm   0.01$ & $-28.52 \pm   0.01$& $-28.18 \pm   0.01$& $-28.03 \pm   0.01$& $-27.47 \pm   0.01$ \\
-111 & $ 93.8 \pm 12.2$ & $ 23.8 \pm 3.0$& $ 6120 \pm   8$ & $-28.87 \pm   0.02$ & $-28.70 \pm   0.01$& $-28.26 \pm   0.01$& $-28.08 \pm   0.01$& $-27.41 \pm   0.02$ \\
-112 & $122.5 \pm 3.8$ & $ 12.7 \pm 1.6$& $ 6132 \pm   6$ & $-29.10 \pm   0.01$ & $-28.96 \pm   0.01$& $-28.51 \pm   0.01$& $-28.25 \pm   0.01$& $-27.57 \pm   0.01$ \\
-113 & $101.7 \pm 1.3$ & $  4.8 \pm 0.8$& $ 6127 \pm   3$ & $-29.43 \pm   0.01$ & $-29.14 \pm   0.01$& $-28.74 \pm   0.01$& $-28.43 \pm   0.01$& $-27.76 \pm   0.01$ \\
-114 & $ 89.8 \pm 9.9$ & $ 23.4 \pm 1.1$& $ 6109 \pm   5$ & $-29.11 \pm   0.02$ & $-28.91 \pm   0.02$& $-28.50 \pm   0.02$& $-28.27 \pm   0.02$& $-27.57 \pm   0.02$ \\
-115 & $ 93.9 \pm 2.4$ & $ 18.5 \pm 1.3$& $ 6116 \pm   6$ & $-29.19 \pm   0.02$ & $-29.03 \pm   0.01$& $-28.59 \pm   0.01$& $-28.30 \pm   0.01$& $-27.55 \pm   0.02$ \\
-116 & $ 61.8 \pm 6.5$ & $ 27.1 \pm 1.8$& $ 6154 \pm   8$ & $-28.37 \pm   0.02$ & $-28.27 \pm   0.02$& $-27.97 \pm   0.02$& $-27.80 \pm   0.02$& $-27.24 \pm   0.02$ \\
-117 & $ 64.6 \pm 3.8$ & $  3.7 \pm 1.4$& $ 6148 \pm   4$ & $-29.49 \pm   0.02$ & $-29.06 \pm   0.02$& $-28.71 \pm   0.02$& $-28.42 \pm   0.02$& $-27.93 \pm   0.02$ \\
-118 & $127.3 \pm 2.4$ & $ 15.5 \pm 1.2$& $ 6152 \pm   4$ & $-28.77 \pm   0.01$ & $-28.66 \pm   0.01$& $-28.37 \pm   0.01$& $-28.15 \pm   0.01$& $-27.52 \pm   0.01$ \\
-119 & $ 77.5 \pm 2.5$ & $  5.1 \pm 0.8$& $ 6140 \pm   4$ & $-29.96 \pm   0.06$ & $-29.56 \pm   0.06$& $-29.06 \pm   0.06$& $-28.75 \pm   0.06$& $-28.01 \pm   0.06$ \\
-120 & $105.5 \pm 3.0$ & $  6.2 \pm 1.2$& $ 6124 \pm   5$ & $-29.54 \pm   0.01$ & $-29.23 \pm   0.01$& $-28.74 \pm   0.01$& $-28.40 \pm   0.01$& $-27.64 \pm   0.01$ \\
-121 & $107.2 \pm 3.5$ & $ 18.6 \pm 1.3$& $ 6132 \pm  14$ & $-28.80 \pm   0.02$ & $-28.69 \pm   0.02$& $-28.34 \pm   0.02$& $-28.13 \pm   0.02$& $-27.52 \pm   0.02$ \\
-122 & $ 99.1 \pm 2.7$ & $  5.8 \pm 0.8$& $ 6164 \pm   5$ & $-29.67 \pm   0.01$ & $-29.34 \pm   0.01$& $-28.94 \pm   0.01$& $-28.60 \pm   0.01$& $-27.96 \pm   0.01$ \\
-123 & $126.5 \pm 1.2$ & $ 15.4 \pm 1.1$& $ 6159 \pm   3$ & $-28.67 \pm   0.02$ & $-28.60 \pm   0.02$& $-28.31 \pm   0.02$& $-28.13 \pm   0.02$& $-27.58 \pm   0.02$ \\
-124 & $ 87.7 \pm 3.6$ & $  7.3 \pm 1.3$& $ 6132 \pm   4$ & $-28.60 \pm   0.02$ & $-28.42 \pm   0.02$& $-28.19 \pm   0.02$& $-28.05 \pm   0.02$& $-27.53 \pm   0.02$ \\
-125 & $121.0 \pm 5.3$ & $  9.3 \pm 3.1$& $ 6129 \pm   7$ & $-29.75 \pm   0.01$ & $-29.42 \pm   0.01$& $-28.99 \pm   0.01$& $-28.68 \pm   0.01$& $-27.97 \pm   0.01$ \\
-126 & $133.0 \pm 1.5$ & $ 17.6 \pm 0.8$& $ 6114 \pm   5$ & $-29.12 \pm   0.01$ & $-28.98 \pm   0.01$& $-28.54 \pm   0.01$& $-28.28 \pm   0.01$& $-27.51 \pm   0.01$ \\
-127 & $106.4 \pm 2.1$ & $ 26.7 \pm 1.3$& $ 6101 \pm   2$ & $-29.00 \pm   0.01$ & $-28.83 \pm   0.01$& $-28.42 \pm   0.01$& $-28.20 \pm   0.01$& $-27.53 \pm   0.04$ \\
-128 & $110.3 \pm 1.6$ & $ 14.2 \pm 0.7$& $ 6141 \pm   4$ & $-29.34 \pm   0.01$ & $-29.04 \pm   0.01$& $-28.57 \pm   0.01$& $-28.32 \pm   0.01$& $-27.66 \pm   0.01$ \\
-129 & $ 99.5 \pm 1.6$ & $ 30.0 \pm 0.7$& $ 6118 \pm   3$ & $-28.81 \pm   0.01$ & $-28.65 \pm   0.01$& $-28.23 \pm   0.01$& $-28.02 \pm   0.01$& $-27.33 \pm   0.01$ \\
-130 & $138.0 \pm 5.1$ & $ 16.2 \pm 1.6$& $ 6125 \pm  10$ & $-27.84 \pm   0.02$ & $-27.92 \pm   0.02$& $-27.69 \pm   0.02$& $-27.60 \pm   0.02$& $-26.99 \pm   0.02$ \\
-131 & $ 80.8 \pm 2.4$ & $  4.3 \pm 0.8$& $ 6138 \pm   4$ & $-29.54 \pm   0.02$ & $-29.16 \pm   0.01$& $-28.87 \pm   0.01$& $-28.54 \pm   0.01$& $-28.01 \pm   0.01$ \\
-132 & $150.4 \pm 2.2$ & $ 22.5 \pm 0.8$& $ 6041 \pm   6$ & $-28.60 \pm   0.01$ & $-28.77 \pm   0.01$& $-28.41 \pm   0.01$& $-28.10 \pm   0.01$& $-27.29 \pm   0.01$ \\
-133 & $124.2 \pm 2.4$ & $  6.8 \pm 1.1$& $ 6119 \pm   3$ & $-29.52 \pm   0.01$ & $-29.25 \pm   0.01$& $-28.80 \pm   0.01$& $-28.49 \pm   0.01$& $-27.76 \pm   0.01$ \\
-134 & $103.6 \pm 7.2$ & $ 27.2 \pm 1.9$& $ 6133 \pm   8$ & $-28.74 \pm   0.02$ & $-28.46 \pm   0.01$& $-28.09 \pm   0.01$& $-27.87 \pm   0.01$& $-27.26 \pm   0.04$ \\
-135 & $ 85.5 \pm 0.6$ & $  5.9 \pm 0.3$& $ 6130 \pm   4$ & $-29.87 \pm   0.02$ & $-29.45 \pm   0.02$& $-28.94 \pm   0.02$& $-28.57 \pm   0.02$& $-27.85 \pm   0.02$ \\
-136 & $118.1 \pm 2.1$ & $  4.6 \pm 2.2$& $ 6101 \pm   3$ & $-29.77 \pm   0.02$ & $-29.52 \pm   0.02$& $-29.08 \pm   0.02$& $-28.74 \pm   0.01$& $-27.94 \pm   0.02$ \\
-137 & $131.4 \pm 2.2$ & $ 17.4 \pm 1.1$& $ 6116 \pm   4$ & $-28.60 \pm   0.02$ & $-28.55 \pm   0.02$& $-28.25 \pm   0.02$& $-28.03 \pm   0.02$& $-27.34 \pm   0.02$ \\
-138 & $ 94.1 \pm 2.0$ & $ 11.2 \pm 0.6$& $ 6132 \pm   4$ & $-29.50 \pm   0.02$ & $-29.11 \pm   0.02$& $-28.67 \pm   0.02$& $-28.37 \pm   0.02$& $-27.71 \pm   0.02$ \\
-139 & $126.9 \pm 2.5$ & $ 10.0 \pm 0.7$& $ 6123 \pm   3$ & $-29.38 \pm   0.01$ & $-29.13 \pm   0.01$& $-28.69 \pm   0.01$& $-28.37 \pm   0.01$& $-27.61 \pm   0.01$ \\
-140 & $106.9 \pm 0.6$ & $  7.1 \pm 0.7$& $ 6138 \pm   4$ & $-29.29 \pm   0.73$ & $-29.00 \pm   0.73$& $-28.51 \pm   0.73$& $-28.15 \pm   0.73$& $-27.38 \pm   0.73$ \\
-141 & $ 82.6 \pm 17.5$ & $ 12.2 \pm 1.4$& $ 6144 \pm   5$ & $-29.51 \pm   0.02$ & $-29.14 \pm   0.01$& $-28.60 \pm   0.01$& $-28.30 \pm   0.01$& $-27.71 \pm   0.02$ \\
-142 & $ 78.9 \pm 20.2$ & $ 21.1 \pm 1.4$& $ 6123 \pm  10$ & $-29.37 \pm   0.05$ & $-29.04 \pm   0.05$& $-28.54 \pm   0.05$& $-28.30 \pm   0.05$& $-27.57 \pm   0.05$ \\
-143 & $125.5 \pm 3.2$ & $ 10.1 \pm 1.6$& $ 6126 \pm   4$ & $-29.34 \pm   0.01$ & $-29.12 \pm   0.01$& $-28.65 \pm   0.01$& $-28.38 \pm   0.01$& $-27.66 \pm   0.01$ \\
-144 & $132.6 \pm 1.4$ & $ 15.2 \pm 1.0$& $ 6116 \pm   5$ & $-29.12 \pm   0.01$ & $-28.95 \pm   0.01$& $-28.53 \pm   0.01$& $-28.27 \pm   0.01$& $-27.55 \pm   0.01$ \\
-145 & $ 95.9 \pm 2.3$ & $ 10.6 \pm 1.1$& $ 6143 \pm   6$ & $-29.59 \pm   0.02$ & $-29.22 \pm   0.02$& $-28.68 \pm   0.02$& $-28.42 \pm   0.02$& $-27.77 \pm   0.02$ \\
-146 & $167.5 \pm 2.2$ & $ 20.4 \pm 0.6$& $ 6112 \pm   4$ & $-28.75 \pm   0.02$ & $-28.78 \pm   0.02$& $-28.40 \pm   0.02$& $-28.18 \pm   0.02$& $-27.41 \pm   0.02$ \\
-147 & $155.2 \pm 1.4$ & $ 11.0 \pm 0.7$& $ 6109 \pm   4$ & $-28.87 \pm   0.02$ & $-28.81 \pm   0.01$& $-28.46 \pm   0.01$& $-28.22 \pm   0.01$& $-27.48 \pm   0.01$ \\
-148 & $112.1 \pm 2.5$ & $  9.8 \pm 1.0$& $ 6121 \pm   3$ & $-29.34 \pm   0.01$ & $-29.09 \pm   0.01$& $-28.68 \pm   0.01$& $-28.39 \pm   0.01$& $-27.70 \pm   0.01$ \\
-149 & $135.8 \pm 1.8$ & $  7.5 \pm 0.9$& $ 6135 \pm   4$ & $-29.22 \pm   0.02$ & $-29.02 \pm   0.02$& $-28.61 \pm   0.02$& $-28.35 \pm   0.01$& $-27.71 \pm   0.02$ \\
-150 & $117.6 \pm 2.6$ & $  8.9 \pm 2.0$& $ 6125 \pm   4$ & $-28.84 \pm   0.01$ & $-28.70 \pm   0.01$& $-28.35 \pm   0.01$& $-28.16 \pm   0.01$& $-27.50 \pm   0.01$ \\
-151 & $ 78.5 \pm 1.8$ & $  6.3 \pm 0.9$& $ 6138 \pm   4$ & $-29.71 \pm   0.01$ & $-29.34 \pm   0.01$& $-28.93 \pm   0.01$& $-28.61 \pm   0.01$& $-27.92 \pm   0.01$ \\
-152 & $137.2 \pm 2.5$ & $  9.3 \pm 1.1$& $ 6112 \pm   7$ & $-29.27 \pm   0.03$ & $-29.09 \pm   0.03$& $-28.73 \pm   0.03$& $-28.38 \pm   0.03$& $-27.68 \pm   0.03$ \\
-153 & $ 99.3 \pm 3.6$ & $ 16.8 \pm 0.7$& $ 6134 \pm   3$ & $-28.29 \pm   0.02$ & $-28.27 \pm   0.01$& $-28.05 \pm   0.01$& $-27.95 \pm   0.01$& $-27.40 \pm   0.01$ \\
-154 & $122.4 \pm 2.7$ & $ 21.2 \pm 0.8$& $ 6114 \pm   4$ & $-29.07 \pm   0.01$ & $-28.94 \pm   0.01$& $-28.50 \pm   0.01$& $-28.26 \pm   0.01$& $-27.53 \pm   0.03$ \\
-155 & $112.2 \pm 2.7$ & $  7.8 \pm 1.0$& $ 6145 \pm   6$ & $-29.42 \pm   0.01$ & $-29.17 \pm   0.01$& $-28.78 \pm   0.01$& $-28.46 \pm   0.01$& $-27.78 \pm   0.01$ \\
-156 & $104.5 \pm 5.5$ & $ 24.4 \pm 2.2$& $ 6123 \pm   9$ & $-29.20 \pm   0.05$ & $-29.01 \pm   0.05$& $-28.48 \pm   0.05$& $-28.23 \pm   0.05$& $-27.54 \pm   0.05$ \\
-157 & $143.3 \pm 1.6$ & $ 18.9 \pm 1.3$& $ 6104 \pm   5$ & $-28.78 \pm   0.02$ & $-28.79 \pm   0.02$& $-28.44 \pm   0.02$& $-28.18 \pm   0.02$& $-27.45 \pm   0.02$ \\
-158 & $ 61.8 \pm 3.5$ & $  3.3 \pm 0.9$& $ 6131 \pm   7$ & $-29.86 \pm   0.01$ & $-29.41 \pm   0.01$& $-29.03 \pm   0.01$& $-28.70 \pm   0.01$& $-28.06 \pm   0.01$ \\
-159 & $ 73.9 \pm 2.4$ & $ 12.8 \pm 0.8$& $ 6133 \pm   3$ & $-29.29 \pm   0.02$ & $-28.94 \pm   0.02$& $-28.53 \pm   0.01$& $-28.35 \pm   0.01$& $-27.76 \pm   0.01$ \\
-160 & $ 95.4 \pm 41.8$ & $ 35.7 \pm 2.8$& $ 6136 \pm   4$ & $-28.71 \pm   0.01$ & $-28.58 \pm   0.01$& $-28.19 \pm   0.01$& $-27.99 \pm   0.01$& $-27.34 \pm   0.01$ \\
-161 & $122.8 \pm 2.3$ & $  9.7 \pm 1.7$& $ 6131 \pm   4$ & $-29.04 \pm   0.02$ & $-28.86 \pm   0.02$& $-28.56 \pm   0.02$& $-28.30 \pm   0.02$& $-27.64 \pm   0.02$ \\
-162 & $111.6 \pm 2.6$ & $  6.4 \pm 1.1$& $ 6115 \pm   4$ & $-29.41 \pm   0.01$ & $-29.15 \pm   0.01$& $-28.70 \pm   0.01$& $-28.38 \pm   0.01$& $-27.73 \pm   0.04$ \\
-163 & $ 98.1 \pm 1.6$ & $ 10.6 \pm 2.1$& $ 6143 \pm   5$ & $-29.23 \pm   0.01$ & $-29.05 \pm   0.01$& $-28.71 \pm   0.01$& $-28.45 \pm   0.01$& $-27.79 \pm   0.01$ \\
-164 & $118.2 \pm 1.5$ & $ 11.3 \pm 1.8$& $ 6158 \pm   5$ & $-29.13 \pm   0.08$ & $-29.01 \pm   0.07$& $-28.62 \pm   0.07$& $-28.32 \pm   0.07$& $-27.68 \pm   0.07$ \\
-165 & $118.8 \pm 2.1$ & $ 15.3 \pm 1.3$& $ 6115 \pm   4$ & $-29.35 \pm   0.01$ & $-29.15 \pm   0.01$& $-28.69 \pm   0.01$& $-28.38 \pm   0.01$& $-27.68 \pm   0.01$ \\
-166 & $108.8 \pm 2.7$ & $ 13.5 \pm 0.9$& $ 6155 \pm   6$ & $-29.44 \pm   0.02$ & $-29.19 \pm   0.01$& $-28.74 \pm   0.01$& $-28.42 \pm   0.01$& $-27.78 \pm   0.01$ \\\enddata
+SN2007bd & $109.7 \pm 5.9$ & $ 17.5 \pm 0.7$& $ 6098 \pm   4$ & $-29.31 \pm   0.01$ & $-29.12 \pm   0.01$& $-28.60 \pm   0.01$& $-28.35 \pm   0.01$& $-27.60 \pm   0.01$ \\
+PTF10zdk & $149.7 \pm 1.2$ & $ 14.3 \pm 0.6$& $ 6150 \pm   3$ & $-28.61 \pm   0.02$ & $-28.69 \pm   0.02$& $-28.32 \pm   0.02$& $-28.08 \pm   0.02$& $-27.40 \pm   0.02$ \\
+SNF20080815-017 & $ 63.8 \pm 21.5$ & $ 27.6 \pm 3.8$& $ 6132 \pm   6$ & $-29.04 \pm   0.07$ & $-28.79 \pm   0.07$& $-28.32 \pm   0.07$& $-28.12 \pm   0.07$& $-27.41 \pm   0.07$ \\
+PTF09dnl & $129.9 \pm 0.9$ & $  9.5 \pm 0.7$& $ 6093 \pm   3$ & $-29.23 \pm   0.01$ & $-29.07 \pm   0.01$& $-28.72 \pm   0.01$& $-28.44 \pm   0.01$& $-27.69 \pm   0.01$ \\
+SN2010ex & $114.4 \pm 0.9$ & $  8.4 \pm 0.4$& $ 6129 \pm   6$ & $-29.26 \pm   0.01$ & $-28.99 \pm   0.01$& $-28.50 \pm   0.01$& $-28.20 \pm   0.01$& $-27.44 \pm   0.01$ \\
+PTF09dnp & $ 64.9 \pm 4.5$ & $ 16.5 \pm 0.7$& $ 6098 \pm   4$ & $-29.55 \pm   0.02$ & $-29.19 \pm   0.02$& $-28.68 \pm   0.02$& $-28.48 \pm   0.02$& $-27.93 \pm   0.02$ \\
+PTF11bnx & $151.4 \pm 3.0$ & $ 13.9 \pm 1.1$& $ 6142 \pm   5$ & $-28.63 \pm   0.02$ & $-28.57 \pm   0.01$& $-28.20 \pm   0.01$& $-27.99 \pm   0.01$& $-27.34 \pm   0.01$ \\
+PTF12jqh & $151.9 \pm 1.5$ & $  7.9 \pm 0.7$& $ 6116 \pm  10$ & $-29.37 \pm   0.01$ & $-29.14 \pm   0.01$& $-28.71 \pm   0.01$& $-28.40 \pm   0.01$& $-27.64 \pm   0.01$ \\
+SNF20080802-006 & $108.2 \pm 6.0$ & $ 20.6 \pm 1.9$& $ 6122 \pm   5$ & $-29.02 \pm   0.06$ & $-28.80 \pm   0.06$& $-28.40 \pm   0.06$& $-28.20 \pm   0.06$& $-27.50 \pm   0.06$ \\
+PTF10xyt & $123.7 \pm 6.6$ & $ 16.4 \pm 4.3$& $ 6101 \pm   4$ & $-28.26 \pm   0.02$ & $-28.20 \pm   0.02$& $-27.93 \pm   0.02$& $-27.74 \pm   0.02$& $-27.22 \pm   0.04$ \\
+PTF11qmo & $101.7 \pm 1.1$ & $  7.7 \pm 0.7$& $ 6150 \pm   8$ & $-29.77 \pm   0.02$ & $-29.43 \pm   0.02$& $-28.97 \pm   0.02$& $-28.64 \pm   0.02$& $-27.93 \pm   0.02$ \\
+SNF20070331-025 & $119.8 \pm 7.4$ & $ 14.2 \pm 2.7$& $ 6120 \pm  10$ & $-28.94 \pm   0.02$ & $-28.75 \pm   0.02$& $-28.32 \pm   0.02$& $-28.07 \pm   0.02$& $-27.31 \pm   0.02$ \\
+SNF20070818-001 & $157.5 \pm 7.5$ & $ 16.7 \pm 1.8$& $ 6115 \pm   5$ & $-28.97 \pm   0.02$ & $-28.96 \pm   0.01$& $-28.61 \pm   0.01$& $-28.37 \pm   0.01$& $-27.62 \pm   0.01$ \\
+SNBOSS38 & $ 57.1 \pm 0.4$ & $ 17.9 \pm 0.3$& $ 6127 \pm   3$ & $-29.20 \pm   0.01$ & $-28.84 \pm   0.01$& $-28.47 \pm   0.01$& $-28.23 \pm   0.01$& $-27.73 \pm   0.04$ \\
+SN2006ob & $ 90.0 \pm 16.5$ & $ 26.5 \pm 1.5$& $ 6112 \pm   5$ & $-29.11 \pm   0.02$ & $-28.82 \pm   0.01$& $-28.42 \pm   0.01$& $-28.19 \pm   0.01$& $-27.54 \pm   0.01$ \\
+PTF12eer & $165.6 \pm 10.7$ & $ 12.7 \pm 2.8$& $ 6150 \pm  10$ & $-28.76 \pm   0.01$ & $-28.76 \pm   0.01$& $-28.40 \pm   0.01$& $-28.17 \pm   0.01$& $-27.45 \pm   0.02$ \\
+PTF10ops & $ 38.7 \pm 9.9$ & $  7.2 \pm 8.7$& $ 6141 \pm   5$ & $-27.93 \pm   0.38$ & $-27.76 \pm   0.38$& $-27.73 \pm   0.38$& $-27.59 \pm   0.38$& $-27.21 \pm   0.38$ \\
+SNF20080514-002 & $ 83.2 \pm 0.7$ & $ 19.4 \pm 0.6$& $ 6131 \pm   3$ & $-29.30 \pm   0.01$ & $-28.95 \pm   0.01$& $-28.44 \pm   0.01$& $-28.17 \pm   0.01$& $-27.49 \pm   0.01$ \\
+PTF12evo & $129.2 \pm 2.8$ & $  9.1 \pm 1.3$& $ 6156 \pm   4$ & $-29.14 \pm   0.02$ & $-28.98 \pm   0.01$& $-28.56 \pm   0.01$& $-28.28 \pm   0.01$& $-27.61 \pm   0.01$ \\
+SNF20080614-010 & $125.4 \pm 5.1$ & $ 26.9 \pm 1.6$& $ 6128 \pm   3$ & $-29.04 \pm   0.04$ & $-28.81 \pm   0.04$& $-28.38 \pm   0.04$& $-28.16 \pm   0.04$& $-27.57 \pm   0.04$ \\
+PTF10icb & $104.8 \pm 0.9$ & $ 12.7 \pm 0.3$& $ 6138 \pm   3$ & $-28.58 \pm   0.02$ & $-28.36 \pm   0.02$& $-27.98 \pm   0.02$& $-27.77 \pm   0.02$& $-27.17 \pm   0.02$ \\
+SNNGC4424 & $109.0 \pm 0.3$ & $  8.6 \pm 0.1$& $ 6138 \pm   2$ & $-28.35 \pm   0.01$ & $-28.15 \pm   0.01$& $-27.79 \pm   0.01$& $-27.58 \pm   0.01$& $-26.97 \pm   0.01$ \\
+SNF20080516-022 & $100.1 \pm 2.1$ & $ 13.7 \pm 1.1$& $ 6158 \pm   3$ & $-29.46 \pm   0.01$ & $-29.19 \pm   0.01$& $-28.71 \pm   0.01$& $-28.39 \pm   0.01$& $-27.77 \pm   0.01$ \\
+PTF12hwb & $ 21.1 \pm 78.0$ & $ -1.8 \pm 8.9$& $ 6090 \pm  14$ & $-28.32 \pm   0.02$ & $-28.24 \pm   0.02$& $-28.03 \pm   0.02$& $-27.79 \pm   0.02$& $-27.05 \pm   0.04$ \\
+PTF10qyz & $106.4 \pm 2.1$ & $ 23.0 \pm 1.0$& $ 6120 \pm   5$ & $-29.05 \pm   0.17$ & $-28.92 \pm   0.17$& $-28.41 \pm   0.17$& $-28.14 \pm   0.17$& $-27.30 \pm   0.17$ \\
+SNF20060907-000 & $106.1 \pm 10.4$ & $ 17.0 \pm 0.9$& $ 6149 \pm   4$ & $-29.54 \pm   0.02$ & $-29.28 \pm   0.01$& $-28.76 \pm   0.01$& $-28.42 \pm   0.01$& $-27.74 \pm   0.04$ \\
+LSQ12fxd & $122.9 \pm 1.7$ & $ 11.4 \pm 0.8$& $ 6119 \pm   4$ & $-29.62 \pm   0.07$ & $-29.39 \pm   0.07$& $-28.95 \pm   0.07$& $-28.64 \pm   0.07$& $-27.91 \pm   0.07$ \\
+SNF20080821-000 & $105.1 \pm 2.2$ & $  8.6 \pm 1.3$& $ 6121 \pm   4$ & $-29.34 \pm   0.01$ & $-29.10 \pm   0.01$& $-28.73 \pm   0.01$& $-28.46 \pm   0.01$& $-27.82 \pm   0.01$ \\
+SNF20070802-000 & $158.3 \pm 3.3$ & $ 16.3 \pm 1.7$& $ 6102 \pm   5$ & $-28.90 \pm   0.01$ & $-28.81 \pm   0.01$& $-28.45 \pm   0.01$& $-28.22 \pm   0.01$& $-27.52 \pm   0.01$ \\
+PTF10wnm & $105.8 \pm 2.3$ & $  6.5 \pm 1.0$& $ 6124 \pm   3$ & $-29.38 \pm   0.01$ & $-29.07 \pm   0.01$& $-28.68 \pm   0.01$& $-28.37 \pm   0.01$& $-27.69 \pm   0.01$ \\
+PTF10mwb & $116.5 \pm 1.2$ & $ 19.8 \pm 0.9$& $ 6138 \pm   2$ & $-29.02 \pm   0.07$ & $-28.84 \pm   0.07$& $-28.40 \pm   0.07$& $-28.14 \pm   0.07$& $-27.52 \pm   0.07$ \\
+SN2010dt & $116.2 \pm 14.9$ & $ 15.5 \pm 0.7$& $ 6138 \pm   6$ & $-29.30 \pm   0.01$ & $-29.15 \pm   0.01$& $-28.64 \pm   0.01$& $-28.35 \pm   0.01$& $-27.63 \pm   0.01$ \\
+SNF20080623-001 & $149.1 \pm 1.4$ & $ 14.9 \pm 0.7$& $ 6131 \pm   3$ & $-29.11 \pm   0.01$ & $-28.97 \pm   0.01$& $-28.50 \pm   0.01$& $-28.22 \pm   0.01$& $-27.46 \pm   0.01$ \\
+LSQ12fhe & $ 42.8 \pm 1.2$ & $  4.0 \pm 3.1$& $ 6108 \pm   4$ & $-29.76 \pm   0.02$ & $-29.40 \pm   0.02$& $-29.04 \pm   0.02$& $-28.74 \pm   0.02$& $-28.11 \pm   0.02$ \\
+PTF11bju & $ 30.2 \pm 4.4$ & $  4.0 \pm 3.0$& $ 6139 \pm   5$ & $-29.47 \pm   0.02$ & $-29.10 \pm   0.01$& $-28.75 \pm   0.01$& $-28.45 \pm   0.01$& $-27.87 \pm   0.01$ \\
+PTF09fox & $117.6 \pm 2.7$ & $  9.1 \pm 1.0$& $ 6116 \pm   3$ & $-29.44 \pm   0.03$ & $-29.21 \pm   0.03$& $-28.72 \pm   0.03$& $-28.42 \pm   0.03$& $-27.68 \pm   0.03$ \\
+PTF13ayw & $104.6 \pm 2.4$ & $ 26.6 \pm 3.2$& $ 6114 \pm   9$ & $-29.16 \pm   0.02$ & $-28.82 \pm   0.02$& $-28.43 \pm   0.02$& $-28.20 \pm   0.02$& $-27.55 \pm   0.02$ \\
+SNF20070810-004 & $126.7 \pm 1.8$ & $ 21.1 \pm 1.1$& $ 6118 \pm   7$ & $-29.22 \pm   0.01$ & $-29.10 \pm   0.01$& $-28.63 \pm   0.01$& $-28.34 \pm   0.01$& $-27.62 \pm   0.01$ \\
+PTF11mty & $111.4 \pm 2.3$ & $ 10.6 \pm 1.5$& $ 6138 \pm   5$ & $-29.54 \pm   0.01$ & $-29.23 \pm   0.01$& $-28.80 \pm   0.01$& $-28.46 \pm   0.01$& $-27.82 \pm   0.01$ \\
+SNF20080512-010 & $ 95.3 \pm 3.5$ & $ 23.3 \pm 1.5$& $ 6129 \pm   5$ & $-29.22 \pm   0.08$ & $-28.96 \pm   0.08$& $-28.50 \pm   0.08$& $-28.26 \pm   0.08$& $-27.56 \pm   0.08$ \\
+PTF11mkx & $ 31.5 \pm 3.7$ & $  4.5 \pm 1.3$& $ 6168 \pm   6$ & $-29.50 \pm   0.45$ & $-29.25 \pm   0.45$& $-28.89 \pm   0.45$& $-28.61 \pm   0.45$& $-27.97 \pm   0.45$ \\
+PTF10tce & $135.7 \pm 1.1$ & $ 11.2 \pm 1.5$& $ 6090 \pm   4$ & $-29.13 \pm   0.02$ & $-28.99 \pm   0.01$& $-28.59 \pm   0.01$& $-28.31 \pm   0.01$& $-27.55 \pm   0.01$ \\
+SNF20061020-000 & $ 95.4 \pm 18.8$ & $ 24.1 \pm 1.0$& $ 6120 \pm   5$ & $-29.01 \pm   0.03$ & $-28.78 \pm   0.03$& $-28.35 \pm   0.03$& $-28.17 \pm   0.03$& $-27.54 \pm   0.03$ \\
+SN2005ir & $115.6 \pm 2.8$ & $ 13.5 \pm 6.9$& $ 6069 \pm   5$ & $-29.33 \pm   0.02$ & $-29.12 \pm   0.02$& $-28.84 \pm   0.02$& $-28.49 \pm   0.02$& $-27.77 \pm   0.02$ \\
+SNF20080717-000 & $ 93.3 \pm 2.6$ & $  8.3 \pm 2.2$& $ 6104 \pm   3$ & $-28.58 \pm   0.01$ & $-28.47 \pm   0.01$& $-28.29 \pm   0.01$& $-28.05 \pm   0.01$& $-27.50 \pm   0.01$ \\
+PTF12ena & $101.1 \pm 1.6$ & $  7.4 \pm 1.0$& $ 6129 \pm   4$ & $-28.01 \pm   0.01$ & $-28.00 \pm   0.01$& $-27.85 \pm   0.01$& $-27.77 \pm   0.01$& $-27.31 \pm   0.01$ \\
+PTF13anh & $166.8 \pm 1.8$ & $ 21.8 \pm 1.2$& $ 6175 \pm   4$ & $-28.67 \pm   0.20$ & $-28.74 \pm   0.20$& $-28.30 \pm   0.20$& $-28.05 \pm   0.20$& $-27.28 \pm   0.20$ \\
+CSS110918\_01 & $110.6 \pm 1.0$ & $  8.0 \pm 1.3$& $ 6101 \pm   2$ & $-29.88 \pm   0.76$ & $-29.58 \pm   0.76$& $-29.09 \pm   0.76$& $-28.71 \pm   0.76$& $-27.91 \pm   0.76$ \\
+SNF20070506-006 & $ 94.1 \pm 1.3$ & $  6.7 \pm 0.6$& $ 6153 \pm   3$ & $-29.72 \pm   0.01$ & $-29.39 \pm   0.01$& $-28.97 \pm   0.01$& $-28.64 \pm   0.01$& $-27.96 \pm   0.01$ \\
+SNF20070403-001 & $105.9 \pm 5.4$ & $ 18.3 \pm 1.8$& $ 6124 \pm   4$ & $-29.23 \pm   0.02$ & $-29.04 \pm   0.01$& $-28.63 \pm   0.01$& $-28.35 \pm   0.01$& $-27.62 \pm   0.01$ \\
+PTF10hmv & $109.6 \pm 1.3$ & $  8.9 \pm 0.7$& $ 6143 \pm   3$ & $-28.54 \pm   0.01$ & $-28.40 \pm   0.01$& $-28.11 \pm   0.01$& $-27.89 \pm   0.01$& $-27.31 \pm   0.01$ \\
+SNF20071015-000 & $105.0 \pm 3.2$ & $  6.9 \pm 1.1$& $ 6124 \pm   7$ & $-27.89 \pm   0.02$ & $-27.82 \pm   0.02$& $-27.69 \pm   0.02$& $-27.63 \pm   0.02$& $-27.16 \pm   0.04$ \\
+SNhunt89 & $ 88.0 \pm 2.7$ & $ 32.2 \pm 1.9$& $ 6111 \pm   7$ & $-28.37 \pm   0.03$ & $-28.26 \pm   0.03$& $-27.92 \pm   0.03$& $-27.77 \pm   0.03$& $-27.13 \pm   0.03$ \\
+SNF20070902-021 & $108.9 \pm 3.5$ & $ 17.1 \pm 1.0$& $ 6131 \pm   6$ & $-29.25 \pm   0.02$ & $-29.02 \pm   0.02$& $-28.56 \pm   0.02$& $-28.32 \pm   0.01$& $-27.65 \pm   0.02$ \\
+PTF09dlc & $143.5 \pm 2.2$ & $ 10.2 \pm 0.9$& $ 6143 \pm   3$ & $-29.38 \pm   0.01$ & $-29.17 \pm   0.01$& $-28.69 \pm   0.01$& $-28.40 \pm   0.01$& $-27.62 \pm   0.01$ \\
+PTF13ajv & $150.5 \pm 8.9$ & $ 46.3 \pm 8.6$& $ 6110 \pm  21$ & $-28.70 \pm   0.02$ & $-28.61 \pm   0.02$& $-28.16 \pm   0.02$& $-27.91 \pm   0.02$& $-27.07 \pm   0.04$ \\
+SNF20080919-000 & $114.7 \pm 2.8$ & $  9.4 \pm 0.9$& $ 6145 \pm   5$ & $-28.53 \pm   0.02$ & $-28.41 \pm   0.01$& $-28.11 \pm   0.01$& $-27.99 \pm   0.01$& $-27.38 \pm   0.01$ \\
+SNF20080919-001 & $ 85.0 \pm 1.1$ & $  6.0 \pm 0.4$& $ 6150 \pm   5$ & $-29.73 \pm   0.01$ & $-29.43 \pm   0.01$& $-29.04 \pm   0.01$& $-28.72 \pm   0.01$& $-28.07 \pm   0.01$ \\
+SN2010kg & $ 95.1 \pm 28.5$ & $ 21.7 \pm 0.7$& $ 6077 \pm   5$ & $-28.85 \pm   0.01$ & $-28.74 \pm   0.01$& $-28.41 \pm   0.01$& $-28.20 \pm   0.01$& $-27.47 \pm   0.01$ \\
+SNF20080714-008 & $134.8 \pm 15.7$ & $ 19.7 \pm 3.7$& $ 6100 \pm   6$ & $-28.56 \pm   0.02$ & $-28.63 \pm   0.01$& $-28.32 \pm   0.01$& $-28.13 \pm   0.01$& $-27.42 \pm   0.01$ \\
+SNF20070714-007 & $129.6 \pm 5.6$ & $ 31.1 \pm 23.8$& $ 6146 \pm   5$ & $-27.88 \pm   0.02$ & $-28.12 \pm   0.01$& $-28.02 \pm   0.01$& $-27.86 \pm   0.01$& $-27.24 \pm   0.03$ \\
+SNF20080522-011 & $122.1 \pm 1.7$ & $  8.3 \pm 0.5$& $ 6125 \pm   3$ & $-29.63 \pm   0.01$ & $-29.38 \pm   0.01$& $-28.92 \pm   0.01$& $-28.60 \pm   0.01$& $-27.88 \pm   0.01$ \\
+SNF20061111-002 & $110.8 \pm 10.7$ & $ 20.4 \pm 1.0$& $ 6145 \pm   6$ & $-29.16 \pm   0.01$ & $-28.99 \pm   0.01$& $-28.59 \pm   0.01$& $-28.29 \pm   0.01$& $-27.61 \pm   0.01$ \\
+SNNGC6343 & $ 87.0 \pm 1.4$ & $ 20.7 \pm 0.7$& $ 6136 \pm   3$ & $-28.78 \pm   0.01$ & $-28.66 \pm   0.01$& $-28.30 \pm   0.01$& $-28.08 \pm   0.01$& $-27.41 \pm   0.01$ \\
+SNF20080825-010 & $102.4 \pm 13.4$ & $ 19.2 \pm 0.6$& $ 6116 \pm   4$ & $-29.46 \pm   0.01$ & $-29.17 \pm   0.01$& $-28.71 \pm   0.01$& $-28.47 \pm   0.01$& $-27.83 \pm   0.01$ \\
+PTF10ufj & $141.1 \pm 3.4$ & $ 11.7 \pm 1.2$& $ 6131 \pm   6$ & $-29.28 \pm   0.15$ & $-29.16 \pm   0.15$& $-28.72 \pm   0.15$& $-28.41 \pm   0.15$& $-27.65 \pm   0.15$ \\
+PTF10wof & $129.6 \pm 2.7$ & $ 17.3 \pm 1.0$& $ 6102 \pm   2$ & $-28.91 \pm   0.01$ & $-28.84 \pm   0.01$& $-28.46 \pm   0.01$& $-28.18 \pm   0.01$& $-27.43 \pm   0.01$ \\
+SNF20080918-000 & $146.8 \pm 3.5$ & $  7.5 \pm 2.5$& $ 6110 \pm   5$ & $-28.79 \pm   0.02$ & $-28.65 \pm   0.02$& $-28.35 \pm   0.02$& $-28.12 \pm   0.02$& $-27.46 \pm   0.02$ \\
+SNF20080516-000 & $117.4 \pm 2.2$ & $  9.0 \pm 1.2$& $ 6127 \pm  10$ & $-29.50 \pm   0.01$ & $-29.23 \pm   0.01$& $-28.80 \pm   0.01$& $-28.47 \pm   0.01$& $-27.74 \pm   0.01$ \\
+SN2005cf & $159.1 \pm 0.7$ & $ 15.7 \pm 0.8$& $ 6144 \pm   2$ & $-29.37 \pm   0.02$ & $-29.16 \pm   0.02$& $-28.68 \pm   0.02$& $-28.41 \pm   0.02$& $-27.69 \pm   0.02$ \\
+CSS130502\_01 & $ 91.5 \pm 10.9$ & $ 15.6 \pm 0.5$& $ 6128 \pm   3$ & $-29.43 \pm   0.02$ & $-29.09 \pm   0.02$& $-28.60 \pm   0.01$& $-28.30 \pm   0.01$& $-27.62 \pm   0.04$ \\
+SNF20080620-000 & $107.8 \pm 14.1$ & $ 20.0 \pm 0.7$& $ 6132 \pm   4$ & $-28.82 \pm   0.02$ & $-28.78 \pm   0.01$& $-28.32 \pm   0.01$& $-28.09 \pm   0.01$& $-27.39 \pm   0.01$ \\
+SNPGC51271 & $ 92.1 \pm 16.5$ & $ 21.1 \pm 0.7$& $ 6121 \pm   2$ & $-29.28 \pm   0.02$ & $-28.95 \pm   0.02$& $-28.46 \pm   0.02$& $-28.20 \pm   0.02$& $-27.62 \pm   0.04$ \\
+PTF11pdk & $128.6 \pm 2.8$ & $ 15.6 \pm 1.7$& $ 6153 \pm   5$ & $-29.35 \pm   0.02$ & $-29.11 \pm   0.02$& $-28.61 \pm   0.02$& $-28.32 \pm   0.02$& $-27.67 \pm   0.02$ \\
+SNF20060511-014 & $102.6 \pm 2.8$ & $ 15.6 \pm 1.1$& $ 6141 \pm   8$ & $-29.16 \pm   0.07$ & $-29.04 \pm   0.06$& $-28.56 \pm   0.06$& $-28.30 \pm   0.06$& $-27.63 \pm   0.06$ \\
+SNF20080612-003 & $120.0 \pm 1.1$ & $  7.3 \pm 0.6$& $ 6123 \pm   3$ & $-29.64 \pm   0.02$ & $-29.41 \pm   0.02$& $-28.99 \pm   0.02$& $-28.70 \pm   0.02$& $-28.00 \pm   0.02$ \\
+SNF20080626-002 & $130.0 \pm 1.0$ & $  6.1 \pm 4.2$& $ 6111 \pm   3$ & $-29.42 \pm   0.01$ & $-29.24 \pm   0.01$& $-28.84 \pm   0.01$& $-28.52 \pm   0.01$& $-27.76 \pm   0.01$ \\
+SNF20060621-015 & $111.9 \pm 1.3$ & $  9.8 \pm 0.7$& $ 6144 \pm   3$ & $-29.63 \pm   0.01$ & $-29.36 \pm   0.01$& $-28.88 \pm   0.01$& $-28.54 \pm   0.01$& $-27.81 \pm   0.01$ \\
+SNF20080920-000 & $135.2 \pm 1.4$ & $  5.6 \pm 1.6$& $ 6085 \pm   3$ & $-29.44 \pm   0.02$ & $-29.19 \pm   0.02$& $-28.79 \pm   0.02$& $-28.49 \pm   0.02$& $-27.74 \pm   0.02$ \\
+SN2007cq & $ 65.8 \pm 4.1$ & $ 10.2 \pm 0.9$& $ 6137 \pm   3$ & $-29.53 \pm   0.02$ & $-29.30 \pm   0.02$& $-28.89 \pm   0.02$& $-28.56 \pm   0.02$& $-27.90 \pm   0.02$ \\
+SNF20080918-004 & $ 87.8 \pm 7.2$ & $ 21.5 \pm 0.9$& $ 6141 \pm   4$ & $-29.00 \pm   0.22$ & $-28.82 \pm   0.22$& $-28.37 \pm   0.22$& $-28.13 \pm   0.22$& $-27.43 \pm   0.22$ \\
+CSS120424\_01 & $138.1 \pm 2.1$ & $ 11.7 \pm 0.7$& $ 6138 \pm   3$ & $-29.40 \pm   0.02$ & $-29.23 \pm   0.02$& $-28.77 \pm   0.01$& $-28.45 \pm   0.02$& $-27.68 \pm   0.02$ \\
+SNF20080610-000 & $119.9 \pm 10.4$ & $ 16.4 \pm 1.7$& $ 6131 \pm   6$ & $-29.05 \pm   0.07$ & $-28.92 \pm   0.07$& $-28.50 \pm   0.07$& $-28.22 \pm   0.07$& $-27.55 \pm   0.07$ \\
+SNF20070701-005 & $101.8 \pm 2.6$ & $ 12.4 \pm 1.0$& $ 6158 \pm   5$ & $-29.46 \pm   0.02$ & $-29.27 \pm   0.02$& $-28.87 \pm   0.02$& $-28.60 \pm   0.02$& $-27.96 \pm   0.02$ \\
+SN2007kk & $128.5 \pm 1.4$ & $ 10.6 \pm 1.0$& $ 6098 \pm   4$ & $-29.48 \pm   0.02$ & $-29.31 \pm   0.02$& $-28.87 \pm   0.01$& $-28.54 \pm   0.01$& $-27.77 \pm   0.02$ \\
+SNF20060908-004 & $114.4 \pm 1.2$ & $ 12.6 \pm 0.6$& $ 6136 \pm   3$ & $-29.59 \pm   0.23$ & $-29.34 \pm   0.23$& $-28.91 \pm   0.23$& $-28.58 \pm   0.23$& $-27.87 \pm   0.23$ \\
+SNF20080909-030 & $ 93.7 \pm 1.0$ & $  7.8 \pm 0.4$& $ 6171 \pm   3$ & $-29.38 \pm   0.02$ & $-29.12 \pm   0.01$& $-28.74 \pm   0.01$& $-28.44 \pm   0.01$& $-27.78 \pm   0.01$ \\
+PTF11bgv & $ 79.4 \pm 3.2$ & $ 12.6 \pm 0.7$& $ 6146 \pm   3$ & $-28.90 \pm   0.02$ & $-28.62 \pm   0.01$& $-28.27 \pm   0.01$& $-28.08 \pm   0.01$& $-27.54 \pm   0.01$ \\
+SNNGC2691 & $ 39.0 \pm 22.2$ & $  4.5 \pm 0.2$& $ 6139 \pm   8$ & $-29.46 \pm   0.02$ & $-29.06 \pm   0.02$& $-28.75 \pm   0.02$& $-28.49 \pm   0.02$& $-27.93 \pm   0.02$ \\
+PTF13asv & $ 75.6 \pm 1.1$ & $  2.2 \pm 0.4$& $ 6148 \pm   4$ & $-29.92 \pm   0.32$ & $-29.49 \pm   0.32$& $-29.02 \pm   0.32$& $-28.63 \pm   0.32$& $-27.90 \pm   0.32$ \\
+SNF20070806-026 & $ 98.8 \pm 12.1$ & $ 25.9 \pm 0.7$& $ 6114 \pm   7$ & $-29.14 \pm   0.02$ & $-28.91 \pm   0.02$& $-28.44 \pm   0.02$& $-28.21 \pm   0.02$& $-27.49 \pm   0.02$ \\
+SNF20070427-001 & $ 81.3 \pm 2.3$ & $  6.3 \pm 0.9$& $ 6142 \pm   5$ & $-29.89 \pm   0.02$ & $-29.46 \pm   0.02$& $-28.97 \pm   0.02$& $-28.62 \pm   0.02$& $-27.97 \pm   0.02$ \\
+SNF20061108-004 & $129.5 \pm 5.6$ & $  6.3 \pm 2.5$& $ 6110 \pm   6$ & $-29.53 \pm   0.02$ & $-29.31 \pm   0.02$& $-28.95 \pm   0.02$& $-28.60 \pm   0.02$& $-27.96 \pm   0.02$ \\
+SNF20060912-000 & $106.5 \pm 1.8$ & $ 21.4 \pm 1.7$& $ 6163 \pm   7$ & $-28.98 \pm   0.02$ & $-28.92 \pm   0.02$& $-28.66 \pm   0.02$& $-28.42 \pm   0.02$& $-27.77 \pm   0.02$ \\
+CSS110918\_02 & $109.1 \pm 9.4$ & $ 15.0 \pm 0.6$& $ 6137 \pm   3$ & $-29.36 \pm   0.02$ & $-29.14 \pm   0.01$& $-28.69 \pm   0.01$& $-28.41 \pm   0.01$& $-27.70 \pm   0.01$ \\
+SNF20080918-002 & $ 97.7 \pm 2.8$ & $ 12.6 \pm 1.4$& $ 6141 \pm   6$ & $-29.50 \pm   0.02$ & $-29.11 \pm   0.02$& $-28.61 \pm   0.02$& $-28.34 \pm   0.02$& $-27.71 \pm   0.02$ \\
+SNIC3573 & $102.7 \pm 1.8$ & $ 11.9 \pm 1.0$& $ 6142 \pm   5$ & $-29.28 \pm   0.02$ & $-29.14 \pm   0.02$& $-28.74 \pm   0.02$& $-28.46 \pm   0.01$& $-27.76 \pm   0.03$ \\
+SNF20080725-004 & $133.6 \pm 2.1$ & $  6.9 \pm 0.9$& $ 6131 \pm   6$ & $-29.09 \pm   0.01$ & $-28.93 \pm   0.01$& $-28.59 \pm   0.01$& $-28.31 \pm   0.01$& $-27.55 \pm   0.03$ \\
+SNF20050728-006 & $127.8 \pm 2.5$ & $ 15.8 \pm 1.3$& $ 6124 \pm   6$ & $-28.80 \pm   0.02$ & $-28.68 \pm   0.02$& $-28.37 \pm   0.02$& $-28.18 \pm   0.02$& $-27.55 \pm   0.02$ \\
+SN2012fr & $134.2 \pm 0.5$ & $  7.4 \pm 0.2$& $ 6102 \pm   1$ & $-29.91 \pm   0.01$ & $-29.70 \pm   0.01$& $-29.31 \pm   0.01$& $-28.94 \pm   0.01$& $-28.10 \pm   0.01$ \\
+SNF20060512-002 & $100.2 \pm 2.8$ & $ 13.4 \pm 1.1$& $ 6107 \pm   8$ & $-29.33 \pm   0.02$ & $-29.11 \pm   0.02$& $-28.77 \pm   0.02$& $-28.52 \pm   0.02$& $-27.80 \pm   0.02$ \\
+SNF20060512-001 & $ 88.4 \pm 1.2$ & $  5.4 \pm 0.4$& $ 6169 \pm   3$ & $-29.33 \pm   0.01$ & $-29.05 \pm   0.01$& $-28.68 \pm   0.01$& $-28.40 \pm   0.01$& $-27.79 \pm   0.01$ \\
+SNF20071003-016 & $125.2 \pm 4.6$ & $ 17.1 \pm 2.0$& $ 6124 \pm  11$ & $-28.58 \pm   0.02$ & $-28.54 \pm   0.02$& $-28.19 \pm   0.02$& $-27.99 \pm   0.02$& $-27.31 \pm   0.02$ \\
+SNF20050821-007 & $141.7 \pm 2.6$ & $  7.7 \pm 1.0$& $ 6140 \pm   9$ & $-29.38 \pm   0.02$ & $-29.20 \pm   0.02$& $-28.77 \pm   0.02$& $-28.46 \pm   0.02$& $-27.67 \pm   0.02$ \\
+SNF20070803-005 & $ 22.7 \pm 21.4$ & $  0.9 \pm 0.6$& $ 6157 \pm  27$ & $-29.87 \pm   0.01$ & $-29.43 \pm   0.01$& $-29.04 \pm   0.01$& $-28.74 \pm   0.01$& $-28.11 \pm   0.01$ \\
+PTF09foz & $127.2 \pm 1.9$ & $ 21.7 \pm 1.2$& $ 6136 \pm   4$ & $-29.14 \pm   0.01$ & $-29.00 \pm   0.01$& $-28.59 \pm   0.01$& $-28.35 \pm   0.01$& $-27.65 \pm   0.01$ \\
+PTF12grk & $162.3 \pm 9.8$ & $ 19.6 \pm 1.4$& $ 6085 \pm   8$ & $-28.86 \pm   0.02$ & $-28.87 \pm   0.01$& $-28.42 \pm   0.01$& $-28.19 \pm   0.01$& $-27.50 \pm   0.03$ \\
+SNF20080720-001 & $138.5 \pm 4.0$ & $ 14.0 \pm 2.0$& $ 6112 \pm   2$ & $-27.59 \pm   0.02$ & $-27.78 \pm   0.01$& $-27.73 \pm   0.01$& $-27.71 \pm   0.01$& $-27.19 \pm   0.02$ \\
+SNF20080810-001 & $ 88.4 \pm 21.6$ & $ 22.3 \pm 1.1$& $ 6145 \pm   5$ & $-29.11 \pm   0.01$ & $-28.89 \pm   0.01$& $-28.45 \pm   0.01$& $-28.23 \pm   0.01$& $-27.60 \pm   0.01$ \\
+SNF20050729-002 & $109.4 \pm 2.2$ & $ 11.5 \pm 1.7$& $ 6142 \pm   6$ & $-29.35 \pm   0.13$ & $-29.17 \pm   0.13$& $-28.68 \pm   0.13$& $-28.38 \pm   0.13$& $-27.56 \pm   0.13$ \\
+SN2008ec & $103.7 \pm 17.0$ & $ 23.1 \pm 0.4$& $ 6125 \pm   3$ & $-28.67 \pm   0.01$ & $-28.52 \pm   0.01$& $-28.18 \pm   0.01$& $-28.03 \pm   0.01$& $-27.47 \pm   0.01$ \\
+SNF20070902-018 & $ 93.8 \pm 12.2$ & $ 23.8 \pm 3.0$& $ 6120 \pm   8$ & $-28.87 \pm   0.02$ & $-28.70 \pm   0.01$& $-28.26 \pm   0.01$& $-28.08 \pm   0.01$& $-27.41 \pm   0.02$ \\
+SNF20070424-003 & $122.5 \pm 3.8$ & $ 12.7 \pm 1.6$& $ 6132 \pm   6$ & $-29.10 \pm   0.01$ & $-28.96 \pm   0.01$& $-28.51 \pm   0.01$& $-28.25 \pm   0.01$& $-27.57 \pm   0.01$ \\
+SN2006cj & $101.7 \pm 1.3$ & $  4.8 \pm 0.8$& $ 6127 \pm   3$ & $-29.43 \pm   0.01$ & $-29.14 \pm   0.01$& $-28.74 \pm   0.01$& $-28.43 \pm   0.01$& $-27.76 \pm   0.01$ \\
+SN2007nq & $ 89.8 \pm 9.9$ & $ 23.4 \pm 1.1$& $ 6109 \pm   5$ & $-29.11 \pm   0.02$ & $-28.91 \pm   0.02$& $-28.50 \pm   0.02$& $-28.27 \pm   0.02$& $-27.57 \pm   0.02$ \\
+SNF20070817-003 & $ 93.9 \pm 2.4$ & $ 18.5 \pm 1.3$& $ 6116 \pm   6$ & $-29.19 \pm   0.02$ & $-29.03 \pm   0.01$& $-28.59 \pm   0.01$& $-28.30 \pm   0.01$& $-27.55 \pm   0.02$ \\
+SNF20070403-000 & $ 61.8 \pm 6.5$ & $ 27.1 \pm 1.8$& $ 6154 \pm   8$ & $-28.37 \pm   0.02$ & $-28.27 \pm   0.02$& $-27.97 \pm   0.02$& $-27.80 \pm   0.02$& $-27.24 \pm   0.02$ \\
+SNF20061022-005 & $ 64.6 \pm 3.8$ & $  3.7 \pm 1.4$& $ 6148 \pm   4$ & $-29.49 \pm   0.02$ & $-29.06 \pm   0.02$& $-28.71 \pm   0.02$& $-28.42 \pm   0.02$& $-27.93 \pm   0.02$ \\
+SNNGC4076 & $127.3 \pm 2.4$ & $ 15.5 \pm 1.2$& $ 6152 \pm   4$ & $-28.77 \pm   0.01$ & $-28.66 \pm   0.01$& $-28.37 \pm   0.01$& $-28.15 \pm   0.01$& $-27.52 \pm   0.01$ \\
+SNF20070727-016 & $ 77.5 \pm 2.5$ & $  5.1 \pm 0.8$& $ 6140 \pm   4$ & $-29.96 \pm   0.06$ & $-29.56 \pm   0.06$& $-29.06 \pm   0.06$& $-28.75 \pm   0.06$& $-28.01 \pm   0.06$ \\
+PTF12fuu & $105.5 \pm 3.0$ & $  6.2 \pm 1.2$& $ 6124 \pm   5$ & $-29.54 \pm   0.01$ & $-29.23 \pm   0.01$& $-28.74 \pm   0.01$& $-28.40 \pm   0.01$& $-27.64 \pm   0.01$ \\
+SNF20070820-000 & $107.2 \pm 3.5$ & $ 18.6 \pm 1.3$& $ 6132 \pm  14$ & $-28.80 \pm   0.02$ & $-28.69 \pm   0.02$& $-28.34 \pm   0.02$& $-28.13 \pm   0.02$& $-27.52 \pm   0.02$ \\
+SNF20070725-001 & $ 99.1 \pm 2.7$ & $  5.8 \pm 0.8$& $ 6164 \pm   5$ & $-29.67 \pm   0.01$ & $-29.34 \pm   0.01$& $-28.94 \pm   0.01$& $-28.60 \pm   0.01$& $-27.96 \pm   0.01$ \\
+SNF20071108-021 & $126.5 \pm 1.2$ & $ 15.4 \pm 1.1$& $ 6159 \pm   3$ & $-28.67 \pm   0.02$ & $-28.60 \pm   0.02$& $-28.31 \pm   0.02$& $-28.13 \pm   0.02$& $-27.58 \pm   0.02$ \\
+SNF20080914-001 & $ 87.7 \pm 3.6$ & $  7.3 \pm 1.3$& $ 6132 \pm   4$ & $-28.60 \pm   0.02$ & $-28.42 \pm   0.02$& $-28.19 \pm   0.02$& $-28.05 \pm   0.02$& $-27.53 \pm   0.02$ \\
+SNF20060609-002 & $121.0 \pm 5.3$ & $  9.3 \pm 3.1$& $ 6129 \pm   7$ & $-29.75 \pm   0.01$ & $-29.42 \pm   0.01$& $-28.99 \pm   0.01$& $-28.68 \pm   0.01$& $-27.97 \pm   0.01$ \\
+SNF20050624-000 & $133.0 \pm 1.5$ & $ 17.6 \pm 0.8$& $ 6114 \pm   5$ & $-29.12 \pm   0.01$ & $-28.98 \pm   0.01$& $-28.54 \pm   0.01$& $-28.28 \pm   0.01$& $-27.51 \pm   0.01$ \\
+SNF20060618-023 & $106.4 \pm 2.1$ & $ 26.7 \pm 1.3$& $ 6101 \pm   2$ & $-29.00 \pm   0.01$ & $-28.83 \pm   0.01$& $-28.42 \pm   0.01$& $-28.20 \pm   0.01$& $-27.53 \pm   0.04$ \\
+SNF20080531-000 & $110.3 \pm 1.6$ & $ 14.2 \pm 0.7$& $ 6141 \pm   4$ & $-29.34 \pm   0.01$ & $-29.04 \pm   0.01$& $-28.57 \pm   0.01$& $-28.32 \pm   0.01$& $-27.66 \pm   0.01$ \\
+SN2006do & $ 99.5 \pm 1.6$ & $ 30.0 \pm 0.7$& $ 6118 \pm   3$ & $-28.81 \pm   0.01$ & $-28.65 \pm   0.01$& $-28.23 \pm   0.01$& $-28.02 \pm   0.01$& $-27.33 \pm   0.01$ \\
+PTF12ikt & $138.0 \pm 5.1$ & $ 16.2 \pm 1.6$& $ 6125 \pm  10$ & $-27.84 \pm   0.02$ & $-27.92 \pm   0.02$& $-27.69 \pm   0.02$& $-27.60 \pm   0.02$& $-26.99 \pm   0.02$ \\
+SN2006dm & $ 80.8 \pm 2.4$ & $  4.3 \pm 0.8$& $ 6138 \pm   4$ & $-29.54 \pm   0.02$ & $-29.16 \pm   0.01$& $-28.87 \pm   0.01$& $-28.54 \pm   0.01$& $-28.01 \pm   0.01$ \\
+PTF13azs & $150.4 \pm 2.2$ & $ 22.5 \pm 0.8$& $ 6041 \pm   6$ & $-28.60 \pm   0.01$ & $-28.77 \pm   0.01$& $-28.41 \pm   0.01$& $-28.10 \pm   0.01$& $-27.29 \pm   0.01$ \\
+SN2005hj & $124.2 \pm 2.4$ & $  6.8 \pm 1.1$& $ 6119 \pm   3$ & $-29.52 \pm   0.01$ & $-29.25 \pm   0.01$& $-28.80 \pm   0.01$& $-28.49 \pm   0.01$& $-27.76 \pm   0.01$ \\
+PTF12iiq & $103.6 \pm 7.2$ & $ 27.2 \pm 1.9$& $ 6133 \pm   8$ & $-28.74 \pm   0.02$ & $-28.46 \pm   0.01$& $-28.09 \pm   0.01$& $-27.87 \pm   0.01$& $-27.26 \pm   0.04$ \\
+PTF10ndc & $ 85.5 \pm 0.6$ & $  5.9 \pm 0.3$& $ 6130 \pm   4$ & $-29.87 \pm   0.02$ & $-29.45 \pm   0.02$& $-28.94 \pm   0.02$& $-28.57 \pm   0.02$& $-27.85 \pm   0.02$ \\
+SNF20080919-002 & $118.1 \pm 2.1$ & $  4.6 \pm 2.2$& $ 6101 \pm   3$ & $-29.77 \pm   0.02$ & $-29.52 \pm   0.02$& $-29.08 \pm   0.02$& $-28.74 \pm   0.01$& $-27.94 \pm   0.02$ \\
+SNPGC027923 & $131.4 \pm 2.2$ & $ 17.4 \pm 1.1$& $ 6116 \pm   4$ & $-28.60 \pm   0.02$ & $-28.55 \pm   0.02$& $-28.25 \pm   0.02$& $-28.03 \pm   0.02$& $-27.34 \pm   0.02$ \\
+SNF20070330-024 & $ 94.1 \pm 2.0$ & $ 11.2 \pm 0.6$& $ 6132 \pm   4$ & $-29.50 \pm   0.02$ & $-29.11 \pm   0.02$& $-28.67 \pm   0.02$& $-28.37 \pm   0.02$& $-27.71 \pm   0.02$ \\
+SNF20061030-010 & $126.9 \pm 2.5$ & $ 10.0 \pm 0.7$& $ 6123 \pm   3$ & $-29.38 \pm   0.01$ & $-29.13 \pm   0.01$& $-28.69 \pm   0.01$& $-28.37 \pm   0.01$& $-27.61 \pm   0.01$ \\
+SNhunt46 & $106.9 \pm 0.6$ & $  7.1 \pm 0.7$& $ 6138 \pm   4$ & $-29.29 \pm   0.73$ & $-29.00 \pm   0.73$& $-28.51 \pm   0.73$& $-28.15 \pm   0.73$& $-27.38 \pm   0.73$ \\
+SN2005hc & $ 82.6 \pm 17.5$ & $ 12.2 \pm 1.4$& $ 6144 \pm   5$ & $-29.51 \pm   0.02$ & $-29.14 \pm   0.01$& $-28.60 \pm   0.01$& $-28.30 \pm   0.01$& $-27.71 \pm   0.02$ \\
+LSQ12dbr & $ 78.9 \pm 20.2$ & $ 21.1 \pm 1.4$& $ 6123 \pm  10$ & $-29.37 \pm   0.05$ & $-29.04 \pm   0.05$& $-28.54 \pm   0.05$& $-28.30 \pm   0.05$& $-27.57 \pm   0.05$ \\
+LSQ12hjm & $125.5 \pm 3.2$ & $ 10.1 \pm 1.6$& $ 6126 \pm   4$ & $-29.34 \pm   0.01$ & $-29.12 \pm   0.01$& $-28.65 \pm   0.01$& $-28.38 \pm   0.01$& $-27.66 \pm   0.01$ \\
+SNF20060521-001 & $132.6 \pm 1.4$ & $ 15.2 \pm 1.0$& $ 6116 \pm   5$ & $-29.12 \pm   0.01$ & $-28.95 \pm   0.01$& $-28.53 \pm   0.01$& $-28.27 \pm   0.01$& $-27.55 \pm   0.01$ \\
+SNF20070630-006 & $ 95.9 \pm 2.3$ & $ 10.6 \pm 1.1$& $ 6143 \pm   6$ & $-29.59 \pm   0.02$ & $-29.22 \pm   0.02$& $-28.68 \pm   0.02$& $-28.42 \pm   0.02$& $-27.77 \pm   0.02$ \\
+PTF11drz & $167.5 \pm 2.2$ & $ 20.4 \pm 0.6$& $ 6112 \pm   4$ & $-28.75 \pm   0.02$ & $-28.78 \pm   0.02$& $-28.40 \pm   0.02$& $-28.18 \pm   0.02$& $-27.41 \pm   0.02$ \\
+SNF20080323-009 & $155.2 \pm 1.4$ & $ 11.0 \pm 0.7$& $ 6109 \pm   4$ & $-28.87 \pm   0.02$ & $-28.81 \pm   0.01$& $-28.46 \pm   0.01$& $-28.22 \pm   0.01$& $-27.48 \pm   0.01$ \\
+SNF20071021-000 & $112.1 \pm 2.5$ & $  9.8 \pm 1.0$& $ 6121 \pm   3$ & $-29.34 \pm   0.01$ & $-29.09 \pm   0.01$& $-28.68 \pm   0.01$& $-28.39 \pm   0.01$& $-27.70 \pm   0.01$ \\
+SNNGC0927 & $135.8 \pm 1.8$ & $  7.5 \pm 0.9$& $ 6135 \pm   4$ & $-29.22 \pm   0.02$ & $-29.02 \pm   0.02$& $-28.61 \pm   0.02$& $-28.35 \pm   0.01$& $-27.71 \pm   0.02$ \\
+SNF20060526-003 & $117.6 \pm 2.6$ & $  8.9 \pm 2.0$& $ 6125 \pm   4$ & $-28.84 \pm   0.01$ & $-28.70 \pm   0.01$& $-28.35 \pm   0.01$& $-28.16 \pm   0.01$& $-27.50 \pm   0.01$ \\
+SNF20080806-002 & $ 78.5 \pm 1.8$ & $  6.3 \pm 0.9$& $ 6138 \pm   4$ & $-29.71 \pm   0.01$ & $-29.34 \pm   0.01$& $-28.93 \pm   0.01$& $-28.61 \pm   0.01$& $-27.92 \pm   0.01$ \\
+SNF20080803-000 & $137.2 \pm 2.5$ & $  9.3 \pm 1.1$& $ 6112 \pm   7$ & $-29.27 \pm   0.03$ & $-29.09 \pm   0.03$& $-28.73 \pm   0.03$& $-28.38 \pm   0.03$& $-27.68 \pm   0.03$ \\
+SNF20080822-005 & $ 99.3 \pm 3.6$ & $ 16.8 \pm 0.7$& $ 6134 \pm   3$ & $-28.29 \pm   0.02$ & $-28.27 \pm   0.01$& $-28.05 \pm   0.01$& $-27.95 \pm   0.01$& $-27.40 \pm   0.01$ \\
+SNF20060618-014 & $122.4 \pm 2.7$ & $ 21.2 \pm 0.8$& $ 6114 \pm   4$ & $-29.07 \pm   0.01$ & $-28.94 \pm   0.01$& $-28.50 \pm   0.01$& $-28.26 \pm   0.01$& $-27.53 \pm   0.03$ \\
+PTF12ghy & $112.2 \pm 2.7$ & $  7.8 \pm 1.0$& $ 6145 \pm   6$ & $-29.42 \pm   0.01$ & $-29.17 \pm   0.01$& $-28.78 \pm   0.01$& $-28.46 \pm   0.01$& $-27.78 \pm   0.01$ \\
+SNF20070531-011 & $104.5 \pm 5.5$ & $ 24.4 \pm 2.2$& $ 6123 \pm   9$ & $-29.20 \pm   0.05$ & $-29.01 \pm   0.05$& $-28.48 \pm   0.05$& $-28.23 \pm   0.05$& $-27.54 \pm   0.05$ \\
+SNF20070831-015 & $143.3 \pm 1.6$ & $ 18.9 \pm 1.3$& $ 6104 \pm   5$ & $-28.78 \pm   0.02$ & $-28.79 \pm   0.02$& $-28.44 \pm   0.02$& $-28.18 \pm   0.02$& $-27.45 \pm   0.02$ \\
+SNF20070417-002 & $ 61.8 \pm 3.5$ & $  3.3 \pm 0.9$& $ 6131 \pm   7$ & $-29.86 \pm   0.01$ & $-29.41 \pm   0.01$& $-29.03 \pm   0.01$& $-28.70 \pm   0.01$& $-28.06 \pm   0.01$ \\
+PTF11cao & $ 73.9 \pm 2.4$ & $ 12.8 \pm 0.8$& $ 6133 \pm   3$ & $-29.29 \pm   0.02$ & $-28.94 \pm   0.02$& $-28.53 \pm   0.01$& $-28.35 \pm   0.01$& $-27.76 \pm   0.01$ \\
+SNF20080522-000 & $ 95.4 \pm 41.8$ & $ 35.7 \pm 2.8$& $ 6136 \pm   4$ & $-28.71 \pm   0.01$ & $-28.58 \pm   0.01$& $-28.19 \pm   0.01$& $-27.99 \pm   0.01$& $-27.34 \pm   0.01$ \\
+PTF10qjq & $122.8 \pm 2.3$ & $  9.7 \pm 1.7$& $ 6131 \pm   4$ & $-29.04 \pm   0.02$ & $-28.86 \pm   0.02$& $-28.56 \pm   0.02$& $-28.30 \pm   0.02$& $-27.64 \pm   0.02$ \\
+PTF12dxm & $111.6 \pm 2.6$ & $  6.4 \pm 1.1$& $ 6115 \pm   4$ & $-29.41 \pm   0.01$ & $-29.15 \pm   0.01$& $-28.70 \pm   0.01$& $-28.38 \pm   0.01$& $-27.73 \pm   0.04$ \\
+SNF20061021-003 & $ 98.1 \pm 1.6$ & $ 10.6 \pm 2.1$& $ 6143 \pm   5$ & $-29.23 \pm   0.01$ & $-29.05 \pm   0.01$& $-28.71 \pm   0.01$& $-28.45 \pm   0.01$& $-27.79 \pm   0.01$ \\
+SNF20080510-005 & $118.2 \pm 1.5$ & $ 11.3 \pm 1.8$& $ 6158 \pm   5$ & $-29.13 \pm   0.08$ & $-29.01 \pm   0.07$& $-28.62 \pm   0.07$& $-28.32 \pm   0.07$& $-27.68 \pm   0.07$ \\
+SNF20080507-000 & $118.8 \pm 2.1$ & $ 15.3 \pm 1.3$& $ 6115 \pm   4$ & $-29.35 \pm   0.01$ & $-29.15 \pm   0.01$& $-28.69 \pm   0.01$& $-28.38 \pm   0.01$& $-27.68 \pm   0.01$ \\
+SNF20080913-031 & $108.8 \pm 2.7$ & $ 13.5 \pm 0.9$& $ 6155 \pm   6$ & $-29.44 \pm   0.02$ & $-29.19 \pm   0.01$& $-28.74 \pm   0.01$& $-28.42 \pm   0.01$& $-27.78 \pm   0.01$ \\
+\enddata
 \end{deluxetable}
 
 Absolute photometric calibration is of extreme importance for the SNfactory.  This analysis, however, is confined to the relative colors for a low-redshift set of supernovae
@@ -604,9 +649,9 @@ in all elements of the covariance matrix, which is disfavored for the Bayesian p
 
 When interpreted as being due to dust, the extrinsic terms are associated with extinction $A_X = \gamma_X k$.  In
 this parlance our parameters can be re-expressed as the  familiar color excess
-$E_\gamma(B-V) = (\gamma_1-\gamma_2) k$ and total-to-selective extinction $R_X = \frac{\gamma_X}{\gamma_1-\gamma_2}$.
+$E_\gamma(B-V) = (\gamma_B-\gamma_V) k$ and total-to-selective extinction $R_X = \frac{\gamma_X}{\gamma_B-\gamma_V}$.
 Similar reparameterizatons of the intrinsic color parameters are
-$E_\delta(B-V) = (\delta_1-\delta_2) D$ and $R_{\delta X} = \frac{\delta_X}{\delta_1-\delta_2}$.
+$E_\delta(B-V) = (\delta_B-\delta_V) D$ and $R_{\delta X} = \frac{\delta_X}{\delta_B-\delta_V}$.
 
 In a Bayesian analysis the priors must be described.  A flat prior is used for all parameters except
 for the covariance matrix $C_c$, which is constructed from a correlation matrix with  $\nu=4$  LKJ prior\footnote{
@@ -629,7 +674,8 @@ by using multilple sequences to estimate how much that distribution would sharpe
 $N_{eff}$ is an estimate of the number of independent draws.
 The output gives $\hat{R} \sim 1.0$ for all parameters, meaning there is no evidence for non-convergence.  The
 output also gives  $N_{eff} \gg 100$ for all parameters, indicating that are all densely sampled.}
-Empirically, the confidence regions are localized and unimodal as is seen in  Figure~\ref{global:fig}.  We find no evidence that
+Empirically, the confidence regions are localized and unimodal as is seen in  Figures~\ref{global1:fig}, \ref{global2:fig}, \ref{global3:fig}, \ref{global4:fig},
+\ref{global5:fig}.  We find no evidence that
 the Monte Carlo chains have not converged to the stationary posterior distribution.
 We have rurun the analysis with a variety of initial conditions, including one with all the $\gamma$'s and $\delta$'s equal to zero, except for a small positive 
 $\gamma_0$ and small negative $\delta_0$ to satisfy our limit conditions.  Parameter credible intervals
@@ -637,14 +683,38 @@ remain consistent within uncertainty.
 
 \begin{figure}[htbp] %  figure placement: here, top, bottom, or page
    \centering
-   \includegraphics[width=2.5in]{output11/coeff0.pdf} 
-   \includegraphics[width=2.5in]{output11/coeff1.pdf} 
-   \includegraphics[width=2.5in]{output11/coeff2.pdf} 
-      \includegraphics[width=2.5in]{output11/coeff3.pdf} 
-         \includegraphics[width=2.5in]{output11/coeff4.pdf} 
-            \caption{Posterior contours for $c$, $\alpha$, $\beta$, $\eta$, $\gamma$, $\delta$, and $\sigma$ in each of the 5 bands.
+   \includegraphics[width=5.5in]{output11/coeff0.pdf} 
+            \caption{Posterior contours for $c$, $\alpha$, $\beta$, $\eta$, $\gamma$, $\delta$, and $\sigma$ in the $U$ band.
             The contours shown here and in future plots represent 1-$\sigma$ in the parameter distribution, not to 68\%, 95\%, etc.\
-            enclosed probability.  \label{global:fig}}
+            enclosed probability.  \label{global1:fig}}
+\end{figure}
+
+\begin{figure}[htbp] %  figure placement: here, top, bottom, or page
+   \centering
+   \includegraphics[width=5.5in]{output11/coeff1.pdf} 
+            \caption{Posterior contours for $c$, $\alpha$, $\beta$, $\eta$, $\gamma$, $\delta$, and $\sigma$ in the $B$ band.
+ \label{global2:fig}}
+\end{figure}
+
+\begin{figure}[htbp] %  figure placement: here, top, bottom, or page
+   \centering
+   \includegraphics[width=5.5in]{output11/coeff2.pdf} 
+            \caption{Posterior contours for $c$, $\alpha$, $\beta$, $\eta$, $\gamma$, $\delta$, and $\sigma$ in the $V$ band.
+ \label{global3:fig}}
+\end{figure}
+
+\begin{figure}[htbp] %  figure placement: here, top, bottom, or page
+   \centering
+      \includegraphics[width=5.5in]{output11/coeff3.pdf} 
+            \caption{Posterior contours for $c$, $\alpha$, $\beta$, $\eta$, $\gamma$, $\delta$, and $\sigma$ in the $R$ band.
+ \label{global4:fig}}
+\end{figure}
+
+\begin{figure}[htbp] %  figure placement: here, top, bottom, or page
+   \centering
+         \includegraphics[width=5.5in]{output11/coeff4.pdf} 
+            \caption{Posterior contours for $c$, $\alpha$, $\beta$, $\eta$, $\gamma$, $\delta$, and $\sigma$ in the $I$ band.
+ \label{global5:fig}}
 \end{figure}
 
 \color{red}
@@ -655,7 +725,7 @@ The scatters in the plots, i.e.\ the residual intrinsic color dispersions from o
 later when we discuss the inferred residual covariance matrix $C_c$.
 \begin{figure}[htbp] %  figure placement: here, top, bottom, or page
    \centering
-   \includegraphics[width=5in]{output11/residual.pdf} 
+   \includegraphics[width=5.5in]{output11/residual.pdf} 
             \caption{\textcolor{red}{Differences between observed and  model-predicted supernova colors  as a function
             of predicted colors.  For reference a dotted line is plotted at zero difference.}
             \label{residual:fig}}
@@ -666,13 +736,13 @@ later when we discuss the inferred residual covariance matrix $C_c$.
 For each of the five filters, the 68\%  equal-tailed credible intervals for the global parameters $\alpha$, $\beta$, $\eta$, $R$, $R_\delta$, and $\sigma$
 (and other interesting derived parameters)
 are given in Table~\ref{global:tab}.
-Contours of the posterior surface for parameter pairs grouped by filter are shown in Figure~\ref{global:fig}.
+Contours of the posterior surface for parameter pairs grouped by filter are shown in Figures~\ref{global1:fig} -- \ref{global5:fig} .
 
 \begin{table}
 \centering
 \begin{tabular}{|c|c|c|c|c|c|}
 \hline
-& $X=0$ &1&2&3&4\\ \hline
+& $X=U$ &$B$&$V$&$R$&$I$\\ \hline
 $\alpha_X$
 &
 $0.0043^{0.0009}_{-0.0009}$
@@ -685,7 +755,7 @@ $0.0015^{0.0005}_{-0.0005}$
 &
 $0.0026^{0.0004}_{-0.0005}$
 \\
-${\alpha_X/\alpha_2-1}$
+${\alpha_X/\alpha_V-1}$
 &
 $   1.9^{   1.0}_{  -0.5}$
 &
@@ -709,7 +779,7 @@ $ 0.020^{ 0.002}_{-0.002}$
 &
 $ 0.019^{ 0.002}_{-0.002}$
 \\
-${\beta_X/\beta_2-1}$
+${\beta_X/\beta_V-1}$
 &
 $  0.25^{  0.05}_{ -0.05}$
 &
@@ -733,7 +803,7 @@ $0.0005^{0.0007}_{-0.0007}$
 &
 $-0.0003^{0.0006}_{-0.0006}$
 \\
-${\eta_X/\eta_2-1}$
+${\eta_X/\eta_V-1}$
 &
 $ -0.38^{  2.21}_{ -1.84}$
 &
@@ -745,7 +815,7 @@ $ -0.11^{  0.28}_{ -0.26}$
 &
 $ -0.86^{  1.69}_{ -1.24}$
 \\
-${\gamma_X/\gamma_2-1}$
+${\gamma_X/\gamma_V-1}$
 &
 $  0.66^{  0.06}_{ -0.05}$
 &
@@ -769,7 +839,7 @@ $  2.22^{  0.25}_{ -0.23}$
 &
 $  1.60^{  0.21}_{ -0.20}$
 \\
-${\delta_X/\delta_2-1}$
+${\delta_X/\delta_V-1}$
 &
 $ -0.31^{  0.18}_{ -0.19}$
 &
@@ -824,13 +894,15 @@ $\lambda_{Si}$ and color.
 
 
 \color{red}
+
 The extrinsic parameters $\gamma$ attributed to dust are fit for without reference to a specific dust model:
 we now do so in a fit to the 
 model of \citet{1999PASP..111...63F},
 taking the fixed 3693,  4369,  5287,  6319, 7611 \AA\  for the effective wavelengths of the supernova flux through the bands.
 Figure~\ref{fitz:fig} shows the   68\% credible intervals of $\gamma$ and our result
-$R^F_V=2.97\ \pm 0.18$.  
+$R_V=2.97^{+0.18}_{-0.17}$..  
 We do the analysis in $\gamma$, as opposed to $R_V$ say, because the posteriors of $\gamma$ are well-approximated by a normal distribution that is used for the fit.
+The posterior distributions for $R_{\gamma X}=\frac{\gamma_X}{\gamma_B-\gamma_V}$ are shown in Figure~\ref{rx:fig}.
 \color{black}
 
 \begin{figure}[htbp] %  figure placement: here, top, bottom, or page
@@ -838,6 +910,15 @@ We do the analysis in $\gamma$, as opposed to $R_V$ say, because the posteriors 
    \includegraphics[width=3.2in]{output11/fitz.pdf}
    \caption{\textcolor{red}{68\% credible intervals of $\gamma_X$ and the best-fit to the  \citet{1999PASP..111...63F}  model $R^F_V=2.97$.}
    \label{fitz:fig}}
+\end{figure}
+
+
+\begin{figure}[htbp] %  figure placement: here, top, bottom, or page
+   \centering
+   \includegraphics[width=2.8in]{output11/rx_corner.pdf}
+      \includegraphics[width=2.8in]{output11/rxdelta_corner.pdf} 
+   \caption{Posterior contours for Left:  $R_X=\frac{\gamma_X}{\gamma_B-\gamma_V}$;  Right:  $R_{\delta X}=\frac{\delta_X}{\delta_B-\delta_V}$.
+   \label{rx:fig}}
 \end{figure}
 
 
@@ -860,18 +941,20 @@ We do the analysis in $\gamma$, as opposed to $R_V$ say, because the posteriors 
 %\end{figure}
 
 None of the 20000 links of 
-our Monte Carlo chains for $\delta$ exceed 0 (see Figure~\ref{global:fig}), we thus claim detection of the
+our Monte Carlo chains for $\delta$ exceed 0 (see Figures~\ref{global1:fig}--\ref{global5:fig}), we thus claim detection of the
 intrinsic parameter on supernova magnitudes
 with probability $(1-5\times 10^{-5})$.
-The posterior distributions for $R_{\delta X}=\frac{\delta_X}{\delta_1-\delta_2}$ are shown in Figure~\ref{rx:fig}.
-Although the posteriors of $\delta$ are close to Gaussian, $\delta_1-\delta_2$ can approach zero, resulting in the
-elongated tail in negative  $R_{\delta X}$.
-All values are significantly negative meaning a color excess in $B-V$ produces a brightening of the supernova.
-The values of $\delta_X/\delta_V-1$ are not monotonic with color: they increase from the $U$ to $V$, and then decrease
+\textcolor{red}{
+The values of $\delta_X/\delta_V$, plotted in  Figure~\ref{deltaratio:fig}, are not monotonic with color: they increase from the $U$ to $V$, and then decrease
 from $V$ to $I$,
 a consequence
 of which is that
 a reddening in $B-V$ comes with a blueing in $V-R$.
+Also apparent is that a reddening of $B-V$ is associated with a brightening of the supernova.
+The posterior distributions for $R_{\delta X}=\frac{\delta_X}{\delta_B-\delta_V}$ are shown in Figure~\ref{rx:fig}.
+Although the posteriors of $\delta$ are close to Gaussian, $\delta_B-\delta_V$ can approach zero, resulting in the
+elongated tail in negative  $R_{\delta X}$.
+All values are significantly negative.}
 These are not the behaviors expected from normal dust,
 circumstellar dust suggested as a source of SN extinction \citep{2005ApJ...635L..33W,2008ApJ...686L.103G,
 2015ApJ...807L..26G}, or a blackbody in the Raleigh-Jeans tail, and so may be indicative of
@@ -879,14 +962,13 @@ more complicated underlying supernova physics.
 
 \begin{figure}[htbp] %  figure placement: here, top, bottom, or page
    \centering
-   \includegraphics[width=2.8in]{output11/rx_corner.pdf}
-      \includegraphics[width=2.8in]{output11/rxdelta_corner.pdf} 
-   \caption{Posterior contours for Left:  $R_X=\frac{\gamma_X}{\gamma_1-\gamma_2}$;  Right:  $R_{\delta X}=\frac{\delta_X}{\delta_1-\delta_2}$.
-   \label{rx:fig}}
+   \includegraphics[width=3.2in]{output11/deltaratio.pdf}
+   \caption{68\% credible intervals of $\frac{\delta_X}{\delta_V}$ at the effective wavelengths of the corresponding bands.
+   \label{deltaratio:fig}}
 \end{figure}
 
-The distribution of both sources of color excess $E_\gamma(B-V) =(\gamma_1-\gamma_2)k$ and
- $E_\delta(B-V) = (\delta_1-\delta_2)D$ are shown as the ideograms in Figure~\ref{ebv:fig}.
+The distribution of both sources of color excess $E_\gamma(B-V) =(\gamma_B-\gamma_V)k$ and
+ $E_\delta(B-V) = (\delta_B-\delta_V)D$ are shown as the ideograms in Figure~\ref{ebv:fig}.
 Recall that our boundary conditions set the means of both distributions to zero. 
 The standard deviations of $E_\gamma(B-V)$ and $E_\delta(B-V)$ are
 %-----
@@ -901,8 +983,8 @@ with the expectation for extinction due to host-galaxy dust \citep{1998ApJ...502
 \begin{figure}[htbp] %  figure placement: here, top, bottom, or page
    \centering
    \includegraphics[width=3.2in]{output11/ebv.pdf}
-   \caption{Ideograms of the external $E_\gamma(B-V) =(\gamma_1-\gamma_2)k$ and
-   internal $E_\delta(B-V) = (\delta_1-\delta_2)D$  contributions to color excess  for the supernovae in our sample.
+   \caption{Ideograms of the external $E_\gamma(B-V) =(\gamma_B-\gamma_V)k$ and
+   internal $E_\delta(B-V) = (\delta_B-\delta_V)D$  contributions to color excess  for the supernovae in our sample.
    \label{ebv:fig}}
 \end{figure}
 
@@ -934,10 +1016,10 @@ chain, element by element.
 For $UBVRI$ the matrix is
 \begin{equation}
 \begin{pmatrix}
-0.0040 & 0.0011 & -0.0002 & -0.0000 & 0.0003 \\
-0.0011 & 0.0012 & 0.0002 & -0.0000 & -0.0006 \\
--0.0002 & 0.0002 & 0.0004 & 0.0001 & -0.0002 \\
--0.0000 & -0.0000 & 0.0001 & 0.0002 & 0.0002 \\
+0.0040 & 0.0011 & -0.0002 & -0.0000 & 0.0003 \cr
+0.0011 & 0.0012 & 0.0002 & -0.0000 & -0.0006 \cr
+-0.0002 & 0.0002 & 0.0004 & 0.0001 & -0.0002 \cr
+-0.0000 & -0.0000 & 0.0001 & 0.0002 & 0.0002 \cr
 0.0003 & -0.0006 & -0.0002 & 0.0002 & 0.0020
  \end{pmatrix} \text{mag}^2.
  \label{mag_cov:eqn}
@@ -953,9 +1035,9 @@ expressed as the standard deviations and
    \end{equation}
  \begin{equation}
 \begin{pmatrix}
-1.000 & 0.624 & -0.318 & -0.287 \\
-0.624 & 1.000 & -0.180 & 0.104 \\
--0.318 & -0.180 & 1.000 & 0.629 \\
+1.000 & 0.624 & -0.318 & -0.287 \cr
+0.624 & 1.000 & -0.180 & 0.104 \cr
+-0.318 & -0.180 & 1.000 & 0.629 \cr
 -0.287 & 0.104 & 0.629 & 1.000
   \end{pmatrix}.
   \label{color_cor:eqn}
@@ -963,7 +1045,7 @@ expressed as the standard deviations and
  
  \begin{figure}[htbp] %  figure placement: here, top, bottom, or page
    \centering
-   \includegraphics[width=3.2in]{output11/sigma_corner.pdf} 
+   \includegraphics[width=5.5in]{output11/sigma_corner.pdf} 
    \caption{Posterior contours for the parameters $\sigma$, the square root of the diagonal elements of $C_c$.
    \label{sigma:fig}}
 \end{figure}
@@ -977,20 +1059,20 @@ Outliers  are also clearly distinguished in  $EW_{Ca}$--$\lambda_{Si}$ space.
 
 \begin{figure}[htbp] %  figure placement: here, top, bottom, or page
    \centering
-   \includegraphics[width=3.2in]{output11/perobject_corner.pdf} 
+   \includegraphics[width=5.5in]{output11/perobject_corner.pdf} 
    \caption{Distributions for the supernova parameters $EW_{Ca}$, $EW_{Si}$, $\lambda_{Si}$, $E_\gamma(B-V)$, and $E_\delta(B-V)$, as well as the grey offset
-$\Delta$.
+$\Delta$.  All links are plotted, so that each supernova contributes a cloud of points.
    \label{perobject:fig}}
 \end{figure}
 
 The Pearson correlation coefficients for $\Delta$, $EW_{Ca}$, $EW_{Si}$, $\lambda_{Si}$, $E_\gamma(B-V)$, and $E_\delta(B-V)$ are given in the matrix
 \begin{equation}
 \begin{pmatrix}
-1.000 & 0.001 & -0.059 & -0.045 & 0.105 & 0.007 \\
-0.001 & 1.000 & 0.115 & -0.252 & -0.066 & -0.003 \\
--0.059 & 0.115 & 1.000 & -0.140 & -0.163 & -0.024 \\
--0.045 & -0.252 & -0.140 & 1.000 & 0.040 & 0.027 \\
-0.105 & -0.066 & -0.163 & 0.040 & 1.000 & 0.055 \\
+1.000 & 0.001 & -0.059 & -0.045 & 0.105 & 0.007 \cr
+0.001 & 1.000 & 0.115 & -0.252 & -0.066 & -0.003 \cr
+-0.059 & 0.115 & 1.000 & -0.140 & -0.163 & -0.024 \cr
+-0.045 & -0.252 & -0.140 & 1.000 & 0.040 & 0.027 \cr
+0.105 & -0.066 & -0.163 & 0.040 & 1.000 & 0.055 \cr
 0.007 & -0.003 & -0.024 & 0.027 & 0.055 & 1.000
 \end{pmatrix}.
 \end{equation}
@@ -1036,7 +1118,7 @@ $E_o(i-V) =  -0.92 \pm   0.03$
 are plotted in Figure~\ref{sn2014j:fig}.
 These data are fit to the model
 \begin{equation}
-E_o(X-V) =  \left(\frac{\gamma_X}{\gamma_2}-1\right)k +  \left(\frac{\delta_X}{\delta_2}-1\right)D,
+E_o(X-V) =  \left(\frac{\gamma_X}{\gamma_V}-1\right)k +  \left(\frac{\delta_X}{\delta_V}-1\right)D,
 \end{equation}
 where we use the median values of the $\gamma$- and $\delta$-terms from Table~\ref{global:tab}.
 
@@ -1128,7 +1210,7 @@ Extending our model to include non-linear terms is a direction for future work.
 \centering
 \begin{tabular}{|c|c|c|c|c|c|}
 \hline
-& $X=0$ &1&2&3&4\\ \hline
+& $X=U$ &$B$&$V$&$R$&$I$\\ \hline
 $\alpha_X$
 &
 $0.0041^{0.0010}_{-0.0010}$
@@ -1141,7 +1223,7 @@ $0.0015^{0.0006}_{-0.0006}$
 &
 $0.0027^{0.0005}_{-0.0005}$
 \\
-${\alpha_X/\alpha_2-1}$
+${\alpha_X/\alpha_V-1}$
 &
 $   1.6^{   0.9}_{  -0.4}$
 &
@@ -1165,7 +1247,7 @@ $ 0.019^{ 0.003}_{-0.003}$
 &
 $ 0.016^{ 0.003}_{-0.003}$
 \\
-${\beta_X/\beta_2-1}$
+${\beta_X/\beta_V-1}$
 &
 $  0.50^{  0.13}_{ -0.12}$
 &
@@ -1189,7 +1271,7 @@ $0.0007^{0.0007}_{-0.0007}$
 &
 $-0.0001^{0.0006}_{-0.0006}$
 \\
-${\eta_X/\eta_2-1}$
+${\eta_X/\eta_V-1}$
 &
 $ -0.49^{  1.15}_{ -1.55}$
 &
@@ -1213,7 +1295,7 @@ $-0.013^{ 0.024}_{-0.024}$
 &
 $-0.029^{ 0.021}_{-0.021}$
 \\
-${\zeta_X/\zeta_2-1}$
+${\zeta_X/\zeta_V-1}$
 &
 $  -0.7^{   1.1}_{  -1.7}$
 &
@@ -1225,7 +1307,7 @@ $  -0.4^{   0.3}_{  -0.5}$
 &
 $  -0.1^{   0.6}_{  -0.4}$
 \\
-${\gamma_X/\gamma_2-1}$
+${\gamma_X/\gamma_V-1}$
 &
 $  0.64^{  0.06}_{ -0.05}$
 &
@@ -1249,7 +1331,7 @@ $  2.23^{  0.27}_{ -0.24}$
 &
 $  1.60^{  0.22}_{ -0.20}$
 \\
-${\delta_X/\delta_2-1}$
+${\delta_X/\delta_V-1}$
 &
 $ -0.38^{  0.17}_{ -0.19}$
 &
@@ -1301,7 +1383,7 @@ preferentially exhibit low $R^F_V$.
 \color{red}
 \citet{2016arXiv160904470M} demonstrate how biased $R_V$ determinations can arise from unaccounted intrinsic color dispersion.
 In our model internal and external effects for each supernova  conflate into an effective color excess
-$E_{eff}(X-V) = E_\gamma(X-V) + E_\delta(X-V)$ and effective $V$ extinction $A_{eff,V} = \gamma_2 k  + \delta_2 D$.
+$E_{eff}(X-V) = E_\gamma(X-V) + E_\delta(X-V)$ and effective $V$ extinction $A_{eff,V} = \gamma_V k  + \delta_V D$.
 Recall that the colors where $E_\gamma(B-V)=0$,  $E_\delta(B-V)=0$ are free and arbitrarily
 fixed using the  boundary conditions $\langle \Delta \rangle = 0$, $\langle k \rangle = 0$:
 there is no unique value for the statistic $R_{eff,V} = A_{eff,V} /E_{eff}(B-V)$, as it depends on the choice of  boundary condition.
@@ -1348,10 +1430,10 @@ Bottom:  $R_{eff,U}- R_{eff,V}$ as a function of the relative contributions of e
 An alternative way to specify $R_V$ is to consider colors relative to a canonical supernova,
  the model prediction being
 \begin{equation}
-R_{eff, V} = \frac{\gamma_1  (k-k_0) + \delta_1 (D-D_0) }{(\gamma_1-\gamma_2) (k-k_0) + (\delta_1-\delta_2) (D-D_0) },
+R_{eff, V} = \frac{\gamma_1  (k-k_0) + \delta_1 (D-D_0) }{(\gamma_B-\gamma_V) (k-k_0) + (\delta_B-\delta_V) (D-D_0) },
 \end{equation}
 where $k_0$ and $D_0$ are the parameter values of the canonical supernova.
-If $D = D_0$, the $R_V = \gamma_1/(\gamma_1-\gamma_2)$ of the extrinsic contribution is recovered, but this does not hold true
+If $D = D_0$, the $R_V = \gamma_B/(\gamma_B-\gamma_V)$ of the extrinsic contribution is recovered, but this does not hold true
 when $D \ne D_0$.  Again considering a set of SNe~Ia  with parameters equal to the median fit values of the SNfactory sample,
 the values for $R_{eff,V}$ choosing a canonical supernova with $k_0=0$, $\delta_0=0$  is shown in Figure~\ref{rv4:fig}.
 The reddest supernovae exhibit a range of $1.5< R_{eff,V}<3.5$. 
@@ -1435,7 +1517,7 @@ of wavelength but rather has an inflection in the $V$ band.  In addition, red $B
 that operate over broad bands are the most obvious candidate for producing this behavior.
 \citet{2006ApJ...649..939K} points out that at a temperature of 7000~K, the iron/cobalt gas in the ejecta transition
 from doubly and singly ionized states, making the gas phosphorescent and efficient in redistributing energy from the UV/blue to redder
-wavelengths.  Qualitatively this would result in the structure for $\gamma_X/\gamma_2-1$ that we measure.
+wavelengths.  Qualitatively this would result in the structure for $\gamma_X/\gamma_V-1$ that we measure.
 We conjecture that varying $^{56}$Ni mass affects the rise-time to peak $B$ brightness and hence the optical depth
 of the reionization front with respect to the core of the ejecta, yielding the wavelength-dependent color behavior
 detected in this analysis.

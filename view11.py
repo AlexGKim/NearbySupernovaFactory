@@ -184,7 +184,6 @@ pp.close()
 plt.close()
 
 
-
 correction = [fit['c'][:,i][:,None] + fit['alpha'][:,i][:,None]*fit['EW'][:,:, 0] \
     + fit['beta'][:,i][:,None]*fit['EW'][:,:, 1] + fit['eta'][:,i][:,None]*fit['sivel']\
     + fit['gamma'][:,i][:,None]*fit['k'] \
@@ -735,13 +734,23 @@ plt.savefig(pp,format='pdf')
 pp.close()
 plt.close()
 
+(y, ymin, ymax) = numpy.percentile(fit['rho1']/fit['rho1'][:,2][:,None],(50,50-34,50+34),axis=0)
+plt.errorbar(efflam,y,yerr=[y-ymin,ymax-y],fmt='o')
+plt.legend()
+plt.xlabel(r'Wavelength (\AA)')
+plt.ylabel(r'$\frac{\delta_X}{\delta_2}$')
+pp = PdfPages('output11/deltaratio.pdf')
+plt.savefig(pp,format='pdf')
+pp.close()
+plt.close()
+
 mega = numpy.array([fit['Delta'].flatten(),fit['EW'][:,:,0].flatten(),fit['EW'][:,:,1].flatten(),fit['sivel'].flatten(), \
     ((fit['gamma'][:,1] - fit['gamma'][:,2])[:,None]*fit['k']).flatten(),((fit['rho1'][:,1] - fit['rho1'][:,2])[:,None]*fit['R']).flatten()])
 
 mega = numpy.transpose(mega)
 mega=mega[::50,:]
 
-figure = corner.corner(mega,labels=[r"$\Delta$",r"$EW_{Ca}-109$\AA",r"$EW_{Si}-14$\AA",r"$\lambda_{Si}$",r"$E_\gamma(B-V)$",r"$E_\delta(B-V)$"],range=numpy.zeros(6)+1.)
+figure = corner.corner(mega,labels=[r"$\Delta$",r"$EW_{Ca}$",r"$EW_{Si}$",r"$\lambda_{Si}$",r"$E_\gamma(B-V)$",r"$E_\delta(B-V)$"],range=numpy.zeros(6)+1.)
 pp = PdfPages('output11/perobject_corner.pdf')
 plt.savefig(pp,format='pdf')
 pp.close()
