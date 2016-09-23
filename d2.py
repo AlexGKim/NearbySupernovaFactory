@@ -78,7 +78,7 @@ f.close()
 
 
 av=0.1
-ebv=0.1/3.1
+ebv=0.1/2.24
 A1=getFitzExt(efflam, av , ebv)
 
 A2=getFitzExt(efflam, av+0.01 , ebv)
@@ -130,31 +130,56 @@ ebvav = numpy.dot(tmat,ebv)
 
 coeffs, cov = numpy.polyfit(ebvav[0,:],ebvav[1,:], 1,cov=True)
 
+ebv  = ((fit['rho1'][:,1]-fit['rho1'][:,2])[:,None] * fit['R'])
+ebv = numpy.array([ebv,((fit['gamma'][:,1]-fit['gamma'][:,2])[:,None] * fit['k'])])
+
+ebvav=[]
+for ind in xrange(ebv.shape[2]):
+  ebvav.append(numpy.dot(tmat,ebv[:,:,ind]))
+
+ebvav=numpy.array(ebvav)
+
+ebvav_s = numpy.percentile(ebvav,(50,50-34,50+34),axis=2)
+
 # ebv  = numpy.median((fit['rho1'][:,1]-fit['rho1'][:,2])[:,None] * fit['R'],axis=0)
 # ebv = numpy.array([ebv,numpy.median((fit['gamma'][:,1]-fit['gamma'][:,2])[:,None] * fit['k'],axis=0)])
 # ebvav = numpy.dot(tmat,ebv)
-plt.scatter(ebvav[0,::1000],ebvav[1,::1000],marker='.')
-plt.xlabel(r'$A_{V,eff}+ const $')
-plt.ylabel(r'$E(B-V)_{eff} + const$')
-x = numpy.array([-0.1,0.4])
-plt.plot(x, coeffs[1]+coeffs[0]*x,label=r'$R_V={:6.2f}$'.format(coeffs[0]))
+
+plt.errorbar(ebvav_s[0,:,0], ebvav_s[0,:,1], \
+ xerr=(ebvav_s[0,:,0]-ebvav_s[1,:,0], ebvav_s[2,:,0]-ebvav_s[0,:,0]),\
+ yerr=(ebvav_s[0,:,1]-ebvav_s[1,:,1], ebvav_s[2,:,1]-ebvav_s[0,:,1]),fmt='o',alpha=0.4)
+# plt.scatter(ebvav[0,::1000],ebvav[1,::1000],marker='.')
+plt.ylabel(r'$A^F_{V,eff}+ const $')
+plt.xlabel(r'$E^F(B-V)_{eff} + const$')
+x = numpy.array([-0.15,0.45])
+plt.plot(x, coeffs[1]+coeffs[0]*x,label=r'$R^F_V={:6.2f}$'.format(coeffs[0]))
 plt.legend()
+pp = PdfPages("output11/avebv_synth.pdf")
+plt.savefig(pp,format='pdf')
+pp.close()
+plt.close()
+
+ebvav_r = numpy.percentile(ebvav[:,1,:]/ebvav[:,0,:],(50,50-34,50+34),axis=1)
+plt.errorbar(ebvav_s[0,:,0], ebvav_r[0], \
+ xerr=(ebvav_s[0,:,0]-ebvav_s[1,:,0], ebvav_s[2,:,0]-ebvav_s[0,:,0]),\
+ yerr=(ebvav_r[0]-ebvav_r[1],ebvav_r[2]-ebvav_r[0]),fmt='o',alpha=0.4)
+# plt.scatter(ebvav[0,::1000],ebvav[1,::1000]/ebvav[0,::1000],marker='.')
+plt.ylabel(r'$R^F_{V,eff} $')
+plt.xlabel(r'$E^F(B-V)_{eff} + const$')
+plt.ylim((-1,5))
 pp = PdfPages("output11/avrv_synth.pdf")
 plt.savefig(pp,format='pdf')
 pp.close()
 plt.close()
-#plt.scatter(ebvav[1,:],(ebvav[1,:]+0.3)/(ebvav[0,:]+2))
-
-
-
 # def lnprob(p, ebvav):
-#   dum= ebvav[1] - (p[0]*ebvav[0] + p[1])
+#   dum= (ebvav[1,:] - p[1]) - (p[0] * (ebvav[0,:] - p[2]))
 #   ans = -0.5 * numpy.sum(dum**2)
+#   print p,ans
 #   return ans
 
-# ndim, nwalkers = 2, 3*4
+# ndim, nwalkers = 3, 3*4
 # zeros = numpy.zeros(ndim)
-# zeros = numpy.array([2.23,0.])
+# zeros = numpy.array([2.23,-0.25,-0.1])
 
 # pos = [zeros + 1e-4*numpy.random.randn(ndim) for i in range(nwalkers)]
 # import emcee
@@ -166,5 +191,6 @@ plt.close()
 # print y, y-ymin, ymax-y
 # (y,ymin,ymax)  = numpy.percentile(samples[:,1],(50,50-34,50+34)) 
 # print y, y-ymin, ymax-y
-
+# (y,ymin,ymax)  = numpy.percentile(samples[:,2],(50,50-34,50+34)) 
+# print y, y-ymin, ymax-y
 wef

@@ -107,6 +107,20 @@ for i in xrange(nsne):
 
 
 
+(x, xmin, xmax) = numpy.percentile( ((fit['gamma'][:,1] - fit['gamma'][:,2])[:,None]*fit['k']),(50,50-34,50+34),axis=0)
+(y, ymin, ymax) = numpy.percentile(((fit['rho1'][:,1] - fit['rho1'][:,2])[:,None]*fit['R']),(50,50-34,50+34),axis=0)
+
+plt.errorbar(x,y,xerr=(x-xmin,xmax-x), yerr=(y-ymin,ymax-y),fmt='o')
+plt.xlim((-0.08,0.05))
+# plt.ylim((-0.02,0.05))
+plt.xlabel(r'$E_\gamma(B-V)$')
+plt.ylabel(r'$E_\delta(B-V)$')
+pp = PdfPages("output11/egammaedelta_corner.pdf")
+plt.savefig(pp,format='pdf')
+pp.close()
+plt.close()
+
+
 (y, ymin, ymax) = numpy.percentile(fit['EW'][:,:,1],(50,50-34,50+34),axis=0)
 plt.errorbar(x1, y, xerr=[x1_err,x1_err],yerr=[y-ymin,ymax-ymin],fmt='o')
 plt.xlabel(r'$X_1$')

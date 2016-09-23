@@ -1163,6 +1163,72 @@ $  0.06 \pm 0.03$
 \textcolor{red}{The deduced parameters for SN~2014J, which are relative to SN~2011fe, live well outside the 
 span} of supernovae used to train the coefficients of the model.
 
+\section{Interpreting $k$ and $D$ As Parameters of a Single Dust Model}
+%ipdb> print y, y-ymin, ymax-y
+%2.23720862938 0.00612061774367 0.00623996846008
+%ipdb> (y,ymin,ymax)  = numpy.percentile(samples[:,1],(50,50-34,50+34)) 
+%ipdb> print y, y-ymin, ymax-y
+%-3.46707773157e-05 0.000555359008477 0.000616592111953
+Until now we have considered $k$ and $D$ as independent external and internal parameters.  However, they may be both
+parameters of a single underlying dust.  Indeed the CCM dust law can be exactly written as a two-parameter linear model
+\begin{equation}
+A_X = A_V a(X) + E(B-V) b(X).
+\end{equation}
+The Fitzpatrick model can also approximately be described by a linear model in the range of $R_V$ and wavelength under consideration:
+the results shown here vary only at the percent level when making this approximation.
+
+In our model, variations in $k$ and $D$ affect magnitudes in two directions in magnitude space
+$\frac{\partial A}{\partial E_\delta(B-V)}$, $\frac{\partial A}{\partial E_\gamma(B-V)}$.  In the Fitzpatrick model
+variations on $E^F(B-V)$ and $A^F_V=R^F_VE^F(B-V)$ induce magnitude changes in
+in directions
+$\frac{\partial A}{\partial E^F(B-V)}$, $\frac{\partial A}{\partial A^F_V}$.
+The planes in magnitude-space defined by each pair of vectors are nearly parallel, in that
+\begin{equation}
+\begin{pmatrix}
+\frac{\partial A}{\partial E_\delta(B-V)} \\
+\frac{\partial A}{\partial E_\gamma(B-V)}
+\end{pmatrix}=
+\begin{pmatrix}
+0.74 & -5.45 \\
+1.15 & 2.84
+\end{pmatrix} 
+\begin{pmatrix}
+\frac{\partial A}{\partial R^F_V} \\
+\frac{\partial A}{\partial A^F_V}
+\end{pmatrix}+
+\vec{\epsilon},
+\end{equation}
+where the residual $\vec{\epsilon}$''s perpendicular to the Fitzpatrick plane
+contribute  5\% and 2\% to the total  length of the vector.
+
+The projections of our model parameters $E_\delta(B-V)$ and  $E_\gamma(B-V)$ for the supernovae in our sample
+onto the Fitzpatrick plane
+have corresponding values of $E^F(B-V)$ and $A^F$, up to a constant.  These are shown in Figure~\ref{avebv:fig}.
+The points are confined to a tight locus around a line, with slope that corresponds to $R^F_V=2.5$.  
+
+\begin{figure}[htbp] %  figure placement: here, top, bottom, or page
+   \centering
+   \includegraphics[width=5in]{output11/avebv_synth.pdf}
+    \caption{\textcolor{red}{Projections of our model parameters $E_\delta(B-V)$ and  $E_\gamma(B-V)$ for the supernovae in our sample
+onto the Fitzpatrick plane.}
+   \label{avebv:fig}}
+\end{figure}
+
+The linear fit produces the zeropoint (which happens to be consistent with zero) along with the slope, allowing us to determine $R^F_V$ for each supernova,
+as shown in Figure~\ref{avrv:fig}.  An interesting feature is that the distribution at extreme blue colors seems to be different from the distribution for redder objects.
+I will contemplate whether this could mean anything.
+
+\begin{figure}[htbp] %  figure placement: here, top, bottom, or page
+   \centering
+   \includegraphics[width=5in]{output11/avrv_synth.pdf}
+    \caption{\textcolor{red}{$R^F_V$ for each supernova.}
+   \label{avrv:fig}}
+\end{figure}
+
+The near coplanarity of the plane defined by our parameters and the plane of Fitzpatrick, together with the fact that our the individual supernova
+parameters translate to Fitzpatrick parameters consistent with a distribution expected for a narrow range of $R^F_V$ lead us to conclude that 
+external dust is responsible for most of our $k$ and $D$ parameters.
+
 \section{Discussion}
 \label{discussion:sec}
 We model SNe~Ia broadband optical peak magnitudes allowing for correlations with spectral features at peak and distinct intrinsic and

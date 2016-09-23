@@ -83,7 +83,31 @@ imax = numpy.argmax(dum,axis=1)[0]
 print '${:6.2f}^{{{:6.2f}}}_{{{:6.2f}}}$'.format(dum[0][imax],dum[2][imax]-dum[0][imax],dum[1][imax]-dum[0][imax])
 
 import sncosmo
+def lnprob(p, x, y ,yerr):
+   # p is ebv and r_v
+   f99 = sncosmo.F99Dust(r_v =p[1])
+   f99.set(ebv=p[0])
+   A_ = f99.propagate(x,1.) / f99.propagate(numpy.array([5287.48667023]),1.)[0]
+   A_ = -2.5*numpy.log10(A_)
+   dum = y-A_
+   ans = -0.5*numpy.sum((dum/yerr)**2)
+   return ans
 
+efflam = numpy.array([ 3693.16777627,  4369.37505509,  6319.19906153,7610.89305298])
+ndim, nwalkers = 2, 100
+pos = [numpy.array([1.3, 1.4]) + 1e-4*numpy.random.randn(ndim) for i in range(nwalkers)]
+
+import emcee
+sampler = emcee.EnsembleSampler(nwalkers, ndim, lnprob, args=(efflam, exv, e_exv))
+sampler.run_mcmc(pos,10)
+samples = sampler.chain[:, 5:, :].reshape((-1, ndim))
+(y,ymin,ymax)  = numpy.percentile(samples[:,1],(50,50-34,50+34))
+ebv=y
+print 'Fitzpatrick fit'
+print '{:6.2f} {:6.2f} {:6.2f}'.format(y, y-ymin, ymax-y)
+(y,ymin,ymax)  = numpy.percentile(samples[:,0],(50,50-34,50+34))
+print '{:6.2f} {:6.2f} {:6.2f}'.format(y, y-ymin, ymax-y)
+rvs=[y]
 
 plt.errorbar(elam,exv,yerr=[e_exv,e_exv],fmt='.',label='SN2014J',color='black')
 plt.errorbar(elam, gammam1*ans[0]+deltam1*ans[1],yerr=[fiterr,fiterr],label='Best-fit Model',color='red',fmt='.')
@@ -91,11 +115,12 @@ plt.errorbar(elam, gammam1*ans[0]+deltam1*ans[1],yerr=[fiterr,fiterr],label='Bes
 
 lambdas = numpy.arange(3500.,8000,100)
 rvs=[1.4]
+ebv=1.37
 
 for rv in rvs:
     f99 = sncosmo.F99Dust(r_v =rv)
-    f99.set(ebv=1.37)
-    A_ = f99.propagate(lambdas,1.) / f99.propagate(numpy.array([5477.]),1.)[0]
+    f99.set(ebv=ebv)
+    A_ = f99.propagate(lambdas,1.) / f99.propagate(numpy.array([5477]),1.)[0]
     A_=-2.5*numpy.log10(A_)
     # A_ = sncosmo._extinction.ccm89(lambdas, 1.37, rv) - sncosmo._extinction.ccm89(numpy.array([5477.]), 1.37, rv)[0]
     # norm  = sncosmo._extinction.ccm89(numpy.array([5477.]), 1., rv)
