@@ -89,24 +89,29 @@ init = [{'EW' : EW_renorm, \
          'gamma03': 3./5,\
          'gamma04': 2./5,\
          'gamma05': 1./5,\
+         'gamma11': -4./5,\
+         'gamma12': -3./5,\
+         'gamma13': -2./5,\
+         'gamma14': -1./5,\
+         'gamma15': -0.5/5,\
          'mag_int_raw': mag_renorm, \
          'L_Omega': numpy.identity(5), \
          'Delta_unit':R_simplex, \
          'Delta_scale': 15./4, \
          'k_unit': R_simplex, \
+         'k1_unit': R_simplex, \
          'R': R_simplex, \
-         'rho11': -17./5,\
-         'rho12': 0.*3./5,\
+         'rho11': -4./5,\
+         'rho12': -3./5,\
          'rho13': 0./5,\
-         'rho14': 0.*3./5,\
-         'rho15': 0.*3./5,\
-         'Rsigma': 0.02,\
+         'rho14': 0./5,\
+         'rho15':  4./5,\
          } \
         for _ in range(4)]
 
 sm = pystan.StanModel(file='gerard15.stan')
 control = {'stepsize':1}
-fit = sm.sampling(data=data, iter=10000, chains=4,control=control,init=init, thin=1)
+fit = sm.sampling(data=data, iter=4000, chains=4,control=control,init=init, thin=1)
 
 
 output = open('temp15.pkl','wb')

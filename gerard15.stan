@@ -23,7 +23,13 @@ parameters {
   real gamma04;
   real gamma05;
 
-  real<upper=0> rho11;
+  real<upper=0> gamma11;
+  real gamma12;
+  real gamma13;
+  real gamma14;
+  real gamma15;
+
+  real rho11;
   real rho12;
   real rho13;
   real rho14;
@@ -39,9 +45,9 @@ parameters {
   simplex[D] Delta_unit;
 
   simplex[D] k_unit;
-  vector[D] R;
+  simplex[D] k1_unit;
 
-  real<lower=0> Rsigma;
+  vector[D] R;
 }
 
 transformed parameters {
@@ -53,8 +59,10 @@ transformed parameters {
 
   vector[D] Delta;
   vector[D] k;
+  vector[D] k1;
   # vector[D] R;
   vector[5] gamma;
+  vector[5] gamma1;
   vector[5] rho1;
   vector[N_mags] mag_int[D];
 
@@ -66,6 +74,7 @@ transformed parameters {
   
   Delta = 4.*Delta_scale*(Delta_unit-1./D);
   k=(k_unit-1./D);
+  k1=(k1_unit-1./D);
   # R=(R_unit-1./D);
 
   gamma[1] = gamma01;
@@ -74,6 +83,13 @@ transformed parameters {
   gamma[4] = gamma04;
   gamma[5] = gamma05;
   gamma = gamma*5;
+
+  gamma1[1] = gamma11;
+  gamma1[2] = gamma12;
+  gamma1[3] = gamma13;
+  gamma1[4] = gamma14;
+  gamma1[5] = gamma15;
+  gamma1 = gamma1*5;
 
   rho1[1] = rho11;
   rho1[3] = rho13;
@@ -98,11 +114,10 @@ model {
 
   for (d in 1:D) {
     target += normal_lpdf(mag_int_raw[d]| 0, 1);
-    # target += multi_normal_lpdf(mag_obs[d] | mag_int[d]+gamma*k[d], mag_cov[d]);
+    target += multi_normal_lpdf(mag_obs[d] | mag_int[d]+gamma*k[d]+gamma1*k1[d], mag_cov[d]);
     target += multi_normal_lpdf(EW_obs[d] | EW[d], EW_cov[d]);
   }
   target += (normal_lpdf(sivel_obs | sivel,sivel_err));
 
-  target += normal_lpdf(R| 0, Rsigma);
-  target += cauchy_lpdf(Rsigma | 0,2.5);
+  target += normal_lpdf(R| 0, 0.1);
 }
