@@ -85,7 +85,7 @@ transformed parameters {
     matrix[5,5] L_Sigma;
     L_Sigma = diag_pre_multiply(L_sigma, L_Omega);
     for (d in 1:D) {
-      mag_int[d] = Delta[d] + c+ alpha*EW[d,1]  + beta*EW[d,2]  + rho1*R[d]  + eta*sivel[d] + L_Sigma * mag_int_raw[d];
+      mag_int[d] = Delta[d] + c+ alpha*EW[d,1]  + beta*EW[d,2]   + eta*sivel[d] + L_Sigma * mag_int_raw[d];
     }
   }
 }
@@ -96,7 +96,7 @@ model {
 
   for (d in 1:D) {
     target += normal_lpdf(mag_int_raw[d]| 0, 1);
-    target += multi_normal_lpdf(mag_obs[d] | mag_int[d]+gamma*k[d], mag_cov[d]);
+    target += multi_normal_lpdf(mag_obs[d] | mag_int[d]+gamma*k[d] + rho1*R[d], mag_cov[d]);
     target += multi_normal_lpdf(EW_obs[d] | EW[d], EW_cov[d]);
   }
   target += (normal_lpdf(sivel_obs | sivel,sivel_err));

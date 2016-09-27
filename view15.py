@@ -11,6 +11,7 @@ import sncosmo
 import scipy
 import cPickle
 import matplotlib as mpl
+import sivel
 
 f = open('temp15.pkl','rb')
 (fit,_) = pickle.load(f)
@@ -22,43 +23,44 @@ pkl_file = open('gege_data.pkl', 'r')
 data = pickle.load(pkl_file)
 pkl_file.close()
 
-dic_phreno=cPickle.load(open("phrenology_2016_12_01_CABALLOv1.pkl"))
+sivel,sivel_err,x1,x1_err = sivel.sivel(data)
+# dic_phreno=cPickle.load(open("phrenology_2016_12_01_CABALLOv1.pkl"))
 
-dic_meta=cPickle.load(open("META.pkl"))
+# dic_meta=cPickle.load(open("META.pkl"))
 
-sivel=[]
-sivel_err=[]
-x1 = []
-x1_err = []
-for sn in data['snlist']:
-   if sn in dic_meta.keys() and sn in dic_phreno.keys():
-      meta = dic_meta[sn]
-      vSiII_6355_lbd=0.
-      vSiII_6355_lbd_err=0.
-      counter  = 0
-      for sp in dic_phreno[sn]["spectra"]:
-         if sp in meta['spectra'].keys() and  numpy.abs(meta['spectra'][sp]['salt2.phase']) < 2.5:
-            vSiII_6355_lbd += dic_phreno[sn]["spectra"][sp]["phrenology.vSiII_6355_lbd"]/dic_phreno[sn]['spectra'][sp]["phrenology.vSiII_6355_lbd.err"]**2
-            vSiII_6355_lbd_err += 1/dic_phreno[sn]['spectra'][sp]["phrenology.vSiII_6355_lbd.err"]**2
-            counter +=1
-      if counter !=0:
-         sivel.append(vSiII_6355_lbd / vSiII_6355_lbd_err)
-         sivel_err.append(1./numpy.sqrt(vSiII_6355_lbd_err))
-      else:
-         sivel.append(float('nan'))
-         sivel_err.append(float('nan'))
-      x1.append(meta['salt2.X1'])
-      x1_err.append(numpy.sqrt(meta['salt2.CovX1X1']))
-   else:
-      sivel.append(float('nan'))
-      sivel_err.append(float('nan'))
-      x1.append(float('nan'))
-      x1_err.append(float('nan'))
+# sivel=[]
+# sivel_err=[]
+# x1 = []
+# x1_err = []
+# for sn in data['snlist']:
+#    if sn in dic_meta.keys() and sn in dic_phreno.keys():
+#       meta = dic_meta[sn]
+#       vSiII_6355_lbd=0.
+#       vSiII_6355_lbd_err=0.
+#       counter  = 0
+#       for sp in dic_phreno[sn]["spectra"]:
+#          if sp in meta['spectra'].keys() and  numpy.abs(meta['spectra'][sp]['salt2.phase']) < 2.5:
+#             vSiII_6355_lbd += dic_phreno[sn]["spectra"][sp]["phrenology.vSiII_6355_lbd"]/dic_phreno[sn]['spectra'][sp]["phrenology.vSiII_6355_lbd.err"]**2
+#             vSiII_6355_lbd_err += 1/dic_phreno[sn]['spectra'][sp]["phrenology.vSiII_6355_lbd.err"]**2
+#             counter +=1
+#       if counter !=0:
+#          sivel.append(vSiII_6355_lbd / vSiII_6355_lbd_err)
+#          sivel_err.append(1./numpy.sqrt(vSiII_6355_lbd_err))
+#       else:
+#          sivel.append(float('nan'))
+#          sivel_err.append(float('nan'))
+#       x1.append(meta['salt2.X1'])
+#       x1_err.append(numpy.sqrt(meta['salt2.CovX1X1']))
+#    else:
+#       sivel.append(float('nan'))
+#       sivel_err.append(float('nan'))
+#       x1.append(float('nan'))
+#       x1_err.append(float('nan'))
 
-sivel = numpy.array(sivel)
-sivel_err = numpy.array(sivel_err)
-x1 = numpy.array(x1)
-x1_err = numpy.array(x1_err)
+# sivel = numpy.array(sivel)
+# sivel_err = numpy.array(sivel_err)
+# x1 = numpy.array(x1)
+# x1_err = numpy.array(x1_err)
 
 use = numpy.isfinite(sivel)
 
@@ -361,8 +363,10 @@ plt.close()
 
 
 
+# plt.hist([(fit['gamma'][:,1]-fit['gamma'][:,2])[:,None]*fit['k'], (fit['gamma1'][:,1]-fit['gamma1'][:,2])[:,None]*fit['k1'], (fit['rho1'][:,1]-fit['rho1'][:,2])[:,None]*fit['R']],normed=True,bins=20,
+#     label=[r'$E_\gamma(B-V)$',r'$E_{\gamma_1}(B-V)$',r'$E_\delta(B-V)$'],range=(-0.1,0.4))
 plt.hist([(fit['gamma'][:,1]-fit['gamma'][:,2])[:,None]*fit['k'], (fit['gamma1'][:,1]-fit['gamma1'][:,2])[:,None]*fit['k1'], (fit['rho1'][:,1]-fit['rho1'][:,2])[:,None]*fit['R']],normed=True,bins=20,
-    label=[r'$E_\gamma(B-V)$',r'$E_{\gamma_1}(B-V)$',r'$E_\delta(B-V)$'],range=(-0.1,0.4))
+    label=[r'$E_\gamma(B-V)$',r'$E_{\gamma_1}(B-V)$',r'$E_\delta(B-V)$'])
 plt.xlabel(r'$E(B-V)$')
 plt.legend()
 pp = PdfPages('output15/ebv.pdf')
@@ -776,11 +780,11 @@ plt.savefig(pp,format='pdf')
 pp.close()
 plt.close()
 
-(y, ymin, ymax) = numpy.percentile(fit['rho1']/fit['rho1'][:,2][:,None],(50,50-34,50+34),axis=0)
+(y, ymin, ymax) = numpy.percentile(fit['rho1']/fit['rho1'][:,4][:,None],(50,50-34,50+34),axis=0)
 plt.errorbar(efflam,y,yerr=[y-ymin,ymax-y],fmt='o')
 plt.legend()
 plt.xlabel(r'Wavelength (\AA)')
-plt.ylabel(r'$\frac{\delta_X}{\delta_2}$')
+plt.ylabel(r'$\frac{\delta_X}{\delta_4}$')
 pp = PdfPages('output15/deltaratio.pdf')
 plt.savefig(pp,format='pdf')
 pp.close()
@@ -798,4 +802,10 @@ plt.savefig(pp,format='pdf')
 pp.close()
 plt.close()
 
-
+mega = numpy.array([fit['rho11'],fit['rho12'],fit['rho13']])
+mega = numpy.transpose(mega)
+figure = corner.corner(mega)
+pp = PdfPages('output15/rho1x_corner.pdf')
+plt.savefig(pp,format='pdf')
+pp.close()
+plt.close()

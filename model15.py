@@ -4,6 +4,7 @@ import pickle
 import cPickle
 import numpy
 import pystan
+import sivel
 
 # two color parameter model
 
@@ -11,35 +12,41 @@ pkl_file = open('gege_data.pkl', 'r')
 data = pickle.load(pkl_file)
 pkl_file.close()
 
-dic_phreno=cPickle.load(open("phrenology_2016_12_01_CABALLOv1.pkl"))
+sivel, sivel_err,_,_ = sivel.sivel(data)
+# dic_phreno=cPickle.load(open("phrenology_2016_12_01_CABALLOv1.pkl"))
 
-dic_meta=cPickle.load(open("META.pkl"))
+# dic_meta=cPickle.load(open("META.pkl"))
 
-sivel=[]
-sivel_err=[]
-for sn in data['snlist']:
-   if sn in dic_meta.keys() and sn in dic_phreno.keys():
-      meta = dic_meta[sn]
-      vSiII_6355_lbd=0.
-      vSiII_6355_lbd_err=0.
-      counter  = 0
-      for sp in dic_phreno[sn]["spectra"]:
-         if sp in meta['spectra'].keys() and  numpy.abs(meta['spectra'][sp]['salt2.phase']) < 2.5:
-            vSiII_6355_lbd += dic_phreno[sn]["spectra"][sp]["phrenology.vSiII_6355_lbd"]/dic_phreno[sn]['spectra'][sp]["phrenology.vSiII_6355_lbd.err"]**2
-            vSiII_6355_lbd_err += 1/dic_phreno[sn]['spectra'][sp]["phrenology.vSiII_6355_lbd.err"]**2
-            counter +=1
-      if counter !=0:
-         sivel.append(vSiII_6355_lbd / vSiII_6355_lbd_err)
-         sivel_err.append(1./numpy.sqrt(vSiII_6355_lbd_err))
-      else:
-         sivel.append(float('nan'))
-         sivel_err.append(float('nan'))
-   else:
-      sivel.append(float('nan'))
-      sivel_err.append(float('nan'))
+# sivel=[]
+# sivel_err=[]
 
-sivel = numpy.array(sivel)
-sivel_err = numpy.array(sivel_err)
+
+# for sn in data['snlist']:
+#    sn = 'PTF12iiq'
+#    if sn in dic_meta.keys() and sn in dic_phreno.keys():
+#       meta = dic_meta[sn]
+#       vSiII_6355_lbd=0.
+#       vSiII_6355_lbd_err=0.
+#       counter  = 0
+#       for sp in dic_phreno[sn]["spectra"]:
+#          if sp in meta['spectra'].keys() and  numpy.abs(meta['spectra'][sp]['salt2.phase']) < 2.5 and numpy.isfinite(dic_phreno[sn]["spectra"][sp]["phrenology.vSiII_6355_lbd"]):
+#             vSiII_6355_lbd += dic_phreno[sn]["spectra"][sp]["phrenology.vSiII_6355_lbd"]/dic_phreno[sn]['spectra'][sp]["phrenology.vSiII_6355_lbd.err"]**2
+#             vSiII_6355_lbd_err += 1/dic_phreno[sn]['spectra'][sp]["phrenology.vSiII_6355_lbd.err"]**2
+#             print dic_phreno[sn]["spectra"][sp]["phrenology.vSiII_6355_lbd"]
+#             counter +=1
+#       if counter !=0:
+#          sivel.append(vSiII_6355_lbd / vSiII_6355_lbd_err)
+#          sivel_err.append(1./numpy.sqrt(vSiII_6355_lbd_err)) 
+#       else:
+#          sivel.append(float('nan'))
+#          sivel_err.append(float('nan'))
+#    else:
+#       sivel.append(float('nan'))
+#       sivel_err.append(float('nan'))
+
+
+# sivel = numpy.array(sivel)
+# sivel_err = numpy.array(sivel_err)
 
 use = numpy.isfinite(sivel)
 
@@ -56,6 +63,8 @@ EW_obs=EW_obs[use]
 mag_obs=mag_obs[use]
 EW_cov= EW_cov[use]
 mag_cov=mag_cov[use]
+
+snname = numpy.array(data['snlist'])[use]
 
 nsne, nmags = mag_obs.shape
 
@@ -84,34 +93,37 @@ init = [{'EW' : EW_renorm, \
          'beta_raw' : numpy.zeros(5), \
          'eta_raw' : numpy.zeros(5), \
          'L_sigma_raw': numpy.zeros(5)+0.03*100, \
-         'gamma01': 6./5,\
-         'gamma02': 4./5,\
-         'gamma03': 3./5,\
-         'gamma04': 2./5,\
-         'gamma05': 1./5,\
-         'gamma11': -4./5,\
-         'gamma12': -3./5,\
-         'gamma13': -2./5,\
-         'gamma14': -1./5,\
-         'gamma15': -0.5/5,\
+         'gamma01': 61./5,\
+         'gamma02': 50./5,\
+         'gamma03': 40./5,\
+         'gamma04': 30./5,\
+         'gamma05': 20./5,\
+         'gamma11': -12./5,\
+         'gamma12': -14./5,\
+         'gamma13': -16./5,\
+         'gamma14': -14./5,\
+         'gamma15': -14/5,\
          'mag_int_raw': mag_renorm, \
          'L_Omega': numpy.identity(5), \
          'Delta_unit':R_simplex, \
          'Delta_scale': 15./4, \
          'k_unit': R_simplex, \
          'k1_unit': R_simplex, \
-         'R': R_simplex, \
-         'rho11': -4./5,\
-         'rho12': -3./5,\
-         'rho13': 0./5,\
-         'rho14': 0./5,\
-         'rho15':  4./5,\
+         'R_unit': R_simplex, \
+         # 'rho11': 2./5,\
+         # 'rho12': -2./5,\
+         # 'rho13': -2./5,\
+         'rho11': 3.5/5,\
+         'rho12': 2./5,\
+         'rho13': -0.1/5,\
+         # 'rho14': 1./5,\
+         # 'rho15':  1./5,\
          } \
         for _ in range(4)]
 
 sm = pystan.StanModel(file='gerard15.stan')
 control = {'stepsize':1}
-fit = sm.sampling(data=data, iter=4000, chains=4,control=control,init=init, thin=1)
+fit = sm.sampling(data=data, iter=10000, chains=4,control=control,init=init, thin=1)
 
 
 output = open('temp15.pkl','wb')
