@@ -365,8 +365,9 @@ plt.close()
 
 # plt.hist([(fit['gamma'][:,1]-fit['gamma'][:,2])[:,None]*fit['k'], (fit['gamma1'][:,1]-fit['gamma1'][:,2])[:,None]*fit['k1'], (fit['rho1'][:,1]-fit['rho1'][:,2])[:,None]*fit['R']],normed=True,bins=20,
 #     label=[r'$E_\gamma(B-V)$',r'$E_{\gamma_1}(B-V)$',r'$E_\delta(B-V)$'],range=(-0.1,0.4))
-plt.hist([(fit['gamma'][:,1]-fit['gamma'][:,2])[:,None]*fit['k'], (fit['gamma1'][:,1]-fit['gamma1'][:,2])[:,None]*fit['k1'], (fit['rho1'][:,1]-fit['rho1'][:,2])[:,None]*fit['R']],normed=True,bins=20,
-    label=[r'$E_\gamma(B-V)$',r'$E_{\gamma_1}(B-V)$',r'$E_\delta(B-V)$'])
+plt.hist([(fit['gamma'][:,1]-fit['gamma'][:,2])[:,None]*fit['k'] + 
+  (fit['gamma1'][:,1]-fit['gamma1'][:,2])[:,None]*fit['k1'], (fit['rho1'][:,1]-fit['rho1'][:,2])[:,None]*fit['R']],normed=True,bins=20,
+  label=[r'$E_{ext}(B-V)$',r'$E_\delta(B-V)$'])
 plt.xlabel(r'$E(B-V)$')
 plt.legend()
 pp = PdfPages('output15/ebv.pdf')
@@ -532,20 +533,28 @@ plt.close()
 # plt.close()
 
 
-figure = corner.corner(fit['gamma'],labels=[r"${\gamma}_0$",r"${\gamma}_1$",r"${\gamma}_2$",r"${\gamma}_3$",r"${\gamma}_4$"])
+figure = corner.corner(fit['gamma'],labels=[r"${\gamma^0}_0$",r"${\gamma^0}_1$",r"${\gamma^0}_2$",r"${\gamma^0}_3$",r"${\gamma^0}_4$"])
 pp = PdfPages('output15/gamma_corner.pdf')
 plt.savefig(pp,format='pdf')
 pp.close()
 plt.close()
 
-figure = corner.corner(fit['gamma1'],labels=[r"${\gamma_1}_0$",r"${\gamma_1}_1$",r"${\gamma_1}_2$",r"${\gamma_1}_3$",r"${\gamma_1}_4$"])
+figure = corner.corner(fit['gamma1'],labels=[r"${\gamma^1}_0$",r"${\gamma^1}_1$",r"${\gamma^1}_2$",r"${\gamma^1}_3$",r"${\gamma^1}_4$"])
 pp = PdfPages('output15/gamma1_corner.pdf')
 plt.savefig(pp,format='pdf')
 pp.close()
 plt.close()
 
-figure = corner.corner(fit['rho1'],labels=[r"${\rho}_{10}$",r"${\rho}_{11}$",r"${\rho}_{12}$",r"${\rho}_{13}$",r"${\rho}_{14}$"])
-pp = PdfPages('output15/rho_corner.pdf')
+figure = corner.corner(fit['rho1'],labels=[r"${\delta}_{0}$",r"${\delta}_{1}$",r"${\delta}_{2}$",r"${\delta}_{3}$",r"${\delta}_{4}$"])
+pp = PdfPages('output15/delta_corner.pdf')
+plt.savefig(pp,format='pdf')
+pp.close()
+plt.close()
+
+figure = corner.corner(fit['rho1'][:,:-1]/fit['rho1'][:,-1][:,None],labels=[r"${\delta}_{0}/{\delta}_{4}$",r"${\delta}_{1}/{\delta}_{4}$",\
+  r"${\delta}_{2}/{\delta}_{4}$",r"${\delta}_{3}/{\delta}_{4}$"], \
+  range=[[-4,4] for x in xrange(4)])
+pp = PdfPages('output15/deltaratio_corner.pdf')
 plt.savefig(pp,format='pdf')
 pp.close()
 plt.close()
@@ -714,7 +723,7 @@ plt.close()
 
 
 nlinks = fit['gamma'].shape[0]
-mega = numpy.array([fit['c'],fit['alpha'],fit['beta'],fit['eta'],fit['gamma'],fit['rho1'],fit['L_sigma']])
+mega = numpy.array([fit['c'],fit['alpha'],fit['beta'],fit['eta'],fit['gamma'],fit['gamma1'],fit['rho1'],fit['L_sigma']])
 mega = numpy.transpose(mega)
 
 
@@ -722,8 +731,8 @@ mega = numpy.transpose(mega)
 
 for index in xrange(5):
     figure = corner.corner(mega[index,:,:],labels=[r"$c_{}$".format(index), r"$\alpha_{}$".format(index),\
-                    r"$\beta_{}$".format(index),r"$\eta_{}$".format(index),r"$\gamma_{}$".format(index),\
-                    r"$\delta_{{1{}}}$".format(index), r"$\sigma_{}$".format(index)])
+                    r"$\beta_{}$".format(index),r"$\eta_{}$".format(index),r"$\gamma^0_{}$".format(index),\
+                    r"$\gamma^1_{}$".format(index),r"$\delta_{{{}}}$".format(index), r"$\sigma_{}$".format(index)])
     figure.suptitle(filts[index],fontsize=28)
     pp = PdfPages('output15/coeff{}.pdf'.format(index))
     plt.savefig(pp,format='pdf')
@@ -791,12 +800,14 @@ pp.close()
 plt.close()
 
 mega = numpy.array([fit['Delta'].flatten(),fit['EW'][:,:,0].flatten(),fit['EW'][:,:,1].flatten(),fit['sivel'].flatten(), \
-    ((fit['gamma'][:,1] - fit['gamma'][:,2])[:,None]*fit['k']).flatten(),((fit['rho1'][:,1] - fit['rho1'][:,2])[:,None]*fit['R']).flatten()])
+    ((fit['gamma'][:,1] - fit['gamma'][:,2])[:,None]*fit['k']).flatten(),\
+    ((fit['gamma1'][:,1] - fit['gamma1'][:,2])[:,None]*fit['k1']).flatten(),\
+    ((fit['rho1'][:,1] - fit['rho1'][:,2])[:,None]*fit['R']).flatten()])
 
 mega = numpy.transpose(mega)
 mega=mega[::50,:]
 
-figure = corner.corner(mega,labels=[r"$\Delta$",r"$EW_{Ca}$",r"$EW_{Si}$",r"$\lambda_{Si}$",r"$E_\gamma(B-V)$",r"$E_\delta(B-V)$"],range=numpy.zeros(6)+1.)
+figure = corner.corner(mega,labels=[r"$\Delta$",r"$EW_{Ca}$",r"$EW_{Si}$",r"$\lambda_{Si}$",r"$E_{\gamma^0}(B-V)$",r"$E_{\gamma^1}(B-V)$",r"$E_\delta(B-V)$"],range=numpy.zeros(7)+1.)
 pp = PdfPages('output15/perobject_corner.pdf')
 plt.savefig(pp,format='pdf')
 pp.close()
