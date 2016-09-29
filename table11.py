@@ -98,23 +98,23 @@ print "standard deviations of E(B-V)"
 print numpy.std(fit['k']*((fit['gamma'][:,1]-fit['gamma'][:,2]))[:,None])
 print numpy.std(fit['R']*((fit['rho1'][:,1]-fit['rho1'][:,2]))[:,None])
 
-# pars = ['alpha','alpha','beta','beta','eta','eta','gamma','gamma','rho1','rho1','L_sigma']
-# pars_n = ['\\alpha_X','{\\alpha_X/\\alpha_2-1}','\\beta_X','{\\beta_X/\\beta_2-1}',\
-#   '\\eta_X','{\\eta_X/\\eta_2-1}', '{\\gamma^0_X/\gamma^0_2-1}','R_{\gamma^0 X}', '{\\gamma^1_X/\\gamma^1_2-1}',\
-#     'R_{\\gamma^1 X}','\\sigma_X']
-# sigfig = [4,1,3,2,4,2,2,2,2,2,3]
-# for p,pn, s in zip(pars,pars_n,sigfig):
-#     print '${}$'.format(pn)
-#     for i in xrange(5):
-#         print '&'
-#         if pn[0] == 'R':
-#             dum = numpy.percentile(fit[p][:,i]/(fit[p][:,1]-fit[p][:,2])[:,None],(50,50-34,50+34)) 
-#         elif pn[0] == '{':
-#             dum = numpy.percentile(fit[p][:,i]/fit[p][:,2]-1,(50,50-34,50+34)) 
-#         else :
-#             dum = numpy.percentile(fit[p][:,i],(50,50-34,50+34))            
-#         print  '${1:6.{0}f}^{{{2:6.{0}f}}}_{{{3:6.{0}f}}}$'.format(s,dum[0], dum[2]-dum[0],dum[1]-dum[0] )
-#     print '\\\\'
+pars = ['alpha','alpha','beta','beta','eta','eta','gamma','gamma','rho1','rho1','L_sigma']
+pars_n = ['\\alpha_X','{\\alpha_X/\\alpha_V-1}','\\beta_X','{\\beta_X/\\beta_V-1}',\
+  '\\eta_X','{\\eta_X/\\eta_V-1}', '\\gamma^0_X', '{\\gamma^0_X/\gamma^0_V-1}', '\\gamma^1_X','{\\gamma^1_X/\\gamma^1_2-1}',\
+  '\\sigma_X']
+sigfig = [4,1,3,2,4,2,2,2,2,2,3]
+for p,pn, s in zip(pars,pars_n,sigfig):
+    print '${}$'.format(pn)
+    for i in xrange(5):
+        print '&'
+        if pn[0] == 'R':
+            dum = numpy.percentile(fit[p][:,i]/(fit[p][:,1]-fit[p][:,2])[:,None],(50,50-34,50+34)) 
+        elif pn[0] == '{':
+            dum = numpy.percentile(fit[p][:,i]/fit[p][:,2]-1,(50,50-34,50+34)) 
+        else :
+            dum = numpy.percentile(fit[p][:,i],(50,50-34,50+34))            
+        print  '${1:6.{0}f}^{{{2:6.{0}f}}}_{{{3:6.{0}f}}}$'.format(s,dum[0], dum[2]-dum[0],dum[1]-dum[0] )
+    print '\\\\'
 
 
 filts = ['U','B','V','R','I']
@@ -185,6 +185,7 @@ mag_obs=mag_obs[use]
 EW_cov= EW_cov[use]
 mag_cov=mag_cov[use]
 
+
 # ebvdelta  = (fit['rho1'][:,1]-fit['rho1'][:,2])[:,None] * fit['R']
 # ebvgamma  = (fit['gamma'][:,1]-fit['gamma'][:,2])[:,None] * fit['k']
 
@@ -192,8 +193,9 @@ mag_cov=mag_cov[use]
 #   print s,a,b
 
 
+# snname=numpy.array(data['snlist'])[use]
 
-for i in xrange(len(sivel)):
-    print '{0} & ${1:5.1f} \pm {2:3.1f}$ & ${3:5.1f} \pm {4:3.1f}$& ${7:5.0f} \pm {8:3.0f}$ & ${5[0]:6.2f} \pm {6[0]:6.2f}$ & ${5[1]:6.2f} \pm {6[1]:6.2f}$& ${5[2]:6.2f} \pm {6[2]:6.2f}$& ${5[3]:6.2f} \pm {6[3]:6.2f}$& ${5[4]:6.2f} \pm {6[4]:6.2f}$ \\\\'.format(snname[i], EW_obs[i,0], numpy.sqrt(EW_cov[i,0,0]),
-        EW_obs[i,1], numpy.sqrt(EW_cov[i,1,1]), mag_obs[i,:], numpy.sqrt(numpy.diagonal(mag_cov[i,:,:])),sivel[i],sivel_err[i])
+# for i in xrange(len(sivel)):
+#     print '{0} & ${1:5.1f} \pm {2:3.1f}$ & ${3:5.1f} \pm {4:3.1f}$& ${7:5.0f} \pm {8:3.0f}$ & ${5[0]:6.2f} \pm {6[0]:6.2f}$ & ${5[1]:6.2f} \pm {6[1]:6.2f}$& ${5[2]:6.2f} \pm {6[2]:6.2f}$& ${5[3]:6.2f} \pm {6[3]:6.2f}$& ${5[4]:6.2f} \pm {6[4]:6.2f}$ \\\\'.format(snname[i], EW_obs[i,0], numpy.sqrt(EW_cov[i,0,0]),
+#         EW_obs[i,1], numpy.sqrt(EW_cov[i,1,1]), mag_obs[i,:], numpy.sqrt(numpy.diagonal(mag_cov[i,:,:])),sivel[i],sivel_err[i])
 
