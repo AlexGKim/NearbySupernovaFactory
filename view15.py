@@ -375,6 +375,15 @@ plt.savefig(pp,format='pdf')
 pp.close()
 plt.close()
 
+plt.hist( ((fit['rho1'][:,1]-fit['rho1'][:,2])[:,None]*fit['R']).flatten(),normed=True,bins=20,
+  label=[r'$E_\delta(B-V)$'],range=(-0.06,.06))
+plt.xlabel(r'$E(B-V)$')
+plt.xlim((-.06,.06))
+plt.legend()
+pp = PdfPages('output15/ebv_delta.pdf')
+plt.savefig(pp,format='pdf')
+pp.close()
+plt.close()
 
 # au = fit['gamma'][:,0][:,None]*fit['k'] + fit['rho1'][:,0][:,None]*fit['R']+0.16
 # ab = fit['gamma'][:,1][:,None]*fit['k'] + fit['rho1'][:,1][:,None]*fit['R']+0.08

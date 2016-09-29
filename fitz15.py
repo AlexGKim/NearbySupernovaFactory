@@ -93,6 +93,23 @@ plt.savefig(pp,format='pdf')
 pp.close()
 plt.close()
 
+rv=(fit['gamma'][:,2][:,None]*fit['k'] + fit['gamma1'][:,2][:,None]*fit['k1'])/ \
+  ((fit['gamma'][:,1]-fit['gamma'][:,2])[:,None] * fit['k']+(fit['gamma1'][:,1]-fit['gamma1'][:,2])[:,None] * fit['k1'])
+
+ebvav_r = numpy.percentile(rv,(50,50-34,50+34),axis=0)
+plt.errorbar(ebvav_s[0,0,:], ebvav_r[0,:], \
+ xerr=(ebvav_s[0,0,:]-ebvav_s[1,0,:], ebvav_s[2,0,:]-ebvav_s[0,0,:]),\
+ yerr=(ebvav_r[0,:]-ebvav_r[1,:],ebvav_r[2,:]-ebvav_r[0,:]),fmt='o',alpha=0.4)
+# plt.scatter(ebvav[0,::1000],ebvav[1,::1000]/ebvav[0,::1000],marker='.')
+plt.ylabel(r'$R_{V} $')
+plt.xlabel(r'$E(B-V) + const$')
+plt.ylim((-1,5))
+pp = PdfPages("output15/rv.pdf")
+plt.savefig(pp,format='pdf')
+pp.close()
+plt.close()
+
+
 ebv  = (fit['gamma'][:,1]-fit['gamma'][:,2])[:,None] * fit['k']
 ebv = numpy.array([ebv,(fit['gamma1'][:,1]-fit['gamma1'][:,2])[:,None] * fit['k1']])
 
