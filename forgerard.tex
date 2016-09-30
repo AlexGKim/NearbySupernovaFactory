@@ -672,8 +672,8 @@ output also gives  $N_{eff} \gg 100$ for all parameters, indicating that are all
 Empirically, the confidence regions are localized and unimodal as is seen in  Figures~\ref{global1:fig}, \ref{global2:fig}, \ref{global3:fig}, \ref{global4:fig},
 \ref{global5:fig}.  We find no evidence that
 the Monte Carlo chains have not converged to the stationary posterior distribution.
-We have rurun the analysis with a variety of initial conditions, including one with all the $\gamma$'s and $\delta$'s equal to zero, except for a small positive 
-$\gamma_0$ and small negative $\delta_0$ to satisfy our limit conditions.  Parameter credible intervals
+We have rurun the analysis with a variety of initial conditions, including one with all the $\gamma$'s equal to zero, except for a small positive 
+$\gamma^0_0$ and small negative $\gamma^1_0$ to satisfy our limit conditions.  Parameter credible intervals
 remain consistent within uncertainty.
 
 \begin{figure}[htbp] %  figure placement: here, top, bottom, or page
@@ -728,11 +728,10 @@ later when we discuss the inferred residual covariance matrix $C_c$.
 
 \color{black}
 
-For each of the five filters, the 68\%  equal-tailed credible intervals for the global parameters $\alpha$, $\beta$, $\eta$, $R$, $R_\delta$, and $\sigma$
-(and other interesting derived parameters)
+For each of the five filters, the 68\%  equal-tailed credible intervals for the global parameters $\alpha$, $\beta$, $\eta$, $\gamma^0$, $\gamma^1$, and $\sigma$
 are given in Table~\ref{global:tab}.
 \color{red}
-As the $\gamma$ parameters are free up to a multiplicative constant and the highly non-zero values of $\gamma^i_V$,
+As the $\gamma$ parameters are free up to a multiplicative constant and have non-zero values of $\gamma^i_V$,
 their results are also shown in terms of $\gamma^i_X/\gamma^i_V-1$.
 \color{black}
 Contours of the posterior surface for parameter pairs grouped by filter are shown in Figures~\ref{global1:fig} -- \ref{global5:fig} .
@@ -895,33 +894,224 @@ We do not detect a significant association between
 $\lambda_{Si}$ and color.
 
 
+
+
+The ideogram for the grey offsets $\Delta$ for all supernovae is shown in Figure~\ref{hist:fig}.  The distribution is non-Gaussian, 
+has a standard deviation of
+%-----
+$0.10$
+%-----
+mag, and a broad tail in the positive (fainter) direction.
+\begin{figure}[htbp] %  figure placement: here, top, bottom, or page
+   \centering
+   \includegraphics[width=3.2in]{output11/Delta_hist.pdf} 
+   \caption{Ideogram for the grey offset $\Delta$.
+   \label{hist:fig}}
+\end{figure}
+
+
+Non-trivial residual magnitude dispersions are captured in $C_c$.
+% Figure~\ref{sigma:fig} shows the confidence regions for $\sigma$, the square root of the diagonal elements of $C_c$. 
+The residual intrinsic dispersion ranges from
+$\sim 0.01$ to 0.06 mag, significantly smaller
+than the dispersion in $\Delta$.
+The off-diagonal elements of $C_c$ are parameterized by the Cholesky factors of a correlation matrix.
+Assembling
+a new set of Cholesky factors based on the distributions of each individual factor will not generally satisfy the condition of representing a correlation matrix.  
+To characterize a typical posterior draw of $C_c$ we use the matrix that is the mean of all covariance realizations in the
+chain, element by element.
+For $UBVRI$ the matrix is
+\begin{equation}
+\begin{pmatrix}
+0.0038 & 0.0010 & -0.0002 & -0.0000 & 0.0003 \\
+0.0010 & 0.0011 & 0.0002 & -0.0000 & -0.0006 \\
+-0.0002 & 0.0002 & 0.0004 & 0.0000 & -0.0002 \\
+-0.0000 & -0.0000 & 0.0000 & 0.0002 & 0.0002 \\
+0.0003 & -0.0006 & -0.0002 & 0.0002 & 0.0020
+ \end{pmatrix} \text{mag}^2.
+ \label{mag_cov:eqn}
+ \end{equation}
+The  covariance of the colors $U-V$, $B-V$, $V-R$, and $V-I$ is
+expressed as the standard deviations and
+ correlation matrix
+ \begin{equation}
+ \begin{pmatrix}
+0.068 , 0.034 , 0.023 , 0.053
+  \end{pmatrix} \text{mag}
+ \label{color_sd:eqn}
+   \end{equation}
+ \begin{equation}
+\begin{pmatrix}
+1.000 & 0.615 & -0.334 & -0.296 \\
+0.615 & 1.000 & -0.193 & 0.099 \\
+-0.334 & -0.193 & 1.000 & 0.634 \\
+-0.296 & 0.099 & 0.634 & 1.000  \end{pmatrix}.
+  \label{color_cor:eqn}
+ \end{equation}
+ 
+% \begin{figure}[htbp] %  figure placement: here, top, bottom, or page
+%   \centering
+%   \includegraphics[width=5.5in]{output11/sigma_corner.pdf} 
+%   \caption{Posterior contours for the parameters $\sigma$, the square root of the diagonal elements of $C_c$.
+%   \label{sigma:fig}}
+%\end{figure}
+
+Each supernova is described by its parameters $EW_{Ca}$, $EW_{Si}$, $\lambda_{Si}$, $E_{\gamma^0}(B-V)=(\gamma^0_B-\gamma^0_V)k$, and
+$E_{\gamma^1}(B-V)=(\gamma^1_B-\gamma^1_V)k_1$, as well as its grey offset
+$\Delta$: their distributions for all Monte Carlo links for all supernovae are shown in Figure~\ref{perobject:fig}.
+There is a core concentration in the  parameter-space, with around ten objects that occupy its outskirts.
+Many outliers appear in the red tail of $E_{\gamma^0}(B-V)$, as would be expected for the infrequent selection of supernovae
+heavily extinguished by host-galaxy dust.
+Outliers  are also clearly distinguished in  $EW_{Ca}$--$\lambda_{Si}$ space.
+
+\begin{figure}[htbp] %  figure placement: here, top, bottom, or page
+   \centering
+   \includegraphics[width=5.5in]{output11/perobject_corner.pdf} 
+   \caption{Distributions for the supernova parameters $EW_{Ca}$, $EW_{Si}$, $\lambda_{Si}$, $E_{\gamma^0}(B-V)$, and $E_{\gamma^1}(B-V)$, as well as the grey offset
+$\Delta$.  All links are plotted, so that each supernova contributes a cloud of points.
+   \label{perobject:fig}}
+\end{figure}
+
+The Pearson correlation coefficients for $\Delta$, $EW_{Ca}$, $EW_{Si}$, $\lambda_{Si}$, $E_\gamma(B-V)$, and $E_\delta(B-V)$ are given in the matrix
+\begin{equation}
+\begin{pmatrix}
+1.000 & 0.001 & -0.059 & -0.045 & 0.105 & 0.007 \cr
+0.001 & 1.000 & 0.115 & -0.252 & -0.066 & -0.003 \cr
+-0.059 & 0.115 & 1.000 & -0.140 & -0.163 & -0.024 \cr
+-0.045 & -0.252 & -0.140 & 1.000 & 0.040 & 0.027 \cr
+0.105 & -0.066 & -0.163 & 0.040 & 1.000 & 0.055 \cr
+0.007 & -0.003 & -0.024 & 0.027 & 0.055 & 1.000
+\end{pmatrix}.
+\end{equation}
 \color{red}
-
-The extrinsic parameters $\gamma$ attributed to dust are fit for without reference to a specific dust model:
-we now do so in a fit to the 
-model of \citet{1999PASP..111...63F},
-taking the fixed 3693,  4369,  5287,  6319, 7611 \AA\  for the effective wavelengths of the supernova flux through the bands.
-Figure~\ref{fitz:fig} shows the   68\% credible intervals of $\gamma$ and our result
-$R_V=2.97^{+0.18}_{-0.17}$..  
-We do the analysis in $\gamma$, as opposed to $R_V$ say, because the posteriors of $\gamma$ are well-approximated by a normal distribution that is used for the fit.
-The posterior distributions for $R_{\gamma X}=\frac{\gamma_X}{\gamma_B-\gamma_V}$ are shown in Figure~\ref{rx:fig}.
+We find weak correlations between our color-excess parameters and the input features, the strongest being $-0.163$ between
+$E_\gamma(B-V)$ and $EW_{Si}$;
 \color{black}
+recall that $EW_{Si}$ is correlated with light-curve shape, which is correlated with host-galaxy (including dust) properties 
+\citep{2003MNRAS.340.1057S}.
+An extensive discussion of the correlations between the spectral features of the SNfactory data set can be found in \citet{chotard:thesis}
+and \citet{leget:thesis}.
+
+The range of SiII equivalent widths is $\pm 20$~\AA\ whereas the width of the $B$-band is 851~\AA.  
+The implied span in $B$ magnitude based on $\beta_1$ is 0.54~mag.  Therefore $\beta_1$ cannot wholly be attributed to the line itself.
+Similarly, the CaII equivalent widths have range $\pm 50$~\AA, while the width of the $U$ band is
+701~\AA.  The implied span in $U$ magnitude is is 0.21~mag, so $\alpha_0$ cannot be completely due to the line iteslf.
+
+\subsection{Two Extrinsic Parameters}
+\color{red}
+The two sets of  $\gamma^i$ parameters  are significantly non-zero. 
+\color{black}
+None of the 20000 links of 
+our Monte Carlo chains for $\delta$ exceed 0 (see Figures~\ref{global1:fig}--\ref{global5:fig}), we thus claim detection of the
+influence of $k$ and $k_1$  on supernova magnitudes
+with probability $(1-5\times 10^{-5})$.
+
+\color{red}
+Combining the effects of both parameters, we can define a total $X$-band extinction $A_X=\gamma^0_X k + \gamma^1_X k_1$
+and a corresponding $E(B-V) = A_B-A_V$.  Figure~\ref{avebv:fig} shows the relationship between $A_V$ and $E(B-V)$, from
+which a linear fit gives a slope of $R_V=2.51^{+0.23}_{-0.21}$.  The fit also gives the zeropoint, which we use to 
+estimate $R_V=A_V/(E(B-V)-zeropoint$ per supernova.  These values are shown in Figure~\ref{avebv:fig}.
 
 \begin{figure}[htbp] %  figure placement: here, top, bottom, or page
    \centering
-   \includegraphics[width=3.2in]{output11/fitz.pdf}
-   \caption{\textcolor{red}{68\% credible intervals of $\gamma_X$ and the best-fit to the  \citet{1999PASP..111...63F}  model $R^F_V=2.97$.}
-   \label{fitz:fig}}
+   \includegraphics[width=2.5in]{output11/avebv.pdf}
+   \includegraphics[width=2.5in]{output11/rv.pdf}
+   \caption{\textcolor{red}{Left: $A_V$ versus $E(B-V)$ and Right: $R_V=A_V/(E(B-V)-zeropoint$\
+   versus $E(B-V)$ for the supernova sample.}
+   \label{avebv:fig}}
 \end{figure}
 
+Until now we have considered $k$ and $D$ as independent external and internal parameters.  However, they may be both
+parameters of a single underlying dust.  Indeed the CCM dust law can be exactly written as a two-parameter linear model
+\begin{equation}
+A_X = a(X)  A_V + b(X) E(B-V).
+\end{equation}
+The Fitzpatrick model can also approximately be described by a linear model in the range of $R_V$ and wavelength under consideration:
+the results shown here vary only at the percent level when making this approximation.
+Similarly our model can be expressed as
+\begin{equation}
+A_X = \frac{\gamma^0_X}{\gamma^0_1-\gamma^0_2}  E_{\gamma^0}(B-V) +  \frac{\gamma^1_X}{\gamma^1_1-\gamma^1_2}  E_{\gamma^1}(B-V).
+\end{equation}
+
+In our model, variations in $k$ and $D$ affect magnitudes in two directions in magnitude space
+$\frac{\partial A}{\partial E_\delta(B-V)}$, $\frac{\partial A}{\partial E_\gamma(B-V)}$.  In the Fitzpatrick model
+variations on $E^F(B-V)$ and $A^F_V=R^F_VE^F(B-V)$ induce magnitude changes in
+in directions
+$\frac{\partial A}{\partial E^F(B-V)}$, $\frac{\partial A}{\partial A^F_V}$.
+The planes in magnitude-space defined by each pair of vectors are nearly parallel, in that
+\begin{equation}
+\begin{pmatrix}
+ \frac{\gamma^0_X}{\gamma^0_1-\gamma^0_2} \\
+\frac{\gamma^1_X}{\gamma^1_1-\gamma^1_2} 
+\end{pmatrix}=
+\begin{pmatrix}
+1.16 & 2.82 \\
+0.74 & -5.43
+\end{pmatrix} 
+\begin{pmatrix}
+a(X) \\
+b(X)
+\end{pmatrix}+
+\vec{\epsilon},
+\end{equation}
+where the residual $\vec{\epsilon}$''s perpendicular to the Fitzpatrick plane
+contribute  2\% and 5\% to the total  length of the vector.
+
+The projections of our model parameters $E_\delta(B-V)$ and  $E_\gamma(B-V)$ for the supernovae in our sample
+onto the Fitzpatrick plane
+have corresponding values of $E^F(B-V)$ and $A^F$, up to a constant.  These are shown in Figure~\ref{avebv:fig}.
+The points are confined to a tight locus around a line, with slope that corresponds to $R^F_V=2.5$.  
 
 \begin{figure}[htbp] %  figure placement: here, top, bottom, or page
    \centering
-   \includegraphics[width=2.8in]{output11/rx_corner.pdf}
-      \includegraphics[width=2.8in]{output11/rxdelta_corner.pdf} 
-   \caption{Posterior contours for Left:  $R_X=\frac{\gamma_X}{\gamma_B-\gamma_V}$;  Right:  $R_{\delta X}=\frac{\delta_X}{\delta_B-\delta_V}$.
-   \label{rx:fig}}
+   \includegraphics[width=5in]{output11/avebv_synth.pdf}
+    \caption{\textcolor{red}{Projections of our model parameters $E_\delta(B-V)$ and  $E_\gamma(B-V)$ for the supernovae in our sample
+onto the Fitzpatrick plane.}
+   \label{avebv:fig}}
 \end{figure}
+
+The linear fit produces the zeropoint (which happens to be consistent with zero) along with the slope, allowing us to determine $R^F_V$ for each supernova,
+as shown in Figure~\ref{avrv:fig}.  An interesting feature is that the distribution at extreme blue colors seems to be different from the distribution for redder objects.
+I will contemplate whether this could mean anything.
+
+\begin{figure}[htbp] %  figure placement: here, top, bottom, or page
+   \centering
+   \includegraphics[width=5in]{output11/avrv_synth.pdf}
+    \caption{\textcolor{red}{$R^F_V$ for each supernova.}
+   \label{avrv:fig}}
+\end{figure}
+
+The near coplanarity of the plane defined by our parameters and the plane of Fitzpatrick, together with the fact that our the individual supernova
+parameters translate to Fitzpatrick parameters consistent with a distribution expected for a narrow range of $R^F_V$ lead us to conclude that 
+external dust is responsible for most of our $k$ and $D$ parameters.
+
+%
+%
+%The extrinsic parameters $\gamma$ attributed to dust are fit for without reference to a specific dust model:
+%we now do so in a fit to the 
+%model of \citet{1999PASP..111...63F},
+%taking the fixed 3693,  4369,  5287,  6319, 7611 \AA\  for the effective wavelengths of the supernova flux through the bands.
+%Figure~\ref{fitz:fig} shows the   68\% credible intervals of $\gamma$ and our result
+%$R_V=2.97^{+0.18}_{-0.17}$..  
+%We do the analysis in $\gamma$, as opposed to $R_V$ say, because the posteriors of $\gamma$ are well-approximated by a normal distribution that is used for the fit.
+%The posterior distributions for $R_{\gamma X}=\frac{\gamma_X}{\gamma_B-\gamma_V}$ are shown in Figure~\ref{rx:fig}.
+%\color{black}
+%
+%\begin{figure}[htbp] %  figure placement: here, top, bottom, or page
+%   \centering
+%   \includegraphics[width=3.2in]{output11/fitz.pdf}
+%   \caption{\textcolor{red}{68\% credible intervals of $\gamma_X$ and the best-fit to the  \citet{1999PASP..111...63F}  model $R^F_V=2.97$.}
+%   \label{fitz:fig}}
+%\end{figure}
+%
+%
+%\begin{figure}[htbp] %  figure placement: here, top, bottom, or page
+%   \centering
+%   \includegraphics[width=2.8in]{output11/rx_corner.pdf}
+%      \includegraphics[width=2.8in]{output11/rxdelta_corner.pdf} 
+%   \caption{Posterior contours for Left:  $R_X=\frac{\gamma_X}{\gamma_B-\gamma_V}$;  Right:  $R_{\delta X}=\frac{\delta_X}{\delta_B-\delta_V}$.
+%   \label{rx:fig}}
+%\end{figure}
 
 
 %
@@ -942,10 +1132,7 @@ The posterior distributions for $R_{\gamma X}=\frac{\gamma_X}{\gamma_B-\gamma_V}
 %   \label{ccm:fig}}
 %\end{figure}
 
-None of the 20000 links of 
-our Monte Carlo chains for $\delta$ exceed 0 (see Figures~\ref{global1:fig}--\ref{global5:fig}), we thus claim detection of the
-intrinsic parameter on supernova magnitudes
-with probability $(1-5\times 10^{-5})$.
+
 \textcolor{red}{
 The values of $\delta_X/\delta_V$, plotted in  Figure~\ref{deltaratio:fig}, are not monotonic with color: they increase from the $U$ to $V$, and then decrease
 from $V$ to $I$,
@@ -989,111 +1176,6 @@ with the expectation for extinction due to host-galaxy dust \citep{1998ApJ...502
    internal $E_\delta(B-V) = (\delta_B-\delta_V)D$  contributions to color excess  for the supernovae in our sample.
    \label{ebv:fig}}
 \end{figure}
-
-
-
-The ideogram for the grey offsets $\Delta$ for all supernovae is shown in Figure~\ref{hist:fig}.  The distribution is non-Gaussian, 
-has a standard deviation of
-%-----
-$0.10$
-%-----
-mag, and a broad tail in the positive (fainter) direction.
-\begin{figure}[htbp] %  figure placement: here, top, bottom, or page
-   \centering
-   \includegraphics[width=3.2in]{output11/Delta_hist.pdf} 
-   \caption{Ideogram for the grey offset $\Delta$.
-   \label{hist:fig}}
-\end{figure}
-
-
-Non-trivial residual magnitude dispersions are captured in $C_c$.   Figure~\ref{sigma:fig} shows the confidence regions for $\sigma$, the
-square root of the diagonal elements of $C_c$.  The residual intrinsic dispersion ranges from
-$\sim 0.01$ to 0.06 mag, significantly smaller
-than the dispersion in $\Delta$.
-The off-diagonal elements of $C_c$ are parameterized by the Cholesky factors of a correlation matrix.
-Assembling
-a new set of Cholesky factors based on the distributions of each individual factor will not generally satisfy the condition of representing a correlation matrix.  
-To characterize a typical posterior draw of $C_c$ we use the matrix that is the mean of all covariance realizations in the
-chain, element by element.
-For $UBVRI$ the matrix is
-\begin{equation}
-\begin{pmatrix}
-0.0040 & 0.0011 & -0.0002 & -0.0000 & 0.0003 \cr
-0.0011 & 0.0012 & 0.0002 & -0.0000 & -0.0006 \cr
--0.0002 & 0.0002 & 0.0004 & 0.0001 & -0.0002 \cr
--0.0000 & -0.0000 & 0.0001 & 0.0002 & 0.0002 \cr
-0.0003 & -0.0006 & -0.0002 & 0.0002 & 0.0020
- \end{pmatrix} \text{mag}^2.
- \label{mag_cov:eqn}
- \end{equation}
-The  covariance of the colors $U-V$, $B-V$, $V-R$, and $V-I$ is
-expressed as the standard deviations and
- correlation matrix
- \begin{equation}
- \begin{pmatrix}
-0.069 , 0.035 , 0.023 , 0.053
-  \end{pmatrix} \text{mag}
- \label{color_sd:eqn}
-   \end{equation}
- \begin{equation}
-\begin{pmatrix}
-1.000 & 0.624 & -0.318 & -0.287 \cr
-0.624 & 1.000 & -0.180 & 0.104 \cr
--0.318 & -0.180 & 1.000 & 0.629 \cr
--0.287 & 0.104 & 0.629 & 1.000
-  \end{pmatrix}.
-  \label{color_cor:eqn}
- \end{equation}
- 
- \begin{figure}[htbp] %  figure placement: here, top, bottom, or page
-   \centering
-   \includegraphics[width=5.5in]{output11/sigma_corner.pdf} 
-   \caption{Posterior contours for the parameters $\sigma$, the square root of the diagonal elements of $C_c$.
-   \label{sigma:fig}}
-\end{figure}
-
-Each supernova is described by its parameters $EW_{Ca}$, $EW_{Si}$, $\lambda_{Si}$, $E_\gamma(B-V)$, and $E_\delta(B-V)$, as well as its grey offset
-$\Delta$: their distributions for all Monte Carlo links for all supernovae are shown in Figure~\ref{perobject:fig}.
-There is a core concentration in the  parameter-space, with around ten objects that occupy its outskirts.
-Many outliers appear in the red tail of $E_\gamma(B-V)$, as would be expected for the infrequent selection of supernovae
-heavily extinguished by host-galaxy dust.
-Outliers  are also clearly distinguished in  $EW_{Ca}$--$\lambda_{Si}$ space.
-
-\begin{figure}[htbp] %  figure placement: here, top, bottom, or page
-   \centering
-   \includegraphics[width=5.5in]{output11/perobject_corner.pdf} 
-   \caption{Distributions for the supernova parameters $EW_{Ca}$, $EW_{Si}$, $\lambda_{Si}$, $E_\gamma(B-V)$, and $E_\delta(B-V)$, as well as the grey offset
-$\Delta$.  All links are plotted, so that each supernova contributes a cloud of points.
-   \label{perobject:fig}}
-\end{figure}
-
-The Pearson correlation coefficients for $\Delta$, $EW_{Ca}$, $EW_{Si}$, $\lambda_{Si}$, $E_\gamma(B-V)$, and $E_\delta(B-V)$ are given in the matrix
-\begin{equation}
-\begin{pmatrix}
-1.000 & 0.001 & -0.059 & -0.045 & 0.105 & 0.007 \cr
-0.001 & 1.000 & 0.115 & -0.252 & -0.066 & -0.003 \cr
--0.059 & 0.115 & 1.000 & -0.140 & -0.163 & -0.024 \cr
--0.045 & -0.252 & -0.140 & 1.000 & 0.040 & 0.027 \cr
-0.105 & -0.066 & -0.163 & 0.040 & 1.000 & 0.055 \cr
-0.007 & -0.003 & -0.024 & 0.027 & 0.055 & 1.000
-\end{pmatrix}.
-\end{equation}
-\color{red}
-We find weak correlations between our color-excess parameters and the input features, the strongest being $-0.163$ between
-$E_\gamma(B-V)$ and $EW_{Si}$;
-\color{black}
-recall that $EW_{Si}$ is correlated with light-curve shape, which is correlated with host-galaxy (including dust) properties 
-\citep{2003MNRAS.340.1057S}.
-Although $E_\gamma(B-V)$ and $E_\delta(B-V)$ are determined simultaneously for each supernova from colors, they have a low correlation coefficient of 0.062;
-this low correlation, and the broad distribution in $E_\delta(B-V)$ for low $E_\gamma(B-V)$,  indicate that what we have been calling intrinsic
-is not related to extrinsic dust.
-An extensive discussion of the correlations between the spectral features of the SNfactory data set can be found in \citet{chotard:thesis}
-and \citet{leget:thesis}.
-
-The range of SiII equivalent widths is $\pm 20$~\AA\ whereas the width of the $B$-band is 851~\AA.  
-The implied span in $B$ magnitude based on $\beta_1$ is 0.54~mag.  Therefore $\beta_1$ cannot wholly be attributed to the line itself.
-Similarly, the CaII equivalent widths have range $\pm 50$~\AA, while the width of the $U$ band is
-701~\AA.  The implied span in $U$ magnitude is is 0.21~mag, so $\alpha_0$ cannot be completely due to the line iteslf.
 
 
 \section{Supernova Model Part 2}
@@ -1265,76 +1347,6 @@ $  0.06 \pm 0.03$
 (see Figure~\ref{ebv:fig}).
 \textcolor{red}{The deduced parameters for SN~2014J, which are relative to SN~2011fe, live well outside the 
 span} of supernovae used to train the coefficients of the model.
-
-\section{Interpreting $k$ and $D$ As Parameters of a Single Dust Model}
-%ipdb> print y, y-ymin, ymax-y
-%2.23720862938 0.00612061774367 0.00623996846008
-%ipdb> (y,ymin,ymax)  = numpy.percentile(samples[:,1],(50,50-34,50+34)) 
-%ipdb> print y, y-ymin, ymax-y
-%-3.46707773157e-05 0.000555359008477 0.000616592111953
-Until now we have considered $k$ and $D$ as independent external and internal parameters.  However, they may be both
-parameters of a single underlying dust.  Indeed the CCM dust law can be exactly written as a two-parameter linear model
-\begin{equation}
-A_X = a(X)  A_V + b(X) E(B-V).
-\end{equation}
-The Fitzpatrick model can also approximately be described by a linear model in the range of $R_V$ and wavelength under consideration:
-the results shown here vary only at the percent level when making this approximation.
-Similarly our model can be expressed as
-\begin{equation}
-A_X = \frac{\gamma^0_X}{\gamma^0_1-\gamma^0_2}  E_{\gamma^0}(B-V) +  \frac{\gamma^1_X}{\gamma^1_1-\gamma^1_2}  E_{\gamma^1}(B-V).
-\end{equation}
-
-In our model, variations in $k$ and $D$ affect magnitudes in two directions in magnitude space
-$\frac{\partial A}{\partial E_\delta(B-V)}$, $\frac{\partial A}{\partial E_\gamma(B-V)}$.  In the Fitzpatrick model
-variations on $E^F(B-V)$ and $A^F_V=R^F_VE^F(B-V)$ induce magnitude changes in
-in directions
-$\frac{\partial A}{\partial E^F(B-V)}$, $\frac{\partial A}{\partial A^F_V}$.
-The planes in magnitude-space defined by each pair of vectors are nearly parallel, in that
-\begin{equation}
-\begin{pmatrix}
- \frac{\gamma^0_X}{\gamma^0_1-\gamma^0_2} \\
-\frac{\gamma^1_X}{\gamma^1_1-\gamma^1_2} 
-\end{pmatrix}=
-\begin{pmatrix}
-1.16 & 2.82 \\
-0.74 & -5.43
-\end{pmatrix} 
-\begin{pmatrix}
-a(X) \\
-b(X)
-\end{pmatrix}+
-\vec{\epsilon},
-\end{equation}
-where the residual $\vec{\epsilon}$''s perpendicular to the Fitzpatrick plane
-contribute  2\% and 5\% to the total  length of the vector.
-
-The projections of our model parameters $E_\delta(B-V)$ and  $E_\gamma(B-V)$ for the supernovae in our sample
-onto the Fitzpatrick plane
-have corresponding values of $E^F(B-V)$ and $A^F$, up to a constant.  These are shown in Figure~\ref{avebv:fig}.
-The points are confined to a tight locus around a line, with slope that corresponds to $R^F_V=2.5$.  
-
-\begin{figure}[htbp] %  figure placement: here, top, bottom, or page
-   \centering
-   \includegraphics[width=5in]{output11/avebv_synth.pdf}
-    \caption{\textcolor{red}{Projections of our model parameters $E_\delta(B-V)$ and  $E_\gamma(B-V)$ for the supernovae in our sample
-onto the Fitzpatrick plane.}
-   \label{avebv:fig}}
-\end{figure}
-
-The linear fit produces the zeropoint (which happens to be consistent with zero) along with the slope, allowing us to determine $R^F_V$ for each supernova,
-as shown in Figure~\ref{avrv:fig}.  An interesting feature is that the distribution at extreme blue colors seems to be different from the distribution for redder objects.
-I will contemplate whether this could mean anything.
-
-\begin{figure}[htbp] %  figure placement: here, top, bottom, or page
-   \centering
-   \includegraphics[width=5in]{output11/avrv_synth.pdf}
-    \caption{\textcolor{red}{$R^F_V$ for each supernova.}
-   \label{avrv:fig}}
-\end{figure}
-
-The near coplanarity of the plane defined by our parameters and the plane of Fitzpatrick, together with the fact that our the individual supernova
-parameters translate to Fitzpatrick parameters consistent with a distribution expected for a narrow range of $R^F_V$ lead us to conclude that 
-external dust is responsible for most of our $k$ and $D$ parameters.
 
 \section{Discussion}
 \label{discussion:sec}

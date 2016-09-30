@@ -14,6 +14,7 @@ def getFitzExt(efflam,av, ebv):
   A1_ = -2.5*numpy.log10(A_)
   return A1_
 
+
 efflam = numpy.array([ 3693.16777627,  4369.37505509,  5287.48667023,  6319.19906153,7610.89305298])
 
 f = open('temp15.pkl','rb')
@@ -30,8 +31,15 @@ dAdAv = (A2 - A1)/0.01
 A3=getFitzExt(efflam, av , ebv+0.001)
 dAdebv = (A3 - A1)/0.001
 
-dAdebv_norm = numpy.linalg.norm(dAdebv)
-dAdAv_norm = numpy.linalg.norm(dAdAv)
+# dAdebv_norm = numpy.linalg.norm(dAdebv)
+# dAdAv_norm = numpy.linalg.norm(dAdAv)
+
+norm_dAdebv = numpy.dot(dAdebv, dAdebv)
+norm_dAdAv = numpy.dot(dAdAv, dAdAv)
+cross = numpy.dot(dAdebv, dAdAv)
+
+a = numpy.array([[norm_dAdebv,cross],[cross,norm_dAdAv]])
+
 
 # dAdebv = dAdebv/dAdebv_norm
 # dAdAv = dAdAv/dAdAv_norm
@@ -48,11 +56,6 @@ for s in ['gamma','gamma1']:
   # c=c/c_norm
 
   y = numpy.array([numpy.dot(c,dAdebv),numpy.dot(c,dAdAv)])
-  norm_dAdebv = numpy.dot(dAdebv, dAdebv)
-  norm_dAdAv = numpy.dot(dAdAv, dAdAv)
-  cross = numpy.dot(dAdebv, dAdAv)
-
-  a = numpy.array([[norm_dAdebv,cross],[cross,norm_dAdAv]])
   ans = numpy.linalg.solve(a,y)
 
   tmat.append(ans)
@@ -115,9 +118,17 @@ ebv = numpy.array([ebv,(fit['gamma1'][:,1]-fit['gamma1'][:,2])[:,None] * fit['k1
 
 ebvav=[]
 for i in xrange(ebv.shape[1]):
+  tmat_=[]
+  for s in ['gamma','gamma1']:
+    ga=fit[s][i,:]
+    y = numpy.array([numpy.dot(ga,dAdebv),numpy.dot(ga,dAdAv)])
+    ans = numpy.linalg.solve(a,y)
+    tmat_.append(ans)
+  tmat_=numpy.array(tmat_)
+  tmat_ = numpy.transpose(tmat_)
   inner = []
   for j in xrange(ebv.shape[2]):
-    inner.append(numpy.dot(tmat,ebv[:,i,j]))
+    inner.append(numpy.dot(tmat_,ebv[:,i,j]))
   ebvav.append(inner)
 ebvav = numpy.array(ebvav)
 

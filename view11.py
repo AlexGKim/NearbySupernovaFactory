@@ -692,8 +692,8 @@ mega = numpy.transpose(mega)
 
 for index in xrange(5):
     figure = corner.corner(mega[index,:,:],labels=[r"$c_{}$".format(index), r"$\alpha_{}$".format(index),\
-                    r"$\beta_{}$".format(index),r"$\eta_{}$".format(index),r"$\gamma_{}$".format(index),\
-                    r"$\delta_{{1{}}}$".format(index), r"$\sigma_{}$".format(index)])
+                    r"$\beta_{}$".format(index),r"$\eta_{}$".format(index),r"$\gamma^0_{}$".format(index),\
+                    r"$\gamma^1_{{1{}}}$".format(index), r"$\sigma_{}$".format(index)])
     figure.suptitle(filts[index],fontsize=28)
     pp = PdfPages('output11/coeff{}.pdf'.format(index))
     plt.savefig(pp,format='pdf')
@@ -766,7 +766,7 @@ mega = numpy.array([fit['Delta'].flatten(),fit['EW'][:,:,0].flatten(),fit['EW'][
 mega = numpy.transpose(mega)
 mega=mega[::50,:]
 
-figure = corner.corner(mega,labels=[r"$\Delta$",r"$EW_{Ca}$",r"$EW_{Si}$",r"$\lambda_{Si}$",r"$E_\gamma(B-V)$",r"$E_\delta(B-V)$"],range=numpy.zeros(6)+1.)
+figure = corner.corner(mega,labels=[r"$\Delta$",r"$EW_{Ca}$",r"$EW_{Si}$",r"$\lambda_{Si}$",r"$E_{\gamma^0}(B-V)$",r"$E_{\gamma^1}(B-V)$"],range=numpy.zeros(6)+1.)
 pp = PdfPages('output11/perobject_corner.pdf')
 plt.savefig(pp,format='pdf')
 pp.close()
