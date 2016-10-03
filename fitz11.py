@@ -112,6 +112,16 @@ plt.savefig(pp,format='pdf')
 pp.close()
 plt.close()
 
+w = ebvav_s[0,0,:] < -0.05
+err = (ebvav_r[2,:]-ebvav_r[1,:])/2
+dum = ebvav_r[0,w]/err[w]**2
+dum2= 1/err[w]**2
+print '${:6.2f} \pm {:6.2f}$'.format(dum.sum()/dum2.sum(),1./numpy.sqrt(dum2.sum()))
+w = ebvav_s[0,0,:] > -0.1
+err = (ebvav_r[2,:]-ebvav_r[1,:])/2
+dum = ebvav_r[0,w]/err[w]**2
+dum2= 1/err[w]**2
+print '${:6.2f} \pm {:6.2f}$'.format(dum.sum()/dum2.sum(),1./numpy.sqrt(dum2.sum()))
 
 ebv  = (fit['gamma'][:,1]-fit['gamma'][:,2])[:,None] * fit['k']
 ebv = numpy.array([ebv,(fit['rho1'][:,1]-fit['rho1'][:,2])[:,None] * fit['R']])
