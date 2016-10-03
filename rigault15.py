@@ -62,14 +62,6 @@ plt.close()
 
 # wefwe
 
-# i=3
-# plt.errorbar(rdata[indr,3*i],x[inda],xerr=[rdata[indr,3*i+2], rdata[indr,3*i+1]], yerr=[x[inda]-xmin[inda],xmax[inda]-x[inda]],fmt='o')
-# plt.ylabel(r'$E_\delta(B-V)$')
-# plt.xlabel(r'$\log{(M/M_\odot)}$')
-# pp = PdfPages("output15/rigault3.pdf")
-# plt.savefig(pp,format='pdf')
-# pp.close()
-# plt.close()
 
 # i=2
 # plt.errorbar(rdata[indr,3*i],x[inda],xerr=[rdata[indr,3*i+2], rdata[indr,3*i+1]], yerr=[x[inda]-xmin[inda],xmax[inda]-x[inda]],fmt='o')
@@ -85,8 +77,9 @@ wm = numpy.where(rdata[indr,9] < 10)[0]
 (x, xmin, xmax) = numpy.percentile(fit['rho1'][:,4][:,None]*fit['R'][:,inda[wm]],(50,50-34,50+34),axis=0)
 dx = (xmax-xmin)/2.
 dx2 = numpy.sum(1/dx**2)
+low1 = numpy.sum(x/dx**2)/dx2
+dlow1=  1/numpy.sqrt(dx2)
 print r"${:9.4f} \pm {:9.4f}$".format(numpy.sum(x/dx**2)/dx2, 1/numpy.sqrt(dx2)) 
-low = (((fit['rho1'][:,1]-fit['rho1'][:,2])[:,None])*fit['R'][:,wm]).flatten()
 
 
 wm = numpy.where(rdata[indr,9] > 10)[0]
@@ -94,18 +87,56 @@ wm = numpy.where(rdata[indr,9] > 10)[0]
 (x, xmin, xmax) = numpy.percentile(fit['rho1'][:,4][:,None]*fit['R'][:,inda[wm]],(50,50-34,50+34),axis=0)
 dx = (xmax-xmin)/2.
 dx2 = numpy.sum(1/dx**2)
+high1 = numpy.sum(x/dx**2)/dx2
+dhigh1=  1/numpy.sqrt(dx2)
 print r"${:9.4f} \pm {:9.4f}$".format(numpy.sum(x/dx**2)/dx2, 1/numpy.sqrt(dx2)) 
 
 
-# hig = (((fit['rho1'][:,1]-fit['rho1'][:,2])[:,None])*fit['R'][:,wm]).flatten()
+i=3
+(x, xmin, xmax) = numpy.percentile(fit['rho1'][:,4][:,None]*fit['R'],(50,50-34,50+34),axis=0)
+plt.errorbar(rdata[indr,3*i],x[inda],xerr=[rdata[indr,3*i+2], rdata[indr,3*i+1]], yerr=[x[inda]-xmin[inda],xmax[inda]-x[inda]],fmt='o')
+plt.axhline(low1, xmax=10)
+plt.axhline(low1+dlow1, xmax=10,linestyle='--')
+plt.axhline(low1-dlow1, xmax=10,linestyle='--')
+plt.axhline(high1, xmin=10)
+plt.axhline(high1+dhigh1, xmin=10,linestyle='--')
+plt.axhline(high1-dhigh1, xmin=10,linestyle='--')
+plt.ylabel(r'$A_{\delta I}$')
+plt.xlabel(r'Host Mass ($M_\cdot$')
+plt.ylim((-0.1,0.03))
+pp = PdfPages("output15/rigault3.pdf")
+plt.savefig(pp,format='pdf')
+pp.close()
+plt.close()
 
-# plt.hist([low,hig],label=['low mass','high mass'],normed=True,range=(-0.03,0.1))
-# plt.xlabel(r'$A_{\delta V}$')
-# plt.legend()
-# pp = PdfPages("output15/rigault2.pdf")
+
+# i=3
+
+# plt.errorbar(rdata[indr,3*i],x[inda],xerr=[rdata[indr,3*i+2], rdata[indr,3*i+1]], yerr=[x[inda]-xmin[inda],xmax[inda]-x[inda]],fmt='o')
+# plt.ylabel(r'$E_\delta(B-V)$')
+# plt.xlabel(r'$\log{(M/M_\odot)}$')
+# plt.axhline(low1, xmax=10)
+# plt.axhline(low1+dlow1, xmax=10,linestyle='--')
+# plt.axhline(low1-dlow1, xmax=10,linestyle='--')
+# plt.axhline(high1, xmin=10)
+# plt.axhline(high1+dhigh1, xmin=10,linestyle='--')
+# plt.axhline(high1-dhigh1, xmin=10,linestyle='--')
+# pp = PdfPages("output15/rigault3.pdf")
 # plt.savefig(pp,format='pdf')
 # pp.close()
 # plt.close()
+wm = numpy.where(rdata[indr,9] < 10)[0]
+low = (((fit['rho1'][:,1]-fit['rho1'][:,2])[:,None])*fit['R'][:,wm]).flatten()
+wm = numpy.where(rdata[indr,9] > 10)[0]
+hig = (((fit['rho1'][:,1]-fit['rho1'][:,2])[:,None])*fit['R'][:,wm]).flatten()
+
+plt.hist([low,hig],20,label=['low mass','high mass'],normed=True,range=(-0.04,0.02))
+plt.xlabel(r'$A_{\delta V}$')
+plt.legend()
+pp = PdfPages("output15/rigault2.pdf")
+plt.savefig(pp,format='pdf')
+pp.close()
+plt.close()
 
 
 # import scipy.stats

@@ -878,7 +878,7 @@ $ 0.044^{ 0.005}_{-0.004}$
 \\
 \hline
 \end{tabular}
-\caption{68\% credible Intervals for the Global Fit Parameters \label{global:tab}}
+\caption{68\% credible Intervals for the Global Fit Parameters of the 2-Parameter Extrinsic Model \label{global:tab}}
 \end{table}
 
 \textcolor{red}{
@@ -1199,8 +1199,8 @@ attributed to dust.
 
 \section{Intrinsic Color}
 \label{model2:sec}
-Analysis of the data using the model presented in \S\ref{model:sec} drew out parameter values consistent
-with two-parameter dust models.  We now consider an extension to the model that accommodate an additional
+Analysis of the data using the model presented in \S\ref{model:sec} draws out parameter values consistent
+with two-parameter dust models.  We now consider an extension to our model that accommodates an additional
 color parameter.
 The new model is written as
 \begin{equation}
@@ -1236,12 +1236,13 @@ EW_{Si}\\ EW_{Ca} \\ \lambda_{Si}
 \right).
 \label{dust:eqn}
 \end{equation}
-In all aspects it is identical to the previous model except for the addition of the term $\delta D$ to the absolute magnitudes.
-Each supernova has an intrinsic $D$ parameter that influences absolute magnitudes through $\delta$. 
+In all aspects it is identical to the previous model except for the addition of the term $\delta D$ toward the mean
+absolute magnitudes.
+Each supernova has an intrinsic $D$ parameter that influences absolute magnitudes with strength $\delta$. 
 Although
-this term is introduced through the absolute rather than observed magnitude,
+this term is introduced through the absolute rather than observed magnitudes,
 practically identical results are obtained when it is placed alongside the extrinsic $\gamma k$ terms.  Despite this
-degeneracy, for convenience we refer to this term as ``intrinsic''.
+degeneracy, this term is referred to as ``intrinsic''.
 
 
 To constrain the new degrees of freedom and degeneracies inherent in the model we impose that
@@ -1252,24 +1253,173 @@ Furthermore we impose
 \langle D\rangle=0,  \delta \cdot \gamma^0=0, \delta \cdot \gamma^1=0.
 \end{equation}
 The first specifies the definition of zero color.   The latter two confine possible magnitude
-variations to those unattributablabe to 
-the $\gamma k$ terms (i.e.\ dust); without this pragmatic condition $\delta D$  
-was degenerate and tended toward $\gamma k$ in the fit.  The initial conditions for
+variations to those that cannot be attributed to 
+the $\gamma k$ terms (i.e.\ dust); practically it is difficult to break the degeneracies between $\delta D$  
+and $\gamma k$ in the fit. 
+Unlike for the $\gamma$'s, there is no condition on the sign of $\delta_0$,
+so that the posterior has degenerate solutions with sign flips of $\delta$ and $D$.
+In the running of the Monte Carlo, the initial conditions for
 $\gamma^0$ and $\gamma^1$ were set to be in the neighborhood of the best fit of \S\ref{model:sec}.   
 
-The resulting posteriors of our parameters are given in Table~\ref{}
+The resulting credible intervals of our parameters are given in Table~\ref{global2:tab}.  Comparison with the
+results of the 2-parameter extrinsic model given in Table~\ref{global:tab} shows that common parameters
+are consistent well within 1$\sigma$ uncertainties.  The most significant changes of note are in the standard
+deviations of the residuals in the $V$ and $I$ bands.
 \begin{table}
 \centering
 \begin{tabular}{|c|c|c|c|c|c|}
 \hline
 & $X=U$ &$B$&$V$&$R$&$I$\\ \hline
+$\alpha_X$
+&
+$0.0044^{0.0009}_{-0.0009}$
+&
+$0.0016^{0.0007}_{-0.0007}$
+&
+$0.0016^{0.0006}_{-0.0006}$
+&
+$0.0015^{0.0005}_{-0.0005}$
+&
+$0.0026^{0.0005}_{-0.0005}$
+\\
+${\alpha_X/\alpha_V-1}$
+&
+$   1.8^{   0.9}_{  -0.4}$
+&
+$   0.0^{   0.1}_{  -0.2}$
+&
+$   0$
+&
+$  -0.0^{   0.1}_{  -0.1}$
+&
+$   0.6^{   0.6}_{  -0.3}$
+\\
+$\beta_X$
+&
+$ 0.032^{ 0.003}_{-0.003}$
+&
+$ 0.025^{ 0.002}_{-0.003}$
+&
+$ 0.025^{ 0.002}_{-0.002}$
+&
+$ 0.020^{ 0.002}_{-0.002}$
+&
+$ 0.019^{ 0.002}_{-0.002}$
+\\
+${\beta_X/\beta_V-1}$
+&
+$  0.26^{  0.05}_{ -0.05}$
+&
+$ -0.01^{  0.03}_{ -0.03}$
+&
+$  0$
+&
+$ -0.19^{  0.01}_{ -0.02}$
+&
+$ -0.24^{  0.03}_{ -0.03}$
+\\
+$\eta_X$
+&
+$-0.0002^{0.0012}_{-0.0011}$
+&
+$0.0000^{0.0010}_{-0.0009}$
+&
+$0.0005^{0.0008}_{-0.0008}$
+&
+$0.0005^{0.0007}_{-0.0007}$
+&
+$-0.0003^{0.0006}_{-0.0006}$
+\\
+${\eta_X/\eta_V-1}$
+&
+$ -0.40^{  2.19}_{ -1.84}$
+&
+$ -0.36^{  1.57}_{ -1.19}$
+&
+$  0$
+&
+$ -0.12^{  0.27}_{ -0.25}$
+&
+$ -0.89^{  1.72}_{ -1.35}$
+\\
+$\gamma^0_X$
+&
+$ 62.53^{  3.64}_{ -3.63}$
+&
+$ 50.74^{  3.08}_{ -3.03}$
+&
+$ 37.67^{  2.62}_{ -2.60}$
+&
+$ 28.89^{  2.32}_{ -2.33}$
+&
+$ 20.62^{  2.15}_{ -2.16}$
+\\
+${\gamma^0_X/\gamma^0_V-1}$
+&
+$  0.66^{  0.06}_{ -0.05}$
+&
+$  0.35^{  0.03}_{ -0.03}$
+&
+$  0$
+&
+$ -0.23^{  0.01}_{ -0.01}$
+&
+$ -0.45^{  0.03}_{ -0.03}$
+\\
+$\gamma^1_X$
+&
+$ -9.93^{  3.53}_{ -4.16}$
+&
+$-11.80^{  2.91}_{ -3.44}$
+&
+$-14.25^{  2.45}_{ -2.72}$
+&
+$-13.39^{  2.15}_{ -2.29}$
+&
+$-12.05^{  1.97}_{ -2.14}$
+\\
+${\gamma^1_X/\gamma^1_2-1}$
+&
+$ -0.30^{  0.18}_{ -0.19}$
+&
+$ -0.17^{  0.09}_{ -0.10}$
+&
+$  0$
+&
+$ -0.06^{  0.05}_{ -0.04}$
+&
+$ -0.16^{  0.10}_{ -0.08}$
+\\
+${{\delta_X/\delta_I-1}}$
+&
+$ -0.61^{  0.47}_{ -0.18}$
+&
+$ -1.21^{  0.25}_{ -0.77}$
+&
+$ -1.76^{  0.16}_{ -0.20}$
+&
+$ -1.17^{  0.29}_{ -0.20}$
+&
+$  0$
+\\
+$\sigma_X$
+&
+$ 0.059^{ 0.013}_{-0.013}$
+&
+$ 0.031^{ 0.007}_{-0.008}$
+&
+$ 0.017^{ 0.005}_{-0.007}$
+&
+$ 0.012^{ 0.006}_{-0.007}$
+&
+$ 0.039^{ 0.005}_{-0.005}$
+\\
 \hline
 \end{tabular}
-\caption{68\% credible Intervals for the Global Fit Parameters \label{global2:tab}}
+\caption{68\% credible Intervals for the Global Fit Parameters of the Intrinsic-Extrinsic Model\label{global2:tab}}
 \end{table}
 
-For dust and our model, possible magnitudes are confined to a plane on the 5-dimensional magnitude space.
-It turns out that the planes for both models are nearly parallel, in that
+We find that the newly fitted $\delta$ parameters have almost identical association with the Fitzpatrick dust law, in that
 \begin{equation}
 \begin{pmatrix}
  \frac{\gamma^0_X}{\gamma^0_1-\gamma^0_2} \\
@@ -1288,38 +1438,57 @@ b(X)
 where the residual $\vec{\epsilon}$''s perpendicular to the Fitzpatrick plane
 contribute  2\% and 5\% to the total  length of the vector.
 
-The distribution of both sources of color excess $E_\gamma(B-V) =(\gamma_B-\gamma_V)k$ and
+The distribution of both sources of color excess $E(B-V)$ and
  $E_\delta(B-V) = (\delta_B-\delta_V)D$ are shown as the ideograms in Figure~\ref{ebv:fig}.
 Recall that our boundary conditions set the means of both distributions to zero. 
 The standard deviations of $E_\gamma(B-V)$ and $E_\delta(B-V)$ are
 %-----
-0.079
-and 0.015
+0.081
+and 0.010
 %-----
 mag respectively.
-The range of $B-V$ colors is $\sim 5$ times larger for the external contribution. 
-Both distributions are non-Gaussian with sharp rises in the blue and extended tails in the red, consistent
+The range of $B-V$ colors is $\sim 8$ times larger for the external contribution. 
+Both distributions are non-Gaussian, that of $E(B-V)$ has a sharp rise in the blue and an extended tail in the red, consistent
 with the expectation for extinction due to host-galaxy dust \citep{1998ApJ...502..177H}.
 
 \begin{figure}[htbp] %  figure placement: here, top, bottom, or page
    \centering
-   \includegraphics[width=3.2in]{output11/ebv.pdf}
-   \caption{Ideograms of the external $E_\gamma(B-V) =(\gamma_B-\gamma_V)k$ and
+   \includegraphics[width=2.8in]{output15/ebv.pdf}
+   \includegraphics[width=2.8in]{output15/ebv_delta.pdf}
+      \caption{Left: Ideograms of the external $E(B-V)$ and
    internal $E_\delta(B-V) = (\delta_B-\delta_V)D$  contributions to color excess  for the supernovae in our sample.
+   Right: Ideogram of $E_\delta(B-V)$ on an enlarged scale.
    \label{ebv:fig}}
 \end{figure}
+The significance of the $\delta$ parameters is shown pictorially
+in Figure~\ref{deltacorner:fig}. The left plot shows the $\delta$ posteriors, which is bimodal due to the parity symmetry.  The probability
+of the null result $\delta_X=0$ for all $X$, lies on a
+$>98\%$-contour.  The right plot shows values of $\delta_X/\delta_I-1$, which nulls out the parity symmetry and has significant non-zero values. 
+
+\begin{figure}[htbp] %  figure placement: here, top, bottom, or page
+   \centering
+   \includegraphics[width=2.8in]{output15/delta_corner.pdf}
+      \includegraphics[width=2.8in]{output15/deltaratio.pdf}
+   \caption{Significance of the non-zero values of $\delta$.  Left: Posterior contours for $\delta$.  The bimodality is due to the degenerate solution due to sign change.
+   Right: $\delta_X/\delta_I-1$, which as a ratio is insensitive to the degeneracy.
+   \label{deltacorner:fig}}
+\end{figure}
+
 
 
 \section{Discussion}
 \label{discussion:sec}
-We model SNe~Ia broadband optical peak magnitudes allowing for correlations with spectral features at peak and distinct intrinsic and
+We model SNe~Ia broadband optical peak magnitudes allowing for correlations with spectral features at peak and
 extrinsic color parameters.  Analyzing SNfactory data with the model, we find significant evidence that the above parameters do
-affect supernova magnitudes and colors.  The external color parameter has behavior consistent with  $R^F_V=2.97$ \citet{1999PASP..111...63F} dust,
-whereas the internal color parameter is inconsistent with dust or a blackbody.  This model  does an excellent job in
-describing SN~2014J, a supernova not used in the training that has atypical colors.
+affect supernova magnitudes and colors.  The external color parameters are consistent with \citet{1999PASP..111...63F} dust
+with $R^F_V=2.43$.  This model  does an excellent job in
+describing SN~2014J, a supernova not used in the training that has atypical colors.  An extended version
+of the model retains the features of the first model, but now with strong evidence for a new parameter related to supernova
+colors.
 
 \color{red}
-Our model does not explicitly include light-curve shape, which is known to track SN~Ia diversity.
+Our models do not explicitly include light-curve shape, which is known to track SN~Ia diversity.
+We now examine this in more depth using the intrinsic--extrinsic model of \S\ref{model2:sec}.
 The correlation between $EW_{Si}$ and the SALT2 $X_1$ light-curve shape parameter is verified
 for our sample, as shown in Figure~\ref{x1:fig}.
 On the other hand, there is no such correlation seen between $E_\delta(B-V)$ and $X_1$. 
@@ -1327,26 +1496,21 @@ Our magnitude residuals $\sigma_X$ are comparable to those of SALT2
 \citep{2010A&A...523A...7G}, showing that our model exhibits no clear loss from the neglect of $X_1$.
 We  run an extension of our model to include light-curve shape by adding a new linear term $\zeta X_1$; the credible intervals
 from this analysis are given in Table~\ref{globalx1:tab}; no significant changes are seen. 
-In fact, light-curve shape is not a strong predictor of supernova magnitude relative to the spectral features: the values
-for
-$\zeta$ are consistent with zero to $2\sigma$, while the $\alpha$'s and $\beta$'s remain significantly
-non-zero.  
-Nevertheless, there 
-appear to be non-linear correlations 
-between $X_1$ and the residuals between observed and model-predicted colors, as seen in
-Figure~\ref{x1res:fig}.
-Extending our model to include non-linear terms is a direction for future work.
+In fact, light-curve shape is not a strong predictor of supernova magnitude relative to the spectral features: only $\zeta_R/\zeta_V$
+has a non-zero value at $>2\sigma$.
+The parameters that describe intrinsic color $\delta$ remain significantly non-zero.
+
 \begin{figure}[htbp] %  figure placement: here, top, bottom, or page
    \centering
-   \includegraphics[width=2.8in]{output11/x1si.pdf}
-   \includegraphics[width=2.8in]{output11/x1D.pdf}
+   \includegraphics[width=2.8in]{output15/x1si.pdf}
+   \includegraphics[width=2.8in]{output15/x1D.pdf}
     \caption{\textcolor{red}{Left: SALT2 $X_1$ versus $EW_{Si}$.  Right: $X_1$ versus $E_\delta(B-V)$.}
    \label{x1:fig}}
 \end{figure}
 
 \begin{figure}[htbp] %  figure placement: here, top, bottom, or page
    \centering
-   \includegraphics[width=5in]{output11/residualx1.pdf}
+   \includegraphics[width=5in]{output15/residualx1.pdf}
     \caption{\textcolor{red}{Differences between observed colors and the colors predicted from the analysis, as a function
             of the SALT2 light-curve shape parameter $X_1$.  For reference a dotted line is plotted at zero difference.}
    \label{x1res:fig}}
@@ -1360,27 +1524,27 @@ Extending our model to include non-linear terms is a direction for future work.
 & $X=U$ &$B$&$V$&$R$&$I$\\ \hline
 $\alpha_X$
 &
-$0.0041^{0.0010}_{-0.0010}$
+$0.0044^{0.0010}_{-0.0010}$
 &
-$0.0015^{0.0008}_{-0.0008}$
+$0.0016^{0.0008}_{-0.0008}$
 &
-$0.0016^{0.0007}_{-0.0007}$
+$0.0017^{0.0006}_{-0.0007}$
 &
-$0.0015^{0.0006}_{-0.0006}$
+$0.0015^{0.0005}_{-0.0005}$
 &
-$0.0027^{0.0005}_{-0.0005}$
+$0.0028^{0.0005}_{-0.0005}$
 \\
 ${\alpha_X/\alpha_V-1}$
 &
-$   1.6^{   0.9}_{  -0.4}$
+$   1.6^{   0.8}_{  -0.4}$
 &
-$  -0.1^{   0.1}_{  -0.2}$
+$  -0.0^{   0.1}_{  -0.2}$
 &
-$   0.0^{   0.0}_{   0.0}$
+$   0$
 &
 $  -0.1^{   0.1}_{  -0.1}$
 &
-$   0.7^{   0.8}_{  -0.3}$
+$   0.7^{   0.7}_{  -0.3}$
 \\
 $\beta_X$
 &
@@ -1390,210 +1554,146 @@ $ 0.025^{ 0.005}_{-0.005}$
 &
 $ 0.022^{ 0.004}_{-0.004}$
 &
-$ 0.019^{ 0.003}_{-0.003}$
+$ 0.019^{ 0.004}_{-0.003}$
 &
 $ 0.016^{ 0.003}_{-0.003}$
 \\
 ${\beta_X/\beta_V-1}$
 &
-$  0.50^{  0.13}_{ -0.12}$
+$  0.52^{  0.13}_{ -0.12}$
 &
 $  0.14^{  0.07}_{ -0.07}$
 &
-$  0.00^{  0.00}_{  0.00}$
+$  0$
 &
-$ -0.14^{  0.03}_{ -0.03}$
+$ -0.13^{  0.03}_{ -0.03}$
 &
-$ -0.28^{  0.06}_{ -0.06}$
+$ -0.27^{  0.06}_{ -0.06}$
 \\
 $\eta_X$
 &
-$0.0001^{0.0011}_{-0.0011}$
+$0.0004^{0.0011}_{-0.0011}$
 &
-$0.0003^{0.0009}_{-0.0009}$
+$0.0005^{0.0010}_{-0.0010}$
 &
-$0.0008^{0.0008}_{-0.0008}$
+$0.0009^{0.0008}_{-0.0008}$
 &
-$0.0007^{0.0007}_{-0.0007}$
+$0.0009^{0.0007}_{-0.0007}$
 &
-$-0.0001^{0.0006}_{-0.0006}$
+$0.0001^{0.0006}_{-0.0006}$
 \\
 ${\eta_X/\eta_V-1}$
 &
-$ -0.49^{  1.15}_{ -1.55}$
+$ -0.34^{  0.58}_{ -1.20}$
 &
-$ -0.39^{  0.84}_{ -0.99}$
+$ -0.36^{  0.35}_{ -0.86}$
 &
-$  0.00^{  0.00}_{  0.00}$
+$  0$
 &
-$ -0.14^{  0.19}_{ -0.18}$
+$ -0.10^{  0.20}_{ -0.14}$
 &
-$ -0.83^{  0.78}_{ -0.96}$
+$ -0.74^{  0.35}_{ -0.75}$
 \\
 $\zeta_X$
 &
-$ 0.004^{ 0.039}_{-0.040}$
+$  0.00^{  0.04}_{ -0.04}$
 &
-$-0.005^{ 0.033}_{-0.033}$
+$ -0.01^{  0.03}_{ -0.03}$
 &
-$-0.028^{ 0.028}_{-0.028}$
+$ -0.03^{  0.03}_{ -0.03}$
 &
-$-0.013^{ 0.024}_{-0.024}$
+$ -0.01^{  0.02}_{ -0.02}$
 &
-$-0.029^{ 0.021}_{-0.021}$
+$ -0.03^{  0.02}_{ -0.02}$
 \\
 ${\zeta_X/\zeta_V-1}$
 &
-$  -0.7^{   1.1}_{  -1.7}$
+$ -0.76^{  0.78}_{ -1.78}$
 &
-$  -0.5^{   0.6}_{  -1.2}$
+$ -0.50^{  0.47}_{ -1.06}$
 &
-$   0.0^{   0.0}_{   0.0}$
+$  0$
 &
-$  -0.4^{   0.3}_{  -0.5}$
+$ -0.46^{  0.21}_{ -0.50}$
 &
-$  -0.1^{   0.6}_{  -0.4}$
+$ -0.16^{  0.45}_{ -0.34}$
 \\
-${\gamma_X/\gamma_V-1}$
+$\gamma^0_X$
 &
-$  0.64^{  0.06}_{ -0.05}$
+$ 61.49^{  3.67}_{ -3.71}$
 &
-$  0.34^{  0.03}_{ -0.03}$
+$ 50.34^{  3.09}_{ -3.07}$
 &
-$  0.00^{  0.00}_{  0.00}$
+$ 37.28^{  2.63}_{ -2.59}$
 &
-$ -0.23^{  0.01}_{ -0.01}$
+$ 28.38^{  2.35}_{ -2.28}$
 &
-$ -0.45^{  0.03}_{ -0.03}$
+$ 20.03^{  2.16}_{ -2.16}$
 \\
-$R_X$
+${\gamma^0_X/\gamma^0_V-1}$
 &
-$  4.78^{  0.52}_{ -0.45}$
+$  0.65^{  0.06}_{ -0.05}$
 &
-$  3.91^{  0.42}_{ -0.37}$
+$  0.35^{  0.03}_{ -0.03}$
 &
-$  2.91^{  0.33}_{ -0.29}$
+$  0$
 &
-$  2.23^{  0.27}_{ -0.24}$
+$ -0.24^{  0.01}_{ -0.01}$
 &
-$  1.60^{  0.22}_{ -0.20}$
+$ -0.46^{  0.03}_{ -0.03}$
 \\
-${\delta_X/\delta_V-1}$
+$\gamma^1_X$
 &
-$ -0.38^{  0.17}_{ -0.19}$
+$ -8.99^{  3.28}_{ -3.68}$
 &
-$ -0.23^{  0.10}_{ -0.10}$
+$-11.21^{  2.72}_{ -3.18}$
 &
-$  0.00^{  0.00}_{  0.00}$
+$-14.76^{  2.34}_{ -2.63}$
 &
-$ -0.07^{  0.04}_{ -0.04}$
+$-13.88^{  2.00}_{ -2.23}$
 &
-$ -0.17^{  0.09}_{ -0.09}$
+$-12.57^{  1.92}_{ -2.06}$
 \\
-$R_{\delta X}$
+${\gamma^1_X/\gamma^1_2-1}$
 &
-$ -2.78^{  1.23}_{ -2.20}$
+$ -0.39^{  0.16}_{ -0.17}$
 &
-$ -3.49^{  1.22}_{ -2.38}$
+$ -0.24^{  0.09}_{ -0.10}$
 &
-$ -4.49^{  1.35}_{ -2.78}$
+$  0$
 &
-$ -4.17^{  1.23}_{ -2.55}$
+$ -0.06^{  0.04}_{ -0.03}$
 &
-$ -3.72^{  1.12}_{ -2.28}$
+$ -0.15^{  0.09}_{ -0.08}$
+\\
+${{\delta_X/\delta_I-1}}$
+&
+$  0.04^{  0.48}_{ -0.31}$
+&
+$ -2.16^{  0.36}_{ -0.64}$
+&
+$ -1.94^{  0.23}_{ -0.42}$
+&
+$ -0.63^{  0.56}_{ -0.29}$
+&
+$  0$
 \\
 $\sigma_X$
 &
-$ 0.060^{ 0.013}_{-0.012}$
+$ 0.050^{ 0.014}_{-0.012}$
 &
-$ 0.033^{ 0.007}_{-0.007}$
+$ 0.027^{ 0.008}_{-0.008}$
 &
-$ 0.018^{ 0.005}_{-0.008}$
+$ 0.015^{ 0.004}_{-0.005}$
 &
-$ 0.014^{ 0.006}_{-0.008}$
+$ 0.008^{ 0.006}_{-0.005}$
 &
-$ 0.044^{ 0.006}_{-0.005}$
+$ 0.041^{ 0.005}_{-0.004}$
 \\
 \hline
 \end{tabular}
 \caption{68\% credible Intervals for the Global Fit Parameters including $X_1$ \label{globalx1:tab}}
 \end{table}
-
-
-
-\color{black}
-
-\citet{2014ApJ...789...32B, 2015MNRAS.453.3300A} deduce a wide range of dust behavior $1.5<R^F_V<3$ encountered by the SN~Ia population.
-\citet{2011ApJ...731..120M, 2011ApJ...729...55F} and the above authors
-find that supernovae with large $E_o(B-V)$ 
-preferentially exhibit low $R^F_V$. 
-\color{red}
-\citet{2016arXiv160904470M} demonstrate how biased $R_V$ determinations can arise from unaccounted intrinsic color dispersion.
-In our model internal and external effects for each supernova  conflate into an effective color excess
-$E_{eff}(X-V) = E_\gamma(X-V) + E_\delta(X-V)$ and effective $V$ extinction $A_{eff,V} = \gamma_V k  + \delta_V D$.
-Recall that the colors where $E_\gamma(B-V)=0$,  $E_\delta(B-V)=0$ are free and arbitrarily
-fixed using the  boundary conditions $\langle \Delta \rangle = 0$, $\langle k \rangle = 0$:
-there is no unique value for the statistic $R_{eff,V} = A_{eff,V} /E_{eff}(B-V)$, as it depends on the choice of  boundary condition.
-
-One choice of boundary condition is to zero the color at the blue extremes of the distributions.
-For specificity in the current qualitative discussion, 
-let us consider a set of SNe~Ia  with parameters set to the median fit values of the SNfactory sample.
-We specify   $E_{eff}(U-V)$  and $E_{eff}(B-V)$ by
-assigning zero color excess close to the blue-extreme colors of this set, 
-as shown in bottom-left corner in the left plot of Figure~\ref{rveff:fig}.
-For this choice of color zeropoints,
-$R_{eff,U} - R_{eff,V} = E_{eff}(U-V) /E_{eff}(B-V)$ is plotted
-in the right of Figure~\ref{rveff:fig}.
-Around $E_{eff}(B-V) \sim 0$, where attempts to measure extinction properties would suffer large uncertainties,
-the $R_{eff,U} - R_{eff,V}$ values are high.
-The distribution spreads to significantly 
-lower   $R_{eff,U} - R_{eff,V}$ as supernovae appear redder but
-then reconverge to higher, tighter values red effective color, with asymptote  $R_{eff,U} - R_{eff,V} >1.8$.
-This cause of this asymptotic behavior is due to the relatively higher contribution of extrinsic over intrinsic color excess to the effective color excess, as
-seen in the bottom plot of
-Figure~\ref{rveff:fig}. 
-Since the standard deviation of the $E_\delta(B-V)$ distribution is  narrow compared to that of
- $E_\gamma(B-V)$, low values of $R_{eff,U} - R_{eff,V}$ can only occur
-at low $E_{eff}(X-V)$.
- The  \citet{1999PASP..111...63F} dust model interprets
- low values of $R_{eff,U} - R_{eff,V}$ as implying high values of $R_V$,
-for example $R_{eff,U} - R_{eff,V}=1.70$ for $R_V=2.97$,  $R_{eff,U} - R_{eff,V}=1.81$ for $R_V=1.5$ (see Figure~\ref{ebv:fig}).
-The $R_V$ inferred for the reddest supernovae would be $R_V<1.5$, even though their colors are dominated by 
-extrinsic $R^F_V=2.97$ dust; this is due our zero colors being (qualitatively) assigned to supernovae that have bluest extrinsic AND intrinsic color excess.
-\begin{figure}[htbp] %  figure placement: here, top, bottom, or page
-   \centering
-   \includegraphics[width=2.8in]{output11/rveff.pdf}
-   \includegraphics[width=2.8in]{output11/rveff2.pdf}
-   \includegraphics[width=2.8in]{output11/rveff3.pdf}
-      \caption{\textcolor{red}{Left: Effective color excess $E_{eff}(B-V)$ versus $E_{eff}(U-V)$
-   where $E_{eff}(X-V)   = E_\gamma(X-V) + E_\delta(X-V) - z_X$
-   for a set of SNe with parameters set to those of the medians of the objects in our analysis.
-   The $z_X$ represents a choice of colors at zero color-excess so that the lower left corner points have values approaching zero. 
-Right:  The inferred $R_{eff,U}- R_{eff,V} = E_{eff}(U-V)/E_{eff}(B-V)$.
-Bottom:  $R_{eff,U}- R_{eff,V}$ as a function of the relative contributions of extrinsic and intrinsic color effects $E_\gamma(B-V)/E_\delta(B-V)$.}
-   \label{rveff:fig}}
-\end{figure}
-
-An alternative way to specify $R_V$ is to consider colors relative to a canonical supernova,
- the model prediction being
-\begin{equation}
-R_{eff, V} = \frac{\gamma_1  (k-k_0) + \delta_1 (D-D_0) }{(\gamma_B-\gamma_V) (k-k_0) + (\delta_B-\delta_V) (D-D_0) },
-\end{equation}
-where $k_0$ and $D_0$ are the parameter values of the canonical supernova.
-If $D = D_0$, the $R_V = \gamma_B/(\gamma_B-\gamma_V)$ of the extrinsic contribution is recovered, but this does not hold true
-when $D \ne D_0$.  Again considering a set of SNe~Ia  with parameters equal to the median fit values of the SNfactory sample,
-the values for $R_{eff,V}$ choosing a canonical supernova with $k_0=0$, $\delta_0=0$  is shown in Figure~\ref{rv4:fig}.
-The reddest supernovae exhibit a range of $1.5< R_{eff,V}<3.5$. 
-
-\begin{figure}[htbp] %  figure placement: here, top, bottom, or page
-   \centering
-   \includegraphics[width=3.2in]{output11/rveff4.pdf}
-      \caption{\textcolor{red}{Effective total-to-selective extinction $R_{eff, V}$
-      with color excess defined relative to  a
-      $k_0=0$, $\delta_0=0$ supernove,  for  a set of SNe~Ia  with parameters equal to the median fit values of the SNfactory sample.}
-   \label{rv4:fig}}
-\end{figure}
-
 
 \color{black}
 
@@ -1632,8 +1732,8 @@ This host-mass bias could be the result of a parameter that was not accounted fo
 To explore this possibility we plot in Figure~\ref{childress:fig} our intrinsic color excess $E_\gamma(B-V)$  versus host mass 
 \citep{2016rigault}.  Choosing the same mass cut as  \citet{2013ApJ...770..108C}, $\log{(M/M_\sun)}=10$, we calculate the average
 color excess for low- (high)-mass hosts to be
-$  -0.0043 \pm    0.0022$
-($  -0.0072 \pm    0.0073$).  
+$   0.0042 \pm    0.0014$
+$   0.0031 \pm    0.0017$.
 The ideograms for the low- and high-mass samples is shown in Figure~\ref{childress:fig}.
 The 2-sample Kolmogorov-Smirnov test of the medians gives a $p$-value of
 %---
@@ -1647,9 +1747,9 @@ The connection between our intrinsic parameter and local star formation and othe
 \color{black}
 \begin{figure}[htbp] %  figure placement: here, top, bottom, or page
    \centering
-%   \includegraphics[width=2.8in]{output11/rigault3.pdf}
-%      \includegraphics[width=2.8in]{output11/rigault2.pdf}
-      \caption{\textcolor{red}{Left: Intrinsic parameter $E_\gamma(B-V)$  versus host mass.  Hosts too faint for a mass measurement
+   \includegraphics[width=2.8in]{output15/rigault3.pdf}
+s     \includegraphics[width=2.8in]{output15/rigault2.pdf}
+      \caption{\textcolor{red}{Intrinsic parameter $E_\gamma(B-V)$  versus host mass.  Hosts too faint for a mass measurement
       are assigned a mass of 5.
 Right: Ideograms of  $E_\gamma(B-V)$ for supernovae in $\log{(M/M_\sun)}<10$ and $\log{(M/M_\sun)}>10$ hosts. 
 }
