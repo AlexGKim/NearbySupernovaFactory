@@ -916,8 +916,8 @@ The residual intrinsic dispersion ranges from
 $\sim 0.01$ to 0.06 mag, significantly smaller
 than the dispersion in $\Delta$.
 The off-diagonal elements of $C_c$ are parameterized by the Cholesky factors of a correlation matrix.
-Assembling
-a new set of Cholesky factors based on the distributions of each individual factor will not generally satisfy the condition of representing a correlation matrix.  
+The average over Monte Carlo links of the
+Cholesky factors will not  generally yield a correlation matrix.  
 To characterize a typical posterior draw of $C_c$ we use the matrix that is the mean of all covariance realizations in the
 chain, element by element.
 For $UBVRI$ the matrix is
@@ -1199,8 +1199,10 @@ attributed to dust.
 
 \section{Intrinsic Color}
 \label{model2:sec}
-Analysis of the data using the model presented in \S\ref{model:sec} draws out parameter values consistent
-with two-parameter dust models.  We now consider an extension to our model that accommodates an additional
+In \S\ref{model:sec} we show that the SNf data analyzed with an agnostic 2-parameter model produces
+results consistent
+with two-parameter dust models.  An extension to our model is now added to accommodate
+a possible additional
 color parameter.
 The new model is written as
 \begin{equation}
@@ -1236,9 +1238,11 @@ EW_{Si}\\ EW_{Ca} \\ \lambda_{Si}
 \right).
 \label{dust:eqn}
 \end{equation}
-In all aspects it is identical to the previous model except for the addition of the term $\delta D$ toward the mean
-absolute magnitudes.
-Each supernova has an intrinsic $D$ parameter that influences absolute magnitudes with strength $\delta$. 
+In all aspects it is identical to the previous model except for the addition of the term $\delta D$,
+which affects the mean
+absolute magnitudes:
+each supernova has an intrinsic $D$ parameter that is linearly related to
+absolute magnitudes through global coefficients $\delta$. 
 Although
 this term is introduced through the absolute rather than observed magnitudes,
 practically identical results are obtained when it is placed alongside the extrinsic $\gamma k$ terms.  Despite this
@@ -1254,8 +1258,8 @@ Furthermore we impose
 \end{equation}
 The first specifies the definition of zero color.   The latter two confine possible magnitude
 variations to those that cannot be attributed to 
-the $\gamma k$ terms (i.e.\ dust); practically it is difficult to break the degeneracies between $\delta D$  
-and $\gamma k$ in the fit. 
+the $\gamma k$ terms (i.e.\ dust); this condition breaks the degeneracies between $\delta D$  
+and $\gamma k$. 
 Unlike for the $\gamma$'s, there is no condition on the sign of $\delta_0$,
 so that the posterior has degenerate solutions with sign flips of $\delta$ and $D$.
 In the running of the Monte Carlo, the initial conditions for
@@ -1265,6 +1269,25 @@ The resulting credible intervals of our parameters are given in Table~\ref{globa
 results of the 2-parameter extrinsic model given in Table~\ref{global:tab} shows that common parameters
 are consistent well within 1$\sigma$ uncertainties.  The most significant changes of note are in the standard
 deviations of the residuals in the $V$ and $I$ bands.
+The newly fitted $\delta$ parameters have an almost identical association with the Fitzpatrick dust law, in that
+\begin{equation}
+\begin{pmatrix}
+ \frac{\gamma^0_X}{\gamma^0_1-\gamma^0_2} \\
+\frac{\gamma^1_X}{\gamma^1_1-\gamma^1_2} 
+\end{pmatrix}=
+\begin{pmatrix}
+1.16 & 2.82 \\
+0.74 & -5.43
+\end{pmatrix} 
+\begin{pmatrix}
+a(X) \\
+b(X)
+\end{pmatrix}+
+\vec{\epsilon},
+\end{equation}
+where the residual $\vec{\epsilon}$''s perpendicular to the Fitzpatrick plane
+contribute  2\% and 5\% to the total  length of the vector.
+
 \begin{table}
 \centering
 \begin{tabular}{|c|c|c|c|c|c|}
@@ -1419,27 +1442,9 @@ $ 0.039^{ 0.005}_{-0.005}$
 \caption{68\% credible Intervals for the Global Fit Parameters of the Intrinsic-Extrinsic Model\label{global2:tab}}
 \end{table}
 
-We find that the newly fitted $\delta$ parameters have almost identical association with the Fitzpatrick dust law, in that
-\begin{equation}
-\begin{pmatrix}
- \frac{\gamma^0_X}{\gamma^0_1-\gamma^0_2} \\
-\frac{\gamma^1_X}{\gamma^1_1-\gamma^1_2} 
-\end{pmatrix}=
-\begin{pmatrix}
-1.16 & 2.82 \\
-0.74 & -5.43
-\end{pmatrix} 
-\begin{pmatrix}
-a(X) \\
-b(X)
-\end{pmatrix}+
-\vec{\epsilon},
-\end{equation}
-where the residual $\vec{\epsilon}$''s perpendicular to the Fitzpatrick plane
-contribute  2\% and 5\% to the total  length of the vector.
 
 The distribution of both sources of color excess $E(B-V)$ and
- $E_\delta(B-V) = (\delta_B-\delta_V)D$ are shown as the ideograms in Figure~\ref{ebv:fig}.
+ $E_\delta(B-V) = (\delta_B-\delta_V)D$ are shown in the ideograms in Figure~\ref{ebv:fig}.
 Recall that our boundary conditions set the means of both distributions to zero. 
 The standard deviations of $E_\gamma(B-V)$ and $E_\delta(B-V)$ are
 %-----
@@ -1447,7 +1452,7 @@ The standard deviations of $E_\gamma(B-V)$ and $E_\delta(B-V)$ are
 and 0.010
 %-----
 mag respectively.
-The range of $B-V$ colors is $\sim 8$ times larger for the external contribution. 
+The range of $B-V$ colors is $\sim 8$ times larger for the external contribution; variation in $B-V$ color due to the intrinsic term is dwarfed by the extrinsic process. 
 Both distributions are non-Gaussian, that of $E(B-V)$ has a sharp rise in the blue and an extended tail in the red, consistent
 with the expectation for extinction due to host-galaxy dust \citep{1998ApJ...502..177H}.
 
@@ -1461,14 +1466,21 @@ with the expectation for extinction due to host-galaxy dust \citep{1998ApJ...502
    \label{ebv:fig}}
 \end{figure}
 The significance of the $\delta$ parameters is shown pictorially
-in Figure~\ref{deltacorner:fig}. The left plot shows the $\delta$ posteriors, which is bimodal due to the parity symmetry.  The probability
-of the null result $\delta_X=0$ for all $X$, lies on a
-$>98\%$-contour.  The right plot shows values of $\delta_X/\delta_I-1$, which nulls out the parity symmetry and has significant non-zero values. 
+in Figure~\ref{deltacorner:fig}. The left plot shows the $\delta$ posteriors, which is bimodal due to the sign-flip degeneracy.  The probability
+of the null result $\delta_X=0$ for all $X$ is $>98\%$, determined through
+the population of its bin in a 5-dimensional histogram.
+The right plot shows values of $\delta_X/\delta_I-1$ that  have significant non-zero values.   An interesting feature
+is that the shift in magnitude is not monotonic in redshift, but rather decreases from $U$ to $V$, and then increases from $V$
+to $I$.
+These are not the behaviors expected from normal dust,
+circumstellar dust suggested as a source of SN extinction \citep{2005ApJ...635L..33W,2008ApJ...686L.103G,
+2015ApJ...807L..26G}, or a blackbody in the Raleigh-Jeans tail, and so may be indicative of
+more complicated underlying supernova physics.
 
 \begin{figure}[htbp] %  figure placement: here, top, bottom, or page
    \centering
-   \includegraphics[width=2.8in]{output15/delta_corner.pdf}
-      \includegraphics[width=2.8in]{output15/deltaratio.pdf}
+   \includegraphics[height=2.5in]{output15/delta_corner.pdf}
+      \includegraphics[height=2.5in]{output15/deltaratio.pdf}
    \caption{Significance of the non-zero values of $\delta$.  Left: Posterior contours for $\delta$.  The bimodality is due to the degenerate solution due to sign change.
    Right: $\delta_X/\delta_I-1$, which as a ratio is insensitive to the degeneracy.
    \label{deltacorner:fig}}
@@ -1478,27 +1490,33 @@ $>98\%$-contour.  The right plot shows values of $\delta_X/\delta_I-1$, which nu
 
 \section{Discussion}
 \label{discussion:sec}
-We model SNe~Ia broadband optical peak magnitudes allowing for correlations with spectral features at peak and
+To summarize, we model SNe~Ia broadband optical peak magnitudes allowing for correlations with spectral features at peak and
 extrinsic color parameters.  Analyzing SNfactory data with the model, we find significant evidence that the above parameters do
 affect supernova magnitudes and colors.  The external color parameters are consistent with \citet{1999PASP..111...63F} dust
 with $R^F_V=2.43$.  This model  does an excellent job in
-describing SN~2014J, a supernova not used in the training that has atypical colors.  An extended version
-of the model retains the features of the first model, but now with strong evidence for a new parameter related to supernova
-colors.
+describing SN~2014J, a supernova not used in the training that has extreme colors.  An extended version
+of the model retains the features of the first model, and gives strong evidence for a new parameter that affects supernova
+colors distinct from dust.
 
-\color{red}
+
 Our models do not explicitly include light-curve shape, which is known to track SN~Ia diversity.
 We now examine this in more depth using the intrinsic--extrinsic model of \S\ref{model2:sec}.
 The correlation between $EW_{Si}$ and the SALT2 $X_1$ light-curve shape parameter is verified
 for our sample, as shown in Figure~\ref{x1:fig}.
 On the other hand, there is no such correlation seen between $E_\delta(B-V)$ and $X_1$. 
 Our magnitude residuals $\sigma_X$ are comparable to those of SALT2
-\citep{2010A&A...523A...7G}, showing that our model exhibits no clear loss from the neglect of $X_1$.
-We  run an extension of our model to include light-curve shape by adding a new linear term $\zeta X_1$; the credible intervals
+\citep{2010A&A...523A...7G}, showing that our model exhibits no clear loss in our ability to standardize
+magnitudes although $X_1$ is neglected.
+There is no apparent correlation
+between $X_1$ and the residuals between observed and model-predicted colors, as seen in
+Figure~\ref{x1res:fig}. 
+We  run an extension of our model to include light-curve shape by adding a new linear term $\zeta X_1$ to the 
+intrinsic magnitude; the credible intervals
 from this analysis are given in Table~\ref{globalx1:tab}; no significant changes are seen. 
 In fact, light-curve shape is not a strong predictor of supernova magnitude relative to the spectral features: only $\zeta_R/\zeta_V$
 has a non-zero value at $>2\sigma$.
-The parameters that describe intrinsic color $\delta$ remain significantly non-zero.
+The evidence for a non-zero $\delta$ remains, meaning that it is not an artifact of
+having neglected light-curve shape.
 
 \begin{figure}[htbp] %  figure placement: here, top, bottom, or page
    \centering
@@ -1733,12 +1751,8 @@ To explore this possibility we plot in Figure~\ref{childress:fig} our intrinsic 
 \citep{2016rigault}.  Choosing the same mass cut as  \citet{2013ApJ...770..108C}, $\log{(M/M_\sun)}=10$, we calculate the average
 color excess for low- (high)-mass hosts to be
 $   0.0042 \pm    0.0014$
-$   0.0031 \pm    0.0017$.
+($   0.0031 \pm    0.0017$).  A significant difference is not found.
 The ideograms for the low- and high-mass samples is shown in Figure~\ref{childress:fig}.
-The 2-sample Kolmogorov-Smirnov test of the medians gives a $p$-value of
-%---
-0.29.
-%---
 From the above evidence, we cannot show that low- and high-mass hosts produce SNe~Ia with difference $E_\gamma(B-V)$ distributions. 
 Using the SNfactory sample,
 \citet{2013A&A...560A..66R} find that step in Hubble residuals as better related to local star formation rate, rather than host mass.
@@ -1749,8 +1763,9 @@ The connection between our intrinsic parameter and local star formation and othe
    \centering
    \includegraphics[width=2.8in]{output15/rigault3.pdf}
 s     \includegraphics[width=2.8in]{output15/rigault2.pdf}
-      \caption{\textcolor{red}{Intrinsic parameter $E_\gamma(B-V)$  versus host mass.  Hosts too faint for a mass measurement
-      are assigned a mass of 5.
+      \caption{\textcolor{red}{Left: Intrinsic parameter $A_I=\delta_I D$  versus host mass.  Hosts too faint for a mass measurement
+      are assigned a mass of 5.  Overplotted are the mean and 1$\sigma$ values for supernovae with hosts
+      less than and greater than  $10 \log{(M/M_\sun)}$.
 Right: Ideograms of  $E_\gamma(B-V)$ for supernovae in $\log{(M/M_\sun)}<10$ and $\log{(M/M_\sun)}>10$ hosts. 
 }
    \label{childress:fig}}
@@ -1768,13 +1783,6 @@ wavelengths.  Qualitatively this would result in the structure for $\gamma_X/\ga
 We conjecture that varying $^{56}$Ni mass affects the rise-time to peak $B$ brightness and hence the optical depth
 of the reionization front with respect to the core of the ejecta, yielding the wavelength-dependent color behavior
 detected in this analysis.
-
-The model introduced in this article is limited, in that it doesn't accommodate the expected diversity
-in extrinsic dust properties that supernovae in different hosts may encounter.  Extending our model to 
-include  a parameterized  $\gamma$ distribution would allow a range of host-dust behavior, and
-offers a direction of further study.
-For the moment, we assert that variations in extrinsic dust across supernovae are limited in
-size by Eqn.~\ref{color_sd:eqn} and positive correlations possible within Eqn.~\ref{color_cor:eqn}.
 
 
 The model and results presented here
