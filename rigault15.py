@@ -126,12 +126,13 @@ plt.close()
 # pp.close()
 # plt.close()
 wm = numpy.where(rdata[indr,9] < 10)[0]
-low = (((fit['rho1'][:,1]-fit['rho1'][:,2])[:,None])*fit['R'][:,wm]).flatten()
+low = (((fit['rho1'][:,4])[:,None])*fit['R'][:,wm]).flatten()
 wm = numpy.where(rdata[indr,9] > 10)[0]
-hig = (((fit['rho1'][:,1]-fit['rho1'][:,2])[:,None])*fit['R'][:,wm]).flatten()
+hig = (((fit['rho1'][:,4])[:,None])*fit['R'][:,wm]).flatten()
 
-plt.hist([low,hig],20,label=['low mass','high mass'],normed=True,range=(-0.04,0.02))
-plt.xlabel(r'$A_{\delta V}$')
+plt.hist([low,hig],20,label=['low mass','high mass'],normed=True,range=(-0.05,0.05))
+plt.xlabel(r'$A_{\delta I}$')
+plt.xlim((-0.05,0.05))
 plt.legend()
 pp = PdfPages("output15/rigault2.pdf")
 plt.savefig(pp,format='pdf')
@@ -139,13 +140,13 @@ pp.close()
 plt.close()
 
 
-# import scipy.stats
-# wm = numpy.where(rdata[:,9] < 10)[0]
-# low = numpy.median(fit['rho1'][:,4]*fit['R'][:,wm],axis=0)
+import scipy.stats
+wm = numpy.where(rdata[:,9] < 10)[0]
+low = numpy.median(fit['rho1'][:,4][:,None]*fit['R'][:,wm],axis=0)
 
-# wm = numpy.where(rdata[:,9] > 10)[0]
-# hig = numpy.median(fit['rho1'][:,4]*fit['R'][:,wm],axis=0)
+wm = numpy.where(rdata[:,9] > 10)[0]
+hig = numpy.median(fit['rho1'][:,4][:,None]*fit['R'][:,wm],axis=0)
 
-# ans= scipy.stats.ks_2samp(hig,low)
-# print ans
+ans= scipy.stats.ks_2samp(hig,low)
+print ans
 
