@@ -112,6 +112,16 @@ plt.savefig(pp,format='pdf')
 pp.close()
 plt.close()
 
+w = ebvav_s[0,0,:] < -0.05
+err = (ebvav_r[2,:]-ebvav_r[1,:])/2
+dum = ebvav_r[0,w]/err[w]**2
+dum2= 1/err[w]**2
+print '${:6.2f} \pm {:6.2f}$'.format(dum.sum()/dum2.sum(),1./numpy.sqrt(dum2.sum()))
+w = ebvav_s[0,0,:] > -0.1
+err = (ebvav_r[2,:]-ebvav_r[1,:])/2
+dum = ebvav_r[0,w]/err[w]**2
+dum2= 1/err[w]**2
+print '${:6.2f} \pm {:6.2f}$'.format(dum.sum()/dum2.sum(),1./numpy.sqrt(dum2.sum()))
 
 ebv  = (fit['gamma'][:,1]-fit['gamma'][:,2])[:,None] * fit['k']
 ebv = numpy.array([ebv,(fit['gamma1'][:,1]-fit['gamma1'][:,2])[:,None] * fit['k1']])
@@ -143,7 +153,7 @@ rbv, mrbv, prbv= numpy.percentile(coeffs,(50,50-34,50+34),axis=0)
 print '$R^F_V={:6.2f}_{{-{:6.2f}}}^{{+ {:6.2f}}}  $'.format(rbv[0],rbv[0]-mrbv[0],prbv[0]-rbv[0])
 print '${:6.2f} -{:6.2f} + {:6.2f}$'.format(rbv[1],rbv[1]-mrbv[1],prbv[1]-rbv[1])
 
-# ebv  = ((fit['gamma'][:,1]-fit['gamma'][:,2])[:,None] * fit['R'])
+# ebv  = ((fit['gamma'][:,1]-fit['gamma'][:,2])[:,None] * fit['k1'])
 # ebv = numpy.array([ebv,((fit['gamma1'][:,1]-fit['gamma1'][:,2])[:,None] * fit['k'])])
 
 ebvav=[]
@@ -154,7 +164,7 @@ ebvav=numpy.array(ebvav)
 
 ebvav_s = numpy.percentile(ebvav,(50,50-34,50+34),axis=2)
 
-# ebv  = numpy.median((fit['rho1'][:,1]-fit['rho1'][:,2])[:,None] * fit['R'],axis=0)
+# ebv  = numpy.median((fit['gamma1'][:,1]-fit['gamma1'][:,2])[:,None] * fit['k1'],axis=0)
 # ebv = numpy.array([ebv,numpy.median((fit['gamma'][:,1]-fit['gamma'][:,2])[:,None] * fit['k'],axis=0)])
 # ebvav = numpy.dot(tmat,ebv)
 # plt.scatter(ebvav[:,0,::200],ebvav[:,1,::200],marker='.',color='red')
@@ -192,7 +202,6 @@ plt.errorbar(ebvav_s[0,:,0], ebvav_r[0], \
 # plt.scatter(ebvav[0,::1000],ebvav[1,::1000]/ebvav[0,::1000],marker='.')
 plt.ylabel(r'$R^F_{V,eff} $')
 plt.xlabel(r'$E^F(B-V)_{eff} + const$')
-plt.ylim((-1,5))
 pp = PdfPages("output15/avrv_synth.pdf")
 plt.savefig(pp,format='pdf')
 pp.close()
