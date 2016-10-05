@@ -7,6 +7,8 @@ import pickle
 import cPickle
 import sivel
 
+
+
 f = open('forAlex_tmp16sept2016_localhost_parameters.dat', 'r')
 for i in xrange(1):
     f.readline()
@@ -22,7 +24,6 @@ f = open('temp15.pkl','rb')
 (fit, _) = pickle.load(f)
 f.close()
 
-
 pkl_file = open('gege_data.pkl', 'r')
 data = pickle.load(pkl_file)
 pkl_file.close()
@@ -36,6 +37,7 @@ use = numpy.isfinite(sivel)
 
 names= numpy.array(data['snlist'])[use]
 
+# Figure out intersection between the two lists
 i = numpy.intersect1d(names, rnames, assume_unique=True)
 
 inda = numpy.zeros(len(i),dtype='int')
@@ -45,8 +47,16 @@ for j in xrange(len(i)):
     inda[j] = numpy.where(names == i[j])[0]
     indr[j] = numpy.where(rnames == i[j])[0]
 
+# the intrinsic parameter is A_I
 
 (x, xmin, xmax) = numpy.percentile(fit['rho1'][:,4][:,None]*fit['R'],(50,50-34,50+34),axis=0)
+
+# print the table of intrinsic parameters
+# for x1,x2,x3,x4 in zip(names,x,xmin,xmax):
+#   print x1,x2,x3,x4
+
+# wefwe
+
 fig, axes = plt.subplots(nrows=4)
 for i in xrange(4):
   axes[i].errorbar(rdata[indr,3*i],x[inda],xerr=[rdata[indr,3*i+2], rdata[indr,3*i+1]], yerr=[x[inda]-xmin[inda],xmax[inda]-x[inda]],fmt='o')
@@ -72,37 +82,34 @@ plt.close()
 # pp.close()
 # plt.close()
 
+# Calculate the weighted mean of low and high mass hosts
 wm = numpy.where(rdata[indr,9] < 10)[0]
-# print r"${:9.3f} \pm {:9.3f}$".format((fit['rho1'][:,4][:,None]*fit['R'][:,wm]).mean(),(fit['rho1'][:,1][:,None]*fit['R'][:,wm]).std())
-(x, xmin, xmax) = numpy.percentile(fit['rho1'][:,4][:,None]*fit['R'][:,inda[wm]],(50,50-34,50+34),axis=0)
-dx = (xmax-xmin)/2.
+x_=x[inda[wm]]
+dx = (xmax[inda[wm]]-xmin[inda[wm]])/2.
 dx2 = numpy.sum(1/dx**2)
-low1 = numpy.sum(x/dx**2)/dx2
+low1 = numpy.sum(x_/dx**2)/dx2
 dlow1=  1/numpy.sqrt(dx2)
-print r"${:9.4f} \pm {:9.4f}$".format(numpy.sum(x/dx**2)/dx2, 1/numpy.sqrt(dx2)) 
-
+print r"${:9.4f} \pm {:9.4f}$".format(low1, dlow1) 
 
 wm = numpy.where(rdata[indr,9] > 10)[0]
-# print r"${:9.3f} \pm {:9.3f}$".format((fit['rho1'][:,4][:,None]*fit['R'][:,wm]).mean(),(fit['rho1'][:,1][:,None]*fit['R'][:,wm]).std())
-(x, xmin, xmax) = numpy.percentile(fit['rho1'][:,4][:,None]*fit['R'][:,inda[wm]],(50,50-34,50+34),axis=0)
-dx = (xmax-xmin)/2.
+x_=x[inda[wm]]
+dx = (xmax[inda[wm]]-xmin[inda[wm]])/2.
 dx2 = numpy.sum(1/dx**2)
-high1 = numpy.sum(x/dx**2)/dx2
+high1 = numpy.sum(x_/dx**2)/dx2
 dhigh1=  1/numpy.sqrt(dx2)
-print r"${:9.4f} \pm {:9.4f}$".format(numpy.sum(x/dx**2)/dx2, 1/numpy.sqrt(dx2)) 
-
+print r"${:9.4f} \pm {:9.4f}$".format(high1, dhigh1) 
 
 i=3
-(x, xmin, xmax) = numpy.percentile(fit['rho1'][:,4][:,None]*fit['R'],(50,50-34,50+34),axis=0)
+# (x, xmin, xmax) = numpy.percentile(fit['rho1'][:,4][:,None]*fit['R'],(50,50-34,50+34),axis=0)
 plt.errorbar(rdata[indr,3*i],x[inda],xerr=[rdata[indr,3*i+2], rdata[indr,3*i+1]], yerr=[x[inda]-xmin[inda],xmax[inda]-x[inda]],fmt='o')
-plt.axhline(low1, xmax=10)
-plt.axhline(low1+dlow1, xmax=10,linestyle='--')
-plt.axhline(low1-dlow1, xmax=10,linestyle='--')
-plt.axhline(high1, xmin=10)
-plt.axhline(high1+dhigh1, xmin=10,linestyle='--')
-plt.axhline(high1-dhigh1, xmin=10,linestyle='--')
+plt.plot([5,10],[low1,low1],color='black')
+plt.plot([5,10],[low1+dlow1,low1+dlow1],linestyle='--',color='black')
+plt.plot([5,10],[low1-dlow1,low1-dlow1],linestyle='--',color='black')
+plt.plot([10,12],[high1,high1],color='black')
+plt.plot([10,12],[high1+dhigh1,high1+dhigh1],linestyle='--',color='black')
+plt.plot([10,12],[high1-dhigh1,high1-dhigh1],linestyle='--',color='black')
 plt.ylabel(r'$A_{\delta I}$')
-plt.xlabel(r'Host Mass ($M_\cdot$')
+plt.xlabel(r'Host Mass ($\log(M_\odot)$)')
 plt.ylim((-0.1,0.03))
 pp = PdfPages("output15/rigault3.pdf")
 plt.savefig(pp,format='pdf')
@@ -110,25 +117,10 @@ pp.close()
 plt.close()
 
 
-# i=3
-
-# plt.errorbar(rdata[indr,3*i],x[inda],xerr=[rdata[indr,3*i+2], rdata[indr,3*i+1]], yerr=[x[inda]-xmin[inda],xmax[inda]-x[inda]],fmt='o')
-# plt.ylabel(r'$E_\delta(B-V)$')
-# plt.xlabel(r'$\log{(M/M_\odot)}$')
-# plt.axhline(low1, xmax=10)
-# plt.axhline(low1+dlow1, xmax=10,linestyle='--')
-# plt.axhline(low1-dlow1, xmax=10,linestyle='--')
-# plt.axhline(high1, xmin=10)
-# plt.axhline(high1+dhigh1, xmin=10,linestyle='--')
-# plt.axhline(high1-dhigh1, xmin=10,linestyle='--')
-# pp = PdfPages("output15/rigault3.pdf")
-# plt.savefig(pp,format='pdf')
-# pp.close()
-# plt.close()
 wm = numpy.where(rdata[indr,9] < 10)[0]
-low = (((fit['rho1'][:,4])[:,None])*fit['R'][:,wm]).flatten()
+low = (fit['rho1'][:,4][:,None]*fit['R'][:,wm]).flatten()
 wm = numpy.where(rdata[indr,9] > 10)[0]
-hig = (((fit['rho1'][:,4])[:,None])*fit['R'][:,wm]).flatten()
+hig = (fit['rho1'][:,4][:,None]*fit['R'][:,wm]).flatten()
 
 plt.hist([low,hig],20,label=['low mass','high mass'],normed=True,range=(-0.05,0.05))
 plt.xlabel(r'$A_{\delta I}$')
