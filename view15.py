@@ -202,7 +202,7 @@ plt.close()
 
 correction = [fit['c'][:,i][:,None] + fit['alpha'][:,i][:,None]*fit['EW'][:,:, 0] \
     + fit['beta'][:,i][:,None]*fit['EW'][:,:, 1] + fit['eta'][:,i][:,None]*fit['sivel']\
-    + fit['gamma'][:,i][:,None]*fit['k'] \
+    + fit['gamma'][:,i][:,None]*fit['k'] + fit['gamma1'][:,i][:,None]*fit['k1'] + fit['rho1'][:,i][:,None]*fit['R']\
     for i in xrange(5)]
 
 correction = numpy.array(correction)
@@ -226,6 +226,53 @@ filename = 'output15/residual.pdf'
 pp = PdfPages(filename)
 plt.savefig(pp,format='pdf')
 pp.close()
+
+
+
+# correction_gerard = [fit['c'][:,i][:,None] + fit['alpha'][:,i][:,None]*fit['EW'][:,:, 0] \
+#     + fit['beta'][:,i][:,None]*fit['EW'][:,:, 1] + fit['eta'][:,i][:,None]*fit['sivel']\
+#     + fit['gamma'][:,i][:,None]*fit['k']+ fit['gamma1'][:,i][:,None]*fit['k1'] + fit['rho1'][:,i][:,None]*fit['R']\
+#     for i in xrange(5)]
+
+# correction_gerard = numpy.array(correction_gerard)
+# correction_gerard = correction_gerard - correction_gerard[1,:,:]
+
+# gin =3
+# gerard_obs = numpy.zeros((nsne,nmags-1))
+# gerard_obs[:,0] = mag_renorm[:,0]- mag_renorm[:,1]
+# gerard_obs[:,1] = mag_renorm[:,2]- mag_renorm[:,1]
+# gerard_obs[:,2] = mag_renorm[:,3]- mag_renorm[:,1]
+# gerard_obs[:,3] = mag_renorm[:,4]- mag_renorm[:,1]
+
+# trans = [[1.,-1.,0,0,0],[0.,1,0,-1,0],[0.,0,1,-1,0],[0.,0,0,-1,0]]
+# trans = numpy.array(trans)
+# gerard_cov = numpy.zeros((nsne,4,4))
+# for i in xrange(nsne):
+#     gerard_cov[i] = numpy.dot(trans,numpy.dot(mag_cov[i], trans.T))
+
+# cind=[0,1,3,4]
+# cname = ['U','B','R','I']
+# fig, axes = plt.subplots(nrows=4)
+# (x, xmin, xmax) = numpy.percentile(correction_gerard[0,:,:],(50,50-34,50+34),axis=0)
+# xerr = numpy.sqrt(gerard_cov[:,0,0] + ((ymax-ymin)/2)**2)   
+# for i in xrange(4):
+#     (y, ymin, ymax) = numpy.percentile(correction[cind[i],:,:],(50,50-34,50+34),axis=0)
+#     yerr = numpy.sqrt(gerard_cov[:,i,i] + ((ymax-ymin)/2)**2)
+#     axes[i].errorbar(gerard_obs[:,0]-x,color_obs[:,i]-y,xerr=[xerr,xerr], yerr=[yerr,yerr],fmt='.',alpha=0.5)
+#     axes[i].set_xlabel(r'$({0}_o-B_o) - ({0}-B)_{{model}}$'.format('U'))
+#     lname = r'$({0}_o-V_o) - ({0}-V)_{{model}}$'.format(cname[i])
+#     axes[i].set_ylim((-0.2,0.2))
+#     axes[i].set_ylabel(lname)
+#     axes[i].axhline(y=0,linestyle=':')
+# fig.subplots_adjust(hspace=.3)
+# fig.set_size_inches(8,11)
+# filename = 'output15/residual_gerard.pdf'
+# pp = PdfPages(filename)
+# plt.savefig(pp,format='pdf')
+# pp.close()
+
+# wefwe
+
 
 cind=[0,1,3,4]
 cname = ['U','B','R','I']

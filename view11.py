@@ -202,7 +202,7 @@ plt.close()
 
 correction = [fit['c'][:,i][:,None] + fit['alpha'][:,i][:,None]*fit['EW'][:,:, 0] \
     + fit['beta'][:,i][:,None]*fit['EW'][:,:, 1] + fit['eta'][:,i][:,None]*fit['sivel']\
-    + fit['gamma'][:,i][:,None]*fit['k'] \
+    + fit['gamma'][:,i][:,None]*fit['k']+ fit['rho1'][:,i][:,None]*fit['R'] \
     for i in xrange(5)]
 
 correction = numpy.array(correction)
