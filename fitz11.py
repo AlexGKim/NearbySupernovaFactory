@@ -6,6 +6,7 @@ import sncosmo
 import scipy
 from matplotlib.backends.backend_pdf import PdfPages
 import matplotlib.pyplot as plt
+import f99_band
 
 # Get the data
 f = open('temp11.pkl','rb')
@@ -14,25 +15,17 @@ f.close()
 
 # Determine the plane approximaion for Fitzpatrick
 
-def getFitzExt(efflam,av, ebv):
-  f99 = sncosmo.F99Dust(r_v =av/ebv)
-  f99.set(ebv=ebv)
-  A_ = f99.propagate(efflam,1.)
-  A1_ = -2.5*numpy.log10(A_)
-  return A1_
-
-efflam = numpy.array([ 3693.16777627,  4369.37505509,  5287.48667023,  6319.19906153,7610.89305298])
-
 # Partial derivatives with respect to av and ebv
 av=0.1
-ebv=0.1/2.27
-A1=getFitzExt(efflam, av , ebv)
+ebv=0.1/2.24
+A1= f99_band.A_X(r_v=av/ebv, ebv=ebv)
 
-A2=getFitzExt(efflam, av+0.01 , ebv)
+A2= f99_band.A_X(r_v=(av+0.01)/ebv, ebv=ebv)
 dAdAv = (A2 - A1)/0.01
 
-A3=getFitzExt(efflam, av , ebv+0.001)
+A3= f99_band.A_X(r_v=av/(ebv+0.001), ebv=ebv+0.001)
 dAdebv = (A3 - A1)/0.001
+
 
 # The equation of interest is
 # gammma0 = ans00 F0 + ans01 F1 + res

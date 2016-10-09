@@ -656,31 +656,31 @@ rc('text', usetex=True)
 
 
 filts = ['U','B','V','R','I']
-lambdas = numpy.arange(3000.,9000,100)
-rvs=[2.97]
-avs = [12.25]
-for rv,av in zip(rvs,avs):
-  f99 = sncosmo.F99Dust(r_v =rv)
-  f99.set(ebv=av)
-  A_ = f99.propagate(lambdas,1)
-  A_=-2.5*numpy.log10(A_)
+# lambdas = numpy.arange(3000.,9000,100)
+# rvs=[2.97]
+# avs = [12.25]
+# for rv,av in zip(rvs,avs):
+#   f99 = sncosmo.F99Dust(r_v =rv)
+#   f99.set(ebv=av)
+#   A_ = f99.propagate(lambdas,1)
+#   A_=-2.5*numpy.log10(A_)
 
-  # norm = f99.propagate([efflam[1]],1.) / f99.propagate(numpy.array([efflam[2]]),1.)
-  # norm  = -2.5*numpy.log10(norm)
-  # A_ = sncosmo._extinction.ccm89(lambdas, 1., rv)
-  # norm  = sncosmo._extinction.ccm89(numpy.array([efflam[1]]), 1., rv)-sncosmo._extinction.ccm89(numpy.array([efflam[2]]), 1., rv)
-  # A_ = A_/norm[0]
-  plt.plot(lambdas,A_,label=r"$R^F_V={:.2f}$".format(rv))
+#   # norm = f99.propagate([efflam[1]],1.) / f99.propagate(numpy.array([efflam[2]]),1.)
+#   # norm  = -2.5*numpy.log10(norm)
+#   # A_ = sncosmo._extinction.ccm89(lambdas, 1., rv)
+#   # norm  = sncosmo._extinction.ccm89(numpy.array([efflam[1]]), 1., rv)-sncosmo._extinction.ccm89(numpy.array([efflam[2]]), 1., rv)
+#   # A_ = A_/norm[0]
+#   plt.plot(lambdas,A_,label=r"$R^F_V={:.2f}$".format(rv))
 
-(y, ymin, ymax) = numpy.percentile(fit['gamma'],(50,50-34,50+34),axis=0)
-plt.errorbar(efflam,y,yerr=[y-ymin,ymax-y],fmt='o')
-plt.legend()
-plt.xlabel(r'Wavelength (\AA)')
-plt.ylabel(r'$\gamma_X$')
-pp = PdfPages('output11/fitz.pdf')
-plt.savefig(pp,format='pdf')
-pp.close()
-plt.close()
+# (y, ymin, ymax) = numpy.percentile(fit['gamma'],(50,50-34,50+34),axis=0)
+# plt.errorbar(efflam,y,yerr=[y-ymin,ymax-y],fmt='o')
+# plt.legend()
+# plt.xlabel(r'Wavelength (\AA)')
+# plt.ylabel(r'$\gamma_X$')
+# pp = PdfPages('output11/fitz.pdf')
+# plt.savefig(pp,format='pdf')
+# pp.close()
+# plt.close()
 
 
 nlinks = fit['gamma'].shape[0]

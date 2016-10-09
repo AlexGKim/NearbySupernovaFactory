@@ -6,7 +6,7 @@ import numpy
 
 import sncosmo
 
-f = open('temp14.pkl','rb')
+f = open('temp15.pkl','rb')
 (fit, _) = pickle.load(f)
 f.close()
 
@@ -95,11 +95,11 @@ print numpy.std(fit['R']*((fit['rho1'][:,1]-fit['rho1'][:,2]))[:,None])
 
 
 
-pars = ['alpha','alpha','beta','beta','eta','eta','zeta','zeta','gamma','gamma','gamma1','gamma1','rho1','rho1','L_sigma']
+pars = ['alpha','alpha','beta','beta','eta','eta','gamma','gamma','gamma1','gamma1','rho1','rho1','L_sigma']
 pars_n = ['\\alpha_X','{\\alpha_X/\\alpha_V-1}','\\beta_X','{\\beta_X/\\beta_V-1}',\
-  '\\eta_X','{\\eta_X/\\eta_V-1}', '\\zeta_X','{\\zeta_X/\\zeta_V-1}', '\\gamma^0_X', '{\\gamma^0_X/\gamma^0_V-1}', '\\gamma^1_X','{\\gamma^1_X/\\gamma^1_2-1}',\
+  '\\eta_X','{\\eta_X/\\eta_V-1}', '\\gamma^0_X', '{\\gamma^0_X/\gamma^0_V-1}', '\\gamma^1_X','{\\gamma^1_X/\\gamma^1_2-1}',\
    '\\delta_X','{{\\delta_X/\\delta_I-1}}','\\sigma_X']
-sigfig = [4,1,3,2,4,2,2,2,2,2,2,2,2,2,3]
+sigfig = [4,1,3,2,4,2,2,2,2,2,2,2,3]
 for p,pn, s in zip(pars,pars_n,sigfig):
     print '${}$'.format(pn)
     for i in xrange(5):
@@ -115,8 +115,6 @@ for p,pn, s in zip(pars,pars_n,sigfig):
         print  '${1:6.{0}f}^{{{2:6.{0}f}}}_{{{3:6.{0}f}}}$'.format(s,dum[0], dum[2]-dum[0],dum[1]-dum[0] )
     print '\\\\'
 
-wefwe
-
 filts = ['U','B','V','R','I']
 for i in xrange(5):
     for j in xrange(i+1,5):
@@ -125,7 +123,7 @@ for i in xrange(5):
 
 
 mega = numpy.array([fit['Delta'].flatten(),fit['EW'][:,:,0].flatten(),fit['EW'][:,:,1].flatten(),fit['sivel'].flatten(), \
-    ((fit['gamma'][:,1] - fit['gamma'][:,2])[:,None]*fit['k']).flatten(),((fit['rho1'][:,1] - fit['rho1'][:,2])[:,None]*fit['R']).flatten()])
+    ((fit['gamma'][:,1] - fit['gamma'][:,2])[:,None]*fit['k']).flatten(),((fit['gamma1'][:,1] - fit['gamma1'][:,2])[:,None]*fit['k1']).flatten(),(fit['rho1'][:,4][:,None]*fit['R']).flatten()])
 
 dum = numpy.corrcoef(mega)
 print "observable correlation coefficients"

@@ -5,27 +5,8 @@ import cPickle
 import numpy
 import sivel
 import sncosmo
+import fitz_band
 
-efflam = numpy.array([ 3693.16777627,  4369.37505509,  5287.48667023,  6319.19906153,7610.89305298])
-
-f99 = sncosmo.F99Dust(r_v =2.09+.22)
-f99.set(ebv=1.37)
-A_ = f99.propagate(efflam,1.)
-A_ = -2.5*numpy.log10(A_)
-# print (A_[0]-A_[2])/(A_[1]-A_[2])
-print (A_[2])/(A_[1]-A_[2])
-f99 = sncosmo.F99Dust(r_v =2.09)
-f99.set(ebv=1.37)
-A_ = f99.propagate(efflam,1.)
-A_ = -2.5*numpy.log10(A_)
-# print (A_[0]-A_[2])/(A_[1]-A_[2])
-print (A_[2])/(A_[1]-A_[2])
-f99 = sncosmo.F99Dust(r_v =2.09-0.20)
-f99.set(ebv=1.37)
-A_ = f99.propagate(efflam,1.)
-A_ = -2.5*numpy.log10(A_)
-# print (A_[0]-A_[2])/(A_[1]-A_[2])
-print (A_[2])/(A_[1]-A_[2])
 f = open('temp11.pkl','rb')
 (fit, _) = pickle.load(f)
 f.close()
