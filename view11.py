@@ -109,6 +109,21 @@ for i in xrange(nsne):
 
 
 
+figure = corner.corner(EW_obs,labels=[r"$EW_{Ca,o}$",r"$EW_{Si,o}$",r"$\lambda_{Si,o}$"])
+for ax in figure.get_axes():
+    for tick in ax.xaxis.get_major_ticks():
+        tick.label.set_fontsize(18) 
+    for tick in ax.yaxis.get_major_ticks():
+        tick.label.set_fontsize(18)
+        
+pp = PdfPages('output11/feature_corner.pdf')
+plt.savefig(pp,format='pdf')
+pp.close()
+plt.close()
+
+wefwe
+
+
 (x, xmin, xmax) = numpy.percentile( ((fit['gamma'][:,1] - fit['gamma'][:,2])[:,None]*fit['k']),(50,50-34,50+34),axis=0)
 (y, ymin, ymax) = numpy.percentile(((fit['rho1'][:,1] - fit['rho1'][:,2])[:,None]*fit['R']),(50,50-34,50+34),axis=0)
 
@@ -215,7 +230,8 @@ fig, axes = plt.subplots(nrows=4)
 for i in xrange(4):
     (y, ymin, ymax) = numpy.percentile(correction[cind[i],:,:],(50,50-34,50+34),axis=0)
     err = numpy.sqrt(color_cov[:,i,i] + ((ymax-ymin)/2)**2)
-    axes[i].errorbar(y+mag_mn[cind[i]]-mag_mn[2],color_obs[:,i]-y,xerr=[y-ymin,ymax-y], yerr=[err,err],fmt='.')
+    axes[i].errorbar(y+mag_mn[cind[i]]-mag_mn[2],color_obs[:,i]-y,xerr=[y-ymin,ymax-y], yerr=[err,err],fmt='.',alpha=0.4)
+    # axes[i].errorbar(color_obs[:,i],color_obs[:,i]-y,xerr=[numpy.sqrt(color_cov[:,i,i]),numpy.sqrt(color_cov[:,i,i])], yerr=[err,err],fmt='.',alpha=0.5)
     axes[i].set_xlabel(r'$({0}-V)_{{model}}$'.format(cname[i]))
     lname = r'$({0}_o-V_o) - ({0}-V)_{{model}}$'.format(cname[i])
     axes[i].set_ylabel(lname)
@@ -233,7 +249,7 @@ fig, axes = plt.subplots(nrows=4)
 for i in xrange(4):
     (y, ymin, ymax) = numpy.percentile(correction[cind[i],:,:],(50,50-34,50+34),axis=0)
     err = numpy.sqrt(color_cov[:,i,i] + ((ymax-ymin)/2)**2)
-    axes[i].errorbar(x1,color_obs[:,i]-y,xerr=[x1_err,x1_err], yerr=[err,err],fmt='.')
+    axes[i].errorbar(x1,color_obs[:,i]-y,xerr=[x1_err,x1_err], yerr=[err,err],fmt='.',alpha=0.4)
     axes[i].set_xlabel(r'$X_1$'.format(cname[i]))
     lname = r'$({0}_o-V_o) - ({0}-V)_{{model}}$'.format(cname[i])
     axes[i].set_ylabel(lname)
@@ -285,7 +301,7 @@ plt.close()
 # print 'EW0', numpy.median(fit['EW'][:,outlier[0],0],axis=0), EW_renorm[outlier[0],0] 
 # print 'EW1', numpy.median(fit['EW'][:,outlier[0],1],axis=0), EW_renorm[outlier[0],1]
 fig, axes = plt.subplots()
-plt.hist(fit['Delta'].flatten(),normed=True,bins=20)
+plt.hist(fit['Delta'].flatten(),normed=True,bins=20,color='yellow')
 plt.xlabel(r'$\Delta$')
 pp = PdfPages('output11/Delta_hist.pdf')
 plt.savefig(pp,format='pdf')
@@ -693,8 +709,15 @@ mega = numpy.transpose(mega)
 for index in xrange(5):
     figure = corner.corner(mega[index,:,:],labels=[r"$c_{}$".format(index), r"$\alpha_{}$".format(index),\
                     r"$\beta_{}$".format(index),r"$\eta_{}$".format(index),r"$\gamma^0_{}$".format(index),\
-                    r"$\gamma^1_{{1{}}}$".format(index), r"$\sigma_{}$".format(index)])
+                    r"$\gamma^1_{{1{}}}$".format(index), r"$\sigma_{}$".format(index)],label_kwargs={'fontsize':20})
     figure.suptitle(filts[index],fontsize=28)
+
+    for ax in figure.get_axes():
+        for tick in ax.xaxis.get_major_ticks():
+            tick.label.set_fontsize(18) 
+        for tick in ax.yaxis.get_major_ticks():
+            tick.label.set_fontsize(18) 
+
     pp = PdfPages('output11/coeff{}.pdf'.format(index))
     plt.savefig(pp,format='pdf')
     pp.close()
@@ -767,6 +790,11 @@ mega = numpy.transpose(mega)
 mega=mega[::50,:]
 
 figure = corner.corner(mega,labels=[r"$\Delta$",r"$EW_{Ca}$",r"$EW_{Si}$",r"$\lambda_{Si}$",r"$E_{\gamma^0}(B-V)$",r"$E_{\gamma^1}(B-V)$"],range=numpy.zeros(6)+1.)
+for ax in figure.get_axes():
+    for tick in ax.xaxis.get_major_ticks():
+        tick.label.set_fontsize(18) 
+    for tick in ax.yaxis.get_major_ticks():
+        tick.label.set_fontsize(18) 
 pp = PdfPages('output11/perobject_corner.pdf')
 plt.savefig(pp,format='pdf')
 pp.close()

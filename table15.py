@@ -97,7 +97,7 @@ print numpy.std(fit['R']*((fit['rho1'][:,1]-fit['rho1'][:,2]))[:,None])
 
 pars = ['alpha','alpha','beta','beta','eta','eta','gamma','gamma','gamma1','gamma1','rho1','rho1','L_sigma']
 pars_n = ['\\alpha_X','{\\alpha_X/\\alpha_V-1}','\\beta_X','{\\beta_X/\\beta_V-1}',\
-  '\\eta_X','{\\eta_X/\\eta_V-1}', '\\gamma^0_X', '{\\gamma^0_X/\gamma^0_V-1}', '\\gamma^1_X','{\\gamma^1_X/\\gamma^1_2-1}',\
+  '\\eta_X','{\\eta_X/\\eta_V-1}', '\\gamma^0_X', '{\\gamma^0_X/\gamma^0_V-1}', '\\gamma^1_X','{\\gamma^1_X/\\gamma^1_V-1}',\
    '\\delta_X','{{\\delta_X/\\delta_I-1}}','\\sigma_X']
 sigfig = [4,1,3,2,4,2,2,2,2,2,2,2,3]
 for p,pn, s in zip(pars,pars_n,sigfig):
@@ -112,7 +112,7 @@ for p,pn, s in zip(pars,pars_n,sigfig):
             dum = numpy.percentile(fit[p][:,i]/fit[p][:,2]-1,(50,50-34,50+34)) 
         else :
             dum = numpy.percentile(fit[p][:,i],(50,50-34,50+34))            
-        print  '${1:6.{0}f}^{{{2:6.{0}f}}}_{{{3:6.{0}f}}}$'.format(s,dum[0], dum[2]-dum[0],dum[1]-dum[0] )
+        print  '${1:6.{0}f}^{{+{2:6.{0}f}}}_{{{3:6.{0}f}}}$'.format(s,dum[0], dum[2]-dum[0],dum[1]-dum[0] )
     print '\\\\'
 
 filts = ['U','B','V','R','I']
