@@ -16,7 +16,7 @@ f.close()
 # Determine the plane approximaion for Fitzpatrick
 
 av=0.1
-ebv=0.1/2.24
+ebv=0.1/2.5
 A1= f99_band.A_X(r_v=av/ebv, ebv=ebv)
 
 A2= f99_band.A_X(r_v=(av+0.01)/ebv, ebv=ebv)

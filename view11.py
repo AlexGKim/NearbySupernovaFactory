@@ -109,19 +109,18 @@ for i in xrange(nsne):
 
 
 
-figure = corner.corner(EW_obs,labels=[r"$EW_{Ca,o}$",r"$EW_{Si,o}$",r"$\lambda_{Si,o}$"])
-for ax in figure.get_axes():
-    for tick in ax.xaxis.get_major_ticks():
-        tick.label.set_fontsize(18) 
-    for tick in ax.yaxis.get_major_ticks():
-        tick.label.set_fontsize(18)
+# figure = corner.corner(EW_obs,labels=[r"$EW_{Ca,o}$",r"$EW_{Si,o}$",r"$\lambda_{Si,o}$"])
+# for ax in figure.get_axes():
+#     for tick in ax.xaxis.get_major_ticks():
+#         tick.label.set_fontsize(18) 
+#     for tick in ax.yaxis.get_major_ticks():
+#         tick.label.set_fontsize(18)
         
-pp = PdfPages('output11/feature_corner.pdf')
-plt.savefig(pp,format='pdf')
-pp.close()
-plt.close()
+# pp = PdfPages('output11/feature_corner.pdf')
+# plt.savefig(pp,format='pdf')
+# pp.close()
+# plt.close()
 
-wefwe
 
 
 (x, xmin, xmax) = numpy.percentile( ((fit['gamma'][:,1] - fit['gamma'][:,2])[:,None]*fit['k']),(50,50-34,50+34),axis=0)
@@ -229,19 +228,24 @@ cname = ['U','B','R','I']
 fig, axes = plt.subplots(nrows=4)
 for i in xrange(4):
     (y, ymin, ymax) = numpy.percentile(correction[cind[i],:,:],(50,50-34,50+34),axis=0)
-    err = numpy.sqrt(color_cov[:,i,i] + ((ymax-ymin)/2)**2)
-    axes[i].errorbar(y+mag_mn[cind[i]]-mag_mn[2],color_obs[:,i]-y,xerr=[y-ymin,ymax-y], yerr=[err,err],fmt='.',alpha=0.4)
-    # axes[i].errorbar(color_obs[:,i],color_obs[:,i]-y,xerr=[numpy.sqrt(color_cov[:,i,i]),numpy.sqrt(color_cov[:,i,i])], yerr=[err,err],fmt='.',alpha=0.5)
-    axes[i].set_xlabel(r'$({0}-V)_{{model}}$'.format(cname[i]))
-    lname = r'$({0}_o-V_o) - ({0}-V)_{{model}}$'.format(cname[i])
-    axes[i].set_ylabel(lname)
-    axes[i].axhline(y=0,linestyle=':')
+    # err = numpy.sqrt(color_cov[:,i,i] + ((ymax-ymin)/2)**2)
+    # axes[i].errorbar(y+mag_mn[cind[i]]-mag_mn[2],color_obs[:,i]-y,xerr=[y-ymin,ymax-y], yerr=[err,err],fmt='.',alpha=0.4)
+    axes[i].errorbar(y+mag_mn[cind[i]]-mag_mn[2],color_obs[:,i]+mag_mn[cind[i]]-mag_mn[2],yerr=[numpy.sqrt(color_cov[:,i,i]),numpy.sqrt(color_cov[:,i,i])], xerr=[(ymax-ymin)/2,(ymax-ymin)/2],fmt='.',alpha=0.5)
+    # axes[i].errorbar(y+mag_mn[cind[i]]-mag_mn[2],color_obs[:,i],xerr=[y-ymin,ymax-y], yerr=[numpy.sqrt(color_cov[:,i,i]),numpy.sqrt(color_cov[:,i,i])],fmt='.',alpha=0.4)
+    miny = (color_obs[:,i]+mag_mn[cind[i]]-mag_mn[2]).min()
+    maxy = (color_obs[:,i]+mag_mn[cind[i]]-mag_mn[2]).max()
+    axes[i].plot([miny,maxy],[miny,maxy])
+    axes[i].set_ylabel(r'$({0}_o-V_o)$'.format(cname[i]))
+    lname = r'$({0}-V)_{{model}}$'.format(cname[i])
+    axes[i].set_xlabel(lname)
+    # axes[i].axhline(y=0,linestyle=':')
 fig.subplots_adjust(hspace=.3)
 fig.set_size_inches(8,11)
 filename = 'output11/residual.pdf'
 pp = PdfPages(filename)
 plt.savefig(pp,format='pdf')
 pp.close()
+
 
 cind=[0,1,3,4]
 cname = ['U','B','R','I']

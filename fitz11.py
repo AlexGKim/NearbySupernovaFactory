@@ -17,7 +17,7 @@ f.close()
 
 # Partial derivatives with respect to av and ebv
 av=0.1
-ebv=0.1/2.24
+ebv=0.1/2.5
 A1= f99_band.A_X(r_v=av/ebv, ebv=ebv)
 
 A2= f99_band.A_X(r_v=(av+0.01)/ebv, ebv=ebv)
@@ -26,6 +26,34 @@ dAdAv = (A2 - A1)/0.01
 A3= f99_band.A_X(r_v=av/(ebv+0.001), ebv=ebv+0.001)
 dAdebv = (A3 - A1)/0.001
 
+print '{0[0]:6.2f}, {0[1]:6.2f}, {0[2]:6.2f}, {0[3]:6.2f}, {0[4]:6.2f}'.format(dAdAv)
+print '{0[0]:6.2f}, {0[1]:6.2f}, {0[2]:6.2f}, {0[3]:6.2f}, {0[4]:6.2f}'.format(dAdebv)
+
+# av=0.1
+# ebv=0.1/3.1
+# A1= f99_band.A_X(r_v=av/ebv, ebv=ebv)
+
+# A2= f99_band.A_X(r_v=(av+0.01)/ebv, ebv=ebv)
+# dAdAv = (A2 - A1)/0.01
+
+# A3= f99_band.A_X(r_v=av/(ebv+0.001), ebv=ebv+0.001)
+# dAdebv = (A3 - A1)/0.001
+
+# print '{0[0]:6.2f}, {0[1]:6.2f}, {0[2]:6.2f}, {0[3]:6.2f}, {0[4]:6.2f}'.format(dAdAv)
+# print '{0[0]:6.2f}, {0[1]:6.2f}, {0[2]:6.2f}, {0[3]:6.2f}, {0[4]:6.2f}'.format(dAdebv)
+
+# av=0.1
+# ebv=0.1/1.9
+# A1= f99_band.A_X(r_v=av/ebv, ebv=ebv)
+
+# A2= f99_band.A_X(r_v=(av+0.01)/ebv, ebv=ebv)
+# dAdAv = (A2 - A1)/0.01
+
+# A3= f99_band.A_X(r_v=av/(ebv+0.001), ebv=ebv+0.001)
+# dAdebv = (A3 - A1)/0.001
+
+# print '{0[0]:6.2f}, {0[1]:6.2f}, {0[2]:6.2f}, {0[3]:6.2f}, {0[4]:6.2f}'.format(dAdAv)
+# print '{0[0]:6.2f}, {0[1]:6.2f}, {0[2]:6.2f}, {0[3]:6.2f}, {0[4]:6.2f}'.format(dAdebv)
 
 # The equation of interest is
 # gammma0 = ans00 F0 + ans01 F1 + res

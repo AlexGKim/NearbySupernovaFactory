@@ -127,7 +127,7 @@ mega = numpy.array([fit['Delta'].flatten(),fit['EW'][:,:,0].flatten(),fit['EW'][
 
 dum = numpy.corrcoef(mega)
 print "observable correlation coefficients"
-print " \\\\\n".join([" & ".join(map('{0:.3f}'.format, line)) for line in dum])
+print " \\\\\n".join([" & ".join(map('{0:.2f}'.format, line)) for line in dum])
 
 
 # pars = ['gamma','rho1']
