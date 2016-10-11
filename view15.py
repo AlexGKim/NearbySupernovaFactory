@@ -424,7 +424,7 @@ plt.close()
 
 plt.hist( ((fit['rho1'][:,1]-fit['rho1'][:,2])[:,None]*fit['R']).flatten(),normed=True,bins=20,
   label=[r'$E_\delta(B-V)$'],range=(-0.06,.06),color='green')
-plt.xlabel(r'$E(B-V)$')
+plt.xlabel(r'$E_\delta(B-V)$')
 plt.xlim((-.06,.06))
 plt.legend()
 pp = PdfPages('output15/ebv_delta.pdf')

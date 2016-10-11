@@ -592,9 +592,13 @@ Residual dispersion is described by a Normal distribution with a parameterized c
 $C_c$.  A grey magnitude offset, $\Delta$, is included for each supernova
 to capture intrinsic dispersion and peculiar-velocity errors introduced when converting fluxes to luminosity.
 The observed magnitudes are linearly dependent on the
-extrinsic-color parameters $k_0$ and $k_1$.  The observables
+extrinsic-color parameters $k_0$ and $k_1$.  
+The observables
 $U_o, B_o, V_o, R_o, I_o$, $EW_{Ca,o}$, $EW_{Si,o}$, $\lambda_{Si,o}$
 shown in Table~\ref{data:tab} have Gaussian measurement uncertainty with covariance $C$.
+\textcolor{red}{Unlike the parameters associated with
+the spectral measurements, $EW_{Ca}$, $EW_{Si}$ and $\lambda_{Si}$,  $k_0$ and $k_1$ are latent parameters with no
+directly associated observables.}
 The model is written as
 \begin{equation}
 \begin{pmatrix}
@@ -1224,11 +1228,12 @@ attributed to dust.
 \label{model2:sec}
 In \S\ref{model:sec} we show that the Nearby Supernova Factory data analyzed with an agnostic model with
 two extrinsic parameters produce
-results consistent
-with two-parameter dust models.  An extension to our model is now added to accommodate
+magnitudes consistent
+with two-parameter dust models that have been established for stars in the Milky Way, LMC, and SMC.
+An extension to our model is now added to explore the possibility of
 a possible additional
-color parameter.
-The new model is written as
+color parameter that could have its origins in supernova astrophysics.
+The extended model is written as
 \begin{equation}
 \begin{pmatrix}
 U\\B\\V\\R\\I
@@ -1266,7 +1271,8 @@ In all aspects it is identical to the previous model except for the addition of 
 which affects the mean
 absolute magnitudes:
 each supernova has an intrinsic $D$ parameter that is linearly related to
-absolute magnitudes through global coefficients $\delta$. 
+absolute magnitudes through global coefficients $\delta$.  Note that $D$ is a latent supernova characteristic whose existence is inferred from
+its effects on broadband magnitudes.
 Although
 this term is introduced through absolute rather than observed magnitudes,
 practically identical results are obtained when it is placed alongside the extrinsic $\gamma k$ terms.  Despite this
@@ -1280,7 +1286,7 @@ Furthermore we impose
 \begin{equation}
 \langle D\rangle=0,  \delta \cdot \gamma^0=0, \delta \cdot \gamma^1=0.
 \end{equation}
-The first specifies the definition of zero color.   The latter two confine possible magnitude
+The first constraint specifies the definition of zero color.   The latter two confine possible magnitude
 variations to those that cannot be attributed to 
 the $\gamma k$ terms (i.e.\ dust); this condition breaks the degeneracies between $\delta D$  
 and $\gamma k$. 
@@ -1293,8 +1299,8 @@ to maintain their correspondence between the two models.
 The resulting credible intervals of our parameters are given in Table~\ref{global2:tab}.  Comparison with the
 results of the 2-parameter extrinsic model given in Table~\ref{global:tab} shows that  parameters that are common to both
 are consistent well within 1$\sigma$ uncertainties.  The most significant changes of note are in the standard
-deviations of the residuals in the $V$ and $I$ bands.
-The newly fitted $\delta$ parameters have an almost identical association with the Fitzpatrick dust law, in that now
+deviations of the residuals in the $V$ and $I$ bands, which are now reduced.
+The newly fitted $\gamma$ parameters have an almost identical association with the Fitzpatrick dust law, in that now
 \begin{equation}
 \begin{pmatrix}
  \frac{\gamma^0_X}{\gamma^0_1-\gamma^0_2} \\
@@ -1312,7 +1318,7 @@ b(X)
 \end{pmatrix}+
 \vec{\epsilon},
 \end{equation}
-where the residual $\vec{\epsilon}$''s perpendicular to the Fitzpatrick plane
+where the residual vectors $\vec{\epsilon}$ are perpendicular to the Fitzpatrick plane and
 contribute similar 2\% and 5\% to the total  length of the vector.
 
 \begin{table}
@@ -1454,9 +1460,10 @@ The standard deviations of $E_\gamma(B-V)$ and $E_\delta(B-V)$ are
 and 0.010
 %-----
 mag respectively.
-The range of $B-V$ colors is $\sim 8$ times larger for the external contribution; variation in $B-V$ color due to the intrinsic term is dwarfed by the extrinsic process. 
+The range of $B-V$ colors is $\sim 8$ times larger for the external contribution; variation in $B-V$ color due to the intrinsic term is dwarfed by the extrinsic dust
+component. 
 Both distributions are non-Gaussian, that of $E(B-V)$ having a sharp rise in the blue and an extended tail in the red, consistent
-with the expectation for extinction due to host-galaxy dust \citep{1998ApJ...502..177H}.
+with the expectation of dust considering the distribution of supernovae within galaxies and the distribution of galaxy orientations with respect to the observer \citep{1998ApJ...502..177H}.
 
 \begin{figure}[htbp] %  figure placement: here, top, bottom, or page
    \centering
@@ -1469,15 +1476,15 @@ with the expectation for extinction due to host-galaxy dust \citep{1998ApJ...502
 \end{figure}
 The significance of the $\delta$ parameters is shown pictorially
 in Figure~\ref{deltacorner:fig}. The left plot shows the $\delta$ posteriors, which are bimodal due to the sign-flip degeneracy.  The probability
-of the null result $\delta_X=0$ for all $X$ is $<98\%$, determined through
+of the null result $\delta_X=0$ for all $X$ is $<98\%$, as determined through
 the population of its bin in a 5-dimensional histogram.
 The right plot shows values of $\delta_X/\delta_I-1$ that  have significant non-zero values.   An interesting feature
 is that the shift in magnitude is not monotonic in wavelength, but rather decreases from $U$ to $V$, and then increases from $V$
 to $I$.
 These are not the behaviors expected from normal dust,
 circumstellar dust suggested as a source of SN extinction \citep{2005ApJ...635L..33W,2008ApJ...686L.103G,
-2015ApJ...807L..26G}, or a blackbody in the Raleigh-Jeans tail, and so may be indicative of
-more complicated underlying supernova physics.
+2015ApJ...807L..26G} and so may be indicative of underlying supernova physics beyond that captured by $EW_{Ca}$, $EW_{Si}$ and
+$\lambda_{Si}$.
 
 \begin{figure}[htbp] %  figure placement: here, top, bottom, or page
    \centering
