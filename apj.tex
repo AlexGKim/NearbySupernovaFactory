@@ -13,9 +13,10 @@
 \begin{document}
 
 \title{Evidence for a Color Parameter Unassociated With Dust Within the Type~Ia Supernovae of the Nearby Supernova Factory}
-\author{A.~G.~Kim}
+\author[0000-0001-6315-8743]{A.~G.~Kim}
 \affiliation{    Physics Division, Lawrence Berkeley National Laboratory, 
     1 Cyclotron Road, Berkeley, CA, 94720}
+    
 
 \author{     G.~Aldering}
 \affiliation{    Physics Division, Lawrence Berkeley National Laboratory, 
@@ -203,14 +204,11 @@ The two color parameters exhibit the behavior expected from the two-parameter
 \citet{1999PASP..111...63F} dust model, yielding a per-supernova scatter in
 total-to-selective extinction, an effective
 %-----
-$R^F_V=2.24 \pm 0.16$
+$R^F_V \sim 2.4$
 %------
 for the full sample, and a difference in the average $R^F_V$ between extremely blue and red supernovae .  The derived dust law is able to reproduce the optical colors of the highly reddened SN~2014J better than the \citet{1999PASP..111...63F} dust model.
 Extending the model to three color parameters gives almost identical results for
 the two parameters
-%-----
-$R^F_V=2.23 \pm 0.16$,
-%------
 plus a detection of a third parameter at  $>98$\% confidence; this new parameter is responsible for supernova color diversity
 beyond those tracked by the spectral features and two-parameter dust models.
 \end{abstract}
@@ -989,10 +987,10 @@ with probability $(1-5\times 10^{-5})$.
 
 Combining the effects of both parameters, we can define a total $X$-band extinction $A_X=\gamma^0_X k_0 + \gamma^1_X k_1$
 and a corresponding $E(B-V) = A_B-A_V$.  Figure~\ref{avebv:fig} shows the relationship between $A_V$ and $E(B-V)$, from
-which a linear fit gives a slope of $R_V=2.51^{+0.23}_{-0.21}$.  The fit also gives the zeropoint, which we use to 
+which a linear fit gives a slope of $R_V=2.77^{+0.08}_{-0.09}$.  The fit also gives the zeropoint, which we use to 
 estimate $R_V=(A_V-zeropoint)/E(B-V)$ per supernova, shown in Figure~\ref{avebv:fig}.
-Extremely blue supernovae ($E(B-V) + const <-0.05$ on the plot) have an average $R_V=1.88 \pm   0.13$,
-whereas the extreme red objects ($E(B-V) + const >0.1$) have $R_V=  2.96 \pm   0.11$, indicating that different physical mechanisms
+Extremely blue supernovae ($E(B-V) <-0.05$ on the plot) have an average $R_V=1.88 \pm   0.13$,
+whereas the extreme red objects ($E(B-V) >0.1$) have $R_V=  2.96 \pm   0.11$, indicating that different physical mechanisms
 operate in these regimes.
 
 \begin{figure}[htbp] %  figure placement: here, top, bottom, or page
@@ -1005,7 +1003,15 @@ operate in these regimes.
 \end{figure}
 
 Until now we have considered $k_0$ and $k_1$ without association with any specific dust model, but they could be interpreted as
-parameters of a single  dust model.  Indeed the \citet{1989ApJ...345..245C} dust law can be expressed as a two-parameter linear model
+parameters of a single  dust model.
+\color{red}
+Plotted in Figure~\ref{avebv:fig} are the expectations for measured $A(V)$, $E(B-V)$, and $R_V$ for $R^F_V=1.9, 2.4, 3.1$
+within the context of the \citetalias{1999PASP..111...63F} model.
+Note that for our broadband measurements, the relationship between $A(V)$ and $E(B-V)$ is subtly
+non-linear, and $R_V$ is not constant, for a fixed value of $R^F_V$.
+\color{black}
+
+The \citet{1989ApJ...345..245C} dust law can be expressed as a two-parameter linear model
 \begin{equation}
 A_X = a(X)  A_V + b(X) E(B-V).
 \end{equation}
@@ -1016,16 +1022,15 @@ $R^F_V=2.5$ and the updated
 \citet{2007ApJ...663.1187H} SN~Ia template at $B$-band peak.  This linear approximation
 is good in the ranges of $R^F_V$ and wavelength under consideration, in that these vectors vary by $<5$\% over the range $1.9<R^F_V<3.1$.
 
-
 Our model can be expressed as
 \begin{equation}
-A_X = \frac{\gamma^0_X}{\gamma^0_1-\gamma^0_2}  E_{\gamma^0}(B-V) +  \frac{\gamma^1_X}{\gamma^1_1-\gamma^1_2}  E_{\gamma^1}(B-V).
+A_X = \frac{\gamma^0_X}{\gamma^0_1-\gamma^0_2}  E_{\gamma^0}(B-V) +  \frac{\gamma^1_X}{\gamma^1_B-\gamma^1_V}  E_{\gamma^1}(B-V).
 \end{equation}
 Our best-fit values for the $\gamma$ coefficients (from Table~\ref{global:tab}) can expressed in terms of the $a(X)$ and $b(X)$ vectors:
 \begin{equation}
 \begin{pmatrix}
- \frac{\gamma^0_X}{\gamma^0_1-\gamma^0_2} \\
-\frac{\gamma^1_X}{\gamma^1_1-\gamma^1_2} 
+ \frac{\gamma^0_X}{\gamma^0_B-\gamma^0_V} \\
+\frac{\gamma^1_X}{\gamma^1_B-\gamma^1_V} 
 \end{pmatrix}=
 \begin{pmatrix}
 \begin{array}{rr}
@@ -1047,23 +1052,46 @@ contribute  3\% and 4\% respectively to the total  length of the $\gamma$ vector
 This result indicates that
 the allowed variation of $UBVRI$ allowed by the \citetalias{1999PASP..111...63F} model and our best-fit model are almost identical.
 
-The model parameters $E_{\gamma^0}(B-V)$ and  $E_{\gamma^1}(B-V)$ for the supernovae in our sample
-are projected onto the  \citetalias{1999PASP..111...63F} values of $E^F(B-V)$ and $A^F$, up to an additive constant:  these are shown in Figure~\ref{avebv:fig}.
-The points are confined to a tight locus around a line, with slope that corresponds to $R^F_V=2.24 \pm 0.16$.  
-The linear fit also produces the zeropoint, allowing us to determine individual $R^F_V$ for all supernovae,
-which are shown in Figure~\ref{avebv_synth:fig}.   The relative values of the projected parameters are similar to
-the native $R_V$, $A_V$, and $E(B-V)$  shown in Figure~\ref{avebv:fig}.
+\color{red}
+To help visualize the above result, Figure~\ref{plane:fig} shows two perspectives in $UVI$-space
+of the vectors corresponding to $\gamma^i_X/(\gamma^i_B-\gamma^i_V)$ of our model,
+and $a(X)$, $b(X)$ of the \citetalias{1999PASP..111...63F} model.
+The left plot shows that none of the four vectors are closely aligned with another, while the right plot shows that
+the planes defined by our model (solid lines) and the  \citetalias{1999PASP..111...63F} model (dashed lines) are nearly coplanar.
+If $R^F_V=2.4$ were constant in our sample, then $A_X = A_V\left(a(X) + \frac{b(X)}{2.4}\right)$;  this combination of $a$ and $b$ is
+almost perfectly aligned with $\gamma^0_X/(\gamma^0_B-\gamma^0_V)$, as shown in the dot-dashed line.  
+The $\gamma^1$ terms capture the remaining magnitude variations due to the fact that $R^F_V$ is not constant in the sample.
 
 \begin{figure}[htbp] %  figure placement: here, top, bottom, or page
    \centering
-   \includegraphics[width=2.8in]{output11/avebv_synth.pdf}
-   \includegraphics[width=2.8in]{output11/avrv_synth.pdf}
-    \caption{Left: Projections of our model parameters $E_{\gamma^0}(B-V)$ and  $E_{\gamma^1}(B-V)$ for the supernovae in our sample
-onto the  \citetalias{1999PASP..111...63F} dust-model plane.  Note that the error bars do not capture the strong
-covariance between the parameters. Right: $R^F_V$ for each supernova.
-   \label{avebv_synth:fig}}
+   \includegraphics[width=2.8in]{output11/plane0.pdf}
+   \includegraphics[width=2.8in]{output11/plane1.pdf}
+   \caption{Two different perspectives in $UVI$-space of the vectors $\gamma^i_X/(\gamma^i_B-\gamma^i_V)$ of our model (solid lines),
+   and $a(X)$, $b(X)$ of the \citetalias{1999PASP..111...63F} model (dashed lines).  The combination $a(X)+b(X)/2.4$ is shown in the dot-dashed
+   line.
+   \label{plane:fig}}
 \end{figure}
 
+\color{black}
+
+%
+%The model parameters $E_{\gamma^0}(B-V)$ and  $E_{\gamma^1}(B-V)$ for the supernovae in our sample
+%are projected onto the  \citetalias{1999PASP..111...63F} values of $E^F(B-V)$ and $A^F$, up to an additive constant:  these are shown in Figure~\ref{avebv:fig}.
+%The points are confined to a tight locus around a line, with slope that corresponds to $R^F_V=2.24 \pm 0.16$.  
+%The linear fit also produces the zeropoint, allowing us to determine individual $R^F_V$ for all supernovae,
+%which are shown in Figure~\ref{avebv_synth:fig}.   The relative values of the projected parameters are similar to
+%the native $R_V$, $A_V$, and $E(B-V)$  shown in Figure~\ref{avebv:fig}.
+%
+%\begin{figure}[htbp] %  figure placement: here, top, bottom, or page
+%   \centering
+%   \includegraphics[width=2.8in]{output11/avebv_synth.pdf}
+%   \includegraphics[width=2.8in]{output11/avrv_synth.pdf}
+%    \caption{Left: Projections of our model parameters $E_{\gamma^0}(B-V)$ and  $E_{\gamma^1}(B-V)$ for the supernovae in our sample
+%onto the  \citetalias{1999PASP..111...63F} dust-model plane.  Note that the error bars do not capture the strong
+%covariance between the parameters. Right: $R^F_V$ for each supernova.
+%   \label{avebv_synth:fig}}
+%\end{figure}
+%
 
 The near coplanarity of the plane defined by our parameters and the plane of  \citetalias{1999PASP..111...63F}, together with the fact that our the individual supernova
 parameters translate to  \citetalias{1999PASP..111...63F} parameters consistent with a distribution expected for a narrow range of $R^F_V$, lead us to conclude that 
