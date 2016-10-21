@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-
 import pickle
 import numpy
 import sncosmo
@@ -7,6 +6,7 @@ import scipy
 from matplotlib.backends.backend_pdf import PdfPages
 import matplotlib.pyplot as plt
 import f99_band
+import emcee
 
 # Get the data
 f = open('temp11.pkl','rb')
@@ -98,20 +98,95 @@ print numpy.linalg.norm(res,axis=1)/numpy.array(c_n)
 tmat = numpy.transpose(tmat)
 
 
+# Plot vectors in UVI
+from mpl_toolkits.mplot3d import Axes3D
+from matplotlib import rcParams
+fig = plt.figure()
+ax = fig.gca(projection='3d')
+dum  = numpy.sqrt(cs[0][0]**2+cs[0][2]**2+cs[0][4]**2)
+ax.plot([0,cs[0][0]/dum],[0,cs[0][2]/dum],[0,cs[0][4]/dum],label=r'$\gamma^0_X/(\gamma^0_B-\gamma^0_V)$')
+dum  = numpy.sqrt(cs[1][0]**2+cs[1][2]**2+cs[1][4]**2)
+ax.plot([0,cs[1][0]/dum],[0,cs[1][2]/dum],[0,cs[1][4]/dum],label=r'$\gamma^1_X/(\gamma^1_B-\gamma^1_V)$')
+dum  = numpy.sqrt(dAdAv[0]**2+dAdAv[2]**2+dAdAv[4]**2)
+ax.plot([0,dAdAv[0]/dum],[0,dAdAv[2]/dum],[0,dAdAv[4]/dum],label=r'$a(X)$',ls='--')
+dum  = numpy.sqrt(dAdebv[0]**2+dAdebv[2]**2+dAdebv[4]**2)
+ax.plot([0,dAdebv[0]/dum],[0,dAdebv[2]/dum],[0,dAdebv[4]/dum],label=r'$b(X)$',ls='--')
+crap = dAdAv + dAdebv/2.4
+dum  = numpy.sqrt(crap[0]**2+crap[2]**2+crap[4]**2)
+ax.plot([0,crap[0]/dum],[0,crap[2]/dum],[0,crap[4]/dum],label=r'$a(X)+b(X)/2.4$',ls='-.')
+ax.legend(prop={'size':10})
+ax.set_xlabel(r'$U$')
+ax.set_ylabel(r'$V$')
+ax.set_zlabel(r'$I$')
+ax.view_init(elev=2, azim=-114)
+pp = PdfPages("output11/plane0.pdf")
+plt.savefig(pp,format='pdf')
+pp.close()
+ax.view_init(elev=7, azim=-165)
+pp = PdfPages("output11/plane1.pdf")
+plt.savefig(pp,format='pdf')
+pp.close()
+plt.close()
+
 # Plot AV versus E(B-V) from the data
 
 # container that contains E(B-V) and AV
 ebv  = ((fit['gamma'][:,1]-fit['gamma'][:,2])[:,None] * fit['k']+((fit['rho1'][:,1]-fit['rho1'][:,2])[:,None] * fit['R']))
 ebv = numpy.array([ebv,((fit['gamma'][:,2])[:,None] * fit['k'])+((fit['rho1'][:,2])[:,None] * fit['R'])])
 
-# RV is calculated as a Monte Carlo, i.e RV is calculated for each link
-coeffs = []
-for i in xrange(ebv.shape[1]):
-  coeffs.append(numpy.polyfit(ebv[0, i,:],ebv[1,i,:], 1))
-coeffs = numpy.array(coeffs)
+ebv_mn = numpy.mean(ebv,axis=1)
 
-# the fit RV
-rbv, mrbv, prbv= numpy.percentile(coeffs,(50,50-34,50+34),axis=0)
+ebv_cov = numpy.zeros((ebv.shape[2],2,2))
+for i in xrange(ebv.shape[2]):
+  ebv_cov[i,:,:] = numpy.cov(ebv[:,:,i])
+
+# ebv_icov = numpy.zeros((ebv.shape[2],2,2))
+# for i in xrange(ebv.shape[2]):
+#   ebv_icov[i,:,:] = numpy.linalg.inv(ebv_cov[i,:,:])
+
+
+# def lnprob(pars, ebv_mn, ebv_icov):
+#   ans = 0.
+#   for i in xrange(ebv_mn.shape[1]):
+#     A1 = f99_band_bv.A_X(r_v=pars[0], ebv=pars[1+i])
+#     vec = ebv_mn[:,i] - numpy.array([A1[0]-A1[1], A1[1]])
+#     term  = numpy.dot(vec, numpy.dot(ebv_icov[i], vec))
+#     ans -= 0.5 * term
+#   return ans
+
+# ndim, nwalkers = len(ebv_icov)+1, 2*(len(ebv_icov)+1)
+
+# p0 = [numpy.random.normal(0,0.1,size=ndim) * numpy.concatenate(([1],numpy.zeros(ndim-1)+0.05)) \
+#   +numpy.concatenate(([2.5],ebv_mn[0,:])) for i in range(nwalkers)]
+
+# sampler = emcee.EnsembleSampler(nwalkers, ndim, lnprob, args=[ebv_mn, ebv_icov])
+# sampler.run_mcmc(p0, 200)
+
+# plt.plot(sampler.chain[1,:,0])
+# samples = sampler.chain[:, 50:, :].reshape((-1, ndim))
+
+# wefwe
+
+import pystan
+
+data = {'D': len(ebv_cov),'obs': numpy.transpose(ebv_mn), 'obs_cov': ebv_cov}
+# print len(ebv_cov), ebv_mn.shape, data['obs_cov'].shape
+
+init1 = {'x0' : -0.01, 'x1': 2.5, 'ebv':ebv_mn[0,:]}#
+
+sm = pystan.StanModel(file='rv.stan')
+fit1 = sm.sampling(data=data, iter=1000, chains=4,init=[init1,init1,init1,init1])
+links = fit1.extract(('x1','x0'))
+rbv, mrbv, prbv= numpy.percentile([links['x1'],links['x0']],(50,50-34,50+34),axis=1)
+
+# # RV is calculated as a Monte Carlo, i.e RV is calculated for each link
+# coeffs = []
+# for i in xrange(ebv.shape[1]):
+#   coeffs.append(numpy.polyfit(ebv[0, i,:],ebv[1,i,:], 1))
+# coeffs = numpy.array(coeffs)
+
+# # the fit RV
+# rbv, mrbv, prbv= numpy.percentile(coeffs,(50,50-34,50+34),axis=0)
 
 # the fit EBV and AV
 ebvav_s = numpy.percentile(ebv,(50,50-34,50+34),axis=1)
@@ -119,15 +194,26 @@ ebvav_s = numpy.percentile(ebv,(50,50-34,50+34),axis=1)
 plt.errorbar(ebvav_s[0,0,:], ebvav_s[0,1,:], \
  xerr=(ebvav_s[0,0,:]-ebvav_s[1,0,:], ebvav_s[2,0,:]-ebvav_s[0,0,:]),\
  yerr=(ebvav_s[0,1,:]-ebvav_s[1,1,:], ebvav_s[2,1,:]-ebvav_s[0,1,:]),fmt='o',alpha=0.4,color='blue')
-plt.ylabel(r'$A_{V}+ const $')
-plt.xlabel(r'$E(B-V) + const$')
+plt.ylabel(r'$A_{V}$')
+plt.xlabel(r'$E(B-V)$')
 x = numpy.array([-0.15,0.45])
 plt.plot(x, rbv[1]+rbv[0]*x,label=r'$R_V={:6.2f}_{{-{:6.2f}}}^{{+{:6.2f}}}$'.format(rbv[0],rbv[0]-mrbv[0],prbv[0]-rbv[0]),color='black')
-plt.legend()
+rbvs = [1.9,2.4,3.1]
+for rbv in rbvs:
+  x=[]
+  y=[]
+  for ebv in numpy.arange(-0.15,0.5,0.02):
+    A1= f99_band.A_X(r_v=rbv, ebv=ebv)
+    x.append(A1[1]-A1[2])
+    y.append(A1[2])
+  plt.plot(x,y,label=r'$R^F_V={:6.1f}$'.format(rbv))
+plt.legend(loc=2)
+plt.xlim((-0.1,0.4))
 pp = PdfPages("output11/avebv.pdf")
 plt.savefig(pp,format='pdf')
 pp.close()
 plt.close()
+
 
 # Calculation of native RV
 rv=(fit['gamma'][:,2][:,None]*fit['k'] + fit['rho1'][:,2][:,None]*fit['R'])/ \
@@ -137,13 +223,26 @@ ebvav_r = numpy.percentile(rv,(50,50-34,50+34),axis=0)
 plt.errorbar(ebvav_s[0,0,:], ebvav_r[0,:], \
  xerr=(ebvav_s[0,0,:]-ebvav_s[1,0,:], ebvav_s[2,0,:]-ebvav_s[0,0,:]),\
  yerr=(ebvav_r[0,:]-ebvav_r[1,:],ebvav_r[2,:]-ebvav_r[0,:]),fmt='o',alpha=0.4)
+
+for rbv in rbvs:
+  x=[]
+  y=[]
+  for ebv in numpy.arange(-0.15,0.5,0.02):
+    A1= f99_band.A_X(r_v=rbv, ebv=ebv)
+    x.append(A1[1]-A1[2])
+    y.append(A1[2]/(A1[1]-A1[2]))
+  plt.plot(x,y,label=r'$R^F_V={:6.1f}$'.format(rbv))
+plt.xlim((-0.1,0.4))
 plt.ylabel(r'$R_{V} $')
-plt.xlabel(r'$E(B-V) + const$')
+plt.xlabel(r'$E(B-V)$')
 plt.ylim((-1,5))
+plt.legend(loc=4)
 pp = PdfPages("output11/rv.pdf")
 plt.savefig(pp,format='pdf')
 pp.close()
 plt.close()
+
+wefwe
 
 # Calculation of the weighted mean of RV for extreme blue and red samples
 w = ebvav_s[0,0,:] < -0.05
