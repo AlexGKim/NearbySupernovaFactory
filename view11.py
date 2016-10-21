@@ -109,18 +109,18 @@ for i in xrange(nsne):
 
 
 
-# figure = corner.corner(EW_obs,labels=[r"$EW_{Ca,o}$",r"$EW_{Si,o}$",r"$\lambda_{Si,o}$"])
-# for ax in figure.get_axes():
-#     for tick in ax.xaxis.get_major_ticks():
-#         tick.label.set_fontsize(18) 
-#     for tick in ax.yaxis.get_major_ticks():
-#         tick.label.set_fontsize(18)
-        
-# pp = PdfPages('output11/feature_corner.pdf')
-# plt.savefig(pp,format='pdf')
-# pp.close()
-# plt.close()
 
+figure = corner.corner(numpy.concatenate((EW_obs,sivel[:,None]),axis=1),labels=[r"$EW_{Ca,o}$",r"$EW_{Si,o}$",r"$\lambda_{Si,o}$"])
+for ax in figure.get_axes():
+    for tick in ax.xaxis.get_major_ticks():
+        tick.label.set_fontsize(18) 
+    for tick in ax.yaxis.get_major_ticks():
+        tick.label.set_fontsize(18)
+        
+pp = PdfPages('output11/feature_corner.pdf')
+plt.savefig(pp,format='pdf')
+pp.close()
+plt.close()
 
 
 (x, xmin, xmax) = numpy.percentile( ((fit['gamma'][:,1] - fit['gamma'][:,2])[:,None]*fit['k']),(50,50-34,50+34),axis=0)

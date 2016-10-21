@@ -409,6 +409,16 @@ plt.close()
 # plt.close()
 
 
+# plt.hist(((fit['gamma'][:,1]-fit['gamma'][:,2])[:,None]*fit['k'] + 
+#   (fit['gamma1'][:,1]-fit['gamma1'][:,2])[:,None]*fit['k1']).flatten(),normed=True,bins=20,
+#   label=r'$E(B-V)$')
+# plt.xlabel(r'Color Excess')
+# # plt.legend()
+# pp = PdfPages('output15/greg.pdf')
+# plt.savefig(pp,format='pdf')
+# pp.close()
+# plt.close()
+# wefe
 
 # plt.hist([(fit['gamma'][:,1]-fit['gamma'][:,2])[:,None]*fit['k'], (fit['gamma1'][:,1]-fit['gamma1'][:,2])[:,None]*fit['k1'], (fit['rho1'][:,1]-fit['rho1'][:,2])[:,None]*fit['R']],normed=True,bins=20,
 #     label=[r'$E_\gamma(B-V)$',r'$E_{\gamma_1}(B-V)$',r'$E_\delta(B-V)$'],range=(-0.1,0.4))

@@ -202,11 +202,7 @@ $(1-5\times10^{-5})$
 confidence.
 The two color parameters exhibit the behavior expected from the two-parameter
 \citet{1999PASP..111...63F} dust model, yielding a per-supernova scatter in
-total-to-selective extinction, an effective
-%-----
-$R^F_V \sim 2.4$
-%------
-for the full sample, and a difference in the average $R^F_V$ between extremely blue and red supernovae .  The derived dust law is able to reproduce the optical colors of the highly reddened SN~2014J better than the \citet{1999PASP..111...63F} dust model.
+total-to-selective extinction.  The derived dust law is able to reproduce the optical colors of the highly reddened SN~2014J better than the \citet{1999PASP..111...63F} dust model.
 Extending the model to three color parameters gives almost identical results for
 the two parameters
 plus a detection of a third parameter at  $>98$\% confidence; this new parameter is responsible for supernova color diversity
@@ -985,30 +981,50 @@ our Monte Carlo chains for $\gamma$ exceed 0 (see Figures~\ref{global1:fig}--\re
 influence of $k_0$ and $k_1$  on supernova magnitudes
 with probability $(1-5\times 10^{-5})$.
 
-Combining the effects of both parameters, we can define a total $X$-band extinction $A_X=\gamma^0_X k_0 + \gamma^1_X k_1$
-and a corresponding $E(B-V) = A_B-A_V$.  Figure~\ref{avebv:fig} shows the relationship between $A_V$ and $E(B-V)$, from
-which a linear fit gives a slope of $R_V=2.77^{+0.08}_{-0.09}$.  The fit also gives the zeropoint, which we use to 
-estimate $R_V=(A_V-zeropoint)/E(B-V)$ per supernova, shown in Figure~\ref{avebv:fig}.
-Extremely blue supernovae ($E(B-V) <-0.05$ on the plot) have an average $R_V=1.88 \pm   0.13$,
-whereas the extreme red objects ($E(B-V) >0.1$) have $R_V=  2.96 \pm   0.11$, indicating that different physical mechanisms
-operate in these regimes.
+
+\color{red}
+Recall that our model does not specify the color of a supernova that suffers no extrinsic effects, but rather sets the
+mean of $k_0$ and $k_1$ of the distribution to zero.
+There is an unconstrained $k_0^0$, $k_1^0$ that corresponds to an intrinsic supernova.  The true extinction is
+$A^T_X(k_0,k_1)= A_X(k_0,k_1) -  A_X(k^0_0,k^0_1)$ where $A_X(k_0,k_1) =  \gamma^0_X k_0 + \gamma^1_X k_1$.
+The true color excess is $E^T(B-V) = A^T_B-A^T_V$.
+Despite this ambiguity, a linear slope relating the $E^T(B-V)$ and $A^T_V$ for a set of supernova is the same slope
+relating $A_V$ and $E(B-V)$.
+\color{black}
+Figure~\ref{avebv:fig} shows the relationship between $A_V$ and $E(B-V)$, from
+which a linear fit gives a slope of $R_V=2.77^{+0.08}_{-0.09}$,
+\color{red}
+which is the observed broad-band total-to-selective extinction exhibited by our sample.
+In contrast, the quantity $R^F_V = A^F_V/E^F(B-V)$ for an individual supernova is unspecified without knowledge of the intrinsic color.
+For ta qualitative view, we choose $k_0$  and $k_1$ such that the bluest supernova roughly correspond to $E(B-V)=0$.
+With this ansatz, we
+estimate $R^T_V$ per supernova as shown in Figure~\ref{avebv:fig}.
+
+\color{black}
 
 \begin{figure}[htbp] %  figure placement: here, top, bottom, or page
    \centering
    \includegraphics[width=2.8in]{output11/avebv.pdf}
    \includegraphics[width=2.8in]{output11/rv.pdf}
-   \caption{Left: $A_V$ versus $E(B-V)$ and Right: $R_V=A_V/(E(B-V)-zeropoint$\
-   versus $E(B-V)$ for the supernova sample.
+   \caption{
+	\color{red}
+   Left: $A_V$ versus $E(B-V)$, and the slope $R_V$ of the linear fit to the data. Right: Shown for qualitative purposes,
+   $R^T_V=A^T_V/E^T(B-V)$ 
+   versus $E^T(B-V)$ for the supernova sample, given an ansatz for the definition of an intrinsic supernova.  Overplotted is the mean and standard deviation of those points in equally divided bins.
+   On both plots are overplotted the expected values for the \citetalias{1999PASP..111...63F} model
+   for specific choices of $R^F_V$, normalized to have $A_V=0$ at $E(B-V)=0$.  Note that these lines are not straight on the left plot, and are not constant on the plot to the right.
+   \color{black}
    \label{avebv:fig}}
 \end{figure}
+
 
 Until now we have considered $k_0$ and $k_1$ without association with any specific dust model, but they could be interpreted as
 parameters of a single  dust model.
 \color{red}
-Plotted in Figure~\ref{avebv:fig} are the expectations for measured $A(V)$, $E(B-V)$, and $R_V$ for $R^F_V=1.9, 2.4, 3.1$
+Plotted in Figure~\ref{avebv:fig} are the expectations for measured $A(V)$, $E(B-V)$, and $R^T_V$ for $R^F_V=1.1, 1.9, 2.5, 3.1$
 within the context of the \citetalias{1999PASP..111...63F} model.
 Note that for our broadband measurements, the relationship between $A(V)$ and $E(B-V)$ is subtly
-non-linear, and $R_V$ is not constant, for a fixed value of $R^F_V$.
+non-linear, and $R^T_V$ is not constant, for a fixed value of $R^F_V$.
 \color{black}
 
 The \citet{1989ApJ...345..245C} dust law can be expressed as a two-parameter linear model
@@ -1066,9 +1082,12 @@ The $\gamma^1$ terms capture the remaining magnitude variations due to the fact 
    \centering
    \includegraphics[width=2.8in]{output11/plane0.pdf}
    \includegraphics[width=2.8in]{output11/plane1.pdf}
-   \caption{Two different perspectives in $UVI$-space of the vectors $\gamma^i_X/(\gamma^i_B-\gamma^i_V)$ of our model (solid lines),
+   \caption{
+   \color{red}
+   Two different perspectives in $UVI$-space of the vectors $\gamma^i_X/(\gamma^i_B-\gamma^i_V)$ of our model (solid lines),
    and $a(X)$, $b(X)$ of the \citetalias{1999PASP..111...63F} model (dashed lines).  The combination $a(X)+b(X)/2.4$ is shown in the dot-dashed
-   line.
+   line, almost perfectly superimposed on $\gamma^0_X/(\gamma^0_B-\gamma^0_V)$.
+   \color{black}
    \label{plane:fig}}
 \end{figure}
 
@@ -1282,7 +1301,7 @@ b(X)
 \end{equation}
 where the residual vectors $\vec{\epsilon}$ are perpendicular to the  \citetalias{1999PASP..111...63F} plane and
 contribute similar 3\% and 4\% to the total  length of the vector.
-The effective total-to-selective extinction for the supernova sample has a slight shift to $R^F_V=2.23 \pm 0.16$.
+%The effective total-to-selective extinction for the supernova sample has a slight shift to $R^F_V=2.23 \pm 0.16$.
 
 \begin{table}
 \centering

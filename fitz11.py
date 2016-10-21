@@ -193,22 +193,23 @@ ebvav_s = numpy.percentile(ebv,(50,50-34,50+34),axis=1)
 
 plt.errorbar(ebvav_s[0,0,:], ebvav_s[0,1,:], \
  xerr=(ebvav_s[0,0,:]-ebvav_s[1,0,:], ebvav_s[2,0,:]-ebvav_s[0,0,:]),\
- yerr=(ebvav_s[0,1,:]-ebvav_s[1,1,:], ebvav_s[2,1,:]-ebvav_s[0,1,:]),fmt='o',alpha=0.4,color='blue')
+ yerr=(ebvav_s[0,1,:]-ebvav_s[1,1,:], ebvav_s[2,1,:]-ebvav_s[0,1,:]),fmt='o',alpha=0.4,color='orange')
 plt.ylabel(r'$A_{V}$')
 plt.xlabel(r'$E(B-V)$')
 x = numpy.array([-0.15,0.45])
 plt.plot(x, rbv[1]+rbv[0]*x,label=r'$R_V={:6.2f}_{{-{:6.2f}}}^{{+{:6.2f}}}$'.format(rbv[0],rbv[0]-mrbv[0],prbv[0]-rbv[0]),color='black')
-rbvs = [1.9,2.4,3.1]
-for rbv in rbvs:
+rbvs = [1.1,1.9,2.5,3.1]
+for rbv_ in rbvs:
   x=[]
   y=[]
   for ebv in numpy.arange(-0.15,0.5,0.02):
-    A1= f99_band.A_X(r_v=rbv, ebv=ebv)
+    A1= f99_band.A_X(r_v=rbv_, ebv=ebv)
     x.append(A1[1]-A1[2])
     y.append(A1[2])
-  plt.plot(x,y,label=r'$R^F_V={:6.1f}$'.format(rbv))
+  plt.plot(x,y,label=r'$R^F_V={:6.1f}$'.format(rbv_))
 plt.legend(loc=2)
 plt.xlim((-0.1,0.4))
+plt.ylim((-0.7,1.2))
 pp = PdfPages("output11/avebv.pdf")
 plt.savefig(pp,format='pdf')
 pp.close()
@@ -216,41 +217,65 @@ plt.close()
 
 
 # Calculation of native RV
-rv=(fit['gamma'][:,2][:,None]*fit['k'] + fit['rho1'][:,2][:,None]*fit['R'])/ \
-  ((fit['gamma'][:,1]-fit['gamma'][:,2])[:,None] * fit['k']+(fit['rho1'][:,1]-fit['rho1'][:,2])[:,None] * fit['R'])
+k0=-0.005
+R0=k0/2.5
+
+rv=(fit['gamma'][:,2][:,None]*(fit['k']-k0) + fit['rho1'][:,2][:,None]*(fit['R']-R0))/ \
+  ((fit['gamma'][:,1]-fit['gamma'][:,2])[:,None] * (fit['k']-k0)+(fit['rho1'][:,1]-fit['rho1'][:,2])[:,None] * (fit['R']-R0))
+
+ebv2=((fit['gamma'][:,1]-fit['gamma'][:,2])[:,None] * (fit['k']-k0)+(fit['rho1'][:,1]-fit['rho1'][:,2])[:,None] * (fit['R']-R0))
 
 ebvav_r = numpy.percentile(rv,(50,50-34,50+34),axis=0)
-plt.errorbar(ebvav_s[0,0,:], ebvav_r[0,:], \
- xerr=(ebvav_s[0,0,:]-ebvav_s[1,0,:], ebvav_s[2,0,:]-ebvav_s[0,0,:]),\
- yerr=(ebvav_r[0,:]-ebvav_r[1,:],ebvav_r[2,:]-ebvav_r[0,:]),fmt='o',alpha=0.4)
+ebvav2_s = numpy.percentile(ebv2,(50,50-34,50+34),axis=0)
 
+plt.errorbar(ebvav2_s[0,:], ebvav_r[0,:], \
+ xerr=(ebvav2_s[0,:]-ebvav2_s[1,:], ebvav2_s[2,:]-ebvav2_s[0,:]),\
+ yerr=(ebvav_r[0,:]-ebvav_r[1,:],ebvav_r[2,:]-ebvav_r[0,:]),fmt='o',alpha=0.3)
+
+xerr=(ebvav2_s[2,:]+ebvav2_s[1,:])/2
+yerr=(ebvav_r[2,:]+ebvav_r[1,:])/2
+so = numpy.argsort(ebvav2_s[0,:])
+so_split = numpy.array_split(so,15)
+bx=[]
+dbx=[]
+by=[]
+dby=[]
+
+for uso in so_split:
+  bx.append(numpy.sum(ebvav2_s[0,uso]/xerr[uso]**2)/numpy.sum(1./xerr[uso]**2))
+  # dbx.append(1./numpy.sqrt(numpy.sum(1./xerr[uso]**2)))
+  # by.append(numpy.sum(ebvav_r[0,uso]/yerr[uso]**2)/numpy.sum(1./yerr[uso]**2))
+  # dby.append(1./numpy.sqrt(numpy.sum(1./yerr[uso]**2)))  
+  by.append(numpy.mean(ebvav_r[0,uso]))
+  dby.append(numpy.std(ebvav_r[0,uso]))
+
+plt.errorbar(bx,by,yerr=[dby,dby], fmt='o', markersize='10',color='black',elinewidth=2)
 for rbv in rbvs:
   x=[]
   y=[]
-  for ebv in numpy.arange(-0.15,0.5,0.02):
+  for ebv in numpy.arange(-0.05,0.6,0.02):
     A1= f99_band.A_X(r_v=rbv, ebv=ebv)
     x.append(A1[1]-A1[2])
     y.append(A1[2]/(A1[1]-A1[2]))
   plt.plot(x,y,label=r'$R^F_V={:6.1f}$'.format(rbv))
-plt.xlim((-0.1,0.4))
-plt.ylabel(r'$R_{V} $')
-plt.xlabel(r'$E(B-V)$')
-plt.ylim((-1,5))
+plt.xlim((-0.02,0.45))
+plt.ylabel(r'$R^T_{V} $')
+plt.xlabel(r'$E^T(B-V)$')
+plt.ylim((-2,5))
 plt.legend(loc=4)
 pp = PdfPages("output11/rv.pdf")
 plt.savefig(pp,format='pdf')
 pp.close()
 plt.close()
 
-wefwe
 
 # Calculation of the weighted mean of RV for extreme blue and red samples
-w = ebvav_s[0,0,:] < -0.05
+w = ebvav2_s[0,:] < 0.05
 err = (ebvav_r[2,:]-ebvav_r[1,:])/2
 dum = ebvav_r[0,w]/err[w]**2
 dum2= 1/err[w]**2
 print '${:6.2f} \pm {:6.2f}$'.format(dum.sum()/dum2.sum(),1./numpy.sqrt(dum2.sum()))
-w = ebvav_s[0,0,:] > 0.1
+w = ebvav2_s[0,:] > 0.1
 err = (ebvav_r[2,:]-ebvav_r[1,:])/2
 dum = ebvav_r[0,w]/err[w]**2
 dum2= 1/err[w]**2
