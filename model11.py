@@ -44,6 +44,9 @@ sivel_renorm = sivel-sivel_mn
 data = {'D': nsne, 'N_mags': 5, 'N_EWs': 2, 'mag_obs': mag_renorm, 'EW_obs': EW_renorm, 'EW_cov': EW_cov, 'mag_cov':mag_cov, \
    'sivel_obs': sivel_renorm, 'sivel_err': sivel_err}
 
+# pystan.misc.stan_rdump(data, 'data.R')
+# wefew
+
 Delta_simplex = numpy.zeros(nsne-1)
 # Delta_simplex = numpy.zeros(nsne)+1./nsne
 # k_simplex = numpy.zeros(nsne)
@@ -76,12 +79,15 @@ init = [{'EW' : EW_renorm, \
          } \
         for _ in range(4)]
 
+pystan.misc.stan_rdump(init[0], 'init11.R')
+wefew
+
 sm = pystan.StanModel(file='gerard11.stan')
 control = {'stepsize':1}
-fit = sm.sampling(data=data, iter=10000, chains=4,control=control,init=init, thin=1)
+fit = sm.sampling(data=data, iter=20, chains=1,control=control,init=init, thin=1)
 
 
-output = open('temp11.pkl','wb')
+output = open('temp11_ll.pkl','wb')
 pickle.dump((fit.extract(),fit.get_sampler_params()), output, protocol=2)
 output.close()
 print fit

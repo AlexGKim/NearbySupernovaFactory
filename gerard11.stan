@@ -1,3 +1,5 @@
+#./gerard11 sample num_warmup=5000 num_samples=5000 data file=data.R init=init11.R output file=output11.csv refresh=1000
+
 data {
   int D;                // Number of supernovae
   int N_mags;
@@ -100,4 +102,15 @@ model {
     target += multi_normal_lpdf(EW_obs[d] | EW[d], EW_cov[d]);
   }
   target += (normal_lpdf(sivel_obs | sivel,sivel_err));
+}
+
+generated quantities {
+  real log_lik;
+  log_lik=0;
+  for (d in 1:D) {
+    log_lik = log_lik + normal_lpdf(mag_int_raw[d]| 0, 1);
+    log_lik = log_lik + multi_normal_lpdf(mag_obs[d] | mag_int[d]+gamma*k[d] + rho1*R[d], mag_cov[d]);
+    log_lik = log_lik + multi_normal_lpdf(EW_obs[d] | EW[d], EW_cov[d]);
+  }
+  log_lik = log_lik +  (normal_lpdf(sivel_obs | sivel,sivel_err));
 }

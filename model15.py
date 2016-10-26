@@ -121,12 +121,15 @@ init = [{'EW' : EW_renorm, \
          } \
         for _ in range(4)]
 
+pystan.misc.stan_rdump(init[0], 'init15.R')
+wefew
+
 sm = pystan.StanModel(file='gerard15.stan')
 control = {'stepsize':1}
 fit = sm.sampling(data=data, iter=10000, chains=4,control=control,init=init, thin=1)
 
 
-output = open('temp15.pkl','wb')
+output = open('temp15_ll.pkl','wb')
 pickle.dump((fit.extract(),fit.get_sampler_params()), output, protocol=2)
 output.close()
 print fit
