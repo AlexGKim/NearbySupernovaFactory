@@ -74,6 +74,7 @@ c_n = []
 cs = []
 for s in ['gamma','rho1']:
   c, cmin, cmax = numpy.percentile(fit[s]/((fit[s][:,1]-fit[s][:,2])[:,None]),(50,50-34,50+34),axis=0)
+  print c
   cs.append(c)
   c_norm = numpy.linalg.norm(c)
   c_n.append(c_norm)
@@ -84,6 +85,8 @@ for s in ['gamma','rho1']:
   tmat.append(ans)
   ans = c-ans[0]*dAdebv - ans[1]*dAdAv
   res.append(ans)
+
+wefew
 
 tmat = numpy.array(tmat)
 res= numpy.array(res)
