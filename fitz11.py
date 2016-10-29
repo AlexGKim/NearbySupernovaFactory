@@ -217,13 +217,18 @@ plt.close()
 
 
 # Calculation of native RV
-k0=-0.005
-R0=k0/2.5
+ebv0=-0.080
+av0=-0.155
 
-rv=(fit['gamma'][:,2][:,None]*(fit['k']-k0) + fit['rho1'][:,2][:,None]*(fit['R']-R0))/ \
-  ((fit['gamma'][:,1]-fit['gamma'][:,2])[:,None] * (fit['k']-k0)+(fit['rho1'][:,1]-fit['rho1'][:,2])[:,None] * (fit['R']-R0))
 
-ebv2=((fit['gamma'][:,1]-fit['gamma'][:,2])[:,None] * (fit['k']-k0)+(fit['rho1'][:,1]-fit['rho1'][:,2])[:,None] * (fit['R']-R0))
+ebv2=((fit['gamma'][:,1]-fit['gamma'][:,2])[:,None] * (fit['k'])+(fit['rho1'][:,1]-fit['rho1'][:,2])[:,None] * (fit['R']))
+ebv2 = ebv2-ebv0
+
+av=(fit['gamma'][:,2][:,None]*(fit['k']) + fit['rho1'][:,2][:,None]*(fit['R']))
+
+av = av-av0
+
+rv=av/ebv2
 
 ebvav_r = numpy.percentile(rv,(50,50-34,50+34),axis=0)
 ebvav2_s = numpy.percentile(ebv2,(50,50-34,50+34),axis=0)
@@ -241,15 +246,15 @@ dbx=[]
 by=[]
 dby=[]
 
-for uso in so_split:
-  bx.append(numpy.sum(ebvav2_s[0,uso]/xerr[uso]**2)/numpy.sum(1./xerr[uso]**2))
-  # dbx.append(1./numpy.sqrt(numpy.sum(1./xerr[uso]**2)))
-  # by.append(numpy.sum(ebvav_r[0,uso]/yerr[uso]**2)/numpy.sum(1./yerr[uso]**2))
-  # dby.append(1./numpy.sqrt(numpy.sum(1./yerr[uso]**2)))  
-  by.append(numpy.mean(ebvav_r[0,uso]))
-  dby.append(numpy.std(ebvav_r[0,uso]))
+# for uso in so_split:
+#   bx.append(numpy.sum(ebvav2_s[0,uso]/xerr[uso]**2)/numpy.sum(1./xerr[uso]**2))
+#   # dbx.append(1./numpy.sqrt(numpy.sum(1./xerr[uso]**2)))
+#   # by.append(numpy.sum(ebvav_r[0,uso]/yerr[uso]**2)/numpy.sum(1./yerr[uso]**2))
+#   # dby.append(1./numpy.sqrt(numpy.sum(1./yerr[uso]**2)))  
+#   by.append(numpy.mean(ebvav_r[0,uso]))
+#   dby.append(numpy.std(ebvav_r[0,uso]))
 
-plt.errorbar(bx,by,yerr=[dby,dby], fmt='o', markersize='10',color='black',elinewidth=2)
+# plt.errorbar(bx,by,yerr=[dby,dby], fmt='o', markersize='10',color='black',elinewidth=2)
 for rbv in rbvs:
   x=[]
   y=[]

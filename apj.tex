@@ -3,6 +3,7 @@
 \geometry{letterpaper}                   		% ... or a4paper or a5paper or ... 
 \usepackage{graphicx}				% Use pdf, png, jpg, or eps§ with pdflatex; use eps in DVI mode
 \usepackage{amsmath}
+\usepackage{amssymb}
 \usepackage{natbib}
 \usepackage{lineno}
 \usepackage{color}
@@ -574,7 +575,11 @@ Unlike the parameters associated with
 the spectral measurements, $EW_{Ca}$, $EW_{Si}$ and $\lambda_{Si}$,  the latent
 parameters $k_0$ and $k_1$ are not directly associated
 with observables but are rather drawn from the set of peak magnitudes.
-The model is written as
+The model 
+\color{red}
+likelihood
+\color{black}
+is written as
 \begin{equation}
 \begin{pmatrix}
 U\\B\\V\\R\\I
@@ -992,14 +997,23 @@ Despite this ambiguity, a linear slope relating the $E^T(B-V)$ and $A^T_V$ for a
 relating $A_V$ and $E(B-V)$.
 \color{black}
 Figure~\ref{avebv:fig} shows the relationship between $A_V$ and $E(B-V)$, from
-which a linear fit gives a slope of $R_V=2.77^{+0.08}_{-0.09}$,
+which a linear fit gives a slope of $R_V=2.77^{+0.08}_{-0.09}$.
 \color{red}
-which is the observed broad-band total-to-selective extinction exhibited by our sample.
-In contrast, the quantity $R^F_V = A^F_V/E^F(B-V)$ for an individual supernova is unspecified without knowledge of the intrinsic color.
-For ta qualitative view, we choose $k_0$  and $k_1$ such that the bluest supernova roughly correspond to $E(B-V)=0$.
-With this ansatz, we
-estimate $R^T_V$ per supernova as shown in Figure~\ref{avebv:fig}.
+The full set of supernovae does not coincide with the expectations of a single linear law; the supernova population rather appears to be peaked
+on a ridge line, and having a tail distributed below.  That is, for a fixed color excess, the amount of $V$-band extinction is bounded above
+but can have values that extend toward lower values.
 
+The quantity $R^F_V = A^F_V/E^F(B-V)$ for an individual supernova is unspecified without knowledge of the intrinsic color.
+For a qualitative view, we choose the zeros for $V$-band extinction and color-excess such that the bluest supernova roughly correspond to $E(B-V)=0$,
+$A_V=0$, and such that the ridge line is close to flat.
+With this ansatz, we
+estimate $R^T_V$ per supernova as shown in Figure~\ref{avebv:fig}, with the expectations of the
+ \citetalias{1999PASP..111...63F} model for fixed $R^F_V$ overplotted.
+With this choice of zeropoints, the ridge line corresponds to $R_V^F\lesssim 2.5$, and even lower values of $R_V^F$ below the ridge line.
+We emphasize that the shape of the locus in this plot (though not the relative positions of the points)  and the flatness
+of the ridge line is specific to our choice of zeropoints, and that our model does not specify the zeropoints.
+A specification of per-supernova $R_V$ requires a model that can identify supernovae that suffer no extrinsic effects,
+for example by modeling  a constraining distribution for the extrinsic parameters \citep{2016arXiv160904470M}.
 \color{black}
 
 \begin{figure}[htbp] %  figure placement: here, top, bottom, or page
@@ -1010,7 +1024,8 @@ estimate $R^T_V$ per supernova as shown in Figure~\ref{avebv:fig}.
 	\color{red}
    Left: $A_V$ versus $E(B-V)$, and the slope $R_V$ of the linear fit to the data. Right: Shown for qualitative purposes,
    $R^T_V=A^T_V/E^T(B-V)$ 
-   versus $E^T(B-V)$ for the supernova sample, given an ansatz for the definition of an intrinsic supernova.  Overplotted is the mean and standard deviation of those points in equally divided bins.
+   versus $E^T(B-V)$ for the supernova sample, given an ansatz for the definition of an intrinsic supernova. 
+   %Overplotted is the mean and standard deviation of those points in equally divided bins.
    On both plots are overplotted the expected values for the \citetalias{1999PASP..111...63F} model
    for specific choices of $R^F_V$, normalized to have $A_V=0$ at $E(B-V)=0$.  Note that these lines are not straight on the left plot, and are not constant on the plot to the right.
    \color{black}
@@ -1251,11 +1266,15 @@ absolute magnitudes:
 each supernova has an intrinsic $D$ parameter that is linearly related to
 absolute magnitudes through global coefficients $\delta$.  As with $k_0$ and $k_1$,  $D$ is a latent supernova parameter whose existence is inferred from
 its effects on broadband magnitudes.
-Although
-this term is introduced as part of the  absolute rather than observed magnitudes,
-practically identical results are obtained when it is placed alongside the extrinsic $\gamma k$ terms.  Despite this
-degeneracy, for convenience this term is referred to as ``intrinsic''.
 
+\color{red}
+The $\delta D$ terms contribute to the mean of the Normal distribution in Eqn.~\ref{ewsiv:eqn}, together with the spectral-feature terms:
+it is for this reason that for convenience these terms are referred to as ``intrinsic''.
+However, we emphasize now that we have also run the alternative case  of placing the
+$\delta D$ terms in mean of the Normal distribution in Eqn.~\ref{dust:eqn}, i.e.\ as extrinsic contributions.
+Analyses of the two different models give practically identical results, meaning that data are not constraining enough
+to identify $\delta D$ as being physically intrinsic or extrinsic.
+\color{black}
 
 To constrain the new degrees of freedom and degeneracies inherent in the model we impose that
 $D+1/N$ be a simplex to break the 
@@ -1457,10 +1476,22 @@ with the expectation of dust considering the spatial distribution of supernovae 
    \label{ebv:fig}}
 \end{figure}
 The significance of the $\delta$ parameters is shown pictorially.
-Figure~\ref{deltacorner:fig} shows the $\delta$ posteriors, which are bimodal due to the $\pm$ sign degeneracy.  The probability
+Figure~\ref{deltacorner:fig} shows the $\delta$ posteriors, which are bimodal due to the $\pm$ sign degeneracy.
+\color{red}
+Recall that fixing $\delta_X=0$ reverts this model into the two external-parameter model of \S\ref{model:sec}.
+\color{black}
+The probability
 of the null result $\delta_X=0$ for all $X$ is $<98\%$, as determined through
 the population of its bin in a 5-dimensional histogram.
-Figure~\ref{deltaratio:fig} shows  values of $\delta_X/\delta_I-1$ that  have significant non-zero values.   An interesting feature
+Figure~\ref{deltaratio:fig} shows  values of $\delta_X/\delta_I-1$ that  have significant non-zero values. 
+\color{red}
+While the signal of the internal parameter is strong within the context of this model, ``model testing'' (comparing the
+performance  between this model
+and that of \S\ref{model:sec}), is challenging for Bayesian Monte Carlo analysis.  Evidence calculations are planned
+for the next generation of STAN and the development of robust algorithms is a subject of theoretical work.
+\color{black}
+
+An interesting feature
 is that the shift in magnitude is not monotonic in wavelength, but rather decreases from $U$ to $V$, and then increases from $V$
 to $I$.
 These are not the behaviors expected from normal dust,
@@ -1500,7 +1531,6 @@ Cor(\Delta, EW_{Ca}, EW_{Si}, \lambda_{Si}, E_{\gamma^0}(B-V), E_{\gamma^1}(B-V)
 \end{multline}
 The intrinsic parameter $A_{\delta I}$ has correlations $<0.05$ with respect to all the other parameters, including those attributed
 to extrinsic dust.
-
 
 \section{Summary and Discussion}
 \label{discussion:sec}
@@ -1716,7 +1746,12 @@ The $\lambda_{Si}$ treated in this article varies linearly with $v_{Si}$.
 The values of $\eta$ in this article are consistent with zero.  $EW_{Ca}$ and $EW_{Si}$ have a significant effect on color,
 and in turn $\lambda_{Si}$ is correlated with $EW_{Ca}$.
 Removing from our model the dependence on equivalent widths (eliminating the  $\alpha$ and $\beta$ parameters), we recover
-non-zero $\eta$ values at  $\gtrsim 2\sigma$.  We conclude that $v_{Si}$ is correlated with color, 
+non-zero $\eta$ values at  $\gtrsim 2\sigma$.
+\color{red}
+The Ca and Si responsible for the equivalent widths and wavelength of our selected spectral features
+are expected to be produced together in the thermonuclear burning into intermediate mass elements.
+\color{black}
+We conclude that $v_{Si}$ is correlated with color, 
 but this correlation
 is absorbed into the equivalent-width corrections, which give higher likelihood as they give lower residual dispersions $C_c$.
 
@@ -1769,16 +1804,18 @@ Although the $D$ parameter has ben referred to as ``intrinsic'', do to its place
 of the $k$ parameters with those of extrinsic two-parameter dust models, the analysis cannot quantitatively distinguish
 whether its origin is intrinsic or due to a third dust parameter or some other extrinsic effect.
 
-
 \subsection{Improving SNe~Ia as Standard Candles}
 The model and results presented here
 carry information on the calibration of absolute magnitude.  The grey parameter $\Delta$ represents Hubble residuals after
 application of the model, and its  $0.10$ mag dispersion has contributions from intrinsic dispersion, peculiar velocities, and
-measurement uncertainties.  It is also subject to overtraining.
-The  analysis of this article was intended to model the color behavior of supernovae in our dataset.
-A new analysis insensitive to overtraining is required to robustly determine how
-well this model can be used to measure supernova distances.
-
+measurement uncertainties.
+\color{red}
+The purpose of this analysis was designed to mine information from the SNfactory data set, and so the results presented here
+are specific to it both in terms of its population distribution and potentially noise.  This is the approach taken by previous
+exploratory work.
+A new analysis that explicitly measures out-of-sample performance is required to robustly determine how
+well the addition of third parameter inferred from supernova magnitudes can be used to measure supernova distances.
+\color{black}
 
 \acknowledgments
 We thank the STAN team for providing the statistical tool without which this analysis would not have been possible,
