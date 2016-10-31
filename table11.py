@@ -57,6 +57,14 @@ dum/= len(fit['L_Omega'])
 print "average L_Omega"
 print " \\\\\n".join([" & ".join(map('{0:.4f}'.format, line)) for line in dum])
 
+dum = numpy.zeros((5,5))
+for x1 in fit['L_Omega']:
+    dum= dum+ numpy.dot(x1,x1.T)
+
+dum/= len(fit['L_Omega'])
+print "average correlation"
+print " \\\\\n".join([" & ".join(map('{0:.2f}'.format, line)) for line in dum])
+
 trans = [[1.,0,-1,0,0],[0.,1,-1,0,0],[0.,0,1,-1,0],[0.,0,1,0,-1]]
 trans = numpy.array(trans)
 
