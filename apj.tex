@@ -908,6 +908,21 @@ C_c(U,B,V,R,I)=
  \end{pmatrix} \text{mag}^2.
  \label{mag_cov:eqn}
  \end{equation}
+\color{red}
+The average correlation matrix is
+\begin{equation}
+Cor(U,B,V,R,I)=
+\begin{pmatrix}
+\begin{array}{rrrrr}
+1.00 & 0.43 & -0.17 & -0.06 & 0.10 \\
+0.43 & 1.00 & 0.24 & -0.09 & -0.41 \\
+-0.17 & 0.24 & 1.00 & 0.09 & -0.22 \\
+-0.06 & -0.09 & 0.09 & 1.00 & 0.25 \\
+0.10 & -0.41 & -0.22 & 0.25 & 1.00
+\end{array}
+ \end{pmatrix}.
+ \end{equation}
+ \color{black}
 The  covariance of the colors $U-V$, $B-V$, $V-R$, and $V-I$ is
 expressed as the standard deviations and
  correlation matrix
@@ -1092,7 +1107,14 @@ b(X)
 \vec{\epsilon}_b
 \end{pmatrix},
 \end{equation}
-where the two residual $\vec{\epsilon}$ vectors are perpendicular to both $a(X)$ and $b(X)$ and
+where the two residual vectors are
+\color{red}
+\begin{align}
+\vec{\epsilon}_a &=\{0.14, -0.15, -0.07,  0.04, 0.07\}, \\
+\vec{\epsilon}_b & =\{0.12, -0.06, -0.30, 0.30, -0.06\}:
+\end{align}
+\color{black}
+both are perpendicular to $a(X)$ and $b(X)$ and
 contribute  3\% and 4\% respectively to the total  length of the $\gamma$ vectors.
 This result indicates that
 the allowed variation of $UBVRI$ allowed by the \citetalias{1999PASP..111...63F} model and our best-fit model are almost identical.
@@ -1336,7 +1358,14 @@ b(X)
 \vec{\epsilon}_b
 \end{pmatrix},
 \end{equation}
-where the residual vectors $\vec{\epsilon}$ are perpendicular to the  \citetalias{1999PASP..111...63F} plane and
+where the residual vectors 
+\color{red}
+\begin{align}
+\vec{\epsilon}_a &=\{0.13, -0.15, -0.07,  0.04,  0.06\},\\
+\vec{\epsilon}_b &=\{ 0.10, -0.04,  -0.28,  0.31, -0.09\}
+\end{align}
+\color{black}
+are perpendicular to the  \citetalias{1999PASP..111...63F} plane and
 contribute similar 3\% and 4\% to the total  length of the vector.
 %The effective total-to-selective extinction for the supernova sample has a slight shift to $R^F_V=2.23 \pm 0.16$.
 

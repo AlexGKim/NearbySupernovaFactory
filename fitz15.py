@@ -62,6 +62,8 @@ res= numpy.array(res)
 #print the matrix and the residues
 print tmat
 print numpy.linalg.norm(res,axis=1)/numpy.array(c_n)
+print res
+
 
 # The matrix to transform the per-SN parameters from gamma to fitzpatrick
 # A= gamma0 k0 + gamma1 k1 = ans00 F0 k0 + ans01 F1 k0 + ans10 F0 k1 + ans11 F1 k1 
