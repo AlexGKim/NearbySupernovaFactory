@@ -53,7 +53,9 @@ eta = numpy.array([-0.0002,0,0.0005,0.0005,-0.0003])
 delta = numpy.array([-0.737, 0.129,1.961,0.598,-2.545])
 gamma = numpy.array([62.5,50.7,37.7,28.9,20.6])
 gamma1 = numpy.array([-9.93,-11.8,-14.2,-13.4,-12.1])
-sigma = numpy.array([0.06,0.03,0.02,0.01,0.04])
+cov =numpy.array([[0.0038, 0.001,-0.0002,0,0.0003],[0.001,0.0011,0.0002,0.,-0.0006],[-0.0002,0.0002,0.0004,0,-0.0002],\
+   [0,0,0,0.0002,0.0002],[0.0003,-0.0006,-0.0002,0.0002,0.002]])
+
 
 EW = numpy.array(EW_renorm)
 sivel = numpy.array(sivel_renorm)
@@ -66,8 +68,7 @@ mn = Delta[:,None] + alpha[None,:] * EW[:,0][:,None] + \
 
 intrinsic=[]
 for i in xrange(nsne):
-   e = numpy.random.normal(0,1,size=5)
-   intrinsic.append(mn[i,:] + e*sigma)
+   intrinsic.append(numpy.random.multivariate_normal(mn[i,:],cov))
 
 intrinsic = intrinsic + gamma[None,:]*k0[:,None] + gamma1[None,:]*k1[:,None]
 mag_obs=[]
@@ -82,10 +83,10 @@ mag_obs=numpy.array(mag_obs)
 EW_obs=numpy.array(EW_obs)
 sivel_obs = numpy.array(sivel_obs)
 
-data = {'D': nsne, 'N_mags': 5, 'N_EWs': 2, 'mag_obs': mag_renorm, 'EW_obs': EW_renorm, 'EW_cov': EW_cov, 'mag_cov':mag_cov, \
-   'sivel_obs': sivel_renorm, 'sivel_err': sivel_err}
+data = {'D': nsne, 'N_mags': 5, 'N_EWs': 2, 'mag_obs': mag_obs, 'EW_obs': EW_obs, 'EW_cov': EW_cov, 'mag_cov':mag_cov, \
+   'sivel_obs': sivel_obs, 'sivel_err': sivel_err}
 
 
 output = open('simdata.pkl','wb')
-pickle.dump((fit.extract(),fit.get_sampler_params()), output, protocol=2)
+pickle.dump(data, output, protocol=2)
 output.close()

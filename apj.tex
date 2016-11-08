@@ -283,9 +283,14 @@ early in their temporal evolution, so that well over a hundred of these supernov
 peak brightness.  This dataset provides a homogenous sample with which to study SN~Ia colors and spectral features together.
 
 In this article we use the idea that spectral indicators carry information on intrinsic supernova colors at peak magnitude.
-We allow for three independent color parameters, one attributed to intrinsic supernova
-properties and two  attributed to
-extrinsic processes, which we attribute to dust.  The data used in this analysis are described in \S\ref{data:sec}.
+\color{red}
+This approach is taken by \citet{2011A&A...529L...4C}, who find that after standardization based on Ca and Si features, remaining residual color
+variation is consistent with Milky Way dust laws.
+We accommodate  three independent color parameters: the model is constructed such that one is attributed to intrinsic supernova
+properties and the two others to
+extrinsic processes that are attributed to dust.
+\color{black}
+The data used in this analysis are described in \S\ref{data:sec}.
 In \S\ref{model:sec} we present a
 first analysis with two extrinsic parameters and omitting the intrinsic parameter.  The properties of the two extrinsic parameters
 are consistent with the expectations of parameterized dust designed for the Milky Way, and do an excellent job of fitting the data of the out-of-sample
@@ -643,6 +648,12 @@ the different initial and boundary conditions for $\gamma^0_0$ and $\gamma^1_0$ 
 otherwise identical initial conditions for $\gamma^0$, $\gamma^1$ produce indistinguishable posteriors
 with relatively broad credible intervals and lower maximum likelihood.
 
+
+\color{red}
+For $N$ supernovae there are $8N$ observables.  For the top-level model parameters, there are $3N$ spectral parameters, $2(N-2)$
+color parameters, $(N-1)$ magnitude offsets,  $5 \times 6$ global coefficients, and $10$ parameters that describe the intrinsic
+$C_c$.  For $N=168$ supernovae, there are 1344 observables and 1043 top-level parameters.
+\color{black}
 
 Having the intrinsic dispersion, $C_c$, as fit parameters seemingly introduces degeneracy in the model, as magnitude and color variation
 ascribed to $\Delta$, $\gamma^0 k_0$, and $\gamma^1 k_1$ could also be attributed to intrinsic dispersion.  There are several features of the model
@@ -1014,7 +1025,9 @@ relating $A_V$ and $E(B-V)$.
 Figure~\ref{avebv:fig} shows the relationship between $A_V$ and $E(B-V)$, from
 which a linear fit gives a slope of $R_V=2.77^{+0.08}_{-0.09}$.
 \color{red}
-The full set of supernovae does not coincide with the expectations of a single linear law; the supernova population rather appears to be peaked
+The slope uncertainties are the $68$\% credible interval from the Bayesian analysis and does not incorporated goodness
+ of fit.  Indeed,
+the full set of supernovae does not coincide with the expectations of a single linear law; the supernova population rather appears to be peaked
 on a ridge line, with a tail distributed below.  That is, for a fixed color excess, the amount of $V$-band extinction is bounded above
 but can have values that extend toward lower values.
 
@@ -1127,7 +1140,10 @@ The left plot shows that none of the four vectors are closely aligned with anoth
 the planes defined by our model (solid lines) and the  \citetalias{1999PASP..111...63F} model (dashed lines) are nearly coplanar.
 If $R^F_V=2.4$ were constant in our sample, then $A_X = A_V\left(a(X) + \frac{b(X)}{2.4}\right)$;  this combination of $a$ and $b$ is
 almost perfectly aligned with $\gamma^0_X/(\gamma^0_B-\gamma^0_V)$, as shown in the dot-dashed line.  
-The $\gamma^1$ terms capture the remaining magnitude variations due to the fact that $R^F_V$ is not constant in the sample.
+The $\gamma^1$ terms capture the remaining magnitude variations due to the fact that $R^F_V$ is not constant in the sample:
+if the $\gamma$'s are due to  \citetalias{1999PASP..111...63F} dust, the only way our analysis could recover
+both $\gamma^0$ and $\gamma^1$ is for there to be variation in $R^F_V$.
+
 
 \begin{figure}[htbp] %  figure placement: here, top, bottom, or page
    \centering
@@ -1306,6 +1322,14 @@ absolute magnitudes:
 each supernova has an intrinsic $D$ parameter that is linearly related to
 absolute magnitudes through global coefficients $\delta$.  As with $k_0$ and $k_1$,  $D$ is a latent supernova parameter whose existence is inferred from
 its effects on broadband magnitudes.
+
+
+\color{red}
+For $N$ supernovae there are $8N$ observables.  For the top-level model parameters, there are $3N$ spectral parameters, $3(N-2)$
+color parameters, $(N-1)$ magnitude offsets,  $5 \times 7$ global coefficients, and $10$ parameters that describe the intrinsic
+$C_c$.  For $N=168$ supernovae, there are 1344 observables and 1214 top-level parameters.
+\color{black}
+
 
 \color{red}
 The $\delta D$ terms contribute to the mean of the Normal distribution in Eqn.~\ref{ewsiv:eqn}, together with the spectral-feature terms:
@@ -1578,6 +1602,44 @@ Cor(\Delta, EW_{Ca}, EW_{Si}, \lambda_{Si}, E_{\gamma^0}(B-V), E_{\gamma^1}(B-V)
 \end{multline}
 The intrinsic parameter $A_{\delta I}$ has correlations $<0.05$ with respect to all the other parameters, including those attributed
 to extrinsic dust.
+
+\color{red}
+The per-supernova color parameters are not strongly correlated,
+\begin{equation}
+Cor(k_0, k_1, D) =
+\begin{pmatrix}
+\begin{array}{rrr}
+1.00 & 0.06 & -0.01 \\
+0.06 & 1.00 & 0.00 \\
+-0.01 & 0.00 & 1.00
+\end{array}
+\end{pmatrix}.
+\end{equation}
+In particular, the Pearson correlation coefficients between the ``intrinsic'' $D$ and ``extrinsic'' $k$ parameters are $-0.01$ and $0.00$.
+So while in principle a single physical color effect can affect both intrinsic and extrinsic parameters, from the correlations
+there is no evidence
+that this occurs in our fits.
+
+
+The distributions for $\Delta$, $EW_{Ca}$, $EW_{Si}$, $\lambda_{Si}$, $E_{\gamma^0}(B-V)$, 
+$E_{\gamma^1}(B-V)$, and
+$E_{\delta}(B-V)$ for all Monte Carlo links for all supernovae are shown in Figure~\ref{perobject2:fig}.
+
+\begin{figure}[htbp] %  figure placement: here, top, bottom, or page
+   \centering
+   \includegraphics[width=5.5in]{output15/perobject_corner.pdf} 
+   \caption{
+   \color{red}
+   Distributions for the supernova parameters $\Delta$, $EW_{Ca}$, $EW_{Si}$, $\lambda_{Si}$, $E_{\gamma^0}(B-V)$,  $E_{\gamma^1}(B-V)$,  and $E_{\delta}(B-V)$, as well as the grey offset
+$\Delta$.  All Monte Carlo links are plotted, so that each supernova contributes a cloud of points.
+\color{black}
+   \label{perobject2:fig}}
+\end{figure}
+
+
+Our code is validated
+though the analysis of a simulated dataset: the input parameters are recovered within  uncertainties.
+\color{black}
 
 \section{Summary and Discussion}
 \label{discussion:sec}

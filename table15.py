@@ -93,6 +93,30 @@ print "standard deviations of E(B-V)"
 print numpy.std(fit['k']*((fit['gamma'][:,1]-fit['gamma'][:,2]))[:,None])
 print numpy.std(fit['R']*((fit['rho1'][:,1]-fit['rho1'][:,2]))[:,None])
 
+pars = ['gamma', 'gamma1','rho1']
+pars_n = ['\\gamma^0_X',  '\\gamma^1_X', '\\delta_X']
+sigfig = [3,3,3]
+for p,pn, s in zip(pars,pars_n,sigfig):
+    print '${}$'.format(pn)
+    for i in xrange(5):
+        print '&'
+        if pn[0] == 'R':
+            dum = numpy.percentile(fit[p][:,i]/(fit[p][:,1]-fit[p][:,2])[:,None],(50,50-34,50+34)) 
+        elif pn[0:2] == '{{':
+            dum = numpy.percentile(fit[p][:,i]/fit[p][:,4]-1,(50,50-34,50+34)) 
+        elif pn[0] == '{':
+            dum = numpy.percentile(fit[p][:,i]/fit[p][:,2]-1,(50,50-34,50+34)) 
+        else :
+            dum = numpy.percentile(fit[p][:,i],(50,50-34,50+34))            
+        print  '${1:6.{0}f}^{{+{2:6.{0}f}}}_{{{3:6.{0}f}}}$'.format(s,dum[0], dum[2]-dum[0],dum[1]-dum[0] )
+    print '\\\\'
+
+
+mega = numpy.array([fit['k'].flatten(),fit['k1'].flatten(),fit['R'].flatten()])
+dum = numpy.corrcoef(mega)
+print "k-D correlation coefficients"
+print " \\\\\n".join([" & ".join(map('{0:.2f}'.format, line)) for line in dum])
+
 
 
 pars = ['alpha','alpha','beta','beta','eta','eta','gamma','gamma','gamma1','gamma1','rho1','rho1','L_sigma']
@@ -128,6 +152,7 @@ mega = numpy.array([fit['Delta'].flatten(),fit['EW'][:,:,0].flatten(),fit['EW'][
 dum = numpy.corrcoef(mega)
 print "observable correlation coefficients"
 print " \\\\\n".join([" & ".join(map('{0:.2f}'.format, line)) for line in dum])
+
 
 
 # pars = ['gamma','rho1']
