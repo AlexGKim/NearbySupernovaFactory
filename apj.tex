@@ -610,7 +610,7 @@ U_o\\B_o\\ V_o\\R_o\\I_o\\EW_{Si, o}\\ EW_{Ca, o} \\ \lambda_{Si, o}
 \sim \mathcal{N}
 \left(
 \begin{pmatrix}
-U +\gamma^0_{1} k_0 +\gamma^1_{1} k_1 \\B +\gamma^0_{1} k_0 +\gamma^1_{1} k_1 \\
+U +\gamma^0_{1} k_0 +\gamma^1_{0} k_1 \\B +\gamma^0_{1} k_0 +\gamma^1_{1} k_1 \\
 V+\gamma^0_{2} k_0+\gamma^1_{2} k_1\\R+\gamma^0_{3} k_0 + \gamma^1_{3} k_1\\I+\gamma^0_{4} k_0+\gamma^1_{4} k_1\\
 EW_{Si}\\ EW_{Ca} \\ \lambda_{Si}
 \end{pmatrix}
@@ -672,6 +672,22 @@ This covariance matrix prior is recommended by STAN, the Monte Carlo we use to e
  We find that imposing a stricter assumption of a
  diagonal covariance matrix, with no reference to a correlation matrix with LKJ prior, produces little change in the posteriors of
  the other parameters.
+
+\color{blue}
+There remains degeneracies in the model.  One is illustrated by the  transformations $\Delta \rightarrow \Delta  + \epsilon_\Delta$,
+ $\gamma^0 \rightarrow \gamma^0  + \epsilon_{\gamma^0}$, $\gamma^1 \rightarrow \gamma^1 + \epsilon_{\gamma^1}$under the condition
+$$
+\epsilon_\Delta  +  \epsilon_{\gamma^0} k_0+  \epsilon_{\gamma^1} k_1=0,
+$$
+i.e.\ shifts in the global coefficients $\gamma$ can be compensated by shifts in $\Delta$ for each supernova while maintaining 
+$\langle \Delta \rangle=0$.
+Another degeneracy is illustrated by $k_0 \rightarrow k_0 + (EW_{Ca}-\langle EW_{Ca}\rangle)\epsilon$,
+$\alpha \rightarrow \alpha - \gamma \epsilon$, $c \rightarrow c + \langle EW_{Ca}\rangle \epsilon$, i.e. the
+linear external terms can leak into the linear spectral feature corrections.
+These degeneracies are not broken within the model, but rather are constrained by the priors, for which the
+per-supernova parameters
+$\Delta$, $EW$, $\lambda$, $k$ are uncorrelated.
+\color{black}
 
 \subsection{Results}
 \label{results:sec}
@@ -876,7 +892,7 @@ to  within one standard deviation.
 The effect of spectral parameters on color is shown in the rows of $\alpha_X/\alpha_V-1$,  $\beta_X/\beta_V-1$, and  $\eta_X/\eta_V-1$
 in Table~\ref{global:tab}:
 values of zero signify no color changes associated with magnitude changes.
-Both $EW_{Ca}$ and $EW_{Ca}$ are associated with color changes, though not in $B-V$ specifically.
+Both $EW_{Ca}$ and $EW_{Si}$ are associated with color changes, though not in $B-V$ specifically.
 We do not detect a significant association between
 $\lambda_{Si}$ and color.
 
@@ -1036,7 +1052,7 @@ For a qualitative view, we choose the zeros for $V$-band extinction and color-ex
 $A_V=0$, and such that the ridge line is close to constant.
 With this ansatz, we
 estimate $R^T_V$ per supernova shown in Figure~\ref{avebv:fig}, with the expectations of the
- \citetalias{1999PASP..111...63F} model for fixed $R^F_V$ overplotted.
+ \citet{1999PASP..111...63F} (hereafter referred to as \citetalias{1999PASP..111...63F})  model for fixed $R^F_V$ overplotted.
 With this choice of zeropoints, the ridge line corresponds to $R_V^F\lesssim 2.5$, and even lower values of $R_V^F$ below the ridge line.
 We emphasize that the shape of the locus in this plot (though not the relative positions of the points)  and the flatness
 of the ridge line is specific to our choice of zeropoints, and that our model does not specify the zeropoints.
@@ -1064,6 +1080,15 @@ for example by modeling  a constraining distribution for the extrinsic parameter
 Until now we have considered $k_0$ and $k_1$ without association with any specific dust model, but they could be interpreted as
 parameters of a single  dust model.
 \color{red}
+Our model for broadband photometry does not specify how spectral features and color parameters affect the supernova spectrum, information
+necessary to predict the magnitude extinction of dust models.
+\color{blue}
+The lack of correspondence between dust models and broadband extinction is quantified when we apply an $R^F_V=2.5$ SN-frame dust to the
+observed spectra used in our sample, to yield a distribution in the quantity $R_V=A_V/(A_B-A_V)$ with mean and standard deviation of $3.11 \pm 0.35$.
+While an accurate study of fundamental dust properties would incorporate the dust law within the model itself, we now proceed nonetheless
+in making a connection between our model outputs and dust.
+
+\color{red}
 Plotted in Figure~\ref{avebv:fig} are the expectations for measured $A(V)$, $E(B-V)$, and $R^T_V$ for $R^F_V=1.1, 1.9, 2.5, 3.1$
 within the context of the \citetalias{1999PASP..111...63F} model.
 Note that for our broadband measurements, the relationship between $A(V)$ and $E(B-V)$ is subtly
@@ -1074,7 +1099,7 @@ The \citet{1989ApJ...345..245C} dust law can be expressed as a two-parameter lin
 \begin{equation}
 A_X = a(X)  A_V + b(X) E(B-V).
 \end{equation}
-The \citet{1999PASP..111...63F} (hereafter referred to as \citetalias{1999PASP..111...63F}) model is approximately described by a linear model with
+The \citetalias{1999PASP..111...63F} model is approximately described by a linear model with
 the above form, with
 $a(U,B,V,R,I)=\{0.96,   1.00,   1.00,   0.97,   0.78\}$ and $b(U,B,V,R,I)=\{  1.64,   1.06,   0.16,  -0.40,  -0.52\}$ for the case of
 $R^F_V=2.5$
@@ -1157,6 +1182,8 @@ both $\gamma^0$ and $\gamma^1$ is for there to be variation in $R^F_V$.
    \color{black}
    \label{plane:fig}}
 \end{figure}
+
+
 
 \color{black}
 
@@ -1308,7 +1335,7 @@ U_o\\B_o\\ V_o\\R_o\\I_o\\EW_{Si, o}\\ EW_{Ca, o} \\ \lambda_{Si, o}
 \sim \mathcal{N}
 \left(
 \begin{pmatrix}
-U +\gamma^0_{1} k_0 +\gamma^1_{1} k_1 \\B +\gamma^0_{1} k_0 +\gamma^1_{1} k_1 \\
+U +\gamma^0_{0} k_0 +\gamma^1_{0} k_1 \\B +\gamma^0_{1} k_0 +\gamma^1_{1} k_1 \\
 V+\gamma^0_{2} k_0+\gamma^1_{2} k_1\\R+\gamma^0_{3} k_0 + \gamma^1_{3} k_1\\I+\gamma^0_{4} k_0+\gamma^1_{4} k_1\\
 EW_{Si}\\ EW_{Ca} \\ \lambda_{Si}
 \end{pmatrix}
