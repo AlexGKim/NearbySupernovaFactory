@@ -122,15 +122,20 @@ ax.legend(prop={'size':10})
 ax.set_xlabel(r'$U$')
 ax.set_ylabel(r'$V$')
 ax.set_zlabel(r'$I$')
+ax.xaxis.set_ticks(numpy.arange(-.5,1.1,.25))
+ax.yaxis.set_ticks(numpy.arange(-.8,.81,.4))
 ax.view_init(elev=2, azim=-114)
 pp = PdfPages("output11/plane0.pdf")
 plt.savefig(pp,format='pdf')
 pp.close()
 ax.view_init(elev=7, azim=-165)
+ax.yaxis.set_ticks(numpy.arange(-.75,.76,.25))
+ax.xaxis.set_ticks(numpy.arange(-.5,.76,.5))
 pp = PdfPages("output11/plane1.pdf")
 plt.savefig(pp,format='pdf')
 pp.close()
 plt.close()
+
 
 # Plot AV versus E(B-V) from the data
 

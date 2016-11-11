@@ -1047,9 +1047,12 @@ the full set of supernovae does not coincide with the expectations of a single l
 on a ridge line, with a tail distributed below.  That is, for a fixed color excess, the amount of $V$-band extinction is bounded above
 but can have values that extend toward lower values.
 
-The quantity $R^F_V = A^F_V/E^F(B-V)$ for an individual supernova is unspecified without knowledge of the intrinsic color.
-For a qualitative view, we choose the zeros for $V$-band extinction and color-excess such that the bluest supernova roughly correspond to $E(B-V)=0$,
-$A_V=0$, and such that the ridge line is close to constant.
+\color{blue}
+Our model alone cannot determine $R^T_V = A^T_V/E^T(B-V)$ for individual objects, as $k_0^0$ and $k_1^0$ are unconstrained.
+For a qualitative view, we choose zeros  such that the $V$-band extinction and color-excess of the bluest supernova roughly correspond to $E(B-V)=0$,
+$A_V=0$, and such that the ridge line 
+has close to constant $R^T_V$.
+\color{black}
 With this ansatz, we
 estimate $R^T_V$ per supernova shown in Figure~\ref{avebv:fig}, with the expectations of the
  \citet{1999PASP..111...63F} (hereafter referred to as \citetalias{1999PASP..111...63F})  model for fixed $R^F_V$ overplotted.
@@ -1100,13 +1103,13 @@ The \citet{1989ApJ...345..245C} dust law can be expressed as a two-parameter lin
 A_X = a(X)  A_V + b(X) E(B-V).
 \end{equation}
 The \citetalias{1999PASP..111...63F} model is approximately described by a linear model with
-the above form, with
-$a(U,B,V,R,I)=\{0.96,   1.00,   1.00,   0.97,   0.78\}$ and $b(U,B,V,R,I)=\{  1.64,   1.06,   0.16,  -0.40,  -0.52\}$ for the case of
-$R^F_V=2.5$
+the above form:
 \color{red}
-and $A^F_V=0.1$,
-for the measurement of the updated
-\citet{2007ApJ...663.1187H} SN~Ia template at $B$-band peak as seen through our synthetic passbands.
+for the case of
+$R^F_V=2.5$ and $A^F_V=0.1$,
+and the measurement of the updated
+\citet{2007ApJ...663.1187H} SN~Ia template at $B$-band peak as seen through our synthetic passbands,
+$a(U,B,V,R,I)=\{0.96,   1.00,   1.00,   0.97,   0.78\}$ and $b(U,B,V,R,I)=\{  1.64,   1.06,   0.16,  -0.40,  -0.52\}$ 
 \color{black}
 This linear approximation
 is good in the ranges of
@@ -1121,7 +1124,7 @@ A_X = \frac{\gamma^0_X}{\gamma^0_1-\gamma^0_2}  E_{\gamma^0}(B-V) +  \frac{\gamm
 \end{equation}
 \color{red}
 Our median-fit values for the $\gamma$ coefficients,
-$\frac{\gamma^0_X}{\gamma^0_1-\gamma^0_2}  =\{4.78,   3.88,   2.88,   2.21,   1.59\}$ and
+$\frac{\gamma^0_X}{\gamma^0_B-\gamma^0_V}  =\{4.78,   3.88,   2.88,   2.21,   1.59\}$ and
 $ \frac{\gamma^1_X}{\gamma^1_B-\gamma^1_V}=\{-3.85,   -4.69,   -5.69,  -5.33,  -4.77\}$,
 \color{black}
 can expressed in terms of the $a(X)$ and $b(X)$ vectors:
@@ -1164,7 +1167,11 @@ and $a(X)$, $b(X)$ of the \citetalias{1999PASP..111...63F} model.
 The left plot shows that none of the four vectors are closely aligned with another, while the right plot shows that
 the planes defined by our model (solid lines) and the  \citetalias{1999PASP..111...63F} model (dashed lines) are nearly coplanar.
 If $R^F_V=2.4$ were constant in our sample, then $A_X = A_V\left(a(X) + \frac{b(X)}{2.4}\right)$;  this combination of $a$ and $b$ is
-almost perfectly aligned with $\gamma^0_X/(\gamma^0_B-\gamma^0_V)$, as shown in the dot-dashed line.  
+almost perfectly aligned with $\gamma^0_X/(\gamma^0_B-\gamma^0_V)$, as shown in the dot-dashed line. 
+\color{blue}
+Note that the specific directions of $\gamma^0$ and
+ $\gamma^1$  within their plane are based on the prior that $k_0$ and $k_1$ are uncorrelated.
+\color{black}
 The $\gamma^1$ terms capture the remaining magnitude variations due to the fact that $R^F_V$ is not constant in the sample:
 if the $\gamma$'s are due to  \citetalias{1999PASP..111...63F} dust, the only way our analysis could recover
 both $\gamma^0$ and $\gamma^1$ is for there to be variation in $R^F_V$.
