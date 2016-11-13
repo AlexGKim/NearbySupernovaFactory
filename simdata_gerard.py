@@ -77,13 +77,18 @@ cov =numpy.array([[0.0038, 0.001,-0.0002,0,0.0003],[0.001,0.0011,0.0002,0.,-0.00
 EW = numpy.array(EW_renorm)
 sivel = numpy.array(sivel_renorm)
 D = numpy.random.uniform(low=0.02, high=0.02, size=nsne)
-k0 = numpy.random.uniform(low=0.2, high=0.2, size=nsne)
-k1 = numpy.random.uniform(low=0.2, high=0.2, size=nsne)
 
 mn = Delta[:,None] + alpha[None,:] * EW[:,0][:,None] + \
    beta[None,:] * EW[:,1][:,None] + eta[None,:]*sivel[:,None] + delta[None,:]*D[:,None]
 
 intrinsic=[]
+for i in xrange(nsne):
+    intrinsic.append(numpy.random.multivariate_normal(mn[i,:],cov))
+intrinsic = numpy.array(intrinsic)
+
+mag_obs=[]
+EW_obs=[]
+sivel_obs=[]
 for i in xrange(nsne):
     dust = sncosmo.F99Dust(r_v=rv[i])
     dust.set(ebv=av[i]/rv[i])
@@ -98,16 +103,9 @@ for i in xrange(nsne):
     model.parameters[2]=x0
     model.parameters[3]=x1
     model.parameters[4]=c
-    intrinsic.append(numpy.random.multivariate_normal(mn[i,:]+2.5*numpy.log10(model0.bandflux(synbands,0.)/model.bandflux(synbands,0.)),cov))
-
-intrinsic = numpy.array(intrinsic)
-mag_obs=[]
-EW_obs=[]
-sivel_obs=[]
-for i in xrange(nsne):
-   mag_obs.append(numpy.random.multivariate_normal(intrinsic[i,:],mag_cov[i]))
-   EW_obs.append(numpy.random.multivariate_normal(EW[i,:],EW_cov[i]))
-   sivel_obs.append(numpy.random.normal(sivel[i],sivel_err[i]))
+    mag_obs.append(numpy.random.multivariate_normal(intrinsic[i,:]+2.5*numpy.log10(model0.bandflux(synbands,0.)/model.bandflux(synbands,0.)),mag_cov[i]))
+    EW_obs.append(numpy.random.multivariate_normal(EW[i,:],EW_cov[i]))
+    sivel_obs.append(numpy.random.normal(sivel[i],sivel_err[i]))
 
 mag_obs=numpy.array(mag_obs)
 EW_obs=numpy.array(EW_obs)
@@ -118,5 +116,5 @@ data = {'D': nsne, 'N_mags': 5, 'N_EWs': 2, 'mag_obs': mag_obs, 'EW_obs': EW_obs
 
 
 output = open('simdata_gerard.pkl','wb')
-pickle.dump(data, output, protocol=2)
+pickle.dump([data, intrinsic, av, rv, D, Delta,alpha,beta,eta,delta], output, protocol=2)
 output.close()
