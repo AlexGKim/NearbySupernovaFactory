@@ -684,9 +684,10 @@ $\langle \Delta \rangle=0$.
 Another degeneracy is illustrated by $k_0 \rightarrow k_0 + (EW_{Ca}-\langle EW_{Ca}\rangle)\epsilon$,
 $\alpha \rightarrow \alpha - \gamma \epsilon$, $c \rightarrow c + \langle EW_{Ca}\rangle \epsilon$, i.e. the
 linear external terms can leak into the linear spectral feature corrections.
-These degeneracies are not broken within the model, but rather are constrained by the priors, for which the
+These degeneracies are not broken within the model, but rather are constrained by the priors, in which the
 per-supernova parameters
-$\Delta$, $EW$, $\lambda$, $k$ are uncorrelated.
+$\Delta$, $EW$, $\lambda$, $k$ are uncorrelated.  It is important to emphasize that the latent parameters $k$ and $\Delta$
+are non-trivially specified by these priors.
 \color{black}
 
 \subsection{Results}
@@ -1101,6 +1102,7 @@ non-linear, and $R^T_V$ is not constant for a fixed value of $R^F_V$.
 The \citet{1989ApJ...345..245C} dust law can be expressed as a two-parameter linear model
 \begin{equation}
 A_X = a(X)  A_V + b(X) E(B-V).
+\label{f99:eqn}
 \end{equation}
 The \citetalias{1999PASP..111...63F} model is approximately described by a linear model with
 the above form:
@@ -1166,16 +1168,24 @@ of the vectors corresponding to $\gamma^i_X/(\gamma^i_B-\gamma^i_V)$ of our mode
 and $a(X)$, $b(X)$ of the \citetalias{1999PASP..111...63F} model.
 The left plot shows that none of the four vectors are closely aligned with another, while the right plot shows that
 the planes defined by our model (solid lines) and the  \citetalias{1999PASP..111...63F} model (dashed lines) are nearly coplanar.
-If $R^F_V=2.4$ were constant in our sample, then $A_X = A_V\left(a(X) + \frac{b(X)}{2.4}\right)$;  this combination of $a$ and $b$ is
-almost perfectly aligned with $\gamma^0_X/(\gamma^0_B-\gamma^0_V)$, as shown in the dot-dashed line. 
-\color{blue}
-Note that the specific directions of $\gamma^0$ and
- $\gamma^1$  within their plane are based on the prior that $k_0$ and $k_1$ are uncorrelated.
-\color{black}
-The $\gamma^1$ terms capture the remaining magnitude variations due to the fact that $R^F_V$ is not constant in the sample:
-if the $\gamma$'s are due to  \citetalias{1999PASP..111...63F} dust, the only way our analysis could recover
-both $\gamma^0$ and $\gamma^1$ is for there to be variation in $R^F_V$.
 
+\color{blue}
+Recall that degeneracies in the values of $\gamma$ and $k$ are broken by the prior that $k_0$, $k_1$, and the other SN parameters are uncorrelated. 
+The combination  $\left(a(X) + \frac{b(X)}{2.4}\right)$ is
+almost perfectly aligned with $\gamma^0_X/(\gamma^0_B-\gamma^0_V)$ while $b$ alone is almost perfectly aligned with $\gamma^1_X/(\gamma^1_B-\gamma^1_V)$,
+as shown in the dot-dashed and dotted lines of  Figure~\ref{plane:fig}.
+Rewriting the \citetalias{1999PASP..111...63F} model in Eqn.~\ref{f99:eqn} as
+\begin{equation}
+A_X =  A_V^F\left(a(X)+\frac{b(X)}{2.4} \right) +  \left(\frac{ A_V^F}{R^F_V} - \frac{ A_V^F}{2.4}\right)b(X),
+\end{equation}
+we see the correspondence between $k_0$ with $A^F_V$, and $k_1$ with $\frac{A^F_V}{R^F_V}-\frac{A^F_V}{2.4}$.
+Reasoning in the opposite direction, our results are motivated by a prior that ultimately turned out to be, based on our ultimate solution, 
+\begin{align}
+\text{cov}\left(A^F_V, \frac{A^F_V}{R^F_V}\right) & = \frac{1}{2.4} \text{var}(A^F_V).
+\end{align}
+Independent variations in $A^F_V$ and  $A^F_V/R^F_V$ within the data allowed the data analysis to detect
+$\gamma^{0,1}$ and $k_{0,1}$ at high significance.
+\color{black}
 
 \begin{figure}[htbp] %  figure placement: here, top, bottom, or page
    \centering
@@ -1185,7 +1195,8 @@ both $\gamma^0$ and $\gamma^1$ is for there to be variation in $R^F_V$.
    \color{red}
    Two different perspectives in $UVI$-space of the vectors $\gamma^i_X/(\gamma^i_B-\gamma^i_V)$ of our model (solid lines),
    and $a(X)$, $b(X)$ of the \citetalias{1999PASP..111...63F} model (dashed lines).  The combination $a(X)+b(X)/2.4$ is shown in the dot-dashed
-   line, almost perfectly superimposed on $\gamma^0_X/(\gamma^0_B-\gamma^0_V)$.
+   line, almost perfectly superimposed on $\gamma^0_X/(\gamma^0_B-\gamma^0_V)$, while $b(X)$ shown in the dotted line is
+   almost  perfectly superimposed on $\gamma^1_X/(\gamma^1_B-\gamma^1_V)$.  
    \color{black}
    \label{plane:fig}}
 \end{figure}
@@ -1588,7 +1599,7 @@ Recall that fixing $\delta_X=0$ reverts this model into the two external-paramet
 The probability
 of the null result $\delta_X=0$ for all $X$ is $<98\%$, as determined through
 the population of its bin in a 5-dimensional histogram.
-Figure~\ref{deltaratio:fig} shows  values of $\delta_X/\delta_I-1$ that  have significant non-zero values. 
+Figure~\ref{deltaratio:fig} shows  values of $\delta_X/\delta_I-1$ that  have significant non-zero values.
 \color{red}
 While the signal of the internal parameter is strong within the context of this model, ``model testing'' (comparing the
 performance  between this model
@@ -1608,6 +1619,9 @@ $\lambda_{Si}$.
    \centering
    \includegraphics[width=4.5in]{output15/delta_corner.pdf}
    \caption{Significance of the non-zero values of $\delta$ seen through the posterior contours for $\delta$.  The bimodality is due to the degenerate solution due to sign change.
+ \color{blue}
+ Three of the chains converged to one solution while the remaining chain converged to the other, resulting in the different normalizations of the two peaks.
+ \color{black}
    \label{deltacorner:fig}}
 \end{figure}
 

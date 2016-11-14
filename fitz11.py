@@ -118,6 +118,8 @@ ax.plot([0,dAdebv[0]/dum],[0,dAdebv[2]/dum],[0,dAdebv[4]/dum],label=r'$b(X)$',ls
 crap = dAdAv + dAdebv/2.4
 dum  = numpy.sqrt(crap[0]**2+crap[2]**2+crap[4]**2)
 ax.plot([0,crap[0]/dum],[0,crap[2]/dum],[0,crap[4]/dum],label=r'$a(X)+b(X)/2.4$',ls='-.')
+crap = dAdebv
+ax.plot([0,crap[0]/dum],[0,crap[2]/dum],[0,crap[4]/dum],label=r'$b(X)$',ls=':')
 ax.legend(prop={'size':10})
 ax.set_xlabel(r'$U$')
 ax.set_ylabel(r'$V$')
