@@ -61,7 +61,7 @@ sivel_renorm = sivel-sivel_mn
 
 # Truth
 
-Delta = numpy.random.uniform(low=0.2, high=0.2, size=nsne)
+Delta = numpy.random.uniform(low=-0.2, high=0.2, size=nsne)
 c = numpy.zeros(5)
 alpha = numpy.array([0.005, 0.002,0.002,0.002,0.003])
 beta = numpy.array([0.03, 0.03,0.03,0.02,0.02])
