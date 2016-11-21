@@ -108,6 +108,20 @@ for i in xrange(nsne):
     color_cov[i] = numpy.dot(trans,numpy.dot(mag_cov[i], trans.T))
 
 
+# correction = [fit['c'][:,i][:,None] + fit['alpha'][:,i][:,None]*fit['EW'][:,:, 0] \
+#     + fit['beta'][:,i][:,None]*fit['EW'][:,:, 1] + fit['eta'][:,i][:,None]*fit['sivel']\
+#     for i in xrange(5)]
+# correction = numpy.array(correction)
+
+# intrinsic = numpy.median(correction,axis=1)
+
+
+# output = open('intrinsic.pkl','wb')
+# print intrinsic.shape, numpy.array(data['snlist'])[use].shape
+# pickle.dump([intrinsic, numpy.array(data['snlist'])[use]], output, protocol=2)
+# output.close()
+# wefew
+
 
 
 figure = corner.corner(numpy.concatenate((EW_obs,sivel[:,None]),axis=1),labels=[r"$EW_{Ca,o}$",r"$EW_{Si,o}$",r"$\lambda_{Si,o}$"])
@@ -212,6 +226,8 @@ pp = PdfPages("output11/Rveff3.pdf")
 plt.savefig(pp,format='pdf')
 pp.close()
 plt.close()
+
+
 
 
 correction = [fit['c'][:,i][:,None] + fit['alpha'][:,i][:,None]*fit['EW'][:,:, 0] \

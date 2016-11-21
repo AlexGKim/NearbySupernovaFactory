@@ -113,23 +113,20 @@ init = [{'EW' : EW_renorm, \
          # 'rho11': 2./5,\
          # 'rho12': -2./5,\
          # 'rho13': -2./5,\
-         'rho11': 3.5/5,\
-         'rho12': 2./5,\
-         'rho13': -0.1/5,\
+         'rho11': 0./5,\
+         'rho12': 0./5,\
+         'rho13': -0./5,\
          # 'rho14': 1./5,\
          # 'rho15':  1./5,\
          } \
-        for _ in range(4)]
-
-pystan.misc.stan_rdump(init[0], 'init15.R')
-wefew
+        for _ in range(8)]
 
 sm = pystan.StanModel(file='gerard15.stan')
 control = {'stepsize':1}
-fit = sm.sampling(data=data, iter=10000, chains=4,control=control,init=init, thin=1)
+fit = sm.sampling(data=data, iter=5000, chains=8,control=control,init=init, thin=1)
 
 
-output = open('temp15_ll.pkl','wb')
+output = open('temp15.pkl','wb')
 pickle.dump((fit.extract(),fit.get_sampler_params()), output, protocol=2)
 output.close()
 print fit

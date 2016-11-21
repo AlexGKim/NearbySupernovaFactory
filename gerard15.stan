@@ -95,11 +95,11 @@ transformed parameters {
   gamma1[5] = gamma15;
   gamma1 = gamma1*5;
 
-  rho1[1] = (-rho11/2+rho12/2+rho13);
-  rho1[2] = (rho11/2-rho12-rho13/2);
-  rho1[3] = (rho11/2+rho12-rho13/2);
-  rho1[4] = (rho11/2+rho12/2-rho13);
-  rho1[5] = (-rho11+rho12/2+rho13/2);
+  rho1[1] = rho11;
+  rho1[2] = 0.;
+  rho1[3] = rho12;
+  rho1[4] = 0;
+  rho1[5] = rho13;
   rho1 = rho1*5;
   {
     vector[2] y;
@@ -114,21 +114,6 @@ transformed parameters {
     x = inverse(A) * y;
     rho1= rho1 - x[1]*gamma - x[2]*gamma1;
   }
-
-  # {
-  #   matrix[5,5] Q;
-  #   matrix[5,2] A;
-  #   for (d in 1:5){
-  #     A[d,1] = gamma[d];
-  #     A[d,2] = gamma1[d];
-  #   }
-  #   Q = qr_Q(A);
-  #   for (d in 1:5){
-  #     rho1[d] = rho11*Q[d,3]+rho12*Q[d,4]+rho13*Q[d,5];
-  #   }
-  #   print (rho11,rho12,rho13);
-  #   rho1=rho1*5;
-  # }
 
     # non-centered parameterization
   {
@@ -151,15 +136,3 @@ model {
   }
   target += (normal_lpdf(sivel_obs | sivel,sivel_err));
 }
-
-# generated quantities {
-#   real log_lik;
-#   log_lik=0;
-
-#   for (d in 1:D) {
-#     log_lik = log_lik + normal_lpdf(mag_int_raw[d]| 0, 1);
-#     log_lik = log_lik + multi_normal_lpdf(mag_obs[d] | mag_int[d]+gamma*k[d]+gamma1*k1[d], mag_cov[d]);
-#     log_lik = log_lik + multi_normal_lpdf(EW_obs[d] | EW[d], EW_cov[d]);
-#   }
-#   log_lik = log_lik + (normal_lpdf(sivel_obs | sivel,sivel_err));
-# }

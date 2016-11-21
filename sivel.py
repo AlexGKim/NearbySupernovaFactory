@@ -7,7 +7,7 @@ import numpy
 def sivel(data):
    dic_phreno=cPickle.load(open("phrenology_2016_12_01_CABALLOv1.pkl"))
 
-   dic_meta=cPickle.load(open("META.pkl"))
+   dic_meta=cPickle.load(open("SNF-0203-CABALLO2/META.pkl"))
 
    sivel=[]
    sivel_err=[]

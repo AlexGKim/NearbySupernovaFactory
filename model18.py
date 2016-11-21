@@ -8,6 +8,10 @@ import sivel
 
 # two color parameter model
 
+pkl_file = open('fitz.pkl', 'r')
+a=pickle.load(pkl_file)
+pkl_file.close()
+
 pkl_file = open('gege_data.pkl', 'r')
 data = pickle.load(pkl_file)
 pkl_file.close()
@@ -42,7 +46,7 @@ mag_renorm  = mag_obs-mag_mn
 sivel_mn = sivel.mean()
 sivel_renorm = sivel-sivel_mn
 data = {'D': nsne, 'N_mags': 5, 'N_EWs': 2, 'mag_obs': mag_renorm, 'EW_obs': EW_renorm, 'EW_cov': EW_cov, 'mag_cov':mag_cov, \
-   'sivel_obs': sivel_renorm, 'sivel_err': sivel_err}
+   'sivel_obs': sivel_renorm, 'sivel_err': sivel_err, 'a':a}
 
 # pystan.misc.stan_rdump(data, 'data.R')
 # wefew
@@ -60,32 +64,23 @@ init = [{'EW' : EW_renorm, \
          'beta_raw' : numpy.zeros(5), \
          'eta_raw' : numpy.zeros(5), \
          'L_sigma_raw': numpy.zeros(5)+0.03*100, \
-         'gamma01': 6./5,\
-         'gamma02': 4./5,\
-         'gamma03': 3./5,\
-         'gamma04': 2./5,\
-         'gamma05': 1./5,\
          'mag_int_raw': mag_renorm, \
          'L_Omega': numpy.identity(5), \
          'Delta_unit':R_simplex, \
          'Delta_scale': 15./4, \
-         'k_unit': R_simplex, \
-         'R_unit': R_simplex, \
-         'rho11': -17./5,\
-         'rho12': 0.*3./5,\
-         'rho13': 0./5,\
-         'rho14': 0.*3./5,\
-         'rho15': 0.*3./5,\
+         'AV': numpy.zeros(nsne)+0.05, \
+         'RVinv': numpy.zeros(nsne)+1./2.5, \
+         'AVscale': 0.05, \
          } \
         for _ in range(8)]
 
 
-sm = pystan.StanModel(file='gerard11.stan')
+sm = pystan.StanModel(file='gerard18.stan')
 control = {'stepsize':1}
-fit = sm.sampling(data=data, iter=5000, chains=8,control=control,init=init, thin=1)
+fit = sm.sampling(data=data, iter=3000, chains=8,control=control,init=init, thin=1)
 
 
-output = open('temp11.pkl','wb')
+output = open('temp18.pkl','wb')
 pickle.dump((fit.extract(),fit.get_sampler_params()), output, protocol=2)
 output.close()
 print fit
