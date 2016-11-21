@@ -20,7 +20,7 @@ for name, lams in zip(synname,synlam):
 model_nodust = sncosmo.Model(source='hsiao')
 flux_nodust = model_nodust.bandflux(synbands,0.)
 
-av = numpy.arange(0,1.5,0.05)
+av = numpy.arange(0,1.8,0.05)
 rv = numpy.arange(1.,5.,0.05)
 
 avs=[]
@@ -61,7 +61,8 @@ ans_ = numpy.array(ans_)
 dum1 = (ans_[0]-ans_[2])/1e-4
 dum2= (ans_[0]-ans_[1])/1e-4
 
-init1 = {'a' : numpy.array([dum1,numpy.zeros(5),dum2,numpy.zeros(5),numpy.zeros(5),numpy.zeros(5)])}
+init1 = {'a' : numpy.array([dum1,numpy.zeros(5),dum2,numpy.zeros(5),numpy.zeros(5),numpy.zeros(5),numpy.zeros(5),\
+    numpy.zeros(5),numpy.zeros(5)])}
 
 sm = pystan.StanModel(file='fitz.stan')
 fit = sm.sampling(data=data, iter=2000, chains=4,init=[init1,init1,init1,init1])
@@ -71,7 +72,9 @@ ans = fit.extract()
 amed= numpy.median(fit['a'], axis=0)
 diff = AX - (amed[0][None,:]*avs[:,None]+ amed[1][None,:] * avs[:,None]**2 \
     +amed[2][None,:]*ebvs[:,None]+ amed[3][None,:] * ebvs[:,None]**2 \
-    +amed[4][None,:] * (ebvs/rvs)[:,None] +amed[5][None,:] * ((ebvs/rvs)**2)[:,None])
+    +amed[4][None,:] * (ebvs/rvs)[:,None] +amed[5][None,:] * ((ebvs/rvs)**2)[:,None]
+    +amed[6][None,:]*(avs*ebvs)[:,None] +amed[7][None,:]*(avs*ebvs/rvs)[:,None]\
+    +amed[8][None,:]*ebvs*ebvs/rvs[:,None])
 
 print numpy.max(numpy.abs(diff))
 # 0.00589190110442

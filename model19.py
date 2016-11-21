@@ -69,18 +69,20 @@ init = [{'EW' : EW_renorm, \
          'Delta_unit':R_simplex, \
          'Delta_scale': 15./4, \
          'AV': numpy.zeros(nsne)+0.02, \
-         'RVinv': 1./2.5, \
+         'lnRV_mn': numpy.log(2.5), \
+         'lnRV_raw': numpy.zeros(nsne),\
+         'lnRV_sig': 0.1 \
          # 'AVscale': 0.05, \
          } \
-        for _ in range(8)]
+        for _ in range(4)]
 
 
-sm = pystan.StanModel(file='gerard18.stan')
+sm = pystan.StanModel(file='gerard19.stan')
 control = {'stepsize':1}
-fit = sm.sampling(data=data, iter=5000, chains=8,control=control,init=init, thin=1)
+fit = sm.sampling(data=data, iter=2000, chains=4,control=control,init=init, thin=1)
 
 
-output = open('temp18.pkl','wb')
+output = open('temp19.pkl','wb')
 pickle.dump((fit.extract(),fit.get_sampler_params()), output, protocol=2)
 output.close()
 print fit

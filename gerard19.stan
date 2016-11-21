@@ -31,8 +31,9 @@ parameters {
 
   vector<lower=0,upper=1.5>[D] AV;
   # vector<lower=1./5.5,upper=1./0.5>[D] RVinv;
-  real<lower=0> RVinv;
-  # real<lower=0> AVscale;
+  vector[D] lnRV_raw;
+  real<lower=0> lnRV_mn;
+  real<lower=0> lnRV_sig;
 }
 
 transformed parameters {
@@ -45,6 +46,7 @@ transformed parameters {
   vector[5] gamma;
   vector[5] rho1;
   vector[N_mags] mag_int[D];
+  vector[D] RVinv;
 
   c = c_raw/1e2;
   alpha = alpha_raw/5e2;
@@ -62,6 +64,8 @@ transformed parameters {
       mag_int[d] = Delta[d] + c+ alpha*EW[d,1]  + beta*EW[d,2]   + eta*sivel[d] + L_Sigma * mag_int_raw[d];
     }
   }
+
+  RVinv =  1. ./ exp(lnRV_mn+ lnRV_sig*lnRV_raw);
 }
 
 model {
@@ -72,16 +76,20 @@ model {
   target += lkj_corr_cholesky_lpdf(L_Omega | 4.);
 
   for (d in 1:D) {
-    ebv  = AV[d]*RVinv;
+    ebv  = AV[d]*RVinv[d];
     target += normal_lpdf(mag_int_raw[d]| 0, 1);
     AX = a[1]* AV[d] + a[2] * AV[d]^2
       + a[3]* ebv+ a[4] * ebv^2
-      + a[5] * ebv*RVinv + a[6]*(ebv*RVinv)^2;
+      + a[5] * ebv*RVinv[d] + a[6]*(ebv*RVinv[d])^2;
     # print (AV[d], 1./RVinv[d],AX);
     target += multi_normal_lpdf(mag_obs[d] | mag_int[d] + AX, mag_cov[d]);
     target += multi_normal_lpdf(EW_obs[d] | EW[d], EW_cov[d]);
   }
   target += (normal_lpdf(sivel_obs | sivel,sivel_err));
+
+  target += cauchy_lpdf(lnRV_sig | 0,1);
+  target += normal_lpdf(lnRV_raw| 0, 1);
+
   # target += exponential_lpdf(AV | AVscale);
   # target += cauchy_lpdf(AVscale | 0.1, 1);
 }

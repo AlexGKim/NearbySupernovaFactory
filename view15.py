@@ -611,6 +611,15 @@ plt.savefig(pp,format='pdf')
 pp.close()
 plt.close()
 
+mega = numpy.array([fit['rho11'],fit['rho12'],fit['rho13']])
+mega = numpy.transpose(mega)
+figure = corner.corner(mega,labels=[r"${\delta}_{0}$",r"${\delta}_{1}$",r"${\delta}_{2}$"])
+pp = PdfPages('output15/rho_corner.pdf')
+plt.savefig(pp,format='pdf')
+pp.close()
+plt.close()
+
+
 figure = corner.corner(fit['rho1'],labels=[r"${\delta}_{0}$",r"${\delta}_{1}$",r"${\delta}_{2}$",r"${\delta}_{3}$",r"${\delta}_{4}$"])
 pp = PdfPages('output15/delta_corner.pdf')
 plt.savefig(pp,format='pdf')
