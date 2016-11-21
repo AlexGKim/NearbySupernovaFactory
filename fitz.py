@@ -74,7 +74,7 @@ diff = AX - (amed[0][None,:]*avs[:,None]+ amed[1][None,:] * avs[:,None]**2 \
     +amed[2][None,:]*ebvs[:,None]+ amed[3][None,:] * ebvs[:,None]**2 \
     +amed[4][None,:] * (ebvs/rvs)[:,None] +amed[5][None,:] * ((ebvs/rvs)**2)[:,None]
     +amed[6][None,:]*(avs*ebvs)[:,None] +amed[7][None,:]*(avs*ebvs/rvs)[:,None]\
-    +amed[8][None,:]*ebvs*ebvs/rvs[:,None])
+    +amed[8][None,:]*(ebvs*ebvs/rvs)[:,None])
 
 print numpy.max(numpy.abs(diff))
 # 0.00589190110442
