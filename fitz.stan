@@ -11,7 +11,7 @@ data {
 parameters {
   # model is a1 AV + a2 AV**2 + a3 EBV + a4 EBV**2 + a5 AV EBV
 #EBV/RV + a6 (EBV/RV)**2
-  vector[5]  a[5];
+  vector[5]  a[9];
 }
 
 model {
@@ -20,10 +20,10 @@ model {
     target += normal_lpdf(AX[d] | a[1]*AV[d]+ a[2] * AV[d]^2
       + a[3]*EBV[d]+ a[4] * EBV[d]^2
       + a[5] * AV[d]*EBV[d]
-# + a[6] * (EBV[d]/RV[d])^2
-#      + a[7] * AV[d]*EBV[d]
-#      + a[8] * AV[d] * (EBV[d]/RV[d])
-#      + a[9] * EBV[d] * (EBV[d]/RV[d])
+      + a[6] * AV[d]^3
+      + a[7] * EBV[d]^3
+      + a[8] * AV[d]^2 * EBV[d]
+      + a[9] * AV[d] * EBV[d]^2
       , 0.01);
   }
 }
