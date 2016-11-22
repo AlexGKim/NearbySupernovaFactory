@@ -1,4 +1,4 @@
-#./gerard11 sample num_warmup=5000 num_samples=5000 data file=data.R init=init11.R output file=output11.csv refresh=1000
+# F99 no distribution priors fixed RV
 
 data {
   int D;                // Number of supernovae
@@ -10,7 +10,7 @@ data {
   matrix[N_EWs, N_EWs] EW_cov[D];
   vector[D] sivel_obs;
   vector[D] sivel_err;
-  vector[5] a[6];
+  vector[5] a[9];
 }
 
 parameters {
@@ -76,12 +76,13 @@ model {
     target += normal_lpdf(mag_int_raw[d]| 0, 1);
     AX = a[1]* AV[d] + a[2] * AV[d]^2
       + a[3]* ebv+ a[4] * ebv^2
-      + a[5] * ebv*RVinv + a[6]*(ebv*RVinv)^2;
-    # print (AV[d], 1./RVinv[d],AX);
+      + a[5] * AV[d]* ebv
+      + a[6]* AV[d]^3
+      + a[7] * ebv^3
+      + a[8] * (AV[d]^2) * ebv
+      + a[9] * AV[d] * (ebv^2);
     target += multi_normal_lpdf(mag_obs[d] | mag_int[d] + AX, mag_cov[d]);
     target += multi_normal_lpdf(EW_obs[d] | EW[d], EW_cov[d]);
   }
   target += (normal_lpdf(sivel_obs | sivel,sivel_err));
-  # target += exponential_lpdf(AV | AVscale);
-  # target += cauchy_lpdf(AVscale | 0.1, 1);
 }
