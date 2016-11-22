@@ -4,7 +4,6 @@ data {
   int D;                // Number of supernovae
   vector[D] AV;
   vector[D] EBV;
-  vector[D] RV;
   vector[5] AX[D];
 }
 

@@ -43,7 +43,7 @@ ebvs = numpy.array(ebvs)
 AX = numpy.array(AX)
 rvs=numpy.array(rvs)
 
-data = {'D': avs.size, 'AV': avs, 'EBV': ebvs, 'AX': AX, 'RV':rvs }
+data = {'D': avs.size, 'AV': avs, 'EBV': ebvs, 'AX': AX}
 
 av_ = numpy.array([0.01,0.01,0.01+1e-4])
 ebv_ = numpy.array([0.01/2.5, 0.01/2.5+1e-4, 0.01/2.5])
