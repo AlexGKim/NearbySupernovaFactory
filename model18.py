@@ -71,12 +71,12 @@ init = [{'EW' : EW_renorm, \
          'AV': numpy.zeros(nsne)+0.02, \
          'RVinv': 1./2.5, \
          } \
-        for _ in range(4)]
+        for _ in range(8)]
 
 
 sm = pystan.StanModel(file='gerard18.stan')
 control = {'stepsize':1}
-fit = sm.sampling(data=data, iter=100, chains=4,control=control,init=init, thin=1)
+fit = sm.sampling(data=data, iter=5000, chains=8,control=control,init=init, thin=1)
 
 
 output = open('temp18.pkl','wb')
