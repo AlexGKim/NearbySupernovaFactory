@@ -1,4 +1,4 @@
-#./gerard11 sample num_warmup=5000 num_samples=5000 data file=data.R init=init11.R output file=output11.csv refresh=1000
+# F99 RV from distribution
 
 data {
   int D;                // Number of supernovae
@@ -10,7 +10,7 @@ data {
   matrix[N_EWs, N_EWs] EW_cov[D];
   vector[D] sivel_obs;
   vector[D] sivel_err;
-  vector[5] a[6];
+  vector[5] a[9];
 }
 
 parameters {
@@ -46,7 +46,7 @@ transformed parameters {
   vector[5] gamma;
   vector[5] rho1;
   vector[N_mags] mag_int[D];
-  vector[D] RVinv;
+  vector[D] RV;
 
   c = c_raw/1e2;
   alpha = alpha_raw/5e2;
@@ -65,7 +65,7 @@ transformed parameters {
     }
   }
 
-  RVinv =  1. ./ exp(lnRV_mn+ lnRV_sig*lnRV_raw);
+  RV =  exp(lnRV_mn+ lnRV_sig*lnRV_raw);
 }
 
 model {
@@ -76,12 +76,15 @@ model {
   target += lkj_corr_cholesky_lpdf(L_Omega | 4.);
 
   for (d in 1:D) {
-    ebv  = AV[d]*RVinv[d];
+    ebv  = AV[d]/RV[d];
     target += normal_lpdf(mag_int_raw[d]| 0, 1);
     AX = a[1]* AV[d] + a[2] * AV[d]^2
       + a[3]* ebv+ a[4] * ebv^2
-      + a[5] * ebv*RVinv[d] + a[6]*(ebv*RVinv[d])^2;
-    # print (AV[d], 1./RVinv[d],AX);
+      + a[5] * AV[d]* ebv
+      + a[6]* AV[d]^3
+      + a[7] * ebv^3
+      + a[8] * (AV[d]^2) * ebv
+      + a[9] * AV[d] * (ebv^2);
     target += multi_normal_lpdf(mag_obs[d] | mag_int[d] + AX, mag_cov[d]);
     target += multi_normal_lpdf(EW_obs[d] | EW[d], EW_cov[d]);
   }
@@ -89,7 +92,4 @@ model {
 
   target += cauchy_lpdf(lnRV_sig | 0,1);
   target += normal_lpdf(lnRV_raw| 0, 1);
-
-  # target += exponential_lpdf(AV | AVscale);
-  # target += cauchy_lpdf(AVscale | 0.1, 1);
 }
