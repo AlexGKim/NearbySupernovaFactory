@@ -4,6 +4,69 @@ import numpy
 import pystan
 import sncosmo
 
+def analyze():
+    pkl_file = open('fitz.pkl', 'r')
+    amed=pickle.load(pkl_file)
+    pkl_file.close()
+
+
+    synlam = numpy.array([[3300.00, 3978.02]
+        ,[3978.02,4795.35]
+        ,[4795.35,5780.60]
+        ,[5780.60,6968.29]
+        ,[6968.29,8400.00]])
+
+    synname=['U','B','V','R','I']
+
+    synbands=[]
+
+    for name, lams in zip(synname,synlam):
+        synbands.append(sncosmo.Bandpass(lams, [1.,1.], name='tophat'+name))
+
+    model_nodust = sncosmo.Model(source='hsiao')
+    flux_nodust = model_nodust.bandflux(synbands,0.)
+
+    av = numpy.arange(0,1.8,0.05)
+    rv = numpy.arange(1.,5.,0.05)
+
+    avs=[]
+    ebvs=[]
+    rvs=[]
+    AX = []
+
+    for a in av:
+        for r in rv:
+            dust = sncosmo.F99Dust(r_v=r)
+            dust.set(ebv=a/r)
+            model = sncosmo.Model(source='hsiao', effects=[dust], effect_names=['host'], effect_frames=['rest'])
+            AX.append(-2.5*numpy.log10(model.bandflux(synbands,0.)/flux_nodust))
+            avs.append(a)
+            ebvs.append(a/r)
+            rvs.append(r)
+
+    avs = numpy.array(avs)
+    ebvs = numpy.array(ebvs)
+    AX = numpy.array(AX)
+    rvs=numpy.array(rvs)
+
+    diff = AX - (amed[0][None,:]*avs[:,None]+ amed[1][None,:] * avs[:,None]**2 \
+        +amed[2][None,:]*ebvs[:,None]+ amed[3][None,:] * ebvs[:,None]**2 \
+        +amed[4][None,:] * (avs*ebvs)[:,None] \
+        +amed[5][None,:] * (avs**3)[:,None] \
+        +amed[6][None,:] * (ebvs**3)[:,None] \
+        +amed[7][None,:] * ((avs**2)*ebvs)[:,None] \
+        +amed[8][None,:] * (avs*(ebvs**2))[:,None] \
+        )
+
+    print numpy.max(numpy.abs(diff))
+# 0.00589190110442
+
+analyze()
+
+wef
+
+
+
 synlam = numpy.array([[3300.00, 3978.02]
     ,[3978.02,4795.35]
     ,[4795.35,5780.60]
