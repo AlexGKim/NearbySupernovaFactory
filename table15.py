@@ -6,7 +6,7 @@ import numpy
 
 import sncosmo
 
-f = open('temp15.pkl','rb')
+f = open('tempsim.pkl','rb')
 (fit, _) = pickle.load(f)
 f.close()
 
@@ -60,6 +60,8 @@ indeces=indeces-1
 
 wbig = H > H[indeces[0],indeces[1],indeces[2],indeces[3],indeces[4]]
 print H[wbig].sum() / H.sum()
+
+erg
 
 print "standard deviation of delta"
 print fit['Delta'].flatten().std()
