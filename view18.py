@@ -13,7 +13,9 @@ import cPickle
 import matplotlib as mpl
 import sivel
 
-f = open('temp18.pkl','rb')
+ext=''
+
+f = open('temp18'+ext+'.pkl','rb')
 (fit,_) = pickle.load(f)
 
 # for key in fit.keys():
@@ -93,7 +95,7 @@ for ax in figure.get_axes():
     for tick in ax.yaxis.get_major_ticks():
         tick.label.set_fontsize(18)
         
-pp = PdfPages('output18/feature_corner.pdf')
+pp = PdfPages('output18'+ext+'/feature_corner.pdf')
 plt.savefig(pp,format='pdf')
 pp.close()
 plt.close()
@@ -104,7 +106,7 @@ plt.close()
 plt.errorbar(x1, y, xerr=[x1_err,x1_err],yerr=[y-ymin,ymax-ymin],fmt='o')
 plt.xlabel(r'$X_1$')
 plt.ylabel(r'$EW_{Si}$')
-pp = PdfPages("output18/x1si.pdf")
+pp = PdfPages('output18'+ext+'/x1si.pdf')
 plt.savefig(pp,format='pdf')
 pp.close()
 plt.close()
@@ -140,7 +142,7 @@ plt.close()
 #     # axes[i].axhline(y=0,linestyle=':')
 # fig.subplots_adjust(hspace=.3)
 # fig.set_size_inches(8,11)
-# filename = 'output18/residual.pdf'
+# filename = 'output18'+ext+'/residual.pdf'
 # pp = PdfPages(filename)
 # plt.savefig(pp,format='pdf')
 # pp.close()
@@ -159,7 +161,7 @@ plt.close()
 #     axes[i].axhline(y=0,linestyle=':')
 # fig.subplots_adjust(hspace=.3)
 # fig.set_size_inches(8,11)
-# filename = 'output18/residualx1.pdf'
+# filename = 'output18'+ext+'/residualx1.pdf'
 # pp = PdfPages(filename)
 # plt.savefig(pp,format='pdf')
 # pp.close()
@@ -174,55 +176,69 @@ plt.close()
 fig, axes = plt.subplots()
 plt.hist(fit['Delta'].flatten(),normed=True,bins=20,color='yellow')
 plt.xlabel(r'$\Delta$')
-pp = PdfPages('output18/Delta_hist.pdf')
+pp = PdfPages('output18'+ext+'/Delta_hist.pdf')
 plt.savefig(pp,format='pdf')
 pp.close()
 plt.close()
 
 plt.hist(fit['AV'].flatten(),normed=True,bins=20)
-plt.title(r'$k$')
-pp = PdfPages('output18/AV_hist.pdf')
+plt.xlabel(r'$A_V$')
+pp = PdfPages('output18'+ext+'/AV_hist.pdf')
+plt.savefig(pp,format='pdf')
+pp.close()
+plt.close()
+
+plt.hist(numpy.median(fit['AV'],axis=0),normed=True,bins=20)
+plt.xlabel(r'$A_V$')
+pp = PdfPages('output18'+ext+'/AV_mode_hist.pdf')
+plt.savefig(pp,format='pdf')
+pp.close()
+plt.close()
+
+plt.hist(fit['RVinv'].flatten(),normed=True,bins=20)
+plt.xlabel(r'$R_V^{-1}$')
+pp = PdfPages('output18'+ext+'/RVinv_hist.pdf')
 plt.savefig(pp,format='pdf')
 pp.close()
 plt.close()
 
 plt.hist(1./fit['RVinv'].flatten(),normed=True,bins=20)
-plt.title(r'$R_V$')
-pp = PdfPages('output18/RV_hist.pdf')
+plt.xlabel(r'$R_V$')
+pp = PdfPages('output18'+ext+'/RV_hist.pdf')
 plt.savefig(pp,format='pdf')
 pp.close()
 plt.close()
 
-plt.hist((fit['AV']*fit['RVinv']).flatten(),normed=True,bins=20)
-plt.title(r'$R_V$')
-plt.xlim((-1,5))
-pp = PdfPages('output18/EBV_hist.pdf')
-plt.savefig(pp,format='pdf')
-pp.close()
-plt.close()
+# plt.hist((fit['AV']*fit['RVinv']).flatten(),normed=True,bins=20)
+# plt.xlabel(r'$E(B-V)$')
+# plt.xlim((-1,5))
+# pp = PdfPages('output18'+ext+'/EBV_hist.pdf')
+# plt.savefig(pp,format='pdf')
+# pp.close()
+# plt.close()
 
 figure = corner.corner(fit['c'],labels=[r"${c}_0$",r"${c}_1$",r"${c}_2$",r"${c}_3$",r"${c}_4$"])
-pp = PdfPages('output18/c_corner.pdf')
+pp = PdfPages('output18'+ext+'/c_corner.pdf')
 plt.savefig(pp,format='pdf')
 pp.close()
 plt.close()
 
 figure = corner.corner(fit['alpha'],labels=[r"${\alpha}_0$",r"${\alpha}_1$",r"${\alpha}_2$",r"${\alpha}_3$",r"${\alpha}_4$"])
-pp = PdfPages('output18/alpha_corner.pdf')
+pp = PdfPages('output18'+ext+'/alpha_corner.pdf')
 plt.savefig(pp,format='pdf')
 pp.close()
 plt.close()
 
 
 figure = corner.corner(fit['beta'],labels=[r"${\beta}_0$",r"${\beta}_1$",r"${\beta}_2$",r"${\beta}_3$",r"${\beta}_4$"])
-pp = PdfPages('output18/beta_corner.pdf')
+pp = PdfPages('output18'+ext+'/beta_corner.pdf')
 plt.savefig(pp,format='pdf')
 pp.close()
 plt.close()
 
 
 figure = corner.corner(fit['eta'],labels=[r"${\eta}_0$",r"${\eta}_1$",r"${\eta}_2$",r"${\eta}_3$",r"${\eta}_4$"])
-pp = PdfPages('output18/eta_corner.pdf')
+pp = PdfPages('output18'+ext+'/eta_corner.pdf')
 plt.savefig(pp,format='pdf')
 pp.close()
 plt.close()
@@ -230,13 +246,13 @@ plt.close()
 
 # mega = numpy.concatenate((fit['Delta_scale'][:,None],fit['L_sigma']),axis=1)
 figure = corner.corner(fit['L_sigma'],labels=[r"${\sigma}_0$",r"${\sigma}_1$",r"${\sigma}_2$",r"${\sigma}_3$",r"${\sigma}_4$"])
-pp = PdfPages('output18/sigma_corner.pdf')
+pp = PdfPages('output18'+ext+'/sigma_corner.pdf')
 plt.savefig(pp,format='pdf')
 pp.close()
 plt.close()
 
 
-with PdfPages('output18/multipage_pdf.pdf') as pdf:
+with PdfPages('output18'+ext+'/multipage_pdf.pdf') as pdf:
 
     lineobjects = plt.plot(fit['lp__'][::10])
     plt.title(r'log p')
@@ -295,7 +311,7 @@ rc('text', usetex=True)
 
 #     for ax in figure.get_axes():
 #         for tick in ax.xaxis.get_major_ticks():
-#             tick.label.set_fontsize(18) 
+#             tick.label.set_fontsize(18'+ext+') 
 #         for tick in ax.yaxis.get_major_ticks():
 #             tick.label.set_fontsize(18) 
 
@@ -307,18 +323,18 @@ rc('text', usetex=True)
 
 
 mega = numpy.array([fit['Delta'].flatten(),fit['EW'][:,:,0].flatten(),fit['EW'][:,:,1].flatten(),fit['sivel'].flatten(), \
-    fit['AV'].flatten(),1./fit['RVinv'].flatten(),(fit['AV']*fit['RVinv']).flatten()])
+    fit['AV'].flatten()])
 
 mega = numpy.transpose(mega)
 mega=mega[::50,:]
 
-figure = corner.corner(mega,labels=[r"$\Delta$",r"$EW_{Ca}$",r"$EW_{Si}$",r"$\lambda_{Si}$",r"$A_V$",r"$R_V$",r"$E(B-V)$"],range=numpy.zeros(7)+1.)
+figure = corner.corner(mega,labels=[r"$\Delta$",r"$EW_{Ca}$",r"$EW_{Si}$",r"$\lambda_{Si}$",r"$A_V$"],range=numpy.zeros(5)+1.)
 for ax in figure.get_axes():
     for tick in ax.xaxis.get_major_ticks():
         tick.label.set_fontsize(18) 
     for tick in ax.yaxis.get_major_ticks():
         tick.label.set_fontsize(18) 
-pp = PdfPages('output18/perobject_corner.pdf')
+pp = PdfPages('output18'+ext+'/perobject_corner.pdf')
 plt.savefig(pp,format='pdf')
 pp.close()
 plt.close()
