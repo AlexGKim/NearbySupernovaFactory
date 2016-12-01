@@ -3,6 +3,10 @@ import pickle
 import numpy
 import pystan
 import sncosmo
+from mpl_toolkits.mplot3d import Axes3D
+from matplotlib import cm
+from matplotlib.ticker import LinearLocator, FormatStrFormatter
+import matplotlib.pyplot as plt
 
 def analyze():
     pkl_file = open('fitz.pkl', 'r')
@@ -60,7 +64,28 @@ def analyze():
         +amed[8][None,:] * (avs*(ebvs**2))[:,None] \
         )
 
-    print numpy.max(numpy.abs(diff))
+    # print numpy.max(numpy.abs(diff))
+    # arg = numpy.argmax(numpy.abs(diff))
+    # print avs[arg / 5], ebvs[arg / 5]
+    # print diff[arg / 5]
+
+    plt.scatter(rvs,diff[:,0])
+    plt.show()
+
+    wef
+    fig = plt.figure()
+    ax = fig.gca(projection='3d')
+
+    x, y = numpy.meshgrid(av,rv)
+    z = numpy.reshape(diff[:,0],x.shape)
+    surf = ax.plot_surface(x, y, z, rstride=1, cstride=1, cmap=cm.coolwarm,
+                       linewidth=0, antialiased=False)
+    ax.zaxis.set_major_locator(LinearLocator(10))
+    ax.zaxis.set_major_formatter(FormatStrFormatter('%.02f'))
+
+    fig.colorbar(surf, shrink=0.5, aspect=5)
+    plt.show()
+
 # 0.00589190110442
 
 snmod='salt2'

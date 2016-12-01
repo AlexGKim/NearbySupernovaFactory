@@ -101,6 +101,13 @@ mag_cov = data['cov'][:,2:,2:]
 
 pkl_file.close()
 
+plt.plot(fit['rho1'][::10,:])
+plt.title(r'$\delta')
+pp = PdfPages("output15/delta_chain.pdf")
+plt.savefig(pp,format='pdf')
+pp.close()
+plt.close()
+
 trans = [[1.,0,-1,0,0],[0.,1,-1,0,0],[0.,0,1,-1,0],[0.,0,1,0,-1]]
 trans = numpy.array(trans)
 color_cov = numpy.zeros((nsne,4,4))
@@ -722,22 +729,22 @@ with PdfPages('output15/multipage_pdf.pdf') as pdf:
     pdf.savefig()
     plt.close()
  
-    mega = fit['gamma1']/((fit['gamma1'][:,1]-fit['gamma1'][:,2]))[:,None]
+    # mega = fit['gamma1']/((fit['gamma1'][:,1]-fit['gamma1'][:,2]))[:,None]
 
-    figure = corner.corner(mega,labels=[r"$R_0$",r"$R_1$",r"$R_2$",r"$R_3$",r"$R_4$"])
-    pp = PdfPages('output15/r1x_corner.pdf')
-    plt.savefig(pp,format='pdf')
-    pp.close()
-    plt.close()
+    # figure = corner.corner(mega,labels=[r"$R_0$",r"$R_1$",r"$R_2$",r"$R_3$",r"$R_4$"])
+    # pp = PdfPages('output15/r1x_corner.pdf')
+    # plt.savefig(pp,format='pdf')
+    # pp.close()
+    # plt.close()
 
-    mega = fit['rho1']/((fit['rho1'][:,1]-fit['rho1'][:,2]))[:,None]
+    # mega = fit['rho1']/((fit['rho1'][:,1]-fit['rho1'][:,2]))[:,None]
 
-    figure = corner.corner(mega,labels=[r"$R_{\delta 0}$",r"$R_{\delta 1}$",r"$R_{\delta 2}$",r"$R_{\delta 3}$",r"$R_{\delta 4}$"], \
-        range=[[-8.,0.5] for x in xrange(5)])
-    pp = PdfPages('output15/rxdelta_corner.pdf')
-    plt.savefig(pp,format='pdf')
-    pp.close()
-    plt.close()
+    # figure = corner.corner(mega,labels=[r"$R_{\delta 0}$",r"$R_{\delta 1}$",r"$R_{\delta 2}$",r"$R_{\delta 3}$",r"$R_{\delta 4}$"], \
+    #     range=[[-8.,0.5] for x in xrange(5)])
+    # pp = PdfPages('output15/rxdelta_corner.pdf')
+    # plt.savefig(pp,format='pdf')
+    # pp.close()
+    # plt.close()
 
     # plt.plot(fit['R'][::10,:10])
     # plt.title('R')
@@ -869,7 +876,7 @@ plt.errorbar(efflam,y-1,yerr=[y-ymin,ymax-y],fmt='o')
 plt.legend()
 plt.xlabel(r'Wavelength (\AA)')
 plt.ylabel(r'$\frac{\delta_X}{\delta_4}-1$')
-plt.ylim((-2,0.1))
+plt.ylim((-4,1))
 pp = PdfPages('output15/deltaratio.pdf')
 plt.savefig(pp,format='pdf')
 pp.close()
@@ -885,14 +892,6 @@ mega=mega[::50,:]
 
 figure = corner.corner(mega,labels=[r"$\Delta$",r"$EW_{Ca}$",r"$EW_{Si}$",r"$\lambda_{Si}$",r"$E_{\gamma^0}(B-V)$",r"$E_{\gamma^1}(B-V)$",r"$E_\delta(B-V)$"],range=numpy.zeros(7)+1.)
 pp = PdfPages('output15/perobject_corner.pdf')
-plt.savefig(pp,format='pdf')
-pp.close()
-plt.close()
-
-mega = numpy.array([fit['rho11'],fit['rho12'],fit['rho13']])
-mega = numpy.transpose(mega)
-figure = corner.corner(mega)
-pp = PdfPages('output15/rho1x_corner.pdf')
 plt.savefig(pp,format='pdf')
 pp.close()
 plt.close()

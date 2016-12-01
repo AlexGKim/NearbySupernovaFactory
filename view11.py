@@ -122,6 +122,22 @@ for i in xrange(nsne):
 # output.close()
 # wefew
 
+plt.hist(numpy.median((fit['gamma'][:,1]-fit['gamma'][:,2])[:,None]*fit['k'],axis=0),bins=20)
+plt.xlabel(r'$E_{\gamma_0}(B-V)$')
+plt.legend()
+pp = PdfPages('output11/ebv_gamma0.pdf')
+plt.savefig(pp,format='pdf')
+pp.close()
+plt.close()
+
+
+plt.hist(numpy.median((fit['rho1'][:,1]-fit['rho1'][:,2])[:,None]*fit['R'],axis=0),bins=20)
+plt.xlabel(r'$E_{\gamma_1}(B-V)$')
+plt.legend()
+pp = PdfPages('output11/ebv_gamma1.pdf')
+plt.savefig(pp,format='pdf')
+pp.close()
+plt.close()
 
 
 figure = corner.corner(numpy.concatenate((EW_obs,sivel[:,None]),axis=1),labels=[r"$EW_{Ca,o}$",r"$EW_{Si,o}$",r"$\lambda_{Si,o}$"])
@@ -399,6 +415,7 @@ pp = PdfPages('output11/ebv.pdf')
 plt.savefig(pp,format='pdf')
 pp.close()
 plt.close()
+
 
 
 # au = fit['gamma'][:,0][:,None]*fit['k'] + fit['rho1'][:,0][:,None]*fit['R']+0.16

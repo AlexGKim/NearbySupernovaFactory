@@ -115,6 +115,10 @@ transformed parameters {
     rho1= rho1 - x[1]*gamma - x[2]*gamma1;
   }
 
+  # if (rho1[5] > 0){
+  #   rho1 = -rho1;
+  # }
+
     # non-centered parameterization
   {
     matrix[5,5] L_Sigma;
@@ -135,4 +139,6 @@ model {
     target += multi_normal_lpdf(EW_obs[d] | EW[d], EW_cov[d]);
   }
   target += (normal_lpdf(sivel_obs | sivel,sivel_err));
+  target += uniform_lpdf(rho1[5] | 0, 100);
+  # target += uniform_lpdf(rho1[5] | 0., 1e6);
 }
