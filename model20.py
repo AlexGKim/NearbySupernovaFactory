@@ -69,17 +69,14 @@ init = [{'EW' : EW_renorm, \
          'Delta_unit':R_simplex, \
          'Delta_scale': 15./4, \
          'AV': numpy.zeros(nsne)+0.02, \
-         'lnRV_mn': numpy.log(2.5), \
-         'lnRV_raw': numpy.zeros(nsne),\
-         'lnRV_sig': 0.1, \
-         'AV_scale': 0.04 \
+         'RV': numpy.zeros(nsne)+2.8, \
          } \
-        for _ in range(4)]
+        for _ in range(8)]
 
 
 sm = pystan.StanModel(file='gerard20.stan')
 control = {'stepsize':1}
-fit = sm.sampling(data=data, iter=100, chains=4,control=control,init=init, thin=1)
+fit = sm.sampling(data=data, iter=5000, chains=8,control=control,init=init, thin=1)
 
 
 output = open('temp20.pkl','wb')

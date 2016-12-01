@@ -24,6 +24,7 @@ def analyze():
         synbands.append(sncosmo.Bandpass(lams, [1.,1.], name='tophat'+name))
 
     model_nodust = sncosmo.Model(source='hsiao')
+    print model_nodust
     flux_nodust = model_nodust.bandflux(synbands,0.)
 
     av = numpy.arange(0,1.8,0.05)
@@ -47,6 +48,7 @@ def analyze():
     avs = numpy.array(avs)
     ebvs = numpy.array(ebvs)
     AX = numpy.array(AX)
+    print AX[400]
     rvs=numpy.array(rvs)
 
     diff = AX - (amed[0][None,:]*avs[:,None]+ amed[1][None,:] * avs[:,None]**2 \
@@ -61,11 +63,7 @@ def analyze():
     print numpy.max(numpy.abs(diff))
 # 0.00589190110442
 
-analyze()
-
-wef
-
-
+snmod='salt2'
 
 synlam = numpy.array([[3300.00, 3978.02]
     ,[3978.02,4795.35]
@@ -80,7 +78,7 @@ synbands=[]
 for name, lams in zip(synname,synlam):
     synbands.append(sncosmo.Bandpass(lams, [1.,1.], name='tophat'+name))
 
-model_nodust = sncosmo.Model(source='hsiao')
+model_nodust = sncosmo.Model(source=snmod)
 flux_nodust = model_nodust.bandflux(synbands,0.)
 
 av = numpy.arange(0,1.8,0.05)
@@ -95,7 +93,7 @@ for a in av:
     for r in rv:
         dust = sncosmo.F99Dust(r_v=r)
         dust.set(ebv=a/r)
-        model = sncosmo.Model(source='hsiao', effects=[dust], effect_names=['host'], effect_frames=['rest'])
+        model = sncosmo.Model(source=snmod, effects=[dust], effect_names=['host'], effect_frames=['rest'])
         AX.append(-2.5*numpy.log10(model.bandflux(synbands,0.)/flux_nodust))
         avs.append(a)
         ebvs.append(a/r)
@@ -116,7 +114,7 @@ ans_=[]
 for av0, ebv0, rv0 in zip(av_,ebv_,rv_):
     dust = sncosmo.F99Dust(r_v=rv0)
     dust.set(ebv=ebv0)
-    model = sncosmo.Model(source='hsiao', effects=[dust], effect_names=['host'], effect_frames=['rest'])
+    model = sncosmo.Model(source=snmod, effects=[dust], effect_names=['host'], effect_frames=['rest'])
     ans_.append(2.5*numpy.log10(model.bandflux(synbands,0.)))
 
 ans_ = numpy.array(ans_)
@@ -144,6 +142,6 @@ diff = AX - (amed[0][None,:]*avs[:,None]+ amed[1][None,:] * avs[:,None]**2 \
 print numpy.max(numpy.abs(diff))
 # 0.00589190110442
 
-output = open('fitz.pkl','wb')
+output = open('fitz_salt2.pkl','wb')
 pickle.dump(amed, output, protocol=2)
 output.close()

@@ -1,4 +1,4 @@
-# F99 RV from distribution
+# F99 no distribution priors free RV
 
 data {
   int D;                // Number of supernovae
@@ -29,12 +29,8 @@ parameters {
 
   simplex[D] Delta_unit;
 
-  vector<lower=0,upper=1.5>[D] AV;
-  # vector<lower=1./5.5,upper=1./0.5>[D] RVinv;
-  vector[D] lnRV_raw;
-  real<lower=0> lnRV_mn;
-  real<lower=0> lnRV_sig;
-  real<lower=0> AV_scale;
+  vector<lower=0,upper=1.8>[D] AV;
+  vector<lower=1,upper=5>[D] RV;
 }
 
 transformed parameters {
@@ -47,7 +43,6 @@ transformed parameters {
   vector[5] gamma;
   vector[5] rho1;
   vector[N_mags] mag_int[D];
-  vector[D] RV;
 
   c = c_raw/1e2;
   alpha = alpha_raw/5e2;
@@ -65,8 +60,6 @@ transformed parameters {
       mag_int[d] = Delta[d] + c+ alpha*EW[d,1]  + beta*EW[d,2]   + eta*sivel[d] + L_Sigma * mag_int_raw[d];
     }
   }
-
-  RV =  exp(lnRV_mn+ lnRV_sig*lnRV_raw);
 }
 
 model {
@@ -90,10 +83,4 @@ model {
     target += multi_normal_lpdf(EW_obs[d] | EW[d], EW_cov[d]);
   }
   target += (normal_lpdf(sivel_obs | sivel,sivel_err));
-
-  target += cauchy_lpdf(lnRV_sig | 0,1);
-  target += normal_lpdf(lnRV_raw| 0, 1);
-
-  target += cauchy_lpdf(AV_scale | 0.,1);
-  target += exponential_lpdf(AV | AV_scale);
 }
