@@ -29,10 +29,11 @@ parameters {
 
   simplex[D] Delta_unit;
 
-  vector<lower=0,upper=1.8>[D] AV;
+  vector<lower=0>[D] AV_raw;
   vector<lower=1,upper=5>[D] RV;
 
   vector[5] AV_offset;
+  real<lower=0> AV_scale;
 }
 
 transformed parameters {
@@ -45,6 +46,7 @@ transformed parameters {
   vector[5] gamma;
   vector[5] rho1;
   vector[N_mags] mag_int[D];
+  vector<lower=0,upper=1.8>[D] AV;
 
   c = c_raw/1e2;
   alpha = alpha_raw/5e2;
@@ -62,6 +64,8 @@ transformed parameters {
       mag_int[d] = Delta[d] + c+ alpha*EW[d,1]  + beta*EW[d,2]   + eta*sivel[d] + L_Sigma * mag_int_raw[d];
     }
   }
+
+  AV = AV_raw*AV_scale;
 }
 
 model {
@@ -81,10 +85,12 @@ model {
       + a[7] * ebv^3
       + a[8] * (AV[d]^2) * ebv
       + a[9] * AV[d] * (ebv^2);
-    target += multi_normal_lpdf(mag_obs[d] | mag_int[d] + (1+AV_offset) .* AX, mag_cov[d]);
+    target += multi_normal_lpdf(mag_obs[d] | mag_int[d] + AV_offset + AX, mag_cov[d]);
     target += multi_normal_lpdf(EW_obs[d] | EW[d], EW_cov[d]);
   }
   target += (normal_lpdf(sivel_obs | sivel,sivel_err));
 
-  target += normal_lpdf(AV_offset | 0, 0.5);
+  target += normal_lpdf(AV_offset | 0, 0.1);
+  target += exponential_lpdf(AV_raw | 1.);
+  target += cauchy_lpdf(AV_scale|0,1);
 }
