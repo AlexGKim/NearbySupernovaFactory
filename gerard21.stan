@@ -86,5 +86,5 @@ model {
   }
   target += (normal_lpdf(sivel_obs | sivel,sivel_err));
 
-  target += normal_lpdf(AV_offset | 0, 0.1);
+  target += normal_lpdf(AV_offset | 0, 0.5);
 }
