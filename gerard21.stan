@@ -32,7 +32,6 @@ parameters {
   vector<lower=0>[D] AV_raw;
   vector<lower=1,upper=5>[D] RV;
 
-  vector[5] AV_offset;
   real<lower=0> AV_scale;
 }
 
@@ -85,12 +84,11 @@ model {
       + a[7] * ebv^3
       + a[8] * (AV[d]^2) * ebv
       + a[9] * AV[d] * (ebv^2);
-    target += multi_normal_lpdf(mag_obs[d] | mag_int[d] + AV_offset + AX, mag_cov[d]);
+    target += multi_normal_lpdf(mag_obs[d] | mag_int[d] + AX, mag_cov[d]);
     target += multi_normal_lpdf(EW_obs[d] | EW[d], EW_cov[d]);
   }
   target += (normal_lpdf(sivel_obs | sivel,sivel_err));
 
-  target += normal_lpdf(AV_offset | 0, 0.1);
   target += exponential_lpdf(AV_raw | 1.);
   target += cauchy_lpdf(AV_scale|0,1);
 }

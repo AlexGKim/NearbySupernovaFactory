@@ -70,7 +70,6 @@ init = [{'EW' : EW_renorm, \
          'Delta_scale': 15./4, \
          'AV_raw': (numpy.zeros(nsne)+0.02/0.05), \
          'RV': numpy.zeros(nsne)+2.8, \
-         'AV_offset': numpy.zeros(5), \
          'AV_scale': 0.05, \
          } \
         for _ in range(8)]
