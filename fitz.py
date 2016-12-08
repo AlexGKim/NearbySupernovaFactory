@@ -32,7 +32,7 @@ def analyze():
     flux_nodust = model_nodust.bandflux(synbands,0.)
 
     av = numpy.arange(0,1.8,0.05)
-    rv = numpy.arange(1.,5.,0.05)
+    rv = numpy.arange(1.,8.,0.05)
 
     avs=[]
     ebvs=[]
@@ -107,7 +107,7 @@ model_nodust = sncosmo.Model(source=snmod)
 flux_nodust = model_nodust.bandflux(synbands,0.)
 
 av = numpy.arange(0,1.8,0.05)
-rv = numpy.arange(1.,5.,0.05)
+rv = numpy.arange(1.,8.,0.05)
 
 avs=[]
 ebvs=[]
