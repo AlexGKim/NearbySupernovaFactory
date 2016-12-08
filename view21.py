@@ -209,6 +209,23 @@ plt.savefig(pp,format='pdf')
 pp.close()
 plt.close()
 
+plt.hist(fit['AV_scale'],normed=True,bins=20)
+plt.xlabel(r'$A^{scale}_V$')
+pp = PdfPages('output21'+ext+'/AV_scale.pdf')
+plt.savefig(pp,format='pdf')
+pp.close()
+plt.close()
+
+(y, ymin, ymax) = numpy.percentile(fit['RV'],(50,50-34,50+34),axis=0)
+(x, xmin, xmax) = numpy.percentile(fit['AV'],(50,50-34,50+34),axis=0)
+plt.errorbar(x, y, xerr=[x-xmin,xmax-x],yerr=[y-ymin,ymax-ymin],fmt='o')
+plt.xlabel(r'$A_V$')
+plt.ylabel(r'$R_V$')
+pp = PdfPages('output21'+ext+'/AVRV_med.pdf')
+plt.savefig(pp,format='pdf')
+pp.close()
+plt.close()
+
 # plt.hist((fit['AV']*fit['RVinv']).flatten(),normed=True,bins=20)
 # plt.xlabel(r'$E(B-V)$')
 # plt.xlim((-1,5))
@@ -242,6 +259,13 @@ pp = PdfPages('output21'+ext+'/eta_corner.pdf')
 plt.savefig(pp,format='pdf')
 pp.close()
 plt.close()
+
+
+# figure = corner.corner(fit['AV_offset'],labels=[r"$A^{off}_{V0}$",r"$A^{off}_{V1}$",r"$A^{off}_{V2}$",r"$A^{off}_{V3}$",r"$A^{off}_{V4}$"])
+# pp = PdfPages('output21'+ext+'/avoffset_corner.pdf')
+# plt.savefig(pp,format='pdf')
+# pp.close()
+# plt.close()
 
 
 # mega = numpy.concatenate((fit['Delta_scale'][:,None],fit['L_sigma']),axis=1)
