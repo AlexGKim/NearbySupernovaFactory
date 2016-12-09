@@ -87,7 +87,7 @@ def analyze():
 
 # 0.00589190110442
 
-snmod='salt2'
+snmod='hsiao'
 
 synlam = numpy.array([[3300.00, 3978.02]
     ,[3978.02,4795.35]
@@ -166,6 +166,6 @@ diff = AX - (amed[0][None,:]*avs[:,None]+ amed[1][None,:] * avs[:,None]**2 \
 print numpy.max(numpy.abs(diff))
 # 0.00589190110442
 
-output = open('fitz_salt2.pkl','wb')
+output = open('fitz.pkl','wb')
 pickle.dump(amed, output, protocol=2)
 output.close()
