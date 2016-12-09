@@ -243,6 +243,12 @@ plt.savefig(pp,format='pdf')
 pp.close()
 plt.close()
 
+figure = corner.corner(fit['deltaAV'],labels=[r"${\delta}_{AV,0}$",r"${\delta}_{AV,1}$",r"${\delta}_{AV,2}$",r"${\delta}_{AV,3}$",r"${\delta}_{AV,4}$"])
+pp = PdfPages('output18'+ext+'/deltaAV_corner.pdf')
+plt.savefig(pp,format='pdf')
+pp.close()
+plt.close()
+
 
 # mega = numpy.concatenate((fit['Delta_scale'][:,None],fit['L_sigma']),axis=1)
 figure = corner.corner(fit['L_sigma'],labels=[r"${\sigma}_0$",r"${\sigma}_1$",r"${\sigma}_2$",r"${\sigma}_3$",r"${\sigma}_4$"])

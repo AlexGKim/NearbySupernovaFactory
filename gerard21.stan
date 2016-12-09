@@ -1,4 +1,4 @@
-# F99 no distribution priors free RV
+# F99 no distribution priors free RV, exponential AV
 
 data {
   int D;                // Number of supernovae
