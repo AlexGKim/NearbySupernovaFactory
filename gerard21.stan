@@ -30,7 +30,7 @@ parameters {
   simplex[D] Delta_unit;
 
   vector<lower=0>[D] AV_raw;
-  vector<lower=1,upper=5>[D] RV;
+  vector<lower=0.9,upper=8>[D] RV;
 
   real<lower=0> AV_scale;
 }
