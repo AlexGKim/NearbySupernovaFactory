@@ -6,6 +6,8 @@ import numpy
 import pystan
 import sivel
 
+numpy.random.seed(seed=1)
+
 # two color parameter model
 
 pkl_file = open('gege_data.pkl', 'r')
@@ -45,12 +47,13 @@ sivel_renorm = sivel-sivel_mn
 
 # Truth
 
-Delta = numpy.random.uniform(low=0.2, high=0.2, size=nsne)
+Delta = numpy.random.uniform(low=-0.2, high=0.2, size=nsne)
 c = numpy.zeros(5)
 alpha = numpy.array([0.005, 0.002,0.002,0.002,0.003])
 beta = numpy.array([0.03, 0.03,0.03,0.02,0.02])
 eta = numpy.array([-0.0002,0,0.0005,0.0005,-0.0003])
 delta = numpy.array([-0.737, 0.129,1.961,0.598,-2.545])
+# delta[:]=0
 gamma = numpy.array([62.5,50.7,37.7,28.9,20.6])
 gamma1 = numpy.array([-9.93,-11.8,-14.2,-13.4,-12.1])
 cov =numpy.array([[0.0038, 0.001,-0.0002,0,0.0003],[0.001,0.0011,0.0002,0.,-0.0006],[-0.0002,0.0002,0.0004,0,-0.0002],\
@@ -59,9 +62,9 @@ cov =numpy.array([[0.0038, 0.001,-0.0002,0,0.0003],[0.001,0.0011,0.0002,0.,-0.00
 
 EW = numpy.array(EW_renorm)
 sivel = numpy.array(sivel_renorm)
-D = numpy.random.uniform(low=0.02, high=0.02, size=nsne)
-k0 = numpy.random.uniform(low=0.2, high=0.2, size=nsne)
-k1 = numpy.random.uniform(low=0.2, high=0.2, size=nsne)
+D = numpy.random.uniform(low=-0.02, high=0.02, size=nsne)
+k0 = numpy.random.uniform(low=-0.2, high=0.2, size=nsne)
+k1 = numpy.random.uniform(low=-0.2, high=0.2, size=nsne)
 
 mn = Delta[:,None] + alpha[None,:] * EW[:,0][:,None] + \
    beta[None,:] * EW[:,1][:,None] + eta[None,:]*sivel[:,None] + delta[None,:]*D[:,None]
