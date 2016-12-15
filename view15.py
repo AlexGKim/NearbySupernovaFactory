@@ -16,8 +16,11 @@ import sivel
 f = open('temp15.pkl','rb')
 (fit,_) = pickle.load(f)
 
-# for key in fit.keys():
-#     print key, fit[key].min(), fit[key].max()
+
+
+for key in fit.keys():
+    shit = numpy.percentile(fit[key],(50,50-34,50+34),axis=0) 
+    print key, shit
 
 pkl_file = open('gege_data.pkl', 'r')
 data = pickle.load(pkl_file)
@@ -435,6 +438,25 @@ plt.hist([(fit['gamma'][:,1]-fit['gamma'][:,2])[:,None]*fit['k'] +
 plt.xlabel(r'$E(B-V)$')
 plt.legend()
 pp = PdfPages('output15/ebv.pdf')
+plt.savefig(pp,format='pdf')
+pp.close()
+plt.close()
+
+plt.hist([(fit['gamma'][:,1]-fit['gamma'][:,2])[:,None]*fit['k'] ,
+  (fit['gamma1'][:,1]-fit['gamma1'][:,2])[:,None]*fit['k1']],normed=True,bins=20,
+  label=[r'$E_{\gamma_0}(B-V)$',r'$E_{\gamma_1}(B-V)$'])
+plt.xlabel(r'$E(B-V)$')
+plt.legend()
+pp = PdfPages('output15/ebv_gamma.pdf')
+plt.savefig(pp,format='pdf')
+pp.close()
+plt.close()
+
+plt.hist([numpy.median(fit['k'],axis=0) ,numpy.median(fit['k1'],axis=0),numpy.median(fit['R'],axis=0)],normed=True,bins=20,
+  label=[r'${\gamma_0}$',r'${\gamma_1}$',r'$R$'])
+plt.xlabel(r'$E(B-V)$')
+plt.legend()
+pp = PdfPages('output15/ebv_natives.pdf')
 plt.savefig(pp,format='pdf')
 pp.close()
 plt.close()

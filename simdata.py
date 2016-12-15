@@ -14,6 +14,11 @@ pkl_file = open('gege_data.pkl', 'r')
 data = pickle.load(pkl_file)
 pkl_file.close()
 
+
+f = open('temp15.pkl','rb')
+(fit,_) = pickle.load(f)
+f.close()
+
 sivel, sivel_err,_,_ = sivel.sivel(data)
 
 
@@ -47,24 +52,41 @@ sivel_renorm = sivel-sivel_mn
 
 # Truth
 
-Delta = numpy.random.uniform(low=-0.2, high=0.2, size=nsne)
 c = numpy.zeros(5)
 alpha = numpy.array([0.005, 0.002,0.002,0.002,0.003])
 beta = numpy.array([0.03, 0.03,0.03,0.02,0.02])
-eta = numpy.array([-0.0002,0,0.0005,0.0005,-0.0003])
-delta = numpy.array([-0.737, 0.129,1.961,0.598,-2.545])
-# delta[:]=0
-gamma = numpy.array([62.5,50.7,37.7,28.9,20.6])
-gamma1 = numpy.array([-9.93,-11.8,-14.2,-13.4,-12.1])
-cov =numpy.array([[0.0038, 0.001,-0.0002,0,0.0003],[0.001,0.0011,0.0002,0.,-0.0006],[-0.0002,0.0002,0.0004,0,-0.0002],\
-   [0,0,0,0.0002,0.0002],[0.0003,-0.0006,-0.0002,0.0002,0.002]])
+eta = numpy.array([0.0001,1.5e-4,0.0005,0.0005,-0.00003])
+gamma = numpy.array([64.1,51.9,38.5,29.3,20.8])
+gamma1 = numpy.array([-10.5,-11.9,-14.6,-13.9,-12.9])
+
+delta = numpy.array([2.13, -2.30,-1.87,0.38,2.09])
+delta = delta.transpose()
+y=numpy.array([numpy.dot(delta, gamma), numpy.dot(delta, gamma1)])
+A=numpy.zeros((2,2))
+A[0,0] = numpy.dot(gamma,gamma)
+A[1,1] = numpy.dot(gamma1,gamma1)
+A[0,1] = numpy.dot(gamma,gamma1)
+A[1,0] = A[0,1];
+x = numpy.dot(numpy.linalg.inv(A),y)
+print delta
+delta= delta - x[0]*gamma - x[1]*gamma1;
+print delta
+
+
+cov =numpy.array([[0.002, 0.0,-0.0,0,0.00],[0.000,0.0008,0.0000,0.,-0.0000],[-0.0000,0.0000,0.0003,0,-0.0000],\
+   [0,0,0,0.0002,0.0000],[0.0000,-0.0000,-0.0000,0.0000,0.001]])
 
 
 EW = numpy.array(EW_renorm)
 sivel = numpy.array(sivel_renorm)
-D = numpy.random.uniform(low=-0.02, high=0.02, size=nsne)
-k0 = numpy.random.uniform(low=-0.2, high=0.2, size=nsne)
-k1 = numpy.random.uniform(low=-0.2, high=0.2, size=nsne)
+
+Delta = numpy.median(fit['Delta'],axis=0)
+D = numpy.median(fit['R'],axis=0)
+k0 = numpy.median(fit['k'],axis=0)
+k1 = numpy.median(fit['k1'],axis=0)
+# D = numpy.random.normal(0,0.002, size=nsne)+numpy.random.exponential(0.0045, size=nsne)
+# k0 = numpy.random.normal(0,0.001, size=nsne)+numpy.random.exponential(0.004, size=nsne)
+# k1 = numpy.random.normal(0,0.002, size=nsne)+numpy.random.exponential(0.003, size=nsne)
 
 mn = Delta[:,None] + alpha[None,:] * EW[:,0][:,None] + \
    beta[None,:] * EW[:,1][:,None] + eta[None,:]*sivel[:,None] + delta[None,:]*D[:,None]

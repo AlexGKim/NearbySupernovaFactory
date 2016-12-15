@@ -6,8 +6,10 @@ import sncosmo
 #from mpl_toolkits.mplot3d import Axes3D
 #from matplotlib import cm
 #from matplotlib.ticker import LinearLocator, FormatStrFormatter
-#import matplotlib.pyplot as plt
+import matplotlib.pyplot as plt
+from matplotlib.backends.backend_pdf import PdfPages
 
+synname=['U','B','V','R','I']
 def analyze():
     pkl_file = open('fitz.pkl', 'r')
     amed=pickle.load(pkl_file)
@@ -31,7 +33,7 @@ def analyze():
     print model_nodust
     flux_nodust = model_nodust.bandflux(synbands,0.)
 
-    av = numpy.arange(0,1.8,0.05)
+    av = numpy.arange(0,1.8001,0.05)
     rv = numpy.exp(numpy.arange(numpy.log(.9), numpy.log(8)+0.001,numpy.log(8/.9)/50))
 
     avs=[]
@@ -64,13 +66,22 @@ def analyze():
         +amed[8][None,:] * (avs*(ebvs**2))[:,None] \
         )
 
-    # print numpy.max(numpy.abs(diff))
-    # arg = numpy.argmax(numpy.abs(diff))
-    # print avs[arg / 5], ebvs[arg / 5]
-    # print diff[arg / 5]
+    print numpy.max(numpy.abs(diff))
+    arg = numpy.argmax(numpy.abs(diff))
+    print avs[arg / 5], ebvs[arg / 5]
+    print diff[arg / 5]
 
-#    plt.scatter(rvs,diff[:,0])
-#    plt.show()
+    print avs.max()
+    wav = avs == 1.8
+    for i in xrange(5):
+        plt.plot(rvs[wav],diff[wav,i],label=synname[i])
+    plt.ylabel(r'$\Delta A$')
+    plt.xlabel(r'$R$')
+    plt.legend()
+    pp = PdfPages('output18/dfitz.pdf')
+    plt.savefig(pp,format='pdf')
+    pp.close()
+    plt.close()
 
     #fig = plt.figure()
     #ax = fig.gca(projection='3d')
@@ -84,7 +95,9 @@ def analyze():
 
     #fig.colorbar(surf, shrink=0.5, aspect=5)
     #plt.show()
+analyze()
 
+wefwe
 # 0.00589190110442
 
 snmod='hsiao'
