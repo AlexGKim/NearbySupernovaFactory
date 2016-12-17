@@ -176,6 +176,9 @@ transformed parameters {
     # print(dot_product(ev1,ev2)," ",dot_product(ev1,ev3)," ",dot_product(ev2,ev3));
     rho1 = rho11*ev1 + rho12*ev2 + rho13*ev3;
   }
+
+  rho1 = rho1*5;
+
     # non-centered parameterization
   {
     matrix[5,5] L_Sigma;
@@ -198,5 +201,4 @@ model {
   target += (normal_lpdf(sivel_obs | sivel,sivel_err));
   target += uniform_lpdf(rho1[5] | 0, 100);
   target += (normal_lpdf(x1_obs | x1,x1_err));
-  # target += uniform_lpdf(rho1[5] | 0., 1e6);
 }
