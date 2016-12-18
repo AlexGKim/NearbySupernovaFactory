@@ -74,7 +74,7 @@ c_n = []
 cs = []
 for s in ['gamma','rho1']:
   c, cmin, cmax = numpy.percentile(fit[s]/((fit[s][:,1]-fit[s][:,2])[:,None]),(50,50-34,50+34),axis=0)
-  print c
+  print "{:6.2f}, {:6.2f}, {:6.2f}, {:6.2f}, {:6.2f}".format(c[0],c[1],c[2],c[3],c[4])
   cs.append(c)
   c_norm = numpy.linalg.norm(c)
   c_n.append(c_norm)
@@ -189,7 +189,8 @@ sm = pystan.StanModel(file='rv.stan')
 fit1 = sm.sampling(data=data, iter=1000, chains=4,init=[init1,init1,init1,init1])
 links = fit1.extract(('x1','x0'))
 rbv, mrbv, prbv= numpy.percentile([links['x1'],links['x0']],(50,50-34,50+34),axis=1)
-
+print "Fit RV"
+print "${:6.2f}_{:6.2f}^{:6.2f}$".format(rbv[0],rbv[0]-mrbv[0],prbv[0]-rbv[0])
 # # RV is calculated as a Monte Carlo, i.e RV is calculated for each link
 # coeffs = []
 # for i in xrange(ebv.shape[1]):
@@ -217,7 +218,7 @@ for rbv_ in rbvs:
     A1= f99_band.A_X(r_v=rbv_, ebv=ebv)
     x.append(A1[1]-A1[2])
     y.append(A1[2])
-  plt.plot(x,y,label=r'$R^F_V={:6.1f}$'.format(rbv_))
+  plt.plot(x,y,label=r'$R^F={:6.1f}$'.format(rbv_))
 plt.legend(loc=2)
 plt.xlim((-0.1,0.4))
 plt.ylim((-0.7,1.2))
@@ -273,7 +274,7 @@ for rbv in rbvs:
     A1= f99_band.A_X(r_v=rbv, ebv=ebv)
     x.append(A1[1]-A1[2])
     y.append(A1[2]/(A1[1]-A1[2]))
-  plt.plot(x,y,label=r'$R^F_V={:6.1f}$'.format(rbv))
+  plt.plot(x,y,label=r'$R^F={:6.1f}$'.format(rbv))
 plt.xlim((-0.02,0.45))
 plt.ylabel(r'$R^T_{V} $')
 plt.xlabel(r'$E^T(B-V)$')
@@ -330,7 +331,7 @@ coeffs = numpy.array(coeffs)
 # the monte carlo regions of rv
 rbv, mrbv, prbv= numpy.percentile(coeffs,(50,50-34,50+34),axis=0)
 
-print '$R^F_V={:6.2f}_{{-{:6.2f}}}^{{+ {:6.2f}}}  $'.format(rbv[0],rbv[0]-mrbv[0],prbv[0]-rbv[0])
+print '$R^F={:6.2f}_{{-{:6.2f}}}^{{+ {:6.2f}}}  $'.format(rbv[0],rbv[0]-mrbv[0],prbv[0]-rbv[0])
 print '${:6.2f} -{:6.2f} + {:6.2f}$'.format(rbv[1],rbv[1]-mrbv[1],prbv[1]-rbv[1])
 
 # Plot syntehetic Fitzpatrix E(B-V) and AV with slope derived above
@@ -350,7 +351,7 @@ plt.errorbar(ebvav_s[0,:,0], ebvav_s[0,:,1], \
 plt.ylabel(r'$A^F_{V,eff}+ const $')
 plt.xlabel(r'$E^F(B-V)_{eff} + const$')
 x = numpy.array([-0.15,0.45])
-plt.plot(x, rbv[1]+rbv[0]*x,label=r'$R^F_V={:6.2f}_{{-{:6.2f}}}^{{+{:6.2f}}}$'.format(rbv[0],rbv[0]-mrbv[0],prbv[0]-rbv[0]),color='black')
+plt.plot(x, rbv[1]+rbv[0]*x,label=r'$R^F={:6.2f}_{{-{:6.2f}}}^{{+{:6.2f}}}$'.format(rbv[0],rbv[0]-mrbv[0],prbv[0]-rbv[0]),color='black')
 plt.legend()
 pp = PdfPages("output11/avebv_synth.pdf")
 plt.savefig(pp,format='pdf')
