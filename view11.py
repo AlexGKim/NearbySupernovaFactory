@@ -130,6 +130,32 @@ plt.savefig(pp,format='pdf')
 pp.close()
 plt.close()
 
+plt.hist(numpy.median((fit['gamma'][:,2])[:,None]*fit['k'],axis=0),bins=20)
+plt.xlabel(r'$\gamma^0_2 k_0$')
+plt.legend()
+pp = PdfPages('output11/gamma0_med.pdf')
+plt.savefig(pp,format='pdf')
+pp.close()
+plt.close()
+
+plt.hist(numpy.median((fit['rho1'][:,2])[:,None]*fit['R'],axis=0),bins=20)
+plt.xlabel(r'$\gamma^1_2 k_1$')
+plt.legend()
+pp = PdfPages('output11/gamma1_med.pdf')
+plt.savefig(pp,format='pdf')
+pp.close()
+plt.close()
+
+(x, xmin, xmax) = numpy.percentile(fit['gamma'][:,2][:,None]*fit['k'],(50,50-34,50+34),axis=0)
+(y, ymin, ymax) = numpy.percentile(fit['rho1'][:,2][:,None]*fit['R'],(50,50-34,50+34),axis=0)
+plt.errorbar(x1, y, xerr=[x1_err,x1_err],yerr=[y-ymin,ymax-ymin],fmt='o')
+plt.xlabel(r'$\gamma^0_2 k_0$')
+plt.ylabel(r'$\gamma^1_2 k_1$')
+pp = PdfPages("output11/kk.pdf")
+plt.savefig(pp,format='pdf')
+pp.close()
+plt.close()
+
 
 plt.hist(numpy.median((fit['rho1'][:,1]-fit['rho1'][:,2])[:,None]*fit['R'],axis=0),bins=20)
 plt.xlabel(r'$E_{\gamma_1}(B-V)$')
@@ -159,8 +185,8 @@ plt.close()
 plt.errorbar(x,y,xerr=(x-xmin,xmax-x), yerr=(y-ymin,ymax-y),fmt='o')
 plt.xlim((-0.08,0.05))
 # plt.ylim((-0.02,0.05))
-plt.xlabel(r'$E_\gamma(B-V)$')
-plt.ylabel(r'$E_\delta(B-V)$')
+plt.xlabel(r'$E_{\gamma^0}(B-V)$')
+plt.ylabel(r'$E_{\gamma^1}(B-V)$')
 pp = PdfPages("output11/egammaedelta_corner.pdf")
 plt.savefig(pp,format='pdf')
 pp.close()
@@ -191,6 +217,13 @@ au = fit['gamma'][:,0][:,None]*fit['k'] + fit['rho1'][:,0][:,None]*fit['R']
 ab = fit['gamma'][:,1][:,None]*fit['k'] + fit['rho1'][:,1][:,None]*fit['R']
 av = fit['gamma'][:,2][:,None]*fit['k'] + fit['rho1'][:,2][:,None]*fit['R']
 
+
+plt.hist(numpy.median(av,axis=0),bins=20)
+plt.xlabel(r'$A_V$')
+pp = PdfPages("output11/Av_med.pdf")
+plt.savefig(pp,format='pdf')
+pp.close()
+plt.close()
 
 (x, xmin, xmax) = numpy.percentile(ab-av,(50,50-34,50+34),axis=0)
 (y, ymin, ymax) = numpy.percentile(au-av,(50,50-34,50+34),axis=0)
