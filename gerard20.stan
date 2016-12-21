@@ -30,7 +30,7 @@ parameters {
   simplex[D] Delta_unit;
 
   vector<lower=0,upper=1.8>[D] AV;
-  vector<lower=1,upper=5>[D] RV;
+  vector<lower=0.9,upper=8>[D] RV;
 }
 
 transformed parameters {
@@ -40,8 +40,6 @@ transformed parameters {
   vector[5] eta;
   vector[N_mags] L_sigma;
   vector[D] Delta;
-  vector[5] gamma;
-  vector[5] rho1;
   vector[N_mags] mag_int[D];
 
   c = c_raw/1e2;

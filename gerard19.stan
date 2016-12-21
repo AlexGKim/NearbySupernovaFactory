@@ -29,7 +29,7 @@ parameters {
 
   simplex[D] Delta_unit;
 
-  vector<lower=0,upper=1.5>[D] AV;
+  vector<lower=0,upper=1.8>[D] AV;
   # vector<lower=1./5.5,upper=1./0.5>[D] RVinv;
   vector[D] lnRV_raw;
   real<lower=0> lnRV_mn;
