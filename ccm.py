@@ -42,8 +42,8 @@ def analyze():
 
     for a in av:
         for r in rv:
-            dust = sncosmo.F99Dust(r_v=r)
-            dust.set(ebv=a/r)
+            dust = sncosmo.CCM89Dust()
+            dust.set(ebv=a/r,r_v=r)
             model = sncosmo.Model(source='hsiao', effects=[dust], effect_names=['host'], effect_frames=['rest'])
             AX.append(-2.5*numpy.log10(model.bandflux(synbands,0.)/flux_nodust))
             avs.append(a)
@@ -93,9 +93,9 @@ def analyze():
 
     #fig.colorbar(surf, shrink=0.5, aspect=5)
     #plt.show()
-# analyze()
+analyze()
 
-# wefwe
+wefwe
 # 0.00589190110442
 
 snmod='hsiao'
