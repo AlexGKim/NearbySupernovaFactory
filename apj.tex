@@ -1851,6 +1851,7 @@ as $R=const$), $R$ is held the same for all supernovae .  In the second  (denote
 the $\ln{R}$ for each supernova is taken to be drawn from a Normal distribution with dispersion $\sigma_{\ln{R}}$.
 In the third (denoted as $R$-free), $A_V$ and $R$ are free for
 each supernova, with a uniform prior $0\le A_V \le 1.8$, $1 \le R \le 8$.
+(Note that for $R<2.2$, the model extrapolates beyond the range of the training set upon which it was trained.) 
 
 The posteriors for the spectral parameters are similar to the ones already
 presented; we therefore focus on the posteriors for the dust parameters, the results of which
@@ -1866,7 +1867,8 @@ the Normal distributions specified by individual links.
    \includegraphics[width=2.8in]{output18/RVs_hist.pdf}
     \caption{Left: Histograms for the median $A_V$ determined for
 each supernova, for the analyses assuming constant $R$, $\ln{R}$ from a Normal distribution, and $R$ from a uniform distribution.
-To contrast, the corresponding $\gamma_0 k_0$ medians from our 2-parameter model is also shown.
+To contrast, the corresponding $\gamma_0 k_0$ medians from our 2-parameter model is also shown.  The means of the measurement
+uncertainty over all supernovae are 0.13,   0.16,   0.11, and  0.05 mag respectively, roughly the size of the bin.
 Right: Posteriors for $R$ for the two analyses that constrain the $R$ distribution, and the histogram of
 the median $R$ determine for each supernova in the $R$-free analysis.
    \label{AVRV:fig}}
@@ -1885,9 +1887,27 @@ The $\ln{R} \sim \mathcal{N}$ distribution for $A_V$ is shifted and a mode of  $
 larger that $4$.
 While for $R$-free the  $A_V$ distribution mode is centered somewhat closer to zero, the distribution of $R$ is shifted to even higher values.
 
+
 The broadband nature of our supernova model does not allow a precise specification for the prediction of dust models, we therefore
 refrain from making absolute conclusions based on our results.  We do emphasize the sensitivity of our results when using the total-to-selective extinction
 $R$ parameter.  
+
+The $R$-free analysis is performed for the dust law of \citet{1989ApJ...345..245C}.  Figure~\ref{CCMF99:fig} shows the difference between per-supernova
+$A_V$ and $R_V$ of  the  \citet{1989ApJ...345..245C} (superscripted with $C$) and \citetalias{1999PASP..111...63F} dust laws.
+The weighted mean of the difference in $A_V$ is $0.06 \pm 0.01$ mag and that of $R_V$ is $-0.26 \pm 0.09$, both significantly
+non-zero.  Insofar that the $A_V$ and $R_V$
+parameters of the two models are designed to represent the same dust observables, we find that the systematic uncertainty in the dust model itself
+is important.
+
+
+\begin{figure}[htbp] %  figure placement: here, top, bottom, or page
+   \centering
+   \includegraphics[width=5.2in]{output18/CCMf99.pdf}
+    \caption{Difference between per-supernova
+$A_V$ and $R_V$ of the  \citet{1989ApJ...345..245C} and \citetalias{1999PASP..111...63F} dust laws.
+   \label{CCMF99:fig}}
+\end{figure}
+
 
 \color{black}
 \section{Summary and Discussion}
@@ -2166,7 +2186,6 @@ $\langle A_{\delta I} \rangle=  -0.0037 \pm    0.0010 $
 for low- and high-mass hosts respectively. 
 Using the SNfactory sample,
 \citet{2013A&A...560A..66R} find that step in Hubble residuals is better related to local star formation rate, rather than host mass.
-
 
 \color{black}
 \begin{figure}[htbp] %  figure placement: here, top, bottom, or page
