@@ -26,7 +26,7 @@ pkl_file = open('gege_data.pkl', 'r')
 data = pickle.load(pkl_file)
 pkl_file.close()
 
-sivel,sivel_err,x1,x1_err,zcmb = sivel.sivel(data)
+sivel,sivel_err,x1,x1_err,zcmb,zerr = sivel.sivel(data)
 
 
 use = numpy.isfinite(sivel)
@@ -43,10 +43,14 @@ sivel_err = sivel_err[use]
 x1=x1[use]
 x1_err = x1_err[use]
 zcmb = zcmb[use]
+zerr = zerr[use]
+
 EW_obs=EW_obs[use]
 mag_obs=mag_obs[use]
 EW_cov= EW_cov[use]
 mag_cov=mag_cov[use]
+
+snnames = numpy.array(data['snlist'])[use]
 
 EW_mn = EW_obs.mean(axis=0)
 EW_renorm = (EW_obs - EW_mn)
@@ -82,7 +86,53 @@ color_cov = numpy.zeros((nsne,4,4))
 for i in xrange(nsne):
     color_cov[i] = numpy.dot(trans,numpy.dot(mag_cov[i], trans.T))
 
+(y, ymin, ymax) = numpy.percentile(fit['Delta'],(50,50-34,50+34),axis=0)
 
+import rdata
+rd = rdata.rdata()
+x=[]
+dx=[]
+for dum in snnames:
+  if dum in rd:
+    x.append(rd[dum][0])
+    dx.append(rd[dum][1])
+  else:
+    x.append(numpy.nan)
+    dx.append(numpy.nan)
+x=numpy.array(x)
+dx=numpy.array(dx)
+w = numpy.isfinite(x)
+plt.errorbar(x[w], y[w], xerr=[dx[w],dx[w]],yerr=[y[w]-ymin[w],ymax[w]-y[w]],fmt='o')
+plt.xlabel(r'Hubble Residual')
+plt.ylabel(r'$\Delta$')
+pp = PdfPages('output23/DeltamB.pdf')
+plt.savefig(pp,format='pdf')
+pp.close()
+plt.close()
+
+
+plt.errorbar(zcmb, y, yerr=[y-ymin,ymax-y],fmt='o')
+plt.xlabel(r'$z_{cmb}$')
+plt.ylabel(r'$\Delta$')
+pp = PdfPages('output23/Deltaz.pdf')
+plt.savefig(pp,format='pdf')
+pp.close()
+plt.close()
+
+dmu = numpy.sqrt((5./numpy.log(10)*300./(zcmb*3e5))**2 + ((ymax-ymin)/2)**2)
+smallz = zerr < 0.001
+
+pull = y/dmu
+
+plt.hist([pull[smallz],pull[numpy.logical_not(smallz)]],log=True,normed=False,bins=20,label=[r'low $\sigma_z$',r'not low $\sigma_z$'])
+print snnames[pull > 2]
+plt.legend()
+
+plt.xlabel(r'$\Delta / \sqrt{(\sigma^2_{\Delta} + \sigma^2_{\Delta v})}$')
+pp = PdfPages('output23/Deltanorm_hist.pdf')
+plt.savefig(pp,format='pdf')
+pp.close()
+plt.close()
 
 (x, xmin, xmax) = numpy.percentile( ((fit['gamma'][:,1] - fit['gamma'][:,2])[:,None]*fit['k']),(50,50-34,50+34),axis=0)
 (y, ymin, ymax) = numpy.percentile(((fit['rho1'][:,1] - fit['rho1'][:,2])[:,None]*fit['R']),(50,50-34,50+34),axis=0)
@@ -883,11 +933,7 @@ plt.savefig(pp,format='pdf')
 pp.close()
 plt.close()
 
-(y, ymin, ymax) = numpy.percentile(fit['Delta'],(50,50-34,50+34),axis=0)
-plt.errorbar(zcmb, y, yerr=[y-ymin,ymax-y],fmt='o')
-plt.xlabel(r'$z_{cmb}$')
-plt.ylabel(r'$\Delta$')
-pp = PdfPages('output23/Deltaz.pdf')
-plt.savefig(pp,format='pdf')
-pp.close()
-plt.close()
+
+
+
+
