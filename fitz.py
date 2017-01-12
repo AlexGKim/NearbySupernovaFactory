@@ -36,7 +36,7 @@ def analyze():
 
     av = numpy.exp(numpy.arange(numpy.log(0.005), numpy.log(1.8)+0.001,numpy.log(1.8/0.005)/25))
     av=numpy.concatenate(([0],av))
-    rv = numpy.exp(numpy.arange(numpy.log(2.1), numpy.log(6.9)+0.001,numpy.log(6.9./2.1)/50))
+    rv = numpy.exp(numpy.arange(numpy.log(2.1), numpy.log(6.9)+0.001,numpy.log(6.9/2.1)/50))
 
 
     avs=[]
@@ -123,7 +123,7 @@ flux_nodust = model_nodust.bandflux(synbands,0.)
 
 av = numpy.exp(numpy.arange(numpy.log(0.005), numpy.log(1.8)+0.001,numpy.log(1.8/0.005)/25))
 av=numpy.concatenate(([0],av))
-rv = numpy.exp(numpy.arange(numpy.log(2.1), numpy.log(6.9)+0.001,numpy.log(6.9./2.1)/50))
+rv = numpy.exp(numpy.arange(numpy.log(2.1), numpy.log(6.9)+0.001,numpy.log(6.9/2.1)/50))
 
 avs=[]
 ebvs=[]
@@ -143,6 +143,7 @@ for a in av:
 avs = numpy.array(avs)
 ebvs = numpy.array(ebvs)
 AX = numpy.array(AX)
+avnz = avs != 0
 rvs=numpy.array(rvs)
 
 data = {'D': avs.size, 'AV': avs, 'EBV': ebvs, 'AX': AX}
