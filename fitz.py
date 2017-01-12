@@ -6,8 +6,8 @@ import sncosmo
 #from mpl_toolkits.mplot3d import Axes3D
 #from matplotlib import cm
 #from matplotlib.ticker import LinearLocator, FormatStrFormatter
-#import matplotlib.pyplot as plt
-#from matplotlib.backends.backend_pdf import PdfPages
+# import matplotlib.pyplot as plt
+# from matplotlib.backends.backend_pdf import PdfPages
 
 synname=['U','B','V','R','I']
 def analyze():
@@ -33,8 +33,11 @@ def analyze():
     print model_nodust
     flux_nodust = model_nodust.bandflux(synbands,0.)
 
-    av = numpy.arange(0,1.8001,0.05)
-    rv = numpy.exp(numpy.arange(numpy.log(2), numpy.log(7)+0.001,numpy.log(7/2)/50))
+
+    av = numpy.exp(numpy.arange(numpy.log(0.005), numpy.log(1.8)+0.001,numpy.log(1.8/0.005)/25))
+    av=numpy.concatenate(([0],av))
+    rv = numpy.exp(numpy.arange(numpy.log(2.1), numpy.log(6.9)+0.001,numpy.log(6.9./2.1)/50))
+
 
     avs=[]
     ebvs=[]
@@ -72,7 +75,7 @@ def analyze():
     print diff[arg / 5]
 
     print avs.max()
-    wav = avs == 1.8
+    wav = avs == 0.1
     for i in xrange(5):
         plt.plot(rvs[wav],diff[wav,i],label=synname[i])
     plt.ylabel(r'$\Delta A$')
@@ -95,9 +98,9 @@ def analyze():
 
     #fig.colorbar(surf, shrink=0.5, aspect=5)
     #plt.show()
-#analyze()
+# analyze()
 
-#wefwe
+
 # 0.00589190110442
 
 snmod='hsiao'
@@ -118,8 +121,9 @@ for name, lams in zip(synname,synlam):
 model_nodust = sncosmo.Model(source=snmod)
 flux_nodust = model_nodust.bandflux(synbands,0.)
 
-av = numpy.arange(0,1.81,0.05)
-rv = numpy.exp(numpy.arange(numpy.log(2), numpy.log(7)+0.001,numpy.log(7/2)/50))
+av = numpy.exp(numpy.arange(numpy.log(0.005), numpy.log(1.8)+0.001,numpy.log(1.8/0.005)/25))
+av=numpy.concatenate(([0],av))
+rv = numpy.exp(numpy.arange(numpy.log(2.1), numpy.log(6.9)+0.001,numpy.log(6.9./2.1)/50))
 
 avs=[]
 ebvs=[]
