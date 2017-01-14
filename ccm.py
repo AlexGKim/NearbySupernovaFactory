@@ -32,8 +32,8 @@ def analyze():
     model_nodust = sncosmo.Model(source='hsiao')
     flux_nodust = model_nodust.bandflux(synbands,0.)
 
-    av = numpy.arange(0,1.8001,0.05)
-    rv = numpy.exp(numpy.arange(numpy.log(.9), numpy.log(8)+0.001,numpy.log(8/.9)/50))
+    av = numpy.exp(numpy.arange(numpy.log(0.005), numpy.log(1.8)+0.001,numpy.log(1.8/0.005)/25))
+    rv = numpy.exp(numpy.arange(numpy.log(2.1), numpy.log(6.9)+0.001,numpy.log(6.9/2.1)/50))
 
     avs=[]
     ebvs=[]
@@ -116,8 +116,9 @@ for name, lams in zip(synname,synlam):
 model_nodust = sncosmo.Model(source=snmod)
 flux_nodust = model_nodust.bandflux(synbands,0.)
 
-av = numpy.arange(0,1.8,0.05)
-rv = numpy.exp(numpy.arange(numpy.log(.9), numpy.log(8)+0.001,numpy.log(8/.9)/50))
+
+av = numpy.exp(numpy.arange(numpy.log(0.005), numpy.log(1.8)+0.001,numpy.log(1.8/0.005)/25))
+rv = numpy.exp(numpy.arange(numpy.log(2.1), numpy.log(6.9)+0.001,numpy.log(6.9/2.1)/50))
 
 avs=[]
 ebvs=[]
