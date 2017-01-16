@@ -13,6 +13,8 @@ def sivel(data):
    sivel_err=[]
    x1 = []
    x1_err = []
+   zcmb = []
+   zerr= []
    for sn in data['snlist']:
       if sn in dic_meta.keys() and sn in dic_phreno.keys():
          meta = dic_meta[sn]
@@ -32,15 +34,21 @@ def sivel(data):
             sivel_err.append(float('nan'))
          x1.append(meta['salt2.X1'])
          x1_err.append(numpy.sqrt(meta['salt2.CovX1X1']))
+         zcmb.append(meta['host.zcmb'])
+         zerr.append(meta['host.zhelio.err'])
       else:
          sivel.append(float('nan'))
          sivel_err.append(float('nan'))
          x1.append(float('nan'))
-         x1_err.append(float('nan'))         
+         x1_err.append(float('nan')) 
+         zcmb.append(float('nan'))
+         zerr.append(float('nan'))
 
    sivel = numpy.array(sivel)
    sivel_err = numpy.array(sivel_err)
    x1 = numpy.array(x1)
    x1_err = numpy.array(x1_err)
+   zcmb = numpy.array(zcmb)
+   zerr = numpy.array(zerr)
 
-   return sivel,sivel_err,x1,x1_err
+   return sivel,sivel_err,x1,x1_err,zcmb,zerr
