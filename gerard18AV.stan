@@ -29,7 +29,7 @@ parameters {
 
   simplex[D] Delta_unit;
 
-  vector[D] AV;
+  vector<lower=-0.21,upper=1.8>[D] AV;
   # vector<lower=1./5.5,upper=1./0.5>[D] RVinv;
   real<lower=0> RVinv;
   # real<lower=0> AVscale;
@@ -74,7 +74,7 @@ model {
   target += lkj_corr_cholesky_lpdf(L_Omega | 4.);
 
   for (d in 1:D) {
-    avtemp = abs(AV[d]);
+    avtemp = AV[d];
     ebv  = avtemp*RVinv;
     target += normal_lpdf(mag_int_raw[d]| 0, 1);
 
@@ -86,9 +86,6 @@ model {
       + a[7] * ebv^3
       + a[8] * (avtemp^2) * ebv
       + a[9] * avtemp * (ebv^2);
-    if (AV[d] < 0) {
-      AX = -AX;
-    }
     target += multi_normal_lpdf(mag_obs[d] | mag_int[d] + AX, mag_cov[d]);
     target += multi_normal_lpdf(EW_obs[d] | EW[d], EW_cov[d]);
   }
