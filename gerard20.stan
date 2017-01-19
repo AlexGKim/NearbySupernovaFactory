@@ -29,8 +29,8 @@ parameters {
 
   simplex[D] Delta_unit;
 
-  vector<lower=0,upper=1.8>[D] AV;
-  vector<lower=0.9,upper=8>[D] RV;
+  vector<lower=-0.21,upper=1.8>[D] AV;
+  vector<lower=2.1,upper=6.9>[D] RV;
 }
 
 transformed parameters {

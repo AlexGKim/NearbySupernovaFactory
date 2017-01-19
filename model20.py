@@ -16,7 +16,7 @@ pkl_file = open('gege_data.pkl', 'r')
 data = pickle.load(pkl_file)
 pkl_file.close()
 
-sivel, sivel_err, _, _ = sivel.sivel(data)
+sivel, sivel_err, _, _, _, _ = sivel.sivel(data)
 
 use = numpy.isfinite(sivel)
 
@@ -40,7 +40,7 @@ nsne, nmags = mag_obs.shape
 EW_mn = EW_obs.mean(axis=0)
 EW_renorm = (EW_obs - EW_mn)
 
-mag_mn = mag_obs.mean(axis=0)
+mag_mn = mag_obs.mean()
 mag_renorm  = mag_obs-mag_mn
 
 sivel_mn = sivel.mean()
@@ -76,7 +76,7 @@ init = [{'EW' : EW_renorm, \
 
 sm = pystan.StanModel(file='gerard20.stan')
 control = {'stepsize':1}
-fit = sm.sampling(data=data, iter=5000, chains=8,control=control,init=init, thin=1)
+fit = sm.sampling(data=data, iter=2000, chains=8,control=control,init=init, thin=1)
 
 
 output = open('temp20.pkl','wb')
