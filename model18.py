@@ -40,7 +40,7 @@ nsne, nmags = mag_obs.shape
 EW_mn = EW_obs.mean(axis=0)
 EW_renorm = (EW_obs - EW_mn)
 
-mag_mn = mag_obs.mean(axis=0)
+mag_mn = mag_obs.mean()
 mag_renorm  = mag_obs-mag_mn
 
 sivel_mn = sivel.mean()
