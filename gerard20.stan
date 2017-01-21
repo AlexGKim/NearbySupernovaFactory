@@ -13,8 +13,28 @@ data {
   vector[5] a[9];
 }
 
+
+transformed data {
+  vector[5] c0;
+  # Hsiao
+  # c0[1]=-14.77399262;
+  # c0[2]= -15.18012344;
+  # c0[3]= -14.95874781;
+  # c0[4]= -14.84625696;
+  # c0[5]= -14.25870491;
+
+  # Salt2
+  c0[1] = -4.03605934;
+  c0[2] = -4.54998908;
+  c0[3] = -4.40304889;
+  c0[4] =  -4.29052768;
+  c0[5] =  -3.70238786;
+  c0 = c0 - mean(c0);
+}
+
 parameters {
-  vector[5] c_raw;
+  # vector[5] c_raw;
+  real c_zero;
   vector[5] alpha_raw;
   vector[5] beta_raw;
   vector<lower=0.0>[N_mags] L_sigma_raw;
@@ -42,7 +62,8 @@ transformed parameters {
   vector[D] Delta;
   vector[N_mags] mag_int[D];
 
-  c = c_raw/1e2;
+  # c = c_raw/1e2;
+  c = c0-c_zero/1e2;
   alpha = alpha_raw/5e2;
   beta = beta_raw/2e2;
   eta = eta_raw/6e2;

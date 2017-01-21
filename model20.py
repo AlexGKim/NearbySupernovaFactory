@@ -8,7 +8,7 @@ import sivel
 
 # two color parameter model
 
-pkl_file = open('fitz.pkl', 'r')
+pkl_file = open('fitz_salt2.pkl', 'r')
 a=pickle.load(pkl_file)
 pkl_file.close()
 
@@ -59,7 +59,8 @@ R_simplex = R_simplex/R_simplex.sum()
 
 init = [{'EW' : EW_renorm, \
          'sivel': sivel_renorm,\
-         'c_raw' : numpy.zeros(5), \
+         'c_zero': 0.,\
+         # 'c_raw' : numpy.zeros(5), \
          'alpha_raw' : numpy.zeros(5), \
          'beta_raw' : numpy.zeros(5), \
          'eta_raw' : numpy.zeros(5), \
@@ -79,7 +80,7 @@ control = {'stepsize':1}
 fit = sm.sampling(data=data, iter=2000, chains=8,control=control,init=init, thin=1)
 
 
-output = open('temp20.pkl','wb')
+output = open('temp20_salt2.pkl','wb')
 pickle.dump((fit.extract(),fit.get_sampler_params()), output, protocol=2)
 output.close()
 print fit
