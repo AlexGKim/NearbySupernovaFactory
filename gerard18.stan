@@ -13,8 +13,20 @@ data {
   vector[5] a[9];
 }
 
+transformed data {
+  vector[5] c0;
+  # Hsiao Vega
+  c0[1]=-0.55527082;
+  c0[2]= -0.07697321;
+  c0[3]= 0;
+  c0[4]= -0.07644737;
+  c0[5]= 0.30325839;
+  c0 = c0 - mean(c0);
+}
+
 parameters {
-  vector[5] c_raw;
+  # vector[5] c_raw;
+  real c_zero;
   vector[5] alpha_raw;
   vector[5] beta_raw;
   vector<lower=0.0>[N_mags] L_sigma_raw;
@@ -45,8 +57,9 @@ transformed parameters {
   vector[5] gamma;
   vector[5] rho1;
   vector[N_mags] mag_int[D];
-
-  c = c_raw/1e2;
+ 
+  # c = c_raw/1e2;
+  c = c0-c_zero/1e2;
   alpha = alpha_raw/5e2;
   beta = beta_raw/2e2;
   eta = eta_raw/6e2;

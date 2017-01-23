@@ -16,7 +16,7 @@ pkl_file = open('gege_data.pkl', 'r')
 data = pickle.load(pkl_file)
 pkl_file.close()
 
-sivel, sivel_err, _, _ = sivel.sivel(data)
+sivel, sivel_err, _, _, _, _ = sivel.sivel(data)
 
 use = numpy.isfinite(sivel)
 
@@ -59,7 +59,8 @@ R_simplex = R_simplex/R_simplex.sum()
 
 init = [{'EW' : EW_renorm, \
          'sivel': sivel_renorm,\
-         'c_raw' : numpy.zeros(5), \
+         'c_zero' : 0, \
+         # 'c_raw' : numpy.zeros(5), \
          'alpha_raw' : numpy.zeros(5), \
          'beta_raw' : numpy.zeros(5), \
          'eta_raw' : numpy.zeros(5), \
@@ -76,7 +77,7 @@ init = [{'EW' : EW_renorm, \
 
 sm = pystan.StanModel(file='gerard18.stan')
 control = {'stepsize':1}
-fit = sm.sampling(data=data, iter=5000, chains=8,control=control,init=init, thin=1)
+fit = sm.sampling(data=data, iter=4000, chains=8,control=control,init=init, thin=1)
 
 
 output = open('temp18.pkl','wb')
