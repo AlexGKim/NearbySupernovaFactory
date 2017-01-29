@@ -1164,7 +1164,7 @@ $a(U,B,V,R,I)=\{0.96,   1.00,   1.00,   0.97,   0.77\}$ and $b(U,B,V,R,I)=\{  1.
 The $F$ superscript is added to distinguish \citetalias{1999PASP..111...63F} parameters.
 Over the ranges of
  $R^F$ and $A^F_V$,
-and the wavelengths under consideration,  the values of the components  vary by $<5$\%.
+and the wavelengths under consideration,  the values $a$ and $b$ change but only by $<5$\%.
 
 Our model can be expressed as
 \begin{equation}
@@ -1175,7 +1175,7 @@ Our median-fit values for the $\gamma$ coefficients,
 $\frac{\gamma^0_X}{\gamma^0_B-\gamma^0_V}  =\{4.80 ,   3.89,   2.89,   2.22,   1.59\}$ and
 $ \frac{\gamma^1_X}{\gamma^1_B-\gamma^1_V}=\{-3.83 ,  -4.42,  -5.42,  -5.15,  -4.71\}$,
 %----
-can be transformed to a basis composed of the $a(X)$ and $b(X)$ vectors, and a residual vectors perpendicular to $a$ and $b$.
+can be transformed to a basis composed of the $a(X)$ and $b(X)$ vectors plus a residual vector perpendicular to $a$ and $b$.
 The result is
 \begin{equation}
 \begin{pmatrix}
@@ -1206,8 +1206,8 @@ contribute  2\% and 5\% respectively to the total  length of the $\gamma$ vector
 This result indicates that
 the allowed variation in $UBVRI$ allowed by the \citetalias{1999PASP..111...63F} model and our best-fit model are closely aligned.
 
-To visualize the above result, Figure~\ref{plane:fig} shows two perspectives (left and right columns) of $UVI$- (top row) and $BVR$- (bottom row) spaces
-of the vectors corresponding to $\gamma^i_X/(\gamma^i_B-\gamma^i_V)$ of our model (solid lines),
+The above result is visualized in Figure~\ref{plane:fig}, which  shows two perspectives (left and right columns) of $UVI$- (top row) and $BVR$- (bottom row) spaces
+of the vectors corresponding to $\gamma_X/(\gamma_B-\gamma_V)$ of our model (solid lines),
 and $a(X)$, $b(X)$ of the \citetalias{1999PASP..111...63F} model (dashed lines).  
 The two perspectives show that while the four vectors point in different directions for each band combination,
 they are almost coplanar in $UVI$, and close to coplanar in $BVR$.
@@ -1227,7 +1227,7 @@ of the vectors corresponding to $\gamma^i_X/(\gamma^i_B-\gamma^i_V)$ of our mode
    \label{plane:fig}}
 \end{figure}
 
-A prior that $k_0$ and  $k_1$ be uncorrelated was enforced to break degeneracies in our linear models, and led to the specification of the directions of
+A prior that $k_0$ and  $k_1$ be uncorrelated was enforced to break degeneracies in our linear models, and determines the choice of directions of
 the vectors $\gamma^0$ and $\gamma^1$.  Suppose that that the data were described by a dust model.  A \citetalias{1999PASP..111...63F}  dust model 
 can be written as 
 %To see how this prior would operate on dust models, consider that themodel in Eqn.~\ref{f99:eqn} can
@@ -1235,23 +1235,23 @@ can be written as
 \begin{equation}
 A_X =  (1-\kappa_1 \kappa_2)^{-1} [(A^F_V - \kappa_2 E^F(B-V))\left(a(X)+\kappa_1 b(X) \right) +  (-\kappa_1 A^F_V + E^F(B-V)) (\kappa_2 a(X) + b(X))],
 \end{equation}
-with the parameters $\kappa_1$ and $\kappa_2$ providing the freedom of choice in the directions of the two basis vectors.  In the analysis,
-the arbitrarity is broken and the $\kappa$'s specified, by the  prior of  
+with the parameters $\kappa_1$ and $\kappa_2$ providing freedom in the directions of the two basis vectors.  In the analysis,
+the $\kappa$'s are specified by the  prior of  
 zero covariance between $(A^F_V - \kappa_2 E^F(B-V))$ and  $(-\kappa_1 A^F_V + E^F(B-V))$.
-The preferred values for $\kappa$ from the linear model in \S\ref{model:sec} are shown qualitatively in
+The preferred values for $\kappa$ are shown qualitatively in
 Figure~\ref{plane:fig}.  For $\kappa_1=1/2.4$, $\kappa_2=-6.8$
 the vector $\gamma^0_X$ is  aligned with 
 the dust vector $\left(a(X)+\kappa_1 b(X) \right)$  and $\gamma^1_X$
-is aligned with $(\kappa_2 a(X) + b(X))$ for $X=UVI$.  Slightly shifted values of $\kappa_1=1/2.6$, $\kappa_2=-6.1$ apply for  $X=BVR$.
+is aligned with $(\kappa_2 a(X) + b(X))$  $UVI$-space.  Slightly shifted values of $\kappa_1=1/2.6$, $\kappa_2=-6.1$ apply in $BVR$-space.
 
-An intuitive understanding of $\kappa_1$ can be obtained by considering what would happen if
-all supernovae were to experience dust with the same $R^F$.   The zero-covariance
+To gain an intuitive understanding of $\kappa_1$, consider the hypothetical case where
+all supernovae experience dust with the same $R^F$.   The zero-covariance
 prior would be satisfied by  $\kappa_1=1/R^F$ and any arbitrary $\kappa_2$.
-The combination  $\gamma^0_V k_0$ would correspond to  $A^F_V$.  Intrinsically $k_1=0$  and $\gamma^1$ would be unconstrained.
-A slight relaxation away from the constant $R^F$ assumption would result in non-zero $k_1$ and a $\gamma^1$ in a direction that satisfies
-the prior condition, as parameterized by $\kappa_2$.
+The combination  $\gamma^0_V k_0$ would correspond to  $A^F_V$.  Both $k_1=0$  and $\gamma^1$ would be unconstrained.
+A slight relaxation away from the constant $R^F$ assumption would result in $\kappa_2$ no longer being arbitrary but determined by the prior, and a
+non-zero $k_1$ and a $\gamma^1$.
 
-Given the association of  our parameter $\gamma^0_V k_0$ with the $A^F_V$ of an $R^F \sim 1/\kappa_1$ dust model ,
+Given the association of  our parameter $\gamma^0_V k_0$ with the $A^F_V$ of an $R^F \sim 1/\kappa_1$ dust model,
 the former's distribution can be compared to the expectation for the latter.
 Figure~\ref{k0_med:fig} shows the histogram of
 median values of $\gamma^0_V k_0$.
@@ -1318,7 +1318,7 @@ Qualitatively, the $R^F \sim 2.4$  most closely matches our linear model fit.
 The near coplanarity of the plane defined by our parameters and the plane of  \citetalias{1999PASP..111...63F}, together with the fact that our  supernova
 parameters translate to  \citetalias{1999PASP..111...63F} parameters with consistent distributions, lead us to conclude that 
 $\{k_0, k_1\}$, describe for the most part the $\{ E(B-V), R\}$ parameters used
-in standard models of Milky Way dust.  There do remain some small inconsistencies between our numbers and expectations from dust models.
+in standard models of Milky Way dust.  Yet there do remain some small inconsistencies between our numbers and expectations from dust models.
 \color{black}
 
 \subsection{SN 2014J in the Context of Our Model}
@@ -1839,13 +1839,14 @@ is easy to interpret as an effective extinction.
 
 We are  faced with a conundrum: our broad-band model does not specify $f(\lambda)$.  As an ansatz,
 the SED of the SALT2, $c=0$, $x_1=0$ supernova at peak $B$ brightness is adopted as the SED of an unextincted
-SN~Ia, independent of spectral-feature parameters.  This choice contrasts with the models in the previous sections, which do not specify the unextincted
+SN~Ia, independent of spectral-feature parameters.  This choice contrasts with the models in the previous sections, which do not specify the
+parameter values of an unextincted
 supernova.
 The SALT2 SED determines the values of $A_X$ and the
 intrinsic colors. 
 
-This ansatz is  inconsistent with the results of the linear models evaluated with SNf data presented in previous sections:  the colors of a canonical supernova are not accessible by a SALT2 SED experiencing  \citetalias{1999PASP..111...63F} dust.
-Relative to SALT2, the canonical supernova with colors given by the best-fit $c_X$'s in \S\ref{model:sec} has the broad-band color excesses $E(X-V)$ shown in
+This ansatz is  inconsistent with the results of the linear models evaluated with SNf data presented in previous sections in that the colors of a canonical supernova are not accessible by a SALT2 SED experiencing  \citetalias{1999PASP..111...63F} dust.
+Taking the SALT2 template as the unextincted supernova, the canonical supernova with colors given by the best-fit $c_X$'s in \S\ref{model:sec} has the broad-band color excesses $E(X-V)$ shown in
 Figure~\ref{model1118:fig}.  Overplotted are representative $E(X-V)$  allowed by dust.
 The canonical supernova is in tension with colors induced by dust at extreme wavelengths, toward the red in the $U$ but blue in the $I$,
 while simultaneously showing no color excess is $B-R$.
@@ -1855,9 +1856,10 @@ while simultaneously showing no color excess is $B-R$.
    \includegraphics[width=2.8in]{output18/model1118ebv.pdf}
    \includegraphics[width=2.8in]{output18/comptolinear.pdf}
     \caption{Left: Broad-band color excesses $E(X-V)$ of the best-fit $c$'s of \S\ref{model:sec} 
-    relative to SALT2.  Overplotted are possible $E(X-V)$ for a fixed $A_V$ and a range of $R$,
+    taking the SALT2 template as an unextinced supernova.  Overplotted are possible $E(X-V)$ for a fixed $A_V$ and a range of $R$,
 allowed by \citetalias{1999PASP..111...63F} dust.
-Right:    \label{model1118:fig}}
+Right:    $A_X/E(X-V)$ of the best-fit $c$'s 
+    relative to SALT2. \label{model1118:fig}}
 \end{figure}
 
 
@@ -1896,10 +1898,9 @@ Right:    \label{model1118:fig}}
 
 The model we consider in this section is identical to the linear model described by Eqns.~\ref{ewsiv:eqn}
 and
-\ref{dust:eqn} in \S\ref{model:sec}, except that the colors of a zero-extinction supernova (parameterized by differences in $c_X$) are fixed to those of the SALT2 model,
+\ref{dust:eqn} in \S\ref{model:sec}, except that the colors of a zero-extinction supernova (parameterized by differences in $c_X$) are fixed to those of the SALT2 template,
 and the $\gamma k$ terms are replaced with $A_X(A_V=R E(B-V), E(B-V))$.   Each supernova has an $E(B-V)$ parameter 
-and there is one global $R$ parameter.
-
+and there is one global $R$ parameter.  
 %
 %
 %Three distinct analyses are run with the  \citetalias{1999PASP..111...63F}  dust model.  In the first (denoted
@@ -1908,11 +1909,11 @@ and there is one global $R$ parameter.
 %In the third (denoted as $R$-free), $A_V$ and $R$ are free for
 %each supernova, with a uniform prior $-0.21\le A_V \le 1.8$, $2.1 \le R \le 6.9$.
 
-The presentation of our results from evaluating this model with SNf data
-begins with further evidence of the inconsistency between the ansatz and the models of the previous section.
-The current analysis sets the magnitude of an $A_V=0$ supernova, so now  magnitudes in addition to colors of the canonical
-supernova in \S\ref{model:sec} can be compared relative to expectations of the dust model.  The magnitude difference
-is the difference between the $c_X$ parameters of the two analyses, denoted as $\Delta c_X$.
+Results from evaluating this model with SNf data
+provide further evidence of the inconsistency between the ansatz and the models of the previous section.
+The dust-model analysis of this section sets the magnitude of an $A_V=0$ supernova, so now  magnitudes of the canonical
+supernova in \S\ref{model:sec} can also be compared (along with color) to the expectations of the dust model.  The magnitude difference, $\Delta c_X$,
+is the difference between the $c_X$ parameters of the two analyses.
 Then  $\Delta c_X / (\Delta c_B - \Delta c_V)$
 corresponds to  $A_X/E(B-V)$ of the canonical supernova relative
 to SALT2: these values are plotted in
@@ -1921,8 +1922,8 @@ The negative values for $X=BVRI$ and the non-monotonic behavior is inconsistent 
 
 The analysis results for the dust parameters are shown in Figure~\ref{AVRV:fig}.  The left plot shows the histogram for the median $A_V$ determined for
 each supernova. The
-$A_V$ distribution  has a slow rise from zero,  compared to the equivalent $\gamma^0_V k_0$
-from the linear model of \S\ref{model:sec} that has the sharp rise expected from of a large fraction of supernovae
+$A_V$ distribution  has a slow rise from zero; recall that the equivalent $\gamma^0_V k_0$
+from the linear model of \S\ref{model:sec} has the sharp rise expected from of a large fraction of supernovae
 experiencing no dust \citep{1998ApJ...502..177H}. The right plot shows the posterior of $R$, with 68\% credible interval
 $R=2.99^{0.18}_{-0.16}$.  We perform the same analysis using the updated template of \citet{2007ApJ...663.1187H} in place of SALT2.
 While the $A_V$ distributions using the different models appear similar, there is a significant shift in the $R$ distribution
@@ -1940,25 +1941,29 @@ Right: Posteriors for $R$.  Results for both the SALT2 supernova model and the u
    \label{AVRV:fig}}
 \end{figure}
 
-The broadband nature of our supernova model does not allow a precise specification for the prediction of dust models, we therefore
-refrain from making absolute conclusions based on our results.  We do emphasize the sensitivity of our results when using the total-to-selective extinction
-$R$ parameter.  
-
-The $R$-free analysis is performed for the dust law of \citet{1989ApJ...345..245C}.  Figure~\ref{CCMF99:fig} shows the difference between per-supernova
-$A_V$ and $R_V$ of  the  \citet{1989ApJ...345..245C} (superscripted with $C$) and \citetalias{1999PASP..111...63F} dust laws.
-The weighted mean of the difference in $A_V$ is $0.06 \pm 0.01$ mag and that of $R_V$ is $-0.26 \pm 0.09$, both significantly
-non-zero.  Insofar that the $A_V$ and $R_V$
-parameters of the two models are designed to represent the same dust observables, we find that the systematic uncertainty in the dust model itself
-is important.
+The broadband nature of our supernova model does not allow a precise specification for the prediction of dust models,
+and our ansatz for incorporating dust is limited systematically in measuring 
+the total-to-selective extinction.  We emphasize also that $R^F$ determined in this section are based on  both absolute extinction and color,
+whereas the $\gamma$'s (and resulting $\kappa_1$) in \S\ref{model:sec} do not depend on absolute extinction, i.e. the extra model constraint  of the
+zero-extinction supernova.
 
 
-\begin{figure}[htbp] %  figure placement: here, top, bottom, or page
-   \centering
-   \includegraphics[width=5.2in]{output18/CCMf99.pdf}
-    \caption{Difference between per-supernova
-$A_V$ and $R_V$ of the  \citet{1989ApJ...345..245C} and \citetalias{1999PASP..111...63F} dust laws.
-   \label{CCMF99:fig}}
-\end{figure}
+%
+%The $R$-free analysis is performed for the dust law of \citet{1989ApJ...345..245C}.  Figure~\ref{CCMF99:fig} shows the difference between per-supernova
+%$A_V$ and $R_V$ of  the  \citet{1989ApJ...345..245C} (superscripted with $C$) and \citetalias{1999PASP..111...63F} dust laws.
+%The weighted mean of the difference in $A_V$ is $0.06 \pm 0.01$ mag and that of $R_V$ is $-0.26 \pm 0.09$, both significantly
+%non-zero.  Insofar that the $A_V$ and $R_V$
+%parameters of the two models are designed to represent the same dust observables, we find that the systematic uncertainty in the dust model itself
+%is important.
+%
+%
+%\begin{figure}[htbp] %  figure placement: here, top, bottom, or page
+%   \centering
+%   \includegraphics[width=5.2in]{output18/CCMf99.pdf}
+%    \caption{Difference between per-supernova
+%$A_V$ and $R_V$ of the  \citet{1989ApJ...345..245C} and \citetalias{1999PASP..111...63F} dust laws.
+%   \label{CCMF99:fig}}
+%\end{figure}
 
 
 \color{black}
