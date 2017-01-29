@@ -70,7 +70,12 @@
 \author{     Y.~Copin}
 \affiliation{    Universit\'e de Lyon, F-69622, Lyon, France ; Universit\'e de Lyon 1, Villeurbanne ; 
     CNRS/IN2P3, Institut de Physique Nucl\'eaire de Lyon}
-    
+
+\author{ S.~Dixon}
+\affiliation{
+    Department of Physics, University of California Berkeley,
+    366 LeConte Hall MC 7300, Berkeley, CA, 94720-7300}
+
 \author{     P.~Fagrelius}
 \affiliation{    Physics Division, Lawrence Berkeley National Laboratory, 
     1 Cyclotron Road, Berkeley, CA, 94720}
@@ -153,8 +158,7 @@ D-85748 Garching, Germany}
  \author{    D.~Rubin}
  \affiliation{    Physics Division, Lawrence Berkeley National Laboratory, 
     1 Cyclotron Road, Berkeley, CA, 94720}
-    \affiliation{    Department of Physics, Florida State University,
-    315 Keen Building, Tallahassee, FL 32306-4350}
+    \affiliation{   Space Telescope Science Institute, 3700 San Martin Drive, Baltimore, MD 21218}
  
  \author{    K.~Runge}
  \affiliation{    Physics Division, Lawrence Berkeley National Laboratory, 
@@ -198,19 +202,19 @@ is applied to the supernova sample of the Nearby Supernova Factory.  The peak ma
 broadband photometry and their colors are found to be 
 dependent on the spectral equivalent widths and the color parameters, to better than 
 %-----
-$(1-5\times10^{-5})$
+$1-5\times10^{-5}$
 %------
 confidence.
-The derived dust law is able to reproduce the optical colors of the highly reddened SN~2014J better than the \citet{1999PASP..111...63F} dust model.
+The derived dust curve is able to reproduce the optical colors of the highly reddened SN~2014J better than the \citet{1999PASP..111...63F} dust model.
 Extending the model to three color parameters gives almost identical results for
 all the parameters in common,
 plus a detection of a third parameter at
 %--- table.py
-$(1-5\times10^{-4})$
+$1-5\times10^{-4}$
 %-----
 confidence;
-this new parameter is responsible for supernova color diversity
-beyond those tracked by the spectral features and two-parameter dust models.
+this new parameter represents supernova color diversity
+beyond that tracked by the spectral features and two-parameter dust models.
 \end{abstract}
 
 \keywords{supernovae: general; supernovae: SN 2014J}
@@ -598,11 +602,11 @@ U\\B\\V\\R\\I
 \left(
 \Delta +
 \begin{pmatrix}
-c_0+\alpha_0 EW_{Ca} + \beta_0 EW_{Si} + \eta_0 \lambda_{Si} \\
-c_1+\alpha_1 EW_{Ca} + \beta_1 EW_{Si} + \eta_1 \lambda_{Si}  \\
-c_2+\alpha_2 EW_{Ca} + \beta_2 EW_{Si} + \eta_2 \lambda_{Si} \\
-c_3+\alpha_3 EW_{Ca} + \beta_3 EW_{Si} + \eta_3 \lambda_{Si} \\
-c_4+\alpha_4 EW_{Ca} + \beta_4 EW_{Si}+ \eta_4 \lambda_{Si}
+c_U+\alpha_U EW_{Ca} + \beta_U EW_{Si} + \eta_U \lambda_{Si} \\
+c_B+\alpha_B EW_{Ca} + \beta_B EW_{Si} + \eta_B \lambda_{Si}  \\
+c_V+\alpha_V EW_{Ca} + \beta_V EW_{Si} + \eta_V \lambda_{Si} \\
+c_R+\alpha_R EW_{Ca} + \beta_R EW_{Si} + \eta_R \lambda_{Si} \\
+c_I+\alpha_I EW_{Ca} + \beta_I EW_{Si}+ \eta_I \lambda_{Si}
 \end{pmatrix}
 ,C_{c}
 \right)
@@ -615,8 +619,8 @@ U_o\\B_o\\ V_o\\R_o\\I_o\\EW_{Si, o}\\ EW_{Ca, o} \\ \lambda_{Si, o}
 \sim \mathcal{N}
 \left(
 \begin{pmatrix}
-U +\gamma^0_{1} k_0 +\gamma^1_{0} k_1 \\B +\gamma^0_{1} k_0 +\gamma^1_{1} k_1 \\
-V+\gamma^0_{2} k_0+\gamma^1_{2} k_1\\R+\gamma^0_{3} k_0 + \gamma^1_{3} k_1\\I+\gamma^0_{4} k_0+\gamma^1_{4} k_1\\
+U +\gamma^0_{U} k_0 +\gamma^1_{U} k_1 \\B +\gamma^0_{B} k_0 +\gamma^1_{B} k_1 \\
+V+\gamma^0_{V} k_0+\gamma^1_{V} k_1\\R+\gamma^0_{R} k_0 + \gamma^1_{R} k_1\\I+\gamma^0_{I} k_0+\gamma^1_{I} k_1\\
 EW_{Si}\\ EW_{Ca} \\ \lambda_{Si}
 \end{pmatrix}
 ,C
@@ -637,7 +641,7 @@ degeneracies  $\gamma ^0\rightarrow a\gamma^0$, $k_0 \rightarrow a^{-1}k_0$ and 
 up to a $\pm$ sign.
 Furthermore we impose
 \begin{equation}
-\langle \Delta \rangle=0, \langle k_0 \rangle=0, \langle k_1 \rangle=0, \gamma^0_0 > 0, \gamma^1_0 < 0.
+\langle \Delta \rangle=0, \langle k_0 \rangle=0, \langle k_1 \rangle=0, \gamma^0_U > 0, \gamma^1_U < 0.
 \end{equation}
 The first two conditions specify the definition of zero color relative to which the color excess is measured:
 in a linear model this value is arbitrary.
@@ -646,10 +650,10 @@ associated
 with the $\pm$ sign, i.e.\ simultaneous sign flips of
 $\gamma^0$--$k_0$ and $\gamma^1$--$k_1$
 (when running our fits, $k_0$ and $k_1$ are set to
-identical initial conditions, so the difference in the signs of $\gamma^0_0$ and $\gamma^1_0$ distinguishes the two.)
+identical initial conditions, so the difference in the signs of $\gamma^0_U$ and $\gamma^1_U$ distinguishes the two.)
 As  $\gamma^0$--$k_0$ and $\gamma^1$--$k_1$ are degenerate with
 each other,
-the different initial and boundary conditions for $\gamma^0_0$ and $\gamma^1_0$ break the degeneracy of our mixture model;
+the different initial and boundary conditions for $\gamma^0_U$ and $\gamma^1_U$ break the degeneracy of our mixture model;
 otherwise identical initial conditions for $\gamma^0$, $\gamma^1$ produce indistinguishable posteriors
 with relatively broad credible intervals and lower maximum likelihood.
 
@@ -1047,12 +1051,12 @@ and \citet{leget:thesis}.
 The range of SiII$\lambda$4130 equivalent widths is $\pm 20$~\AA\ whereas the width of the $B$-band is 851~\AA, so that its affect on magnitude
 is
 $2.5 \log{(20/850)} \sim 0.03$ mag.  
-The implied span in $B$ magnitude based on $\beta_1$ is 0.54~mag.  Therefore $\beta_1$ cannot wholly be attributed to the flux deficit
+The implied span in $B$ magnitude based on $\beta_B$ is 0.54~mag.  Therefore $\beta_B$ cannot wholly be attributed to the flux deficit
 from the line itself.
 Similarly, the CaII H\&K equivalent widths have range $\pm 50$~\AA, while the width of the $U$ band is
 701~\AA, so that its affect on magnitude
 is
-$2.5 \log{(50/701)} \sim 0.08$ mags.   The implied span in $U$ magnitude is  0.21~mag, so $\alpha_0$ cannot be completely due to the line itself.
+$2.5 \log{(50/701)} \sim 0.08$ mags.   The implied span in $U$ magnitude is  0.21~mag, so $\alpha_U$ cannot be completely due to the line itself.
 
 \subsection{The Two Extrinsic Parameters $k_0$ and $k_1$}
 \color{blue}
@@ -1202,52 +1206,63 @@ contribute  2\% and 5\% respectively to the total  length of the $\gamma$ vector
 This result indicates that
 the allowed variation in $UBVRI$ allowed by the \citetalias{1999PASP..111...63F} model and our best-fit model are closely aligned.
 
-To visualize the above result, Figure~\ref{plane:fig} shows two perspectives in $UVI$-space
-of the vectors corresponding to $\gamma^i_X/(\gamma^i_B-\gamma^i_V)$ of our model,
-and $a(X)$, $b(X)$ of the \citetalias{1999PASP..111...63F} model.
-The left plot shows that the four vectors point in different directions, while the right plot shows that
-the planes defined by our model (solid lines) and the  \citetalias{1999PASP..111...63F} model (dashed lines) are nearly coplanar.
-
-The specific directions of $\frac{\gamma^0_X}{\gamma^0_B-\gamma^0_V}$ and
-$\frac{\gamma^1_X}{\gamma^1_B-\gamma^1_V}$ within the plane they define are not arbitrary, but are determined by the prior that
-$k_0$ and  $k_1$ are uncorrelated. 
-In order to understand these directions in the context of the dust model,
-we
-rewrite the \citetalias{1999PASP..111...63F} model in Eqn.~\ref{f99:eqn} as
-\begin{equation}
-A_X =  A_V^F\left(a(X)+\frac{b(X)}{r} \right) +  \left( E^F(B-V) - \frac{ A_V^F}{r}\right)b(X).
-\end{equation}
-Assigning $r=2.4$, we find that the combination  $\left(a(X) + \frac{b(X)}{2.4}\right)$ is
-almost perfectly aligned with $\gamma^0_X/(\gamma^0_B-\gamma^0_V)$ while $b$ alone is almost perfectly aligned with $\gamma^1_X/(\gamma^1_B-\gamma^1_V)$,
-as shown in the dot-dashed and dotted lines of  Figure~\ref{plane:fig}.  This implies a correspondence of $k_0$ with $A^F_V$,
-and $k_1$ with $  \left( E^F(B-V) - \frac{ A_V^F}{2.4}\right)$.
-Our prior of a non-correlation between $k_0$ and $k_1$ has lead to an $r \sim 2.4$  that optimizes the
-non-correlation between $A^F_V$ and $  \left( E^F(B-V) - \frac{ A_V^F}{r}\right)$.
+To visualize the above result, Figure~\ref{plane:fig} shows two perspectives (left and right columns) of $UVI$- (top row) and $BVR$- (bottom row) spaces
+of the vectors corresponding to $\gamma^i_X/(\gamma^i_B-\gamma^i_V)$ of our model (solid lines),
+and $a(X)$, $b(X)$ of the \citetalias{1999PASP..111...63F} model (dashed lines).  
+The two perspectives show that while the four vectors point in different directions for each band combination,
+they are almost coplanar in $UVI$, and close to coplanar in $BVR$.
 
 \begin{figure}[htbp] %  figure placement: here, top, bottom, or page
    \centering
-   \includegraphics[width=2.8in]{output11/plane0.pdf}
-   \includegraphics[width=2.8in]{output11/plane1.pdf}
+   \includegraphics[width=2.95in]{output11/plane0.pdf}
+   \includegraphics[width=2.95in]{output11/plane1.pdf}
+   \includegraphics[width=2.95in]{output11/plane0BVR.pdf}
+   \includegraphics[width=2.95in]{output11/plane1BVR.pdf}
    \caption{
-   Two different perspectives in $UVI$-space of the vectors $\gamma^i_X/(\gamma^i_B-\gamma^i_V)$ of our model (solid lines),
-   and $a(X)$, $b(X)$ of the \citetalias{1999PASP..111...63F} model (dashed lines).  The combination $a(X)+b(X)/2.4$ is shown in the dot-dashed
-   line, almost perfectly superimposed on $\gamma^0_X/(\gamma^0_B-\gamma^0_V)$, while $b(X)$ shown in the dotted line is
-   almost  perfectly superimposed on $\gamma^1_X/(\gamma^1_B-\gamma^1_V)$.  
+   Two perspectives (left and right columns) of $UVI$- (top row) and $BVR$- (bottom row) spaces
+of the vectors corresponding to $\gamma^i_X/(\gamma^i_B-\gamma^i_V)$ of our model (solid lines),
+   and $a(X)$, $b(X)$ of the \citetalias{1999PASP..111...63F} model (dashed lines).  The combinations $a(X)+b(X)/2.4$ and  $a(X)+b(X)/2.6$ are shown in the dotted
+   lines: thy are almost perfectly superimposed on $\gamma^0_X/(\gamma^0_B-\gamma^0_V)$ for $UVI$ and $BVR$ respectively.  $b(X)$ shown in the dotted line is
+   almost  perfectly superimposed on $\gamma^1_X/(\gamma^1_B-\gamma^1_V)$ in $UVI$ but is clearly distinct in $BVR$.  
    \label{plane:fig}}
 \end{figure}
 
-Given the association of  our parameter $\gamma^0_V k_0$ with the $A^F_V$ of an $R^F \sim 2.4$ dust model ,
+A prior that $k_0$ and  $k_1$ be uncorrelated was enforced to break degeneracies in our linear models, and led to the specification of the directions of
+the vectors $\gamma^0$ and $\gamma^1$.  Suppose that that the data were described by a dust model.  A \citetalias{1999PASP..111...63F}  dust model 
+can be written as 
+%To see how this prior would operate on dust models, consider that themodel in Eqn.~\ref{f99:eqn} can
+%be expressed in terms of new basis vectors parametrized by $\kappa$:
+\begin{equation}
+A_X =  (1-\kappa_1 \kappa_2)^{-1} [(A^F_V - \kappa_2 E^F(B-V))\left(a(X)+\kappa_1 b(X) \right) +  (-\kappa_1 A^F_V + E^F(B-V)) (\kappa_2 a(X) + b(X))],
+\end{equation}
+with the parameters $\kappa_1$ and $\kappa_2$ providing the freedom of choice in the directions of the two basis vectors.  In the analysis,
+the arbitrarity is broken and the $\kappa$'s specified, by the  prior of  
+zero covariance between $(A^F_V - \kappa_2 E^F(B-V))$ and  $(-\kappa_1 A^F_V + E^F(B-V))$.
+The preferred values for $\kappa$ from the linear model in \S\ref{model:sec} are shown qualitatively in
+Figure~\ref{plane:fig}.  For $\kappa_1=1/2.4$, $\kappa_2=-6.8$
+the vector $\gamma^0_X$ is  aligned with 
+the dust vector $\left(a(X)+\kappa_1 b(X) \right)$  and $\gamma^1_X$
+is aligned with $(\kappa_2 a(X) + b(X))$ for $X=UVI$.  Slightly shifted values of $\kappa_1=1/2.6$, $\kappa_2=-6.1$ apply for  $X=BVR$.
+
+An intuitive understanding of $\kappa_1$ can be obtained by considering what would happen if
+all supernovae were to experience dust with the same $R^F$.   The zero-covariance
+prior would be satisfied by  $\kappa_1=1/R^F$ and any arbitrary $\kappa_2$.
+The combination  $\gamma^0_V k_0$ would correspond to  $A^F_V$.  Intrinsically $k_1=0$  and $\gamma^1$ would be unconstrained.
+A slight relaxation away from the constant $R^F$ assumption would result in non-zero $k_1$ and a $\gamma^1$ in a direction that satisfies
+the prior condition, as parameterized by $\kappa_2$.
+
+Given the association of  our parameter $\gamma^0_V k_0$ with the $A^F_V$ of an $R^F \sim 1/\kappa_1$ dust model ,
 the former's distribution can be compared to the expectation for the latter.
 Figure~\ref{k0_med:fig} shows the histogram of
 median values of $\gamma^0_V k_0$.
 The distribution is non-Gaussian, having a sharp rise in the blue and an extended tail in the red, consistent
 with the expectation of dust considering the spatial distribution of supernovae within galaxies and the distribution of galaxy orientations with respect to the observer \citep{1998ApJ...502..177H}.
 
-Figure~\ref{k0_med:fig} also shows the distribution of $\gamma^1_V k_1$, which is associated with $\left( E^F(B-V) - \frac{ A_V^F}{2.4}\right)$, i.e.\
-extinction corrections due to deviations away from the $R=2.4$ value.   The distribution has a long
+Figure~\ref{k0_med:fig} also shows the distribution of $\gamma^1_V k_1$, which is associated with 
+extinction corrections due to deviations away from the canonical $R^F$ value.   The distribution has a long
 negative tail and is peaked at its positive edge, and by construction has a mean of zero.
-The implication is that while the bulk of supernovae have positive values associated with $R>2.4$, there is a tail
-of negative values associated with $R<2.4$.  The plot of   $\gamma^0_V k_0$ versus $\gamma^1_V k_1$  shown in Figure~\ref{kk:fig} shows that
+The implication is that while the bulk of supernovae have positive values associated with $R>1/\kappa_1$, there is a tail
+of negative values associated with $R<1/\kappa_1$.  The plot of   $\gamma^0_V k_0$ versus $\gamma^1_V k_1$  shown in Figure~\ref{kk:fig} shows that
 the positive edge in $\gamma^1_V k_1$ persists over the full range of  $\gamma^0_V k_0$. On the other hand, lower values of $\gamma^1_V k_1$
 occur at larger values of  $\gamma^0_V k_0$.
 These findings are consistent with previous results:
@@ -1303,7 +1318,7 @@ Qualitatively, the $R^F \sim 2.4$  most closely matches our linear model fit.
 The near coplanarity of the plane defined by our parameters and the plane of  \citetalias{1999PASP..111...63F}, together with the fact that our  supernova
 parameters translate to  \citetalias{1999PASP..111...63F} parameters with consistent distributions, lead us to conclude that 
 $\{k_0, k_1\}$, describe for the most part the $\{ E(B-V), R\}$ parameters used
-in standard models of Milky Way dust.
+in standard models of Milky Way dust.  There do remain some small inconsistencies between our numbers and expectations from dust models.
 \color{black}
 
 \subsection{SN 2014J in the Context of Our Model}
@@ -1412,11 +1427,11 @@ U\\B\\V\\R\\I
 \left(
 \Delta +
 \begin{pmatrix}
-c_0+\alpha_0 EW_{Ca} + \beta_0 EW_{Si} + \eta_0 \lambda_{Si} + \delta_0 D\\
-c_1+\alpha_1 EW_{Ca} + \beta_1 EW_{Si} + \eta_1 \lambda_{Si} + \delta_1 D \\
-c_2+\alpha_2 EW_{Ca} + \beta_2 EW_{Si} + \eta_2 \lambda_{Si} + \delta_2 D\\
-c_3+\alpha_3 EW_{Ca} + \beta_3 EW_{Si} + \eta_3 \lambda_{Si} + \delta_3 D\\
-c_4+\alpha_4 EW_{Ca} + \beta_4 EW_{Si}+ \eta_4 \lambda_{Si} + \delta_4 D
+c_U+\alpha_U EW_{Ca} + \beta_U EW_{Si} + \eta_U \lambda_{Si} + \delta_0 D\\
+c_B+\alpha_B EW_{Ca} + \beta_B EW_{Si} + \eta_B \lambda_{Si} + \delta_1 D \\
+c_V+\alpha_V EW_{Ca} + \beta_V EW_{Si} + \eta_V \lambda_{Si} + \delta_2 D\\
+c_R+\alpha_R EW_{Ca} + \beta_R EW_{Si} + \eta_R \lambda_{Si} + \delta_3 D\\
+c_I+\alpha_I EW_{Ca} + \beta_I EW_{Si}+ \eta_I \lambda_{Si} + \delta_4 D
 \end{pmatrix}
 ,C_{c}
 \right)
@@ -1429,8 +1444,8 @@ U_o\\B_o\\ V_o\\R_o\\I_o\\EW_{Si, o}\\ EW_{Ca, o} \\ \lambda_{Si, o}
 \sim \mathcal{N}
 \left(
 \begin{pmatrix}
-U +\gamma^0_{0} k_0 +\gamma^1_{0} k_1 \\B +\gamma^0_{1} k_0 +\gamma^1_{1} k_1 \\
-V+\gamma^0_{2} k_0+\gamma^1_{2} k_1\\R+\gamma^0_{3} k_0 + \gamma^1_{3} k_1\\I+\gamma^0_{4} k_0+\gamma^1_{4} k_1\\
+U +\gamma^0_{U} k_0 +\gamma^1_{B} k_1 \\B +\gamma^0_{B} k_0 +\gamma^1_{B} k_1 \\
+V+\gamma^0_{V} k_0+\gamma^1_{V} k_1\\R+\gamma^0_{R} k_0 + \gamma^1_{R} k_1\\I+\gamma^0_{I} k_0+\gamma^1_{I} k_1\\
 EW_{Si}\\ EW_{Ca} \\ \lambda_{Si}
 \end{pmatrix}
 ,C
