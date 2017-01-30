@@ -13,6 +13,8 @@ import cPickle
 import matplotlib as mpl
 import sivel
 
+mpl.rcParams['font.size'] = 18
+
 f = open('temp23.pkl','rb')
 (fit,_) = pickle.load(f)
 
@@ -152,6 +154,7 @@ plt.close()
 plt.errorbar(x1, y, xerr=[x1_err,x1_err],yerr=[y-ymin,ymax-ymin],fmt='o')
 plt.xlabel(r'$x_1$')
 plt.ylabel(r'$EW_{Si}$')
+plt.tight_layout()
 pp = PdfPages("output23/x1si.pdf")
 plt.savefig(pp,format='pdf')
 pp.close()
@@ -161,6 +164,7 @@ plt.close()
 plt.errorbar(x1, y, xerr=[x1_err,x1_err],yerr=[y-ymin,ymax-ymin],fmt='o')
 plt.xlabel(r'$x_1$')
 plt.ylabel(r'$A_{\delta I}$')
+plt.tight_layout()
 pp = PdfPages("output23/x1D.pdf")
 plt.savefig(pp,format='pdf')
 pp.close()
@@ -245,8 +249,9 @@ for i in xrange(4):
     lname = r'$({0}_o-V_o) - ({0}-V)_{{model}}$'.format(cname[i])
     axes[i].set_ylabel(lname)
     axes[i].axhline(y=0,linestyle=':')
-fig.subplots_adjust(hspace=.3)
+# fig.subplots_adjust(hspace=.3)
 fig.set_size_inches(8,11)
+plt.tight_layout()
 filename = 'output23/residual.pdf'
 pp = PdfPages(filename)
 plt.savefig(pp,format='pdf')
@@ -310,8 +315,9 @@ for i in xrange(4):
     lname = r'$({0}_o-V_o) - ({0}-V)_{{model}}$'.format(cname[i])
     axes[i].set_ylabel(lname)
     axes[i].axhline(y=0,linestyle=':')
-fig.subplots_adjust(hspace=.3)
+# fig.subplots_adjust(hspace=.3)
 fig.set_size_inches(8,11)
+plt.tight_layout()
 filename = 'output23/residualx1.pdf'
 pp = PdfPages(filename)
 plt.savefig(pp,format='pdf')
@@ -666,6 +672,7 @@ plt.close()
 
 figure = corner.corner(fit['rho1'],labels=[r"${\delta}_{0}$",r"${\delta}_{1}$",r"${\delta}_{2}$",r"${\delta}_{3}$",r"${\delta}_{4}$"])
 pp = PdfPages('output23/delta_corner.pdf')
+plt.tight_layout()
 plt.savefig(pp,format='pdf')
 pp.close()
 plt.close()
@@ -914,6 +921,7 @@ plt.legend()
 plt.xlabel(r'Wavelength (\AA)')
 plt.ylabel(r'$\frac{\delta_X}{\delta_4}-1$')
 plt.ylim((-4,1))
+plt.tight_layout()
 pp = PdfPages('output23/deltaratio.pdf')
 plt.savefig(pp,format='pdf')
 pp.close()

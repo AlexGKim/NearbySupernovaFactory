@@ -7,6 +7,9 @@ from matplotlib.backends.backend_pdf import PdfPages
 import matplotlib.pyplot as plt
 import f99_band
 import emcee
+import matplotlib as mpl
+
+mpl.rcParams['font.size'] = 14
 
 # Get the data
 f = open('temp11.pkl','rb')
@@ -20,6 +23,23 @@ av=0.1
 ebv=0.1/2.5
 A1= f99_band.A_X(r_v=av/ebv, ebv=ebv)
 
+# pkl_file = open('fitz.pkl', 'r')
+# a=pickle.load(pkl_file)
+# pkl_file.close()
+
+# AX = a[0]* av + a[1] * av**2 \
+#   + a[2]* ebv+ a[3] * ebv**2 \
+#   + a[4] * av* ebv \
+#   + a[5]* av**3 \
+#   + a[6] * ebv**3 \
+#   + a[7] * (av**2) * ebv \
+#   + a[8] * av * (ebv**2)
+
+# plt.plot(A1-AX)
+
+# plt.show()
+
+# wefe
 A2= f99_band.A_X(r_v=(av+0.01)/ebv, ebv=ebv)
 dAdAv = (A2 - A1)/0.01
 
@@ -117,27 +137,81 @@ dum  = numpy.sqrt(dAdebv[0]**2+dAdebv[2]**2+dAdebv[4]**2)
 ax.plot([0,dAdebv[0]/dum],[0,dAdebv[2]/dum],[0,dAdebv[4]/dum],label=r'$b(X)$',ls='--')
 crap = dAdAv + dAdebv/2.4
 dum  = numpy.sqrt(crap[0]**2+crap[2]**2+crap[4]**2)
-ax.plot([0,crap[0]/dum],[0,crap[2]/dum],[0,crap[4]/dum],label=r'$a(X)+b(X)/2.4$',ls='-.')
-crap = dAdebv
-ax.plot([0,crap[0]/dum],[0,crap[2]/dum],[0,crap[4]/dum],label=r'$b(X)$',ls=':')
-ax.legend(prop={'size':10})
-ax.set_xlabel(r'$U$')
-ax.set_ylabel(r'$V$')
-ax.set_zlabel(r'$I$')
+ax.plot([0,crap[0]/dum],[0,crap[2]/dum],[0,crap[4]/dum],label=r'$a(X)+b(X)/2.4$',ls=':')
+crap = -6.8*dAdAv + dAdebv
+dum  = numpy.sqrt(crap[0]**2+crap[2]**2+crap[4]**2)
+ax.plot([0,crap[0]/dum],[0,crap[2]/dum],[0,crap[4]/dum],label=r'$-6.8a(X)+b(X)$',ls=':',color='black')
+crap = dAdAv + dAdebv/2.6
+# dum  = numpy.sqrt(crap[0]**2+crap[2]**2+crap[4]**2)
+# ax.plot([0,crap[0]/dum],[0,crap[2]/dum],[0,crap[4]/dum],label=r'$a(X)+b(X)/2.6$',ls=':',color='black')
+#crap = dAdebv
+#ax.plot([0,crap[0]/dum],[0,crap[2]/dum],[0,crap[4]/dum],label=r'$b(X)$',ls=':')
+ax.legend(prop={'size':14})
+ax.set_xlabel(r'$U$',labelpad=18)
+ax.set_ylabel(r'$V$',labelpad=18)
+ax.set_zlabel(r'$I$',labelpad=18)
 ax.xaxis.set_ticks(numpy.arange(-.5,1.1,.25))
 ax.yaxis.set_ticks(numpy.arange(-.8,.81,.4))
 ax.view_init(elev=2, azim=-114)
 pp = PdfPages("output11/plane0.pdf")
+plt.tight_layout()
 plt.savefig(pp,format='pdf')
 pp.close()
 ax.view_init(elev=7, azim=-165)
 ax.yaxis.set_ticks(numpy.arange(-.75,.76,.25))
 ax.xaxis.set_ticks(numpy.arange(-.5,.76,.5))
 pp = PdfPages("output11/plane1.pdf")
+plt.tight_layout()
 plt.savefig(pp,format='pdf')
 pp.close()
 plt.close()
 
+
+# Plot vectors in BVR
+from mpl_toolkits.mplot3d import Axes3D
+from matplotlib import rcParams
+fig = plt.figure()
+ax = fig.gca(projection='3d')
+dum  = numpy.sqrt(cs[0][1]**2+cs[0][2]**2+cs[0][3]**2)
+ax.plot([0,cs[0][1]/dum],[0,cs[0][2]/dum],[0,cs[0][3]/dum],label=r'$\gamma^0_X/(\gamma^0_B-\gamma^0_V)$')
+dum  = numpy.sqrt(cs[1][1]**2+cs[1][2]**2+cs[1][3]**2)
+ax.plot([0,cs[1][1]/dum],[0,cs[1][2]/dum],[0,cs[1][3]/dum],label=r'$\gamma^1_X/(\gamma^1_B-\gamma^1_V)$')
+dum  = numpy.sqrt(dAdAv[1]**2+dAdAv[2]**2+dAdAv[3]**2)
+ax.plot([0,dAdAv[1]/dum],[0,dAdAv[2]/dum],[0,dAdAv[3]/dum],label=r'$a(X)$',ls='--')
+dum  = numpy.sqrt(dAdebv[1]**2+dAdebv[2]**2+dAdebv[3]**2)
+ax.plot([0,dAdebv[1]/dum],[0,dAdebv[2]/dum],[0,dAdebv[3]/dum],label=r'$b(X)$',ls='--')
+# crap = dAdAv + dAdebv/2.4
+# dum  = numpy.sqrt(crap[1]**2+crap[2]**2+crap[3]**2)
+# ax.plot([0,crap[1]/dum],[0,crap[2]/dum],[0,crap[3]/dum],label=r'$a(X)+b(X)/2.4$',ls=':')
+crap = dAdAv + dAdebv/2.6
+dum  = numpy.sqrt(crap[1]**2+crap[2]**2+crap[3]**2)
+ax.plot([0,crap[1]/dum],[0,crap[2]/dum],[0,crap[3]/dum],label=r'$a(X)+b(X)/2.6$',ls=':')
+crap = -6.1*dAdAv + dAdebv
+dum  = numpy.sqrt(crap[1]**2+crap[2]**2+crap[3]**2)
+ax.plot([0,crap[1]/dum],[0,crap[2]/dum],[0,crap[3]/dum],label=r'$-6.1a(X)+b(X)$',ls=':',color='black')
+#crap = dAdebv
+#ax.plot([0,crap[1]/dum],[0,crap[2]/dum],[0,crap[3]/dum],label=r'$b(X)$',ls=':')
+ax.legend(prop={'size':14})
+ax.set_xlabel(r'$B$',labelpad=18)
+ax.set_ylabel(r'$V$',labelpad=18)
+ax.set_zlabel(r'$R$',labelpad=18)
+ax.xaxis.set_ticks(numpy.arange(-.5,1.1,.25))
+ax.yaxis.set_ticks(numpy.arange(-.8,.81,.4))
+ax.view_init(elev=2, azim=-114)
+pp = PdfPages("output11/plane0BVR.pdf")
+plt.tight_layout()
+plt.savefig(pp,format='pdf')
+pp.close()
+ax.view_init(elev=7, azim=-165)
+ax.yaxis.set_ticks(numpy.arange(-.75,.76,.25))
+ax.xaxis.set_ticks(numpy.arange(-.5,.76,.5))
+pp = PdfPages("output11/plane1BVR.pdf")
+plt.tight_layout()
+plt.savefig(pp,format='pdf')
+pp.close()
+plt.close()
+
+wef
 
 # Plot AV versus E(B-V) from the data
 
@@ -219,7 +293,7 @@ for rbv_ in rbvs:
     x.append(A1[1]-A1[2])
     y.append(A1[2])
   plt.plot(x,y,label=r'$R^F={:6.1f}$'.format(rbv_))
-plt.legend(loc=2)
+plt.legend(loc=4)
 plt.xlim((-0.1,0.4))
 plt.ylim((-0.7,1.2))
 pp = PdfPages("output11/avebv.pdf")

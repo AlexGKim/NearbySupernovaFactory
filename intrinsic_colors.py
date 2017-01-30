@@ -12,7 +12,7 @@ import scipy
 import cPickle
 import matplotlib as mpl
 import sivel
-
+mpl.rcParams['font.size'] = 18
 ext=''
 
 f = open('temp18'+ext+'.pkl','rb')
@@ -132,7 +132,7 @@ for r in rv:
     ax.plot(numpy.arange(4),AX,label=r'$R={}$'.format(r))
     ax.set_ylabel(r'$E(X-V)$')
     ax.set_xlabel(r'Band $X$')
-plt.legend()
+plt.legend(fontsize=15)
 pp = PdfPages('output18'+ext+'/model1118ebv.pdf')
 plt.savefig(pp,format='pdf')
 pp.close()

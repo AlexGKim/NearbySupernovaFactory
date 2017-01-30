@@ -12,6 +12,7 @@ import scipy
 import cPickle
 import matplotlib as mpl
 import sivel
+mpl.rcParams['font.size'] = 18
 
 f = open('temp11.pkl','rb')
 (fit,_) = pickle.load(f)
@@ -61,7 +62,7 @@ pkl_file.close()
 # x1 = numpy.array(x1)
 # x1_err = numpy.array(x1_err)
 
-sivel,sivel_err,x1,x1_err = sivel.sivel(data)
+sivel,sivel_err,x1,x1_err, _, _ = sivel.sivel(data)
 use = numpy.isfinite(sivel)
 
 #  The ordering is 'Ca','Si','U','B','V','R','I'
@@ -121,6 +122,15 @@ for i in xrange(nsne):
 # pickle.dump([intrinsic, numpy.array(data['snlist'])[use]], output, protocol=2)
 # output.close()
 # wefew
+colors = fit['c']+mag_mn[None,:]
+colors  = colors - colors[:,2][:,None]
+colors = numpy.delete(colors, 2,axis=1)
+figure = corner.corner(colors,labels=[r"$U_0-V_0$",r"$B_0-V_0$",r"$R_0-V_0$",r"$I_0-V_0$"])
+pp = PdfPages('output11/col_corner.pdf')
+plt.savefig(pp,format='pdf')
+pp.close()
+plt.close()
+
 
 plt.hist(numpy.median((fit['gamma'][:,1]-fit['gamma'][:,2])[:,None]*fit['k'],axis=0),bins=20)
 plt.xlabel(r'$E_{\gamma_0}(B-V)$')
@@ -133,6 +143,7 @@ plt.close()
 plt.hist(numpy.median((fit['gamma'][:,2])[:,None]*fit['k'],axis=0),bins=20)
 plt.xlabel(r'$\gamma^0_2 k_0$')
 plt.legend()
+plt.tight_layout()
 pp = PdfPages('output11/gamma0_med.pdf')
 plt.savefig(pp,format='pdf')
 pp.close()
@@ -141,6 +152,7 @@ plt.close()
 plt.hist(numpy.median((fit['rho1'][:,2])[:,None]*fit['R'],axis=0),bins=20)
 plt.xlabel(r'$\gamma^1_2 k_1$')
 plt.legend()
+plt.tight_layout()
 pp = PdfPages('output11/gamma1_med.pdf')
 plt.savefig(pp,format='pdf')
 pp.close()
@@ -152,6 +164,7 @@ plt.errorbar(x1, y, xerr=[x1_err,x1_err],yerr=[y-ymin,ymax-ymin],fmt='o')
 plt.xlabel(r'$\gamma^0_2 k_0$')
 plt.ylabel(r'$\gamma^1_2 k_1$')
 pp = PdfPages("output11/kk.pdf")
+plt.tight_layout()
 plt.savefig(pp,format='pdf')
 pp.close()
 plt.close()
@@ -304,7 +317,7 @@ for i in xrange(4):
     lname = r'$({0}-V)_{{model}}$'.format(cname[i])
     axes[i].set_xlabel(lname)
     # axes[i].axhline(y=0,linestyle=':')
-fig.subplots_adjust(hspace=.3)
+fig.subplots_adjust(hspace=.5)
 fig.set_size_inches(8,11)
 filename = 'output11/residual.pdf'
 pp = PdfPages(filename)

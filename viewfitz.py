@@ -13,6 +13,10 @@ import cPickle
 import matplotlib as mpl
 import sivel
 
+
+mpl.rcParams['font.size'] = 18
+
+
 ext=''
 
 f = open('temp18'+ext+'.pkl','rb')
@@ -50,6 +54,7 @@ plt.hist(fit18['AV'].flatten(),histtype='step', stacked='false', \
 
 plt.xlabel(r'$A_V$')
 plt.legend()
+plt.tight_layout()
 pp = PdfPages('output18'+ext+'/AVs_hist.pdf')
 plt.savefig(pp,format='pdf')
 pp.close()
@@ -64,6 +69,7 @@ plt.hist(numpy.median(fit18['AV'],axis=0),label=r'$R=const$ Hsiao',histtype='ste
 plt.hist(numpy.median(fit11['gamma'][:,2][:,None]*fit11['k'],axis=0),label=r'$\gamma_0 k_0$',histtype='step',bins=numpy.arange(-0.2,1.8,0.1),normed=True)
 plt.xlabel(r'$A_V$')
 plt.legend()
+plt.tight_layout()
 pp = PdfPages('output18'+ext+'/AVs_mode_hist.pdf')
 plt.savefig(pp,format='pdf')
 pp.close()
@@ -116,6 +122,7 @@ plt.hist(1./fit18['RVinv'].flatten(),histtype='step', stacked='false', \
 #     label=r'$R$-free CCM',bins=numpy.arange(0,8.2,0.1),normed=True)
 plt.xlabel(r'$R_V$')
 plt.legend()
+plt.tight_layout()
 pp = PdfPages('output18'+ext+'/RVs_hist.pdf')
 plt.savefig(pp,format='pdf')
 pp.close()
@@ -149,6 +156,7 @@ plt.scatter(x, y,marker='o',alpha=0.3,s=4,c='b')
 # plt.ylim((-4,6))
 plt.xlabel(r'$A_V^F$')
 plt.ylabel(r'$R_V^F$')
+plt.tight_layout()
 pp = PdfPages('output18'+ext+'/AVRV.pdf')
 plt.savefig(pp,format='pdf')
 pp.close()
