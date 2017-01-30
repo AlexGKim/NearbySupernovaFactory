@@ -58,7 +58,7 @@ rvs=numpy.array(rvs)
 
 for i in xrange(5):
     plt.plot(rvs,AX[:,i],label=synname[i])
-plt.xlabel(r'$R_V$')
+plt.xlabel(r'$R$')
 plt.ylabel(r'$A^C_X-A^F_X$ @ $A_V=1$')
 plt.legend(loc=4)
 pp = PdfPages('output18/CCMF99diff.pdf')

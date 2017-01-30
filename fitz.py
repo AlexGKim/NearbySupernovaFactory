@@ -6,8 +6,8 @@ import sncosmo
 #from mpl_toolkits.mplot3d import Axes3D
 #from matplotlib import cm
 #from matplotlib.ticker import LinearLocator, FormatStrFormatter
-# import matplotlib.pyplot as plt
-# from matplotlib.backends.backend_pdf import PdfPages
+import matplotlib.pyplot as plt
+from matplotlib.backends.backend_pdf import PdfPages
 
 synname=['U','B','V','R','I']
 def analyze():
@@ -29,12 +29,17 @@ def analyze():
     for name, lams in zip(synname,synlam):
         synbands.append(sncosmo.Bandpass(lams, [1.,1.], name='tophat'+name))
 
-    model_nodust = sncosmo.Model(source='hsiao')
+    model_nodust = sncosmo.Model(source='salt2')
     print model_nodust
     flux_nodust = model_nodust.bandflux(synbands,0.)
-
+    shit = -2.5*numpy.log10(flux_nodust)
+    print shit-shit[2]
+    shit = model_nodust.bandmag(synbands,'vega',0.)
+    print shit-shit[2]
+    wetw
 
     av = numpy.exp(numpy.arange(numpy.log(0.005), numpy.log(1.8)+0.001,numpy.log(1.8/0.005)/25))
+    av=numpy.concatenate((-av[16::-1],av))
     rv = numpy.exp(numpy.arange(numpy.log(2.1), numpy.log(6.9)+0.001,numpy.log(6.9/2.1)/50))
 
 
@@ -68,15 +73,35 @@ def analyze():
         +amed[8][None,:] * (avs*(ebvs**2))[:,None] \
         )
 
-    print numpy.max(numpy.abs(diff))
-    arg = numpy.argmax(numpy.abs(diff))
+    fdiff = (AX - (amed[0][None,:]*avs[:,None]+ amed[1][None,:] * avs[:,None]**2 \
+        +amed[2][None,:]*ebvs[:,None]+ amed[3][None,:] * ebvs[:,None]**2 \
+        +amed[4][None,:] * (avs*ebvs)[:,None] \
+        +amed[5][None,:] * (avs**3)[:,None] \
+        +amed[6][None,:] * (ebvs**3)[:,None] \
+        +amed[7][None,:] * ((avs**2)*ebvs)[:,None] \
+        +amed[8][None,:] * (avs*(ebvs**2))[:,None] \
+        ))/AX
+
+    temp = (amed[0][None,:]*avs[:,None]+ amed[1][None,:] * avs[:,None]**2 \
+        +amed[2][None,:]*ebvs[:,None]+ amed[3][None,:] * ebvs[:,None]**2 \
+        +amed[4][None,:] * (avs*ebvs)[:,None] \
+        +amed[5][None,:] * (avs**3)[:,None] \
+        +amed[6][None,:] * (ebvs**3)[:,None] \
+        +amed[7][None,:] * ((avs**2)*ebvs)[:,None] \
+        +amed[8][None,:] * (avs*(ebvs**2))[:,None] \
+        )
+
+    print numpy.max(numpy.abs(fdiff))
+    arg = numpy.argmax(numpy.abs(fdiff))
     print avs[arg / 5], ebvs[arg / 5]
     print diff[arg / 5]
 
     print avs.max()
-    wav = avs == 0.1
+    wav = numpy.isclose(avs,-0.21627365)
     for i in xrange(5):
-        plt.plot(rvs[wav],diff[wav,i],label=synname[i])
+        # plt.plot(rvs[wav],fdiff[wav,i],label=synname[i])
+        plt.plot(rvs[wav],AX[wav,i],label=synname[i])
+        plt.plot(rvs[wav],temp[wav,i])
     plt.ylabel(r'$\Delta A$')
     plt.xlabel(r'$R$')
     plt.legend()
@@ -97,12 +122,12 @@ def analyze():
 
     #fig.colorbar(surf, shrink=0.5, aspect=5)
     #plt.show()
-# analyze()
+analyze()
 
-
+wef
 # 0.00589190110442
 
-snmod='hsiao'
+snmod='salt2'
 
 synlam = numpy.array([[3300.00, 3978.02]
     ,[3978.02,4795.35]
@@ -121,6 +146,7 @@ model_nodust = sncosmo.Model(source=snmod)
 flux_nodust = model_nodust.bandflux(synbands,0.)
 
 av = numpy.exp(numpy.arange(numpy.log(0.005), numpy.log(1.8)+0.001,numpy.log(1.8/0.005)/25))
+av=numpy.concatenate((-av[10::-1],av))
 rv = numpy.exp(numpy.arange(numpy.log(2.1), numpy.log(6.9)+0.001,numpy.log(6.9/2.1)/50))
 
 avs=[]
@@ -182,6 +208,6 @@ diff = AX - (amed[0][None,:]*avs[:,None]+ amed[1][None,:] * avs[:,None]**2 \
 print numpy.max(numpy.abs(diff))
 # 0.00589190110442
 
-output = open('fitz.pkl','wb')
+output = open('fitz_salt2.pkl','wb')
 pickle.dump(amed, output, protocol=2)
 output.close()

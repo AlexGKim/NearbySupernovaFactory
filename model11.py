@@ -12,7 +12,7 @@ pkl_file = open('gege_data.pkl', 'r')
 data = pickle.load(pkl_file)
 pkl_file.close()
 
-sivel, sivel_err, _, _ = sivel.sivel(data)
+sivel, sivel_err, _, _, _, _ = sivel.sivel(data)
 
 use = numpy.isfinite(sivel)
 

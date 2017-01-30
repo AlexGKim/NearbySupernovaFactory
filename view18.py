@@ -15,7 +15,7 @@ import sivel
 
 ext=''
 
-f = open('temp18'+ext+'.pkl','rb')
+f = open('temp18AV'+ext+'.pkl','rb')
 (fit,_) = pickle.load(f)
 
 # for key in fit.keys():
@@ -25,7 +25,7 @@ pkl_file = open('gege_data.pkl', 'r')
 data = pickle.load(pkl_file)
 pkl_file.close()
 
-sivel,sivel_err,x1,x1_err = sivel.sivel(data)
+sivel,sivel_err,x1,x1_err, _, _ = sivel.sivel(data)
 use = numpy.isfinite(sivel)
 
 #  The ordering is 'Ca','Si','U','B','V','R','I'
@@ -72,22 +72,6 @@ for i in xrange(nsne):
     color_cov[i] = numpy.dot(trans,numpy.dot(mag_cov[i], trans.T))
 
 
-# correction = [fit['c'][:,i][:,None] + fit['alpha'][:,i][:,None]*fit['EW'][:,:, 0] \
-#     + fit['beta'][:,i][:,None]*fit['EW'][:,:, 1] + fit['eta'][:,i][:,None]*fit['sivel']\
-#     for i in xrange(5)]
-# correction = numpy.array(correction)
-
-# intrinsic = numpy.median(correction,axis=1)
-
-
-# output = open('intrinsic.pkl','wb')
-# print intrinsic.shape, numpy.array(data['snlist'])[use].shape
-# pickle.dump([intrinsic, numpy.array(data['snlist'])[use]], output, protocol=2)
-# output.close()
-# wefew
-
-
-
 figure = corner.corner(numpy.concatenate((EW_obs,sivel[:,None]),axis=1),labels=[r"$EW_{Ca,o}$",r"$EW_{Si,o}$",r"$\lambda_{Si,o}$"])
 for ax in figure.get_axes():
     for tick in ax.xaxis.get_major_ticks():
@@ -100,6 +84,15 @@ plt.savefig(pp,format='pdf')
 pp.close()
 plt.close()
 
+# colors = fit['c']+mag_mn[None,:]
+# colors  = colors - colors[:,2][:,None]
+# colors = numpy.delete(colors, 2,axis=1)
+
+# figure = corner.corner(colors,labels=[r"$U_0-V_0$",r"$B_0-V_0$",r"$R_0-V_0$",r"$I_0-V_0$"])
+# pp = PdfPages('output18'+ext+'/col_corner.pdf')
+# plt.savefig(pp,format='pdf')
+# pp.close()
+# plt.close()
 
 
 (y, ymin, ymax) = numpy.percentile(fit['EW'][:,:,1],(50,50-34,50+34),axis=0)
@@ -217,11 +210,11 @@ plt.close()
 # pp.close()
 # plt.close()
 
-figure = corner.corner(fit['c'],labels=[r"${c}_0$",r"${c}_1$",r"${c}_2$",r"${c}_3$",r"${c}_4$"])
-pp = PdfPages('output18'+ext+'/c_corner.pdf')
-plt.savefig(pp,format='pdf')
-pp.close()
-plt.close()
+# figure = corner.corner(fit['c'],labels=[r"${c}_0$",r"${c}_1$",r"${c}_2$",r"${c}_3$",r"${c}_4$"])
+# pp = PdfPages('output18'+ext+'/c_corner.pdf')
+# plt.savefig(pp,format='pdf')
+# pp.close()
+# plt.close()
 
 figure = corner.corner(fit['alpha'],labels=[r"${\alpha}_0$",r"${\alpha}_1$",r"${\alpha}_2$",r"${\alpha}_3$",r"${\alpha}_4$"])
 pp = PdfPages('output18'+ext+'/alpha_corner.pdf')
@@ -243,11 +236,11 @@ plt.savefig(pp,format='pdf')
 pp.close()
 plt.close()
 
-figure = corner.corner(fit['deltaAV'],labels=[r"${\delta}_{AV,0}$",r"${\delta}_{AV,1}$",r"${\delta}_{AV,2}$",r"${\delta}_{AV,3}$",r"${\delta}_{AV,4}$"])
-pp = PdfPages('output18'+ext+'/deltaAV_corner.pdf')
-plt.savefig(pp,format='pdf')
-pp.close()
-plt.close()
+# figure = corner.corner(fit['deltaAV'],labels=[r"${\delta}_{AV,0}$",r"${\delta}_{AV,1}$",r"${\delta}_{AV,2}$",r"${\delta}_{AV,3}$",r"${\delta}_{AV,4}$"])
+# pp = PdfPages('output18'+ext+'/deltaAV_corner.pdf')
+# plt.savefig(pp,format='pdf')
+# pp.close()
+# plt.close()
 
 
 # mega = numpy.concatenate((fit['Delta_scale'][:,None],fit['L_sigma']),axis=1)
@@ -283,10 +276,10 @@ with PdfPages('output18'+ext+'/multipage_pdf.pdf') as pdf:
 
 
 
-    plt.plot(fit['Delta_scale'][::10])
-    plt.title(r'$\Delta$ scale')
-    pdf.savefig()
-    plt.close()
+    # plt.plot(fit['Delta_scale'][::10])
+    # plt.title(r'$\Delta$ scale')
+    # pdf.savefig()
+    # plt.close()
     
     lineobjects = plt.plot(fit['alpha'][::10],alpha=0.5,label=['U','B','V','R','I'])
     plt.title('alpha')
