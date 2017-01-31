@@ -306,23 +306,28 @@ cname = ['U','B','R','I']
 fig, axes = plt.subplots(nrows=4)
 for i in xrange(4):
     (y, ymin, ymax) = numpy.percentile(correction[cind[i],:,:],(50,50-34,50+34),axis=0)
-    # err = numpy.sqrt(color_cov[:,i,i] + ((ymax-ymin)/2)**2)
-    # axes[i].errorbar(y+mag_mn[cind[i]]-mag_mn[2],color_obs[:,i]-y,xerr=[y-ymin,ymax-y], yerr=[err,err],fmt='.',alpha=0.4)
-    axes[i].errorbar(y+mag_mn[cind[i]]-mag_mn[2],color_obs[:,i]+mag_mn[cind[i]]-mag_mn[2],yerr=[numpy.sqrt(color_cov[:,i,i]),numpy.sqrt(color_cov[:,i,i])], xerr=[(ymax-ymin)/2,(ymax-ymin)/2],fmt='.',alpha=0.5)
+    err = numpy.sqrt(color_cov[:,i,i] + ((ymax-ymin)/2)**2)
+    axes[i].errorbar(y+mag_mn[cind[i]]-mag_mn[2],color_obs[:,i]-y,xerr=[y-ymin,ymax-y], yerr=[err,err],fmt='.',alpha=0.4)
+    # axes[i].errorbar(y+mag_mn[cind[i]]-mag_mn[2],color_obs[:,i]+mag_mn[cind[i]]-mag_mn[2],yerr=[numpy.sqrt(color_cov[:,i,i]),numpy.sqrt(color_cov[:,i,i])], xerr=[(ymax-ymin)/2,(ymax-ymin)/2],fmt='.',alpha=0.5)
+
+ 
     # axes[i].errorbar(y+mag_mn[cind[i]]-mag_mn[2],color_obs[:,i],xerr=[y-ymin,ymax-y], yerr=[numpy.sqrt(color_cov[:,i,i]),numpy.sqrt(color_cov[:,i,i])],fmt='.',alpha=0.4)
     miny = (color_obs[:,i]+mag_mn[cind[i]]-mag_mn[2]).min()
     maxy = (color_obs[:,i]+mag_mn[cind[i]]-mag_mn[2]).max()
-    axes[i].plot([miny,maxy],[miny,maxy])
-    axes[i].set_ylabel(r'$({0}_o-V_o)$'.format(cname[i]))
-    lname = r'$({0}-V)_{{model}}$'.format(cname[i])
-    axes[i].set_xlabel(lname)
+    # axes[i].plot([miny,maxy],[miny,maxy])
+    axes[i].set_xlabel(r'$({0}_o-V_o)$'.format(cname[i]))
+    lname = r'$\Delta({0}-V)$'.format(cname[i])
+    axes[i].set_ylabel(lname)
     # axes[i].axhline(y=0,linestyle=':')
 fig.subplots_adjust(hspace=.5)
 fig.set_size_inches(8,11)
+plt.tight_layout()
 filename = 'output11/residual.pdf'
 pp = PdfPages(filename)
 plt.savefig(pp,format='pdf')
 pp.close()
+
+wefwe
 
 
 cind=[0,1,3,4]
@@ -383,9 +388,18 @@ plt.close()
 # print 'EW0', numpy.median(fit['EW'][:,outlier[0],0],axis=0), EW_renorm[outlier[0],0] 
 # print 'EW1', numpy.median(fit['EW'][:,outlier[0],1],axis=0), EW_renorm[outlier[0],1]
 fig, axes = plt.subplots()
-plt.hist(fit['Delta'].flatten(),normed=True,bins=20,color='yellow')
+plt.hist(fit['Delta'].flatten(),normed=True,bins=20)
 plt.xlabel(r'$\Delta$')
 pp = PdfPages('output11/Delta_hist.pdf')
+plt.savefig(pp,format='pdf')
+pp.close()
+plt.close()
+
+fig, axes = plt.subplots()
+plt.hist(numpy.median(fit['Delta'],axis=0),bins=20)
+plt.xlabel(r'$\Delta$')
+plt.ylabel(r'Number per bin')
+pp = PdfPages('output11/Delta_med_hist.pdf')
 plt.savefig(pp,format='pdf')
 pp.close()
 plt.close()
@@ -792,7 +806,8 @@ mega = numpy.transpose(mega)
 for index in xrange(5):
     figure = corner.corner(mega[index,:,:],labels=[r"$c_{}$".format(index), r"$\alpha_{}$".format(index),\
                     r"$\beta_{}$".format(index),r"$\eta_{}$".format(index),r"$\gamma^0_{}$".format(index),\
-                    r"$\gamma^1_{{1{}}}$".format(index), r"$\sigma_{}$".format(index)],label_kwargs={'fontsize':20})
+                    r"$\gamma^1_{{1{}}}$".format(index), r"$\sigma_{}$".format(index)],label_kwargs={'fontsize':20},\
+                    truths=[None,0,0,0,0,0,0])
     figure.suptitle(filts[index],fontsize=28)
 
     for ax in figure.get_axes():
