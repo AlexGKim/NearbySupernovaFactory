@@ -1040,6 +1040,8 @@ Cor(\Delta, EW_{Ca}, EW_{Si}, \lambda_{Si}, E_{\gamma^0}(B-V), E_{\gamma^1}(B-V)
 \end{pmatrix}.
 \end{multline}
 
+\color{red}
+[Greg asked for discussion but I think the spectral correlations should go in Chotard et al.\ 2017.]
 The  strong correlation between $EW_{Ca}$ and $\lambda_{Si}$ is not surprising.   Si~II velocities have been
 suggested as being able to distinguish two distinct SN~Ia populations
 \citep{2009ApJ...699L.139W, 2013Sci...340..170W}.  CaII~H\&K, and more cleanly CaII~NIR photospheric features
@@ -1047,6 +1049,7 @@ suggested as being able to distinguish two distinct SN~Ia populations
 high-velocity features if present), have been found to trend with light-curve shape  \citep{2012MNRAS.426.2359M}.
 \citet{2014MNRAS.437..338C, 2014MNRAS.444.3258M} found a strong correlation between Si~II velocities and the
 CaII~NIR photometric velocity feature, and found that the correlation is sensitive to the presence of high-velocity features.
+\color{black}
 
 We find weak correlations between our color-excess parameters and the input features, the strongest being
 %---
@@ -1059,23 +1062,24 @@ Recall that $EW_{Si}$ is correlated with light-curve shape, which is correlated 
 An extensive discussion of the correlations between the spectral features of the SNfactory data set can be found in \citet{chotard:thesis}
 and \citet{leget:thesis}.
 
-The range of SiII$\lambda$4130 equivalent widths is $\pm 20$~\AA\ whereas the width of the $B$-band is 851~\AA, so that its affect on magnitude
+The range of SiII$\lambda$4130 equivalent widths is $\pm 20$~\AA\ whereas the width of the $B$-band is 851~\AA, so that its direct affect on magnitude
 is
 $2.5 \log{(20/850)} \sim 0.03$ mag.  
 The implied span in $B$ magnitude based on $\beta_B$ is 0.54~mag.  Therefore $\beta_B$ cannot wholly be attributed to the flux deficit
 from the line itself.
 Similarly, the CaII H\&K equivalent widths have range $\pm 50$~\AA, while the width of the $U$ band is
-701~\AA, so that its affect on magnitude
+701~\AA, so that its direct affect on magnitude
 is
-$2.5 \log{(50/701)} \sim 0.08$ mags.   The implied span in $U$ magnitude is  0.21~mag, so $\alpha_U$ cannot be completely due to the line itself.
+$2.5 \log{(50/701)} \sim 0.08$ mags.   The implied span in $U$ magnitude is  0.21~mag, so $\alpha_U$ cannot be completely due to the 
+presence of the line itself.
 
-\subsection{The Two Extrinsic Parameters $k_0$ and $k_1$}
+\subsection{The Two Extrinsic Per-Supernova Parameters $k_0$ and $k_1$}
 \color{blue}
 The two sets of  $\gamma^i$ parameters  are significantly non-zero. 
 None of the 20000 links of 
-our Monte Carlo chains for $\gamma$ exceed 0 (see Figures~\ref{global1:fig}--\ref{global5:fig}), we thus claim detection of the
+our Monte Carlo chains for $\gamma$ extend to 0 (see Figures~\ref{global1:fig}--\ref{global5:fig}), we thus claim detection of the
 influence of $k_0$ and $k_1$  on supernova magnitudes
-with probability $(1-5\times 10^{-5})$.
+with probability $1-5\times 10^{-5}$.
 
 There is a pair of parameter values,  $k_0^0$ and $k_1^0$, that correspond to supernovae experiencing no extrinsic effect.
 The true extrinsic
@@ -1094,21 +1098,21 @@ do not determine $k_0^0$ and $k_1^0$, and so the extrinsic extinction and color 
 
 Nevertheless, we are able to examine aggregate properties of the extinction.  The extrinsic extinction and color relation can be
 rearranged as
-$$A_X(k_0,k_1) = R^T_V \left( A_B(k_0,k_1) -  A_V(k_0,k_1)\right) -R^T_V \left(A_B(k^0_0,k^0_1) + A_V(k^0_0,k^0_1)\right)+  A_X(k^0_0,k^0_1) .
-$$
-Making the assumption that it is the same for all supernovae ,
- $R^T_V$  can be determined as the slope of the linear relation between $A_X$ and $E(B-V)$.
+\begin{equation}
+A_X(k_0,k_1) = R^T_V \left( A_B(k_0,k_1) -  A_V(k_0,k_1)\right) -R^T_V \left(A_B(k^0_0,k^0_1) + A_V(k^0_0,k^0_1)\right)+  A_X(k^0_0,k^0_1) .
+\end{equation}
+Making the assumption that $R^T_V$ is the same for all supernovae,
+its value can be determined as the slope of the linear relation between $A_X$ and $E(B-V)$.
 
 Figure~\ref{avebv:fig} shows the relationship between $A_V$ and $E(B-V)$.
-The full set of supernovae does not coincide with the expectations of a single linear law; rather the supernova population is peaked
+The full set of supernovae does not coincide with the expectations of a single linear relation; rather the supernova population is peaked
 on a ridge line, with a tail distributed below.  That is, for a fixed color excess, the amount of $V$-band extinction is bounded above
 but can have values that extend toward lower values.
 The assumption of a constant $R^T_V$ is not altogether correct; still we perform a linear fit that gives a slope of
 %----- fitz11.py
 $R^T_V=2.77 \pm 0.08$,
 %----
-where the uncertainty is the $68$\% credible interval and does not include goodness
- of fit.  
+where the uncertainty is the $68$\% credible interval and does not include model error.  
 
 %\begin{comment}
 %\color{blue}
@@ -1137,7 +1141,7 @@ where the uncertainty is the $68$\% credible interval and does not include goodn
    %$R^T_V=A^T_V/E^T(B-V)$ 
    %versus $E^T(B-V)$ for the supernova sample, given an ansatz for the definition of an intrinsic supernova. 
    %Overplotted is the mean and standard deviation of those points in equally divided bins.
-   Overplotted the expected values for the \citetalias{1999PASP..111...63F} model
+   Overplotted are the expected curves for the \citetalias{1999PASP..111...63F} model
    for specific choices of $R^F$. Note that these lines are not straight, which is apparent when comparing to the straight black $R_V=2.78$ line.
    \label{avebv:fig}}
 \end{figure}
@@ -1175,7 +1179,7 @@ $a(U,B,V,R,I)=\{0.96,   1.00,   1.00,   0.97,   0.77\}$ and $b(U,B,V,R,I)=\{  1.
 The $F$ superscript is added to distinguish \citetalias{1999PASP..111...63F} parameters.
 Over the ranges of
  $R^F$ and $A^F_V$,
-and the wavelengths under consideration,  the values $a$ and $b$ change but only by $<5$\%.
+and the wavelengths under consideration,  the values of the elements of $a$ and $b$ change but only by $<5$\%.
 
 Our model can be expressed as
 \begin{equation}
@@ -1214,14 +1218,18 @@ where the two residual vectors
 \vec{\epsilon}_b & =\{-0.06, 0.16, -0.22, 0.33, -0.26\}
 \end{align}
 contribute  2\% and 5\% respectively to the total  length of the $\gamma$ vectors.
+
 This result indicates that
 the allowed variation in $UBVRI$ allowed by the \citetalias{1999PASP..111...63F} model and our best-fit model are closely aligned.
+That is to say, with no prior assumptions of dust extinction behavior or the distribution of $A_V$, the supernova data themselves exhibit
+2-dimensional color variations that are closely aligned with the 2-dimensional color variations predicted by  \citetalias{1999PASP..111...63F} dust.
 
 The above result is visualized in Figure~\ref{plane:fig}, which  shows two perspectives (left and right columns) of $UVI$- (top row) and $BVR$- (bottom row) spaces
 of the vectors corresponding to $\gamma_X/(\gamma_B-\gamma_V)$ of our model (solid lines),
-and $a(X)$, $b(X)$ of the \citetalias{1999PASP..111...63F} model (dashed lines).  
+and $a(X)$, $b(X)$ of the \citetalias{1999PASP..111...63F} model (dashed lines).  All $\gamma$ vectors are chosen to intersect the origin.
 The two perspectives show that while the four vectors point in different directions for each band combination,
-they are almost coplanar in $UVI$, and close to coplanar in $BVR$.
+they are almost coplanar in $UVI$, and close to coplanar in $BVR$.  The $a$ and $b$ vectors and the $\gamma^0$ and $\gamma^1$
+vectors are bases for almost the same plane in the 5-dimensional color space, and can be transformed between themselves through rotation.
 
 \begin{figure}[htbp] %  figure placement: here, top, bottom, or page
    \centering
@@ -1238,6 +1246,13 @@ of the vectors corresponding to $\gamma^i_X/(\gamma^i_B-\gamma^i_V)$ of our mode
    \label{plane:fig}}
 \end{figure}
 
+
+When fixing the origin of the $\gamma$'s to zero, the are found to be coplanar with $a$ and $b$.
+However the linear model does not specify zero dust so the origin of gamma is unspecified.
+The general result is that the magnitude planes of the linear and dust models are parallel.
+Color changes are consistent between the two models but there is no specification of the relation between $k^0$ and $k^1$ with $A_V$ and $E(B-V)$. 
+
+
 A prior that $k_0$ and  $k_1$ be uncorrelated was enforced to break degeneracies in our linear models, and determines the choice of directions of
 the vectors $\gamma^0$ and $\gamma^1$.  Suppose that that the data were described by a dust model.  A \citetalias{1999PASP..111...63F}  dust model 
 can be written as 
@@ -1246,31 +1261,47 @@ can be written as
 \begin{equation}
 A_X =  (1-\kappa_1 \kappa_2)^{-1} [(A^F_V - \kappa_2 E^F(B-V))\left(a(X)+\kappa_1 b(X) \right) +  (-\kappa_1 A^F_V + E^F(B-V)) (\kappa_2 a(X) + b(X))],
 \end{equation}
-with the parameters $\kappa_1$ and $\kappa_2$ providing freedom in the directions of the two basis vectors.  In the analysis,
-the $\kappa$'s are specified by the  prior of  
-zero covariance between $(A^F_V - \kappa_2 E^F(B-V))$ and  $(-\kappa_1 A^F_V + E^F(B-V))$.
+with the parameters $\kappa_1$ and $\kappa_2$ providing freedom in the directions of the two basis vectors.
+The vector $a(X)+\kappa_1 b(X)$ represents extinction that can occur with fixed $R^F_0=1/\kappa_1$ and unconstrained $\kappa_2$.
+%While a similar interpretation could be made of $\kappa_2 a(X) + b(X)$, note that to first order the extinction for $\Delta R$
+%perturbations from a fixed $R^F_0$ is
+%\begin{equation}
+%A_X = A_V \left(a(X) + \left(\frac{1}{R^F_0} - \frac{\Delta R^F}{R^F_0} \right) b(X) \right).
+%\end{equation}
+%Then $\kappa^{-1}_2$ can this be associated with $\frac{1}{R^F_0} - \frac{\Delta R^F}{R^F_0}$.
+
 The preferred values for $\kappa$ are shown qualitatively in
 Figure~\ref{plane:fig}.  For $\kappa_1=1/2.4$, $\kappa_2=-6.8$
 the vector $\gamma^0_X$ is  aligned with 
-the dust vector $\left(a(X)+\kappa_1 b(X) \right)$  and $\gamma^1_X$
-is aligned with $(\kappa_2 a(X) + b(X))$  $UVI$-space.  Slightly shifted values of $\kappa_1=1/2.6$, $\kappa_2=-6.1$ apply in $BVR$-space.
+the dust vector $a(X)+\kappa_1 b(X)$  and $\gamma^1_X$
+is aligned with $\kappa_2 a(X) + b(X)$  $UVI$-space.  
+%With these values of $\kappa$, the dust parameters are $R^F_0=2.4$ and $\Delta R^F=1.4$.
+Slightly shifted values of $\kappa_1=1/2.6$, $\kappa_2=-6.1$ apply in $BVR$-space.
+%, which correspond to  $R^F_0=2.6$ and $\Delta R^F=1.4$.
 
-To gain an intuitive understanding of $\kappa_1$, consider the hypothetical case where
-all supernovae experience dust with the same $R^F$.   The zero-covariance
-prior would be satisfied by  $\kappa_1=1/R^F$ and any arbitrary $\kappa_2$.
-The combination  $\gamma^0_V k_0$ would correspond to  $A^F_V$.  Both $k_1=0$  and $\gamma^1$ would be unconstrained.
-A slight relaxation away from the constant $R^F$ assumption would result in $\kappa_2$ no longer being arbitrary but determined by the prior, and a
-non-zero $k_1$ and a $\gamma^1$.
+To gain an intuitive understanding of how the $\kappa$ values are determined, consider the hypothetical case where
+all supernovae experience dust with the same $R^F$.   There is only one free parameter $A^F_V$ and magnitudes are
+constrained to move along the vector $a(X)+b(X)/R^F$.  In the fit of the linear model, the zero-covariance condition is satisfied when
+$-\kappa_1 A^F_V + E^F(B-V)=0$,  i.e.\ when $\kappa_1=1/R^F$.  
+Supernova magnitudes do not vary along the $\kappa_2 a(X) + b(X)$ direction.  Consequently
+$\gamma^0$ is aligned with  $a(X)+b(X)/R^F$, and $\gamma^1$ is unconstrained.
 
-Given the association of  our parameter $\gamma^0_V k_0$ with the $A^F_V$ of an $R^F \sim 1/\kappa_1$ dust model,
+Now consider what happens when supernovae can have small  perturbations away from that constant $R^F$ value.  Each supernova magnitude
+can be described as the sum of the contribution along the $a(X)+b(X)/R^F$ direction, plus a perturbation in a different direction due its deviation  from $R_V$.
+The zero-correlation condition, which determines the direction of $\gamma^1$,  is for the coordinate values along $\gamma^0$ to be uncorrelated with the coordinate values along $\gamma^1$.
+Our analysis yields an angle of 154\arcdeg between  $\gamma^0$ and $\gamma^1$.
+The vectors not being perpendicular arises because the distribution of the perturbations in $R^F$ are dependent on the amount of first-order $R_V$ extinction.
+
+Given the association of  our parameter $\gamma^0_V k_0$ with changes in $A^F_V$ of an $R^F =\kappa^{-1}_1$ dust model up to an additive offset,
 the former's distribution can be compared to the expectation for the latter.
 Figure~\ref{k0_med:fig} shows the histogram of
 median values of $\gamma^0_V k_0$.
-The distribution is non-Gaussian, having a sharp rise in the blue and an extended tail in the red, consistent
-with the expectation of dust considering the spatial distribution of supernovae within galaxies and the distribution of galaxy orientations with respect to the observer \citep{1998ApJ...502..177H}.
+The distribution is non-Gaussian, having a sharp rise in the blue and an extended tail in the red.  This is consistent
+with the expectation of dust considering the spatial distribution of supernovae within galaxies and the distribution of galaxy orientations with respect to the observer \citep{1998ApJ...502..177H}.  This distribution is given by the data, in that it is independent of any knowledge or prior
+for the distribution of dust extinction the SN population is expected to suffer. 
 
 Figure~\ref{k0_med:fig} also shows the distribution of $\gamma^1_V k_1$, which is associated with 
-extinction corrections due to deviations away from the canonical $R^F$ value.   The distribution has a long
+extinction corrections due to deviations away from the canonical $\kappa_1$ value.   The distribution has a long
 negative tail and is peaked at its positive edge, and by construction has a mean of zero.
 The implication is that while the bulk of supernovae have positive values associated with $R>1/\kappa_1$, there is a tail
 of negative values associated with $R<1/\kappa_1$.  The plot of   $\gamma^0_V k_0$ versus $\gamma^1_V k_1$  shown in Figure~\ref{kk:fig} shows that
@@ -1288,16 +1319,15 @@ preferentially exhibit low $R^F$.
    \includegraphics[width=2.8in]{output11/gamma0_med.pdf}
    \includegraphics[width=2.8in]{output11/gamma1_med.pdf}
       \caption{ Histogram of
-median values of Left: $\gamma^0_V k_0$, which is associated with the $A^F_V$ of an $R^F \sim 2.4$ dust model; Right: $\gamma^1_V k_1$,
-which  is associated with $\left( E^F(B-V) - \frac{ A_V^F}{2.4}\right)$, i.e.\
-extinction corrections due to deviations away from the $R=2.4$ value.
+median values of Left: $\gamma^0_V k_0$, which is associated up to an offset with the $A^F_V$ of an $R^F \sim 1/\kappa_1$ dust model; Right: $\gamma^1_V k_1$,
+which  is associated with extinction corrections due to deviations away from the canonical $\kappa_1$ value.
    \label{k0_med:fig}}
 \end{figure}
 
 \begin{figure}[htbp] %  figure placement: here, top, bottom, or page
    \centering
    \includegraphics[width=5.2in]{output11/kk.pdf}
-      \caption{ $\gamma^0_V k_0$ versus $\gamma^1_V k_1$.
+      \caption{$\gamma^1_V k_1$ versus $\gamma^0_V k_0$.
    \label{kk:fig}}
 \end{figure}
 %
