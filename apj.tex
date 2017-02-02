@@ -1300,7 +1300,7 @@ The distribution is non-Gaussian, having a sharp rise in the blue and an extende
 with the expectation of dust considering the spatial distribution of supernovae within galaxies and the distribution of galaxy orientations with respect to the observer \citep{1998ApJ...502..177H}.  This distribution is given by the data, in that it is independent of any knowledge or prior
 for the distribution of dust extinction the SN population is expected to suffer. 
 
-Figure~\ref{k0_med:fig} also shows the distribution of $\gamma^1_V k_1$, which is associated with 
+Figure~\ref{k0_med:fig} also shows the distribution of $\gamma^1_V k_1$, which can be attributed to 
 extinction corrections due to deviations away from the canonical $\kappa_1$ value.   The distribution has a long
 negative tail and is peaked at its positive edge, and by construction has a mean of zero.
 The implication is that while the bulk of supernovae have positive values associated with $R>1/\kappa_1$, there is a tail
@@ -1370,7 +1370,8 @@ SN~2014J   is one of several SNe~Ia that exhibits colors that imply a low $R_V<2
 The colors of this supernova can be studied in comparison to SN~2011fe, an object with similar
 spectral evolution that 
 suffers very low galactic and host reddening
-\citep[this technique has been used in][]{2006MNRAS.369.1880E,2007AJ....133...58K,2008MNRAS.384..107E,2010AJ....139..120F, 2014ApJ...788L..21A}.
+\citep[this technique has been used in][]{2006MNRAS.369.1880E,2007AJ....133...58K,2008MNRAS.384..107E,2010AJ....139..120F, 2014ApJ...788L..21A,
+2017arXiv170101422H}.
 The overall higher photospheric velocities of
 SN~2014J are unimportant  based on the findings of  \S\ref{results:sec}.
 
@@ -1391,15 +1392,16 @@ and those used for the observations,
 \color{black}
 these data are fit to our model
 \begin{equation}
-E_o(X-V) =  \left(\frac{\gamma^0_X}{\gamma^0_V}-1\right)x_0 +  \left(\frac{\gamma^1_X}{\gamma^1_V}-1\right)x_1,
+E_o(X-V) =  \left(\frac{\gamma^0_X}{\gamma^0_V}-1\right)e_0 +  \left(\frac{\gamma^1_X}{\gamma^1_V}-1\right)e_1,
 \end{equation}
 where we use the median values of the $\gamma$- and $\delta$-terms from Table~\ref{global:tab} and the fit
-parameters $x_i $.
+parameters $e_i $.
 
 \begin{figure}[htbp] %  figure placement: here, top, bottom, or page
    \centering
    \includegraphics[width=5.2in]{output11/sn2014j.pdf} 
-   \caption{Measured color excess for SN~2014J and the best-fit predictions from this article. 
+   \caption{Top: Measured color excess for SN~2014J and the best-fit predictions from this article.   Bottom: Residual color excess
+   between the data and model.
    \color{red}
    This can be compared with the best-fit results of
    \citet{2014ApJ...788L..21A} shown in their Figure~3.
@@ -1420,11 +1422,11 @@ $x_0= 2.60$, $ x_1=-1.89$ with covariance
 \end{pmatrix}.
 \end{equation}
 The predicted values of observed $E_o(B-V)$ from the fit are shown in Figure~\ref{sn2014j:fig}, where they are found to
-overlap with the data within the error bars.   For comparison, the best-fit model determined by  \citet{2014ApJ...788L..21A} model using
-UV through NIR data,
-a  \citet{1999PASP..111...63F} dust with $R_V^F=1.4$ and $E(B-V)=1.37$
+overlap with the data within the error bars.   
+Our results can be compared with those of  \citet{2014ApJ...788L..21A} (Figure 3), who 
+use
+UV through NIR data to fit \citet{1999PASP..111...63F} dust with $R_V^F=1.4$ and $E(B-V)=1.37$.
 \color{red}
-is shown in their Figure 3.
 \color{black}
 Our model predictions provide a significantly better match to the data
 \color{red}
@@ -1437,16 +1439,15 @@ $E_{\gamma^0}(B-V)=  0.90 \pm   0.08$ and  $E_{\gamma^1}(B-V)=  0.34 \pm   0.10$
 %-----
 contributions.
 Among the supernovae in the SNfactory  set used to determine $\gamma^0$ and $\gamma^1$, the
-objects with the extreme median values have 
+objects with extreme median MCMC-sample values in $E_{\gamma^0}(B-V)$ have 
 %---
-$E_{\gamma^0}(B-V)$ are $-0.07 \pm 0.01$ and  $  0.33 \pm 0.04$,
-and for $E_{\gamma^1}(B-V)$ $-0.01 \pm 0.01$  and
+$-0.07 \pm 0.01$ and  $  0.33 \pm 0.04$, and in $E_{\gamma^1}(B-V)$  have$-0.01 \pm 0.01$  and
 $  0.06 \pm 0.03$ 
 %---
 (see Figure~\ref{ebv:fig}).
 The deduced parameters for SN~2014J, which are relative to SN~2011fe, live well outside the 
 span of supernovae used to train the coefficients of the model, which is not unexpected if
-attributed to dust. 
+attributable to dust. 
 
 
 
