@@ -160,7 +160,7 @@ plt.close()
 
 (x, xmin, xmax) = numpy.percentile(fit['gamma'][:,2][:,None]*fit['k'],(50,50-34,50+34),axis=0)
 (y, ymin, ymax) = numpy.percentile(fit['rho1'][:,2][:,None]*fit['R'],(50,50-34,50+34),axis=0)
-plt.errorbar(x1, y, xerr=[x1_err,x1_err],yerr=[y-ymin,ymax-ymin],fmt='o')
+plt.errorbar(x, y, xerr=[x-xmin,xmax-x],yerr=[y-ymin,ymax-ymin],fmt='o')
 plt.xlabel(r'$\gamma^0_2 k_0$')
 plt.ylabel(r'$\gamma^1_2 k_1$')
 pp = PdfPages("output11/kk.pdf")
@@ -169,6 +169,26 @@ plt.savefig(pp,format='pdf')
 pp.close()
 plt.close()
 
+# kappa1=1/2.4
+# kappa2 = -6.8
+# av = ((fit['gamma'][:,1]-fit['gamma'][:,2])[:,None]*fit['k']+ \
+#     kappa2*(fit['rho1'][:,1]-fit['rho1'][:,2])[:,None]*fit['R'])
+# e = (kappa1*(fit['gamma'][:,1]-fit['gamma'][:,2])[:,None]*fit['k'] +\
+#     (fit['rho1'][:,1]-fit['rho1'][:,2])[:,None]*fit['R'])
+# r = av/e
+
+# (x, xmin, xmax) = numpy.percentile(av,(50,50-34,50+34),axis=0)
+# (y, ymin, ymax) = numpy.percentile(e,(50,50-34,50+34),axis=0)
+# plt.errorbar(x, y, xerr=[x-xmin,xmax-x],yerr=[y-ymin,ymax-ymin],fmt='o')
+# plt.xlabel(r'$\gamma^0_2 k_0$')
+# plt.ylabel(r'$\gamma^1_2 k_1$')
+# pp = PdfPages("output11/ra.pdf")
+# plt.tight_layout()
+# plt.savefig(pp,format='pdf')
+# pp.close()
+# plt.close()
+
+# wefwef
 
 plt.hist(numpy.median((fit['rho1'][:,1]-fit['rho1'][:,2])[:,None]*fit['R'],axis=0),bins=20)
 plt.xlabel(r'$E_{\gamma_1}(B-V)$')
@@ -327,7 +347,6 @@ pp = PdfPages(filename)
 plt.savefig(pp,format='pdf')
 pp.close()
 
-wefwe
 
 
 cind=[0,1,3,4]
@@ -731,7 +750,7 @@ with PdfPages('output11/multipage_pdf.pdf') as pdf:
 
     mega = fit['rho1']/((fit['rho1'][:,1]-fit['rho1'][:,2]))[:,None]
 
-    figure = corner.corner(mega,labels=[r"$R_{\delta 0}$",r"$R_{\delta 1}$",r"$R_{\delta 2}$",r"$R_{\delta 3}$",r"$R_{\delta 4}$"], \
+    figure = corner.corner(mega,labels=[r"$R_{\delta U}$",r"$R_{\delta B}$",r"$R_{\delta V}$",r"$R_{\delta R}$",r"$R_{\delta I}$"], \
         range=[[-8.,0.5] for x in xrange(5)])
     pp = PdfPages('output11/rxdelta_corner.pdf')
     plt.savefig(pp,format='pdf')
@@ -802,11 +821,11 @@ mega = numpy.transpose(mega)
 
 
 
-
+cname=['U','B','V','R','I']
 for index in xrange(5):
-    figure = corner.corner(mega[index,:,:],labels=[r"$c_{}$".format(index), r"$\alpha_{}$".format(index),\
-                    r"$\beta_{}$".format(index),r"$\eta_{}$".format(index),r"$\gamma^0_{}$".format(index),\
-                    r"$\gamma^1_{{1{}}}$".format(index), r"$\sigma_{}$".format(index)],label_kwargs={'fontsize':20},\
+    figure = corner.corner(mega[index,:,:],labels=[r"$c_{}$".format(cname[index]), r"$\alpha_{}$".format(cname[index]),\
+                    r"$\beta_{}$".format(cname[index]),r"$\eta_{}$".format(cname[index]),r"$\gamma^0_{}$".format(cname[index]),\
+                    r"$\gamma^1_{{1{}}}$".format(cname[index]), r"$\sigma_{}$".format(cname[index])],label_kwargs={'fontsize':20},\
                     truths=[None,0,0,0,0,0,0])
     figure.suptitle(filts[index],fontsize=28)
 
