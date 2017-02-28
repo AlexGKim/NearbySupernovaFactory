@@ -320,14 +320,16 @@ correction = [fit['c'][:,i][:,None] + fit['alpha'][:,i][:,None]*fit['EW'][:,:, 0
 correction = numpy.array(correction)
 correction = correction - correction[2,:,:]
 # correction_median = numpy.median(correction,axis=1)
-
+from matplotlib.ticker import NullFormatter
 cind=[0,1,3,4]
 cname = ['U','B','R','I']
-fig, axes = plt.subplots(nrows=4)
+mpl.rcParams['font.size'] = 14
+
+fig, axes = plt.subplots(nrows=4,ncols=2,gridspec_kw={'width_ratios':[1,.2]})
 for i in xrange(4):
     (y, ymin, ymax) = numpy.percentile(correction[cind[i],:,:],(50,50-34,50+34),axis=0)
     err = numpy.sqrt(color_cov[:,i,i] + ((ymax-ymin)/2)**2)
-    axes[i].errorbar(y+mag_mn[cind[i]]-mag_mn[2],color_obs[:,i]-y,xerr=[y-ymin,ymax-y], yerr=[err,err],fmt='.',alpha=0.4)
+    axes[i,0].errorbar(y+mag_mn[cind[i]]-mag_mn[2],color_obs[:,i]-y,xerr=[y-ymin,ymax-y], yerr=[err,err],fmt='.',alpha=0.4)
     # axes[i].errorbar(y+mag_mn[cind[i]]-mag_mn[2],color_obs[:,i]+mag_mn[cind[i]]-mag_mn[2],yerr=[numpy.sqrt(color_cov[:,i,i]),numpy.sqrt(color_cov[:,i,i])], xerr=[(ymax-ymin)/2,(ymax-ymin)/2],fmt='.',alpha=0.5)
 
  
@@ -335,20 +337,23 @@ for i in xrange(4):
     miny = (color_obs[:,i]+mag_mn[cind[i]]-mag_mn[2]).min()
     maxy = (color_obs[:,i]+mag_mn[cind[i]]-mag_mn[2]).max()
     # axes[i].plot([miny,maxy],[miny,maxy])
-    axes[i].set_xlabel(r'$({0}_o-V_o)$'.format(cname[i]))
+    axes[i,0].set_xlabel(r'$({0}_o-V_o)$'.format(cname[i]))
     lname = r'$\Delta({0}-V)$'.format(cname[i])
-    axes[i].set_ylabel(lname)
+    axes[i,0].set_ylabel(lname)
+    axes[i,1].hist(color_obs[:,i]-y, orientation='horizontal')
+    axes[i,1].set_ylim(axes[i,0].get_ylim())
+    axes[i,1].yaxis.set_major_formatter(NullFormatter())
+    axes[i,1].xaxis.set_major_formatter(NullFormatter())
     # axes[i].axhline(y=0,linestyle=':')
-fig.subplots_adjust(hspace=.5)
+fig.subplots_adjust(hspace=.4, wspace=.04)
 fig.set_size_inches(8,11)
-plt.tight_layout()
+# plt.tight_layout()
 filename = 'output11/residual.pdf'
 pp = PdfPages(filename)
 plt.savefig(pp,format='pdf')
 pp.close()
 
-
-
+mpl.rcParams['font.size'] = 18
 cind=[0,1,3,4]
 cname = ['U','B','R','I']
 fig, axes = plt.subplots(nrows=4)
@@ -367,6 +372,7 @@ pp = PdfPages(filename)
 plt.savefig(pp,format='pdf')
 pp.close()
 plt.close()
+
 
 # plt.scatter(numpy.median((fit['gamma'][:,1]-fit['gamma'][:,2])[:,None]*fit['k'],axis=0), mag_obs[:,2])
 # x=numpy.array([-0.08, 0.37])
