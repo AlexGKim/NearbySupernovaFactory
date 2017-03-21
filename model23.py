@@ -12,7 +12,8 @@ pkl_file = open('gege_data.pkl', 'r')
 data = pickle.load(pkl_file)
 pkl_file.close()
 
-sivel, sivel_err,_,_ = sivel.sivel(data)
+sivel,sivel_err,x1,x1_err,zcmb,zerr = sivel.sivel(data)
+
 # dic_phreno=cPickle.load(open("phrenology_2016_12_01_CABALLOv1.pkl"))
 
 # dic_meta=cPickle.load(open("META.pkl"))
