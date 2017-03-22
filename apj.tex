@@ -202,19 +202,26 @@ is applied to the supernova sample of the Nearby Supernova Factory.  The peak ma
 broadband photometry and their colors are found to be 
 dependent on the spectral equivalent widths and the color parameters, to better than 
 %-----
-$1-5\times10^{-5}$
+$(1-5\times10^{-5})$
 %------
 confidence.
+The color changes allowed by the model are almost parallel to the color changes allowed by the dust model of  \citet{1999PASP..111...63F} with floating
+total-to-selective extinction parameter $R^F$.  The prior of no parameter covariance used in the training, and the deduced extinctions and color excess
+are both qualitatively consistent with $R^F \sim 2.4$.
 The derived dust curve is able to reproduce the optical colors of the highly reddened SN~2014J better than the \citet{1999PASP..111...63F} dust model.
-Extending the model to three color parameters gives almost identical results for
+Inspired that our  two-parameter model, with no conditioning that would steer it toward a dust model, produces behavior similar to that expected from Galactic dust, we extend  the model to three color parameters.
+In this new case we obtain consistent results for
 all the parameters in common,
 plus a detection of a third parameter at
 %--- table.py
-$1-5\times10^{-4}$
+$(1-5\times10^{-4})$
 %-----
 confidence;
 this new parameter represents supernova color diversity
 beyond that tracked by the spectral features and two-parameter dust models.
+A direct incorporation of dust models into our formalism is impossible. An indirect incorporation of dust
+yields in constant-$R^F$ model $R^F \sim 3$, but the implementation is sensitive to systematic uncertainties that arise
+from the need to specify the colors of an unextincted supernova and its use of absolute extinction, neither of which is used in our original model.
 \end{abstract}
 
 \keywords{supernovae: general; supernovae: SN 2014J}
@@ -1847,10 +1854,53 @@ $\Delta$.  All Monte Carlo links are plotted, so that each supernova contributes
    \label{perobject2:fig}}
 \end{figure}
 
-The analysis is validated using simulated datasets with and without third color parameters: the input parameters are recovered within  uncertainties.
 \color{black}
+The analysis is validated using simulated datasets with and without third color parameters: the input parameters are recovered within  uncertainties.
+\color{blue}
+We present here the results of one of the validation tests.  The input values of the supernova parameters are the median values from the analysis of real data.
+Ten realizations of simulated data are generated based on the data covariances, and then analyzed separately.   The posteriors of the ten realizations
+are aggregated and shown in Figures~\ref{simglobal1:fig}--\ref{simglobal5:fig}.  The input parameters are recovered well
+within the 68\% credible interval.  There is a tendency for the slope parameters to be slightly underestimated, which is an expected consequence of 
+the uncertainties in the predictor variable, which in turn lead to 
+regression dilution.  Our analysis is susceptible to this bias because we do consciously do not include distributions
+of supernova parameters as part of our model.
 
+\begin{figure}[htbp] %  figure placement: here, top, bottom, or page
+   \centering
+   \includegraphics[width=5.2in]{output23_sim/coeff0.pdf} 
+            \caption{Aggregated Model~II posterior contours for $c$, $\alpha$, $\beta$, $\eta$, $\gamma^0$, $\gamma^1$,  $\delta$, and $\sigma$ in the $U$ band of ten independent simulated data sets.  Lines show the values of the input values.
+            \label{simglobal1:fig}}
+\end{figure}
 
+\begin{figure}[htbp] %  figure placement: here, top, bottom, or page
+   \centering
+   \includegraphics[width=5.2in]{output23_sim/coeff1.pdf} 
+            \caption{Aggregated Model~II posterior contours for $c$, $\alpha$, $\beta$, $\eta$, $\gamma^0$, $\gamma^1$,  $\delta$, and $\sigma$ in the $B$ band of ten independent simulated data sets.   Lines show the values of the input values.
+ \label{simglobal2:fig}}
+\end{figure}
+
+\begin{figure}[htbp] %  figure placement: here, top, bottom, or page
+   \centering
+   \includegraphics[width=5.2in]{output23_sim/coeff2.pdf} 
+            \caption{Aggregated Model~II posterior contours for $c$, $\alpha$, $\beta$, $\eta$, $\gamma^0$, $\gamma^1$,  $\delta$, and $\sigma$ in the $V$ band of ten independent simulated data sets.   Lines show the values of the input values.
+ \label{simglobal3:fig}}
+\end{figure}
+
+\begin{figure}[htbp] %  figure placement: here, top, bottom, or page
+   \centering
+      \includegraphics[width=5.2in]{output23_sim/coeff3.pdf} 
+            \caption{Aggregated Model~II posterior contours for $c$, $\alpha$, $\beta$, $\eta$, $\gamma^0$, $\gamma^1$,  $\delta$, and $\sigma$ in the $R$ band of ten independent simulated data sets.   Lines show the values of the input values.
+\label{simglobal4:fig}}
+\end{figure}
+
+\begin{figure}[htbp] %  figure placement: here, top, bottom, or page
+   \centering
+         \includegraphics[width=5.2in]{output23_sim/coeff4.pdf} 
+            \caption{Aggregated Model~II posterior contours for $c$, $\alpha$, $\beta$, $\eta$, $\gamma^0$, $\gamma^1$,  $\delta$, and $\sigma$ in the $I$ band of ten independent simulated data sets.   Lines show the values of the input values.
+ \label{simglobal5:fig}}
+\end{figure}
+
+\color{black}
 \section{Supernova Model III: Fitzpatrick Dust}
 \label{model0:sec}
 \color{blue}
@@ -2315,9 +2365,15 @@ of the reionization front with respect to the core of the ejecta at peak, yieldi
 detected in this analysis.
 
 
+
 Although the $D$ parameter has ben referred to as ``intrinsic'', due to its placement in the model and the correspondence
 of the $k$ parameters with those of extrinsic two-parameter dust models, the analysis cannot quantitatively distinguish
 whether its origin is intrinsic or due to a third dust parameter or some other extrinsic effect.
+
+\color{blue}
+We stress that our $\delta$ vector does not capture the full behavior of the observable effects of the $D$ parameter, but rather only
+the contribution perpendicular to the $\gamma$ vectors.
+\color{black}
 
 \subsection{Improving SNe~Ia as Standard Candles}
 The model and results presented here

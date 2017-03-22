@@ -13,7 +13,7 @@ import cPickle
 import matplotlib as mpl
 import sivel
 
-f = open('temp23_sim.pkl','rb')
+f = open('temp23_sim0.pkl','rb')
 (fit,_) = pickle.load(f)
 
 

@@ -306,18 +306,24 @@ pp.close()
 
 cind=[0,1,3,4]
 cname = ['U','B','R','I']
-fig, axes = plt.subplots(nrows=4)
+fig, axes = plt.subplots(nrows=4,sharex=True)
 for i in xrange(4):
     (y, ymin, ymax) = numpy.percentile(correction[cind[i],:,:],(50,50-34,50+34),axis=0)
     err = numpy.sqrt(color_cov[:,i,i] + ((ymax-ymin)/2)**2)
     axes[i].errorbar(x1,color_obs[:,i]-y,xerr=[x1_err,x1_err], yerr=[err,err],fmt='.',alpha=0.4)
-    axes[i].set_xlabel(r'$x_1$'.format(cname[i]))
-    lname = r'$({0}_o-V_o) - ({0}-V)_{{model}}$'.format(cname[i])
+    lname = r'$\Delta ({0}-V)$'.format(cname[i])
     axes[i].set_ylabel(lname)
     axes[i].axhline(y=0,linestyle=':')
+
+axes[3].set_xlabel(r'$x_1$')
+
 # fig.subplots_adjust(hspace=.3)
-fig.set_size_inches(8,11)
-plt.tight_layout()
+fig.set_size_inches(10,11)
+plt.setp(axes[0].get_xticklabels(),visible=False)
+plt.setp(axes[1].get_xticklabels(),visible=False)
+plt.setp(axes[2].get_xticklabels(),visible=False)
+plt.subplots_adjust(hspace=.1)
+#plt.tight_layout()
 filename = 'output23/residualx1.pdf'
 pp = PdfPages(filename)
 plt.savefig(pp,format='pdf')
@@ -670,7 +676,8 @@ pp.close()
 plt.close()
 
 
-figure = corner.corner(fit['rho1'],labels=[r"${\delta}_{0}$",r"${\delta}_{1}$",r"${\delta}_{2}$",r"${\delta}_{3}$",r"${\delta}_{4}$"])
+figure = corner.corner(fit['rho1'],labels=[r"${\delta}_{U}$",r"${\delta}_{B}$",r"${\delta}_{V}$",r"${\delta}_{R}$",r"${\delta}_{I}$"],\
+  truths=[0,0,0,0,0])
 pp = PdfPages('output23/delta_corner.pdf')
 plt.tight_layout()
 plt.savefig(pp,format='pdf')
@@ -853,12 +860,13 @@ mega = numpy.array([fit['c'],fit['alpha'],fit['beta'],fit['eta'],fit['gamma'],fi
 mega = numpy.transpose(mega)
 
 
-
+cname=['U','B','V','R','I']
 
 for index in xrange(5):
-    figure = corner.corner(mega[index,:,:],labels=[r"$c_{}$".format(index), r"$\alpha_{}$".format(index),\
-                    r"$\beta_{}$".format(index),r"$\eta_{}$".format(index),r"$\gamma^0_{}$".format(index),\
-                    r"$\gamma^1_{}$".format(index),r"$\delta_{{{}}}$".format(index), r"$\sigma_{}$".format(index)])
+    figure = corner.corner(mega[index,:,:],labels=[r"$c_{}$".format(cname[index]), r"$\alpha_{}$".format(cname[index]),\
+                    r"$\beta_{}$".format(cname[index]),r"$\eta_{}$".format(cname[index]),r"$\gamma^0_{}$".format(cname[index]),\
+                    r"$\gamma^1_{}$".format(cname[index]),r"$\delta_{{{}}}$".format(cname[index]), r"$\sigma_{}$".format(cname[index])], \
+                    truths=[None,0,0,0,0,0,0,0])
     figure.suptitle(filts[index],fontsize=28)
     pp = PdfPages('output23/coeff{}.pdf'.format(index))
     plt.savefig(pp,format='pdf')
@@ -915,12 +923,25 @@ plt.savefig(pp,format='pdf')
 pp.close()
 plt.close()
 
+
+
+labels = list('UBVRI')
+from matplotlib.ticker import FuncFormatter, MaxNLocator
+def format_fn2(tick_val, tick_pos):
+    if int(tick_val) in numpy.arange(5):
+        return labels[int(tick_val)]
+    else:
+        return ''
 (y, ymin, ymax) = numpy.percentile(fit['rho1']/fit['rho1'][:,4][:,None],(50,50-34,50+34),axis=0)
-plt.errorbar(efflam,y-1,yerr=[y-ymin,ymax-y],fmt='o')
-plt.legend()
-plt.xlabel(r'Wavelength (\AA)')
-plt.ylabel(r'$\frac{\delta_X}{\delta_4}-1$')
-plt.ylim((-4,1))
+fig = plt.figure()
+ax = fig.add_subplot(111)
+ax.errorbar(numpy.arange(5),y-1,yerr=[y-ymin,ymax-y],fmt='o')
+ax.xaxis.set_major_formatter(FuncFormatter(format_fn2))
+ax.xaxis.set_major_locator(MaxNLocator(integer=True))
+ax.set_xlim((-0.5,4.5))
+ax.set_xlabel(r'Band $X$')
+ax.set_ylabel(r'$\frac{\delta_X}{\delta_I}-1$')
+ax.set_ylim((-4,1))
 plt.tight_layout()
 pp = PdfPages('output23/deltaratio.pdf')
 plt.savefig(pp,format='pdf')

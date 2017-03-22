@@ -13,6 +13,7 @@ for index in xrange(10):
    pkl_file.close()
 
    nsne = data['D']
+   
 
    Delta_simplex = numpy.zeros(nsne-1)
    # Delta_simplex = numpy.zeros(nsne)+1./nsne
