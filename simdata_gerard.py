@@ -100,7 +100,7 @@ for i in xrange(nsne):
     # model0.parameters[2]=x0
     # model0.parameters[3]=x1
     # model0.parameters[4]=c
-    model = sncosmo.Model(source='hsiao', effects=[dust], effect_names=['host'], effect_frames=['rest'])
+    model = sncosmo.Model(source='salt2', effects=[dust], effect_names=['host'], effect_frames=['rest'])
     # model.parameters[2]=x0
     # model.parameters[3]=x1
     # model.parameters[4]=c

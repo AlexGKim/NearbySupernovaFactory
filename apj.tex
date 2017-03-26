@@ -219,9 +219,9 @@ $(1-5\times10^{-4})$
 confidence;
 this new parameter represents supernova color diversity
 beyond that tracked by the spectral features and two-parameter dust models.
-A direct incorporation of dust models into our formalism is impossible. An indirect incorporation of dust
-yields in constant-$R^F$ model $R^F \sim 3$, but the implementation is sensitive to systematic uncertainties that arise
-from the need to specify the colors of an unextincted supernova and its use of absolute extinction, neither of which is used in our original model.
+%A direct incorporation of dust models into our formalism is impossible. An indirect incorporation of dust
+%yields in constant-$R^F$ model $R^F \sim 3$, but the implementation is sensitive to systematic uncertainties that arise
+%from the need to specify the colors of an unextincted supernova and its use of absolute extinction, neither of which is used in our original model.
 \end{abstract}
 
 \keywords{supernovae: general; supernovae: SN 2014J}
@@ -1155,11 +1155,6 @@ where the uncertainty is the $68$\% credible interval and does not include model
 \end{figure}
 %\end{comment}
 
-We now compare our model and its color-coefficient parameters $\gamma^0$ and $\gamma^1$ with the expectations of  dust models.
-A direct analysis of the  \citetalias{1999PASP..111...63F} dust model is presented later
-in \S\ref{model0:sec}.
-
-
 
 %Until now we have considered $k_0$ and $k_1$ without association with any specific dust model, but they could be interpreted as
 %parameters of a single  dust model.
@@ -1172,6 +1167,7 @@ in \S\ref{model0:sec}.
 %While an accurate study of fundamental dust properties would incorporate the dust law within the model itself, we now proceed nonetheless
 %in making a connection between our model outputs and dust.
 
+We now compare our model and its color-coefficient parameters $\gamma^0$ and $\gamma^1$ with the expectations of  dust models.
 The 2-parameter linear model
 \begin{equation}
 A_X = a(X)  A_V + b(X) E(B-V)
@@ -1251,7 +1247,7 @@ vectors are bases for almost the same plane in the 5-dimensional color space, an
    Two perspectives (left and right columns) of $UVI$- (top row) and $BVR$- (bottom row) spaces
 of the vectors corresponding to $\gamma^i_X/(\gamma^i_B-\gamma^i_V)$ of our model (solid lines),
    and $a(X)$, $b(X)$ of the \citetalias{1999PASP..111...63F} model (dashed lines).  The combinations $a(X)+b(X)/2.4$ and  $a(X)+b(X)/2.6$ are shown in the dotted
-   lines: thy are almost perfectly superimposed on $\gamma^0_X/(\gamma^0_B-\gamma^0_V)$ for $UVI$ and $BVR$ respectively.  $b(X)$ shown in the dotted line is
+   lines: they are almost perfectly superimposed on $\gamma^0_X/(\gamma^0_B-\gamma^0_V)$ for $UVI$ and $BVR$ respectively.  $b(X)$ shown in the dotted line is
    almost  perfectly superimposed on $\gamma^1_X/(\gamma^1_B-\gamma^1_V)$ in $UVI$ but is clearly distinct in $BVR$.  
    \label{plane:fig}}
 \end{figure}
@@ -1299,9 +1295,35 @@ $\gamma^0$ is aligned with  $a(X)+b(X)/R^F$, and $\gamma^1$ is unconstrained.
 Now consider what happens when supernovae can have small  perturbations away from that constant $R^F$ value.  Each supernova magnitude
 can be described as the sum of the contribution along the $a(X)+b(X)/R^F$ direction, plus a perturbation in a different direction due its deviation  from $R_V$.
 The zero-correlation condition, which determines the direction of $\gamma^1$,  is for the coordinate values along $\gamma^0$ to be uncorrelated with the coordinate values along $\gamma^1$.
-Our analysis yields an angle of 154\arcdeg between  $\gamma^0$ and $\gamma^1$.
+Our analysis yields an angle of 154\arcdeg\ between  $\gamma^0$ and $\gamma^1$.
 The vectors not being perpendicular arises because the distribution of the perturbations in $R^F$ are dependent on the amount of first-order $R_V$ extinction.
 Perturbations away from $R^F$ and their correlation with extinction also shift the direction of $\gamma^0$.
+
+
+
+As a check of the above interpretation, we generate a simulated dataset with the same numbers and uncertainties as our data, based on a
+SALT2 $x_1=0$, $c=0$ template and  \citetalias{1999PASP..111...63F} dust.  The supernovae
+are assigned $E^F(B-V)$ parameters equal to the $B-V$ color excesses determined in our sample, and $R^F$ values drawn from a log-normal
+distribution with a mean of $2.4$ and 0.05 standard deviation.  The $\alpha$, $\beta$, and $\eta$ parameters are set to zero, so that dust and
+measurement uncertainty are the only sources of variation in magnitudes.  As with the analysis of our data, we find that the
+$\gamma$'s and \citetalias{1999PASP..111...63F}  vectors for nearly parallel planes, with the $\gamma^0$ vector consistent with
+$\kappa_1=1/2.3$.
+
+\begin{figure}[htbp] %  figure placement: here, top, bottom, or page
+   \centering
+   \includegraphics[width=2.95in]{output11_sim/plane0.pdf}
+   \includegraphics[width=2.95in]{output11_sim/plane1.pdf}
+   \caption{
+   Two perspectives of $UVI$- spaces
+of the vectors corresponding to $\gamma^i_X/(\gamma^i_B-\gamma^i_V)$ of our model (solid lines),
+   and $a(X)$, $b(X)$ of the \citetalias{1999PASP..111...63F} model (dashed lines), for a simulated dataset with
+   input $R^F$ drawn from a log-normal distribution  with a mean of $2.4$ and 0.05 standard deviation.
+   The combinations $a(X)+b(X)/2.3$ and  $a(X)+b(X)/2.4$ are shown in the dotted
+   lines, the former is 
+   almost  perfectly  superimposed on  $\gamma^0_X/(\gamma^0_B-\gamma^0_V)$.
+   \label{plane_sim:fig}}
+\end{figure}
+
 
 Given the association of  our parameter $\gamma^0_V k_0$ with changes in $A^F_V$ of an $R^F =\kappa^{-1}_1$ dust model up to an additive offset,
 the former's distribution can be compared to the expectation for the latter.
@@ -1859,8 +1881,8 @@ The analysis is validated using simulated datasets with and without third color 
 \color{blue}
 We present here the results of one of the validation tests.  The input values of the supernova parameters are the median values from the analysis of real data.
 Ten realizations of simulated data are generated based on the data covariances, and then analyzed separately.   The posteriors of the ten realizations
-are aggregated and shown in Figures~\ref{simglobal1:fig}--\ref{simglobal5:fig}.  The input parameters are recovered well
-within the 68\% credible interval.  There is a tendency for the slope parameters to be slightly underestimated, which is an expected consequence of 
+are aggregated and shown in Figures~\ref{simglobal1:fig}--\ref{simglobal5:fig}.  The input parameters are recovered with negligible bias
+relative to the statistical uncertainties.  There is a tendency for the slope parameters to be slightly underestimated, which is an expected consequence of 
 the uncertainties in the predictor variable, which in turn lead to 
 regression dilution.  Our analysis is susceptible to this bias because we do consciously do not include distributions
 of supernova parameters as part of our model.
@@ -1901,172 +1923,172 @@ of supernova parameters as part of our model.
 \end{figure}
 
 \color{black}
-\section{Supernova Model III: Fitzpatrick Dust}
-\label{model0:sec}
-\color{blue}
-Dust models can explain the extrinsic magnitude and color variations found in
-the linear models of \S\ref{model:sec} and \S\ref{model2:sec}.  In this section, we 
-perform a more conventional analysis by replacing the $\gamma k$ color terms with extinction
-terms predicted by a dust extinction model from the literature.  
+%\section{Supernova Model III: Fitzpatrick Dust}
+%\label{model0:sec}
+%\color{blue}
+%Dust models can explain the extrinsic magnitude and color variations found in
+%the linear models of \S\ref{model:sec} and \S\ref{model2:sec}.  In this section, we 
+%perform a more conventional analysis by replacing the $\gamma k$ color terms with extinction
+%terms predicted by a dust extinction model from the literature.  
+%%
+%%We analyze our data with a model that incorporates attenuation due to host-galaxy dust: it is identical to that of \S\ref{model:sec}
+%%except that dust
+%%is used in place of  the linear two-color-parameter  model.      
+%The dust model of  \citet{1999PASP..111...63F} is considered:
+%while commonly used dust
+%models are qualitatively similar in the optical wavelengths relevant to our data, that of  \citetalias{1999PASP..111...63F} 
+%does relatively well in reproducing supernova observations \citep{2041-8205-788-2-L21, 2016AAS...22723705H}.
 %
-%We analyze our data with a model that incorporates attenuation due to host-galaxy dust: it is identical to that of \S\ref{model:sec}
-%except that dust
-%is used in place of  the linear two-color-parameter  model.      
-The dust model of  \citet{1999PASP..111...63F} is considered:
-while commonly used dust
-models are qualitatively similar in the optical wavelengths relevant to our data, that of  \citetalias{1999PASP..111...63F} 
-does relatively well in reproducing supernova observations \citep{2041-8205-788-2-L21, 2016AAS...22723705H}.
-
-
-The  \citetalias{1999PASP..111...63F} dust model has two parameters, $R^F$ and $E^F(B-V)$.  The first, $R^F$,
-specifies the wavelength-dependent  attenuation  that we notate as $A^F/E^F(B-V)$.  The second, $E^F(B-V)$, specifies the normalization
-of that attenuation.  These two parameters can be combined to define a third dependent parameter $A^F_V \equiv R^F E^F(B-V)$.
-The dust model is expressed as
-\begin{equation}
-A(\lambda; E^F(B-V), R^F) = E^F(B-V) \frac{A^F}{E^F(B-V)}\left(\lambda; R^F \right).
-\end{equation}
-
-In the broadband photometry of a source with SED $f(\lambda)$ observed in a filter with transmission $X$, the attenuation $A_X$ is
-\begin{equation}
-A_X\left(A^F_V, E^F(B-V)  \right) = 2.5 \log{\left(\frac{\int f(\lambda) X(\lambda)d\lambda}{\int 10^{-0.4 A\left(\lambda; E^F(B-V), R^F=\frac{A^F_V}{E^F(B-V)}\right)} f(\lambda) X(\lambda)d\lambda } \right)},
-\end{equation}
-whose first-order approximation
-\begin{equation}
-A_X\left(A^F_V, E^F(B-V)  \right) = \frac{\int  A\left(\lambda; E^F(B-V), R^F=\frac{A^F_V}{E^F(B-V)}\right)f(\lambda) X(\lambda)d\lambda}{\int  f(\lambda) X(\lambda)d\lambda}
-\end{equation}
-is easy to interpret as an effective extinction.
-
-
-We are  faced with a conundrum: our broad-band model does not specify $f(\lambda)$.  As an ansatz,
-the SED of the SALT2 (v2.4), $c=0$, $x_1=0$ supernova at peak $B$ brightness is adopted as the SED of an unextincted
-SN~Ia, independent of spectral-feature parameters.  This choice contrasts with the models in the previous sections, which do not specify the
-parameter values of an unextincted
-supernova.
-The SALT2 SED determines the values of $A_X$ and the
-intrinsic colors. 
-
-This ansatz is  inconsistent with the results of the linear models evaluated with SNf data presented in previous sections in that the colors of a canonical supernova are not accessible by a SALT2 SED experiencing  \citetalias{1999PASP..111...63F} dust.
-Taking the SALT2 template as the unextincted supernova, the canonical supernova with colors given by the best-fit $c_X$'s in \S\ref{model:sec} has the broad-band color excesses $E(X-V)$ shown in
-Figure~\ref{model1118:fig}.  Overplotted are representative $E(X-V)$  allowed by dust.
-The canonical supernova is in tension with colors induced by dust at extreme wavelengths, toward the red in the $U$ but blue in the $I$,
-while simultaneously showing no color excess is $B-R$.
- 
-\begin{figure}[htbp] %  figure placement: here, top, bottom, or page
-   \centering
-   \includegraphics[width=2.8in]{output18/model1118ebv.pdf}
-   \includegraphics[width=2.8in]{output18/comptolinear.pdf}
-    \caption{Left: Broad-band color excesses $E(X-V)$ of the best-fit $c$'s of \S\ref{model:sec} 
-    taking the SALT2 template as an unextinced supernova.  Overplotted are possible $E(X-V)$ for a fixed $A_V$ and a range of $R$,
-allowed by \citetalias{1999PASP..111...63F} dust.
-Right:    $A_X/E(X-V)$ of the best-fit $c$'s 
-    relative to SALT2. \label{model1118:fig}}
-\end{figure}
-
-
 %
-%We emphasize now that our broadband magnitude model does not ambiguously specify $A_X$, which depend
-%on the SED of the source.  
-%In our model for broadband magnitudes, the SEDs of supernovae $f(\lambda)$ are not specified.  In its place we use the 
-%updated \citet{2007ApJ...663.1187H} template at peak (the $x_1=0$, $c=0$
-%SALT2 template yields similar results.)
-%The Hsiao template does not perfectly represent the underlying spectrum of a supernova and hence is a source
-%of model error.  Consider the SED to be the sum of the template and an offset
+%The  \citetalias{1999PASP..111...63F} dust model has two parameters, $R^F$ and $E^F(B-V)$.  The first, $R^F$,
+%specifies the wavelength-dependent  attenuation  that we notate as $A^F/E^F(B-V)$.  The second, $E^F(B-V)$, specifies the normalization
+%of that attenuation.  These two parameters can be combined to define a third dependent parameter $A^F_V \equiv R^F E^F(B-V)$.
+%The dust model is expressed as
 %\begin{equation}
-%f(\lambda) = f_{Hsiao}(\lambda) + \delta f(\lambda).
+%A(\lambda; E^F(B-V), R^F) = E^F(B-V) \frac{A^F}{E^F(B-V)}\left(\lambda; R^F \right).
 %\end{equation}
-%To first order, deviations of the true spectrum from the template yield small additive and multiplicative corrections to the template-based
-%extinction.  Heterogeneity in the true spectrum amongst supernovae produce scatter on top of those corrections.
-
-%For the purposes of efficiency in our fitter algorithm, we approximate the \citetalias{1999PASP..111...63F} dust model in the range
-%$-0.21 \le A_V \le 1.8$, $2.1 \le R \le 6.9$ with a third-order polynomial in $A_V$ and $E(B-V)$.   The limits in $R$ represent the range of
-%values that enter the dust-model training.
-%The differences between the extinction and the polynomial approximation are small relative to  $\partial A_X/ \partial R$ over the scales of
-%$R$ of interest.
-
 %
+%In the broadband photometry of a source with SED $f(\lambda)$ observed in a filter with transmission $X$, the attenuation $A_X$ is
+%\begin{equation}
+%A_X\left(A^F_V, E^F(B-V)  \right) = 2.5 \log{\left(\frac{\int f(\lambda) X(\lambda)d\lambda}{\int 10^{-0.4 A\left(\lambda; E^F(B-V), R^F=\frac{A^F_V}{E^F(B-V)}\right)} f(\lambda) X(\lambda)d\lambda } \right)},
+%\end{equation}
+%whose first-order approximation
+%\begin{equation}
+%A_X\left(A^F_V, E^F(B-V)  \right) = \frac{\int  A\left(\lambda; E^F(B-V), R^F=\frac{A^F_V}{E^F(B-V)}\right)f(\lambda) X(\lambda)d\lambda}{\int  f(\lambda) X(\lambda)d\lambda}
+%\end{equation}
+%is easy to interpret as an effective extinction.
+%
+%
+%We are  faced with a conundrum: our broad-band model does not specify $f(\lambda)$.  As an ansatz,
+%the SED of the SALT2 (v2.4), $c=0$, $x_1=0$ supernova at peak $B$ brightness is adopted as the SED of an unextincted
+%SN~Ia, independent of spectral-feature parameters.  This choice contrasts with the models in the previous sections, which do not specify the
+%parameter values of an unextincted
+%supernova.
+%The SALT2 SED determines the values of $A_X$ and the
+%intrinsic colors. 
+%
+%This ansatz is  inconsistent with the results of the linear models evaluated with SNf data presented in previous sections in that the colors of a canonical supernova are not accessible by a SALT2 SED experiencing  \citetalias{1999PASP..111...63F} dust.
+%Taking the SALT2 template as the unextincted supernova, the canonical supernova with colors given by the best-fit $c_X$'s in \S\ref{model:sec} has the broad-band color excesses $E(X-V)$ shown in
+%Figure~\ref{model1118:fig}.  Overplotted are representative $E(X-V)$  allowed by dust.
+%The canonical supernova is in tension with colors induced by dust at extreme wavelengths, toward the red in the $U$ but blue in the $I$,
+%while simultaneously showing no color excess is $B-R$.
+% 
+%\begin{figure}[htbp] %  figure placement: here, top, bottom, or page
+%   \centering
+%   \includegraphics[width=2.8in]{output18/model1118ebv.pdf}
+%   \includegraphics[width=2.8in]{output18/comptolinear.pdf}
+%    \caption{Left: Broad-band color excesses $E(X-V)$ of the best-fit $c$'s of \S\ref{model:sec} 
+%    taking the SALT2 template as an unextinced supernova.  Overplotted are possible $E(X-V)$ for a fixed $A_V$ and a range of $R$,
+%allowed by \citetalias{1999PASP..111...63F} dust.
+%Right:    $A_X/E(X-V)$ of the best-fit $c$'s 
+%    relative to SALT2. \label{model1118:fig}}
+%\end{figure}
+%
+%
+%%
+%%We emphasize now that our broadband magnitude model does not ambiguously specify $A_X$, which depend
+%%on the SED of the source.  
+%%In our model for broadband magnitudes, the SEDs of supernovae $f(\lambda)$ are not specified.  In its place we use the 
+%%updated \citet{2007ApJ...663.1187H} template at peak (the $x_1=0$, $c=0$
+%%SALT2 template yields similar results.)
+%%The Hsiao template does not perfectly represent the underlying spectrum of a supernova and hence is a source
+%%of model error.  Consider the SED to be the sum of the template and an offset
+%%\begin{equation}
+%%f(\lambda) = f_{Hsiao}(\lambda) + \delta f(\lambda).
+%%\end{equation}
+%%To first order, deviations of the true spectrum from the template yield small additive and multiplicative corrections to the template-based
+%%extinction.  Heterogeneity in the true spectrum amongst supernovae produce scatter on top of those corrections.
+%
+%%For the purposes of efficiency in our fitter algorithm, we approximate the \citetalias{1999PASP..111...63F} dust model in the range
+%%$-0.21 \le A_V \le 1.8$, $2.1 \le R \le 6.9$ with a third-order polynomial in $A_V$ and $E(B-V)$.   The limits in $R$ represent the range of
+%%values that enter the dust-model training.
+%%The differences between the extinction and the polynomial approximation are small relative to  $\partial A_X/ \partial R$ over the scales of
+%%$R$ of interest.
+%
+%%
+%%
+%%
+%%\begin{figure}[htbp] %  figure placement: here, top, bottom, or page
+%%   \centering
+%%   \includegraphics[width=5.2in]{output18/dfitz.pdf}
+%%    \caption{Residuals between the  broadband extinction of the updated \citet{2007ApJ...663.1187H} template at peak due to $A_V=1.8$
+%%    \citetalias{1999PASP..111...63F} dust,  and the polynomial approximation used in this analysis.
+%%   \label{dfitz:fig}}
+%%\end{figure}
+%%
+%
+%
+%The model we consider in this section is identical to the linear model described by Eqns.~\ref{ewsiv:eqn}
+%and
+%\ref{dust:eqn} in \S\ref{model:sec}, except that the colors of a zero-extinction supernova (parameterized by differences in $c_X$) are fixed to those of the SALT2 template,
+%and the $\gamma k$ terms are replaced with $A_X(A_V=R E(B-V), E(B-V))$.   Each supernova has an $E(B-V)$ parameter 
+%and there is one global $R$ parameter.  
+%%
+%%
+%%Three distinct analyses are run with the  \citetalias{1999PASP..111...63F}  dust model.  In the first (denoted
+%%as $R=const$), $R$ is held the same for all supernovae.  In the second  (denoted as $\ln{R} \sim \mathcal{N}$),
+%%the $\ln{R}$ for each supernova is taken to be drawn from a Normal distribution with dispersion $\sigma_{\ln{R}}$.
+%%In the third (denoted as $R$-free), $A_V$ and $R$ are free for
+%%each supernova, with a uniform prior $-0.21\le A_V \le 1.8$, $2.1 \le R \le 6.9$.
+%
+%Results from evaluating this model with SNf data
+%provide further evidence of the inconsistency between the ansatz and the models of the previous section.
+%The dust-model analysis of this section sets the magnitude of an $A_V=0$ supernova, so now  magnitudes of the canonical
+%supernova in \S\ref{model:sec} can also be compared (along with color) to the expectations of the dust model.  The magnitude difference, $\Delta c_X$,
+%is the difference between the $c_X$ parameters of the two analyses.
+%Then  $\Delta c_X / (\Delta c_B - \Delta c_V)$
+%corresponds to  $A_X/E(B-V)$ of the canonical supernova relative
+%to SALT2: these values are plotted in
+%Figure~\ref{model1118:fig}.
+%The negative values for $X=BVRI$ and the non-monotonic behavior is inconsistent with the expectations of dust.
+%
+%The analysis results for the dust parameters are shown in Figure~\ref{AVRV:fig}.  The left plot shows the histogram of the median $A_V$ determined for
+%each supernova. The
+%$A_V$ distribution  has a slow rise from zero; recall that the equivalent $\gamma^0_V k_0$
+%from the linear model of \S\ref{model:sec} has the sharp rise expected from of a large fraction of supernovae
+%experiencing no dust \citep{1998ApJ...502..177H}. The right plot shows the posterior of $R$, with 68\% credible interval
+%$R=2.99^{0.18}_{-0.16}$.  We perform the same analysis using the updated template of \citet{2007ApJ...663.1187H} in place of SALT2.
+%While the $A_V$ distributions using the different models appear similar, there is a significant shift in the $R$ distribution
+%to $R=3.17^{0.20}_{-0.17}$.
 %
 %
 %\begin{figure}[htbp] %  figure placement: here, top, bottom, or page
 %   \centering
-%   \includegraphics[width=5.2in]{output18/dfitz.pdf}
-%    \caption{Residuals between the  broadband extinction of the updated \citet{2007ApJ...663.1187H} template at peak due to $A_V=1.8$
-%    \citetalias{1999PASP..111...63F} dust,  and the polynomial approximation used in this analysis.
-%   \label{dfitz:fig}}
+%   \includegraphics[width=2.8in]{output18/AVs_mode_hist.pdf}
+%   \includegraphics[width=2.8in]{output18/RVs_hist.pdf}
+%    \caption{Left: Histogram of the median $A_V$ determined for
+%each supernova.  The $\gamma^0_V k_0$ medians from our 2-parameter model of \S\ref{model:sec} is also shown.  The means of the measurement
+%uncertainty over all supernovae are 0.13,   0.16,   0.11, and  0.05 mag respectively, roughly the size of the bin.
+%Right: Posteriors for $R$.  Results for both the SALT2 supernova model and the updated \citet{2007ApJ...663.1187H} are shown.
+%   \label{AVRV:fig}}
 %\end{figure}
 %
-
-
-The model we consider in this section is identical to the linear model described by Eqns.~\ref{ewsiv:eqn}
-and
-\ref{dust:eqn} in \S\ref{model:sec}, except that the colors of a zero-extinction supernova (parameterized by differences in $c_X$) are fixed to those of the SALT2 template,
-and the $\gamma k$ terms are replaced with $A_X(A_V=R E(B-V), E(B-V))$.   Each supernova has an $E(B-V)$ parameter 
-and there is one global $R$ parameter.  
+%The broadband nature of our supernova model does not allow a precise specification for the prediction of dust models,
+%and our ansatz for incorporating dust is limited systematically in measuring 
+%the total-to-selective extinction.  We emphasize also that $R^F$ determined in this section are based on  both absolute extinction and color,
+%whereas the $\gamma$'s (and resulting $\kappa_1$) in \S\ref{model:sec} do not depend on absolute extinction, i.e. the extra model constraint  of the
+%zero-extinction supernova.
 %
 %
-%Three distinct analyses are run with the  \citetalias{1999PASP..111...63F}  dust model.  In the first (denoted
-%as $R=const$), $R$ is held the same for all supernovae.  In the second  (denoted as $\ln{R} \sim \mathcal{N}$),
-%the $\ln{R}$ for each supernova is taken to be drawn from a Normal distribution with dispersion $\sigma_{\ln{R}}$.
-%In the third (denoted as $R$-free), $A_V$ and $R$ are free for
-%each supernova, with a uniform prior $-0.21\le A_V \le 1.8$, $2.1 \le R \le 6.9$.
-
-Results from evaluating this model with SNf data
-provide further evidence of the inconsistency between the ansatz and the models of the previous section.
-The dust-model analysis of this section sets the magnitude of an $A_V=0$ supernova, so now  magnitudes of the canonical
-supernova in \S\ref{model:sec} can also be compared (along with color) to the expectations of the dust model.  The magnitude difference, $\Delta c_X$,
-is the difference between the $c_X$ parameters of the two analyses.
-Then  $\Delta c_X / (\Delta c_B - \Delta c_V)$
-corresponds to  $A_X/E(B-V)$ of the canonical supernova relative
-to SALT2: these values are plotted in
-Figure~\ref{model1118:fig}.
-The negative values for $X=BVRI$ and the non-monotonic behavior is inconsistent with the expectations of dust.
-
-The analysis results for the dust parameters are shown in Figure~\ref{AVRV:fig}.  The left plot shows the histogram of the median $A_V$ determined for
-each supernova. The
-$A_V$ distribution  has a slow rise from zero; recall that the equivalent $\gamma^0_V k_0$
-from the linear model of \S\ref{model:sec} has the sharp rise expected from of a large fraction of supernovae
-experiencing no dust \citep{1998ApJ...502..177H}. The right plot shows the posterior of $R$, with 68\% credible interval
-$R=2.99^{0.18}_{-0.16}$.  We perform the same analysis using the updated template of \citet{2007ApJ...663.1187H} in place of SALT2.
-While the $A_V$ distributions using the different models appear similar, there is a significant shift in the $R$ distribution
-to $R=3.17^{0.20}_{-0.17}$.
-
-
-\begin{figure}[htbp] %  figure placement: here, top, bottom, or page
-   \centering
-   \includegraphics[width=2.8in]{output18/AVs_mode_hist.pdf}
-   \includegraphics[width=2.8in]{output18/RVs_hist.pdf}
-    \caption{Left: Histogram of the median $A_V$ determined for
-each supernova.  The $\gamma^0_V k_0$ medians from our 2-parameter model of \S\ref{model:sec} is also shown.  The means of the measurement
-uncertainty over all supernovae are 0.13,   0.16,   0.11, and  0.05 mag respectively, roughly the size of the bin.
-Right: Posteriors for $R$.  Results for both the SALT2 supernova model and the updated \citet{2007ApJ...663.1187H} are shown.
-   \label{AVRV:fig}}
-\end{figure}
-
-The broadband nature of our supernova model does not allow a precise specification for the prediction of dust models,
-and our ansatz for incorporating dust is limited systematically in measuring 
-the total-to-selective extinction.  We emphasize also that $R^F$ determined in this section are based on  both absolute extinction and color,
-whereas the $\gamma$'s (and resulting $\kappa_1$) in \S\ref{model:sec} do not depend on absolute extinction, i.e. the extra model constraint  of the
-zero-extinction supernova.
-
-
-%
-%The $R$-free analysis is performed for the dust law of \citet{1989ApJ...345..245C}.  Figure~\ref{CCMF99:fig} shows the difference between per-supernova
-%$A_V$ and $R_V$ of  the  \citet{1989ApJ...345..245C} (superscripted with $C$) and \citetalias{1999PASP..111...63F} dust laws.
-%The weighted mean of the difference in $A_V$ is $0.06 \pm 0.01$ mag and that of $R_V$ is $-0.26 \pm 0.09$, both significantly
-%non-zero.  Insofar that the $A_V$ and $R_V$
-%parameters of the two models are designed to represent the same dust observables, we find that the systematic uncertainty in the dust model itself
-%is important.
+%%
+%%The $R$-free analysis is performed for the dust law of \citet{1989ApJ...345..245C}.  Figure~\ref{CCMF99:fig} shows the difference between per-supernova
+%%$A_V$ and $R_V$ of  the  \citet{1989ApJ...345..245C} (superscripted with $C$) and \citetalias{1999PASP..111...63F} dust laws.
+%%The weighted mean of the difference in $A_V$ is $0.06 \pm 0.01$ mag and that of $R_V$ is $-0.26 \pm 0.09$, both significantly
+%%non-zero.  Insofar that the $A_V$ and $R_V$
+%%parameters of the two models are designed to represent the same dust observables, we find that the systematic uncertainty in the dust model itself
+%%is important.
+%%
+%%
+%%\begin{figure}[htbp] %  figure placement: here, top, bottom, or page
+%%   \centering
+%%   \includegraphics[width=5.2in]{output18/CCMf99.pdf}
+%%    \caption{Difference between per-supernova
+%%$A_V$ and $R_V$ of the  \citet{1989ApJ...345..245C} and \citetalias{1999PASP..111...63F} dust laws.
+%%   \label{CCMF99:fig}}
+%%\end{figure}
 %
 %
-%\begin{figure}[htbp] %  figure placement: here, top, bottom, or page
-%   \centering
-%   \includegraphics[width=5.2in]{output18/CCMf99.pdf}
-%    \caption{Difference between per-supernova
-%$A_V$ and $R_V$ of the  \citet{1989ApJ...345..245C} and \citetalias{1999PASP..111...63F} dust laws.
-%   \label{CCMF99:fig}}
-%\end{figure}
-
-
-\color{black}
+%\color{black}
 \section{Discussion and Summary}
 \label{discussion:sec}
 
@@ -2403,7 +2425,8 @@ colors in a manner that is distinct from  the expectations from dust or the spec
 \color{blue}
 An interesting direction for future work is to use narrower bands for generating synthetic photometry.  When the bandwidth were small enough
 to resolve spectral features, the analysis would produce a spectroscopic model.   Higher resolution would allow us to forego 
-the use of a fiducial template necessary to predict broadband fluxes generated by dust models.
+the use of a fiducial template necessary to predict broadband fluxes generated by dust models, and also allow direct incorporation
+of dust models into our framework.
 \color{black}
 
 \acknowledgments
