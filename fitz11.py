@@ -106,7 +106,6 @@ for s in ['gamma','rho1']:
   ans = c-ans[0]*dAdebv - ans[1]*dAdAv
   res.append(ans)
 
-
 tmat = numpy.array(tmat)
 res= numpy.array(res)
 
@@ -141,7 +140,12 @@ ax.plot([0,crap[0]/dum],[0,crap[2]/dum],[0,crap[4]/dum],label=r'$a(X)+b(X)/2.4$'
 crap = -6.8*dAdAv + dAdebv
 dum  = numpy.sqrt(crap[0]**2+crap[2]**2+crap[4]**2)
 ax.plot([0,crap[0]/dum],[0,crap[2]/dum],[0,crap[4]/dum],label=r'$-6.8a(X)+b(X)$',ls=':',color='black')
-crap = dAdAv + dAdebv/2.6
+
+# crap = -16*dAdAv - dAdebv
+# dum  = numpy.sqrt(crap[0]**2+crap[2]**2+crap[4]**2)
+# ax.plot([0,crap[0]/dum],[0,crap[2]/dum],[0,crap[4]/dum],label=r'$-6.8a(X)-b(X)$',ls=':',color='black')
+
+# crap = dAdAv + dAdebv/2.6
 # dum  = numpy.sqrt(crap[0]**2+crap[2]**2+crap[4]**2)
 # ax.plot([0,crap[0]/dum],[0,crap[2]/dum],[0,crap[4]/dum],label=r'$a(X)+b(X)/2.6$',ls=':',color='black')
 #crap = dAdebv
