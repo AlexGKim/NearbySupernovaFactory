@@ -115,6 +115,10 @@ print numpy.linalg.norm(res,axis=1)/numpy.array(c_n)
 print res
 
 
+kappa1_inv = tmat[0,1]/tmat[0,0]
+kappa2_inv = tmat[1,1]/tmat[1,0]
+
+
 # The matrix to transform the per-SN parameters from gamma to fitzpatrick
 # A= gamma0 k0 + gamma1 k1 = ans00 F0 k0 + ans01 F1 k0 + ans10 F0 k1 + ans11 F1 k1 
 #  = (ans00 k0 + ans10 k1)F0 + (ans01 k0 + ans11 k1)F1
@@ -134,12 +138,12 @@ dum  = numpy.sqrt(dAdAv[0]**2+dAdAv[2]**2+dAdAv[4]**2)
 ax.plot([0,dAdAv[0]/dum],[0,dAdAv[2]/dum],[0,dAdAv[4]/dum],label=r'$a(X)$',ls='--')
 dum  = numpy.sqrt(dAdebv[0]**2+dAdebv[2]**2+dAdebv[4]**2)
 ax.plot([0,dAdebv[0]/dum],[0,dAdebv[2]/dum],[0,dAdebv[4]/dum],label=r'$b(X)$',ls='--')
-crap = dAdAv + dAdebv/2.4
+crap = dAdAv + dAdebv*kappa1_inv
 dum  = numpy.sqrt(crap[0]**2+crap[2]**2+crap[4]**2)
-ax.plot([0,crap[0]/dum],[0,crap[2]/dum],[0,crap[4]/dum],label=r'$a(X)+b(X)/2.4$',ls=':')
-crap = -6.8*dAdAv + dAdebv
+ax.plot([0,crap[0]/dum],[0,crap[2]/dum],[0,crap[4]/dum],label=r'$a(X)+b(X)/{:4.2f}$'.format(kappa1_inv),ls=':')
+crap = kappa2_inv*dAdAv + dAdebv
 dum  = numpy.sqrt(crap[0]**2+crap[2]**2+crap[4]**2)
-ax.plot([0,crap[0]/dum],[0,crap[2]/dum],[0,crap[4]/dum],label=r'$-6.8a(X)+b(X)$',ls=':',color='black')
+ax.plot([0,crap[0]/dum],[0,crap[2]/dum],[0,crap[4]/dum],label=r'${:4.2f}a(X)+b(X)$'.format(kappa2_inv),ls=':',color='black')
 
 # crap = -16*dAdAv - dAdebv
 # dum  = numpy.sqrt(crap[0]**2+crap[2]**2+crap[4]**2)
@@ -170,7 +174,6 @@ plt.savefig(pp,format='pdf')
 pp.close()
 plt.close()
 
-
 # Plot vectors in BVR
 from mpl_toolkits.mplot3d import Axes3D
 from matplotlib import rcParams
@@ -187,12 +190,12 @@ ax.plot([0,dAdebv[1]/dum],[0,dAdebv[2]/dum],[0,dAdebv[3]/dum],label=r'$b(X)$',ls
 # crap = dAdAv + dAdebv/2.4
 # dum  = numpy.sqrt(crap[1]**2+crap[2]**2+crap[3]**2)
 # ax.plot([0,crap[1]/dum],[0,crap[2]/dum],[0,crap[3]/dum],label=r'$a(X)+b(X)/2.4$',ls=':')
-crap = dAdAv + dAdebv/2.6
+crap = dAdAv + dAdebv*kappa1_inv
 dum  = numpy.sqrt(crap[1]**2+crap[2]**2+crap[3]**2)
-ax.plot([0,crap[1]/dum],[0,crap[2]/dum],[0,crap[3]/dum],label=r'$a(X)+b(X)/2.6$',ls=':')
-crap = -6.1*dAdAv + dAdebv
+ax.plot([0,crap[1]/dum],[0,crap[2]/dum],[0,crap[3]/dum],label=r'$a(X)+b(X)/{:4.2f}$'.format(kappa1_inv),ls=':')
+crap = kappa2_inv*dAdAv + dAdebv
 dum  = numpy.sqrt(crap[1]**2+crap[2]**2+crap[3]**2)
-ax.plot([0,crap[1]/dum],[0,crap[2]/dum],[0,crap[3]/dum],label=r'$-6.1a(X)+b(X)$',ls=':',color='black')
+ax.plot([0,crap[1]/dum],[0,crap[2]/dum],[0,crap[3]/dum],label=r'${:4.2f}a(X)+b(X)$'.format(kappa2_inv),ls=':',color='black')
 #crap = dAdebv
 #ax.plot([0,crap[1]/dum],[0,crap[2]/dum],[0,crap[3]/dum],label=r'$b(X)$',ls=':')
 ax.legend(prop={'size':14})
@@ -215,7 +218,34 @@ plt.savefig(pp,format='pdf')
 pp.close()
 plt.close()
 
-wef
+
+
+r1 = []
+r2 = []
+for ind in xrange(fit['gamma'].shape[0]):
+  tmat = []
+  cs = []
+  for s in ['gamma','rho1']:
+    c = fit[s][ind,:]/((fit[s][ind,1]-fit[s][ind,2]))
+    cs.append(c)
+
+    y = numpy.array([numpy.dot(c,dAdebv),numpy.dot(c,dAdAv)])
+
+    ans = numpy.linalg.solve(a,y)
+
+    tmat.append(ans)
+
+  tmat = numpy.array(tmat)
+  r1.append(tmat[0,1]/tmat[0,0])
+  
+
+print numpy.percentile(r1,(50,50-34,50+34))
+plt.hist(r1)
+plt.show()
+wefwe
+
+
+
 
 # Plot AV versus E(B-V) from the data
 

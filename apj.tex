@@ -1081,6 +1081,11 @@ is
 $2.5 \log{(50/701)} \sim 0.08$ mags.   The implied span in $U$ magnitude is  0.21~mag, so $\alpha_U$ cannot be completely due to the 
 presence of the line itself.
 
+\color{orange}
+For brevity, we do not present here the analysis of simulated data used to validate and bias quantify bias in our results.
+The simulation tests in \S\ref{model2:sec} are representative for both Model~1 of this Section and Model~2 of the subsequent section.
+\color{black}
+
 \subsection{The Two Extrinsic Per-Supernova Parameters $k_0$ and $k_1$}
 \color{blue}
 The two sets of  $\gamma^i$ parameters  are significantly non-zero. 
@@ -1090,9 +1095,12 @@ influence of $k_0$ and $k_1$  on supernova magnitudes
 with probability $1-5\times 10^{-5}$.
 
 There is a pair of parameter values,  $k_0^0$ and $k_1^0$, that correspond to supernovae experiencing no extrinsic effect.
+\color{orange}
+For observer filters $X$ and $Y$, we define $A_X(k_0,k_1) =  \gamma^0_X k_0 + \gamma^1_X k_1$, $E(X-Y)=A_X-A_Y$.
 The true extrinsic
 extinction is
-$A^T_X(k_0,k_1)= A_X(k_0,k_1) -  A_X(k^0_0,k^0_1)$ where $A_X(k_0,k_1) =  \gamma^0_X k_0 + \gamma^1_X k_1$.
+$A^T_X(k_0,k_1)= A_X(k_0,k_1) -  A_X(k^0_0,k^0_1)$.
+\color{blue}
 The true extrinsic color excess is $E^T(B-V) = A^T_B-A^T_V$, so that the total-to-selective extinction is $R^T_V=A^T_V/E^T(B-V)$.
 Our $\langle k_0 \rangle=0$ and  $\langle k_1 \rangle=0$ constraints
 do not determine $k_0^0$ and $k_1^0$, and so the extrinsic extinction and color excess per supernova are not products of our analysis.
@@ -1241,14 +1249,16 @@ vectors are bases for almost the same plane in the 5-dimensional color space, an
    \centering
    \includegraphics[width=2.95in]{output11/plane0.pdf}
    \includegraphics[width=2.95in]{output11/plane1.pdf}
-   \includegraphics[width=2.95in]{output11/plane0BVR.pdf}
-   \includegraphics[width=2.95in]{output11/plane1BVR.pdf}
+%   \includegraphics[width=2.95in]{output11/plane0BVR.pdf}
+%   \includegraphics[width=2.95in]{output11/plane1BVR.pdf}
    \caption{
-   Two perspectives (left and right columns) of $UVI$- (top row) and $BVR$- (bottom row) spaces
+   \color{orange}
+   Two perspectives (left and right columns) of the $UVI$-space
 of the vectors corresponding to $\gamma^i_X/(\gamma^i_B-\gamma^i_V)$ of our model (solid lines),
-   and $a(X)$, $b(X)$ of the \citetalias{1999PASP..111...63F} model (dashed lines).  The combinations $a(X)+b(X)/2.4$ and  $a(X)+b(X)/2.6$ are shown in the dotted
-   lines: they are almost perfectly superimposed on $\gamma^0_X/(\gamma^0_B-\gamma^0_V)$ for $UVI$ and $BVR$ respectively.  $b(X)$ shown in the dotted line is
-   almost  perfectly superimposed on $\gamma^1_X/(\gamma^1_B-\gamma^1_V)$ in $UVI$ but is clearly distinct in $BVR$.  
+   and $a(X)$, $b(X)$ of the \citetalias{1999PASP..111...63F} model (dashed lines).  The combination $a(X)+b(X)/2.44$ is shown in the dotted red
+   line: it is almost perfectly superimposed on $\gamma^0_X/(\gamma^0_B-\gamma^0_V)$.   The combination $-7.31a(X)+b(X)$ is shown in the dotted blue
+   line: it is
+   almost  perfectly superimposed on $\gamma^1_X/(\gamma^1_B-\gamma^1_V)$ in $UVI$.  
    \label{plane:fig}}
 \end{figure}
 
@@ -1276,14 +1286,12 @@ The vector $a(X)+\kappa_1 b(X)$ represents extinction that can occur with fixed 
 %\end{equation}
 %Then $\kappa^{-1}_2$ can this be associated with $\frac{1}{R^F_0} - \frac{\Delta R^F}{R^F_0}$.
 
-The preferred values for $\kappa$ are shown qualitatively in
-Figure~\ref{plane:fig}.  For $\kappa_1=1/2.4$, $\kappa_2=-6.8$
-the vector $\gamma^0_X$ is  aligned with 
-the dust vector $a(X)+\kappa_1 b(X)$  and $\gamma^1_X$
-is aligned with $\kappa_2 a(X) + b(X)$  $UVI$-space.  
-%With these values of $\kappa$, the dust parameters are $R^F_0=2.4$ and $\Delta R^F=1.4$.
-Slightly shifted values of $\kappa_1=1/2.6$, $\kappa_2=-6.1$ apply in $BVR$-space.
-%, which correspond to  $R^F_0=2.6$ and $\Delta R^F=1.4$.
+\color{orange}
+The preferred values for $\kappa^{-1}$ can be determined from the matrix elements of Eqn.~\ref{model11trans:eqn}: $\kappa^{-1}_1=2.82/1.15 =2.44$, $\kappa^{-1}_2=-5.27/0.72=-7.31$.
+The directions of the $\gamma$ vectors, and  the expectations from  \citetalias{1999PASP..111...63F} with $R=\kappa^{-1}$, are shown in 
+Figure~\ref{plane:fig}.  There is almost perfect alignment between $\gamma^0$ and $R=2.44$ dust.
+ From the Monte Carlo chains, we find a 68\% credible interval for $\kappa^{-1}_1$ of 2.26--2.63.
+\color{blue}
 
 To gain an intuitive understanding of how the $\kappa$ values are determined, consider the hypothetical case where
 all supernovae experience dust with the same $R^F$.   There is only one free parameter $A^F_V$ and magnitudes are
@@ -1305,7 +1313,9 @@ As a check of the above interpretation, we generate a simulated dataset with the
 SALT2 $x_1=0$, $c=0$ template and  \citetalias{1999PASP..111...63F} dust.  The supernovae
 are assigned $E^F(B-V)$ parameters equal to the $B-V$ color excesses determined in our sample, and $R^F$ values drawn from a log-normal
 distribution with a mean of $\ln{2.4}$ and 0.05 standard deviation.  The $\alpha$, $\beta$, and $\eta$ parameters are set to zero, so that dust and
-measurement uncertainty are the only sources of variation in magnitudes.  As with the analysis of our data, we find that the
+measurement uncertainty are the only sources of variation in magnitudes.  
+From the Monte Carlo chains, we find a 68\% credible interval for $\kappa^{-1}_1$ of 2.18--2.40.
+As with the analysis of our data, we find that the
 $\gamma$'s and \citetalias{1999PASP..111...63F}  vectors for nearly parallel planes, with the $\gamma^0$ vector almost consistent with
 $\kappa_1^{-1}=2.4$, as expected given the mean of $\ln{2.4}$ of the input log-normal distribution.
 
@@ -1604,6 +1614,7 @@ where the residual vectors
 \vec{\epsilon}_a &=\{0.05, -0.06, -0.06,  0.06,  0.07\},\\
 \vec{\epsilon}_b &=\{ -0.10, 0.20,  -0.19,  0.32, -0.30\}
 \end{align}
+\label{model11trans:eqn}
 \color{black}
 are perpendicular to the  \citetalias{1999PASP..111...63F} plane and
 contribute similar 2\% and 4\% to the total  length of the vector.
