@@ -11,11 +11,6 @@ import matplotlib as mpl
 
 mpl.rcParams['font.size'] = 14
 
-# Get the data
-f = open('temp11_sim.pkl','rb')
-(fit, _) = pickle.load(f)
-f.close()
-
 # Determine the plane approximaion for Fitzpatrick
 
 # Partial derivatives with respect to av and ebv
@@ -46,41 +41,6 @@ dAdAv = (A2 - A1)/0.01
 A3= f99_band.A_X(r_v=av/(ebv+0.001), ebv=ebv+0.001)
 dAdebv = (A3 - A1)/0.001
 
-print '{0[0]:6.2f}, {0[1]:6.2f}, {0[2]:6.2f}, {0[3]:6.2f}, {0[4]:6.2f}'.format(dAdAv)
-print '{0[0]:6.2f}, {0[1]:6.2f}, {0[2]:6.2f}, {0[3]:6.2f}, {0[4]:6.2f}'.format(dAdebv)
-
-# av=0.1
-# ebv=0.1/3.1
-# A1= f99_band.A_X(r_v=av/ebv, ebv=ebv)
-
-# A2= f99_band.A_X(r_v=(av+0.01)/ebv, ebv=ebv)
-# dAdAv = (A2 - A1)/0.01
-
-# A3= f99_band.A_X(r_v=av/(ebv+0.001), ebv=ebv+0.001)
-# dAdebv = (A3 - A1)/0.001
-
-# print '{0[0]:6.2f}, {0[1]:6.2f}, {0[2]:6.2f}, {0[3]:6.2f}, {0[4]:6.2f}'.format(dAdAv)
-# print '{0[0]:6.2f}, {0[1]:6.2f}, {0[2]:6.2f}, {0[3]:6.2f}, {0[4]:6.2f}'.format(dAdebv)
-
-# av=0.1
-# ebv=0.1/1.9
-# A1= f99_band.A_X(r_v=av/ebv, ebv=ebv)
-
-# A2= f99_band.A_X(r_v=(av+0.01)/ebv, ebv=ebv)
-# dAdAv = (A2 - A1)/0.01
-
-# A3= f99_band.A_X(r_v=av/(ebv+0.001), ebv=ebv+0.001)
-# dAdebv = (A3 - A1)/0.001
-
-# print '{0[0]:6.2f}, {0[1]:6.2f}, {0[2]:6.2f}, {0[3]:6.2f}, {0[4]:6.2f}'.format(dAdAv)
-# print '{0[0]:6.2f}, {0[1]:6.2f}, {0[2]:6.2f}, {0[3]:6.2f}, {0[4]:6.2f}'.format(dAdebv)
-
-# The equation of interest is
-# gammma0 = ans00 F0 + ans01 F1 + res
-# gammma0 = ans10 F0 + ans11 F1 + res
-# where F are the Fitzpatrick vectors (partial derivatives above) and
-# the residues are perpendicular to a and b
-# Note that the gammas are really gamma_X/(gamma_B-gamma_V)
 
 norm_dAdebv = numpy.dot(dAdebv, dAdebv)
 norm_dAdAv = numpy.dot(dAdAv, dAdAv)
@@ -88,34 +48,36 @@ cross = numpy.dot(dAdebv, dAdAv)
 
 a = numpy.array([[norm_dAdebv,cross],[cross,norm_dAdAv]])
 
-tmat = []
-res = []
-c_n = []
-cs = []
-for s in ['gamma','rho1']:
-  c, cmin, cmax = numpy.percentile(fit[s]/((fit[s][:,1]-fit[s][:,2])[:,None]),(50,50-34,50+34),axis=0)
-  print "{:6.2f}, {:6.2f}, {:6.2f}, {:6.2f}, {:6.2f}".format(c[0],c[1],c[2],c[3],c[4])
-  cs.append(c)
-  c_norm = numpy.linalg.norm(c)
-  c_n.append(c_norm)
+r1 = []
+for seed in xrange(10):
 
-  y = numpy.array([numpy.dot(c,dAdebv),numpy.dot(c,dAdAv)])
-  ans = numpy.linalg.solve(a,y)
+  # Get the data
+  f = open('temp11_sim{}.pkl'.format(seed),'rb')
+  (fit, _) = pickle.load(f)
+  f.close()
 
-  tmat.append(ans)
-  ans = c-ans[0]*dAdebv - ans[1]*dAdAv
-  res.append(ans)
+  for ind in xrange(fit['gamma'].shape[0]):
+    tmat = []
+    cs = []
+    for s in ['gamma','rho1']:
+      c = fit[s][ind,:]/((fit[s][ind,1]-fit[s][ind,2]))
+      cs.append(c)
 
-tmat = numpy.array(tmat)
-res= numpy.array(res)
+      y = numpy.array([numpy.dot(c,dAdebv),numpy.dot(c,dAdAv)])
 
-#print the matrix and the residues
-print tmat
-print numpy.linalg.norm(res,axis=1)/numpy.array(c_n)
-print res
+      ans = numpy.linalg.solve(a,y)
 
-kappa1_inv = tmat[0,1]/tmat[0,0]
-kappa2_inv = tmat[1,1]/tmat[1,0]
+      tmat.append(ans)
+
+    tmat = numpy.array(tmat)
+    r1.append(tmat[0,1]/tmat[0,0])
+    
+
+print numpy.percentile(r1,(50,50-34,50+34))
+plt.hist(r1)
+plt.show()
+wefwe
+
 
 # The matrix to transform the per-SN parameters from gamma to fitzpatrick
 # A= gamma0 k0 + gamma1 k1 = ans00 F0 k0 + ans01 F1 k0 + ans10 F0 k1 + ans11 F1 k1 
