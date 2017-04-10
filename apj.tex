@@ -20,7 +20,7 @@
     
 
 \author{     G.~Aldering}
-\affiliation{    Physics Division, Lawrence Berkeley National Laboratory, ?out???½
+\affiliation{    Physics Division, Lawrence Berkeley National Laboratory, 
     1 Cyclotron Road, Berkeley, CA, 94720}
 
 \author{     P.~Antilogus}
@@ -640,7 +640,10 @@ relate intrinsic magnitudes with the spectral-feature parameters.
 The global parameters $\gamma^0$, $\gamma^1$  are the slopes that connect the extrinsic-color
 parameters to observed magnitudes.
 
-To constrain the degrees of freedom and degeneracies inherent in the model we impose that
+To constrain the degrees of freedom and degeneracies inherent in the model we
+\color{orange}
+implement
+\color{black}
 each of the vectors $k_0+1/N$ and $k_1+1/N$,  where $N$ is the number of objects in our sample, are element-wise $\ge 0$ and sum to one, i.e.\
 these vectors are simplexes.
 These
@@ -1034,19 +1037,21 @@ $\Delta$.  All Monte Carlo links are plotted, so that each supernova contributes
 \end{figure}
 
 The Pearson correlation coefficients for $\Delta$, $EW_{Ca}$, $EW_{Si}$, $\lambda_{Si}$, $E_{\gamma^0}(B-V)$, and $E_{\gamma^0}(B-V)$ are given in the matrix
+\color{orange}
 \begin{multline}
 Cor(\Delta, EW_{Ca}, EW_{Si}, \lambda_{Si}, E_{\gamma^0}(B-V), E_{\gamma^1}(B-V)) =\\
 \begin{pmatrix}
 \begin{array}{rrrrrr}
-1.00 & 0.00 & -0.06 & -0.05 & 0.11 & 0.01 \\
-0.00 & 1.00 & 0.10 & -0.26 & -0.07 & -0.01 \\
--0.06 & 0.10 & 1.00 & -0.14 & -0.17 & -0.03 \\
--0.05 & -0.26 & -0.14 & 1.00 & 0.03 & 0.03 \\
-0.11 & -0.07 & -0.17 & 0.03 & 1.00 & 0.05 \\
-0.01 & -0.01 & -0.03 & 0.03 & 0.05 & 1.00
+1.00 & 0.00^{+0.06}_{-0.06} & -0.07^{+0.07}_{-0.06} & -0.04^{+0.06}_{-0.06} & 0.10^{+0.07}_{-0.07} & -0.00^{+0.08}_{-0.07} \\
+0.00^{+0.06}_{-0.06} & 1.00 & 0.10^{+0.03}_{-0.03} & -0.26^{+0.03}_{-0.03} & -0.07^{+0.06}_{-0.06} & -0.01^{+0.08}_{-0.08} \\
+-0.07^{+0.07}_{-0.06} & 0.10^{+0.03}_{-0.03} & 1.00 & -0.14^{+0.04}_{-0.03} & -0.17^{+0.05}_{-0.05} & -0.04^{+0.08}_{-0.07} \\
+-0.04^{+0.06}_{-0.06} & -0.26^{+0.03}_{-0.03} & -0.14^{+0.04}_{-0.03} & 1.00 & 0.03^{+0.05}_{-0.06} & 0.03^{+0.08}_{-0.08} \\
+0.10^{+0.07}_{-0.07} & -0.07^{+0.06}_{-0.06} & -0.17^{+0.05}_{-0.05} & 0.03^{+0.05}_{-0.06} & 1.00 & 0.06^{+0.08}_{-0.08} \\
+-0.00^{+0.08}_{-0.07} & -0.01^{+0.08}_{-0.08} & -0.04^{+0.08}_{-0.07} & 0.03^{+0.08}_{-0.08} & 0.06^{+0.08}_{-0.08} & 1.00 \\
 \end{array}
 \end{pmatrix}.
 \end{multline}
+\color{black}
 
 \color{red}
 [Greg asked for discussion but I think the spectral correlations should go in Chotard et al.\ 2017.]
@@ -1561,8 +1566,14 @@ to identify $\delta D$ as being physically intrinsic or extrinsic.
 \color{black}
 
 To constrain the new degrees of freedom and degeneracies inherent in the model we impose additional constraints.  We first
-require that
-$D+1/N$ be a simplex to break the 
+\color{orange}
+implement
+\color{black}
+$D+1/N$ as a simplex to
+\color{orange}
+help
+\color{black}
+break the 
 degeneracy  $\delta \rightarrow a\delta$, $D \rightarrow a^{-1}D$.
 Furthermore we impose
 \begin{equation}
@@ -1849,21 +1860,23 @@ $\lambda_{Si}$.
    \label{deltaratio:fig}}
 \end{figure}
 
-The Pearson correlation coefficients for $\Delta$, $EW_{Ca}$, $EW_{Si}$, $\lambda_{Si}$, $E_{\gamma^0}(B-V)$, $E_{\gamma^1}(B-V)$,  $A_{\delta I}=\delta_I D$ are given in the matrix.
+The Pearson correlation coefficients for $\Delta$, $EW_{Ca}$, $EW_{Si}$, $\lambda_{Si}$, $E_{\gamma^0}(B-V)$, $E_{\gamma^1}(B-V)$,  $A_{\delta I}=\delta_I D$ are given in the matrix
+\color{orange}
 \begin{multline}
 Cor(\Delta, EW_{Ca}, EW_{Si}, \lambda_{Si}, E_{\gamma^0}(B-V), E_{\gamma^1}(B-V),  A_{\delta I}) =\\
 \begin{pmatrix}
 \begin{array}{rrrrrrr}
-1.00 & 0.00 & -0.07 & -0.04 & 0.11 & 0.01 & -0.06 \\
-0.00 & 1.00 & 0.10 & -0.26 & -0.07 & -0.02 & -0.02 \\
--0.07 & 0.10 & 1.00 & -0.14 & -0.17 & -0.04 & 0.04 \\
--0.04 & -0.26 & -0.14 & 1.00 & 0.03 & 0.03 & -0.07 \\
-0.11 & -0.07 & -0.17 & 0.03 & 1.00 & 0.05 & 0.06 \\
-0.01 & -0.02 & -0.04 & 0.03 & 0.05 & 1.00 & 0.01 \\
--0.06 & -0.02 & 0.04 & -0.07 & 0.06 & 0.01 & 1.00
+1.00 & 0.00^{+0.06}_{-0.06} & -0.07^{+0.06}_{-0.07} & -0.04^{+0.06}_{-0.06} & 0.11^{+0.07}_{-0.07} & -0.00^{+0.07}_{-0.07} & -0.06^{+0.07}_{-0.06} \\
+0.00^{+0.06}_{-0.06} & 1.00 & 0.11^{+0.03}_{-0.04} & -0.26^{+0.03}_{-0.03} & -0.07^{+0.06}_{-0.06} & -0.01^{+0.08}_{-0.08} & -0.01^{+0.08}_{-0.08} \\
+-0.07^{+0.06}_{-0.07} & 0.11^{+0.03}_{-0.04} & 1.00 & -0.14^{+0.04}_{-0.03} & -0.17^{+0.05}_{-0.05} & -0.05^{+0.08}_{-0.07} & 0.04^{+0.07}_{-0.07} \\
+-0.04^{+0.06}_{-0.06} & -0.26^{+0.03}_{-0.03} & -0.14^{+0.04}_{-0.03} & 1.00 & 0.03^{+0.06}_{-0.06} & 0.04^{+0.07}_{-0.08} & -0.08^{+0.10}_{-0.09} \\
+0.11^{+0.07}_{-0.07} & -0.07^{+0.06}_{-0.06} & -0.17^{+0.05}_{-0.05} & 0.03^{+0.06}_{-0.06} & 1.00 & 0.06^{+0.08}_{-0.07} & 0.06^{+0.08}_{-0.07} \\
+-0.00^{+0.07}_{-0.07} & -0.01^{+0.08}_{-0.08} & -0.05^{+0.08}_{-0.07} & 0.04^{+0.07}_{-0.08} & 0.06^{+0.08}_{-0.07} & 1.00 & 0.01^{+0.08}_{-0.07} \\
+-0.06^{+0.07}_{-0.06} & -0.01^{+0.08}_{-0.08} & 0.04^{+0.07}_{-0.07} & -0.08^{+0.10}_{-0.09} & 0.06^{+0.08}_{-0.07} & 0.01^{+0.08}_{-0.07} & 1.00 \\
 \end{array}
 \end{pmatrix}.
 \end{multline}
+\color{black}
 The correlation coefficients between the ``intrinsic'' and ``extrinsic'' parameters are $0.06$ and $0.01$.
 This has two important implications:
 First, while in principle a single physical color effect can affect both intrinsic and extrinsic parameters, from the correlations
