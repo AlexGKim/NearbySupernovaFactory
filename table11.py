@@ -112,12 +112,46 @@ for i in xrange(5):
             numpy.std((fit['gamma'][:,i]-fit['gamma'][:,j])[:,None]*fit['k']),numpy.std((fit['rho1'][:,i]-fit['rho1'][:,j])[:,None]*fit['R']))
 
 
-mega = numpy.array([fit['Delta'].flatten(),fit['EW'][:,:,0].flatten(),fit['EW'][:,:,1].flatten(),fit['sivel'].flatten(), \
-    ((fit['gamma'][:,1] - fit['gamma'][:,2])[:,None]*fit['k']).flatten(),((fit['rho1'][:,1] - fit['rho1'][:,2])[:,None]*fit['R']).flatten()])
+mega = numpy.array([fit['Delta'],fit['EW'][:,:,0],fit['EW'][:,:,1],fit['sivel'], \
+    ((fit['gamma'][:,1] - fit['gamma'][:,2])[:,None]*fit['k']),((fit['rho1'][:,1] - fit['rho1'][:,2])[:,None]*fit['R'])])
 
-dum = numpy.corrcoef(mega)
+# mega = numpy.array([fit['Delta'].flatten(),fit['EW'][:,:,0].flatten(),fit['EW'][:,:,1].flatten(),fit['sivel'].flatten(), \
+#     ((fit['gamma'][:,1] - fit['gamma'][:,2])[:,None]*fit['k']).flatten(),((fit['rho1'][:,1] - fit['rho1'][:,2])[:,None]*fit['R']).flatten()])
+
+corrarray = []
+
+for i in xrange(mega.shape[1]):
+    corrarray.append(numpy.corrcoef(mega[:,i,:]))    
+
+corrarray=numpy.array(corrarray)
+
+dum1, dumm, dump = numpy.percentile(corrarray,(50,50-34,50+34),axis=0)
+
+# dum = numpy.zeros()
+# dum = numpy.corrcoef(mega)
 print "observable correlation coefficients"
-print " \\\\\n".join([" & ".join(map('{0:.2f}'.format, line)) for line in dum])
+# dum=numpy.zeros((6,18))
+for i1 in xrange(6):
+    for i2 in xrange(6):
+        print "{:.2f}^{{+{:.2f}}}_{{{:.2f}}}".format(dum1[i1,i2],dump[i1,i2]-dum1[i1,i2],dumm[i1,i2]-dum1[i1,i2]),
+        if (i2 != 5):
+            print "&",
+
+    print "\\\\" 
+
+#         # dum[i1,3*i2]=dum1[i1,i2]
+#         # dum[i1,3*i2+1]=dump[i1,i2]-dum1[i1,i2]
+#         # dum[i1,3*i2+2]=dum1[i1,i2]-dumm[i1,i2]
+
+
+
+# # dum = zip(dum1,dump-dum1,dum1-dumm)
+# # dum = numpy.reshape(numpy.array(dum),(6,18))
+# print " \\\\\n".join([" & ".join(map('{:.2f}^{:.2f}_{:.2f}'.format,line)) for line in dum])
+
+
+# print " \\\\\n".join([" & ".join(map('${0:.2f}^1_1$'.format,line)) for line in dum])
+
 
 
 # pars = ['gamma','rho1']

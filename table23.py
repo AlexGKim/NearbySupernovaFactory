@@ -164,12 +164,44 @@ for i in xrange(5):
             numpy.std((fit['gamma'][:,i]-fit['gamma'][:,j])[:,None]*fit['k']),numpy.std((fit['rho1'][:,i]-fit['rho1'][:,j])[:,None]*fit['R']))
 
 
-mega = numpy.array([fit['Delta'].flatten(),fit['EW'][:,:,0].flatten(),fit['EW'][:,:,1].flatten(),fit['sivel'].flatten(), \
-    ((fit['gamma'][:,1] - fit['gamma'][:,2])[:,None]*fit['k']).flatten(),((fit['gamma1'][:,1] - fit['gamma1'][:,2])[:,None]*fit['k1']).flatten(),(fit['rho1'][:,4][:,None]*fit['R']).flatten()])
+mega = numpy.array([fit['Delta'],fit['EW'][:,:,0],fit['EW'][:,:,1],fit['sivel'], \
+    ((fit['gamma'][:,1] - fit['gamma'][:,2])[:,None]*fit['k']),((fit['gamma1'][:,1] - fit['gamma1'][:,2])[:,None]*fit['k1']),(fit['rho1'][:,4][:,None]*fit['R'])])
 
-dum = numpy.corrcoef(mega)
+# dum = numpy.corrcoef(mega)
+# print "observable correlation coefficients"
+# print " \\\\\n".join([" & ".join(map('{0:.2f}'.format, line)) for line in dum])
+
+
+
+# mega = numpy.array([fit['Delta'],fit['EW'][:,:,0],fit['EW'][:,:,1],fit['sivel'], \
+#     ((fit['gamma'][:,1] - fit['gamma'][:,2])[:,None]*fit['k']),((fit['rho1'][:,1] - fit['rho1'][:,2])[:,None]*fit['R'])])
+
+# mega = numpy.array([fit['Delta'].flatten(),fit['EW'][:,:,0].flatten(),fit['EW'][:,:,1].flatten(),fit['sivel'].flatten(), \
+#     ((fit['gamma'][:,1] - fit['gamma'][:,2])[:,None]*fit['k']).flatten(),((fit['rho1'][:,1] - fit['rho1'][:,2])[:,None]*fit['R']).flatten()])
+
+corrarray = []
+
+for i in xrange(mega.shape[1]):
+    corrarray.append(numpy.corrcoef(mega[:,i,:]))    
+
+corrarray=numpy.array(corrarray)
+
+dum1, dumm, dump = numpy.percentile(corrarray,(50,50-34,50+34),axis=0)
+
+# dum = numpy.zeros()
+# dum = numpy.corrcoef(mega)
 print "observable correlation coefficients"
-print " \\\\\n".join([" & ".join(map('{0:.2f}'.format, line)) for line in dum])
+# dum=numpy.zeros((6,18))
+for i1 in xrange(7):
+    for i2 in xrange(7):
+        print "{:.2f}^{{+{:.2f}}}_{{{:.2f}}}".format(dum1[i1,i2],dump[i1,i2]-dum1[i1,i2],dumm[i1,i2]-dum1[i1,i2]),
+        if (i2 != 6):
+            print "&",
+
+    print "\\\\" 
+
+wefwe
+
 
 
 
