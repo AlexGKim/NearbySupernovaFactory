@@ -140,7 +140,14 @@ plt.savefig(pp,format='pdf')
 pp.close()
 plt.close()
 
-plt.hist(numpy.median((fit['gamma'][:,2])[:,None]*fit['k'],axis=0),bins=20)
+
+# bins = numpy.arange(-0.2,0.8001,0.02)
+# plt.hist(fit['Delta'].flatten(),bins,label='ideogram',normed=True,alpha=0.5)
+# plt.hist(numpy.median(fit['Delta'],axis=0),bins,label='median',normed=True,alpha=0.5,width=0.01)
+
+bins=numpy.arange(-0.3,1,0.05)
+plt.hist(numpy.median((fit['gamma'][:,2])[:,None]*fit['k'],axis=0),bins,label='median',normed=True,alpha=0.5,width=0.02)
+plt.hist(((fit['gamma'][:,2])[:,None]*fit['k']).flatten(),bins,label='ideogram',normed=True,alpha=0.5)
 plt.xlabel(r'$\gamma^0_2 k_0$')
 plt.legend()
 plt.tight_layout()
@@ -149,14 +156,17 @@ plt.savefig(pp,format='pdf')
 pp.close()
 plt.close()
 
-plt.hist(numpy.median((fit['rho1'][:,2])[:,None]*fit['R'],axis=0),bins=20)
+bins=numpy.arange(-0.35,0.1,0.02)
+plt.hist(numpy.median((fit['rho1'][:,2])[:,None]*fit['R'],axis=0),bins,label='median',normed=True,alpha=0.5,width=0.01)
+plt.hist(((fit['rho1'][:,2])[:,None]*fit['R']).flatten(),bins,label='ideogram',normed=True,alpha=0.5)
 plt.xlabel(r'$\gamma^1_2 k_1$')
-plt.legend()
+plt.legend(loc=2)
 plt.tight_layout()
 pp = PdfPages('output11/gamma1_med.pdf')
 plt.savefig(pp,format='pdf')
 pp.close()
 plt.close()
+
 
 (x, xmin, xmax) = numpy.percentile(fit['gamma'][:,2][:,None]*fit['k'],(50,50-34,50+34),axis=0)
 (y, ymin, ymax) = numpy.percentile(fit['rho1'][:,2][:,None]*fit['R'],(50,50-34,50+34),axis=0)
@@ -202,9 +212,9 @@ plt.close()
 figure = corner.corner(numpy.concatenate((EW_obs,sivel[:,None]),axis=1),labels=[r"$EW_{Ca,o}$",r"$EW_{Si,o}$",r"$\lambda_{Si,o}$"])
 for ax in figure.get_axes():
     for tick in ax.xaxis.get_major_ticks():
-        tick.label.set_fontsize(18) 
+        tick.label.set_fontsize(20) 
     for tick in ax.yaxis.get_major_ticks():
-        tick.label.set_fontsize(18)
+        tick.label.set_fontsize(20)
         
 pp = PdfPages('output11/feature_corner.pdf')
 plt.savefig(pp,format='pdf')
@@ -329,7 +339,12 @@ fig, axes = plt.subplots(nrows=4,ncols=2,gridspec_kw={'width_ratios':[1,.2]})
 for i in xrange(4):
     (y, ymin, ymax) = numpy.percentile(correction[cind[i],:,:],(50,50-34,50+34),axis=0)
     err = numpy.sqrt(color_cov[:,i,i] + ((ymax-ymin)/2)**2)
-    axes[i,0].errorbar(y+mag_mn[cind[i]]-mag_mn[2],color_obs[:,i]-y,xerr=[y-ymin,ymax-y], yerr=[err,err],fmt='.',alpha=0.4)
+    axes[i,0].errorbar(y,y-color_obs[:,i],xerr=[((ymax-ymin)/2),((ymax-ymin)/2)], yerr=[err,err],fmt='.',alpha=0.4)
+    #axes[i,0].errorbar(color_obs[:,i],y-color_obs[:,i],xerr=[numpy.sqrt(color_cov[:,i,i]),numpy.sqrt(color_cov[:,i,i])], yerr=[err,err],fmt='.',alpha=0.4)
+    # axes[i,0].errorbar(color_obs[:,i],y,xerr=[numpy.sqrt(color_cov[:,i,i]),numpy.sqrt(color_cov[:,i,i])], yerr=[((ymax-ymin)/2),((ymax-ymin)/2)],fmt='.',alpha=0.4)
+    # axes[i,0].errorbar(y,color_obs[:,i],yerr=[numpy.sqrt(color_cov[:,i,i]),numpy.sqrt(color_cov[:,i,i])], xerr=[((ymax-ymin)/2),((ymax-ymin)/2)],fmt='.',alpha=0.4)
+
+    # axes[i,0].errorbar(y+mag_mn[cind[i]]-mag_mn[2],color_obs[:,i]-y,xerr=[y-ymin,ymax-y], yerr=[err,err],fmt='.',alpha=0.4)
     # axes[i].errorbar(y+mag_mn[cind[i]]-mag_mn[2],color_obs[:,i]+mag_mn[cind[i]]-mag_mn[2],yerr=[numpy.sqrt(color_cov[:,i,i]),numpy.sqrt(color_cov[:,i,i])], xerr=[(ymax-ymin)/2,(ymax-ymin)/2],fmt='.',alpha=0.5)
 
  
@@ -337,10 +352,10 @@ for i in xrange(4):
     miny = (color_obs[:,i]+mag_mn[cind[i]]-mag_mn[2]).min()
     maxy = (color_obs[:,i]+mag_mn[cind[i]]-mag_mn[2]).max()
     # axes[i].plot([miny,maxy],[miny,maxy])
-    axes[i,0].set_xlabel(r'$({0}_o-V_o)$'.format(cname[i]))
+    axes[i,0].set_xlabel(r'$({0}-V)$'.format(cname[i]))
     lname = r'$\Delta({0}-V)$'.format(cname[i])
     axes[i,0].set_ylabel(lname)
-    axes[i,1].hist(color_obs[:,i]-y, orientation='horizontal')
+    axes[i,1].hist(y-color_obs[:,i], orientation='horizontal')
     axes[i,1].set_ylim(axes[i,0].get_ylim())
     axes[i,1].yaxis.set_major_formatter(NullFormatter())
     axes[i,1].xaxis.set_major_formatter(NullFormatter())
@@ -352,6 +367,9 @@ filename = 'output11/residual.pdf'
 pp = PdfPages(filename)
 plt.savefig(pp,format='pdf')
 pp.close()
+
+wefwe
+
 
 mpl.rcParams['font.size'] = 18
 cind=[0,1,3,4]
@@ -413,12 +431,16 @@ plt.close()
 # print 'EW0', numpy.median(fit['EW'][:,outlier[0],0],axis=0), EW_renorm[outlier[0],0] 
 # print 'EW1', numpy.median(fit['EW'][:,outlier[0],1],axis=0), EW_renorm[outlier[0],1]
 fig, axes = plt.subplots()
-plt.hist(fit['Delta'].flatten(),normed=True,bins=20)
+bins = numpy.arange(-0.2,0.8001,0.02)
+plt.hist(fit['Delta'].flatten(),bins,label='ideogram',normed=True,alpha=0.5)
+plt.hist(numpy.median(fit['Delta'],axis=0),bins,label='median',normed=True,alpha=0.5,width=0.01)
+plt.legend()
 plt.xlabel(r'$\Delta$')
 pp = PdfPages('output11/Delta_hist.pdf')
 plt.savefig(pp,format='pdf')
 pp.close()
 plt.close()
+
 
 fig, axes = plt.subplots()
 plt.hist(numpy.median(fit['Delta'],axis=0),bins=20)
@@ -837,9 +859,9 @@ for index in xrange(5):
 
     for ax in figure.get_axes():
         for tick in ax.xaxis.get_major_ticks():
-            tick.label.set_fontsize(18) 
+            tick.label.set_fontsize(20) 
         for tick in ax.yaxis.get_major_ticks():
-            tick.label.set_fontsize(18) 
+            tick.label.set_fontsize(20) 
 
     pp = PdfPages('output11/coeff{}.pdf'.format(index))
     plt.savefig(pp,format='pdf')
@@ -915,9 +937,9 @@ mega=mega[::50,:]
 figure = corner.corner(mega,labels=[r"$\Delta$",r"$EW_{Ca}$",r"$EW_{Si}$",r"$\lambda_{Si}$",r"$E_{\gamma^0}(B-V)$",r"$E_{\gamma^1}(B-V)$"],range=numpy.zeros(6)+1.)
 for ax in figure.get_axes():
     for tick in ax.xaxis.get_major_ticks():
-        tick.label.set_fontsize(18) 
+        tick.label.set_fontsize(20) 
     for tick in ax.yaxis.get_major_ticks():
-        tick.label.set_fontsize(18) 
+        tick.label.set_fontsize(20) 
 pp = PdfPages('output11/perobject_corner.pdf')
 plt.savefig(pp,format='pdf')
 pp.close()
