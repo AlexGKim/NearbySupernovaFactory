@@ -1075,16 +1075,10 @@ Cor(\Delta, EW_{Ca}, EW_{Si}, \lambda_{Si}, E_{\gamma^0}(B-V), E_{\gamma^1}(B-V)
 \end{multline}
 \color{black}
 
-We find weak correlations between our color-excess parameters and the input features, the 
+We find weak correlations between our color-excess parameters and the input features; 
 \color{orange}
-only of significance much larger than $1 \sigma$
+only the $ -0.17 \pm 0.05$ between $E_{\gamma^0}(B-V)$ and $EW_{Si}$ has significance much larger than $1 \sigma$.
 \color{black}
-being
-%---
-$-0.17$
-%---
- between
-$E_{\gamma^0}(B-V)$ and $EW_{Si}$.
 Recall that $EW_{Si}$ is correlated with light-curve shape, which is correlated with host-galaxy (including dust) properties 
 \citep{2000AJ....120.1479H, 2003MNRAS.340.1057S}.
 An extensive discussion of the correlations between the spectral features of the SNfactory data set can be found in \citet{chotard:thesis}
@@ -1471,7 +1465,7 @@ parameters $e_i $.
    \centering
    \includegraphics[width=5.2in]{output11/sn2014j.pdf} 
    \caption{Top: Measured color excess for SN~2014J and the best-fit predictions from this article.   Bottom: Residual color excess
-   between the data and model, with a line at zero shown for reference.
+   between the data and model, with a dotted line at zero shown for reference.
    This can be compared with the best-fit results of
    \citet{2014ApJ...788L..21A} shown in their Figure~3.
    \label{sn2014j:fig}}
@@ -1852,7 +1846,7 @@ $\lambda_{Si}$.
    \centering
       \includegraphics[width=5.2in]{output23/deltaratio.pdf}
    \caption{Significance of the non-zero values of $\delta$ as demonstrated by the best-fit values of $\delta_X/\delta_I-1$ for $\delta$ for Model~II.
-   A line at zero is shown for reference.
+   A dotted line at zero is shown for reference.
    \label{deltaratio:fig}}
 \end{figure}
 
@@ -1901,10 +1895,12 @@ The analysis is validated using simulated datasets with and without third color 
 We present here the results of one of the validation tests.  The input values of the supernova parameters are the median values from the analysis of real data.
 Ten realizations of simulated data are generated based on the data covariances, and then analyzed separately.   The posteriors of the ten realizations
 are aggregated and shown in Figures~\ref{simglobal1:fig}--\ref{simglobal5:fig}.  The input parameters are recovered with negligible bias
-relative to the statistical uncertainties.  There is a tendency for the slope parameters to be slightly underestimated, which is an expected consequence of 
-the uncertainties in the predictor variable, which in turn lead to 
-regression dilution.  Our analysis is susceptible to this bias because we consciously do not include distributions
-of supernova parameters as part of our model.
+relative to the statistical uncertainties.   Note that some bias is expected: the priors for the distributions of $\Delta$, $k$, and $D$ are inconsistent
+with the extracted distributions.
+%There is a tendency for the slope parameters to be slightly underestimated, which is an expected consequence of 
+%the uncertainties in the predictor variable, which in turn lead to 
+%regression dilution.  Our analysis is susceptible to this bias because we consciously do not include distributions
+%of supernova parameters as part of our model.
 
 \begin{figure}[htbp] %  figure placement: here, top, bottom, or page
    \centering
@@ -2144,7 +2140,7 @@ having neglected light-curve shape.
    \centering
    \includegraphics[width=5.2in]{output23/residualx1.pdf}
     \caption{Differences between observed colors and the colors predicted from the analysis, as a function
-            of the SALT2 light-curve shape parameter $x_1$.  For reference a dotted line is plotted at zero difference.
+            of the SALT2 light-curve shape parameter $x_1$.  Our model does not explicitly use $x_1$.  For reference a dotted line is plotted at zero difference.
    \label{x1res:fig}}
 \end{figure}
 
@@ -2344,7 +2340,7 @@ $ 0.041^{+ 0.005}_{-0.004}$
 \citet{2009ApJ...699L.139W, 2011ApJ...729...55F} find a connection between $v_{Si}$ and color, and  
 \citet{2015MNRAS.447.1247S} show that $v_{Si}$ is an important spectral classifier within the SNfactory data themselves.
 To first order, the $\lambda_{Si}$ treated in this article varies linearly with $v_{Si}$.
-The values of $\eta$ in this article are consistent with zero.  $EW_{Ca}$ and $EW_{Si}$ have a significant effect on color,
+The values of the $v_{Si}$ coefficient, $\eta$, in this article are consistent with zero.  $EW_{Ca}$ and $EW_{Si}$ have a significant effect on color,
 and in turn $\lambda_{Si}$ is correlated with $EW_{Ca}$.
 Removing from our model the dependence on equivalent widths (eliminating the  $\alpha$ and $\beta$ parameters), we recover
 non-zero $\eta$ values at  $\gtrsim 2\sigma$.
@@ -2401,7 +2397,7 @@ detected in this analysis.
 
 
 
-Although the $D$ parameter has ben referred to as ``intrinsic'', due to its placement in the model and the correspondence
+Although the $D$ parameter has been referred to as ``intrinsic'', due to its placement in the model and the correspondence
 of the $k$ parameters with those of extrinsic two-parameter dust models, the analysis cannot quantitatively distinguish
 whether its origin is intrinsic or due to a third dust parameter or some other extrinsic effect.
 
@@ -2420,18 +2416,22 @@ A new analysis that explicitly measures out-of-sample performance is required to
 well the addition of third parameter inferred from one data set can be used to measure supernova distances
 of an independent set.
 
-\subsection{Summary}
+\subsection{Conclusion}
 To summarize, we model SNe~Ia broadband optical peak magnitudes allowing for correlations with spectral features at peak and
 extrinsic color parameters.  Analyzing SNfactory data with this model, we find significant evidence that the above parameters do
 affect supernova magnitudes and colors.  This model  does an excellent job in
 describing SN~2014J, a supernova with extreme colors that was not used in the training.  
 This work represents the first determination of the dust extinction curve outside the Local Group
 derived entirely independently of assumptions about the shape of the extinction curve and/or assumptions about the
-distribution of $A_V$.  An extended version
-of the model retains the features of the first model, and gives the first identification of  a new parameter that affects supernova
-colors in a manner that is distinct from  the expectations from dust or the spectral features $EW_{Ca}$, $EW_{Si}$, and $\lambda_{Si}$.
+distribution of $A_V$.  
+\color{orange}
+Nesting this model in an extended model produces a result that 
+\color{black}
+disfavors the original model and gives the first identification of  a new parameter that affects supernova
+colors in a manner that is distinct from the expectations from dust or the spectral features $EW_{Ca}$, $EW_{Si}$, and $\lambda_{Si}$.
 
-An interesting direction for future work is to use narrower bands for generating synthetic photometry.  When the bandwidth were small enough
+An interesting direction for future work is to use narrower bands for generating synthetic photometry
+from the SNfactory spectrophotometry.  When the bandwidth becomes small enough
 to resolve spectral features, the analysis would produce a spectroscopic model.   Higher resolution would allow us to forego 
 the use of a fiducial template necessary to predict broadband fluxes generated by dust models, and also allow direct incorporation
 of dust models into our framework.
