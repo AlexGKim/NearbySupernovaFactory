@@ -140,6 +140,7 @@ plt.setp(axes[0].get_xticklabels(),visible=False)
 
 axes[1].errorbar(elam,exv-(gammam1*ans[0]+deltam1*ans[1]), \
   yerr=[numpy.sqrt(e_exv**2+fiterr**2),numpy.sqrt(e_exv**2+fiterr**2)],fmt='.')
+axes[1].axhline(0)
 axes[1].set_ylabel(r'$\Delta E_o(X-V)$')
 
 

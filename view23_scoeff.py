@@ -12,6 +12,7 @@ import scipy
 import cPickle
 import matplotlib as mpl
 import sivel
+mpl.rcParams['font.size'] = 18
 
 f = open('temp23_sim0.pkl','rb')
 (fit,_) = pickle.load(f)
@@ -109,7 +110,7 @@ for index in xrange(5):
     figure = corner.corner(mega[index,:,:],labels=[r"$c_{}$".format(index), r"$\alpha_{}$".format(index),\
                     r"$\beta_{}$".format(index),r"$\eta_{}$".format(index),r"$\gamma^0_{}$".format(index),\
                     r"$\gamma^1_{}$".format(index),r"$\delta_{{{}}}$".format(index), r"$\sigma_{}$".format(index)],\
-                    truths=[c[index], alpha[index],beta[index],eta[index],gamma[index], gamma1[index],delta[index],numpy.sqrt(cov[index,index])])
+                    truths=[c[index], alpha[index],beta[index],eta[index],gamma[index], gamma1[index],delta[index],numpy.sqrt(cov[index,index])],label_kwargs={'fontsize':20})
     figure.suptitle(filts[index],fontsize=28)
     pp = PdfPages('output23_sim/coeff{}.pdf'.format(index))
     plt.savefig(pp,format='pdf')

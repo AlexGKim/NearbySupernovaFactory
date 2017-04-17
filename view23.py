@@ -233,25 +233,38 @@ correction = [fit['c'][:,i][:,None] + fit['alpha'][:,i][:,None]*fit['EW'][:,:, 0
     + fit['beta'][:,i][:,None]*fit['EW'][:,:, 1] + fit['eta'][:,i][:,None]*fit['sivel']\
     + fit['gamma'][:,i][:,None]*fit['k'] + fit['gamma1'][:,i][:,None]*fit['k1'] + fit['rho1'][:,i][:,None]*fit['R']\
     for i in xrange(5)]
-
 correction = numpy.array(correction)
 correction = correction - correction[2,:,:]
 # correction_median = numpy.median(correction,axis=1)
-
+from matplotlib.ticker import NullFormatter
 cind=[0,1,3,4]
 cname = ['U','B','R','I']
-fig, axes = plt.subplots(nrows=4)
+mpl.rcParams['font.size'] = 14
+
+fig, axes = plt.subplots(nrows=4,ncols=2,gridspec_kw={'width_ratios':[1,.2]})
 for i in xrange(4):
     (y, ymin, ymax) = numpy.percentile(correction[cind[i],:,:],(50,50-34,50+34),axis=0)
     err = numpy.sqrt(color_cov[:,i,i] + ((ymax-ymin)/2)**2)
-    axes[i].errorbar(y+mag_mn[cind[i]]-mag_mn[2],color_obs[:,i]-y,xerr=[y-ymin,ymax-y], yerr=[err,err],fmt='.',alpha=0.4)
-    axes[i].set_xlabel(r'$({0}-V)_{{model}}$'.format(cname[i]))
-    lname = r'$({0}_o-V_o) - ({0}-V)_{{model}}$'.format(cname[i])
-    axes[i].set_ylabel(lname)
-    axes[i].axhline(y=0,linestyle=':')
-# fig.subplots_adjust(hspace=.3)
+    axes[i,0].errorbar(color_obs[:,i],color_obs[:,i]-y,xerr=[numpy.sqrt(color_cov[:,i,i]),numpy.sqrt(color_cov[:,i,i])], yerr=[err,err],fmt='.',alpha=0.4)
+
+    # axes[i,0].errorbar(y+mag_mn[cind[i]]-mag_mn[2],color_obs[:,i]-y,xerr=[y-ymin,ymax-y], yerr=[err,err],fmt='.',alpha=0.4)
+    # axes[i].errorbar(y+mag_mn[cind[i]]-mag_mn[2],color_obs[:,i]+mag_mn[cind[i]]-mag_mn[2],yerr=[numpy.sqrt(color_cov[:,i,i]),numpy.sqrt(color_cov[:,i,i])], xerr=[(ymax-ymin)/2,(ymax-ymin)/2],fmt='.',alpha=0.5)
+
+ 
+    # axes[i].errorbar(y+mag_mn[cind[i]]-mag_mn[2],color_obs[:,i],xerr=[y-ymin,ymax-y], yerr=[numpy.sqrt(color_cov[:,i,i]),numpy.sqrt(color_cov[:,i,i])],fmt='.',alpha=0.4)
+    miny = (color_obs[:,i]+mag_mn[cind[i]]-mag_mn[2]).min()
+    maxy = (color_obs[:,i]+mag_mn[cind[i]]-mag_mn[2]).max()
+    # axes[i].plot([miny,maxy],[miny,maxy])
+    axes[i,0].set_xlabel(r'$({0}_o-V_o)$'.format(cname[i]))
+    lname = r'$\Delta({0}-V)$'.format(cname[i])
+    axes[i,0].set_ylabel(lname)
+    axes[i,1].hist(color_obs[:,i]-y, orientation='horizontal')
+    axes[i,1].set_ylim(axes[i,0].get_ylim())
+    axes[i,1].yaxis.set_major_formatter(NullFormatter())
+    axes[i,1].xaxis.set_major_formatter(NullFormatter())
+    # axes[i].axhline(y=0,linestyle=':')
+fig.subplots_adjust(hspace=.4, wspace=.04)
 fig.set_size_inches(8,11)
-plt.tight_layout()
 filename = 'output23/residual.pdf'
 pp = PdfPages(filename)
 plt.savefig(pp,format='pdf')
@@ -488,15 +501,25 @@ plt.savefig(pp,format='pdf')
 pp.close()
 plt.close()
 
-plt.hist( ((fit['rho1'][:,1]-fit['rho1'][:,2])[:,None]*fit['R']).flatten(),normed=True,bins=20,
-  label=[r'$E_\delta(B-V)$'],range=(-0.06,.06),color='green')
+
+bins = numpy.arange(-0.02,0.0201,0.001)
+# plt.hist(fit['Delta'].flatten(),bins,label='ideogram',normed=True,alpha=0.5)
+# plt.hist(numpy.median(fit['Delta'],axis=0),bins,label='median',normed=True,alpha=0.5,width=0.01)
+# plt.legend()
+
+
+plt.hist( ((fit['rho1'][:,1]-fit['rho1'][:,2])[:,None]*fit['R']).flatten(),normed=True,bins=bins,alpha=0.5,
+  label='ideogram')
+plt.hist( numpy.median((fit['rho1'][:,1]-fit['rho1'][:,2])[:,None]*fit['R'],axis=0),normed=True,bins=bins,alpha=0.5,width=0.0005,
+  label='median')
 plt.xlabel(r'$E_\delta(B-V)$')
-plt.xlim((-.06,.06))
+plt.xlim((-.02,.02))
 plt.legend()
 pp = PdfPages('output23/ebv_delta.pdf')
 plt.savefig(pp,format='pdf')
 pp.close()
 plt.close()
+
 
 # au = fit['gamma'][:,0][:,None]*fit['k'] + fit['rho1'][:,0][:,None]*fit['R']+0.16
 # ab = fit['gamma'][:,1][:,None]*fit['k'] + fit['rho1'][:,1][:,None]*fit['R']+0.08
@@ -683,6 +706,17 @@ plt.tight_layout()
 plt.savefig(pp,format='pdf')
 pp.close()
 plt.close()
+
+dum = (fit['rho1']-fit['rho1'][:,2][:,None])/((fit['rho1'][:,0]-fit['rho1'][:,1])[:,None])
+dum = numpy.delete(dum,2,axis=1)
+figure = corner.corner(dum,range=((0,2),(-1,1),(-0.5,1.5),(0,2)))
+pp = PdfPages('output23/g_corner.pdf')
+plt.tight_layout()
+plt.savefig(pp,format='pdf')
+pp.close()
+plt.close()
+
+
 
 figure = corner.corner(fit['rho1'][:,:-1]/fit['rho1'][:,-1][:,None],labels=[r"${\delta}_{0}/{\delta}_{4}$",r"${\delta}_{1}/{\delta}_{4}$",\
   r"${\delta}_{2}/{\delta}_{4}$",r"${\delta}_{3}/{\delta}_{4}$"], \
@@ -938,6 +972,7 @@ ax = fig.add_subplot(111)
 ax.errorbar(numpy.arange(5),y-1,yerr=[y-ymin,ymax-y],fmt='o')
 ax.xaxis.set_major_formatter(FuncFormatter(format_fn2))
 ax.xaxis.set_major_locator(MaxNLocator(integer=True))
+ax.axhline(0)
 ax.set_xlim((-0.5,4.5))
 ax.set_xlabel(r'Band $X$')
 ax.set_ylabel(r'$\frac{\delta_X}{\delta_I}-1$')

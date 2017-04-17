@@ -171,13 +171,20 @@ plt.close()
 (x, xmin, xmax) = numpy.percentile(fit['gamma'][:,2][:,None]*fit['k'],(50,50-34,50+34),axis=0)
 (y, ymin, ymax) = numpy.percentile(fit['rho1'][:,2][:,None]*fit['R'],(50,50-34,50+34),axis=0)
 plt.errorbar(x, y, xerr=[x-xmin,xmax-x],yerr=[y-ymin,ymax-ymin],fmt='o')
-plt.xlabel(r'$\gamma^0_2 k_0$')
-plt.ylabel(r'$\gamma^1_2 k_1$')
+plt.xlabel(r'$\gamma^0_V k_0$')
+plt.ylabel(r'$\gamma^1_V k_1$')
 pp = PdfPages("output11/kk.pdf")
 plt.tight_layout()
 plt.savefig(pp,format='pdf')
 pp.close()
 plt.close()
+
+crap=fit['rho1'][:,2][:,None]*fit['R']
+med = numpy.percentile(x,(25,75))
+plt.hist([crap[:,x<=med[0]].flatten(),crap[:,x>med[1]].flatten()],label=[r'Low $\gamma^0_V k_0$', r'High $\gamma^0_V k_0$'])
+plt.legend(loc=2)
+# plt.show()
+plt.clf()
 
 # kappa1=1/2.4
 # kappa2 = -6.8
@@ -335,14 +342,15 @@ cind=[0,1,3,4]
 cname = ['U','B','R','I']
 mpl.rcParams['font.size'] = 14
 
-fig, axes = plt.subplots(nrows=4,ncols=2,gridspec_kw={'width_ratios':[1,.2]})
+fig, axes = plt.subplots(nrows=4,ncols=2,gridspec_kw={'width_ratios':[.8,.2]})
 for i in xrange(4):
     (y, ymin, ymax) = numpy.percentile(correction[cind[i],:,:],(50,50-34,50+34),axis=0)
     err = numpy.sqrt(color_cov[:,i,i] + ((ymax-ymin)/2)**2)
-    axes[i,0].errorbar(y,y-color_obs[:,i],xerr=[((ymax-ymin)/2),((ymax-ymin)/2)], yerr=[err,err],fmt='.',alpha=0.4)
+    #axes[i,0].errorbar(y,y-color_obs[:,i],xerr=[((ymax-ymin)/2),((ymax-ymin)/2)], yerr=[err,err],fmt='.',alpha=0.4)
     #axes[i,0].errorbar(color_obs[:,i],y-color_obs[:,i],xerr=[numpy.sqrt(color_cov[:,i,i]),numpy.sqrt(color_cov[:,i,i])], yerr=[err,err],fmt='.',alpha=0.4)
     # axes[i,0].errorbar(color_obs[:,i],y,xerr=[numpy.sqrt(color_cov[:,i,i]),numpy.sqrt(color_cov[:,i,i])], yerr=[((ymax-ymin)/2),((ymax-ymin)/2)],fmt='.',alpha=0.4)
-    # axes[i,0].errorbar(y,color_obs[:,i],yerr=[numpy.sqrt(color_cov[:,i,i]),numpy.sqrt(color_cov[:,i,i])], xerr=[((ymax-ymin)/2),((ymax-ymin)/2)],fmt='.',alpha=0.4)
+    axes[i,0].errorbar(y,color_obs[:,i],yerr=[numpy.sqrt(color_cov[:,i,i]),numpy.sqrt(color_cov[:,i,i])], xerr=[((ymax-ymin)/2),((ymax-ymin)/2)],fmt='.',alpha=0.2)
+    axes[i,0].scatter(y,color_obs[:,i],alpha=0.8,s=1)
 
     # axes[i,0].errorbar(y+mag_mn[cind[i]]-mag_mn[2],color_obs[:,i]-y,xerr=[y-ymin,ymax-y], yerr=[err,err],fmt='.',alpha=0.4)
     # axes[i].errorbar(y+mag_mn[cind[i]]-mag_mn[2],color_obs[:,i]+mag_mn[cind[i]]-mag_mn[2],yerr=[numpy.sqrt(color_cov[:,i,i]),numpy.sqrt(color_cov[:,i,i])], xerr=[(ymax-ymin)/2,(ymax-ymin)/2],fmt='.',alpha=0.5)
@@ -352,15 +360,20 @@ for i in xrange(4):
     miny = (color_obs[:,i]+mag_mn[cind[i]]-mag_mn[2]).min()
     maxy = (color_obs[:,i]+mag_mn[cind[i]]-mag_mn[2]).max()
     # axes[i].plot([miny,maxy],[miny,maxy])
+
     axes[i,0].set_xlabel(r'$({0}-V)$'.format(cname[i]))
+    axes[i,0].set_ylabel(r'$({0}_o-V_o)$'.format(cname[i]))
     lname = r'$\Delta({0}-V)$'.format(cname[i])
-    axes[i,0].set_ylabel(lname)
-    axes[i,1].hist(y-color_obs[:,i], orientation='horizontal')
-    axes[i,1].set_ylim(axes[i,0].get_ylim())
-    axes[i,1].yaxis.set_major_formatter(NullFormatter())
-    axes[i,1].xaxis.set_major_formatter(NullFormatter())
+    # axes[i,0].set_ylabel(lname)
+    # axes[i,1].hist(y-color_obs[:,i], orientation='horizontal')
+    axes[i,1].hist(color_obs[:,i]-y,bins=numpy.arange(-.2,.2001,0.02))
+    axes[i,1].set_xlabel(lname)
+    axes[i,1].locator_params(axis='x', nbins=3)
+    # axes[i,1].set_ylim(axes[i,0].get_ylim())
+    # axes[i,1].yaxis.set_major_formatter(NullFormatter())
+    # axes[i,1].xaxis.set_major_formatter(NullFormatter())
     # axes[i].axhline(y=0,linestyle=':')
-fig.subplots_adjust(hspace=.4, wspace=.04)
+fig.subplots_adjust(hspace=.4, wspace=.18)
 fig.set_size_inches(8,11)
 # plt.tight_layout()
 filename = 'output11/residual.pdf'
@@ -368,7 +381,6 @@ pp = PdfPages(filename)
 plt.savefig(pp,format='pdf')
 pp.close()
 
-wefwe
 
 
 mpl.rcParams['font.size'] = 18

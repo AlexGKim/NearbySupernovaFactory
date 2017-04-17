@@ -12,7 +12,7 @@ import scipy
 import cPickle
 import matplotlib as mpl
 import sivel
-
+mpl.rcParams['font.size'] = 18
 f = open('temp23_sim0.pkl','rb')
 (fit,_) = pickle.load(f)
 
@@ -99,363 +99,81 @@ mag_cov = data['cov'][:,2:,2:]
 
 pkl_file.close()
 
-plt.plot(fit['rho1'][::10,:])
-plt.title(r'$\delta')
-pp = PdfPages("output23_sim/delta_chain.pdf")
-plt.savefig(pp,format='pdf')
-pp.close()
-plt.close()
-
-trans = [[1.,0,-1,0,0],[0.,1,-1,0,0],[0.,0,1,-1,0],[0.,0,1,0,-1]]
-trans = numpy.array(trans)
-color_cov = numpy.zeros((nsne,4,4))
-for i in xrange(nsne):
-    color_cov[i] = numpy.dot(trans,numpy.dot(mag_cov[i], trans.T))
-
-
-
-(x, xmin, xmax) = numpy.percentile( ((fit['gamma'][:,1] - fit['gamma'][:,2])[:,None]*fit['k']),(50,50-34,50+34),axis=0)
-(y, ymin, ymax) = numpy.percentile(((fit['rho1'][:,1] - fit['rho1'][:,2])[:,None]*fit['R']),(50,50-34,50+34),axis=0)
-
-plt.errorbar(x,y,xerr=(x-xmin,xmax-x), yerr=(y-ymin,ymax-y),fmt='o')
-plt.xlim((-0.08,0.05))
-# plt.ylim((-0.02,0.05))
-plt.xlabel(r'$E_\gamma(B-V)$')
-plt.ylabel(r'$E_\delta(B-V)$')
-pp = PdfPages("output23_sim/egammaedelta_corner.pdf")
-plt.savefig(pp,format='pdf')
-pp.close()
-plt.close()
-
-
-(y, ymin, ymax) = numpy.percentile(fit['EW'][:,:,1],(50,50-34,50+34),axis=0)
-plt.errorbar(x1, y, xerr=[x1_err,x1_err],yerr=[y-ymin,ymax-ymin],fmt='o')
-plt.xlabel(r'$x_1$')
-plt.ylabel(r'$EW_{Si}$')
-pp = PdfPages("output23_sim/x1si.pdf")
-plt.savefig(pp,format='pdf')
-pp.close()
-plt.close()
-
-(y, ymin, ymax) = numpy.percentile(fit['rho1'][:,4][:,None]*fit['R'],(50,50-34,50+34),axis=0)
-plt.errorbar(x1, y, xerr=[x1_err,x1_err],yerr=[y-ymin,ymax-ymin],fmt='o')
-plt.xlabel(r'$x_1$')
-plt.ylabel(r'$A_{\delta I}$')
-pp = PdfPages("output23_sim/x1D.pdf")
-plt.savefig(pp,format='pdf')
-pp.close()
-plt.close()
-
-
-offset = 0.01
-au = fit['gamma'][:,0][:,None]*fit['k'] + fit['rho1'][:,0][:,None]*fit['R']
-ab = fit['gamma'][:,1][:,None]*fit['k'] + fit['rho1'][:,1][:,None]*fit['R']
-av = fit['gamma'][:,2][:,None]*fit['k'] + fit['rho1'][:,2][:,None]*fit['R']
-
-
-(x, xmin, xmax) = numpy.percentile(ab-av,(50,50-34,50+34),axis=0)
-(y, ymin, ymax) = numpy.percentile(au-av,(50,50-34,50+34),axis=0)
-
-plt.scatter(x ,numpy.median(av/(ab-av),axis=0))
-plt.ylim((-2,6))
-plt.xlim((-0.1,.4))
-plt.ylabel(r'$R_{eff,V}$')
-plt.xlabel(r'$E_{eff}(B-V)$')
-pp = PdfPages("output23_sim/Rveff4.pdf")
-plt.savefig(pp,format='pdf')
-pp.close()
-plt.close()
-
-
-x=x-x.min()-offset*1.3
-y=y-y.min()-offset
-plt.scatter(x,y)
-# x_=numpy.array([-0.03,0.45])
-# plt.plot(x_,(4.87-2.96)*x_)
-plt.xlim((-0.04,0.5))
-plt.ylim((-0.04,1))
-plt.xlabel(r'$E_{eff}(B-V)$')
-plt.ylabel(r'$E_{eff}(U-V)$')
-pp = PdfPages("output23_sim/Rveff.pdf")
-plt.savefig(pp,format='pdf')
-pp.close()
-plt.close()
-
-(y, ymin, ymax) = numpy.percentile((au-av-y.min()-offset)/(ab-av-x.min()-offset),(50,50-34,50+34),axis=0)
-plt.scatter(x,y)
-# plt.ylim((1.8,2.3))
-#plt.xlim((0,0.5))
-plt.xlabel(r'$E_{eff}(B-V)$')
-plt.ylabel(r'$R_{eff,U} - R_{eff,V}$')
-pp = PdfPages("output23_sim/Rveff2.pdf")
-plt.savefig(pp,format='pdf')
-pp.close()
-plt.close()
-
-temp = (fit['gamma'][:,1][:,None]*fit['k']-fit['gamma'][:,2][:,None]*fit['k'] ) /\
- (fit['rho1'][:,1][:,None]*fit['R'] - fit['rho1'][:,2][:,None]*fit['R'])
-(x, xmin, xmax) = numpy.percentile(temp,(50,50-34,50+34),axis=0)
-plt.scatter(x,y)
-# plt.ylim((1.8,2.3))
-plt.xlabel(r'$E_\gamma(B-V)/E_\rho(B-V)$')
-plt.ylabel(r'$R_{eff,U} - R_{eff,V}$')
-pp = PdfPages("output23_sim/Rveff3.pdf")
-plt.savefig(pp,format='pdf')
-pp.close()
-plt.close()
-
-
-correction = [fit['c'][:,i][:,None] + fit['alpha'][:,i][:,None]*fit['EW'][:,:, 0] \
-    + fit['beta'][:,i][:,None]*fit['EW'][:,:, 1] + fit['eta'][:,i][:,None]*fit['sivel']\
-    + fit['gamma'][:,i][:,None]*fit['k'] + fit['gamma1'][:,i][:,None]*fit['k1'] + fit['rho1'][:,i][:,None]*fit['R']\
-    for i in xrange(5)]
-
-correction = numpy.array(correction)
-correction = correction - correction[2,:,:]
-# correction_median = numpy.median(correction,axis=1)
-
-cind=[0,1,3,4]
-cname = ['U','B','R','I']
-fig, axes = plt.subplots(nrows=4)
-for i in xrange(4):
-    (y, ymin, ymax) = numpy.percentile(correction[cind[i],:,:],(50,50-34,50+34),axis=0)
-    err = numpy.sqrt(color_cov[:,i,i] + ((ymax-ymin)/2)**2)
-    axes[i].errorbar(y+mag_mn[cind[i]]-mag_mn[2],color_obs[:,i]-y,xerr=[y-ymin,ymax-y], yerr=[err,err],fmt='.',alpha=0.4)
-    axes[i].set_xlabel(r'$({0}-V)_{{model}}$'.format(cname[i]))
-    lname = r'$({0}_o-V_o) - ({0}-V)_{{model}}$'.format(cname[i])
-    axes[i].set_ylabel(lname)
-    axes[i].axhline(y=0,linestyle=':')
-fig.subplots_adjust(hspace=.3)
-fig.set_size_inches(8,11)
-filename = 'output23_sim/residual.pdf'
-pp = PdfPages(filename)
-plt.savefig(pp,format='pdf')
-pp.close()
-
-
-
-# correction_gerard = [fit['c'][:,i][:,None] + fit['alpha'][:,i][:,None]*fit['EW'][:,:, 0] \
-#     + fit['beta'][:,i][:,None]*fit['EW'][:,:, 1] + fit['eta'][:,i][:,None]*fit['sivel']\
-#     + fit['gamma'][:,i][:,None]*fit['k']+ fit['gamma1'][:,i][:,None]*fit['k1'] + fit['rho1'][:,i][:,None]*fit['R']\
-#     for i in xrange(5)]
-
-# correction_gerard = numpy.array(correction_gerard)
-# correction_gerard = correction_gerard - correction_gerard[1,:,:]
-
-# gin =3
-# gerard_obs = numpy.zeros((nsne,nmags-1))
-# gerard_obs[:,0] = mag_renorm[:,0]- mag_renorm[:,1]
-# gerard_obs[:,1] = mag_renorm[:,2]- mag_renorm[:,1]
-# gerard_obs[:,2] = mag_renorm[:,3]- mag_renorm[:,1]
-# gerard_obs[:,3] = mag_renorm[:,4]- mag_renorm[:,1]
-
-# trans = [[1.,-1.,0,0,0],[0.,1,0,-1,0],[0.,0,1,-1,0],[0.,0,0,-1,0]]
-# trans = numpy.array(trans)
-# gerard_cov = numpy.zeros((nsne,4,4))
-# for i in xrange(nsne):
-#     gerard_cov[i] = numpy.dot(trans,numpy.dot(mag_cov[i], trans.T))
-
-# cind=[0,1,3,4]
-# cname = ['U','B','R','I']
-# fig, axes = plt.subplots(nrows=4)
-# (x, xmin, xmax) = numpy.percentile(correction_gerard[0,:,:],(50,50-34,50+34),axis=0)
-# xerr = numpy.sqrt(gerard_cov[:,0,0] + ((ymax-ymin)/2)**2)   
-# for i in xrange(4):
-#     (y, ymin, ymax) = numpy.percentile(correction[cind[i],:,:],(50,50-34,50+34),axis=0)
-#     yerr = numpy.sqrt(gerard_cov[:,i,i] + ((ymax-ymin)/2)**2)
-#     axes[i].errorbar(gerard_obs[:,0]-x,color_obs[:,i]-y,xerr=[xerr,xerr], yerr=[yerr,yerr],fmt='.',alpha=0.5)
-#     axes[i].set_xlabel(r'$({0}_o-B_o) - ({0}-B)_{{model}}$'.format('U'))
-#     lname = r'$({0}_o-V_o) - ({0}-V)_{{model}}$'.format(cname[i])
-#     axes[i].set_ylim((-0.2,0.2))
-#     axes[i].set_ylabel(lname)
-#     axes[i].axhline(y=0,linestyle=':')
-# fig.subplots_adjust(hspace=.3)
-# fig.set_size_inches(8,11)
-# filename = 'output23_sim/residual_gerard.pdf'
-# pp = PdfPages(filename)
+# plt.plot(fit['rho1'][::10,:])
+# plt.title(r'$\delta')
+# pp = PdfPages("output23_sim/delta_chain.pdf")
 # plt.savefig(pp,format='pdf')
 # pp.close()
-
-# wefwe
-
-
-cind=[0,1,3,4]
-cname = ['U','B','R','I']
-fig, axes = plt.subplots(nrows=4)
-for i in xrange(4):
-    (y, ymin, ymax) = numpy.percentile(correction[cind[i],:,:],(50,50-34,50+34),axis=0)
-    err = numpy.sqrt(color_cov[:,i,i] + ((ymax-ymin)/2)**2)
-    axes[i].errorbar(x1,color_obs[:,i]-y,xerr=[x1_err,x1_err], yerr=[err,err],fmt='.',alpha=0.4)
-    axes[i].set_xlabel(r'$x_1$'.format(cname[i]))
-    lname = r'$({0}_o-V_o) - ({0}-V)_{{model}}$'.format(cname[i])
-    axes[i].set_ylabel(lname)
-    axes[i].axhline(y=0,linestyle=':')
-fig.subplots_adjust(hspace=.3)
-fig.set_size_inches(8,11)
-filename = 'output23_sim/residualx1.pdf'
-pp = PdfPages(filename)
-plt.savefig(pp,format='pdf')
-pp.close()
-plt.close()
-plt.clf()
-
-# plt.scatter(numpy.median((fit['gamma'][:,1]-fit['gamma'][:,2])[:,None]*fit['k'],axis=0), mag_obs[:,2])
-# x=numpy.array([-0.08, 0.37])
-# plt.plot(x,-28.6+x*3.96)
-# plt.show()
-
-
-# dum = numpy.zeros((5,5))
-# for x1, x2 in zip(fit['L_Omega'], fit['L_sigma']):
-#     dum= dum+ numpy.dot(x2[:,None],x2[None,:])*numpy.dot(x1,x1.T)
-
-# dum/= len(fit['L_Omega'])
-# print " \\\\\n".join([" & ".join(map('{0:.4f}'.format, line)) for line in dum])
+# plt.close()
 
 # trans = [[1.,0,-1,0,0],[0.,1,-1,0,0],[0.,0,1,-1,0],[0.,0,1,0,-1]]
 # trans = numpy.array(trans)
-# color_cov = numpy.dot(trans,numpy.dot(dum, trans.T))
-# print " \\\\\n".join([" & ".join(map('{0:.4f}'.format, line)) for line in color_cov])
-
-# correction = [ fit['alpha'][:,i][:,None]*fit['EW'][:,:, 0] \
-#     + fit['beta'][:,i][:,None]*fit['EW'][:,:, 1] \
-#     + fit['gamma'][:,i][:,None]*fit['k'] \
-#     + fit['Delta'] \
-#     for i in xrange(5)]
-
-# correction = numpy.array(correction)
-# correction_median = numpy.median(correction,axis=1)
-
-# outlier  = numpy.where((mag_obs[:, 4]-correction_median[4,:]) < -27.8)
-# print data['snlist'][outlier]
-
-# outlier  = numpy.where((mag_obs[:, 0]-correction_median[0,:]) < -29.35)
-# print data['snlist'][outlier]
+# color_cov = numpy.zeros((nsne,4,4))
+# for i in xrange(nsne):
+#     color_cov[i] = numpy.dot(trans,numpy.dot(mag_cov[i], trans.T))
 
 
-# print 'Delta', numpy.median(fit['Delta'][:,outlier[0]],axis=0)
-# print 'k', numpy.median(fit['k'][:,outlier[0]],axis=0)
-# print 'EW0', numpy.median(fit['EW'][:,outlier[0],0],axis=0), EW_renorm[outlier[0],0] 
-# print 'EW1', numpy.median(fit['EW'][:,outlier[0],1],axis=0), EW_renorm[outlier[0],1]
-fig, axes = plt.subplots()
-plt.hist(fit['Delta'].flatten(),normed=True,bins=20)
-plt.xlabel(r'$\Delta$')
-pp = PdfPages('output23_sim/Delta_hist.pdf')
-plt.savefig(pp,format='pdf')
-pp.close()
-plt.close()
 
-plt.hist(fit['k'].flatten(),normed=True,bins=20)
-plt.title(r'$k$')
-pp = PdfPages('output23_sim/k_hist.pdf')
-plt.savefig(pp,format='pdf')
-pp.close()
-plt.close()
+# (x, xmin, xmax) = numpy.percentile( ((fit['gamma'][:,1] - fit['gamma'][:,2])[:,None]*fit['k']),(50,50-34,50+34),axis=0)
+# (y, ymin, ymax) = numpy.percentile(((fit['rho1'][:,1] - fit['rho1'][:,2])[:,None]*fit['R']),(50,50-34,50+34),axis=0)
 
-plt.hist(fit['k1'].flatten(),normed=True,bins=20)
-plt.title(r'$k1$')
-pp = PdfPages('output23_sim/k1_hist.pdf')
-plt.savefig(pp,format='pdf')
-pp.close()
-plt.close()
-
-plt.hist(fit['R'].flatten(),normed=True,bins=20)
-plt.title(r'$D$')
-pp = PdfPages('output23_sim/D_hist.pdf')
-plt.savefig(pp,format='pdf')
-pp.close()
-plt.close()
-
-# plt.scatter(numpy.median((fit['gamma'][:,1]-fit['gamma'][:,2])[:,None]*fit['k'],axis=0),mag_obs[:,1]-mag_obs[:,2])
+# plt.errorbar(x,y,xerr=(x-xmin,xmax-x), yerr=(y-ymin,ymax-y),fmt='o')
+# plt.xlim((-0.08,0.05))
+# # plt.ylim((-0.02,0.05))
 # plt.xlabel(r'$E_\gamma(B-V)$')
-# plt.ylabel(r'$B_o-V_o$')
-# pp = PdfPages('output23_sim/ebvvsobs.pdf')
-# plt.savefig(pp,format='pdf')
-# pp.close()
-# plt.close()
-
-# plt.scatter(numpy.median((fit['gamma'][:,1]-fit['gamma'][:,2])[:,None]*fit['k'],axis=0),mag_obs[:,1],color='red',label=r'$E_\gamma(B-V)$')
-# plt.plot(numpy.array([-0.07,0.36]), -29. + 3.96*numpy.array([-0.08,0.36]))
-# plt.xlabel(r'$E_\gamma(B-V)$')
-# plt.ylabel(r'$B_o$')
-# pp = PdfPages('output23_sim/g1.pdf')
-# plt.savefig(pp,format='pdf')
-# pp.close()
-# plt.close()
-
-# plt.scatter(numpy.median((fit['gamma'][:,1]-fit['gamma'][:,2])[:,None]*fit['k'],axis=0),mag_obs[:,0],color='red',label=r'$E_\gamma(B-V)$')
-# plt.plot(numpy.array([-0.07,0.36]), -29.2 + 4.87*numpy.array([-0.08,0.36]))
-# plt.xlabel(r'$E_\gamma(B-V)$')
-# plt.ylabel(r'$U_o$')
-# pp = PdfPages('output23_sim/g1u.pdf')
-# plt.savefig(pp,format='pdf')
-# pp.close()
-# plt.close()
-
-# plt.scatter(numpy.median((fit['gamma'][:,1]-fit['gamma'][:,2])[:,None]*fit['k'],axis=0), \
-#     mag_obs[:,0]- numpy.median(fit['alpha'][:,0][:,None]*fit['EW'][:,:,0]) - numpy.median(fit['beta'][:,0][:,None]*fit['EW'][:,:,1])\
-#     ,color='red',label=r'$E_\gamma(B-V)$')
-# plt.plot(numpy.array([-0.07,0.36]), -29.2 + 4.87*numpy.array([-0.08,0.36]))
-# plt.xlabel(r'$E_\gamma(B-V)$')
-# plt.ylabel(r'$U_o - \alpha_0 EW_{Ca} - \beta_0 EW_{Si}$')
-# pp = PdfPages('output23_sim/g2uc.pdf')
+# plt.ylabel(r'$E_\delta(B-V)$')
+# pp = PdfPages("output23_sim/egammaedelta_corner.pdf")
 # plt.savefig(pp,format='pdf')
 # pp.close()
 # plt.close()
 
 
-# plt.scatter(numpy.median((fit['rho1'][:,1]-fit['rho1'][:,2])[:,None]*fit['R'],axis=0),mag_obs[:,1]-3.96*numpy.median((fit['gamma'][:,1]-fit['gamma'][:,2])[:,None]*fit['k'],axis=0),color='blue')
-# plt.plot(numpy.array([-0.015,0.08]), -29 - 3.46*numpy.array([-0.015,0.08]))
-# plt.xlabel(r'$E_\delta(B-V)$')
-# plt.ylabel(r'$B_o - \gamma_1 E_\gamma(B-V)$')
-# pp = PdfPages('output23_sim/g2.pdf')
+# (y, ymin, ymax) = numpy.percentile(fit['EW'][:,:,1],(50,50-34,50+34),axis=0)
+# plt.errorbar(x1, y, xerr=[x1_err,x1_err],yerr=[y-ymin,ymax-ymin],fmt='o')
+# plt.xlabel(r'$x_1$')
+# plt.ylabel(r'$EW_{Si}$')
+# pp = PdfPages("output23_sim/x1si.pdf")
+# plt.savefig(pp,format='pdf')
+# pp.close()
+# plt.close()
+
+# (y, ymin, ymax) = numpy.percentile(fit['rho1'][:,4][:,None]*fit['R'],(50,50-34,50+34),axis=0)
+# plt.errorbar(x1, y, xerr=[x1_err,x1_err],yerr=[y-ymin,ymax-ymin],fmt='o')
+# plt.xlabel(r'$x_1$')
+# plt.ylabel(r'$A_{\delta I}$')
+# pp = PdfPages("output23_sim/x1D.pdf")
 # plt.savefig(pp,format='pdf')
 # pp.close()
 # plt.close()
 
 
-# plt.hist(((fit['gamma'][:,1]-fit['gamma'][:,2])[:,None]*fit['k'] + 
-#   (fit['gamma1'][:,1]-fit['gamma1'][:,2])[:,None]*fit['k1']).flatten(),normed=True,bins=20,
-#   label=r'$E(B-V)$')
-# plt.xlabel(r'Color Excess')
-# # plt.legend()
-# pp = PdfPages('output23_sim/greg.pdf')
-# plt.savefig(pp,format='pdf')
-# pp.close()
-# plt.close()
-# wefe
-
-# plt.hist([(fit['gamma'][:,1]-fit['gamma'][:,2])[:,None]*fit['k'], (fit['gamma1'][:,1]-fit['gamma1'][:,2])[:,None]*fit['k1'], (fit['rho1'][:,1]-fit['rho1'][:,2])[:,None]*fit['R']],normed=True,bins=20,
-#     label=[r'$E_\gamma(B-V)$',r'$E_{\gamma_1}(B-V)$',r'$E_\delta(B-V)$'],range=(-0.1,0.4))
-plt.hist([(fit['gamma'][:,1]-fit['gamma'][:,2])[:,None]*fit['k'] + 
-  (fit['gamma1'][:,1]-fit['gamma1'][:,2])[:,None]*fit['k1'], (fit['rho1'][:,1]-fit['rho1'][:,2])[:,None]*fit['R']],normed=True,bins=20,
-  label=[r'$E(B-V)$',r'$E_\delta(B-V)$'])
-plt.xlabel(r'$E(B-V)$')
-plt.legend()
-pp = PdfPages('output23_sim/ebv.pdf')
-plt.savefig(pp,format='pdf')
-pp.close()
-plt.close()
-
-plt.hist( ((fit['rho1'][:,1]-fit['rho1'][:,2])[:,None]*fit['R']).flatten(),normed=True,bins=20,
-  label=[r'$E_\delta(B-V)$'],range=(-0.06,.06),color='green')
-plt.xlabel(r'$E_\delta(B-V)$')
-plt.xlim((-.06,.06))
-plt.legend()
-pp = PdfPages('output23_sim/ebv_delta.pdf')
-plt.savefig(pp,format='pdf')
-pp.close()
-plt.close()
-
-# au = fit['gamma'][:,0][:,None]*fit['k'] + fit['rho1'][:,0][:,None]*fit['R']+0.16
-# ab = fit['gamma'][:,1][:,None]*fit['k'] + fit['rho1'][:,1][:,None]*fit['R']+0.08
+# offset = 0.01
+# au = fit['gamma'][:,0][:,None]*fit['k'] + fit['rho1'][:,0][:,None]*fit['R']
+# ab = fit['gamma'][:,1][:,None]*fit['k'] + fit['rho1'][:,1][:,None]*fit['R']
 # av = fit['gamma'][:,2][:,None]*fit['k'] + fit['rho1'][:,2][:,None]*fit['R']
+
+
 # (x, xmin, xmax) = numpy.percentile(ab-av,(50,50-34,50+34),axis=0)
 # (y, ymin, ymax) = numpy.percentile(au-av,(50,50-34,50+34),axis=0)
-# plt.errorbar(x,y,xerr=[x-xmin,xmax-x],yerr=[y-ymin,ymax-y],fmt='o')
-# x_=numpy.array([-0.03,0.45])
-# plt.plot(x_,(4.87-2.96)*x_)
+
+# plt.scatter(x ,numpy.median(av/(ab-av),axis=0))
+# plt.ylim((-2,6))
+# plt.xlim((-0.1,.4))
+# plt.ylabel(r'$R_{eff,V}$')
+# plt.xlabel(r'$E_{eff}(B-V)$')
+# pp = PdfPages("output23_sim/Rveff4.pdf")
+# plt.savefig(pp,format='pdf')
+# pp.close()
+# plt.close()
+
+
+# x=x-x.min()-offset*1.3
+# y=y-y.min()-offset
+# plt.scatter(x,y)
+# # x_=numpy.array([-0.03,0.45])
+# # plt.plot(x_,(4.87-2.96)*x_)
 # plt.xlim((-0.04,0.5))
+# plt.ylim((-0.04,1))
 # plt.xlabel(r'$E_{eff}(B-V)$')
 # plt.ylabel(r'$E_{eff}(U-V)$')
 # pp = PdfPages("output23_sim/Rveff.pdf")
@@ -463,450 +181,769 @@ plt.close()
 # pp.close()
 # plt.close()
 
-# (y, ymin, ymax) = numpy.percentile((au-av)/(ab-av),(50,50-34,50+34),axis=0)
-# plt.errorbar(x,y,xerr=[x-xmin,xmax-x],yerr=[y-ymin,ymax-y],fmt='o')
-# plt.ylim((1.8,2.3))
-# plt.xlim((-0.04,0.5))
+# (y, ymin, ymax) = numpy.percentile((au-av-y.min()-offset)/(ab-av-x.min()-offset),(50,50-34,50+34),axis=0)
+# plt.scatter(x,y)
+# # plt.ylim((1.8,2.3))
+# #plt.xlim((0,0.5))
 # plt.xlabel(r'$E_{eff}(B-V)$')
-# plt.ylabel(r'$R_{eff,U} - R_{eff,V} = E_{eff}(U-V) /E_{eff}(U-V)$')
+# plt.ylabel(r'$R_{eff,U} - R_{eff,V}$')
 # pp = PdfPages("output23_sim/Rveff2.pdf")
 # plt.savefig(pp,format='pdf')
 # pp.close()
 # plt.close()
 
-
-# (x, xmin, xmax) = numpy.percentile(ab-av,(50,50-34,50+34),axis=0) + 0.08
-# (y, ymin, ymax) = numpy.percentile((av+0.15)/(ab-av+0.08),(50,50-34,50+34),axis=0)
-# plt.errorbar(x,y,xerr=[x-xmin,xmax-x],yerr=[y-ymin,ymax-y],fmt='o')
-# plt.xlim((-0.04,0.5))
-# plt.xlabel(r'$E_{eff}(B-V)$')
-# plt.ylabel(r'$R_{eff, V} = A_{eff, V}/E_{eff}(B-V)$')
-# pp = PdfPages('output23_sim/Rveff2.pdf')
-# plt.savefig(pp,format='pdf')
-# pp.close()
-# plt.close()
-
-# (x, xmin, xmax) = numpy.percentile(ab-av,(50,50-34,50+34),axis=0) + 0.08
-# (y, ymin, ymax) = numpy.percentile((av+0.15)/(ab-av+0.08),(50,50-34,50+34),axis=0)
-# plt.errorbar(x,y/(ymax-ymin)*2,xerr=[x-xmin,xmax-x],fmt='o')
-# plt.xlim((-0.04,0.5))
-# plt.xlabel(r'$E_{eff}(B-V)$')
-# plt.ylabel(r'$S/N(R_{eff, V})$')
-# pp = PdfPages('output23_sim/Rveff3.pdf')
-# plt.savefig(pp,format='pdf')
-# pp.close()
-# plt.close()
-
-# plt.errorbar(x,y-3.96*x,xerr=[x-xmin,xmax-x],yerr=[(y-ymin),(ymax-y)],fmt='o')
-# plt.xlabel(r'$E_{eff}(B-V)+const$')
-# plt.ylabel(r'$\Delta A_B  = A_{eff, B}-3.96 (E_{eff}(B-V)+const)$')
-# plt.ylim((-0.8,0.1))
-# pp = PdfPages('output23_sim/Rveffres.pdf')
-# plt.savefig(pp,format='pdf')
-# pp.close()
-# plt.close()
-
-# (y, ymin, ymax) = numpy.percentile((fit['gamma'][:,1]-fit['gamma'][:,2])[:,None]*fit['k'] ,(50,50-34,50+34),axis=0)
-# plt.errorbar(x,y,xerr=[x-xmin,xmax-x],yerr=[y-ymin,ymax-y],fmt='o')
-# (y, ymin, ymax) = numpy.percentile((fit['rho1'][:,1]-fit['rho1'][:,2])[:,None]*fit['R'] ,(50,50-34,50+34),axis=0)
-# plt.errorbar(x,y,xerr=[x-xmin,xmax-x],yerr=[y-ymin,ymax-y],fmt='o')
-# plt.xlim((-0.1,0.1))
-# plt.show()
-# (y, ymin, ymax) = numpy.percentile((fit['gamma'][:,1]-fit['gamma'][:,2])[:,None]*fit['k']- ((fit['rho1'][:,1]-fit['rho1'][:,2])[:,None]*fit['R']) ,(50,50-34,50+34),axis=0)
-# plt.errorbar(x,y,xerr=[x-xmin,xmax-x],yerr=[y-ymin,ymax-y],fmt='o')
-# plt.show()
-# x_=numpy.array([-0.08,0.36])
-# plt.plot(x_,3.96*x_)
-# plt.xlim((-0.1,0.4))
-# plt.xlabel(r'$E_{eff}(B-V)+const$')
-# plt.ylabel(r'$A_{eff, B}$')
-# pp = PdfPages('output23_sim/ebvebv.pdf')
+# temp = (fit['gamma'][:,1][:,None]*fit['k']-fit['gamma'][:,2][:,None]*fit['k'] ) /\
+#  (fit['rho1'][:,1][:,None]*fit['R'] - fit['rho1'][:,2][:,None]*fit['R'])
+# (x, xmin, xmax) = numpy.percentile(temp,(50,50-34,50+34),axis=0)
+# plt.scatter(x,y)
+# # plt.ylim((1.8,2.3))
+# plt.xlabel(r'$E_\gamma(B-V)/E_\rho(B-V)$')
+# plt.ylabel(r'$R_{eff,U} - R_{eff,V}$')
+# pp = PdfPages("output23_sim/Rveff3.pdf")
 # plt.savefig(pp,format='pdf')
 # pp.close()
 # plt.close()
 
 
+# correction = [fit['c'][:,i][:,None] + fit['alpha'][:,i][:,None]*fit['EW'][:,:, 0] \
+#     + fit['beta'][:,i][:,None]*fit['EW'][:,:, 1] + fit['eta'][:,i][:,None]*fit['sivel']\
+#     + fit['gamma'][:,i][:,None]*fit['k'] + fit['gamma1'][:,i][:,None]*fit['k1'] + fit['rho1'][:,i][:,None]*fit['R']\
+#     for i in xrange(5)]
+
+# correction = numpy.array(correction)
+# correction = correction - correction[2,:,:]
+# # correction_median = numpy.median(correction,axis=1)
+
+# cind=[0,1,3,4]
+# cname = ['U','B','R','I']
+# fig, axes = plt.subplots(nrows=4)
+# for i in xrange(4):
+#     (y, ymin, ymax) = numpy.percentile(correction[cind[i],:,:],(50,50-34,50+34),axis=0)
+#     err = numpy.sqrt(color_cov[:,i,i] + ((ymax-ymin)/2)**2)
+#     axes[i].errorbar(y+mag_mn[cind[i]]-mag_mn[2],color_obs[:,i]-y,xerr=[y-ymin,ymax-y], yerr=[err,err],fmt='.',alpha=0.4)
+#     axes[i].set_xlabel(r'$({0}-V)_{{model}}$'.format(cname[i]))
+#     lname = r'$({0}_o-V_o) - ({0}-V)_{{model}}$'.format(cname[i])
+#     axes[i].set_ylabel(lname)
+#     axes[i].axhline(y=0,linestyle=':')
+# fig.subplots_adjust(hspace=.3)
+# fig.set_size_inches(8,11)
+# filename = 'output23_sim/residual.pdf'
+# pp = PdfPages(filename)
+# plt.savefig(pp,format='pdf')
+# pp.close()
 
 
 
-# IMPORTANT TO KEEP THIS
-# import scipy.odr.odrpack as odrpack
-# dcolor = numpy.std(ab-av,axis=0)
-# dmu = numpy.std(ab,axis=0)
+# # correction_gerard = [fit['c'][:,i][:,None] + fit['alpha'][:,i][:,None]*fit['EW'][:,:, 0] \
+# #     + fit['beta'][:,i][:,None]*fit['EW'][:,:, 1] + fit['eta'][:,i][:,None]*fit['sivel']\
+# #     + fit['gamma'][:,i][:,None]*fit['k']+ fit['gamma1'][:,i][:,None]*fit['k1'] + fit['rho1'][:,i][:,None]*fit['R']\
+# #     for i in xrange(5)]
 
-# def f(B, x):
-#     return B[0]*x + B[1]
-# linear = odrpack.Model(f)
-# # mydata = odrpack.Data(x, y, wd=1./np.power(sx,2), we=1./np.power(sy,2))
-# mydata = odrpack.RealData(x, y-3.96*x, sx=dcolor, sy=dmu)
+# # correction_gerard = numpy.array(correction_gerard)
+# # correction_gerard = correction_gerard - correction_gerard[1,:,:]
 
-# myodr = odrpack.ODR(mydata, linear, beta0=[1., 2.])
-# myoutput = myodr.run()
-# myoutput.pprint()
+# # gin =3
+# # gerard_obs = numpy.zeros((nsne,nmags-1))
+# # gerard_obs[:,0] = mag_renorm[:,0]- mag_renorm[:,1]
+# # gerard_obs[:,1] = mag_renorm[:,2]- mag_renorm[:,1]
+# # gerard_obs[:,2] = mag_renorm[:,3]- mag_renorm[:,1]
+# # gerard_obs[:,3] = mag_renorm[:,4]- mag_renorm[:,1]
+
+# # trans = [[1.,-1.,0,0,0],[0.,1,0,-1,0],[0.,0,1,-1,0],[0.,0,0,-1,0]]
+# # trans = numpy.array(trans)
+# # gerard_cov = numpy.zeros((nsne,4,4))
+# # for i in xrange(nsne):
+# #     gerard_cov[i] = numpy.dot(trans,numpy.dot(mag_cov[i], trans.T))
+
+# # cind=[0,1,3,4]
+# # cname = ['U','B','R','I']
+# # fig, axes = plt.subplots(nrows=4)
+# # (x, xmin, xmax) = numpy.percentile(correction_gerard[0,:,:],(50,50-34,50+34),axis=0)
+# # xerr = numpy.sqrt(gerard_cov[:,0,0] + ((ymax-ymin)/2)**2)   
+# # for i in xrange(4):
+# #     (y, ymin, ymax) = numpy.percentile(correction[cind[i],:,:],(50,50-34,50+34),axis=0)
+# #     yerr = numpy.sqrt(gerard_cov[:,i,i] + ((ymax-ymin)/2)**2)
+# #     axes[i].errorbar(gerard_obs[:,0]-x,color_obs[:,i]-y,xerr=[xerr,xerr], yerr=[yerr,yerr],fmt='.',alpha=0.5)
+# #     axes[i].set_xlabel(r'$({0}_o-B_o) - ({0}-B)_{{model}}$'.format('U'))
+# #     lname = r'$({0}_o-V_o) - ({0}-V)_{{model}}$'.format(cname[i])
+# #     axes[i].set_ylim((-0.2,0.2))
+# #     axes[i].set_ylabel(lname)
+# #     axes[i].axhline(y=0,linestyle=':')
+# # fig.subplots_adjust(hspace=.3)
+# # fig.set_size_inches(8,11)
+# # filename = 'output23_sim/residual_gerard.pdf'
+# # pp = PdfPages(filename)
+# # plt.savefig(pp,format='pdf')
+# # pp.close()
+
+# # wefwe
 
 
-# plt.hist(rv)
-# pp = PdfPages('output23_sim/Rveff.pdf')
-# plt.xlabel(r'$R_{V,eff}$')
+# cind=[0,1,3,4]
+# cname = ['U','B','R','I']
+# fig, axes = plt.subplots(nrows=4)
+# for i in xrange(4):
+#     (y, ymin, ymax) = numpy.percentile(correction[cind[i],:,:],(50,50-34,50+34),axis=0)
+#     err = numpy.sqrt(color_cov[:,i,i] + ((ymax-ymin)/2)**2)
+#     axes[i].errorbar(x1,color_obs[:,i]-y,xerr=[x1_err,x1_err], yerr=[err,err],fmt='.',alpha=0.4)
+#     axes[i].set_xlabel(r'$x_1$'.format(cname[i]))
+#     lname = r'$({0}_o-V_o) - ({0}-V)_{{model}}$'.format(cname[i])
+#     axes[i].set_ylabel(lname)
+#     axes[i].axhline(y=0,linestyle=':')
+# fig.subplots_adjust(hspace=.3)
+# fig.set_size_inches(8,11)
+# filename = 'output23_sim/residualx1.pdf'
+# pp = PdfPages(filename)
+# plt.savefig(pp,format='pdf')
+# pp.close()
+# plt.close()
+# plt.clf()
+
+# # plt.scatter(numpy.median((fit['gamma'][:,1]-fit['gamma'][:,2])[:,None]*fit['k'],axis=0), mag_obs[:,2])
+# # x=numpy.array([-0.08, 0.37])
+# # plt.plot(x,-28.6+x*3.96)
+# # plt.show()
+
+
+# # dum = numpy.zeros((5,5))
+# # for x1, x2 in zip(fit['L_Omega'], fit['L_sigma']):
+# #     dum= dum+ numpy.dot(x2[:,None],x2[None,:])*numpy.dot(x1,x1.T)
+
+# # dum/= len(fit['L_Omega'])
+# # print " \\\\\n".join([" & ".join(map('{0:.4f}'.format, line)) for line in dum])
+
+# # trans = [[1.,0,-1,0,0],[0.,1,-1,0,0],[0.,0,1,-1,0],[0.,0,1,0,-1]]
+# # trans = numpy.array(trans)
+# # color_cov = numpy.dot(trans,numpy.dot(dum, trans.T))
+# # print " \\\\\n".join([" & ".join(map('{0:.4f}'.format, line)) for line in color_cov])
+
+# # correction = [ fit['alpha'][:,i][:,None]*fit['EW'][:,:, 0] \
+# #     + fit['beta'][:,i][:,None]*fit['EW'][:,:, 1] \
+# #     + fit['gamma'][:,i][:,None]*fit['k'] \
+# #     + fit['Delta'] \
+# #     for i in xrange(5)]
+
+# # correction = numpy.array(correction)
+# # correction_median = numpy.median(correction,axis=1)
+
+# # outlier  = numpy.where((mag_obs[:, 4]-correction_median[4,:]) < -27.8)
+# # print data['snlist'][outlier]
+
+# # outlier  = numpy.where((mag_obs[:, 0]-correction_median[0,:]) < -29.35)
+# # print data['snlist'][outlier]
+
+
+# # print 'Delta', numpy.median(fit['Delta'][:,outlier[0]],axis=0)
+# # print 'k', numpy.median(fit['k'][:,outlier[0]],axis=0)
+# # print 'EW0', numpy.median(fit['EW'][:,outlier[0],0],axis=0), EW_renorm[outlier[0],0] 
+# # print 'EW1', numpy.median(fit['EW'][:,outlier[0],1],axis=0), EW_renorm[outlier[0],1]
+# fig, axes = plt.subplots()
+# plt.hist(fit['Delta'].flatten(),normed=True,bins=20)
+# plt.xlabel(r'$\Delta$')
+# pp = PdfPages('output23_sim/Delta_hist.pdf')
 # plt.savefig(pp,format='pdf')
 # pp.close()
 # plt.close()
 
-# plt.scatter(numpy.median(ab-av,axis=0), numpy.median(rv,axis=0))
-# plt.xlabel(r'$E^o(B-V)$')
-# plt.ylabel(r'$R_{V,eff}$')
-# pp = PdfPages('output23_sim/EVRveff.pdf')
+# plt.hist(fit['k'].flatten(),normed=True,bins=20)
+# plt.title(r'$k$')
+# pp = PdfPages('output23_sim/k_hist.pdf')
 # plt.savefig(pp,format='pdf')
 # pp.close()
 # plt.close()
 
-figure = corner.corner(fit['c'],labels=[r"${c}_0$",r"${c}_1$",r"${c}_2$",r"${c}_3$",r"${c}_4$"])
-pp = PdfPages('output23_sim/c_corner.pdf')
-plt.savefig(pp,format='pdf')
-pp.close()
-plt.close()
+# plt.hist(fit['k1'].flatten(),normed=True,bins=20)
+# plt.title(r'$k1$')
+# pp = PdfPages('output23_sim/k1_hist.pdf')
+# plt.savefig(pp,format='pdf')
+# pp.close()
+# plt.close()
 
-figure = corner.corner(fit['alpha'],labels=[r"${\alpha}_0$",r"${\alpha}_1$",r"${\alpha}_2$",r"${\alpha}_3$",r"${\alpha}_4$"])
-pp = PdfPages('output23_sim/alpha_corner.pdf')
-plt.savefig(pp,format='pdf')
-pp.close()
-plt.close()
+# plt.hist(fit['R'].flatten(),normed=True,bins=20)
+# plt.title(r'$D$')
+# pp = PdfPages('output23_sim/D_hist.pdf')
+# plt.savefig(pp,format='pdf')
+# pp.close()
+# plt.close()
 
-# mega = fit['alpha']-fit['alpha'][:,4][:,None]
+# # plt.scatter(numpy.median((fit['gamma'][:,1]-fit['gamma'][:,2])[:,None]*fit['k'],axis=0),mag_obs[:,1]-mag_obs[:,2])
+# # plt.xlabel(r'$E_\gamma(B-V)$')
+# # plt.ylabel(r'$B_o-V_o$')
+# # pp = PdfPages('output23_sim/ebvvsobs.pdf')
+# # plt.savefig(pp,format='pdf')
+# # pp.close()
+# # plt.close()
 
-# figure = corner.corner(mega[:,:4],labels=[r"${\alpha}_0$",r"${\alpha}_1$",r"${\alpha}_2$",r"${\alpha}_3$"])
-# pp = PdfPages('output23_sim/alpham4_corner.pdf')
+# # plt.scatter(numpy.median((fit['gamma'][:,1]-fit['gamma'][:,2])[:,None]*fit['k'],axis=0),mag_obs[:,1],color='red',label=r'$E_\gamma(B-V)$')
+# # plt.plot(numpy.array([-0.07,0.36]), -29. + 3.96*numpy.array([-0.08,0.36]))
+# # plt.xlabel(r'$E_\gamma(B-V)$')
+# # plt.ylabel(r'$B_o$')
+# # pp = PdfPages('output23_sim/g1.pdf')
+# # plt.savefig(pp,format='pdf')
+# # pp.close()
+# # plt.close()
+
+# # plt.scatter(numpy.median((fit['gamma'][:,1]-fit['gamma'][:,2])[:,None]*fit['k'],axis=0),mag_obs[:,0],color='red',label=r'$E_\gamma(B-V)$')
+# # plt.plot(numpy.array([-0.07,0.36]), -29.2 + 4.87*numpy.array([-0.08,0.36]))
+# # plt.xlabel(r'$E_\gamma(B-V)$')
+# # plt.ylabel(r'$U_o$')
+# # pp = PdfPages('output23_sim/g1u.pdf')
+# # plt.savefig(pp,format='pdf')
+# # pp.close()
+# # plt.close()
+
+# # plt.scatter(numpy.median((fit['gamma'][:,1]-fit['gamma'][:,2])[:,None]*fit['k'],axis=0), \
+# #     mag_obs[:,0]- numpy.median(fit['alpha'][:,0][:,None]*fit['EW'][:,:,0]) - numpy.median(fit['beta'][:,0][:,None]*fit['EW'][:,:,1])\
+# #     ,color='red',label=r'$E_\gamma(B-V)$')
+# # plt.plot(numpy.array([-0.07,0.36]), -29.2 + 4.87*numpy.array([-0.08,0.36]))
+# # plt.xlabel(r'$E_\gamma(B-V)$')
+# # plt.ylabel(r'$U_o - \alpha_0 EW_{Ca} - \beta_0 EW_{Si}$')
+# # pp = PdfPages('output23_sim/g2uc.pdf')
+# # plt.savefig(pp,format='pdf')
+# # pp.close()
+# # plt.close()
+
+
+# # plt.scatter(numpy.median((fit['rho1'][:,1]-fit['rho1'][:,2])[:,None]*fit['R'],axis=0),mag_obs[:,1]-3.96*numpy.median((fit['gamma'][:,1]-fit['gamma'][:,2])[:,None]*fit['k'],axis=0),color='blue')
+# # plt.plot(numpy.array([-0.015,0.08]), -29 - 3.46*numpy.array([-0.015,0.08]))
+# # plt.xlabel(r'$E_\delta(B-V)$')
+# # plt.ylabel(r'$B_o - \gamma_1 E_\gamma(B-V)$')
+# # pp = PdfPages('output23_sim/g2.pdf')
+# # plt.savefig(pp,format='pdf')
+# # pp.close()
+# # plt.close()
+
+
+# # plt.hist(((fit['gamma'][:,1]-fit['gamma'][:,2])[:,None]*fit['k'] + 
+# #   (fit['gamma1'][:,1]-fit['gamma1'][:,2])[:,None]*fit['k1']).flatten(),normed=True,bins=20,
+# #   label=r'$E(B-V)$')
+# # plt.xlabel(r'Color Excess')
+# # # plt.legend()
+# # pp = PdfPages('output23_sim/greg.pdf')
+# # plt.savefig(pp,format='pdf')
+# # pp.close()
+# # plt.close()
+# # wefe
+
+# # plt.hist([(fit['gamma'][:,1]-fit['gamma'][:,2])[:,None]*fit['k'], (fit['gamma1'][:,1]-fit['gamma1'][:,2])[:,None]*fit['k1'], (fit['rho1'][:,1]-fit['rho1'][:,2])[:,None]*fit['R']],normed=True,bins=20,
+# #     label=[r'$E_\gamma(B-V)$',r'$E_{\gamma_1}(B-V)$',r'$E_\delta(B-V)$'],range=(-0.1,0.4))
+# plt.hist([(fit['gamma'][:,1]-fit['gamma'][:,2])[:,None]*fit['k'] + 
+#   (fit['gamma1'][:,1]-fit['gamma1'][:,2])[:,None]*fit['k1'], (fit['rho1'][:,1]-fit['rho1'][:,2])[:,None]*fit['R']],normed=True,bins=20,
+#   label=[r'$E(B-V)$',r'$E_\delta(B-V)$'])
+# plt.xlabel(r'$E(B-V)$')
+# plt.legend()
+# pp = PdfPages('output23_sim/ebv.pdf')
+# plt.savefig(pp,format='pdf')
+# pp.close()
+# plt.close()
+
+# plt.hist( ((fit['rho1'][:,1]-fit['rho1'][:,2])[:,None]*fit['R']).flatten(),normed=True,bins=20,
+#   label=[r'$E_\delta(B-V)$'],range=(-0.06,.06),color='green')
+# plt.xlabel(r'$E_\delta(B-V)$')
+# plt.xlim((-.06,.06))
+# plt.legend()
+# pp = PdfPages('output23_sim/ebv_delta.pdf')
+# plt.savefig(pp,format='pdf')
+# pp.close()
+# plt.close()
+
+# # au = fit['gamma'][:,0][:,None]*fit['k'] + fit['rho1'][:,0][:,None]*fit['R']+0.16
+# # ab = fit['gamma'][:,1][:,None]*fit['k'] + fit['rho1'][:,1][:,None]*fit['R']+0.08
+# # av = fit['gamma'][:,2][:,None]*fit['k'] + fit['rho1'][:,2][:,None]*fit['R']
+# # (x, xmin, xmax) = numpy.percentile(ab-av,(50,50-34,50+34),axis=0)
+# # (y, ymin, ymax) = numpy.percentile(au-av,(50,50-34,50+34),axis=0)
+# # plt.errorbar(x,y,xerr=[x-xmin,xmax-x],yerr=[y-ymin,ymax-y],fmt='o')
+# # x_=numpy.array([-0.03,0.45])
+# # plt.plot(x_,(4.87-2.96)*x_)
+# # plt.xlim((-0.04,0.5))
+# # plt.xlabel(r'$E_{eff}(B-V)$')
+# # plt.ylabel(r'$E_{eff}(U-V)$')
+# # pp = PdfPages("output23_sim/Rveff.pdf")
+# # plt.savefig(pp,format='pdf')
+# # pp.close()
+# # plt.close()
+
+# # (y, ymin, ymax) = numpy.percentile((au-av)/(ab-av),(50,50-34,50+34),axis=0)
+# # plt.errorbar(x,y,xerr=[x-xmin,xmax-x],yerr=[y-ymin,ymax-y],fmt='o')
+# # plt.ylim((1.8,2.3))
+# # plt.xlim((-0.04,0.5))
+# # plt.xlabel(r'$E_{eff}(B-V)$')
+# # plt.ylabel(r'$R_{eff,U} - R_{eff,V} = E_{eff}(U-V) /E_{eff}(U-V)$')
+# # pp = PdfPages("output23_sim/Rveff2.pdf")
+# # plt.savefig(pp,format='pdf')
+# # pp.close()
+# # plt.close()
+
+
+# # (x, xmin, xmax) = numpy.percentile(ab-av,(50,50-34,50+34),axis=0) + 0.08
+# # (y, ymin, ymax) = numpy.percentile((av+0.15)/(ab-av+0.08),(50,50-34,50+34),axis=0)
+# # plt.errorbar(x,y,xerr=[x-xmin,xmax-x],yerr=[y-ymin,ymax-y],fmt='o')
+# # plt.xlim((-0.04,0.5))
+# # plt.xlabel(r'$E_{eff}(B-V)$')
+# # plt.ylabel(r'$R_{eff, V} = A_{eff, V}/E_{eff}(B-V)$')
+# # pp = PdfPages('output23_sim/Rveff2.pdf')
+# # plt.savefig(pp,format='pdf')
+# # pp.close()
+# # plt.close()
+
+# # (x, xmin, xmax) = numpy.percentile(ab-av,(50,50-34,50+34),axis=0) + 0.08
+# # (y, ymin, ymax) = numpy.percentile((av+0.15)/(ab-av+0.08),(50,50-34,50+34),axis=0)
+# # plt.errorbar(x,y/(ymax-ymin)*2,xerr=[x-xmin,xmax-x],fmt='o')
+# # plt.xlim((-0.04,0.5))
+# # plt.xlabel(r'$E_{eff}(B-V)$')
+# # plt.ylabel(r'$S/N(R_{eff, V})$')
+# # pp = PdfPages('output23_sim/Rveff3.pdf')
+# # plt.savefig(pp,format='pdf')
+# # pp.close()
+# # plt.close()
+
+# # plt.errorbar(x,y-3.96*x,xerr=[x-xmin,xmax-x],yerr=[(y-ymin),(ymax-y)],fmt='o')
+# # plt.xlabel(r'$E_{eff}(B-V)+const$')
+# # plt.ylabel(r'$\Delta A_B  = A_{eff, B}-3.96 (E_{eff}(B-V)+const)$')
+# # plt.ylim((-0.8,0.1))
+# # pp = PdfPages('output23_sim/Rveffres.pdf')
+# # plt.savefig(pp,format='pdf')
+# # pp.close()
+# # plt.close()
+
+# # (y, ymin, ymax) = numpy.percentile((fit['gamma'][:,1]-fit['gamma'][:,2])[:,None]*fit['k'] ,(50,50-34,50+34),axis=0)
+# # plt.errorbar(x,y,xerr=[x-xmin,xmax-x],yerr=[y-ymin,ymax-y],fmt='o')
+# # (y, ymin, ymax) = numpy.percentile((fit['rho1'][:,1]-fit['rho1'][:,2])[:,None]*fit['R'] ,(50,50-34,50+34),axis=0)
+# # plt.errorbar(x,y,xerr=[x-xmin,xmax-x],yerr=[y-ymin,ymax-y],fmt='o')
+# # plt.xlim((-0.1,0.1))
+# # plt.show()
+# # (y, ymin, ymax) = numpy.percentile((fit['gamma'][:,1]-fit['gamma'][:,2])[:,None]*fit['k']- ((fit['rho1'][:,1]-fit['rho1'][:,2])[:,None]*fit['R']) ,(50,50-34,50+34),axis=0)
+# # plt.errorbar(x,y,xerr=[x-xmin,xmax-x],yerr=[y-ymin,ymax-y],fmt='o')
+# # plt.show()
+# # x_=numpy.array([-0.08,0.36])
+# # plt.plot(x_,3.96*x_)
+# # plt.xlim((-0.1,0.4))
+# # plt.xlabel(r'$E_{eff}(B-V)+const$')
+# # plt.ylabel(r'$A_{eff, B}$')
+# # pp = PdfPages('output23_sim/ebvebv.pdf')
+# # plt.savefig(pp,format='pdf')
+# # pp.close()
+# # plt.close()
+
+
+
+
+
+# # IMPORTANT TO KEEP THIS
+# # import scipy.odr.odrpack as odrpack
+# # dcolor = numpy.std(ab-av,axis=0)
+# # dmu = numpy.std(ab,axis=0)
+
+# # def f(B, x):
+# #     return B[0]*x + B[1]
+# # linear = odrpack.Model(f)
+# # # mydata = odrpack.Data(x, y, wd=1./np.power(sx,2), we=1./np.power(sy,2))
+# # mydata = odrpack.RealData(x, y-3.96*x, sx=dcolor, sy=dmu)
+
+# # myodr = odrpack.ODR(mydata, linear, beta0=[1., 2.])
+# # myoutput = myodr.run()
+# # myoutput.pprint()
+
+
+# # plt.hist(rv)
+# # pp = PdfPages('output23_sim/Rveff.pdf')
+# # plt.xlabel(r'$R_{V,eff}$')
+# # plt.savefig(pp,format='pdf')
+# # pp.close()
+# # plt.close()
+
+# # plt.scatter(numpy.median(ab-av,axis=0), numpy.median(rv,axis=0))
+# # plt.xlabel(r'$E^o(B-V)$')
+# # plt.ylabel(r'$R_{V,eff}$')
+# # pp = PdfPages('output23_sim/EVRveff.pdf')
+# # plt.savefig(pp,format='pdf')
+# # pp.close()
+# # plt.close()
+
+# figure = corner.corner(fit['c'],labels=[r"${c}_0$",r"${c}_1$",r"${c}_2$",r"${c}_3$",r"${c}_4$"])
+# pp = PdfPages('output23_sim/c_corner.pdf')
+# plt.savefig(pp,format='pdf')
+# pp.close()
+# plt.close()
+
+# figure = corner.corner(fit['alpha'],labels=[r"${\alpha}_0$",r"${\alpha}_1$",r"${\alpha}_2$",r"${\alpha}_3$",r"${\alpha}_4$"])
+# pp = PdfPages('output23_sim/alpha_corner.pdf')
+# plt.savefig(pp,format='pdf')
+# pp.close()
+# plt.close()
+
+# # mega = fit['alpha']-fit['alpha'][:,4][:,None]
+
+# # figure = corner.corner(mega[:,:4],labels=[r"${\alpha}_0$",r"${\alpha}_1$",r"${\alpha}_2$",r"${\alpha}_3$"])
+# # pp = PdfPages('output23_sim/alpham4_corner.pdf')
+# # plt.savefig(pp,format='pdf')
+# # pp.close()
+# # plt.close()
+
+
+
+# figure = corner.corner(fit['beta'],labels=[r"${\beta}_0$",r"${\beta}_1$",r"${\beta}_2$",r"${\beta}_3$",r"${\beta}_4$"])
+# pp = PdfPages('output23_sim/beta_corner.pdf')
 # plt.savefig(pp,format='pdf')
 # pp.close()
 # plt.close()
 
 
+# figure = corner.corner(fit['eta'],labels=[r"${\eta}_0$",r"${\eta}_1$",r"${\eta}_2$",r"${\eta}_3$",r"${\eta}_4$"])
+# pp = PdfPages('output23_sim/eta_corner.pdf')
+# plt.savefig(pp,format='pdf')
+# pp.close()
+# plt.close()
 
-figure = corner.corner(fit['beta'],labels=[r"${\beta}_0$",r"${\beta}_1$",r"${\beta}_2$",r"${\beta}_3$",r"${\beta}_4$"])
-pp = PdfPages('output23_sim/beta_corner.pdf')
-plt.savefig(pp,format='pdf')
-pp.close()
-plt.close()
+# # mega = fit['beta']-fit['beta'][:,4][:,None]
+
+# # figure = corner.corner(mega[:,:4],labels=[r"${\beta}_0$",r"${\beta}_1$",r"${\beta}_2$",r"${\beta}_3$"])
+# # pp = PdfPages('output23_sim/betam4_corner.pdf')
+# # plt.savefig(pp,format='pdf')
+# # pp.close()
+# # plt.close()
 
 
-figure = corner.corner(fit['eta'],labels=[r"${\eta}_0$",r"${\eta}_1$",r"${\eta}_2$",r"${\eta}_3$",r"${\eta}_4$"])
-pp = PdfPages('output23_sim/eta_corner.pdf')
-plt.savefig(pp,format='pdf')
-pp.close()
-plt.close()
+# figure = corner.corner(fit['gamma'],labels=[r"${\gamma^0}_0$",r"${\gamma^0}_1$",r"${\gamma^0}_2$",r"${\gamma^0}_3$",r"${\gamma^0}_4$"])
+# pp = PdfPages('output23_sim/gamma_corner.pdf')
+# plt.savefig(pp,format='pdf')
+# pp.close()
+# plt.close()
 
-# mega = fit['beta']-fit['beta'][:,4][:,None]
+# figure = corner.corner(fit['gamma1'],labels=[r"${\gamma^1}_0$",r"${\gamma^1}_1$",r"${\gamma^1}_2$",r"${\gamma^1}_3$",r"${\gamma^1}_4$"])
+# pp = PdfPages('output23_sim/gamma1_corner.pdf')
+# plt.savefig(pp,format='pdf')
+# pp.close()
+# plt.close()
 
-# figure = corner.corner(mega[:,:4],labels=[r"${\beta}_0$",r"${\beta}_1$",r"${\beta}_2$",r"${\beta}_3$"])
-# pp = PdfPages('output23_sim/betam4_corner.pdf')
+# mega = numpy.array([fit['rho11'],fit['rho12'],fit['rho13']])
+# mega = numpy.transpose(mega)
+# figure = corner.corner(mega,labels=[r"${\delta}_{0}$",r"${\delta}_{1}$",r"${\delta}_{2}$"])
+# pp = PdfPages('output23_sim/rho_corner.pdf')
 # plt.savefig(pp,format='pdf')
 # pp.close()
 # plt.close()
 
 
-figure = corner.corner(fit['gamma'],labels=[r"${\gamma^0}_0$",r"${\gamma^0}_1$",r"${\gamma^0}_2$",r"${\gamma^0}_3$",r"${\gamma^0}_4$"])
-pp = PdfPages('output23_sim/gamma_corner.pdf')
-plt.savefig(pp,format='pdf')
-pp.close()
-plt.close()
-
-figure = corner.corner(fit['gamma1'],labels=[r"${\gamma^1}_0$",r"${\gamma^1}_1$",r"${\gamma^1}_2$",r"${\gamma^1}_3$",r"${\gamma^1}_4$"])
-pp = PdfPages('output23_sim/gamma1_corner.pdf')
-plt.savefig(pp,format='pdf')
-pp.close()
-plt.close()
-
-mega = numpy.array([fit['rho11'],fit['rho12'],fit['rho13']])
-mega = numpy.transpose(mega)
-figure = corner.corner(mega,labels=[r"${\delta}_{0}$",r"${\delta}_{1}$",r"${\delta}_{2}$"])
-pp = PdfPages('output23_sim/rho_corner.pdf')
-plt.savefig(pp,format='pdf')
-pp.close()
-plt.close()
-
-
-figure = corner.corner(fit['rho1'],labels=[r"${\delta}_{0}$",r"${\delta}_{1}$",r"${\delta}_{2}$",r"${\delta}_{3}$",r"${\delta}_{4}$"])
-pp = PdfPages('output23_sim/delta_corner.pdf')
-plt.savefig(pp,format='pdf')
-pp.close()
-plt.close()
-
-figure = corner.corner(fit['rho1'][:,:-1]/fit['rho1'][:,-1][:,None],labels=[r"${\delta}_{0}/{\delta}_{4}$",r"${\delta}_{1}/{\delta}_{4}$",\
-  r"${\delta}_{2}/{\delta}_{4}$",r"${\delta}_{3}/{\delta}_{4}$"], \
-  range=[[-4,4] for x in xrange(4)])
-pp = PdfPages('output23_sim/deltaratio_corner.pdf')
-plt.savefig(pp,format='pdf')
-pp.close()
-plt.close()
-
-# mega = fit['gamma']/((fit['gamma'][:,1]-fit['gamma'][:,2]))[:,None]
-
-# mega = mega-mega[:,2][:,None]
-# mega = numpy.delete(mega,2,axis=1)
-# mega = numpy.delete(mega,1,axis=1)
-# figure = corner.corner(mega,labels=[r"$R_0$",r"$R_3$",r"$R_4$"])
-# pp = PdfPages('output23_sim/rx-rv_corner.pdf')
+# figure = corner.corner(fit['rho1'],labels=[r"${\delta}_{0}$",r"${\delta}_{1}$",r"${\delta}_{2}$",r"${\delta}_{3}$",r"${\delta}_{4}$"])
+# pp = PdfPages('output23_sim/delta_corner.pdf')
 # plt.savefig(pp,format='pdf')
 # pp.close()
 # plt.close()
 
-# mega = numpy.concatenate((fit['Delta_scale'][:,None],fit['L_sigma']),axis=1)
-figure = corner.corner(fit['L_sigma'],labels=[r"${\sigma}_0$",r"${\sigma}_1$",r"${\sigma}_2$",r"${\sigma}_3$",r"${\sigma}_4$"])
-pp = PdfPages('output23_sim/sigma_corner.pdf')
-plt.savefig(pp,format='pdf')
-pp.close()
-plt.close()
+# figure = corner.corner(fit['rho1'][:,:-1]/fit['rho1'][:,-1][:,None],labels=[r"${\delta}_{0}/{\delta}_{4}$",r"${\delta}_{1}/{\delta}_{4}$",\
+#   r"${\delta}_{2}/{\delta}_{4}$",r"${\delta}_{3}/{\delta}_{4}$"], \
+#   range=[[-4,4] for x in xrange(4)])
+# pp = PdfPages('output23_sim/deltaratio_corner.pdf')
+# plt.savefig(pp,format='pdf')
+# pp.close()
+# plt.close()
 
-plt.hist(fit['lp__'],cumulative=True) #
-plt.xlabel(r'$\ln{p}$')
-pp = PdfPages('output23_sim/lp.pdf')
-plt.savefig(pp,format='pdf')
-pp.close()
-plt.close()
+# # mega = fit['gamma']/((fit['gamma'][:,1]-fit['gamma'][:,2]))[:,None]
+
+# # mega = mega-mega[:,2][:,None]
+# # mega = numpy.delete(mega,2,axis=1)
+# # mega = numpy.delete(mega,1,axis=1)
+# # figure = corner.corner(mega,labels=[r"$R_0$",r"$R_3$",r"$R_4$"])
+# # pp = PdfPages('output23_sim/rx-rv_corner.pdf')
+# # plt.savefig(pp,format='pdf')
+# # pp.close()
+# # plt.close()
+
+# # mega = numpy.concatenate((fit['Delta_scale'][:,None],fit['L_sigma']),axis=1)
+# figure = corner.corner(fit['L_sigma'],labels=[r"${\sigma}_0$",r"${\sigma}_1$",r"${\sigma}_2$",r"${\sigma}_3$",r"${\sigma}_4$"])
+# pp = PdfPages('output23_sim/sigma_corner.pdf')
+# plt.savefig(pp,format='pdf')
+# pp.close()
+# plt.close()
+
+# plt.hist(fit['lp__'],cumulative=True) #
+# plt.xlabel(r'$\ln{p}$')
+# pp = PdfPages('output23_sim/lp.pdf')
+# plt.savefig(pp,format='pdf')
+# pp.close()
+# plt.close()
 
 
-with PdfPages('output23_sim/multipage_pdf.pdf') as pdf:
+# with PdfPages('output23_sim/multipage_pdf.pdf') as pdf:
 
-    lineobjects = plt.plot(fit['lp__'][::10])
-    plt.title(r'log p')
-    pdf.savefig()
-    plt.close()
+#     lineobjects = plt.plot(fit['lp__'][::10])
+#     plt.title(r'log p')
+#     pdf.savefig()
+#     plt.close()
 
-    lineobjects = plt.plot(fit['L_sigma'][::10,:],label=[])
-    plt.title(r'$L_\sigma$')
-    plt.legend(iter(lineobjects),('U','B','V','R','I'))
-    pdf.savefig()
-    plt.close()
+#     lineobjects = plt.plot(fit['L_sigma'][::10,:],label=[])
+#     plt.title(r'$L_\sigma$')
+#     plt.legend(iter(lineobjects),('U','B','V','R','I'))
+#     pdf.savefig()
+#     plt.close()
     
-    plt.plot(fit['EW'][::10,:10,0])
-    plt.title('EW - 0')
-    pdf.savefig()
-    plt.close()
+#     plt.plot(fit['EW'][::10,:10,0])
+#     plt.title('EW - 0')
+#     pdf.savefig()
+#     plt.close()
 
-    plt.plot(fit['EW'][::10,:10,1])
-    plt.title('EW - 1')
-    pdf.savefig()
-    plt.close()
+#     plt.plot(fit['EW'][::10,:10,1])
+#     plt.title('EW - 1')
+#     pdf.savefig()
+#     plt.close()
 
 
 
-    plt.plot(fit['Delta_scale'][::10])
-    plt.title(r'$\Delta$ scale')
-    pdf.savefig()
-    plt.close()
+#     plt.plot(fit['Delta_scale'][::10])
+#     plt.title(r'$\Delta$ scale')
+#     pdf.savefig()
+#     plt.close()
     
-    lineobjects = plt.plot(fit['alpha'][::10],alpha=0.5,label=['U','B','V','R','I'])
-    plt.title('alpha')
-    plt.legend(iter(lineobjects),('U','B','V','R','I'))
-    pdf.savefig()
-    plt.close()
+#     lineobjects = plt.plot(fit['alpha'][::10],alpha=0.5,label=['U','B','V','R','I'])
+#     plt.title('alpha')
+#     plt.legend(iter(lineobjects),('U','B','V','R','I'))
+#     pdf.savefig()
+#     plt.close()
     
-    lineobjects = plt.plot(fit['beta'][::10],alpha=0.5,label=['U','B','V','R','I'])
-    plt.title('beta')
-    plt.legend(iter(lineobjects),('U','B','V','R','I'))
-    pdf.savefig()
-    plt.close()
+#     lineobjects = plt.plot(fit['beta'][::10],alpha=0.5,label=['U','B','V','R','I'])
+#     plt.title('beta')
+#     plt.legend(iter(lineobjects),('U','B','V','R','I'))
+#     pdf.savefig()
+#     plt.close()
     
-    lineobjects = plt.plot(fit['gamma'][::10],label=['U','B','V','R','I'])
-    plt.title('gamma')
-    plt.legend(iter(lineobjects),('U','B','V','R','I'))
-    pdf.savefig()
-    plt.close()
+#     lineobjects = plt.plot(fit['gamma'][::10],label=['U','B','V','R','I'])
+#     plt.title('gamma')
+#     plt.legend(iter(lineobjects),('U','B','V','R','I'))
+#     pdf.savefig()
+#     plt.close()
  
-    mega = fit['gamma']/((fit['gamma'][:,1]-fit['gamma'][:,2]))[:,None]
+#     mega = fit['gamma']/((fit['gamma'][:,1]-fit['gamma'][:,2]))[:,None]
 
-    figure = corner.corner(mega,labels=[r"$R_0$",r"$R_1$",r"$R_2$",r"$R_3$",r"$R_4$"])
-    pp = PdfPages('output23_sim/rx_corner.pdf')
-    plt.savefig(pp,format='pdf')
-    pp.close()
-    plt.close()
+#     figure = corner.corner(mega,labels=[r"$R_0$",r"$R_1$",r"$R_2$",r"$R_3$",r"$R_4$"])
+#     pp = PdfPages('output23_sim/rx_corner.pdf')
+#     plt.savefig(pp,format='pdf')
+#     pp.close()
+#     plt.close()
 
-    lineobjects = plt.plot(fit['gamma1'][::10],label=['U','B','V','R','I'])
-    plt.title('gamma1')
-    plt.legend(iter(lineobjects),('U','B','V','R','I'))
-    pdf.savefig()
-    plt.close()
+#     lineobjects = plt.plot(fit['gamma1'][::10],label=['U','B','V','R','I'])
+#     plt.title('gamma1')
+#     plt.legend(iter(lineobjects),('U','B','V','R','I'))
+#     pdf.savefig()
+#     plt.close()
  
-    # mega = fit['gamma1']/((fit['gamma1'][:,1]-fit['gamma1'][:,2]))[:,None]
+#     # mega = fit['gamma1']/((fit['gamma1'][:,1]-fit['gamma1'][:,2]))[:,None]
 
-    # figure = corner.corner(mega,labels=[r"$R_0$",r"$R_1$",r"$R_2$",r"$R_3$",r"$R_4$"])
-    # pp = PdfPages('output23_sim/r1x_corner.pdf')
-    # plt.savefig(pp,format='pdf')
-    # pp.close()
-    # plt.close()
+#     # figure = corner.corner(mega,labels=[r"$R_0$",r"$R_1$",r"$R_2$",r"$R_3$",r"$R_4$"])
+#     # pp = PdfPages('output23_sim/r1x_corner.pdf')
+#     # plt.savefig(pp,format='pdf')
+#     # pp.close()
+#     # plt.close()
 
-    # mega = fit['rho1']/((fit['rho1'][:,1]-fit['rho1'][:,2]))[:,None]
+#     # mega = fit['rho1']/((fit['rho1'][:,1]-fit['rho1'][:,2]))[:,None]
 
-    # figure = corner.corner(mega,labels=[r"$R_{\delta 0}$",r"$R_{\delta 1}$",r"$R_{\delta 2}$",r"$R_{\delta 3}$",r"$R_{\delta 4}$"], \
-    #     range=[[-8.,0.5] for x in xrange(5)])
-    # pp = PdfPages('output23_sim/rxdelta_corner.pdf')
-    # plt.savefig(pp,format='pdf')
-    # pp.close()
-    # plt.close()
+#     # figure = corner.corner(mega,labels=[r"$R_{\delta 0}$",r"$R_{\delta 1}$",r"$R_{\delta 2}$",r"$R_{\delta 3}$",r"$R_{\delta 4}$"], \
+#     #     range=[[-8.,0.5] for x in xrange(5)])
+#     # pp = PdfPages('output23_sim/rxdelta_corner.pdf')
+#     # plt.savefig(pp,format='pdf')
+#     # pp.close()
+#     # plt.close()
 
-    # plt.plot(fit['R'][::10,:10])
-    # plt.title('R')
-    # pdf.savefig()
-    # plt.close()
+#     # plt.plot(fit['R'][::10,:10])
+#     # plt.title('R')
+#     # pdf.savefig()
+#     # plt.close()
 
-    # mega = numpy.array([fit['c'],fit['alpha'],fit['beta'],fit['L_sigma']])
-    # mega = numpy.transpose(mega)
+#     # mega = numpy.array([fit['c'],fit['alpha'],fit['beta'],fit['L_sigma']])
+#     # mega = numpy.transpose(mega)
 
-    # for index in xrange(5):
-    #     figure = corner.corner(mega[index,:,:],labels=[r"$c_{}$".format(index),r"$\alpha_{}$".format(index),\
-    #         r"$\beta_{}$".format(index),r"$\sigma_{}$".format(index)])
-    #     pdf.savefig()
-    #     plt.close()
+#     # for index in xrange(5):
+#     #     figure = corner.corner(mega[index,:,:],labels=[r"$c_{}$".format(index),r"$\alpha_{}$".format(index),\
+#     #         r"$\beta_{}$".format(index),r"$\sigma_{}$".format(index)])
+#     #     pdf.savefig()
+#     #     plt.close()
 
-    # filter wavelengths
-# r = numpy.log(8635./3276.)
-# edges= 3276.*numpy.exp(numpy.arange(6)*r/5.)
-# # edges = numpy.array([[3300., 4102], [4102, 5100], [5200, 6289], [6289, 7607], [7607, 9200]])
-# efflam = []
-# for i in xrange(5):
-#     efflam.append((edges[i+1]-edges[i])/2+edges[i])
-#     # efflam.append((edges[i][1]-edges[i][0])/2+edges[i][0])
+#     # filter wavelengths
+# # r = numpy.log(8635./3276.)
+# # edges= 3276.*numpy.exp(numpy.arange(6)*r/5.)
+# # # edges = numpy.array([[3300., 4102], [4102, 5100], [5200, 6289], [6289, 7607], [7607, 9200]])
+# # efflam = []
+# # for i in xrange(5):
+# #     efflam.append((edges[i+1]-edges[i])/2+edges[i])
+# #     # efflam.append((edges[i][1]-edges[i][0])/2+edges[i][0])
 
-#from manu
-efflam = numpy.array([ 3693.16777627,  4369.37505509,  5287.48667023,  6319.19906153,7610.89305298])
-# [3701, 4601, 5744, 6948, 8403]
-rc('text', usetex=True)
+# #from manu
+# efflam = numpy.array([ 3693.16777627,  4369.37505509,  5287.48667023,  6319.19906153,7610.89305298])
+# # [3701, 4601, 5744, 6948, 8403]
+# rc('text', usetex=True)
 
 
 
-filts = ['U','B','V','R','I']
+# filts = ['U','B','V','R','I']
+# # lambdas = numpy.arange(3000.,9000,100)
+# # rvs=[2.97]
+# # avs = [12.25]
+# # for rv,av in zip(rvs,avs):
+# #   f99 = sncosmo.F99Dust(r_v =rv)
+# #   f99.set(ebv=av)
+# #   A_ = f99.propagate(lambdas,1)
+# #   A_=-2.5*numpy.log10(A_)
+
+# #   # norm = f99.propagate([efflam[1]],1.) / f99.propagate(numpy.array([efflam[2]]),1.)
+# #   # norm  = -2.5*numpy.log10(norm)
+# #   # A_ = sncosmo._extinction.ccm89(lambdas, 1., rv)
+# #   # norm  = sncosmo._extinction.ccm89(numpy.array([efflam[1]]), 1., rv)-sncosmo._extinction.ccm89(numpy.array([efflam[2]]), 1., rv)
+# #   # A_ = A_/norm[0]
+# #   plt.plot(lambdas,A_,label=r"$R^F_V={:.2f}$".format(rv))
+
+# # (y, ymin, ymax) = numpy.percentile(fit['gamma'],(50,50-34,50+34),axis=0)
+# # plt.errorbar(efflam,y,yerr=[y-ymin,ymax-y],fmt='o')
+# # plt.legend()
+# # plt.xlabel(r'Wavelength (\AA)')
+# # plt.ylabel(r'$\gamma_X$')
+# # pp = PdfPages('output23_sim/fitz.pdf')
+# # plt.savefig(pp,format='pdf')
+# # pp.close()
+# # plt.close()
+
+
+# nlinks = fit['gamma'].shape[0]
+# mega = numpy.array([fit['c'],fit['alpha'],fit['beta'],fit['eta'],fit['gamma'],fit['gamma1'],fit['rho1'],fit['L_sigma']])
+# mega = numpy.transpose(mega)
+
+# c = numpy.zeros(5)
+# alpha = numpy.array([0.005, 0.002,0.002,0.002,0.003])
+# beta = numpy.array([0.03, 0.03,0.03,0.02,0.02])
+# eta = numpy.array([0.0001,1.5e-4,0.0005,0.0005,-0.00003])
+# gamma = numpy.array([64.1,51.9,38.5,29.3,20.8])
+# gamma1 = numpy.array([-10.5,-11.9,-14.6,-13.9,-12.9])
+# delta = numpy.array([2.13, -2.30,-1.87,0.38,2.09])
+# delta = numpy.array([2.13, -2.30,-1.87,0.38,2.09])
+# delta = delta.transpose()
+# y=numpy.array([numpy.dot(delta, gamma), numpy.dot(delta, gamma1)])
+# A=numpy.zeros((2,2))
+# A[0,0] = numpy.dot(gamma,gamma)
+# A[1,1] = numpy.dot(gamma1,gamma1)
+# A[0,1] = numpy.dot(gamma,gamma1)
+# A[1,0] = A[0,1];
+# x = numpy.dot(numpy.linalg.inv(A),y)
+# delta= delta - x[0]*gamma - x[1]*gamma1;
+# cov =numpy.array([[0.002, 0.0,-0.0,0,0.00],[0.000,0.0008,0.0000,0.,-0.0000],[-0.0000,0.0000,0.0003,0,-0.0000],\
+#    [0,0,0,0.0002,0.0000],[0.0000,-0.0000,-0.0000,0.0000,0.001]])
+# for index in xrange(5):
+#     figure = corner.corner(mega[index,:,:],labels=[r"$c_{}$".format(index), r"$\alpha_{}$".format(index),\
+#                     r"$\beta_{}$".format(index),r"$\eta_{}$".format(index),r"$\gamma^0_{}$".format(index),\
+#                     r"$\gamma^1_{}$".format(index),r"$\delta_{{{}}}$".format(index), r"$\sigma_{}$".format(index)],\
+#                     truths=[c[index], alpha[index],beta[index],eta[index],gamma[index], gamma1[index],delta[index],numpy.sqrt(cov[index,index])])
+#     figure.suptitle(filts[index],fontsize=28)
+#     pp = PdfPages('output23_sim/coeff{}.pdf'.format(index))
+#     plt.savefig(pp,format='pdf')
+#     pp.close()
+#     plt.close()
+
+
+
 # lambdas = numpy.arange(3000.,9000,100)
-# rvs=[2.97]
-# avs = [12.25]
-# for rv,av in zip(rvs,avs):
-#   f99 = sncosmo.F99Dust(r_v =rv)
-#   f99.set(ebv=av)
-#   A_ = f99.propagate(lambdas,1)
-#   A_=-2.5*numpy.log10(A_)
+# # for rv in rvs:
 
-#   # norm = f99.propagate([efflam[1]],1.) / f99.propagate(numpy.array([efflam[2]]),1.)
-#   # norm  = -2.5*numpy.log10(norm)
-#   # A_ = sncosmo._extinction.ccm89(lambdas, 1., rv)
-#   # norm  = sncosmo._extinction.ccm89(numpy.array([efflam[1]]), 1., rv)-sncosmo._extinction.ccm89(numpy.array([efflam[2]]), 1., rv)
-#   # A_ = A_/norm[0]
-#   plt.plot(lambdas,A_,label=r"$R^F_V={:.2f}$".format(rv))
+# #     f99 = sncosmo.F99Dust(r_v =rv)
+# #     f99.set(ebv=1.37)
+# #     A_ = f99.propagate(lambdas,1.)
+# #     A_=-2.5*numpy.log10(A_)
 
-# (y, ymin, ymax) = numpy.percentile(fit['gamma'],(50,50-34,50+34),axis=0)
+# #     norm = f99.propagate([efflam[1]],1.) / f99.propagate(numpy.array([efflam[2]]),1.)
+# #     norm  = -2.5*numpy.log10(norm)
+# #     # A_ = sncosmo._extinction.ccm89(lambdas, 1., rv)
+# #     # norm  = sncosmo._extinction.ccm89(numpy.array([efflam[1]]), 1., rv)-sncosmo._extinction.ccm89(numpy.array([efflam[2]]), 1., rv)
+# #     A_ = A_/norm[0]
+# #     plt.plot(lambdas,A_,label=r"$R^F_V={:.2f}$".format(rv))
+
+# (y, ymin, ymax) = numpy.percentile(fit['gamma']/((fit['gamma'][:,1]-fit['gamma'][:,2])[:,None]),(50,50-34,50+34),axis=0)
 # plt.errorbar(efflam,y,yerr=[y-ymin,ymax-y],fmt='o')
 # plt.legend()
 # plt.xlabel(r'Wavelength (\AA)')
-# plt.ylabel(r'$\gamma_X$')
-# pp = PdfPages('output23_sim/fitz.pdf')
+# plt.ylabel(r'$R_X=\frac{\gamma_X}{\gamma_1-\gamma_2}$')
+# pp = PdfPages('output23_sim/ccm.pdf')
+# plt.savefig(pp,format='pdf')
+# pp.close()
+# plt.close()
+
+# # for rv in rvs:
+
+# #     f99 = sncosmo.F99Dust(r_v =rv)
+# #     f99.set(ebv=1.37)
+# #     A_ = f99.propagate(lambdas,1.)
+
+# #     norm  = f99.propagate(numpy.array([efflam[2]]),1.) 
+# #     # A_ = sncosmo._extinction.ccm89(lambdas, 1., rv)
+# #     # norm  = sncosmo._extinction.ccm89(numpy.array([efflam[2]]), 1., rv)
+# #     # A_ = A_/norm[0]
+# #     A_ = numpy.log10(A_)/numpy.log10(norm)
+# #     plt.plot(lambdas,A_,label=r"$R^F_V={:.1f}$".format(rv))
+
+# (y, ymin, ymax) = numpy.percentile(fit['gamma']/fit['gamma'][:,2][:,None],(50,50-34,50+34),axis=0)
+# plt.errorbar(efflam,y,yerr=[y-ymin,ymax-y],fmt='o')
+# plt.legend()
+# plt.xlabel(r'Wavelength (\AA)')
+# plt.ylabel(r'$\frac{\gamma_X}{\gamma_2}$')
+# pp = PdfPages('output23_sim/ccm2.pdf')
+# plt.savefig(pp,format='pdf')
+# pp.close()
+# plt.close()
+
+# (y, ymin, ymax) = numpy.percentile(fit['rho1']/fit['rho1'][:,4][:,None],(50,50-34,50+34),axis=0)
+# plt.errorbar(efflam,y-1,yerr=[y-ymin,ymax-y],fmt='o')
+# plt.legend()
+# plt.xlabel(r'Wavelength (\AA)')
+# plt.ylabel(r'$\frac{\delta_X}{\delta_4}-1$')
+# plt.ylim((-4,1))
+# pp = PdfPages('output23_sim/deltaratio.pdf')
+# plt.savefig(pp,format='pdf')
+# pp.close()
+# plt.close()
+
+# mega = numpy.array([fit['Delta'].flatten(),fit['EW'][:,:,0].flatten(),fit['EW'][:,:,1].flatten(),fit['sivel'].flatten(), \
+#     ((fit['gamma'][:,1] - fit['gamma'][:,2])[:,None]*fit['k']).flatten(),\
+#     ((fit['gamma1'][:,1] - fit['gamma1'][:,2])[:,None]*fit['k1']).flatten(),\
+#     ((fit['rho1'][:,1] - fit['rho1'][:,2])[:,None]*fit['R']).flatten()])
+
+# mega = numpy.transpose(mega)
+# mega=mega[::50,:]
+
+# figure = corner.corner(mega,labels=[r"$\Delta$",r"$EW_{Ca}$",r"$EW_{Si}$",r"$\lambda_{Si}$",r"$E_{\gamma^0}(B-V)$",r"$E_{\gamma^1}(B-V)$",r"$E_\delta(B-V)$"],range=numpy.zeros(7)+1.)
+# pp = PdfPages('output23_sim/perobject_corner.pdf')
 # plt.savefig(pp,format='pdf')
 # pp.close()
 # plt.close()
 
 
-nlinks = fit['gamma'].shape[0]
-mega = numpy.array([fit['c'],fit['alpha'],fit['beta'],fit['eta'],fit['gamma'],fit['gamma1'],fit['rho1'],fit['L_sigma']])
-mega = numpy.transpose(mega)
 
-c = numpy.zeros(5)
-alpha = numpy.array([0.005, 0.002,0.002,0.002,0.003])
-beta = numpy.array([0.03, 0.03,0.03,0.02,0.02])
-eta = numpy.array([0.0001,1.5e-4,0.0005,0.0005,-0.00003])
-gamma = numpy.array([64.1,51.9,38.5,29.3,20.8])
-gamma1 = numpy.array([-10.5,-11.9,-14.6,-13.9,-12.9])
-delta = numpy.array([2.13, -2.30,-1.87,0.38,2.09])
-delta = numpy.array([2.13, -2.30,-1.87,0.38,2.09])
-delta = delta.transpose()
-y=numpy.array([numpy.dot(delta, gamma), numpy.dot(delta, gamma1)])
-A=numpy.zeros((2,2))
-A[0,0] = numpy.dot(gamma,gamma)
-A[1,1] = numpy.dot(gamma1,gamma1)
-A[0,1] = numpy.dot(gamma,gamma1)
-A[1,0] = A[0,1];
-x = numpy.dot(numpy.linalg.inv(A),y)
-delta= delta - x[0]*gamma - x[1]*gamma1;
-cov =numpy.array([[0.002, 0.0,-0.0,0,0.00],[0.000,0.0008,0.0000,0.,-0.0000],[-0.0000,0.0000,0.0003,0,-0.0000],\
-   [0,0,0,0.0002,0.0000],[0.0000,-0.0000,-0.0000,0.0000,0.001]])
-for index in xrange(5):
-    figure = corner.corner(mega[index,:,:],labels=[r"$c_{}$".format(index), r"$\alpha_{}$".format(index),\
-                    r"$\beta_{}$".format(index),r"$\eta_{}$".format(index),r"$\gamma^0_{}$".format(index),\
-                    r"$\gamma^1_{}$".format(index),r"$\delta_{{{}}}$".format(index), r"$\sigma_{}$".format(index)],\
-                    truths=[c[index], alpha[index],beta[index],eta[index],gamma[index], gamma1[index],delta[index],numpy.sqrt(cov[index,index])])
-    figure.suptitle(filts[index],fontsize=28)
-    pp = PdfPages('output23_sim/coeff{}.pdf'.format(index))
-    plt.savefig(pp,format='pdf')
-    pp.close()
-    plt.close()
+f = open('temp23.pkl','rb')
+(fit_,_) = pickle.load(f)
+f.close()
 
+c = numpy.median(fit_['c'],axis=0)
+alpha = numpy.median(fit_['alpha'],axis=0)
+beta = numpy.median(fit_['beta'],axis=0)
+eta = numpy.median(fit_['eta'],axis=0)
+gamma = numpy.median(fit_['gamma'],axis=0)
+gamma1 = numpy.median(fit_['gamma1'],axis=0)
+delta = numpy.median(fit_['rho1'],axis=0)
 
+# EW = numpy.array(EW_renorm)
+# sivel = numpy.array(sivel_renorm)
+EW = numpy.median(fit_['EW'],axis=0)
+sivel = numpy.median(fit_['sivel'],axis=0)
 
-lambdas = numpy.arange(3000.,9000,100)
-# for rv in rvs:
+Delta = numpy.median(fit_['Delta'],axis=0)
+D = numpy.median(fit_['R'],axis=0)
+k0 = numpy.median(fit_['k'],axis=0)
+k1 = numpy.median(fit_['k1'],axis=0)
 
-#     f99 = sncosmo.F99Dust(r_v =rv)
-#     f99.set(ebv=1.37)
-#     A_ = f99.propagate(lambdas,1.)
-#     A_=-2.5*numpy.log10(A_)
+plt.scatter(numpy.median(fit_['gamma'][:,2][:,None]*fit_['k']+fit_['gamma1'][:,2][:,None]*fit_['k1'] + fit_['rho1'][:,2][:,None]*fit_['R'],axis=0),\
+    numpy.median(fit['gamma'][:,2][:,None]*fit['k']+fit['gamma1'][:,2][:,None]*fit['k1'] + fit['rho1'][:,2][:,None]*fit['R'],axis=0))
+plt.xlabel(r'Almost input $A_V$')
+plt.ylabel(r'Best fit $A_V$')
+plt.savefig('output23_sim/gerardav.pdf')
 
-#     norm = f99.propagate([efflam[1]],1.) / f99.propagate(numpy.array([efflam[2]]),1.)
-#     norm  = -2.5*numpy.log10(norm)
-#     # A_ = sncosmo._extinction.ccm89(lambdas, 1., rv)
-#     # norm  = sncosmo._extinction.ccm89(numpy.array([efflam[1]]), 1., rv)-sncosmo._extinction.ccm89(numpy.array([efflam[2]]), 1., rv)
-#     A_ = A_/norm[0]
-#     plt.plot(lambdas,A_,label=r"$R^F_V={:.2f}$".format(rv))
+plt.scatter(numpy.median((fit_['gamma'][:,1]-fit_['gamma'][:,2])[:,None]*fit_['k']+(fit_['gamma1'][:,1]-fit_['gamma1'][:,2])[:,None]*fit_['k1'] + (fit_['rho1'][:,1]-fit_['rho1'][:,2])[:,None]*fit_['R'],axis=0),\
+    numpy.median((fit['gamma'][:,1]-fit['gamma'][:,2])[:,None]*fit['k']+(fit['gamma1'][:,1]-fit['gamma1'][:,2])[:,None]*fit['k1'] + (fit['rho1'][:,1]-fit['rho1'][:,2])[:,None]*fit['R'],axis=0))
+plt.xlabel(r'Almost input $E(B-V)$')
+plt.ylabel(r'Best fit $E(B-V)$')
+plt.savefig('output23_sim/gerardebv.pdf')
 
-(y, ymin, ymax) = numpy.percentile(fit['gamma']/((fit['gamma'][:,1]-fit['gamma'][:,2])[:,None]),(50,50-34,50+34),axis=0)
-plt.errorbar(efflam,y,yerr=[y-ymin,ymax-y],fmt='o')
-plt.legend()
-plt.xlabel(r'Wavelength (\AA)')
-plt.ylabel(r'$R_X=\frac{\gamma_X}{\gamma_1-\gamma_2}$')
-pp = PdfPages('output23_sim/ccm.pdf')
-plt.savefig(pp,format='pdf')
-pp.close()
-plt.close()
-
-# for rv in rvs:
-
-#     f99 = sncosmo.F99Dust(r_v =rv)
-#     f99.set(ebv=1.37)
-#     A_ = f99.propagate(lambdas,1.)
-
-#     norm  = f99.propagate(numpy.array([efflam[2]]),1.) 
-#     # A_ = sncosmo._extinction.ccm89(lambdas, 1., rv)
-#     # norm  = sncosmo._extinction.ccm89(numpy.array([efflam[2]]), 1., rv)
-#     # A_ = A_/norm[0]
-#     A_ = numpy.log10(A_)/numpy.log10(norm)
-#     plt.plot(lambdas,A_,label=r"$R^F_V={:.1f}$".format(rv))
-
-(y, ymin, ymax) = numpy.percentile(fit['gamma']/fit['gamma'][:,2][:,None],(50,50-34,50+34),axis=0)
-plt.errorbar(efflam,y,yerr=[y-ymin,ymax-y],fmt='o')
-plt.legend()
-plt.xlabel(r'Wavelength (\AA)')
-plt.ylabel(r'$\frac{\gamma_X}{\gamma_2}$')
-pp = PdfPages('output23_sim/ccm2.pdf')
-plt.savefig(pp,format='pdf')
-pp.close()
-plt.close()
-
-(y, ymin, ymax) = numpy.percentile(fit['rho1']/fit['rho1'][:,4][:,None],(50,50-34,50+34),axis=0)
-plt.errorbar(efflam,y-1,yerr=[y-ymin,ymax-y],fmt='o')
-plt.legend()
-plt.xlabel(r'Wavelength (\AA)')
-plt.ylabel(r'$\frac{\delta_X}{\delta_4}-1$')
-plt.ylim((-4,1))
-pp = PdfPages('output23_sim/deltaratio.pdf')
-plt.savefig(pp,format='pdf')
-pp.close()
-plt.close()
-
-mega = numpy.array([fit['Delta'].flatten(),fit['EW'][:,:,0].flatten(),fit['EW'][:,:,1].flatten(),fit['sivel'].flatten(), \
-    ((fit['gamma'][:,1] - fit['gamma'][:,2])[:,None]*fit['k']).flatten(),\
-    ((fit['gamma1'][:,1] - fit['gamma1'][:,2])[:,None]*fit['k1']).flatten(),\
-    ((fit['rho1'][:,1] - fit['rho1'][:,2])[:,None]*fit['R']).flatten()])
-
-mega = numpy.transpose(mega)
-mega=mega[::50,:]
-
-figure = corner.corner(mega,labels=[r"$\Delta$",r"$EW_{Ca}$",r"$EW_{Si}$",r"$\lambda_{Si}$",r"$E_{\gamma^0}(B-V)$",r"$E_{\gamma^1}(B-V)$",r"$E_\delta(B-V)$"],range=numpy.zeros(7)+1.)
-pp = PdfPages('output23_sim/perobject_corner.pdf')
-plt.savefig(pp,format='pdf')
-pp.close()
-plt.close()
