@@ -170,7 +170,8 @@ plt.close()
 
 (x, xmin, xmax) = numpy.percentile(fit['gamma'][:,2][:,None]*fit['k'],(50,50-34,50+34),axis=0)
 (y, ymin, ymax) = numpy.percentile(fit['rho1'][:,2][:,None]*fit['R'],(50,50-34,50+34),axis=0)
-plt.errorbar(x, y, xerr=[x-xmin,xmax-x],yerr=[y-ymin,ymax-ymin],fmt='o')
+plt.errorbar(x, y, xerr=[x-xmin,xmax-x],yerr=[y-ymin,ymax-ymin],fmt='o',alpha=0.2)
+plt.scatter(x, y, s=1,alpha=0.8)
 plt.xlabel(r'$\gamma^0_V k_0$')
 plt.ylabel(r'$\gamma^1_V k_1$')
 pp = PdfPages("output11/kk.pdf")
@@ -528,7 +529,7 @@ plt.close()
 
 plt.hist([(fit['gamma'][:,1]-fit['gamma'][:,2])[:,None]*fit['k'], (fit['rho1'][:,1]-fit['rho1'][:,2])[:,None]*fit['R']],normed=True,bins=20,
     label=[r'$E_\gamma(B-V)$',r'$E_\delta(B-V)$'],range=(-0.1,0.4))
-plt.xlabel(r'$E(B-V)$')
+plt.xlabel(r'$E(B-V)$',fontsize=20)
 plt.legend()
 pp = PdfPages('output11/ebv.pdf')
 plt.savefig(pp,format='pdf')
@@ -865,15 +866,15 @@ cname=['U','B','V','R','I']
 for index in xrange(5):
     figure = corner.corner(mega[index,:,:],labels=[r"$c_{}$".format(cname[index]), r"$\alpha_{}$".format(cname[index]),\
                     r"$\beta_{}$".format(cname[index]),r"$\eta_{}$".format(cname[index]),r"$\gamma^0_{}$".format(cname[index]),\
-                    r"$\gamma^1_{{1{}}}$".format(cname[index]), r"$\sigma_{}$".format(cname[index])],label_kwargs={'fontsize':20},\
+                    r"$\gamma^1_{{1{}}}$".format(cname[index]), r"$\sigma_{}$".format(cname[index])],label_kwargs={'fontsize':22},\
                     truths=[None,0,0,0,0,0,0])
     figure.suptitle(filts[index],fontsize=28)
 
     for ax in figure.get_axes():
         for tick in ax.xaxis.get_major_ticks():
-            tick.label.set_fontsize(20) 
+            tick.label.set_fontsize(14) 
         for tick in ax.yaxis.get_major_ticks():
-            tick.label.set_fontsize(20) 
+            tick.label.set_fontsize(14) 
 
     pp = PdfPages('output11/coeff{}.pdf'.format(index))
     plt.savefig(pp,format='pdf')
@@ -946,12 +947,12 @@ mega = numpy.array([fit['Delta'].flatten(),fit['EW'][:,:,0].flatten(),fit['EW'][
 mega = numpy.transpose(mega)
 mega=mega[::50,:]
 
-figure = corner.corner(mega,labels=[r"$\Delta$",r"$EW_{Ca}$",r"$EW_{Si}$",r"$\lambda_{Si}$",r"$E_{\gamma^0}(B-V)$",r"$E_{\gamma^1}(B-V)$"],range=numpy.zeros(6)+1.)
+figure = corner.corner(mega,labels=[r"$\Delta$",r"$EW_{Ca}$",r"$EW_{Si}$",r"$\lambda_{Si}$",r"$E_{\gamma^0}(B-V)$",r"$E_{\gamma^1}(B-V)$"],range=numpy.zeros(6)+1.,label_kwargs={'fontsize':22})
 for ax in figure.get_axes():
     for tick in ax.xaxis.get_major_ticks():
-        tick.label.set_fontsize(20) 
+        tick.label.set_fontsize(14) 
     for tick in ax.yaxis.get_major_ticks():
-        tick.label.set_fontsize(20) 
+        tick.label.set_fontsize(14) 
 pp = PdfPages('output11/perobject_corner.pdf')
 plt.savefig(pp,format='pdf')
 pp.close()

@@ -161,7 +161,8 @@ pp.close()
 plt.close()
 
 (y, ymin, ymax) = numpy.percentile(fit['rho1'][:,4][:,None]*fit['R'],(50,50-34,50+34),axis=0)
-plt.errorbar(x1, y, xerr=[x1_err,x1_err],yerr=[y-ymin,ymax-ymin],fmt='o')
+plt.errorbar(x1, y, xerr=[x1_err,x1_err],yerr=[y-ymin,ymax-ymin],fmt='o',alpha=0.2)
+plt.scatter(x1, y,s=1,alpha=0.8)
 plt.xlabel(r'$x_1$')
 plt.ylabel(r'$A_{\delta I}$')
 plt.tight_layout()
@@ -323,7 +324,8 @@ fig, axes = plt.subplots(nrows=4,sharex=True)
 for i in xrange(4):
     (y, ymin, ymax) = numpy.percentile(correction[cind[i],:,:],(50,50-34,50+34),axis=0)
     err = numpy.sqrt(color_cov[:,i,i] + ((ymax-ymin)/2)**2)
-    axes[i].errorbar(x1,color_obs[:,i]-y,xerr=[x1_err,x1_err], yerr=[err,err],fmt='.',alpha=0.4)
+    axes[i].errorbar(x1,color_obs[:,i]-y,xerr=[x1_err,x1_err], yerr=[err,err],fmt='.',alpha=0.2)
+    axes[i].scatter(x1,color_obs[:,i]-y,s=1,alpha=0.8)
     lname = r'$\Delta ({0}-V)$'.format(cname[i])
     axes[i].set_ylabel(lname)
     axes[i].axhline(y=0,linestyle=':')
@@ -475,7 +477,7 @@ plt.close()
 plt.hist([(fit['gamma'][:,1]-fit['gamma'][:,2])[:,None]*fit['k'] + 
   (fit['gamma1'][:,1]-fit['gamma1'][:,2])[:,None]*fit['k1'], (fit['rho1'][:,1]-fit['rho1'][:,2])[:,None]*fit['R']],normed=True,bins=20,
   label=[r'$E(B-V)$',r'$E_\delta(B-V)$'])
-plt.xlabel(r'$E(B-V)$')
+plt.xlabel(r'$E(B-V)$',fontsize=20)
 plt.legend()
 pp = PdfPages('output23/ebv.pdf')
 plt.savefig(pp,format='pdf')
@@ -512,7 +514,7 @@ plt.hist( ((fit['rho1'][:,1]-fit['rho1'][:,2])[:,None]*fit['R']).flatten(),norme
   label='ideogram')
 plt.hist( numpy.median((fit['rho1'][:,1]-fit['rho1'][:,2])[:,None]*fit['R'],axis=0),normed=True,bins=bins,alpha=0.5,width=0.0005,
   label='median')
-plt.xlabel(r'$E_\delta(B-V)$')
+plt.xlabel(r'$E_\delta(B-V)$',fontsize=20)
 plt.xlim((-.02,.02))
 plt.legend()
 pp = PdfPages('output23/ebv_delta.pdf')
@@ -678,7 +680,7 @@ plt.close()
 # plt.close()
 
 
-figure = corner.corner(fit['gamma'],labels=[r"${\gamma^0}_0$",r"${\gamma^0}_1$",r"${\gamma^0}_2$",r"${\gamma^0}_3$",r"${\gamma^0}_4$"])
+figure = corner.corner(fit['gamma'],labels=[r"${\gamma^0}_0$",r"${\gamma^0}_1$",r"${\gamma^0}_2$",r"${\gamma^0}_3$",r"${\gamma^0}_4$"],label_kwargs={'fontsize':22})
 pp = PdfPages('output23/gamma_corner.pdf')
 plt.savefig(pp,format='pdf')
 pp.close()
@@ -900,8 +902,15 @@ for index in xrange(5):
     figure = corner.corner(mega[index,:,:],labels=[r"$c_{}$".format(cname[index]), r"$\alpha_{}$".format(cname[index]),\
                     r"$\beta_{}$".format(cname[index]),r"$\eta_{}$".format(cname[index]),r"$\gamma^0_{}$".format(cname[index]),\
                     r"$\gamma^1_{}$".format(cname[index]),r"$\delta_{{{}}}$".format(cname[index]), r"$\sigma_{}$".format(cname[index])], \
-                    truths=[None,0,0,0,0,0,0,0])
+                    truths=[None,0,0,0,0,0,0,0],label_kwargs={'fontsize':22})
     figure.suptitle(filts[index],fontsize=28)
+
+    for ax in figure.get_axes():
+        for tick in ax.xaxis.get_major_ticks():
+            tick.label.set_fontsize(14) 
+        for tick in ax.yaxis.get_major_ticks():
+            tick.label.set_fontsize(14) 
+
     pp = PdfPages('output23/coeff{}.pdf'.format(index))
     plt.savefig(pp,format='pdf')
     pp.close()
@@ -972,7 +981,7 @@ ax = fig.add_subplot(111)
 ax.errorbar(numpy.arange(5),y-1,yerr=[y-ymin,ymax-y],fmt='o')
 ax.xaxis.set_major_formatter(FuncFormatter(format_fn2))
 ax.xaxis.set_major_locator(MaxNLocator(integer=True))
-ax.axhline(0)
+ax.axhline(0,linestyle=':')
 ax.set_xlim((-0.5,4.5))
 ax.set_xlabel(r'Band $X$')
 ax.set_ylabel(r'$\frac{\delta_X}{\delta_I}-1$')
@@ -991,7 +1000,12 @@ mega = numpy.array([fit['Delta'].flatten(),fit['EW'][:,:,0].flatten(),fit['EW'][
 mega = numpy.transpose(mega)
 mega=mega[::50,:]
 
-figure = corner.corner(mega,labels=[r"$\Delta$",r"$EW_{Ca}$",r"$EW_{Si}$",r"$\lambda_{Si}$",r"$E_{\gamma^0}(B-V)$",r"$E_{\gamma^1}(B-V)$",r"$E_\delta(B-V)$"],range=numpy.zeros(7)+1.)
+figure = corner.corner(mega,labels=[r"$\Delta$",r"$EW_{Ca}$",r"$EW_{Si}$",r"$\lambda_{Si}$",r"$E_{\gamma^0}(B-V)$",r"$E_{\gamma^1}(B-V)$",r"$E_\delta(B-V)$"],range=numpy.zeros(7)+1.,label_kwargs={'fontsize':22})
+for ax in figure.get_axes():
+    for tick in ax.xaxis.get_major_ticks():
+        tick.label.set_fontsize(14) 
+    for tick in ax.yaxis.get_major_ticks():
+        tick.label.set_fontsize(14) 
 pp = PdfPages('output23/perobject_corner.pdf')
 plt.savefig(pp,format='pdf')
 pp.close()

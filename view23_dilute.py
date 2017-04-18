@@ -12,16 +12,16 @@ import scipy
 import cPickle
 import matplotlib as mpl
 import sivel
-# mpl.rcParams['font.size'] = 18
+mpl.rcParams['font.size'] = 18
 
-f = open('temp23_sim0.pkl','rb')
+f = open('temp23_dilute0.pkl','rb')
 (fit,_) = pickle.load(f)
 
 mega = numpy.array([fit['c'],fit['alpha'],fit['beta'],fit['eta'],fit['gamma'],fit['gamma1'],fit['rho1'],fit['L_sigma']])
 
 print mega.shape
-for index in xrange(1,10):
-    f = open('temp23_sim{}.pkl'.format(index),'rb')
+for index in xrange(1,4):
+    f = open('temp23_dilute{}.pkl'.format(index),'rb')
     (fit,_) = pickle.load(f)
     mega_ = numpy.array([fit['c'],fit['alpha'],fit['beta'],fit['eta'],fit['gamma'],fit['gamma1'],fit['rho1'],fit['L_sigma']])
 
@@ -107,19 +107,12 @@ for x1, x2 in zip(fit_input['L_Omega'], fit_input['L_sigma']):
 cov/= len(fit_input['L_Omega'])
 
 for index in xrange(5):
-    figure = corner.corner(mega[index,:,:],labels=[r"$c_{}$".format(filts[index]), r"$\alpha_{}$".format(filts[index]),\
-                    r"$\beta_{}$".format(filts[index]),r"$\eta_{}$".format(filts[index]),r"$\gamma^0_{}$".format(filts[index]),\
-                    r"$\gamma^1_{}$".format(filts[index]),r"$\delta_{{{}}}$".format(filts[index]), r"$\sigma_{}$".format(filts[index])],\
-                    truths=[c[index], alpha[index],beta[index],eta[index],gamma[index], gamma1[index],delta[index],numpy.sqrt(cov[index,index])],label_kwargs={'fontsize':22})
+    figure = corner.corner(mega[index,:,:],labels=[r"$c_{}$".format(index), r"$\alpha_{}$".format(index),\
+                    r"$\beta_{}$".format(index),r"$\eta_{}$".format(index),r"$\gamma^0_{}$".format(index),\
+                    r"$\gamma^1_{}$".format(index),r"$\delta_{{{}}}$".format(index), r"$\sigma_{}$".format(index)],\
+                    truths=[c[index], alpha[index],beta[index],eta[index],gamma[index], gamma1[index],delta[index],numpy.sqrt(cov[index,index])],label_kwargs={'fontsize':20})
     figure.suptitle(filts[index],fontsize=28)
-
-    for ax in figure.get_axes():
-        for tick in ax.xaxis.get_major_ticks():
-            tick.label.set_fontsize(14) 
-        for tick in ax.yaxis.get_major_ticks():
-            tick.label.set_fontsize(14)
-
-    pp = PdfPages('output23_sim/coeff{}.pdf'.format(index))
+    pp = PdfPages('output23_dilute/coeff{}.pdf'.format(index))
     plt.savefig(pp,format='pdf')
     pp.close()
     plt.close()
