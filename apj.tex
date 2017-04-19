@@ -984,63 +984,104 @@ with the $\Delta$'s in the tail of the distribution.
 Non-trivial residual magnitude dispersions are captured in $C_c$.  The diagonal elements are captured by the $\sigma$ parameters;
 the residual intrinsic dispersion ranges from
 $\sim 0.01$ to 0.06 mag, significantly smaller
-than the dispersion in $\Delta$.  Given that the 
-off-diagonal elements of $C_c$ are parameterized by the Cholesky factors of a correlation matrix rather than the matrix elements themselves,
-it is not straightforward to present correlation matrix confidences:
-the average over Monte Carlo links of the
-Cholesky factors will not  generally yield a correlation matrix.  
-To characterize a typical posterior draw of $C_c$ we use the matrix that is the mean of all covariance realizations in the
-chain, element by element.
-For $UBVRI$ the matrix is
+than the dispersion in $\Delta$.
+\color{orange}
+Of particular interest in $C_c$ is intrinsic color dispersion.  The intrinsic dispersions in $V$ and colors with respect to $V$ are
 \begin{equation}
-C_c(U,B,V,R,I)=
-\begin{pmatrix}
-\begin{array}{rrrrr}
-0.0038 & 0.0010 & -0.0002 & -0.0000 & 0.0003 \\
-0.0010 & 0.0011 & 0.0002 & -0.0000 & -0.0006 \\
--0.0002 & 0.0002 & 0.0004 & 0.0000 & -0.0002 \\
--0.0000 & -0.0000 & 0.0000 & 0.0002 & 0.0002 \\
-0.0003 & -0.0006 & -0.0002 & 0.0002 & 0.0020
-\end{array}
- \end{pmatrix} \text{mag}^2.
- \label{mag_cov:eqn}
+\sigma(V,U-V,B-V,V-R,V-I)=
+%\begin{pmatrix}
+%\begin{array}{rrrrr}
+\left(
+0.021^{+0.004}_{-0.005} ,
+0.067^{+0.010}_{-0.010},
+0.034^{+0.005}_{-0.005},
+0.023^{+0.002}_{-0.002},
+0.053^{+0.004}_{-0.004}
+\right)
+%\end{array}
+% \end{pmatrix} 
+ \text{mag}.
+ \label{sig_intrinsic:eqn}
  \end{equation}
-The average correlation matrix is
+The correlations between these parameters are
 \begin{equation}
-Cor(U,B,V,R,I)=
+Cor(V,U-V,B-V,V-R,V-I)=
 \begin{pmatrix}
 \begin{array}{rrrrr}
-1.00 & 0.42 & -0.18 & -0.05 & 0.12 \\
-0.42 & 1.00 & 0.26 & -0.09 & -0.39 \\
--0.18 & 0.26 & 1.00 & 0.09 & -0.22 \\
--0.05 & -0.09 & 0.09 & 1.00 & 0.27 \\
-0.12 & -0.39 & -0.22 & 0.27 & 1.00
+1 & -0.48^{+0.20}_{-0.18} & -0.34^{+0.21}_{-0.22} & 0.88^{+0.10}_{-0.25} & 0.60^{+0.11}_{-0.19} \\
+-0.48^{+0.20}_{-0.18} & 1 & 0.60^{+0.10}_{-0.13} & -0.38^{+0.18}_{-0.17} & -0.33^{+0.15}_{-0.14} \\
+-0.34^{+0.21}_{-0.22} & 0.60^{+0.10}_{-0.13} & 1 & -0.21^{+0.17}_{-0.17} & 0.08^{+0.14}_{-0.15} \\
+0.88^{+0.10}_{-0.25} & -0.38^{+0.18}_{-0.17} & -0.21^{+0.17}_{-0.17} & 1 & 0.65^{+0.06}_{-0.07} \\
+0.60^{+0.11}_{-0.19} & -0.33^{+0.15}_{-0.14} & 0.08^{+0.14}_{-0.15} & 0.65^{+0.06}_{-0.07} & 1 \\
 \end{array}
  \end{pmatrix}.
+ \label{cor_intrinsic:eqn}
  \end{equation}
-The  covariance of the colors $U-V$, $B-V$, $V-R$, and $V-I$ is
-expressed as the standard deviations and
-correlation matrix
- \begin{equation}
- \sigma(U-V, B-V, V-R, V-I)=
- \begin{pmatrix}
-0.068 & 0.034 & 0.023 & 0.053
-  \end{pmatrix} \text{mag},
- \label{color_sd:eqn}
- \end{equation}
- \begin{equation}
- Cor(U-V, B-V, V-R, V-I)=
-\begin{pmatrix}
-\begin{array}{rrrr}
-1.000 & 0.602 & -0.353 & -0.317 \\
-0.602 & 1.000 & -0.197 & 0.082 \\
--0.353 & -0.197 & 1.000 & 0.647 \\
--0.317 & 0.082 & 0.647 & 1.000
-\end{array}
-\end{pmatrix}.
-  \label{color_cor:eqn}
- \end{equation}
+
+\color{black}
+%
+%Given that the 
+%off-diagonal elements of $C_c$ are parameterized by the Cholesky factors of a correlation matrix rather than the matrix elements themselves,
+%it is not straightforward to present correlation matrix confidences:
+%the average over Monte Carlo links of the
+%Cholesky factors will not  generally yield a correlation matrix.  
+%To characterize a typical posterior draw of $C_c$ we use the matrix that is the mean of all covariance realizations in the
+%chain, element by element.
+%For $UBVRI$ the matrix is
+%\begin{equation}
+%C_c(U,B,V,R,I)=
+%\begin{pmatrix}
+%\begin{array}{rrrrr}
+%0.0038 & 0.0010 & -0.0002 & -0.0000 & 0.0003 \\
+%0.0010 & 0.0011 & 0.0002 & -0.0000 & -0.0006 \\
+%-0.0002 & 0.0002 & 0.0004 & 0.0000 & -0.0002 \\
+%-0.0000 & -0.0000 & 0.0000 & 0.0002 & 0.0002 \\
+%0.0003 & -0.0006 & -0.0002 & 0.0002 & 0.0020
+%\end{array}
+% \end{pmatrix} \text{mag}^2.
+% \label{mag_cov:eqn}
+% \end{equation}
+%The average correlation matrix is
+%\begin{equation}
+%Cor(U,B,V,R,I)=
+%\begin{pmatrix}
+%\begin{array}{rrrrr}
+%1.00 & 0.42 & -0.18 & -0.05 & 0.12 \\
+%0.42 & 1.00 & 0.26 & -0.09 & -0.39 \\
+%-0.18 & 0.26 & 1.00 & 0.09 & -0.22 \\
+%-0.05 & -0.09 & 0.09 & 1.00 & 0.27 \\
+%0.12 & -0.39 & -0.22 & 0.27 & 1.00
+%\end{array}
+% \end{pmatrix}.
+% \end{equation}
+%The  covariance of the colors $U-V$, $B-V$, $V-R$, and $V-I$ is
+%expressed as the standard deviations and
+%correlation matrix
+% \begin{equation}
+% \sigma(U-V, B-V, V-R, V-I)=
+% \begin{pmatrix}
+%0.068 & 0.034 & 0.023 & 0.053
+%  \end{pmatrix} \text{mag},
+% \label{color_sd:eqn}
+% \end{equation}
+% \begin{equation}
+% Cor(U-V, B-V, V-R, V-I)=
+%\begin{pmatrix}
+%\begin{array}{rrrr}
+%1.000 & 0.602 & -0.353 & -0.317 \\
+%0.602 & 1.000 & -0.197 & 0.082 \\
+%-0.353 & -0.197 & 1.000 & 0.647 \\
+%-0.317 & 0.082 & 0.647 & 1.000
+%\end{array}
+%\end{pmatrix}.
+%  \label{color_cor:eqn}
+% \end{equation}
 These color variances are smaller than those derived by \citet{2003A&A...404..901N} or \citet{2007ApJ...659..122J}, for cases where direct comparison can be made.
+\color{orange}
+%model11_rubin.py
+Having no intrinsic color dispersion is disfavored, and not allowing for them can have important consequences.  Running an analysis assuming no intrinsic dispersion (replacing the probabilistic intrinsic magnitudes in Eqn.~\ref{ewsiv:eqn}
+with a strict equality), we find significant shifts in the inferred slopes and smaller statistical uncertainties.
+\color{black}
 
 Each supernova is described by its parameters $EW_{Ca}$, $EW_{Si}$, $\lambda_{Si}$, $E_{\gamma^0}(B-V)=(\gamma^0_B-\gamma^0_V)k_0$, and
 $E_{\gamma^1}(B-V)=(\gamma^1_B-\gamma^1_V)k_1$, as well as its grey offset
@@ -1536,7 +1577,7 @@ c_I+\alpha_I EW_{Ca} + \beta_I EW_{Si}+ \eta_I \lambda_{Si} + \delta_I D
 \end{pmatrix}
 ,C_{c}
 \right)
-\label{ewsiv:eqn}
+\label{ewsiv2:eqn}
 \end{equation}
 \begin{equation}
 \begin{pmatrix}
@@ -1551,7 +1592,7 @@ EW_{Si}\\ EW_{Ca} \\ \lambda_{Si}
 \end{pmatrix}
 ,C
 \right).
-\label{dust:eqn}
+\label{dust2:eqn}
 \end{equation}
 In all aspects it is identical to the previous model except for the addition of the term $\delta D$,
 which affects the mean
@@ -1566,10 +1607,10 @@ color parameters, $(N-1)$ magnitude offsets,  $5 \times 7$ global coefficients, 
 $C_c$.  For $N=172$ supernovae, there are 1376 observables and 1242 top-level parameters.
 
 
-The $\delta D$ terms contribute to the mean of the Normal distribution in Eq.~\ref{ewsiv:eqn}, together with the spectral-feature terms:
+The $\delta D$ terms contribute to the mean of the Normal distribution in Eq.~\ref{ewsiv2:eqn}, together with the spectral-feature terms:
 it is for this reason that for convenience these terms are referred to as ``intrinsic''.
 However, we emphasize now that we have also run the alternative case  of switching the placement of the
-$\delta D$ terms from Eq.~\ref{ewsiv:eqn} to Eq.~\ref{dust:eqn}, i.e.\ from intrinsic to extrinsic contributions.
+$\delta D$ terms from Eq.~\ref{ewsiv2:eqn} to Eq.~\ref{dust2:eqn}, i.e.\ from intrinsic to extrinsic contributions.
 Analyses of the two different models give practically identical results, meaning that data are not constraining enough
 to identify $\delta D$ as being physically intrinsic or extrinsic.
 
