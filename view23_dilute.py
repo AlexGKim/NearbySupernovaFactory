@@ -20,7 +20,7 @@ f = open('temp23_dilute0.pkl','rb')
 mega = numpy.array([fit['c'],fit['alpha'],fit['beta'],fit['eta'],fit['gamma'],fit['gamma1'],fit['rho1'],fit['L_sigma']])
 
 print mega.shape
-for index in xrange(1,4):
+for index in xrange(1,10):
     f = open('temp23_dilute{}.pkl'.format(index),'rb')
     (fit,_) = pickle.load(f)
     mega_ = numpy.array([fit['c'],fit['alpha'],fit['beta'],fit['eta'],fit['gamma'],fit['gamma1'],fit['rho1'],fit['L_sigma']])

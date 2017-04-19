@@ -7,7 +7,7 @@ import pystan
 import sivel
 
 # two color parameter model
-for index in xrange(4):
+for index in xrange(10):
    pkl_file = open('simdata{}.pkl'.format(index), 'r')
    data = pickle.load(pkl_file)
    pkl_file.close()

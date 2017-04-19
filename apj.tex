@@ -657,17 +657,6 @@ We impose
 These conditions specify the definition of absolute magnitude and zero color relative to which the color excess is measured:
 in a linear model these values are arbitrary.
 \color{orange}
-As a technical aside whose effect will be noted later, we highlight a choice of model parameterization that enables the efficient evaluation of the
-posterior by the software package
-STAN \citep{stan}.  Given $N$ supernovae, each of the above conditions reduce the number of degrees of freedom by one,
-for example  the $N$ $\Delta$ values are specified by $N-1$ independent parameters. 
-Our implementations
-with $N-1$ independent parameters do not converge efficiently, presumably because the highly correlated parameters result in
-no single ``mass'' in the Hamiltonian Monte Carlo being appropriate over the full parameter space.  
-Based on the recommendation in the STAN User's Guide
-and reinforced by our own experience, each of the above vectors is described by $N$ parameters.  While this introduces an unconstrained
-degree of freedom, it improves the efficiency in evaluating the posterior in the other parameters of interest.
-
 We impose 
 \begin{equation}
 \gamma^0_U > 0, \gamma^1_U < 0.
@@ -1401,9 +1390,6 @@ for the distribution of dust extinction the SN population is expected to suffer.
 Figure~\ref{k0_med:fig} also shows the distribution of $\gamma^1_V k_1$, which can be attributed to 
 extinction corrections due to deviations away from the canonical $\kappa_1$ value.   The distribution has a long
 negative tail and is peaked at its positive edge, and by construction has a mean of zero.
-\color{orange}
-Note that the extreme outlier has large uncertainties, and is a manifestation of the unconstrained degree of freedom in this parameter set.
-\color{black}
 The implication is that while the bulk of supernovae have positive values associated with $R>1/\kappa_1$, there is a tail
 of negative values associated with $R<1/\kappa_1$.  The plot of   $\gamma^0_V k_0$ versus $\gamma^1_V k_1$  shown in Figure~\ref{kk:fig} shows that
 the positive edge in $\gamma^1_V k_1$ persists over the full range of  $\gamma^0_V k_0$
@@ -2412,13 +2398,14 @@ This host-mass bias could be the result of a parameter that was not accounted fo
 \citet{2016arXiv160904470M} find that when introducing intrinsic color scatter as a latent parameter, the null mass-step effect falls on the 95\%-level of their posterior.
 To explore whether the Hubble residual may be due to unaccounted color,
 we plot in Figure~\ref{childress:fig} our intrinsic parameter  $A_{\delta I}$  versus host mass 
-\citep{2016rigault}, and their ideograms for two samples divided at host mass of  $\log{(M/M_\sun)}=10$
-as in  \citet{2013ApJ...770..108C}.
+\color{orange}
+for the subset of supernovae whose hosts are given in \citet{2013ApJ...770..108C}.
+Also plotted  are ideograms of $A_{\delta I}$ for the two subsamples obtained by dividing the full sample at a host mass of  $\log{(M/M_\sun)}=10$.
 Although by eye it appears that the high-mass hosts tend the have lower $A_{\delta I}$, the difference is
 not significant; we calculate  average
 %---
-$\langle A_{\delta I} \rangle=    -0.0026 \pm    0.0010$,
-$\langle A_{\delta I} \rangle=  -0.0037 \pm    0.0010 $ 
+$\langle A_{\delta I} \rangle=   -0.0026 \pm    0.0014$,
+$\langle A_{\delta I} \rangle=-0.0035 \pm    0.0010$ 
 for low- and high-mass hosts respectively. 
 Using the SNfactory sample,
 \citet{2013A&A...560A..66R,2017Rigault} find that a step in Hubble residuals is better related to local star formation rate, rather than
@@ -2426,15 +2413,15 @@ global host mass.
 
 \begin{figure}[htbp] %  figure placement: here, top, bottom, or page
    \centering
-   \includegraphics[width=2.8in]{output23/rigault3.pdf}
-s     \includegraphics[width=2.8in]{output23/rigault2.pdf}
+   \includegraphics[width=2.8in]{output23/childress.pdf}
+s     \includegraphics[width=2.8in]{output23/childress2.pdf}
       \caption{Left: Intrinsic parameter $A_{\delta I}=\delta_I D$  versus host galaxy mass. Overplotted are the mean and 1$\sigma$ values for supernovae with hosts
       less than and greater than  $\log{(M/M_\sun)}=10$.
-Right: Ideograms of  $A_{\delta I}$ for supernovae in $\log{(M/M_\sun)}<10$ and $\log{(M/M_\sun)}>10$ hosts. 
+Right: Normalized ideograms of  $A_{\delta I}$ for supernovae in $\log{(M/M_\sun)}<10$ and $\log{(M/M_\sun)}>10$ hosts. 
    \label{childress:fig}}
 \end{figure}
 
-
+\color{black}
 \subsection{Physical Motivation}
 
 Our third supernova parameter does not have a monotonic influence on supernova magnitudes as a function

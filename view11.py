@@ -80,6 +80,15 @@ EW_obs=EW_obs[use]
 mag_obs=mag_obs[use]
 EW_cov= EW_cov[use]
 mag_cov=mag_cov[use]
+snname=numpy.array(data['snlist'])[use]
+
+dic_meta=cPickle.load(open("META.pkl"))
+dic_meta['PTF12efn']={'host.zhelio':0.06194}
+# dic_meta['PTF12efn']['host.zhelio']=0.06194
+zhelio=[]
+for nm in snname:
+    zhelio.append(dic_meta[nm]['host.zhelio'])
+zhelio=numpy.array(zhelio)
 
 EW_mn = EW_obs.mean(axis=0)
 EW_renorm = (EW_obs - EW_mn)
@@ -100,7 +109,6 @@ color_obs[:,3] = mag_renorm[:,4]- mag_renorm[:,2]
 EW_cov = data['cov'][:,0:2,0:2]
 mag_cov = data['cov'][:,2:,2:]
 
-pkl_file.close()
 
 trans = [[1.,0,-1,0,0],[0.,1,-1,0,0],[0.,0,1,-1,0],[0.,0,1,0,-1]]
 trans = numpy.array(trans)
@@ -148,7 +156,7 @@ plt.close()
 bins=numpy.arange(-0.3,1,0.05)
 plt.hist(numpy.median((fit['gamma'][:,2])[:,None]*fit['k'],axis=0),bins,label='median',normed=True,alpha=0.5,width=0.02)
 plt.hist(((fit['gamma'][:,2])[:,None]*fit['k']).flatten(),bins,label='ideogram',normed=True,alpha=0.5)
-plt.xlabel(r'$\gamma^0_2 k_0$')
+plt.xlabel(r'$\gamma^0_2 k_0 \approx A^F_V|_{R^F=2.44}$')
 plt.legend()
 plt.tight_layout()
 pp = PdfPages('output11/gamma0_med.pdf')
@@ -172,7 +180,7 @@ plt.close()
 (y, ymin, ymax) = numpy.percentile(fit['rho1'][:,2][:,None]*fit['R'],(50,50-34,50+34),axis=0)
 plt.errorbar(x, y, xerr=[x-xmin,xmax-x],yerr=[y-ymin,ymax-ymin],fmt='o',alpha=0.2)
 plt.scatter(x, y, s=1,alpha=0.8)
-plt.xlabel(r'$\gamma^0_V k_0$')
+plt.xlabel(r'$\gamma^0_V k_0 \approx A^F_V|_{R^F=2.44}$')
 plt.ylabel(r'$\gamma^1_V k_1$')
 pp = PdfPages("output11/kk.pdf")
 plt.tight_layout()
@@ -454,6 +462,22 @@ plt.savefig(pp,format='pdf')
 pp.close()
 plt.close()
 
+fig, axes = plt.subplots()
+# import matplotlib.pyplot
+# matplotlib.pyplot.rcdefaults()
+# dmean = fit['Delta'].mean()
+x, xmin, xmax = numpy.percentile(fit['Delta'],(50, 50-34,50+34),axis=0)
+dum = x>0.3
+print zhelio[dum],x[dum],snname[dum]
+plt.errorbar(zhelio,x,yerr=(x-xmin,xmax-x),fmt='o')
+plt.ylabel(r'$\Delta$')
+plt.xlabel(r'$z_{\odot}$')
+pp = PdfPages('output11/Delta_vs_z.pdf')
+plt.savefig(pp,format='pdf')
+pp.close()
+plt.close()
+
+wefwe
 
 fig, axes = plt.subplots()
 plt.hist(numpy.median(fit['Delta'],axis=0),bins=20)
