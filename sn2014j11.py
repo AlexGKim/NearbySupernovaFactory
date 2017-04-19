@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 from matplotlib.backends.backend_pdf import PdfPages
 from matplotlib import rc
 import pickle
-
+import f99_band
 import matplotlib as mpl
 mpl.rcParams['font.size'] = 16
 
@@ -66,22 +66,34 @@ print '${0[0]:6.2f}$, ${0[1]:6.2f}$'.format(ans)
 print " \\\\\n".join([" & ".join(map('{0:.3f}'.format, line)) for line in u])
 
 
+# in fundamental units
+tvec = [numpy.median(fit['gamma'][:,1]/fit['gamma'][:,2]-1,axis=0),numpy.median(fit['rho1'][:,1]/fit['rho1'][:,2]-1,axis=0)]
+Egamma = ans* tvec
+ugamma=u*numpy.outer(tvec,tvec)
+# print numpy.outer(tvec,tvec)
+# print Egamma
+# print ugamma
+
+
 fiterr = numpy.sqrt(gammam1**2 * u[0,0] + 2*deltam1*gammam1*u[0,1] + deltam1**2 * u[1,1])
 ebvext= gammam1[1]*ans[0]
 ebvint = deltam1[1]*ans[1]
-print "$E(B-V)={:6.2f} \\pm {:6.2f}$, $E_\delta(B-V)={:6.2f} \\pm {:6.2f}$".format(ebvext,numpy.sqrt(u[0,0])*gammam1[1], ebvint,numpy.sqrt(u[1,1])*numpy.abs(deltam1[1]))
+# print "$E(B-V)={:6.2f} \\pm {:6.2f}$, $E_\delta(B-V)={:6.2f} \\pm {:6.2f}$".format(ebvext,numpy.sqrt(u[0,0])*gammam1[1], ebvint,numpy.sqrt(u[1,1])*numpy.abs(deltam1[1]))
 
 
 dum = numpy.percentile((fit['gamma'][:,1]-fit['gamma'][:,2])[:,None]*fit['k'],(50,50-34,50+34),axis=0)
 imax = numpy.argmin(dum,axis=1)[0]
-print '${:6.2f}^{{{:6.2f}}}_{{{:6.2f}}}$'.format(dum[0][imax],dum[2][imax]-dum[0][imax],dum[1][imax]-dum[0][imax])
+# print '${:6.2f}^{{{:6.2f}}}_{{{:6.2f}}}$'.format(dum[0][imax],dum[2][imax]-dum[0][imax],dum[1][imax]-dum[0][imax])
 imax = numpy.argmax(dum,axis=1)[0]
-print '${:6.2f}^{{{:6.2f}}}_{{{:6.2f}}}$'.format(dum[0][imax],dum[2][imax]-dum[0][imax],dum[1][imax]-dum[0][imax])
+# print '${:6.2f}^{{{:6.2f}}}_{{{:6.2f}}}$'.format(dum[0][imax],dum[2][imax]-dum[0][imax],dum[1][imax]-dum[0][imax])
 dum = numpy.percentile((fit['rho1'][:,1]-fit['rho1'][:,2])[:,None]*fit['R'],(50,50-34,50+34),axis=0)
 imax = numpy.argmin(dum,axis=1)[0]
-print '${:6.2f}^{{{:6.2f}}}_{{{:6.2f}}}$'.format(dum[0][imax],dum[2][imax]-dum[0][imax],dum[1][imax]-dum[0][imax])
+# print '${:6.2f}^{{{:6.2f}}}_{{{:6.2f}}}$'.format(dum[0][imax],dum[2][imax]-dum[0][imax],dum[1][imax]-dum[0][imax])
 imax = numpy.argmax(dum,axis=1)[0]
-print '${:6.2f}^{{{:6.2f}}}_{{{:6.2f}}}$'.format(dum[0][imax],dum[2][imax]-dum[0][imax],dum[1][imax]-dum[0][imax])
+# print '${:6.2f}^{{{:6.2f}}}_{{{:6.2f}}}$'.format(dum[0][imax],dum[2][imax]-dum[0][imax],dum[1][imax]-dum[0][imax])
+
+
+
 
 import sncosmo
 # def lnprob(p, x, y ,yerr):
@@ -152,3 +164,67 @@ plt.tight_layout()
 
 pp.close()
 plt.close()
+
+# Partial derivatives with respect to av and ebv
+av=0.1
+ebv=0.1/2.5
+A1= f99_band.A_X(r_v=av/ebv, ebv=ebv)
+A2= f99_band.A_X(r_v=(av+0.01)/ebv, ebv=ebv)
+dAdAv = (A2 - A1)/0.01
+
+A3= f99_band.A_X(r_v=av/(ebv+0.001), ebv=ebv+0.001)
+dAdebv = (A3 - A1)/0.001
+
+# print '{0[0]:6.2f}, {0[1]:6.2f}, {0[2]:6.2f}, {0[3]:6.2f}, {0[4]:6.2f}'.format(dAdAv)
+# print '{0[0]:6.2f}, {0[1]:6.2f}, {0[2]:6.2f}, {0[3]:6.2f}, {0[4]:6.2f}'.format(dAdebv)
+
+
+# The equation of interest is
+# gammma0 = ans00 F0 + ans01 F1 + res
+# gammma0 = ans10 F0 + ans11 F1 + res
+# where F are the Fitzpatrick vectors (partial derivatives above) and
+# the residues are perpendicular to a and b
+# Note that the gammas are really gamma_X/(gamma_B-gamma_V)
+
+norm_dAdebv = numpy.dot(dAdebv, dAdebv)
+norm_dAdAv = numpy.dot(dAdAv, dAdAv)
+cross = numpy.dot(dAdebv, dAdAv)
+
+a = numpy.array([[norm_dAdebv,cross],[cross,norm_dAdAv]])
+
+tmat = []
+res = []
+c_n = []
+cs = []
+for s in ['gamma','rho1']:
+  c, cmin, cmax = numpy.percentile(fit[s]/((fit[s][:,1]-fit[s][:,2])[:,None]),(50,50-34,50+34),axis=0)
+  # print "{:6.2f}, {:6.2f}, {:6.2f}, {:6.2f}, {:6.2f}".format(c[0],c[1],c[2],c[3],c[4])
+  cs.append(c)
+  c_norm = numpy.linalg.norm(c)
+  c_n.append(c_norm)
+
+  y = numpy.array([numpy.dot(c,dAdebv),numpy.dot(c,dAdAv)])
+  ans = numpy.linalg.solve(a,y)
+
+  tmat.append(ans)
+  ans = c-ans[0]*dAdebv - ans[1]*dAdAv
+  res.append(ans)
+
+tmat = numpy.array(tmat)
+res= numpy.array(res)
+
+#print the matrix and the residues
+
+print numpy.dot(tmat.T,Egamma)
+
+newmat=numpy.array(tmat)
+newmat[:]=0
+for i in xrange(2):
+  for j in xrange(i,2):
+    for k in xrange(2):
+      for l in xrange(2):
+        # print i, j ,k,l,tmat.T[i,k],tmat.T[j,l]
+        newmat[i,j]= newmat[i,j]+tmat.T[i,k]*tmat.T[j,l]*ugamma[k,l]
+    newmat[j,i]=newmat[i,j]
+print " \\\\\n".join([" & ".join(map('{0:.3f}'.format, line)) for line in newmat])
+

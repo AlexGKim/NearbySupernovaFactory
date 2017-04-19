@@ -970,9 +970,8 @@ $0.10$
 %-----
 mag, and a broad tail in the positive (fainter) direction. 
 \color{orange}
-We remind the reader that in our construction of the model, the $\Delta$'s have one extra unconstrained degree of freedom.
-The effect of this degree of freedom can be discerned in the overplotted ideogram, which shows the large uncertainties associated 
-with the $\Delta$'s in the tail of the distribution.
+Of the three extreme outliers, the supernovae with largest and third largest $\Delta$'s have  heliocentric redshifts of 
+ $0.0015$ and $0.0085$ respectively, and so have peculiar velocities that can contribute significantly to $\Delta$.
 \color{black}
 \begin{figure}[htbp] %  figure placement: here, top, bottom, or page
    \centering
@@ -1105,12 +1104,12 @@ The Pearson correlation coefficients for $\Delta$, $EW_{Ca}$, $EW_{Si}$, $\lambd
 Cor(\Delta, EW_{Ca}, EW_{Si}, \lambda_{Si}, E_{\gamma^0}(B-V), E_{\gamma^1}(B-V)) =\\
 \begin{pmatrix}
 \begin{array}{rrrrrr}
-1.00 & 0.00^{+0.06}_{-0.06} & -0.07^{+0.07}_{-0.06} & -0.04^{+0.06}_{-0.06} & 0.10^{+0.07}_{-0.07} & -0.00^{+0.08}_{-0.07} \\
-0.00^{+0.06}_{-0.06} & 1.00 & 0.10^{+0.03}_{-0.03} & -0.26^{+0.03}_{-0.03} & -0.07^{+0.06}_{-0.06} & -0.01^{+0.08}_{-0.08} \\
--0.07^{+0.07}_{-0.06} & 0.10^{+0.03}_{-0.03} & 1.00 & -0.14^{+0.04}_{-0.03} & -0.17^{+0.05}_{-0.05} & -0.04^{+0.08}_{-0.07} \\
--0.04^{+0.06}_{-0.06} & -0.26^{+0.03}_{-0.03} & -0.14^{+0.04}_{-0.03} & 1.00 & 0.03^{+0.05}_{-0.06} & 0.03^{+0.08}_{-0.08} \\
-0.10^{+0.07}_{-0.07} & -0.07^{+0.06}_{-0.06} & -0.17^{+0.05}_{-0.05} & 0.03^{+0.05}_{-0.06} & 1.00 & 0.06^{+0.08}_{-0.08} \\
--0.00^{+0.08}_{-0.07} & -0.01^{+0.08}_{-0.08} & -0.04^{+0.08}_{-0.07} & 0.03^{+0.08}_{-0.08} & 0.06^{+0.08}_{-0.08} & 1.00 \\
+1 & 0.00^{+0.06}_{-0.06} & -0.07^{+0.07}_{-0.06} & -0.04^{+0.06}_{-0.06} & 0.10^{+0.07}_{-0.07} & -0.00^{+0.08}_{-0.07} \\
+0.00^{+0.06}_{-0.06} & 1 & 0.10^{+0.03}_{-0.03} & -0.26^{+0.03}_{-0.03} & -0.07^{+0.06}_{-0.06} & -0.01^{+0.08}_{-0.08} \\
+-0.07^{+0.07}_{-0.06} & 0.10^{+0.03}_{-0.03} & 1 & -0.14^{+0.04}_{-0.03} & -0.17^{+0.05}_{-0.05} & -0.04^{+0.08}_{-0.07} \\
+-0.04^{+0.06}_{-0.06} & -0.26^{+0.03}_{-0.03} & -0.14^{+0.04}_{-0.03} & 1 & 0.03^{+0.05}_{-0.06} & 0.03^{+0.08}_{-0.08} \\
+0.10^{+0.07}_{-0.07} & -0.07^{+0.06}_{-0.06} & -0.17^{+0.05}_{-0.05} & 0.03^{+0.05}_{-0.06} & 1 & 0.06^{+0.08}_{-0.08} \\
+-0.00^{+0.08}_{-0.07} & -0.01^{+0.08}_{-0.08} & -0.04^{+0.08}_{-0.07} & 0.03^{+0.08}_{-0.08} & 0.06^{+0.08}_{-0.08} & 1 \\
 \end{array}
 \end{pmatrix}.
 \end{multline}
@@ -1531,6 +1530,20 @@ use
 UV through NIR data to fit \citet{1999PASP..111...63F} dust with $R_V^F=1.4$ and $E(B-V)=1.37$.
 Our model predictions provide a significantly better match to the data
 despite the only approximate correspondence of the synthetic SNfactory and \citet{2014ApJ...788L..21A} observer passbands.
+
+\color{orange}
+Our model and its fit parameters can be associated with the extinction model of  \citetalias{1999PASP..111...63F} using Eqn.\ref{trans_I:eqn}
+and the assumption that  SN~2011fe has zero extinction.  The inferred  \citetalias{1999PASP..111...63F} parameters
+are $A^F_V=1.28$ and $E^F(B-V)=0.77$ (which together imply $R^F=1.66$) with covariance
+\begin{equation}
+\begin{pmatrix}
+\begin{array}{rr}
+0.007 & -0.004 \\
+-0.004 & 0.430
+\end{array}
+\end{pmatrix}.
+\end{equation}
+\color{black}
 
 
 In the fit to our model, the observed color excess is attributed to 
