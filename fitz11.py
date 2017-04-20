@@ -117,7 +117,7 @@ print res
 
 
 kappa1 = tmat[0,1]/tmat[0,0]
-kappa2 = tmat[1,1]/tmat[1,0]
+kappa2 = tmat[1,0]/tmat[1,1]
 
 
 # The matrix to transform the per-SN parameters from gamma to fitzpatrick
@@ -144,7 +144,7 @@ dum  = numpy.sqrt(crap[0]**2+crap[2]**2+crap[4]**2)
 ax.plot([0,crap[0]/dum],[0,crap[2]/dum],[0,crap[4]/dum],label=r'$a(X)+b(X)/{:4.2f}$'.format(1/kappa1),ls=':')
 crap = kappa2*dAdAv + dAdebv
 dum  = numpy.sqrt(crap[0]**2+crap[2]**2+crap[4]**2)
-ax.plot([0,crap[0]/dum],[0,crap[2]/dum],[0,crap[4]/dum],label=r'${:4.2f}a(X)+b(X)$'.format(1/kappa2),ls=':',color='black')
+ax.plot([0,crap[0]/dum],[0,crap[2]/dum],[0,crap[4]/dum],label=r'${:4.2f}a(X)+b(X)$'.format(kappa2),ls=':',color='black')
 
 # crap = -16*dAdAv - dAdebv
 # dum  = numpy.sqrt(crap[0]**2+crap[2]**2+crap[4]**2)
@@ -197,7 +197,7 @@ dum  = numpy.sqrt(crap[1]**2+crap[2]**2+crap[3]**2)
 ax.plot([0,crap[1]/dum],[0,crap[2]/dum],[0,crap[3]/dum],label=r'$a(X)+b(X)/{:4.2f}$'.format(1/kappa1),ls=':')
 crap = kappa2*dAdAv + dAdebv
 dum  = numpy.sqrt(crap[1]**2+crap[2]**2+crap[3]**2)
-ax.plot([0,crap[1]/dum],[0,crap[2]/dum],[0,crap[3]/dum],label=r'${:4.2f}a(X)+b(X)$'.format(1/kappa2),ls=':',color='black')
+ax.plot([0,crap[1]/dum],[0,crap[2]/dum],[0,crap[3]/dum],label=r'${:4.2f}a(X)+b(X)$'.format(kappa2),ls=':',color='black')
 #crap = dAdebv
 #ax.plot([0,crap[1]/dum],[0,crap[2]/dum],[0,crap[3]/dum],label=r'$b(X)$',ls=':')
 ax.legend(prop={'size':14})
