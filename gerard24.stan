@@ -31,8 +31,8 @@ transformed data {
 
 parameters {
   vector[5] c_raw;
-  # vector[5] alpha_raw;
-  # vector[5] beta_raw;
+  vector[5] alpha_raw;
+  vector[5] beta_raw;
   vector<lower=0.0>[N_mags] L_sigma_raw;
   vector[5] eta_raw;
 
@@ -57,7 +57,7 @@ parameters {
   real <lower=0> Delta_scale;
   cholesky_factor_corr[N_mags] L_Omega;
 
-  # vector[2] EW[D];
+  vector[2] EW[D];
   vector[D] sivel;
   vector[N_mags] mag_int_raw[D];
 
@@ -71,8 +71,8 @@ parameters {
 
 transformed parameters {
   vector[5] c;
-  # vector[5] alpha;
-  # vector[5] beta;
+  vector[5] alpha;
+  vector[5] beta;
   vector[5] eta;
   vector[N_mags] L_sigma;
 
@@ -87,8 +87,8 @@ transformed parameters {
 
 
   c = c_raw/1e2;
-  # alpha = alpha_raw/5e2;
-  # beta = beta_raw/2e2;
+  alpha = alpha_raw/5e2;
+  beta = beta_raw/2e2;
   eta = eta_raw/6e2;
   L_sigma = L_sigma_raw/100.;
   
@@ -121,6 +121,7 @@ transformed parameters {
     vector[5] ev3;
     real dp;
 
+    # vector in 5th direction perpendicular to gamma plane
     for (d in 1:5){
       A[d,1] = gamma[d];
       A[d,2] = gamma1[d];
@@ -138,6 +139,7 @@ transformed parameters {
     }
     ev3 = ev3/sqrt(sum(ev3 .* ev3));
 
+    # vector in 1rd direction perpendicular to gamma-ev3 plane
     for (d in 1:5){
       A2[d,1] = gamma[d];
       A2[d,2] = gamma1[d];
@@ -155,6 +157,7 @@ transformed parameters {
     }
     ev1 = ev1/sqrt(sum(ev1 .* ev1));
 
+    # The remaining eigenvector
     for (d in 1:5){
       A3[d,1] = gamma[d];
       A3[d,2] = gamma1[d];
@@ -166,8 +169,9 @@ transformed parameters {
     for(d2 in 1:5){
       ev2[d2] = Q[5,d2];
     }
-    dp = dot_product(ev2, e3);
-    ev2 = dp/fabs(dp) * ev2;
+
+    # dp = dot_product(ev2, e3);
+    # ev2 = dp/fabs(dp) * ev2;
 
     # print(dot_product(gamma,ev1)," ",dot_product(gamma1,ev1));
     # print(dot_product(gamma,ev2)," ",dot_product(gamma1,ev2));
@@ -183,7 +187,7 @@ transformed parameters {
     matrix[5,5] L_Sigma;
     L_Sigma = diag_pre_multiply(L_sigma, L_Omega);
     for (d in 1:D) {
-      mag_int[d] = Delta[d] + c+ rho1*R[d]  + eta*sivel[d] + L_Sigma * mag_int_raw[d];
+      mag_int[d] = Delta[d] + c+ alpha*EW[d,1]  + beta*EW[d,2]  + rho1*R[d]  + eta*sivel[d] + L_Sigma * mag_int_raw[d];
     }
   }
 }
@@ -195,8 +199,8 @@ model {
   for (d in 1:D) {
     target += normal_lpdf(mag_int_raw[d]| 0, 1);
     target += multi_normal_lpdf(mag_obs[d] | mag_int[d]+gamma*k[d]+gamma1*k1[d], mag_cov[d]);
-    # target += multi_normal_lpdf(EW_obs[d] | EW[d], EW_cov[d]);
+    target += multi_normal_lpdf(EW_obs[d] | EW[d], EW_cov[d]);
   }
   target += (normal_lpdf(sivel_obs | sivel,sivel_err));
-  target += uniform_lpdf(rho1[5] | 0, 100);
+  # target += uniform_lpdf(rho1[5] | 0, 100);
 }
