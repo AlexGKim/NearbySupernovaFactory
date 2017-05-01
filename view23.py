@@ -474,15 +474,22 @@ plt.close()
 
 # plt.hist([(fit['gamma'][:,1]-fit['gamma'][:,2])[:,None]*fit['k'], (fit['gamma1'][:,1]-fit['gamma1'][:,2])[:,None]*fit['k1'], (fit['rho1'][:,1]-fit['rho1'][:,2])[:,None]*fit['R']],normed=True,bins=20,
 #     label=[r'$E_\gamma(B-V)$',r'$E_{\gamma_1}(B-V)$',r'$E_\delta(B-V)$'],range=(-0.1,0.4))
-plt.hist([(fit['gamma'][:,1]-fit['gamma'][:,2])[:,None]*fit['k'] + 
-  (fit['gamma1'][:,1]-fit['gamma1'][:,2])[:,None]*fit['k1'], (fit['rho1'][:,1]-fit['rho1'][:,2])[:,None]*fit['R']],normed=True,bins=20,
+dustebv = (fit['gamma'][:,1]-fit['gamma'][:,2])[:,None]*fit['k'] + (fit['gamma1'][:,1]-fit['gamma1'][:,2])[:,None]*fit['k1']
+extebv = (fit['rho1'][:,1]-fit['rho1'][:,2])[:,None]*fit['R']
+dustebv = dustebv-dustebv[:,0][:,None]
+extebv = extebv-extebv[:,0][:,None]
+plt.hist([dustebv, extebv],normed=True,bins=20,
   label=[r'$E(B-V)$',r'$E_\delta(B-V)$'])
+# plt.hist([(fit['gamma'][:,1]-fit['gamma'][:,2])[:,None]*fit['k'] + 
+#   (fit['gamma1'][:,1]-fit['gamma1'][:,2])[:,None]*fit['k1'], (fit['rho1'][:,1]-fit['rho1'][:,2])[:,None]*fit['R']],normed=True,bins=20,
+#   label=[r'$E(B-V)$',r'$E_\delta(B-V)$'])
 plt.xlabel(r'$E(B-V)$',fontsize=20)
 plt.legend()
 pp = PdfPages('output23/ebv.pdf')
 plt.savefig(pp,format='pdf')
 pp.close()
 plt.close()
+
 
 plt.hist([(fit['gamma'][:,1]-fit['gamma'][:,2])[:,None]*fit['k'] ,
   (fit['gamma1'][:,1]-fit['gamma1'][:,2])[:,None]*fit['k1']],normed=True,bins=20,
@@ -504,23 +511,34 @@ pp.close()
 plt.close()
 
 
-bins = numpy.arange(-0.02,0.0201,0.001)
+bins = numpy.arange(-0.015,0.0151,0.001)
 # plt.hist(fit['Delta'].flatten(),bins,label='ideogram',normed=True,alpha=0.5)
 # plt.hist(numpy.median(fit['Delta'],axis=0),bins,label='median',normed=True,alpha=0.5,width=0.01)
 # plt.legend()
 
 
-plt.hist( ((fit['rho1'][:,1]-fit['rho1'][:,2])[:,None]*fit['R']).flatten(),normed=True,bins=bins,alpha=0.5,
+plt.hist( extebv.flatten(),normed=True,bins=bins,alpha=0.5,
   label='ideogram')
-plt.hist( numpy.median((fit['rho1'][:,1]-fit['rho1'][:,2])[:,None]*fit['R'],axis=0),normed=True,bins=bins,alpha=0.5,width=0.0005,
+plt.hist( numpy.median(extebv,axis=0),normed=True,bins=bins,alpha=0.5,width=0.0005,
   label='median')
 plt.xlabel(r'$E_\delta(B-V)$',fontsize=20)
-plt.xlim((-.02,.02))
+plt.xlim((-.015,.015))
 plt.legend()
 pp = PdfPages('output23/ebv_delta.pdf')
 plt.savefig(pp,format='pdf')
 pp.close()
 plt.close()
+
+
+plt.hist(numpy.median(extebv[:,1:],axis=0)/numpy.std(extebv[:,1:],axis=0),normed=True,bins=20)
+plt.xlabel(r'pull $E_\delta(B-V)$',fontsize=20)
+# plt.xlim((-.015,.015))
+plt.legend()
+pp = PdfPages('output23/ebv_delta_pull.pdf')
+plt.savefig(pp,format='pdf')
+pp.close()
+plt.close()
+# print snnames[numpy.median(extebv,axis=0)/numpy.std(extebv,axis=0) < -0.4]
 
 
 # au = fit['gamma'][:,0][:,None]*fit['k'] + fit['rho1'][:,0][:,None]*fit['R']+0.16
@@ -709,6 +727,15 @@ plt.savefig(pp,format='pdf')
 pp.close()
 plt.close()
 
+
+figure = corner.corner(fit['rho1']/numpy.linalg.norm(fit['rho1'],axis=1)[:,None],labels=[r"${\delta}_{U}$",r"${\delta}_{B}$",r"${\delta}_{V}$",r"${\delta}_{R}$",r"${\delta}_{I}$"],\
+  truths=[0,0,0,0,0])
+pp = PdfPages('output23/delta_unit_corner.pdf')
+plt.tight_layout()
+plt.savefig(pp,format='pdf')
+pp.close()
+plt.close()
+
 dum = (fit['rho1']-fit['rho1'][:,2][:,None])/((fit['rho1'][:,0]-fit['rho1'][:,1])[:,None])
 dum = numpy.delete(dum,2,axis=1)
 figure = corner.corner(dum,range=((0,2),(-1,1),(-0.5,1.5),(0,2)))
@@ -722,12 +749,12 @@ plt.close()
 
 figure = corner.corner(fit['rho1'][:,:-1]/fit['rho1'][:,-1][:,None],labels=[r"${\delta}_{0}/{\delta}_{4}$",r"${\delta}_{1}/{\delta}_{4}$",\
   r"${\delta}_{2}/{\delta}_{4}$",r"${\delta}_{3}/{\delta}_{4}$"], \
-  range=[[-4,4] for x in xrange(4)])
+  range=[[-1.5,2.5],[-2.5,1.5],[-2.5,1.5],[-2,2]])
 pp = PdfPages('output23/deltaratio_corner.pdf')
 plt.savefig(pp,format='pdf')
 pp.close()
 plt.close()
-
+fewfe
 # mega = fit['gamma']/((fit['gamma'][:,1]-fit['gamma'][:,2]))[:,None]
 
 # mega = mega-mega[:,2][:,None]
