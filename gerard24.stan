@@ -12,21 +12,10 @@ data {
   matrix[N_EWs, N_EWs] EW_cov[D];
   vector[D] sivel_obs;
   vector[D] sivel_err;
-}
 
-transformed data {
   unit_vector[5] e1;
+  unit_vector[5] e2;
   unit_vector[5] e3;
-  unit_vector[5] e5;
-
-  for (d in 1:5){
-    e1[d]=0;
-    e3[d]=0;
-    e5[d]=0;
-  }
-  e1[1]=1;
-  e3[3]=1;
-  e5[5]=1;
 }
 
 parameters {
@@ -121,7 +110,6 @@ transformed parameters {
     vector[5] ev3;
     real dp;
 
-    # vector in 5th direction perpendicular to gamma plane
     for (d in 1:5){
       A[d,1] = gamma[d];
       A[d,2] = gamma1[d];
@@ -130,16 +118,15 @@ transformed parameters {
     Q=qr_Q(A);
     Q=Q';
 
-    ev3 = e5;
+    ev3 = e1;
     for (d in 1:2){
-      dp = dot_product(Q[d],e5);
+      dp = dot_product(Q[d],e1);
       for(d2 in 1:5){
         ev3[d2] = ev3[d2] -  dp *Q[d,d2];
       }
     }
     ev3 = ev3/sqrt(sum(ev3 .* ev3));
 
-    # vector in 1rd direction perpendicular to gamma-ev3 plane
     for (d in 1:5){
       A2[d,1] = gamma[d];
       A2[d,2] = gamma1[d];
@@ -148,16 +135,15 @@ transformed parameters {
 
     Q=qr_Q(A2);
     Q=Q';
-    ev1=e1;
+    ev1=e2;
     for (d in 1:3){
-      dp = dot_product(Q[d],e1);
+      dp = dot_product(Q[d],e2);
       for(d2 in 1:5){
         ev1[d2] = ev1[d2] -  dp *Q[d,d2];
       }
     }
     ev1 = ev1/sqrt(sum(ev1 .* ev1));
 
-    # The remaining eigenvector
     for (d in 1:5){
       A3[d,1] = gamma[d];
       A3[d,2] = gamma1[d];
@@ -169,9 +155,8 @@ transformed parameters {
     for(d2 in 1:5){
       ev2[d2] = Q[5,d2];
     }
-
-    # dp = dot_product(ev2, e3);
-    # ev2 = dp/fabs(dp) * ev2;
+    dp = dot_product(ev2, e3);
+    ev2 = dp/fabs(dp) * ev2;
 
     # print(dot_product(gamma,ev1)," ",dot_product(gamma1,ev1));
     # print(dot_product(gamma,ev2)," ",dot_product(gamma1,ev2));
@@ -180,7 +165,7 @@ transformed parameters {
     rho1 = rho11*ev1 + rho12*ev2 + rho13*ev3;
   }
 
-  rho1 = rho1*5;
+  rho1 = -rho1*5;
 
     # non-centered parameterization
   {
@@ -202,5 +187,6 @@ model {
     target += multi_normal_lpdf(EW_obs[d] | EW[d], EW_cov[d]);
   }
   target += (normal_lpdf(sivel_obs | sivel,sivel_err));
-  # target += uniform_lpdf(rho1[5] | 0, 100);
+  target += uniform_lpdf(rho1[5] | 0, 100);
+  sum(R .* R) ~ cauchy(1e-3,0.5e-3);
 }

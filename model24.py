@@ -6,13 +6,30 @@ import numpy
 import pystan
 import sivel
 
+# provide stan 3 eigenvectors with respect to try to align delta vector
+f = open('temp11.pkl','rb')
+(fit,_) = pickle.load(f)
+
+gamma0 = numpy.median(fit['gamma'],axis=0)
+gamma1 = numpy.median(fit['rho1'],axis=0)
+fit=None
+
+m = numpy.zeros((2,5))
+m[0]=gamma0
+m[1]=gamma1
+m=m.T
+
+q, r = numpy.linalg.qr(m,mode='complete')
+q=q.T
+
 # two color parameter model
 
 pkl_file = open('gege_data.pkl', 'r')
 data = pickle.load(pkl_file)
 pkl_file.close()
 
-sivel, sivel_err,_,_ = sivel.sivel(data)
+sivel,sivel_err,x1,x1_err,zcmb,zerr = sivel.sivel(data)
+
 # dic_phreno=cPickle.load(open("phrenology_2016_12_01_CABALLOv1.pkl"))
 
 # dic_meta=cPickle.load(open("META.pkl"))
@@ -78,7 +95,7 @@ mag_renorm  = mag_obs-mag_mn
 sivel_mn = sivel.mean()
 sivel_renorm = sivel-sivel_mn
 data = {'D': nsne, 'N_mags': 5, 'N_EWs': 2, 'mag_obs': mag_renorm, 'EW_obs': EW_renorm, 'EW_cov': EW_cov, 'mag_cov':mag_cov, \
-   'sivel_obs': sivel_renorm, 'sivel_err': sivel_err}
+   'sivel_obs': sivel_renorm, 'sivel_err': sivel_err, 'e1': q[2], 'e2':q[3], 'e3':q[4]}
 
 Delta_simplex = numpy.zeros(nsne-1)
 # Delta_simplex = numpy.zeros(nsne)+1./nsne
@@ -89,8 +106,8 @@ R_simplex = R_simplex/R_simplex.sum()
 init = [{'EW' : EW_renorm, \
          'sivel': sivel_renorm,\
          'c_raw' : numpy.zeros(5), \
-         # 'alpha_raw' : numpy.zeros(5), \
-         # 'beta_raw' : numpy.zeros(5), \
+         'alpha_raw' : numpy.zeros(5), \
+         'beta_raw' : numpy.zeros(5), \
          'eta_raw' : numpy.zeros(5), \
          'L_sigma_raw': numpy.zeros(5)+0.03*100, \
          'gamma01': 61./5,\
