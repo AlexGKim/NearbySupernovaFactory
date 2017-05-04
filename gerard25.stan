@@ -17,19 +17,19 @@ data {
   unit_vector[5] e2;
   unit_vector[5] e3;
 
-  # vector[5] gamma0in;
-  # matrix[5,5] gamma0in_cov;
-  # vector[5] gamma1in;
-  # matrix[5,5] gamma1in_cov;
+  vector[5] gamma0in;
+  matrix[5,5] gamma0in_cov;
+  vector[5] gamma1in;
+  matrix[5,5] gamma1in_cov;
 }
 
-# transformed data{
-#   cholesky_factor_cov[5] L_gamma0;
-#   cholesky_factor_cov[5] L_gamma1;
-#   #make the prior 2x looser than the previous determination
-#   L_gamma0 = cholesky_decompose(4*gamma0in_cov);
-#   L_gamma1 = cholesky_decompose(4*gamma1in_cov);
-# }
+transformed data{
+  cholesky_factor_cov[5] L_gamma0;
+  cholesky_factor_cov[5] L_gamma1;
+  #make the prior 2x looser than the previous determination
+  L_gamma0 = cholesky_decompose(4*gamma0in_cov);
+  L_gamma1 = cholesky_decompose(4*gamma1in_cov);
+}
 
 parameters {
   vector[5] c_raw;
@@ -68,7 +68,8 @@ parameters {
   simplex[D] k_unit;
   simplex[D] k1_unit;
 
-  simplex[D] R_unit;
+  # simplex[D] R_unit;
+  vector<lower=-.1,upper=.1>[D] R_unit;
 }
 
 transformed parameters {
@@ -97,7 +98,8 @@ transformed parameters {
   Delta = 4.*Delta_scale*(Delta_unit-1./D);
   k=(k_unit-1./D);
   k1=(k1_unit-1./D);
-  R=(R_unit-1./D);
+  # R=(R_unit-1./D);
+  R = R_unit - mean(R_unit);
 
   gamma[1] = gamma01;
   gamma[2] = gamma02;
@@ -201,9 +203,9 @@ model {
     target += multi_normal_lpdf(EW_obs[d] | EW[d], EW_cov[d]);
   }
   target += (normal_lpdf(sivel_obs | sivel,sivel_err));
-  target += uniform_lpdf(rho11 | -10, 0);
+  # target += uniform_lpdf(rho11 | -10, 0);
   # target += uniform_lpdf(rho1[5] | 0, 100);
-  sum(R .* R) ~ cauchy(1e-3,0.5e-3);
-  # gamma ~ multi_normal_cholesky(gamma0in, L_gamma0);
-  # gamma1 ~ multi_normal_cholesky(gamma1in, L_gamma1);
+  sum(R .* R) ~ cauchy(5e-3,1.);
+  gamma ~ multi_normal_cholesky(gamma0in, L_gamma0);
+  gamma1 ~ multi_normal_cholesky(gamma1in, L_gamma1);
 }

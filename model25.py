@@ -12,8 +12,8 @@ f = open('temp11.pkl','rb')
 
 gamma0 = numpy.median(fit['gamma'],axis=0)
 gamma1 = numpy.median(fit['rho1'],axis=0)
-# gamma0_cov = numpy.cov(fit['gamma'],rowvar=False)
-# gamma1_cov = numpy.cov(fit['rho1'],rowvar=False)
+gamma0_cov = numpy.cov(fit['gamma'],rowvar=False)
+gamma1_cov = numpy.cov(fit['rho1'],rowvar=False)
 
 # print gamma0, gamma0_cov, gamma1, gamma1_cov
 fit=None
@@ -99,8 +99,7 @@ mag_renorm  = mag_obs-mag_mn
 sivel_mn = sivel.mean()
 sivel_renorm = sivel-sivel_mn
 data = {'D': nsne, 'N_mags': 5, 'N_EWs': 2, 'mag_obs': mag_renorm, 'EW_obs': EW_renorm, 'EW_cov': EW_cov, 'mag_cov':mag_cov, \
-   'sivel_obs': sivel_renorm, 'sivel_err': sivel_err, 'e1': q[2], 'e2':q[3], 'e3':q[4] }
-   # 'gamma0in':gamma0,'gamma1in':gamma1,'gamma0in_cov':gamma0_cov,'gamma1in_cov':gamma1_cov }
+   'sivel_obs': sivel_renorm, 'sivel_err': sivel_err, 'e1': q[2], 'e2':q[3], 'e3':q[4], 'gamma0in':gamma0,'gamma1in':gamma1,'gamma0in_cov':gamma0_cov,'gamma1in_cov':gamma1_cov }
 
 Delta_simplex = numpy.zeros(nsne-1)
 # Delta_simplex = numpy.zeros(nsne)+1./nsne
@@ -131,16 +130,17 @@ init = [{'EW' : EW_renorm, \
          'Delta_scale': 15./4, \
          'k_unit': R_simplex, \
          'k1_unit': R_simplex, \
-         'R_unit': R_simplex, \
+         'R_unit': numpy.zeros(nsne),\
          'rho11': 0./5,\
          'rho12': 0/5,\
-         'rho13': 1./5,\
+         'rho13': 0./5,\
          } \
-        for _ in range(8)]
+        for _ in range(4)]
 
-sm = pystan.StanModel(file='gerard25.stan')
-control = {'stepsize':1}
-fit = sm.sampling(data=data, iter=10000, chains=8,control=control,init=init, thin=2)
+sm = pystan.StanModel(file='gerard25.stan',verbose=True)
+# control = {'stepsize':0.1, 'max_treedepth':20}
+control = {'stepsize':1, 'max_treedepth':10}
+fit = sm.sampling(data=data, iter=4000, chains=4,control=control,init=init, thin=1)
 
 
 output = open('temp25.pkl','wb')
