@@ -21,6 +21,13 @@ data {
   matrix[5,5] gamma0in_cov;
   vector[5] gamma1in;
   matrix[5,5] gamma1in_cov;
+
+  vector[5] gamma0_min;
+  vector[5] gamma0_max;
+  matrix[5,5] gamma0_ev;
+  vector[5] gamma1_min;
+  vector[5] gamma1_max;
+  matrix[5,5] gamma1_ev;
 }
 
 transformed data{
@@ -38,21 +45,21 @@ parameters {
   vector<lower=0.0>[N_mags] L_sigma_raw;
   vector[5] eta_raw;
 
-  real<lower=0> gamma01;
-  real gamma02;
-  real gamma03;
-  real gamma04;
-  real gamma05;
+  real<lower=gamma0_min[1], upper=gamma0_max[1]> gamma01;
+  real<lower=gamma0_min[2], upper=gamma0_max[2]> gamma02;
+  real<lower=gamma0_min[3], upper=gamma0_max[3]> gamma03;
+  real<lower=gamma0_min[4], upper=gamma0_max[4]> gamma04;
+  real<lower=gamma0_min[5], upper=gamma0_max[5]> gamma05;
 
-  real<upper=0> gamma11;
-  real gamma12;
-  real gamma13;
-  real gamma14;
-  real gamma15;
+  real<lower=gamma1_min[1], upper=gamma1_max[1]> gamma11;
+  real<lower=gamma1_min[2], upper=gamma1_max[2]> gamma12;
+  real<lower=gamma1_min[3], upper=gamma1_max[3]> gamma13;
+  real<lower=gamma1_min[4], upper=gamma1_max[4]> gamma14;
+  real<lower=gamma1_min[5], upper=gamma1_max[5]> gamma15;
 
-  real rho11;
-  real rho12;
-  real rho13;
+  # real rho11;
+  # real rho12;
+  # real rho13;
   # real rho14;
   # real rho15;
 
@@ -70,6 +77,7 @@ parameters {
 
   # simplex[D] R_unit;
   vector<lower=-.1,upper=.1>[D] R_unit;
+  vector[5] rho1;
 }
 
 transformed parameters {
@@ -85,7 +93,7 @@ transformed parameters {
   vector[D] R;
   vector[5] gamma;
   vector[5] gamma1;
-  vector[5] rho1;
+  # vector[5] rho1;
   vector[N_mags] mag_int[D];
 
 
@@ -101,87 +109,92 @@ transformed parameters {
   # R=(R_unit-1./D);
   R = R_unit - mean(R_unit);
 
-  gamma[1] = gamma01;
-  gamma[2] = gamma02;
-  gamma[3] = gamma03;
-  gamma[4] = gamma04;
-  gamma[5] = gamma05;
-  gamma = gamma*5;
-
-  gamma1[1] = gamma11;
-  gamma1[2] = gamma12;
-  gamma1[3] = gamma13;
-  gamma1[4] = gamma14;
-  gamma1[5] = gamma15;
-  gamma1 = gamma1*5;
-
-  {
-    matrix[5,5] Q;
-    matrix[5,2] A;
-    matrix[5,3] A2;
-    matrix[5,4] A3;
-    vector[5] ev1;
-    vector[5] ev2;
-    vector[5] ev3;
-    real dp;
-
-    for (d in 1:5){
-      A[d,1] = gamma[d];
-      A[d,2] = gamma1[d];
-    }
-    
-    Q=qr_Q(A);
-    Q=Q';
-
-    ev3 = e1;
-    for (d in 1:2){
-      dp = dot_product(Q[d],e1);
-      for(d2 in 1:5){
-        ev3[d2] = ev3[d2] -  dp *Q[d,d2];
-      }
-    }
-    ev3 = ev3/sqrt(sum(ev3 .* ev3));
-
-    for (d in 1:5){
-      A2[d,1] = gamma[d];
-      A2[d,2] = gamma1[d];
-      A2[d,3] = ev3[d];
-    }
-
-    Q=qr_Q(A2);
-    Q=Q';
-    ev1=e2;
-    for (d in 1:3){
-      dp = dot_product(Q[d],e2);
-      for(d2 in 1:5){
-        ev1[d2] = ev1[d2] -  dp *Q[d,d2];
-      }
-    }
-
-    ev1 = ev1/sqrt(sum(ev1 .* ev1));
-
-    for (d in 1:5){
-      A3[d,1] = gamma[d];
-      A3[d,2] = gamma1[d];
-      A3[d,3] = ev3[d];
-      A3[d,4] = ev1[d];
-    }
-    Q=qr_Q(A3);
-    Q=Q';
-    for(d2 in 1:5){
-      ev2[d2] = Q[5,d2];
-    }
-    dp = dot_product(ev2, e3);
-    ev2 = dp/fabs(dp) * ev2;
-
-    # print(dot_product(gamma,ev1)," ",dot_product(gamma1,ev1));
-    # print(dot_product(gamma,ev2)," ",dot_product(gamma1,ev2));
-    # print(dot_product(gamma,ev3)," ",dot_product(gamma1,ev3));
-    # print(dot_product(ev1,ev2)," ",dot_product(ev1,ev3)," ",dot_product(ev2,ev3));
-    rho1 = rho11*ev1 + rho12*ev2 + rho13*ev3;
+  for (d in 1:5){
+    gamma[d] = gamma01 * gamma0_ev[d,1]  + gamma02  * gamma0_ev[d,2] + gamma03 * gamma0_ev[d,3] + gamma04  * gamma0_ev[d,4] + gamma05 * gamma0_ev[d,5];
+    gamma1[d]= gamma11 * gamma1_ev[d,1]  + gamma12  * gamma1_ev[d,2] + gamma13 * gamma1_ev[d,3] + gamma14  * gamma1_ev[d,4] + gamma15 * gamma1_ev[d,5];
   }
+  
+  # gamma[1] = gamma01;
+  # gamma[2] = gamma02;
+  # gamma[3] = gamma03;
+  # gamma[4] = gamma04;
+  # gamma[5] = gamma05;
+  # gamma = gamma*5;
 
-  rho1 = -rho1*2.5;
+  # gamma1[1] = gamma11;
+  # gamma1[2] = gamma12;
+  # gamma1[3] = gamma13;
+  # gamma1[4] = gamma14;
+  # gamma1[5] = gamma15;
+  # gamma1 = gamma1*5;
+
+  # {
+  #   matrix[5,5] Q;
+  #   matrix[5,2] A;
+  #   matrix[5,3] A2;
+  #   matrix[5,4] A3;
+  #   vector[5] ev1;
+  #   vector[5] ev2;
+  #   vector[5] ev3;
+  #   real dp;
+
+  #   for (d in 1:5){
+  #     A[d,1] = gamma[d];
+  #     A[d,2] = gamma1[d];
+  #   }
+    
+  #   Q=qr_Q(A);
+  #   Q=Q';
+
+  #   ev3 = e1;
+  #   for (d in 1:2){
+  #     dp = dot_product(Q[d],e1);
+  #     for(d2 in 1:5){
+  #       ev3[d2] = ev3[d2] -  dp *Q[d,d2];
+  #     }
+  #   }
+  #   ev3 = ev3/sqrt(sum(ev3 .* ev3));
+
+  #   for (d in 1:5){
+  #     A2[d,1] = gamma[d];
+  #     A2[d,2] = gamma1[d];
+  #     A2[d,3] = ev3[d];
+  #   }
+
+  #   Q=qr_Q(A2);
+  #   Q=Q';
+  #   ev1=e2;
+  #   for (d in 1:3){
+  #     dp = dot_product(Q[d],e2);
+  #     for(d2 in 1:5){
+  #       ev1[d2] = ev1[d2] -  dp *Q[d,d2];
+  #     }
+  #   }
+
+  #   ev1 = ev1/sqrt(sum(ev1 .* ev1));
+
+  #   for (d in 1:5){
+  #     A3[d,1] = gamma[d];
+  #     A3[d,2] = gamma1[d];
+  #     A3[d,3] = ev3[d];
+  #     A3[d,4] = ev1[d];
+  #   }
+  #   Q=qr_Q(A3);
+  #   Q=Q';
+  #   for(d2 in 1:5){
+  #     ev2[d2] = Q[5,d2];
+  #   }
+  #   dp = dot_product(ev2, e3);
+  #   ev2 = dp/fabs(dp) * ev2;
+
+  #   # print(dot_product(gamma,ev1)," ",dot_product(gamma1,ev1));
+  #   # print(dot_product(gamma,ev2)," ",dot_product(gamma1,ev2));
+  #   # print(dot_product(gamma,ev3)," ",dot_product(gamma1,ev3));
+  #   # print(dot_product(ev1,ev2)," ",dot_product(ev1,ev3)," ",dot_product(ev2,ev3));
+  #   rho1 = rho11*ev1 + rho12*ev2 + rho13*ev3;
+  # }
+
+  # rho1 = -rho1*2.5;
 
     # non-centered parameterization
   {
@@ -206,6 +219,18 @@ model {
   # target += uniform_lpdf(rho11 | -10, 0);
   # target += uniform_lpdf(rho1[5] | 0, 100);
   sum(R .* R) ~ cauchy(5e-3,1.);
-  gamma ~ multi_normal_cholesky(gamma0in, L_gamma0);
-  gamma1 ~ multi_normal_cholesky(gamma1in, L_gamma1);
+  # gamma ~ multi_normal_cholesky(gamma0in, L_gamma0);
+  # gamma1 ~ multi_normal_cholesky(gamma1in, L_gamma1);
+  # for (d in 1:5) {
+  #   # print (gamma, " ",gamma1);
+  #   # # print ( gamma0_ev[1,d]  ," ", gamma0_ev[2,d]  ," ", gamma0_ev[3,d] ," ", gamma0_ev[4,d] ," ", gamma0_ev[5,d]);
+  #   # print (gamma[1]*gamma0_ev[1,d] + gamma[2]*gamma0_ev[2,d] + gamma[3]*gamma0_ev[3,d]+ gamma[4]*gamma0_ev[4,d]+ gamma[5]*gamma0_ev[5,d]);
+  #   # print (gamma0_min[d]," ", gamma0_max[d]);
+  #   # print (gamma1[1]*gamma1_ev[1,d] + gamma[2]*gamma1_ev[2,d] + gamma[3]*gamma1_ev[3,d]+ gamma[4]*gamma1_ev[4,d]+ gamma[5]*gamma1_ev[5,d]);
+  #   # print (gamma1_min[d]," ", gamma1_max[d]);
+  #   gamma[1]*gamma0_ev[1,d] + gamma[2]*gamma0_ev[2,d] + gamma[3]*gamma0_ev[3,d]+ gamma[4]*gamma0_ev[4,d]+ gamma[5]*gamma0_ev[5,d]
+  #     ~ uniform(gamma0_min[d], gamma0_max[d]);
+  #   gamma1[1]*gamma1_ev[1,d] + gamma1[2]*gamma1_ev[2,d] + gamma1[3]*gamma1_ev[3,d]+ gamma1[4]*gamma1_ev[4,d]+ gamma1[5]*gamma1_ev[5,d]
+  #     ~ uniform(gamma1_min[d], gamma1_max[d]);
+  # }
 }
