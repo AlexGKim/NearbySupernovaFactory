@@ -5,6 +5,8 @@ import cPickle
 import numpy
 import pystan
 import sivel
+import matplotlib.pyplot as plt
+import corner
 
 # provide stan 3 eigenvectors with respect to try to align delta vector
 f = open('temp11.pkl','rb')
@@ -15,7 +17,42 @@ gamma1 = numpy.median(fit['rho1'],axis=0)
 gamma0_cov = numpy.cov(fit['gamma'],rowvar=False)
 gamma1_cov = numpy.cov(fit['rho1'],rowvar=False)
 
-# print gamma0, gamma0_cov, gamma1, gamma1_cov
+
+_, gamma0_ev = numpy.linalg.eigh(gamma0_cov)
+
+# print gamma0_ev[:,0]
+
+gamma0_eval = numpy.array(fit['gamma'])
+for i in xrange(gamma0_eval.shape[0]):
+   for j in xrange(5):
+      gamma0_eval[i,j]=numpy.dot(fit['gamma'][i,:], gamma0_ev[:,j])
+
+gamma0_min = numpy.min(gamma0_eval,axis=0)-0.05
+gamma0_max = numpy.max(gamma0_eval,axis=0)+0.05
+
+# for i in xrange(5):
+#    plt.hist(gamma0_eval[:,i])
+#    plt.show()
+
+_, gamma1_ev = numpy.linalg.eigh(gamma1_cov)
+
+gamma1_eval = numpy.array(fit['rho1'])
+for i in xrange(gamma1_eval.shape[0]):
+   for j in xrange(5):
+      gamma1_eval[i,j]=numpy.dot(fit['rho1'][i,:], gamma1_ev[:,j])
+
+gamma1_min = numpy.min(gamma1_eval,axis=0)-0.05
+gamma1_max = numpy.max(gamma1_eval,axis=0)+0.05
+
+# for i in xrange(5):
+#    plt.hist(gamma1_eval[:,i])
+#    plt.show()
+
+wefwef
+
+gamma0median = numpy.median(gamma0_eval,axis=0)
+gamma1median = numpy.median(gamma1_eval,axis=0)
+
 fit=None
 
 m = numpy.zeros((2,5))
@@ -99,7 +136,8 @@ mag_renorm  = mag_obs-mag_mn
 sivel_mn = sivel.mean()
 sivel_renorm = sivel-sivel_mn
 data = {'D': nsne, 'N_mags': 5, 'N_EWs': 2, 'mag_obs': mag_renorm, 'EW_obs': EW_renorm, 'EW_cov': EW_cov, 'mag_cov':mag_cov, \
-   'sivel_obs': sivel_renorm, 'sivel_err': sivel_err, 'e1': q[2], 'e2':q[3], 'e3':q[4], 'gamma0in':gamma0,'gamma1in':gamma1,'gamma0in_cov':gamma0_cov,'gamma1in_cov':gamma1_cov }
+   'sivel_obs': sivel_renorm, 'sivel_err': sivel_err, 'e1': q[2], 'e2':q[3], 'e3':q[4], 'gamma0in':gamma0,'gamma1in':gamma1,'gamma0in_cov':gamma0_cov,'gamma1in_cov':gamma1_cov,\
+   'gamma0_ev':gamma0_ev, 'gamma1_ev':gamma1_ev, 'gamma0_min':gamma0_min, 'gamma0_max': gamma0_max, 'gamma1_min':gamma1_min, 'gamma1_max': gamma1_max }
 
 Delta_simplex = numpy.zeros(nsne-1)
 # Delta_simplex = numpy.zeros(nsne)+1./nsne
@@ -114,16 +152,16 @@ init = [{'EW' : EW_renorm, \
          'beta_raw' : numpy.zeros(5), \
          'eta_raw' : numpy.zeros(5), \
          'L_sigma_raw': numpy.zeros(5)+0.03*100, \
-         'gamma01': 61./5,\
-         'gamma02': 50./5,\
-         'gamma03': 40./5,\
-         'gamma04': 30./5,\
-         'gamma05': 20./5,\
-         'gamma11': -12./5,\
-         'gamma12': -14./5,\
-         'gamma13': -16./5,\
-         'gamma14': -14./5,\
-         'gamma15': -14/5,\
+         'gamma01': gamma0median[0],\
+         'gamma02': gamma0median[1],\
+         'gamma03': gamma0median[2],\
+         'gamma04': gamma0median[3],\
+         'gamma05': gamma0median[4],\
+         'gamma11': gamma1median[0],\
+         'gamma12': gamma1median[1],\
+         'gamma13': gamma1median[2],\
+         'gamma14': gamma1median[3],\
+         'gamma15': gamma1median[4],\
          'mag_int_raw': mag_renorm, \
          'L_Omega': numpy.identity(5), \
          'Delta_unit':R_simplex, \
@@ -131,16 +169,17 @@ init = [{'EW' : EW_renorm, \
          'k_unit': R_simplex, \
          'k1_unit': R_simplex, \
          'R_unit': numpy.zeros(nsne),\
-         'rho11': 0./5,\
-         'rho12': 0/5,\
-         'rho13': 0./5,\
+         # 'rho11': 0./5,\
+         # 'rho12': 0./5,\
+         # 'rho13': 0./5,\
+         'rho1': numpy.zeros(5),\
          } \
-        for _ in range(4)]
+        for _ in range(8)]
 
-sm = pystan.StanModel(file='gerard25.stan',verbose=True)
+sm = pystan.StanModel(file='gerard25.stan')
 # control = {'stepsize':0.1, 'max_treedepth':20}
 control = {'stepsize':1, 'max_treedepth':10}
-fit = sm.sampling(data=data, iter=4000, chains=4,control=control,init=init, thin=1)
+fit = sm.sampling(data=data, iter=5000, chains=8,control=control,init=init, thin=1)
 
 
 output = open('temp25.pkl','wb')

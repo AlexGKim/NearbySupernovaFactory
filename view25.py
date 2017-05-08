@@ -12,6 +12,7 @@ import scipy
 import cPickle
 import matplotlib as mpl
 import sivel
+import flip
 
 dirname = 'output25/'
 
@@ -736,6 +737,29 @@ plt.savefig(pp,format='pdf')
 pp.close()
 plt.close()
 
+
+# wmn, wless, wmore = numpy.percentile(fit['rho1'][:,0][:,None]*fit['R'],(50,50-34,50+34),axis=0)
+# shit = wmn/(wmn-wless)
+# shit[wmn < 0] = wmn[wmn < 0]/(wmn[wmn < 0]-wmore[wmn < 0])
+# wmax = numpy.argmax(shit)
+# temprho1 = numpy.array(fit['rho1'])
+# for i in xrange(temprho1.shape[0]):
+#     # if (scipy.stats.skew(fit['R'][i,:]) < 0):
+#     if (fit['R'][i,wmax] < 0):
+#         temprho1[i,:] *=-1
+
+temprho1,_ = flip.flip(fit)
+
+
+figure = corner.corner(temprho1,labels=[r"${\delta}_{U}$",r"${\delta}_{B}$",r"${\delta}_{V}$",r"${\delta}_{R}$",r"${\delta}_{I}$"],\
+  truths=[0,0,0,0,0])
+pp = PdfPages(dirname+'/delta_corner_flipped.pdf')
+plt.tight_layout()
+plt.savefig(pp,format='pdf')
+pp.close()
+plt.close()
+
+wefwe
 Rsd = numpy.linalg.norm(fit['rho1'],axis=1)
 figure = corner.corner(fit['rho1']/Rsd[:,None],labels=[r"${\delta}_{U}$",r"${\delta}_{B}$",r"${\delta}_{V}$",r"${\delta}_{R}$",r"${\delta}_{I}$"],\
   truths=[0,0,0,0,0])
