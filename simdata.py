@@ -5,7 +5,7 @@ import cPickle
 import numpy
 import pystan
 import sivel as sivel2
-
+import flip
 
 # two color parameter model
 
@@ -14,7 +14,7 @@ data = pickle.load(pkl_file)
 pkl_file.close()
 
 
-f = open('temp23.pkl','rb')
+f = open('temp25.pkl','rb')
 (fit,_) = pickle.load(f)
 f.close()
 
@@ -76,15 +76,17 @@ beta = numpy.median(fit['beta'],axis=0)
 eta = numpy.median(fit['eta'],axis=0)
 gamma = numpy.median(fit['gamma'],axis=0)
 gamma1 = numpy.median(fit['gamma1'],axis=0)
-delta = numpy.median(fit['rho1'],axis=0)
 
 # EW = numpy.array(EW_renorm)
 # sivel = numpy.array(sivel_renorm)
 EW = numpy.median(fit['EW'],axis=0)
 sivel = numpy.median(fit['sivel'],axis=0)
 
+
+deltacolor = numpy.median(fit['rho1'][:,None,:]*fit['R'][:,:,None],axis=0)
+dustcolor = numpy.median(fit['gamma'][:,None,:]*fit['k'][:,:,None] + fit['gamma1'][:,None,:]*fit['k1'][:,:,None],axis=0)
+
 Delta = numpy.median(fit['Delta'],axis=0)
-D = numpy.median(fit['R'],axis=0)
 k0 = numpy.median(fit['k'],axis=0)
 k1 = numpy.median(fit['k1'],axis=0)
 
@@ -95,7 +97,7 @@ for x1, x2 in zip(fit['L_Omega'], fit['L_sigma']):
 cov/= len(fit['L_Omega'])
 
 mn = Delta[:,None] + c[None,:] + alpha[None,:] * EW[:,0][:,None] + \
-   beta[None,:] * EW[:,1][:,None] + eta[None,:]*sivel[:,None] + delta[None,:]*D[:,None]
+   beta[None,:] * EW[:,1][:,None] + eta[None,:]*sivel[:,None] +deltacolor 
 
 for seed in xrange(10):
     numpy.random.seed(seed=seed)
@@ -105,7 +107,7 @@ for seed in xrange(10):
     for i in xrange(nsne):
        intrinsic.append(numpy.random.multivariate_normal(mn[i,:],cov))
 
-    intrinsic = intrinsic + gamma[None,:]*k0[:,None] + gamma1[None,:]*k1[:,None]
+    intrinsic = intrinsic + dustcolor #gamma[None,:]*k0[:,None] + gamma1[None,:]*k1[:,None]
     mag_obs=[]
     EW_obs=[]
     sivel_obs=[]
