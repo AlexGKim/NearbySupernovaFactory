@@ -10,5 +10,5 @@ def flip(fit):
 	for i in xrange(temprho1.shape[0]):
 	    if (fit['R'][i,wmax] < 0):
 	        temprho1[i,:] *=-1
-	        tempR[i,:] +=-1
+	        tempR[i,:] *=-1
 	return temprho1,tempR

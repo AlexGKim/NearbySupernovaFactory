@@ -6,6 +6,8 @@ import numpy
 import pystan
 import sivel as sivel2
 import flip
+import matplotlib.pyplot as plt
+import corner
 
 # two color parameter model
 
@@ -82,9 +84,39 @@ gamma1 = numpy.median(fit['gamma1'],axis=0)
 EW = numpy.median(fit['EW'],axis=0)
 sivel = numpy.median(fit['sivel'],axis=0)
 
+# for i in xrange(5):
+#   plt.hist(fit['rho1'][:,i])
+#   plt.show()
 
-deltacolor = numpy.median(fit['rho1'][:,None,:]*fit['R'][:,:,None],axis=0)
-dustcolor = numpy.median(fit['gamma'][:,None,:]*fit['k'][:,:,None] + fit['gamma1'][:,None,:]*fit['k1'][:,:,None],axis=0)
+
+temprho1,tempR = flip.flip(fit)
+
+H,edges  = numpy.histogramdd(temprho1,bins=30)
+w = numpy.argmax(H)
+w = numpy.unravel_index(w,H.shape)
+rho1=numpy.array([edges[0][w[0]],edges[1][w[1]],edges[2][w[2]],edges[3][w[3]],edges[4][w[4]]])
+
+print rho1
+
+# R=[]
+# R2=[]
+# for i in xrange(tempR.shape[1]):
+  # H,edges  = numpy.histogram(tempR[:,i],bins=20)
+  # R.append(edges[numpy.argmax(H)])
+  # R2.append(numpy.mean(temprho1*tempR[:,i][:,None]/rho1))
+  # plt.hist(tempR[:,i],bins=20)
+  # plt.show()
+
+# R=numpy.array(R)
+# R2=numpy.array(R2)
+
+# plt.hist([R,R2,numpy.median(tempR,axis=0)],label=['mode','avg','median'])
+# plt.legend()
+# plt.show()
+
+# wfwe
+
+R = numpy.median(tempR,axis=0)
 
 Delta = numpy.median(fit['Delta'],axis=0)
 k0 = numpy.median(fit['k'],axis=0)
@@ -97,7 +129,7 @@ for x1, x2 in zip(fit['L_Omega'], fit['L_sigma']):
 cov/= len(fit['L_Omega'])
 
 mn = Delta[:,None] + c[None,:] + alpha[None,:] * EW[:,0][:,None] + \
-   beta[None,:] * EW[:,1][:,None] + eta[None,:]*sivel[:,None] +deltacolor 
+   beta[None,:] * EW[:,1][:,None] + eta[None,:]*sivel[:,None] + rho1[None,:]*R[:,None]
 
 for seed in xrange(10):
     numpy.random.seed(seed=seed)
@@ -107,7 +139,7 @@ for seed in xrange(10):
     for i in xrange(nsne):
        intrinsic.append(numpy.random.multivariate_normal(mn[i,:],cov))
 
-    intrinsic = intrinsic + dustcolor #gamma[None,:]*k0[:,None] + gamma1[None,:]*k1[:,None]
+    intrinsic = intrinsic + gamma[None,:]*k0[:,None] + gamma1[None,:]*k1[:,None]
     mag_obs=[]
     EW_obs=[]
     sivel_obs=[]
