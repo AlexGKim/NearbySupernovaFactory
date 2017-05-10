@@ -12,24 +12,24 @@ import scipy
 import cPickle
 import matplotlib as mpl
 import sivel
-# mpl.rcParams['font.size'] = 18
+import flip
 
-f = open('temp25_sim_null0.pkl','rb')
+# mpl.rcParams['font.size'] = 18
+tag="_null"
+f = open('temp25_sim'+tag+'0.pkl','rb')
 (fit,_) = pickle.load(f)
 
 mega = numpy.array([fit['c'],fit['alpha'],fit['beta'],fit['eta'],fit['gamma'],fit['gamma1'],fit['rho1'],fit['L_sigma']])
 
 print mega.shape
-for index in xrange(1,7):
-    f = open('temp25_sim_null{}.pkl'.format(index),'rb')
+for index in xrange(0):
+    f = open('temp25_sim'+tag+'{}.pkl'.format(index),'rb')
     (fit,_) = pickle.load(f)
     mega_ = numpy.array([fit['c'],fit['alpha'],fit['beta'],fit['eta'],fit['gamma'],fit['gamma1'],fit['rho1'],fit['L_sigma']])
 
     mega = numpy.concatenate((mega,mega_),axis=1)
 
 mega = numpy.transpose(mega)
-
-
 
 f = open('temp25.pkl','rb')
 (fit_input,_) = pickle.load(f)
@@ -97,8 +97,18 @@ beta = numpy.median(fit_input['beta'],axis=0)
 eta = numpy.median(fit_input['eta'],axis=0)
 gamma = numpy.median(fit_input['gamma'],axis=0)
 gamma1 = numpy.median(fit_input['gamma1'],axis=0)
-delta = numpy.median(fit_input['rho1'],axis=0)
 
+
+temprho1,_ = flip.flip(fit_input)
+
+
+H,edges  = numpy.histogramdd(temprho1,bins=30)
+w = numpy.argmax(H)
+w = numpy.unravel_index(w,H.shape)
+delta=numpy.array([edges[0][w[0]],edges[1][w[1]],edges[2][w[2]],edges[3][w[3]],edges[4][w[4]]])
+
+if tag == '_null':
+    delta[:]=0
 
 cov = numpy.zeros((5,5))
 for x1, x2 in zip(fit_input['L_Omega'], fit_input['L_sigma']):
@@ -119,17 +129,35 @@ for index in xrange(5):
         for tick in ax.yaxis.get_major_ticks():
             tick.label.set_fontsize(14)
 
-    pp = PdfPages('output25_sim_null/coeff{}.pdf'.format(index))
+    pp = PdfPages('output25_sim'+tag+'/coeff{}.pdf'.format(index))
     plt.savefig(pp,format='pdf')
     pp.close()
     plt.close()
 
 
-delta_ratio = fit_input['rho1']/fit_input['rho1'][:,4][:,None]
-
-
-figure = corner.corner(delta_ratio[:,0:4],labels=[r'\delta_U/\delta_I',r'\delta_B/\delta_I',r'\delta_V/\delta_I',r'\delta_R/\delta_I'])
-pp = PdfPages('output25_sim_null/delta_ratio.pdf')
+figure = corner.corner(fit['gamma'],labels=[r"${\gamma^0}_0$",r"${\gamma^0}_1$",r"${\gamma^0}_2$",r"${\gamma^0}_3$",r"${\gamma^0}_4$"],label_kwargs={'fontsize':22})
+pp = PdfPages('output25_sim'+tag+'/gamma_corner.pdf')
 plt.savefig(pp,format='pdf')
 pp.close()
 plt.close()
+
+figure = corner.corner(fit['gamma1'],labels=[r"${\gamma^1}_0$",r"${\gamma^1}_1$",r"${\gamma^1}_2$",r"${\gamma^1}_3$",r"${\gamma^1}_4$"])
+pp = PdfPages('output25_sim'+tag+'/gamma1_corner.pdf')
+plt.savefig(pp,format='pdf')
+pp.close()
+
+figure = corner.corner(fit['rho1'],labels=[r"${\delta}_U$",r"${\delta}_B$",r"${\delta}_V$",r"${\delta}_R$",r"${\delta}_I$"], \
+    truths=-delta)
+pp = PdfPages('output25_sim'+tag+'/delta_corner.pdf')
+plt.savefig(pp,format='pdf')
+pp.close()
+# plt.close()
+
+# delta_ratio = fit_input['rho1']/fit_input['rho1'][:,4][:,None]
+
+
+# figure = corner.corner(delta_ratio[:,0:4],labels=[r'\delta_U/\delta_I',r'\delta_B/\delta_I',r'\delta_V/\delta_I',r'\delta_R/\delta_I'])
+# pp = PdfPages('output25_sim'+tag+'/delta_ratio.pdf')
+# plt.savefig(pp,format='pdf')
+# pp.close()
+# plt.close()

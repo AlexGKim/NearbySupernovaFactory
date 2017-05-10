@@ -518,15 +518,14 @@ pp.close()
 plt.close()
 
 
-bins = numpy.arange(-0.1,0.121,0.05)
+bins = numpy.arange(-0.1,0.121,0.01)
 # # plt.hist(fit['Delta'].flatten(),bins,label='ideogram',normed=True,alpha=0.5)
 # # plt.hist(numpy.median(fit['Delta'],axis=0),bins,label='median',normed=True,alpha=0.5,width=0.01)
 # # plt.legend()
 
-
 plt.hist( extebv.flatten(),normed=True,bins=bins,alpha=0.5,
   label='ideogram')
-plt.hist( numpy.median(extebv,axis=0),normed=True,bins=bins,alpha=0.5,width=0.0025,
+plt.hist( numpy.median(extebv,axis=0),normed=True,bins=bins,alpha=0.5,width=0.005,
   label='median')
 plt.xlabel(r'$E_\delta(B-V)$',fontsize=20)
 plt.xlim((-.1,.12))
@@ -759,15 +758,14 @@ plt.savefig(pp,format='pdf')
 pp.close()
 plt.close()
 
-wefwe
-Rsd = numpy.linalg.norm(fit['rho1'],axis=1)
-figure = corner.corner(fit['rho1']/Rsd[:,None],labels=[r"${\delta}_{U}$",r"${\delta}_{B}$",r"${\delta}_{V}$",r"${\delta}_{R}$",r"${\delta}_{I}$"],\
-  truths=[0,0,0,0,0])
-pp = PdfPages(dirname+'/delta_corner_scaled.pdf')
-plt.tight_layout()
-plt.savefig(pp,format='pdf')
-pp.close()
-plt.close()
+# Rsd = numpy.linalg.norm(fit['rho1'],axis=1)
+# figure = corner.corner(fit['rho1']/Rsd[:,None],labels=[r"${\delta}_{U}$",r"${\delta}_{B}$",r"${\delta}_{V}$",r"${\delta}_{R}$",r"${\delta}_{I}$"],\
+#   truths=[0,0,0,0,0])
+# pp = PdfPages(dirname+'/delta_corner_scaled.pdf')
+# plt.tight_layout()
+# plt.savefig(pp,format='pdf')
+# pp.close()
+# plt.close()
 
 # figure = corner.corner(fit['rho1']/numpy.linalg.norm(fit['rho1'],axis=1)[:,None],labels=[r"${\delta}_{U}$",r"${\delta}_{B}$",r"${\delta}_{V}$",r"${\delta}_{R}$",r"${\delta}_{I}$"],\
 #   truths=[0,0,0,0,0])

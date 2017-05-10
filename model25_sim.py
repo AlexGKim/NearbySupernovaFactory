@@ -5,6 +5,8 @@ import cPickle
 import numpy
 import pystan
 import sivel
+
+tag="_null"
 f = open('temp11.pkl','rb')
 (fit,_) = pickle.load(f)
 
@@ -53,7 +55,7 @@ q=q.T
 
 # two color parameter model
 for index in xrange(10):
-   pkl_file = open('simdata{}.pkl'.format(index), 'r')
+   pkl_file = open('simdata'+tag+'{}.pkl'.format(index), 'r')
    data = pickle.load(pkl_file)
    pkl_file.close()
 
@@ -117,7 +119,7 @@ for index in xrange(10):
    fit = sm.sampling(data=data, iter=5000, chains=4,control=control,init=init, thin=1)
 
 
-   output = open('temp25_sim{}.pkl'.format(index),'wb')
+   output = open('temp25_sim'+tag+'{}.pkl'.format(index),'wb')
    pickle.dump((fit.extract(),fit.get_sampler_params()), output, protocol=2)
    output.close()
    print fit
