@@ -14,26 +14,39 @@ import matplotlib as mpl
 import sivel
 import flip
 
+
+simperc = []
+
 # mpl.rcParams['font.size'] = 18
 tag="_null"
 f = open('temp25_sim'+tag+'0.pkl','rb')
 (fit,_) = pickle.load(f)
 
+simperc.append(numpy.percentile(numpy.sum(fit['rho1']**2,axis=1),(68,90,95)))
+
 mega = numpy.array([fit['c'],fit['alpha'],fit['beta'],fit['eta'],fit['gamma'],fit['gamma1'],fit['rho1'],fit['L_sigma']])
 
-print mega.shape
-for index in xrange(0):
+for index in xrange(1,20):
     f = open('temp25_sim'+tag+'{}.pkl'.format(index),'rb')
     (fit,_) = pickle.load(f)
+    simperc.append(numpy.percentile(numpy.sum(fit['rho1']**2,axis=1),(68,90,95)))
+
     mega_ = numpy.array([fit['c'],fit['alpha'],fit['beta'],fit['eta'],fit['gamma'],fit['gamma1'],fit['rho1'],fit['L_sigma']])
 
     mega = numpy.concatenate((mega,mega_),axis=1)
 
 mega = numpy.transpose(mega)
 
+simperc=numpy.array(simperc)
+
+
 f = open('temp25.pkl','rb')
 (fit_input,_) = pickle.load(f)
 
+dataperc = numpy.percentile(numpy.sum(fit_input['rho1']**2,axis=1),(68,90,95))
+
+print (simperc[:,1]< dataperc[1]).sum(), simperc.shape[0], (simperc[:,1]< dataperc[1]).sum()*1./simperc.shape[0]
+wefwef
 
 pkl_file = open('gege_data.pkl', 'r')
 data = pickle.load(pkl_file)
@@ -106,6 +119,8 @@ H,edges  = numpy.histogramdd(temprho1,bins=30)
 w = numpy.argmax(H)
 w = numpy.unravel_index(w,H.shape)
 delta=numpy.array([edges[0][w[0]],edges[1][w[1]],edges[2][w[2]],edges[3][w[3]],edges[4][w[4]]])
+numpy.set_printoptions(precision=2)
+print delta
 
 if tag == '_null':
     delta[:]=0
@@ -135,22 +150,58 @@ for index in xrange(5):
     plt.close()
 
 
-figure = corner.corner(fit['gamma'],labels=[r"${\gamma^0}_0$",r"${\gamma^0}_1$",r"${\gamma^0}_2$",r"${\gamma^0}_3$",r"${\gamma^0}_4$"],label_kwargs={'fontsize':22})
-pp = PdfPages('output25_sim'+tag+'/gamma_corner.pdf')
-plt.savefig(pp,format='pdf')
-pp.close()
-plt.close()
+# figure = corner.corner(fit['gamma'],labels=[r"${\gamma^0}_0$",r"${\gamma^0}_1$",r"${\gamma^0}_2$",r"${\gamma^0}_3$",r"${\gamma^0}_4$"],label_kwargs={'fontsize':22})
+# pp = PdfPages('output25_sim'+tag+'/gamma_corner.pdf')
+# plt.savefig(pp,format='pdf')
+# pp.close()
+# plt.close()
 
-figure = corner.corner(fit['gamma1'],labels=[r"${\gamma^1}_0$",r"${\gamma^1}_1$",r"${\gamma^1}_2$",r"${\gamma^1}_3$",r"${\gamma^1}_4$"])
-pp = PdfPages('output25_sim'+tag+'/gamma1_corner.pdf')
-plt.savefig(pp,format='pdf')
-pp.close()
+# figure = corner.corner(fit['gamma1'],labels=[r"${\gamma^1}_0$",r"${\gamma^1}_1$",r"${\gamma^1}_2$",r"${\gamma^1}_3$",r"${\gamma^1}_4$"])
+# pp = PdfPages('output25_sim'+tag+'/gamma1_corner.pdf')
+# plt.savefig(pp,format='pdf')
+# pp.close()
 
-figure = corner.corner(fit['rho1'],labels=[r"${\delta}_U$",r"${\delta}_B$",r"${\delta}_V$",r"${\delta}_R$",r"${\delta}_I$"], \
+# doublerho = numpy.concatenate((fit['rho1'],-fit['rho1']),axis=0)
+
+
+H,edges  = numpy.histogramdd(numpy.transpose(mega[:,:,6]),bins=30)
+w = numpy.argmax(H)
+w = numpy.unravel_index(w,H.shape)
+print numpy.array([edges[0][w[0]],edges[1][w[1]],edges[2][w[2]],edges[3][w[3]],edges[4][w[4]]])
+
+perc = []
+for i in xrange(10,25):
+    H,edges  = numpy.histogramdd(numpy.transpose(mega[:,:,6]),bins=i)
+    indeces=numpy.zeros(5,dtype='int')
+    for ind in xrange(5):
+      indeces[ind] = numpy.digitize(0,edges[ind])
+    indeces=indeces-1
+    # print indeces
+    # print H.sum()
+    # print H[indeces[0],indeces[1],indeces[2],indeces[3],indeces[4]]
+    wbig = H > H[indeces[0],indeces[1],indeces[2],indeces[3],indeces[4]]
+    print 'confidence non-zero ',H[wbig].sum() / H.sum(), i,  H[indeces[0],indeces[1],indeces[2],indeces[3],indeces[4]]
+    # print 'confidence non-zero ',1./(H >0).sum(), (H >0).sum()
+    perc.append(H[wbig].sum() / H.sum())
+
+figure = corner.corner(numpy.transpose(mega[:,:,6]),labels=[r"${\delta}_U$",r"${\delta}_B$",r"${\delta}_V$",r"${\delta}_R$",r"${\delta}_I$"], \
     truths=-delta)
 pp = PdfPages('output25_sim'+tag+'/delta_corner.pdf')
 plt.savefig(pp,format='pdf')
 pp.close()
+# plt.close()
+
+
+# import flip
+
+# temprho1,_ = flip.flip(fit)
+
+# figure = corner.corner(temprho1,labels=[r"${\delta}_{U}$",r"${\delta}_{B}$",r"${\delta}_{V}$",r"${\delta}_{R}$",r"${\delta}_{I}$"],\
+#   truths=[0,0,0,0,0])
+# pp = PdfPages('output25_sim'+tag+'/delta_corner_flipped.pdf')
+# plt.tight_layout()
+# plt.savefig(pp,format='pdf')
+# pp.close()
 # plt.close()
 
 # delta_ratio = fit_input['rho1']/fit_input['rho1'][:,4][:,None]

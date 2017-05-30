@@ -21,11 +21,11 @@ mpl.rcParams['font.size'] = 18
 f = open('temp25.pkl','rb')
 (fit,_) = pickle.load(f)
 
-flipin=[]
-for i in xrange(8):
-    flipin.append(numpy.median(fit['rho1'][i*2500:(i+1)*2500,0]))
+# flipin=[]
+# for i in xrange(8):
+#     flipin.append(numpy.median(fit['rho1'][i*2500:(i+1)*2500,0]))
 
-flipin = numpy.array(flipin)
+# flipin = numpy.array(flipin)
 
 # for key in fit.keys():
 #     shit = numpy.percentile(fit[key],(50,50-34,50+34),axis=0) 
@@ -1054,6 +1054,23 @@ ax.set_ylabel(r'$\frac{\delta_X}{\delta_U}-1$')
 ax.set_ylim((-4,1))
 plt.tight_layout()
 pp = PdfPages(dirname+'/deltaratio.pdf')
+plt.savefig(pp,format='pdf')
+pp.close()
+plt.close()
+
+(y, ymin, ymax) = numpy.percentile(temprho1/temprho1[:,0][:,None],(50,50-34,50+34),axis=0)
+fig = plt.figure()
+ax = fig.add_subplot(111)
+ax.errorbar(numpy.arange(5),y,yerr=[y-ymin,ymax-y],fmt='o')
+ax.xaxis.set_major_formatter(FuncFormatter(format_fn2))
+ax.xaxis.set_major_locator(MaxNLocator(integer=True))
+ax.axhline(0,linestyle=':')
+ax.set_xlim((-0.5,4.5))
+ax.set_xlabel(r'Band $X$')
+ax.set_ylabel(r'$\frac{\delta_X}{\delta_U}$')
+ax.set_ylim((-1.3,1.3))
+plt.tight_layout()
+pp = PdfPages(dirname+'/deltaratio_flip.pdf')
 plt.savefig(pp,format='pdf')
 pp.close()
 plt.close()
