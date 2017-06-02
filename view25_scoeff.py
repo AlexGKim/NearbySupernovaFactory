@@ -15,14 +15,43 @@ import sivel
 import flip
 
 
-simperc = []
 
+# statistics of first two vectors relative to third
+def meanfrac(fit):
+    perpfrac=[]
+    perpabs=[]
+    for i in xrange(fit['gamma'].shape[0]):
+      norm_gamma = numpy.dot(fit['gamma'][i,:], fit['gamma'][i,:])
+      norm_gamma1 = numpy.dot(fit['gamma1'][i,:], fit['gamma1'][i,:])
+      cross = numpy.dot(fit['gamma'][i,:], fit['gamma1'][i,:])
+
+      a = numpy.array([[norm_gamma,cross],[cross,norm_gamma1]])
+      y=numpy.array([numpy.dot(fit['rho1'][i,:],fit['gamma'][i,:]), numpy.dot(fit['rho1'][i,:],fit['gamma1'][i,:])])
+      ans = numpy.linalg.solve(a,y)
+      ans = fit['rho1'][i,:]-ans[1]*fit['gamma1'][i,:] - ans[0]*fit['gamma'][i,:]
+      perpfrac.append(numpy.sum(ans **2)/numpy.sum(fit['rho1'][i,:] **2))
+      perpabs.append(numpy.sum(ans **2))
+
+    perpfrac=numpy.array(perpfrac)
+    perpabs = numpy.array(perpabs)
+    # plt.hist(perpabs,bins=20)
+    # plt.show()
+    return numpy.median(perpfrac), numpy.median(perpabs)
+
+
+simperc = []
+simmedfrac = []
+simmedabs=[]
 # mpl.rcParams['font.size'] = 18
 tag="_null"
 f = open('temp25_sim'+tag+'0.pkl','rb')
 (fit,_) = pickle.load(f)
 
+
 simperc.append(numpy.percentile(numpy.sum(fit['rho1']**2,axis=1),(68,90,95)))
+dum=meanfrac(fit)
+simmedfrac.append(dum[0])
+simmedabs.append(dum[1])
 
 mega = numpy.array([fit['c'],fit['alpha'],fit['beta'],fit['eta'],fit['gamma'],fit['gamma1'],fit['rho1'],fit['L_sigma']])
 
@@ -30,23 +59,54 @@ for index in xrange(1,20):
     f = open('temp25_sim'+tag+'{}.pkl'.format(index),'rb')
     (fit,_) = pickle.load(f)
     simperc.append(numpy.percentile(numpy.sum(fit['rho1']**2,axis=1),(68,90,95)))
+    dum=meanfrac(fit)
+    simmedfrac.append(dum[0])
+    simmedabs.append(dum[1])
 
     mega_ = numpy.array([fit['c'],fit['alpha'],fit['beta'],fit['eta'],fit['gamma'],fit['gamma1'],fit['rho1'],fit['L_sigma']])
-
     mega = numpy.concatenate((mega,mega_),axis=1)
 
 mega = numpy.transpose(mega)
 
 simperc=numpy.array(simperc)
-
+simmedfrac= numpy.array(simmedfrac)
+simmedabs= numpy.array(simmedabs)
 
 f = open('temp25.pkl','rb')
 (fit_input,_) = pickle.load(f)
 
 dataperc = numpy.percentile(numpy.sum(fit_input['rho1']**2,axis=1),(68,90,95))
 
+datamedfrac, datamedabs = meanfrac(fit_input)
+
 print (simperc[:,1]< dataperc[1]).sum(), simperc.shape[0], (simperc[:,1]< dataperc[1]).sum()*1./simperc.shape[0]
-wefwef
+print (simmedfrac > datamedfrac).sum(), simmedfrac.shape[0]
+print (simmedabs > datamedabs).sum(), simmedabs.shape[0]
+
+pp = PdfPages('output25_sim/pvalues.pdf')
+plt.hist(simperc[:,1])
+plt.axvline(dataperc[1])
+plt.xlabel(r'$\delta^2$')
+plt.savefig(pp,format='pdf')
+plt.clf()
+
+
+plt.hist(simmedfrac)
+plt.axvline(datamedfrac)
+plt.xlabel(r'$\delta^2_\perp/\delta^2$')
+plt.savefig(pp,format='pdf')
+plt.clf()
+
+
+plt.hist(simmedabs)
+plt.axvline(datamedabs)
+plt.xlabel(r'$\delta^2_\perp$')
+plt.savefig(pp,format='pdf')
+plt.clf()
+pp.close()
+
+wef
+
 
 pkl_file = open('gege_data.pkl', 'r')
 data = pickle.load(pkl_file)
