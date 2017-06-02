@@ -747,8 +747,20 @@ plt.close()
 #     if (fit['R'][i,wmax] < 0):
 #         temprho1[i,:] *=-1
 
-temprho1,_ = flip.flip(fit)
+temprho1,tempD = flip.flip(fit)
 
+m1,m2 = numpy.percentile(fit['R']*fit['rho1'][:,0][:,None],(50-34,50+34),axis=0)
+print numpy.median((m2-m1)/2)
+
+fig, axes = plt.subplots()
+plt.hist(numpy.median(fit['R']*fit['rho1'][:,0][:,None],axis=0),bins=20)
+plt.xlabel(r'$A_{\delta U}$')
+pp = PdfPages(dirname+'/AU_hist.pdf')
+plt.savefig(pp,format='pdf')
+pp.close()
+plt.close()
+
+wefwe
 
 figure = corner.corner(temprho1,labels=[r"${\delta}_{U}$",r"${\delta}_{B}$",r"${\delta}_{V}$",r"${\delta}_{R}$",r"${\delta}_{I}$"],\
   truths=[0,0,0,0,0])
