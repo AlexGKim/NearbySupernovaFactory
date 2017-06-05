@@ -94,6 +94,7 @@ c_n = []
 cs = []
 for s in ['gamma','gamma1','rho1']:
   c, cmin, cmax = numpy.percentile(fit[s]/((fit[s][:,1]-fit[s][:,2])[:,None]),(50,50-34,50+34),axis=0)
+
   print "{:6.2f}, {:6.2f}, {:6.2f}, {:6.2f}, {:6.2f}".format(c[0],c[1],c[2],c[3],c[4])
   cs.append(c)
   c_norm = numpy.linalg.norm(c)
@@ -112,7 +113,7 @@ res= numpy.array(res)
 
 #print the matrix and the residues
 print tmat
-print numpy.linalg.norm(res,axis=1)/numpy.array(c_n)
+print (numpy.linalg.norm(res,axis=1)/numpy.array(c_n))**2
 print res
 
 
