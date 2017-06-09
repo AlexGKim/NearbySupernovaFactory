@@ -27,28 +27,55 @@ def meanfrac(fit):
 
       a = numpy.array([[norm_gamma,cross],[cross,norm_gamma1]])
       y=numpy.array([numpy.dot(fit['rho1'][i,:],fit['gamma'][i,:]), numpy.dot(fit['rho1'][i,:],fit['gamma1'][i,:])])
-      ans = numpy.linalg.solve(a,y)
-      ans = fit['rho1'][i,:]-ans[1]*fit['gamma1'][i,:] - ans[0]*fit['gamma'][i,:]
+      ans_ = numpy.linalg.solve(a,y)
+      ans = fit['rho1'][i,:]-ans_[1]*fit['gamma1'][i,:] - ans_[0]*fit['gamma'][i,:]
       perpfrac.append(numpy.sum(ans **2)/numpy.sum(fit['rho1'][i,:] **2))
       perpabs.append(numpy.sum(ans **2))
 
     perpfrac=numpy.array(perpfrac)
+    perpfracmode = numpy.percentile(perpfrac,(50,50-34,50+34))
+
     perpabs = numpy.array(perpabs)
+    perpabsmode = numpy.percentile(perpabs,50+34)
+    # bins=numpy.arange(0,1,.002)
+    # plt.hist(perpfrac,bins)
+    # plt.show()
+    # wefwe
+    # H,edges  = numpy.histogram(perpfrac,bins=bins)
+    # w = numpy.argmax(H)
+    # w = numpy.unravel_index(w,H.shape)
+    # perpfracmode=edges[w]
+
+    # bins=numpy.arange(0,2,.02)
+    # H,edges  = numpy.histogram(perpabs,bins=bins)
+    # w = numpy.argmax(H)
+    # w = numpy.unravel_index(w,H.shape)
+    # perpabsmode=edges[w]
+
     # plt.hist(perpabs,bins=20)
     # plt.show()
-    return numpy.median(perpfrac), numpy.median(perpabs)
+    return perpfracmode, perpabsmode
 
 
 simperc = []
 simmedfrac = []
 simmedabs=[]
-# mpl.rcParams['font.size'] = 18
 tag="_null"
 f = open('temp25_sim'+tag+'0.pkl','rb')
 (fit,_) = pickle.load(f)
 
 
-simperc.append(numpy.percentile(numpy.sum(fit['rho1']**2,axis=1),(68,90,95)))
+
+# bins=numpy.arange(0,4,0.1)
+# H,edges  = numpy.histogram(numpy.sum(fit['rho1']**2,axis=1),bins=bins)
+# w = numpy.argmax(H)
+# w = numpy.unravel_index(w,H.shape)
+# simperc.append(edges[w])
+
+# simperc.append(numpy.mean(numpy.sum(fit['rho1']**2,axis=1)*numpy.sum(fit['R']**2,axis=1)))
+
+simperc.append(numpy.percentile(numpy.sum(fit['rho1']**2,axis=1),(50,50-34,50+34)))
+
 dum=meanfrac(fit)
 simmedfrac.append(dum[0])
 simmedabs.append(dum[1])
@@ -58,7 +85,15 @@ mega = numpy.array([fit['c'],fit['alpha'],fit['beta'],fit['eta'],fit['gamma'],fi
 for index in xrange(1,20):
     f = open('temp25_sim'+tag+'{}.pkl'.format(index),'rb')
     (fit,_) = pickle.load(f)
-    simperc.append(numpy.percentile(numpy.sum(fit['rho1']**2,axis=1),(68,90,95)))
+
+    # H,edges  = numpy.histogram(numpy.sum(fit['rho1']**2,axis=1),bins=bins)
+    # w = numpy.argmax(H)
+    # w = numpy.unravel_index(w,H.shape) 
+    # simperc.append(edges[w])
+    # simperc.append(numpy.mean(numpy.sum(fit['rho1']**2,axis=1)*numpy.sum(fit['R']**2,axis=1)))
+    simperc.append(numpy.percentile(numpy.sum(fit['rho1']**2,axis=1),(50,50-34,50+34)))
+
+
     dum=meanfrac(fit)
     simmedfrac.append(dum[0])
     simmedabs.append(dum[1])
@@ -75,28 +110,64 @@ simmedabs= numpy.array(simmedabs)
 f = open('temp25.pkl','rb')
 (fit_input,_) = pickle.load(f)
 
-dataperc = numpy.percentile(numpy.sum(fit_input['rho1']**2,axis=1),(68,90,95))
-
+dataperc = numpy.percentile(numpy.sum(fit_input['rho1']**2,axis=1),(50,50-34,50+34))
 datamedfrac, datamedabs = meanfrac(fit_input)
 
-print (simperc[:,1]< dataperc[1]).sum(), simperc.shape[0], (simperc[:,1]< dataperc[1]).sum()*1./simperc.shape[0]
+plt.errorbar(xrange(20),simperc[:,0],yerr=[simperc[:,0]-simperc[:,1],simperc[:,2]-simperc[:,0]],fmt='.',color='blue')
+plt.errorbar(9.5,dataperc[0],yerr=[[dataperc[0]-dataperc[1]],[dataperc[2]-dataperc[0]]],fmt='.',color='red')
+plt.xlim([-1,20])
+plt.show()
+
+plt.errorbar(xrange(20),simmedfrac[:,0],yerr=[simmedfrac[:,0]-simmedfrac[:,1],simmedfrac[:,2]-simmedfrac[:,0]],fmt='.',color='blue')
+plt.errorbar(9.5,datamedfrac[0],yerr=[[datamedfrac[0]-datamedfrac[1]],[datamedfrac[2]-datamedfrac[0]]],fmt='.',color='red')
+plt.xlim([-1,20])
+plt.show()
+
+wfeef
+
+# bins=numpy.arange(0,4,0.1)
+# H,edges  = numpy.histogram(numpy.sum(fit_input['rho1']**2,axis=1),bins=bins)
+# w = numpy.argmax(H)
+# w = numpy.unravel_index(w,H.shape)
+# dataperc=edges[w]
+
+
+# print delta
+
+# plt.hist(numpy.sum(fit_input['rho1']**2,axis=1),log=True,bins=bins)
+# plt.show()
+
+
+# wefwe
+# dataperc = numpy.mean(numpy.sum(fit_input['rho1']**2,axis=1)*numpy.sum(fit_input['R']**2,axis=1))
+
+
+# print datamedfrac
+# print simmedfrac
+
+
+print (simperc< dataperc).sum(), simperc.shape[0], (simperc< dataperc).sum()*1./simperc.shape[0]
 print (simmedfrac > datamedfrac).sum(), simmedfrac.shape[0]
 print (simmedabs > datamedabs).sum(), simmedabs.shape[0]
 
-pp = PdfPages('output25_sim/pvalues.pdf')
-plt.hist(simperc[:,1])
-plt.axvline(dataperc[1])
+pp = PdfPages('output25_sim'+tag+'/pvalues_delta2.pdf')
+plt.hist(simperc)
+plt.axvline(dataperc)
 plt.xlabel(r'$\delta^2$')
 plt.savefig(pp,format='pdf')
 plt.clf()
+pp.close()
 
 
-plt.hist(simmedfrac)
+pp = PdfPages('output25_sim'+tag+'/pvalues_relperp.pdf')
+plt.hist(simmedfrac,log=True)
 plt.axvline(datamedfrac)
 plt.xlabel(r'$\delta^2_\perp/\delta^2$')
 plt.savefig(pp,format='pdf')
 plt.clf()
 
+pp.close()
+pp = PdfPages('output25_sim'+tag+'/pvalues_perp.pdf')
 
 plt.hist(simmedabs)
 plt.axvline(datamedabs)
@@ -105,7 +176,7 @@ plt.savefig(pp,format='pdf')
 plt.clf()
 pp.close()
 
-wef
+wefw
 
 
 pkl_file = open('gege_data.pkl', 'r')
