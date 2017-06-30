@@ -20,7 +20,7 @@ f.close()
 
 # Partial derivatives with respect to av and ebv
 av=0.1
-ebv=0.1/2.5
+ebv=av/2.5
 A1= f99_band.A_X(r_v=av/ebv, ebv=ebv)
 
 # pkl_file = open('fitz.pkl', 'r')
@@ -48,6 +48,18 @@ dAdebv = (A3 - A1)/0.001
 
 print '{0[0]:6.2f}, {0[1]:6.2f}, {0[2]:6.2f}, {0[3]:6.2f}, {0[4]:6.2f}'.format(dAdAv)
 print '{0[0]:6.2f}, {0[1]:6.2f}, {0[2]:6.2f}, {0[3]:6.2f}, {0[4]:6.2f}'.format(dAdebv)
+
+# # vector of difference
+# av_=1.
+# ebv_=av/2.
+# A1_= f99_band.A_X(r_v=av_/ebv_, ebv=ebv_)
+# A2_= f99_band.A_X(r_v=(av_+0.01)/ebv, ebv=ebv_)
+# dAdAv_low = (A2_ - A1_)/0.01
+# A3_= f99_band.A_X(r_v=av_/(ebv+0.001), ebv=ebv_+0.001)
+# dAdebv_low = (A3_ - A1_)/0.001
+
+
+
 
 # av=0.1
 # ebv=0.1/3.1
@@ -94,6 +106,8 @@ c_n = []
 cs = []
 for s in ['gamma','gamma1','rho1']:
   c, cmin, cmax = numpy.percentile(fit[s]/((fit[s][:,1]-fit[s][:,2])[:,None]),(50,50-34,50+34),axis=0)
+  if s == 'rho1':
+    c, cmin, cmax = numpy.percentile(fit[s]/fit[s][:,0][:,None],(50,50-34,50+34),axis=0)
 
   print "{:6.2f}, {:6.2f}, {:6.2f}, {:6.2f}, {:6.2f}".format(c[0],c[1],c[2],c[3],c[4])
   cs.append(c)
@@ -224,8 +238,30 @@ plt.savefig(pp,format='pdf')
 pp.close()
 plt.close()
 
+AVconv = numpy.array(fit['k'][0,:])
+EBVconv = numpy.array(fit['k1'][0,:])
+
+# print tmat[0:2,0:2].T
+for ind2 in xrange(AVconv.shape[0]):
+  # print fit['k'][ind,ind2],fit['k1'][ind,ind2]
+  dum= numpy.dot(numpy.array([numpy.median(fit['k'][:,ind2]),numpy.median(fit['k1'][:,ind2])]),tmat[0:2,0:2].T)
+  AVconv[ind2]=dum[0]
+  EBVconv[ind2]=dum[1]
 
 
+# plt.hist(AVconv)
+# plt.show()
+
+# plt.hist(EBVconv)
+# plt.show()
+
+plt.scatter(AVconv,numpy.median(fit['rho1'][:,0][:,None]*fit['R'],axis=0))
+plt.show()
+
+plt.scatter(EBVconv,numpy.median(fit['rho1'][:,0][:,None]*fit['R'],axis=0))
+plt.show()
+
+wefwe
 # r1 = []
 # r2 = []
 # for ind in xrange(fit['gamma'].shape[0]):

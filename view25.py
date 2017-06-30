@@ -167,11 +167,11 @@ plt.savefig(pp,format='pdf')
 pp.close()
 plt.close()
 
-(y, ymin, ymax) = numpy.percentile(fit['rho1'][:,4][:,None]*fit['R'],(50,50-34,50+34),axis=0)
+(y, ymin, ymax) = numpy.percentile(fit['rho1'][:,0][:,None]*fit['R'],(50,50-34,50+34),axis=0)
 plt.errorbar(x1, y, xerr=[x1_err,x1_err],yerr=[y-ymin,ymax-ymin],fmt='o',alpha=0.2)
 plt.scatter(x1, y,s=1,alpha=0.8)
 plt.xlabel(r'$x_1$')
-plt.ylabel(r'$A_{\delta I}$')
+plt.ylabel(r'$A_{\delta U}$')
 plt.tight_layout()
 pp = PdfPages(dirname+"/x1D.pdf")
 plt.savefig(pp,format='pdf')
@@ -490,7 +490,7 @@ plt.hist([dustebv, extebv],normed=True,bins=20,
 # plt.hist([(fit['gamma'][:,1]-fit['gamma'][:,2])[:,None]*fit['k'] + 
 #   (fit['gamma1'][:,1]-fit['gamma1'][:,2])[:,None]*fit['k1'], (fit['rho1'][:,1]-fit['rho1'][:,2])[:,None]*fit['R']],normed=True,bins=20,
 #   label=[r'$E(B-V)$',r'$E_\delta(B-V)$'])
-plt.xlabel(r'$E(B-V)$',fontsize=20)
+plt.xlabel(r'$E(B-V)-E(B-V)|_0$',fontsize=20)
 plt.legend()
 pp = PdfPages(dirname+'/ebv.pdf')
 plt.savefig(pp,format='pdf')
@@ -523,11 +523,14 @@ bins = numpy.arange(-0.1,0.121,0.01)
 # # plt.hist(numpy.median(fit['Delta'],axis=0),bins,label='median',normed=True,alpha=0.5,width=0.01)
 # # plt.legend()
 
+print 'E_delta(B-V) median sd ',numpy.median(extebv,axis=0).std()
+print 'E_ext(B-V) median sd ',numpy.median(dustebv,axis=0).std()
+
 plt.hist( extebv.flatten(),normed=True,bins=bins,alpha=0.5,
   label='ideogram')
 plt.hist( numpy.median(extebv,axis=0),normed=True,bins=bins,alpha=0.5,width=0.005,
   label='median')
-plt.xlabel(r'$E_\delta(B-V)$',fontsize=20)
+plt.xlabel(r'$E_\delta(B-V)-E_\delta(B-V)|_0$',fontsize=20)
 plt.xlim((-.1,.12))
 plt.legend()
 pp = PdfPages(dirname+'/ebv_delta.pdf')
@@ -760,7 +763,6 @@ plt.savefig(pp,format='pdf')
 pp.close()
 plt.close()
 
-wefwe
 
 figure = corner.corner(temprho1,labels=[r"${\delta}_{U}$",r"${\delta}_{B}$",r"${\delta}_{V}$",r"${\delta}_{R}$",r"${\delta}_{I}$"],\
   truths=[0,0,0,0,0])
@@ -1056,14 +1058,14 @@ def format_fn2(tick_val, tick_pos):
 (y, ymin, ymax) = numpy.percentile(fit['rho1']/fit['rho1'][:,0][:,None],(50,50-34,50+34),axis=0)
 fig = plt.figure()
 ax = fig.add_subplot(111)
-ax.errorbar(numpy.arange(5),y-1,yerr=[y-ymin,ymax-y],fmt='o')
+ax.errorbar(numpy.arange(5),y,yerr=[y-ymin,ymax-y],fmt='o')
 ax.xaxis.set_major_formatter(FuncFormatter(format_fn2))
 ax.xaxis.set_major_locator(MaxNLocator(integer=True))
 ax.axhline(0,linestyle=':')
 ax.set_xlim((-0.5,4.5))
 ax.set_xlabel(r'Band $X$')
-ax.set_ylabel(r'$\frac{\delta_X}{\delta_U}-1$')
-ax.set_ylim((-4,1))
+ax.set_ylabel(r'$\frac{\delta_X}{\delta_U}$')
+ax.set_ylim((-1.5,1.2))
 plt.tight_layout()
 pp = PdfPages(dirname+'/deltaratio.pdf')
 plt.savefig(pp,format='pdf')

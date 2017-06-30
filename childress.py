@@ -5,6 +5,7 @@ from matplotlib.backends.backend_pdf import PdfPages
 from matplotlib import rc
 import pickle
 import cPickle
+import scipy.stats
 
 f = open('MJC_compile_SNdata.pkl','r')
 gal= pickle.load(f)
@@ -65,52 +66,82 @@ for j in xrange(len(i)):
 mass = numpy.array(mass)
 emass= numpy.array(emass)
 
-(x, xmin, xmax) = numpy.percentile(((fit['rho1'][:,0])[:,None])*fit['R'],(50,50-34,50+34),axis=0)
+# scaled = fit['rho1'][:,0][:,None]*(fit['R']-fit['R'][:,0][:,None])
+scaled = fit['rho1'][:,0][:,None]*fit['R']
+scaled = scaled[:,inda]
 
-plt.errorbar(mass,x[inda],xerr=[emass, emass], yerr=[x[inda]-xmin[inda],xmax[inda]-x[inda]],fmt='o')
-plt.ylabel(r'$A_{\delta U}$')
+ksarr=[]
+pvarr=[]
+wlow = numpy.where(mass < 10)[0]
+wbig = numpy.where(mass >= 10)[0]
+for i in xrange(scaled.shape[0]):
+  temp1,temp2= scipy.stats.ks_2samp(scaled[i,wlow],scaled[i,wbig])
+  print temp1,temp2
+  ksarr.append(temp1)
+  pvarr.append(temp2)
+ksarr=numpy.array(ksarr)
+pvarr=numpy.array(pvarr)
+
+plt.hist(pvarr)
+plt.xlabel(r'$p$-value')
+
+pp = PdfPages("output25/childress_pvalue.pdf")
+plt.savefig(pp,format='pdf')
+pp.close()
+plt.close()
+
+
+(x, xmin, xmax) = numpy.percentile(scaled,(50,50-34,50+34),axis=0)
+
+plt.errorbar(mass,x,xerr=[emass, emass], yerr=[x-xmin,xmax-x],fmt='o')
+plt.ylabel(r'$A_{\delta U}-A_{\delta U}|_0$')
 plt.xlabel(r'$\log{(M_{host}/M_{\odot})}$')
 
-
-ux = numpy.array([6.,10])
-wm = numpy.where(mass < 10)[0]
-# print r"${:9.3f} \pm {:9.3f}$".format((((fit['rho1'][:,1]-fit['rho1'][:,2])[:,None])*fit['R'][:,wm]).mean(),(((fit['rho1'][:,1]-fit['rho1'][:,2])[:,None])*fit['R'][:,wm]).std())
-(x, xmin, xmax) = numpy.percentile((((fit['rho1'][:,0])[:,None])*fit['R'][:,wm]),(50,50-34,50+34),axis=0)
-dx = (xmax-xmin)/2.
-dx2 = numpy.sum(1/dx**2)
-print r"${:9.4f} \pm {:9.4f}$".format(numpy.sum(x/dx**2)/dx2, 1/numpy.sqrt(dx2)) 
-plt.plot(ux, [numpy.sum(x/dx**2)/dx2,numpy.sum(x/dx**2)/dx2],color='black')
-plt.plot(ux, [numpy.sum(x/dx**2)/dx2-1/numpy.sqrt(dx2),numpy.sum(x/dx**2)/dx2-1/numpy.sqrt(dx2)],color='red')
-plt.plot(ux, [numpy.sum(x/dx**2)/dx2+1/numpy.sqrt(dx2),numpy.sum(x/dx**2)/dx2+1/numpy.sqrt(dx2)],color='red')
-
-
-ux = numpy.array([10,13])
-wm = numpy.where(mass > 10)[0]
-# print r"${:9.3f} \pm {:9.3f}$".format((((fit['rho1'][:,4])[:,None])*fit['R'][:,wm]).mean(),(((fit['rho1'][:,4])[:,None])*fit['R'][:,wm]).std())
-(x, xmin, xmax) = numpy.percentile((((fit['rho1'][:,0])[:,None])*fit['R'][:,wm]),(50,50-34,50+34),axis=0)
-dx = (xmax-xmin)/2.
-dx2 = numpy.sum(1/dx**2)
-print r"${:9.4f} \pm {:9.4f}$".format(numpy.sum(x/dx**2)/dx2, 1/numpy.sqrt(dx2)) 
-plt.plot(ux, [numpy.sum(x/dx**2)/dx2,numpy.sum(x/dx**2)/dx2],color='black')
-plt.plot(ux, [numpy.sum(x/dx**2)/dx2-1/numpy.sqrt(dx2),numpy.sum(x/dx**2)/dx2-1/numpy.sqrt(dx2)],color='red')
-plt.plot(ux, [numpy.sum(x/dx**2)/dx2+1/numpy.sqrt(dx2),numpy.sum(x/dx**2)/dx2+1/numpy.sqrt(dx2)],color='red')
-
-plt.xlim((6,13))
-plt.ylim((-0.1,0.1))
 pp = PdfPages("output25/childress.pdf")
 plt.savefig(pp,format='pdf')
 pp.close()
 plt.close()
 
+done
+
+ux = numpy.array([6,10])
 wm = numpy.where(mass < 10)[0]
+temp = scaled[:,wm].flatten()
+temp=temp[temp !=0]
+(x, xmin, xmax) = numpy.percentile(temp,(50,50-34,50+34))
+
+print r"${:9.4f}^{{ {:9.4f} }}_{{ {:9.4f} }}$".format(x,xmax-x,x-xmin) 
+plt.plot(ux, [x,x],color='black')
+plt.plot(ux, [xmax,xmax],color='red')
+plt.plot(ux, [xmin,xmin],color='red')
+
+
+ux = numpy.array([10,13])
+wm = numpy.where(mass[1:] > 10)[0]
+temp = scaled[:,wm].flatten()
+temp=temp[temp !=0]
+(x, xmin, xmax) = numpy.percentile(temp,(50,50-34,50+34))
+print r"${:9.4f}^{{ {:9.4f} }}_{{ {:9.4f} }}$".format(x,xmax-x,x-xmin) 
+plt.plot(ux, [x,x],color='black')
+plt.plot(ux, [xmax,xmax],color='red')
+plt.plot(ux, [xmin,xmin],color='red')
+
+plt.xlim((6,13))
+# plt.ylim((-0.1,0.1))
+pp = PdfPages("output25/childress.pdf")
+plt.savefig(pp,format='pdf')
+pp.close()
+plt.close()
+
+wm = numpy.where(mass[1:] < 10)[0]
 low = (((fit['rho1'][:,0])[:,None])*fit['R'][:,wm]).flatten()
-lowlim = numpy.percentile((((fit['rho1'][:,0])[:,None])*fit['R'][:,wm]),(50,50-34,50+34),axis=0)
+lowlim = numpy.percentile(scaled,(50,50-34,50+34),axis=0)
 lowmn = lowlim[2,:]+lowlim[1,:]/2
 lowsig = lowlim[2,:]-lowlim[1,:]/2
 print "${:6.1e} \pm {:6.1e}$".format(numpy.sum(lowmn/lowsig**2)/numpy.sum(1/lowsig**2), 1/numpy.sqrt(numpy.sum(1/lowsig**2)))
-wm = numpy.where(mass > 10)[0]
+wm = numpy.where(mass[1:] > 10)[0]
 hig = (((fit['rho1'][:,0])[:,None])*fit['R'][:,wm]).flatten()
-higlim = numpy.percentile((((fit['rho1'][:,0])[:,None])*fit['R'][:,wm]),(50,50-34,50+34),axis=0)
+higlim = numpy.percentile(scaled,(50,50-34,50+34),axis=0)
 higmn = higlim[2,:]+higlim[1,:]/2
 higsig = higlim[2,:]-higlim[1,:]/2
 print "${:6.1e} \pm {:6.1e}$".format(numpy.sum(higmn/higsig**2)/numpy.sum(1/higsig**2), 1/numpy.sqrt(numpy.sum(1/higsig**2)))
@@ -125,8 +156,8 @@ print "${:6.1e} \pm {:6.1e}$".format(numpy.sum(higmn/higsig**2)/numpy.sum(1/higs
 # print '{:6.2e} {:6.2e}'.format(hig.mean(), hig.std())
 
 
-plt.hist([low,hig],label=['low mass','high mass'],normed=True,range=[-0.1,0.1],bins=20)
-plt.xlabel(r'$A_{\delta U}$')
+plt.hist([lowlim[1],higlim[1]],label=['low mass','high mass'],normed=True,bins=20)
+plt.xlabel(r'$A_{\delta U}-A_{\delta U}|_0$')
 plt.legend()
 pp = PdfPages("output25/childress2.pdf")
 plt.savefig(pp,format='pdf')

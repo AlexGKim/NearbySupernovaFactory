@@ -54,7 +54,7 @@ q=q.T
 
 
 # two color parameter model
-for index in xrange(10):
+for index in xrange(20,50):
    pkl_file = open('simdata'+tag+'{}.pkl'.format(index), 'r')
    data = pickle.load(pkl_file)
    pkl_file.close()
