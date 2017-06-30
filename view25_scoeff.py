@@ -61,6 +61,7 @@ simperc = []
 simmedfrac = []
 simmedabs=[]
 tag="_null"
+# tag=""
 f = open('temp25_sim'+tag+'0.pkl','rb')
 (fit,_) = pickle.load(f)
 
@@ -82,7 +83,7 @@ simmedabs.append(dum[1])
 
 mega = numpy.array([fit['c'],fit['alpha'],fit['beta'],fit['eta'],fit['gamma'],fit['gamma1'],fit['rho1'],fit['L_sigma']])
 
-for index in xrange(1,20):
+for index in xrange(1,30):
     f = open('temp25_sim'+tag+'{}.pkl'.format(index),'rb')
     (fit,_) = pickle.load(f)
 
@@ -113,15 +114,31 @@ f = open('temp25.pkl','rb')
 dataperc = numpy.percentile(numpy.sum(fit_input['rho1']**2,axis=1),(50,50-34,50+34))
 datamedfrac, datamedabs = meanfrac(fit_input)
 
-plt.errorbar(xrange(20),simperc[:,0],yerr=[simperc[:,0]-simperc[:,1],simperc[:,2]-simperc[:,0]],fmt='.',color='blue')
-plt.errorbar(9.5,dataperc[0],yerr=[[dataperc[0]-dataperc[1]],[dataperc[2]-dataperc[0]]],fmt='.',color='red')
-plt.xlim([-1,20])
-plt.show()
+asort = numpy.argsort(numpy.append(simperc[:,0],dataperc[0]))
+resort = numpy.argsort(asort)
 
-plt.errorbar(xrange(20),simmedfrac[:,0],yerr=[simmedfrac[:,0]-simmedfrac[:,1],simmedfrac[:,2]-simmedfrac[:,0]],fmt='.',color='blue')
-plt.errorbar(9.5,datamedfrac[0],yerr=[[datamedfrac[0]-datamedfrac[1]],[datamedfrac[2]-datamedfrac[0]]],fmt='.',color='red')
-plt.xlim([-1,20])
-plt.show()
+pp = PdfPages('output25_sim'+tag+'/pvalues_delta2.pdf')
+plt.errorbar(resort[:-1],simperc[:,0],yerr=[simperc[:,0]-simperc[:,1],simperc[:,2]-simperc[:,0]],fmt='.',color='blue')
+plt.errorbar(resort[-1],dataperc[0],yerr=[[dataperc[0]-dataperc[1]],[dataperc[2]-dataperc[0]]],fmt='.',color='red')
+plt.xlim([-1,len(resort)])
+plt.xlabel('Simulation index')
+plt.ylabel(r'$\delta^2$')
+plt.savefig(pp,format='pdf')
+plt.clf()
+pp.close()
+
+pp = PdfPages('output25_sim'+tag+'/pvalues_relperp.pdf')
+asort = numpy.argsort(numpy.append(simmedfrac[:,0],datamedfrac[0]))
+resort = numpy.argsort(asort)
+
+plt.errorbar(resort[:-1],simmedfrac[:,0],yerr=[simmedfrac[:,0]-simmedfrac[:,1],simmedfrac[:,2]-simmedfrac[:,0]],fmt='.',color='blue')
+plt.errorbar(resort[-1],datamedfrac[0],yerr=[[datamedfrac[0]-datamedfrac[1]],[datamedfrac[2]-datamedfrac[0]]],fmt='.',color='red')
+plt.xlim([-1,len(resort)])
+plt.xlabel('Simulation index')
+plt.ylabel(r'$\delta_\perp^2 / \delta^2$')
+plt.savefig(pp,format='pdf')
+plt.clf()
+pp.close()
 
 wfeef
 
@@ -150,33 +167,33 @@ print (simperc< dataperc).sum(), simperc.shape[0], (simperc< dataperc).sum()*1./
 print (simmedfrac > datamedfrac).sum(), simmedfrac.shape[0]
 print (simmedabs > datamedabs).sum(), simmedabs.shape[0]
 
-pp = PdfPages('output25_sim'+tag+'/pvalues_delta2.pdf')
-plt.hist(simperc)
-plt.axvline(dataperc)
-plt.xlabel(r'$\delta^2$')
-plt.savefig(pp,format='pdf')
-plt.clf()
-pp.close()
+# pp = PdfPages('output25_sim'+tag+'/pvalues_delta2.pdf')
+# plt.hist(simperc)
+# plt.axvline(dataperc)
+# plt.xlabel(r'$\delta^2$')
+# plt.savefig(pp,format='pdf')
+# plt.clf()
+# pp.close()
 
 
-pp = PdfPages('output25_sim'+tag+'/pvalues_relperp.pdf')
-plt.hist(simmedfrac,log=True)
-plt.axvline(datamedfrac)
-plt.xlabel(r'$\delta^2_\perp/\delta^2$')
-plt.savefig(pp,format='pdf')
-plt.clf()
+# pp = PdfPages('output25_sim'+tag+'/pvalues_relperp.pdf')
+# plt.hist(simmedfrac,log=True)
+# plt.axvline(datamedfrac)
+# plt.xlabel(r'$\delta^2_\perp/\delta^2$')
+# plt.savefig(pp,format='pdf')
+# plt.clf()
 
-pp.close()
-pp = PdfPages('output25_sim'+tag+'/pvalues_perp.pdf')
+# pp.close()
+# pp = PdfPages('output25_sim'+tag+'/pvalues_perp.pdf')
 
-plt.hist(simmedabs)
-plt.axvline(datamedabs)
-plt.xlabel(r'$\delta^2_\perp$')
-plt.savefig(pp,format='pdf')
-plt.clf()
-pp.close()
+# plt.hist(simmedabs)
+# plt.axvline(datamedabs)
+# plt.xlabel(r'$\delta^2_\perp$')
+# plt.savefig(pp,format='pdf')
+# plt.clf()
+# pp.close()
 
-wefw
+# wefw
 
 
 pkl_file = open('gege_data.pkl', 'r')
