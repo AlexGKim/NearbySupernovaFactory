@@ -231,28 +231,28 @@ plt.close()
 
 
 
-# r1 = []
-# r2 = []
-# for ind in xrange(fit['gamma'].shape[0]):
-#   tmat = []
-#   cs = []
-#   for s in ['gamma','rho1']:
-#     c = fit[s][ind,:]/((fit[s][ind,1]-fit[s][ind,2]))
-#     cs.append(c)
+r1 = []
+r2 = []
+for ind in xrange(fit['gamma'].shape[0]):
+  tmat = []
+  cs = []
+  for s in ['gamma','rho1']:
+    c = fit[s][ind,:]/((fit[s][ind,1]-fit[s][ind,2]))
+    cs.append(c)
 
-#     y = numpy.array([numpy.dot(c,dAdAv),numpy.dot(c,dAdebv)])
+    y = numpy.array([numpy.dot(c,dAdAv),numpy.dot(c,dAdebv)])
 
-#     ans = numpy.linalg.solve(a,y)
+    ans = numpy.linalg.solve(a,y)
 
-#     tmat.append(ans)
+    tmat.append(ans)
 
-#   tmat = numpy.array(tmat)
-#   r1.append(tmat[0,1]/tmat[0,0])
+  tmat = numpy.array(tmat)
+  r1.append(tmat[0,1]/tmat[0,0])
   
 
-# print numpy.percentile(r1,(50,50-34,50+34))
-# plt.hist(r1)
-# plt.show()
+print numpy.percentile(r1,(50,50-34,50+34))
+plt.hist(r1)
+plt.show()
 
 
 

@@ -157,9 +157,9 @@ dum  = numpy.sqrt(dAdAv[0]**2+dAdAv[2]**2+dAdAv[4]**2)
 ax.plot([0,dAdAv[0]/dum],[0,dAdAv[2]/dum],[0,dAdAv[4]/dum],label=r'$a(X)$',ls='--')
 dum  = numpy.sqrt(dAdebv[0]**2+dAdebv[2]**2+dAdebv[4]**2)
 ax.plot([0,dAdebv[0]/dum],[0,dAdebv[2]/dum],[0,dAdebv[4]/dum],label=r'$b(X)$',ls='--')
-# crap = dAdAv + dAdebv*kappa1
-# dum  = numpy.sqrt(crap[0]**2+crap[2]**2+crap[4]**2)
-# ax.plot([0,crap[0]/dum],[0,crap[2]/dum],[0,crap[4]/dum],label=r'$a(X)+b(X)/{:4.2f}$'.format(1/kappa1),ls=':')
+crap = dAdAv + dAdebv*kappa1
+dum  = numpy.sqrt(crap[0]**2+crap[2]**2+crap[4]**2)
+ax.plot([0,crap[0]/dum],[0,crap[2]/dum],[0,crap[4]/dum],label=r'$a(X)+b(X)/{:4.2f}$'.format(1/kappa1),ls=':')
 crap = kappa3*dAdAv + dAdebv
 dum  = numpy.sqrt(crap[0]**2+crap[2]**2+crap[4]**2)
 ax.plot([0,crap[0]/dum],[0,crap[2]/dum],[0,crap[4]/dum],label=r'${:4.2f}a(X)+b(X)$'.format(kappa3),ls=':',color='black')
@@ -255,13 +255,13 @@ for ind2 in xrange(AVconv.shape[0]):
 # plt.hist(EBVconv)
 # plt.show()
 
-plt.scatter(AVconv,numpy.median(fit['rho1'][:,0][:,None]*fit['R'],axis=0))
-plt.show()
+# plt.scatter(AVconv,numpy.median(fit['rho1'][:,0][:,None]*fit['R'],axis=0))
+# plt.show()
 
-plt.scatter(EBVconv,numpy.median(fit['rho1'][:,0][:,None]*fit['R'],axis=0))
-plt.show()
+# plt.scatter(EBVconv,numpy.median(fit['rho1'][:,0][:,None]*fit['R'],axis=0))
+# plt.show()
 
-wefwe
+# wefwe
 # r1 = []
 # r2 = []
 # for ind in xrange(fit['gamma'].shape[0]):
@@ -287,7 +287,28 @@ wefwe
 
 
 
+r1 = []
+r2 = []
+for ind in xrange(fit['gamma'].shape[0]):
+  tmat = []
+  cs = []
+  for s in ['gamma','gamma1']:
+    c = fit[s][ind,:]/((fit[s][ind,1]-fit[s][ind,2]))
+    cs.append(c)
 
+    y = numpy.array([numpy.dot(c,dAdAv),numpy.dot(c,dAdebv)])
+
+    ans = numpy.linalg.solve(a,y)
+
+    tmat.append(ans)
+
+  tmat = numpy.array(tmat)
+  r1.append(tmat[0,0]/tmat[0,1])
+  
+
+print numpy.percentile(r1,(50,50-34,50+34))
+# plt.hist(r1)
+# plt.show()
 
 # Plot AV versus E(B-V) from the data
 
