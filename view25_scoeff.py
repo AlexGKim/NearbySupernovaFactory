@@ -83,7 +83,7 @@ simmedabs.append(dum[1])
 
 mega = numpy.array([fit['c'],fit['alpha'],fit['beta'],fit['eta'],fit['gamma'],fit['gamma1'],fit['rho1'],fit['L_sigma']])
 
-for index in xrange(1,30):
+for index in xrange(1,50):
     f = open('temp25_sim'+tag+'{}.pkl'.format(index),'rb')
     (fit,_) = pickle.load(f)
 
@@ -121,7 +121,7 @@ pp = PdfPages('output25_sim'+tag+'/pvalues_delta2.pdf')
 plt.errorbar(resort[:-1],simperc[:,0],yerr=[simperc[:,0]-simperc[:,1],simperc[:,2]-simperc[:,0]],fmt='.',color='blue')
 plt.errorbar(resort[-1],dataperc[0],yerr=[[dataperc[0]-dataperc[1]],[dataperc[2]-dataperc[0]]],fmt='.',color='red')
 plt.xlim([-1,len(resort)])
-plt.xlabel('Simulation index')
+plt.xlabel('Sorted index')
 plt.ylabel(r'$\delta^2$')
 plt.savefig(pp,format='pdf')
 plt.clf()
@@ -134,7 +134,7 @@ resort = numpy.argsort(asort)
 plt.errorbar(resort[:-1],simmedfrac[:,0],yerr=[simmedfrac[:,0]-simmedfrac[:,1],simmedfrac[:,2]-simmedfrac[:,0]],fmt='.',color='blue')
 plt.errorbar(resort[-1],datamedfrac[0],yerr=[[datamedfrac[0]-datamedfrac[1]],[datamedfrac[2]-datamedfrac[0]]],fmt='.',color='red')
 plt.xlim([-1,len(resort)])
-plt.xlabel('Simulation index')
+plt.xlabel('Sorted index')
 plt.ylabel(r'$\delta_\perp^2 / \delta^2$')
 plt.savefig(pp,format='pdf')
 plt.clf()
