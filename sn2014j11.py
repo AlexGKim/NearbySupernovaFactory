@@ -162,6 +162,11 @@ print myavebv
 newmat = numpy.dot(tmat.T, numpy.dot(ugamma, tmat))
 print " \\\\\n".join([" & ".join(map('{0:.3f}'.format, line)) for line in newmat])
 
+print myavebv[0]/myavebv[1], numpy.sqrt(newmat[0,0]/myavebv[1]**2 - 2*myavebv[0]*newmat[0,1]/myavebv[1]*3 + newmat[1,1]*myavebv[1]**4)
+
+dum = numpy.random.multivariate_normal(myavebv,newmat,1000)
+dum =numpy.percentile(dum[:,0]/dum[:,1],(50,50-34,50+34))
+print "{:5.2f}^{{+{:5.2f}}}_{{-{:5.2f}}}".format(dum[0],dum[2]-dum[0],dum[0]-dum[1])
 # sanity check
 # print "sanity check"
 # print "my model"

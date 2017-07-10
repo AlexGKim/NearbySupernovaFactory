@@ -518,6 +518,35 @@ pp.close()
 plt.close()
 
 
+
+bins=numpy.arange(-0.3,1,0.05)
+crap = fit['gamma'][:,2][:,None]*fit['k']
+crap = crap-crap[:,0][:,None]
+plt.hist(numpy.median(crap,axis=0),bins,label='median',normed=True,alpha=0.5,width=0.025)
+plt.hist(crap.flatten(),bins,label='ideogram',normed=True,alpha=0.5)
+plt.xlabel(r'$\gamma^0_2 k_0 - \gamma^0_2 k_0|_0\approx A^F_V|_{R^F=2.44}$')
+plt.legend()
+plt.tight_layout()
+pp = PdfPages(dirname+'/deltagamma0_med.pdf')
+plt.savefig(pp,format='pdf')
+pp.close()
+plt.close()
+
+bins=numpy.arange(-0.35,0.1,0.02)
+crap2 = fit['gamma1'][:,2][:,None]*fit['k1']
+crap2 = crap2-crap2[:,0][:,None]
+plt.hist(numpy.median(crap2,axis=0),bins,label='median',normed=True,alpha=0.5,width=0.01)
+plt.hist(crap2.flatten(),bins,label='ideogram',normed=True,alpha=0.5)
+plt.xlabel(r'$\gamma^1_2 k_1 - \gamma^1_2 k_1|_0$')
+plt.legend(loc=2)
+plt.tight_layout()
+pp = PdfPages(dirname+'/deltagamma1_med.pdf')
+plt.savefig(pp,format='pdf')
+pp.close()
+plt.close()
+
+wefwe
+
 bins = numpy.arange(-0.1,0.121,0.01)
 # # plt.hist(fit['Delta'].flatten(),bins,label='ideogram',normed=True,alpha=0.5)
 # # plt.hist(numpy.median(fit['Delta'],axis=0),bins,label='median',normed=True,alpha=0.5,width=0.01)

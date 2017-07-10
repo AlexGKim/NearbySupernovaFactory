@@ -9,6 +9,20 @@ import f99_band
 import emcee
 import matplotlib as mpl
 
+from matplotlib.patches import FancyArrowPatch
+from mpl_toolkits.mplot3d import proj3d
+
+class Arrow3D(FancyArrowPatch):
+    def __init__(self, xs, ys, zs, *args, **kwargs):
+        FancyArrowPatch.__init__(self, (0,0), (0,0), *args, **kwargs)
+        self._verts3d = xs, ys, zs
+
+    def draw(self, renderer):
+        xs3d, ys3d, zs3d = self._verts3d
+        xs, ys, zs = proj3d.proj_transform(xs3d, ys3d, zs3d, renderer.M)
+        self.set_positions((xs[0],ys[0]),(xs[1],ys[1]))
+        FancyArrowPatch.draw(self, renderer)
+
 mpl.rcParams['font.size'] = 14
 
 # Get the data
@@ -135,25 +149,83 @@ kappa2 = tmat[1,0]/tmat[1,1]
 tmat = numpy.transpose(tmat)
 
 
+
+
+r1 = []
+r2 = []
+for ind in xrange(fit['gamma'].shape[0]):
+  tmat = []
+  cs = []
+  for s in ['gamma','rho1']:
+    c = fit[s][ind,:]/((fit[s][ind,1]-fit[s][ind,2]))
+    cs.append(c)
+
+    y = numpy.array([numpy.dot(c,dAdAv),numpy.dot(c,dAdebv)])
+
+    ans = numpy.linalg.solve(a,y)
+
+    tmat.append(ans)
+
+  tmat = numpy.array(tmat)
+  r1.append(tmat[0,1]/tmat[0,0])
+  
+
+# print numpy.percentile(r1,(50,50-34,50+34))
+# plt.hist(r1)
+# plt.show()
+
+
+
 # Plot vectors in UVI
 from mpl_toolkits.mplot3d import Axes3D
 from matplotlib import rcParams
 fig = plt.figure()
 ax = fig.gca(projection='3d')
 dum  = numpy.sqrt(cs[0][0]**2+cs[0][2]**2+cs[0][4]**2)
-ax.plot([0,cs[0][0]/dum],[0,cs[0][2]/dum],[0,cs[0][4]/dum],label=r'$\gamma^0_X/(\gamma^0_B-\gamma^0_V)$')
+ax.plot([0,cs[0][0]/dum],[0,cs[0][2]/dum],[0,cs[0][4]/dum],label=r'$\hat{\gamma}^0$',color='blue')
+a = Arrow3D([0,cs[0][0]/dum],[0,cs[0][2]/dum],[0,cs[0][4]/dum], mutation_scale=10, 
+            arrowstyle="-|>",color='blue')
+ax.add_artist(a)
 dum  = numpy.sqrt(cs[1][0]**2+cs[1][2]**2+cs[1][4]**2)
-ax.plot([0,cs[1][0]/dum],[0,cs[1][2]/dum],[0,cs[1][4]/dum],label=r'$\gamma^1_X/(\gamma^1_B-\gamma^1_V)$')
+ax.plot([0,cs[1][0]/dum],[0,cs[1][2]/dum],[0,cs[1][4]/dum],label=r'$\hat{\gamma}^1$',color='green')
+a = Arrow3D([0,cs[1][0]/dum],[0,cs[1][2]/dum],[0,cs[1][4]/dum], mutation_scale=10, 
+            arrowstyle="-|>",color='green')
+ax.add_artist(a)
+
 dum  = numpy.sqrt(dAdAv[0]**2+dAdAv[2]**2+dAdAv[4]**2)
-ax.plot([0,dAdAv[0]/dum],[0,dAdAv[2]/dum],[0,dAdAv[4]/dum],label=r'$a(X)$',ls='--')
+ax.plot([0,dAdAv[0]/dum],[0,dAdAv[2]/dum],[0,dAdAv[4]/dum],label=r'$\hat{a(X)}$',ls='--',color='blue')
+a = Arrow3D([0,dAdAv[0]/dum],[0,dAdAv[2]/dum],[0,dAdAv[4]/dum],ls='--', mutation_scale=10, color='blue',
+            arrowstyle="-|>")
+ax.add_artist(a)
 dum  = numpy.sqrt(dAdebv[0]**2+dAdebv[2]**2+dAdebv[4]**2)
-ax.plot([0,dAdebv[0]/dum],[0,dAdebv[2]/dum],[0,dAdebv[4]/dum],label=r'$b(X)$',ls='--')
+ax.plot([0,dAdebv[0]/dum],[0,dAdebv[2]/dum],[0,dAdebv[4]/dum],label=r'$\hat{b(X)}$',ls='--', color='green')
+a = Arrow3D([0,dAdebv[0]/dum],[0,dAdebv[2]/dum],[0,dAdebv[4]/dum],ls='--', mutation_scale=10, color='green',
+            arrowstyle="-|>")
+ax.add_artist(a)
 crap = dAdAv + dAdebv*kappa1
 dum  = numpy.sqrt(crap[0]**2+crap[2]**2+crap[4]**2)
-ax.plot([0,crap[0]/dum],[0,crap[2]/dum],[0,crap[4]/dum],label=r'$a(X)+b(X)/{:4.2f}$'.format(1/kappa1),ls=':')
-crap = kappa2*dAdAv + dAdebv
-dum  = numpy.sqrt(crap[0]**2+crap[2]**2+crap[4]**2)
-ax.plot([0,crap[0]/dum],[0,crap[2]/dum],[0,crap[4]/dum],label=r'${:4.2f}a(X)+b(X)$'.format(kappa2),ls=':',color='black')
+ax.plot([0,crap[0]/dum],[0,crap[2]/dum],[0,crap[4]/dum],label=r'$a(X)+b(X)/{:4.2f}$'.format(1/kappa1),ls=':',color='black')
+a = Arrow3D([0,crap[0]/dum],[0,crap[2]/dum],[0,crap[4]/dum], mutation_scale=10, ls=':',color='black',
+            arrowstyle="-|>")
+ax.add_artist(a)
+
+
+# fig = plt.figure()
+# ax = fig.gca(projection='3d')
+# dum  = numpy.sqrt(cs[0][0]**2+cs[0][2]**2+cs[0][4]**2)
+# ax.plot([0,cs[0][0]/dum],[0,cs[0][2]/dum],[0,cs[0][4]/dum],label=r'$\gamma^0_X/(\gamma^0_B-\gamma^0_V)$')
+# dum  = numpy.sqrt(cs[1][0]**2+cs[1][2]**2+cs[1][4]**2)
+# ax.plot([0,cs[1][0]/dum],[0,cs[1][2]/dum],[0,cs[1][4]/dum],label=r'$\gamma^1_X/(\gamma^1_B-\gamma^1_V)$')
+# dum  = numpy.sqrt(dAdAv[0]**2+dAdAv[2]**2+dAdAv[4]**2)
+# ax.plot([0,dAdAv[0]/dum],[0,dAdAv[2]/dum],[0,dAdAv[4]/dum],label=r'$a(X)$',ls='--')
+# dum  = numpy.sqrt(dAdebv[0]**2+dAdebv[2]**2+dAdebv[4]**2)
+# ax.plot([0,dAdebv[0]/dum],[0,dAdebv[2]/dum],[0,dAdebv[4]/dum],label=r'$b(X)$',ls='--')
+# crap = dAdAv + dAdebv*kappa1
+# dum  = numpy.sqrt(crap[0]**2+crap[2]**2+crap[4]**2)
+# ax.plot([0,crap[0]/dum],[0,crap[2]/dum],[0,crap[4]/dum],label=r'$a(X)+b(X)/{:4.2f}$'.format(1/kappa1),ls=':')
+# crap = kappa2*dAdAv + dAdebv
+# dum  = numpy.sqrt(crap[0]**2+crap[2]**2+crap[4]**2)
+# ax.plot([0,crap[0]/dum],[0,crap[2]/dum],[0,crap[4]/dum],label=r'${:4.2f}a(X)+b(X)$'.format(kappa2),ls=':',color='black')
 
 # crap = -16*dAdAv - dAdebv
 # dum  = numpy.sqrt(crap[0]**2+crap[2]**2+crap[4]**2)
@@ -186,8 +258,6 @@ plt.close()
 
 
 # Plot vectors in BVR
-from mpl_toolkits.mplot3d import Axes3D
-from matplotlib import rcParams
 fig = plt.figure()
 ax = fig.gca(projection='3d')
 dum  = numpy.sqrt(cs[0][1]**2+cs[0][2]**2+cs[0][3]**2)
@@ -228,31 +298,6 @@ plt.tight_layout()
 plt.savefig(pp,format='pdf')
 pp.close()
 plt.close()
-
-
-
-r1 = []
-r2 = []
-for ind in xrange(fit['gamma'].shape[0]):
-  tmat = []
-  cs = []
-  for s in ['gamma','rho1']:
-    c = fit[s][ind,:]/((fit[s][ind,1]-fit[s][ind,2]))
-    cs.append(c)
-
-    y = numpy.array([numpy.dot(c,dAdAv),numpy.dot(c,dAdebv)])
-
-    ans = numpy.linalg.solve(a,y)
-
-    tmat.append(ans)
-
-  tmat = numpy.array(tmat)
-  r1.append(tmat[0,1]/tmat[0,0])
-  
-
-print numpy.percentile(r1,(50,50-34,50+34))
-plt.hist(r1)
-plt.show()
 
 
 
