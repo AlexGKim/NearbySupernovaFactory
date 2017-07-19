@@ -150,7 +150,7 @@ tmat = numpy.transpose(tmat)
 
 
 
-
+#range of R^F 
 r1 = []
 r2 = []
 for ind in xrange(fit['gamma'].shape[0]):
@@ -169,8 +169,8 @@ for ind in xrange(fit['gamma'].shape[0]):
   tmat = numpy.array(tmat)
   r1.append(tmat[0,1]/tmat[0,0])
   
-
-# print numpy.percentile(r1,(50,50-34,50+34))
+r1 = numpy.array(r1)
+print numpy.percentile(1/r1,(50,50-34,50+34))
 # plt.hist(r1)
 # plt.show()
 

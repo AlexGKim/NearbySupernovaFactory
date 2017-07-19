@@ -155,6 +155,31 @@ kappa3 = tmat[2,0]/tmat[2,1]
 #  = (ans00 k0 + ans10 k1)F0 + (ans01 k0 + ans11 k1)F1
 tmat = numpy.transpose(tmat)
 
+#range of R^F 
+
+r1 = []
+r2 = []
+for ind in xrange(fit['gamma'].shape[0]):
+  tmat = []
+  cs = []
+  for s in ['gamma','gamma1']:
+    c = fit[s][ind,:]/((fit[s][ind,1]-fit[s][ind,2]))
+    cs.append(c)
+
+    y = numpy.array([numpy.dot(c,dAdAv),numpy.dot(c,dAdebv)])
+
+    ans = numpy.linalg.solve(a,y)
+
+    tmat.append(ans)
+
+  tmat = numpy.array(tmat)
+  r1.append(tmat[0,1]/tmat[0,0])
+  
+r1 = numpy.array(r1)
+
+print numpy.percentile(1/r1,(50,50-34,50+34))
+
+wefwe
 
 # Plot vectors in UVI
 from mpl_toolkits.mplot3d import Axes3D
