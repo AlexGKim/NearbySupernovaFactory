@@ -579,7 +579,7 @@ spectral features: equivalent widths and line positions are considered as statis
 broadband colors.
 These intrinsic spectral  parameters may not deterministically predict magnitudes, but rather do so with some intrinsic dispersion,
 which in this section is not yet associated with a parameter. The intrinsic magnitudes are then
-modified by an extrinsic physical process (i.e.\ dust) to produce apparent magnitudes.
+modified by an extrinsic physical process (i.e.\ dust) to produce apparent magnitudes.  
 
 \subsection{Model}
 We assume 
@@ -646,7 +646,7 @@ EW_{Si}\\ EW_{Ca} \\ \lambda_{Si}
 The global parameters $c_X$, $\alpha_i$, $\beta_i$,  and $\eta_i$,  are the intercepts and slopes of the linear relationships that
 relate intrinsic magnitudes with the spectral-feature parameters.
 The global parameters $\pmb{\gamma}^0$, $\pmb{\gamma}^1$  are the slopes that connect the extrinsic-color
-parameters to observed magnitudes.
+parameters to observed magnitudes.  
 
 \color{purple}
 We impose
@@ -709,6 +709,8 @@ These degeneracies are not broken within the model, but rather are constrained b
 per-supernova parameters
 $\Delta$, $EW$, $\lambda$, $k$ are uncorrelated.  It is important to emphasize that the latent parameters $k$ and $\Delta$
 are non-trivially specified by these priors.
+
+We refer to this model as Model~I.
 
 \subsection{Results}
 \label{results:sec}
@@ -936,7 +938,7 @@ $ 0.044^{+ 0.005}_{-0.004}$
 \\
 \hline
 \end{tabular}
-\caption{68\% credible intervals for the Global Fit Parameters of the 2-Parameter Extrinsic Model in \S\ref{model:sec}.\label{global:tab}}
+\caption{68\% credible intervals for the Global Fit Parameters of the 2-Parameter Extrinsic Model~I in \S\ref{model:sec}.\label{global:tab}}
 \end{table}
 
 We find significant non-zero values for $\alpha$ and $\beta$, indicating that $EW_{Ca}$ and $EW_{Si}$ are indicators of broadband
@@ -1588,13 +1590,14 @@ despite the only approximate correspondence of the synthetic SNfactory and \cite
 \section{Supernova Model II: Two Extrinsic Parameters, One Intrinsic Parameter}
 \label{model2:sec}
 In \S\ref{model:sec} we show that the SNfactory data analyzed with an agnostic model with
-two extrinsic parameters produce
-magnitudes similar
-to two-parameter dust models that have been established for stars in the Milky Way, LMC, and SMC.
-An extension to our model is now added to explore the possibility of
-a possible additional
+two extrinsic parameters yield magnitude variations
+similar
+to those from  two-parameter dust models established for stars in the Milky Way, LMC, and SMC.
+In this Section, our model is extended
+to probe the existence of
+an additional
 color parameter.
-The extended model referred to as Model~II is written as
+The extended model, referred to as Model~II, is written as
 \begin{equation}
 \begin{pmatrix}
 U\\B\\V\\R\\I
@@ -1628,31 +1631,32 @@ EW_{Si}\\ EW_{Ca} \\ \lambda_{Si}
 \right).
 \label{dust2:eqn}
 \end{equation}
-In all aspects it is identical to the previous model except for the addition of the term $\pmb{\delta} D$,
-which affects the mean
-absolute magnitudes.  
-Each supernova has an intrinsic $D$ parameter that is linearly related to
-absolute magnitudes through global coefficients $\pmb{\delta}$.  As with $k_0$ and $k_1$,  $D$ is a latent supernova parameter whose existence is inferred from
+In all aspects Model~II is identical to the Model~I except for the addition of the term $\pmb{\delta} D$,
+which enters in the mean intrinsic
+absolute magnitudes.  Model~I is nested in Model~II at $\pmb{\delta}=0$.
+Each supernova has an intrinsic $D$ parameter that is linearly related to the intrinsic
+absolute magnitudes through the global coefficients $\pmb{\delta}$.  As with $k_0$ and $k_1$,  $D$ is a latent supernova parameter whose existence is inferred from
 its effects on broadband magnitudes.
 
 
-The $\pmb{\delta} D$ terms contribute to the mean of the Normal distribution in Eq.~\ref{ewsiv2:eqn}, together with the spectral-feature terms:
-for convenience these terms are referred to as ``intrinsic''.
-However, switching the placement of the
-$\pmb{\delta} D$ terms from Eq.~\ref{ewsiv2:eqn} to Eq.~\ref{dust2:eqn}, i.e.\ from intrinsic to extrinsic contributions,
+The $\pmb{\delta} D$ term contributes to the means of the Normal distribution in Eq.~\ref{ewsiv2:eqn}, together with the spectral-feature terms.
+However, switching the placement of 
+$\pmb{\delta} D$ term from Eq.~\ref{ewsiv2:eqn} to Eq.~\ref{dust2:eqn}, i.e.\ from an intrinsic to extrinsic contribution,
 does not significantly affect the results, meaning that data are not constraining enough
-to identify $\pmb{\delta} D$ as being physically intrinsic or extrinsic.
+to identify $\pmb{\delta} D$ as being physically intrinsic or extrinsic.  Nevertheless, $\pmb{\delta} D$ is referred to as ``intrinsic''  for convenience.
 
 \color{red}
 We impose
 $\langle D\rangle=0$
-to specify the (arbitrary) definition of zero color.  We assign a prior on the ensemble amplitudes of $D$ to break the
-degeneracy $\pmb{\delta} \rightarrow a\pmb{\delta}$, $D \rightarrow a^{-1}D$.  A sign degeneracy in $a$ remains.
-In contrast to $\pmb{\gamma}$, our MCMC chains migrate between these degenerate solutions in  $\pmb{\delta}$.  This
-degeneracy is preserved in the model.
+to specify the (arbitrary in our linear model) definition of zero color.  We assign a prior on the ensemble amplitudes of $D$ to break the
+degeneracy $\pmb{\delta} \rightarrow a\pmb{\delta}$, $D \rightarrow a^{-1}D$: as described
+in \S\ref{model:sec} this prior does not affect physics but aids in the convergence of fitting $D$ and $\pmb{\delta}$ as independent parameters.
+A sign degeneracy in $a$ remains.
+In contrast to $\pmb{\gamma}$, our MCMC chains migrate between sign-degenerate solutions in  $\pmb{\delta}$.  We make
+no attempt to resolve this degeneracy in the model.
 In the running of the Monte Carlo fit, the initial conditions and ranges for
-$\pmb{\gamma}^0$ and $\pmb{\gamma}^1$ were set to be in the neighborhood of the best fit of \S\ref{model:sec}
-to maintain their correspondence between the two models. 
+$\pmb{\gamma}^0$ and $\pmb{\gamma}^1$ were set to be in the neighborhood of the best fit of Model~I
+to maintain their correspondence between the two models. Our finite MCMC chains do not migrate away from these ranges.
 \color{black}
 
 In Model II, for $N$ supernovae there are $8N$ observables.  For the top-level model parameters, there are $3N$ spectral parameters, $3(N-2)$
@@ -1662,9 +1666,12 @@ $C_c$.  For $N=172$ supernovae, there are 1376 observables and 1242 top-level pa
 The resulting credible intervals of our parameters are given in Table~\ref{global2:tab}.  Comparison with the
 results of the 2-parameter extrinsic model given in Table~\ref{global:tab} shows that  parameters that are common to both
 are consistent well within 1$\sigma$ uncertainties.  The most significant change is in the reduction of the standard
-deviations of the magnitude residuals $\sigma_X$,
+deviations of the magnitude residuals $\sigma_X$
 \color{red}
-particularly in the $U$ and $B$ bands.
+in the $U$ and $B$ bands.  The   $<1\sigma$ changes in $\pmb{\gamma}$ lead to a slight increase in the 
+ \citetalias{1999PASP..111...63F}
+$R^F$-parameter 68\% credible interval
+from $2.26$--$2.63$ to $2.31$--$2.69$.
 \color{black}
 
 
@@ -1819,36 +1826,33 @@ $ 0.040^{+ 0.006}_{-0.005}$
 \\
 \hline
 \end{tabular}
-\caption{68\% credible intervals for the Global Fit Parameters of the Extrinsic--Intrinsic Model~II in \S\ref{model2:sec}.\label{global2:tab}}
+\caption{68\% credible intervals for the global fit Parameters of the Extrinsic--Intrinsic Model~II in \S\ref{model2:sec}.\label{global2:tab}}
 \end{table}
 
 \color{red}
 
-The significance of the $\pmb{\delta}$ parameters is shown pictorially in
-Figure~\ref{deltacorner:fig}, which shows their posteriors.
-Recall that fixing $\delta_X=0$ reverts this model into the two extrinsic-parameter model of \S\ref{model:sec},
-this null result lies on the 85\%-ile contour.
-Recall that
-the model has a  $\pmb{\delta} \rightarrow -\pmb{\delta}$, $D \rightarrow -D$ that results in the bimodal peaks in the distribution.
+The posteriors of the $\pmb{\delta}$ parameters are shown  in
+Figure~\ref{deltacorner:fig}.
+In the full 5-dimensional space,
+the point $\delta_X=0$  lies on the 85\%-ile contour.
+Model~II has a  $\pmb{\delta} \rightarrow -\pmb{\delta}$, $D \rightarrow -D$ that results in the bimodal peaks in the distribution.
 To aid in the visualization of the results,
-we break this degeneracy by imposing  that the one supernova with the highest signal-to-noise in $D$ be positive.
+we break this degeneracy by imposing  that the $D$ of the one supernova with the highest signal-to-noise be positive.
 The resulting posterior contours of $\pmb{\delta}$ with this additional
 condition are shown in Figure~\ref{deltacorner:fig}.
-The modes of $\pmb{\delta}$ are at $\mp 1.12$, $\mp 0.89$, $\mp 0.36$,  $\mp0.16$, $\pm0.21$.
-
+The modes of $\pmb{\delta}$ are at $\mp 1.12$, $\mp 0.89$, $\mp 0.36$,  $\mp0.16$, $\pm0.21$ in $UBVRI$ respectively.
+The values of $\delta_X/\delta_U-1$, statistics insensitive to the scaling (including the sign) degeneracy, are shown in Figure~\ref{deltaratio:fig}.
 
 \begin{figure}[htbp] %  figure placement: here, top, bottom, or page
    \centering
    \includegraphics[width=2.8in]{output25/delta_corner.pdf}
      \includegraphics[width=2.8in]{output25/delta_corner_flipped.pdf}
    \caption{Left:  Posterior contours for $\pmb{\delta}$ for Model~II.
-   Right: The same posteriors after imposing that  the one supernova with the highest signal-to-noise has positive value of $D$.
+   Right: The same posteriors after imposing that  the one supernova with  the $D$ of the one supernova with the highest signal-to-noise be positive.
      Lines for $\pmb{\delta}=0$ are overplotted.
    \label{deltacorner:fig}}
 \end{figure}
 
-An alternative visualization of the $\pmb{\delta}$ results can be seen in Figure~\ref{deltaratio:fig}, which
-shows  values of $\delta_X/\delta_U-1$, statistics insensitive to the scaling (including the sign) degeneracy.
 
 \begin{figure}[htbp] %  figure placement: here, top, bottom, or page
    \centering
@@ -1872,7 +1876,7 @@ The standard deviations of  the median $E_\gamma(B-V)$ and $E_\delta(B-V)$ are
 and 0.014
 %-----
 mag respectively.
-The range of $B-V$ colors is $> 5$ times larger for the external contribution; variation in $B-V$ color due to the intrinsic term is dwarfed by the extrinsic dust
+The range of $B-V$ colors is $> 5$ times larger for the external contribution than for the extrinsic dust
 component. 
 
 \begin{figure}[htbp] %  figure placement: here, top, bottom, or page
@@ -1903,18 +1907,21 @@ Cor(\Delta, EW_{Ca}, EW_{Si}, \lambda_{Si}, E_{\gamma^0}(B-V), E_{\gamma^1}(B-V)
 \end{pmatrix}.
 \end{multline}
 \color{black}
+The distributions for $\Delta$, $EW_{Ca}$, $EW_{Si}$, $\lambda_{Si}$, $E_{\gamma^0}(B-V)$, 
+$E_{\gamma^1}(B-V)$, and
+$E_{\delta}(B-V)$ for all Monte Carlo links for all supernovae are shown in Figure~\ref{perobject2:fig}.
+
 The correlation coefficients between the ``intrinsic'' and ``extrinsic'' parameters are
 \color{purple}
 not statistically significant.
 \color{black}
 This has two important implications:
-First, while in principle a single physical color effect can affect both intrinsic and extrinsic parameters, from the correlations
+First, while the degeneracies in the model could allow a single physical color effect to be
+distributed between both intrinsic and extrinsic parameters, from the correlations
 there is no evidence
 that this occurs.
-Second, the intrinsic term is not a second-order extrinsic correction.
-The distributions for $\Delta$, $EW_{Ca}$, $EW_{Si}$, $\lambda_{Si}$, $E_{\gamma^0}(B-V)$, 
-$E_{\gamma^1}(B-V)$, and
-$E_{\delta}(B-V)$ for all Monte Carlo links for all supernovae are shown in Figure~\ref{perobject2:fig}.
+Second, the intrinsic term cannot be attributed to non-linearity that is inherent to the broad-band extinction in dust models, since
+in that case a correlation between the  $k$'s and $D$ would be expected.
 
 \begin{figure}[htbp] %  figure placement: here, top, bottom, or page
    \centering
@@ -1966,18 +1973,38 @@ The $\pmb{\gamma}$ residuals $\vec{\epsilon}_{\gamma^0}$ and
 $\vec{\epsilon}_{\gamma^1} $
 quadratically contribute 0.03\% and 0.2\% to the total  lengths of the vectors, meaning that most
 of the $\pmb{\gamma}$'s project onto the plane predicted by the \citetalias{1999PASP..111...63F} dust model.
-(These are the same values found in the results of Model I in Eqs.\ \ref{trans_I:eqn}--\ref{res_I:eqn}.)
+These results are similar to those of Model I in Eqs.\ \ref{trans_I:eqn}--\ref{res_I:eqn}.
 \color{red}
 The $\vec{\epsilon}_{\delta}$ residual contributes 2\% of the length of the $\pmb{\delta}$ vector.
 \color{black}
 
 
 \color{red}
-The analysis is evaluated using simulated datasets.
-For one set of tests, we realize 20 random realizations of data with input  parameters equal to the median values found in
+The significance of the results is evaluated using simulated datasets.
+For one set of tests, we realize 50 random realizations of data with input  parameters equal to the median values found in
 \S\ref{model:sec} and the same noise as our data.  The input values of $\pmb{\delta}$ are set to zero.
+In Figure~\ref{pvalues_delta2:fig}, the squared amplitudes  $\pmb{\delta}^2$
+from the null realizations are compared with that of our fit to the data.  Depending on the choice either the  $-1$, 0, or $1$-sigma
+value, the data value is at the 90--98\%-ile.  Contrast these $p$-values with the 85\%-ile contour on which $\pmb{\delta}=0$ lies
+in the Bayesian posterior.
+
+\begin{figure}[htbp] %  figure placement: here, top, bottom, or page
+   \centering
+   \includegraphics[width=2.9in]{output25_sim_null/pvalues_delta2.pdf} 
+  \includegraphics[width=2.9in]{output25_sim_null/pvalues_relperp.pdf} 
+            \caption{ The squared length $\pmb{\delta}^2$ (left) and relative length perpendicular to the plane defined by $\pmb{\gamma}$ $\delta_\perp^2/\delta^2$ for 50 independent simulated data sets with input $\delta=0$.  The fits
+            are ordered by the median value, the null realizations are shown in blue and the result from our data is shown in red.
+            \label{pvalues_delta2:fig}}
+\end{figure}
+
+The significance of the close projection of $\pmb{\delta}$ onto the plane defined by the $\pmb{\gamma}$'s is shown
+in  Figure~\ref{pvalues_delta2:fig}, which plots the relative amplitude projected out of the plane $\delta_\perp^2/\delta^2$ for the null realizations
+and our data.  Our data has smaller value than all the realizations for $-1$, 0, or $1$-sigma values.  This alleviates
+the concern that our model and sampling spuriously produce $\pmb{\delta}$ closely aligned with the $\pmb{\gamma}$--plane, i.e.\
+the small  $\delta_\perp^2/\delta^2$ of our data is not expected to be due to noise at 98\%.
+
 The posterior for each realization is analyzed individually, and the posteriors of all realizations are stacked.  The stack is sensitive to
-biases in the best fit value, and is shown in Figure~\ref{simnulldelta:fig}.  The correlations between the parameters
+biases in the best fit value.  The stack of   $\pmb{\delta}$ is shown in Figure~\ref{simnulldelta:fig}.  The correlations between the parameters
 and the bimodality of each posterior results in biases in the stack, with
 modes at $\mp 0.67$, $\pm0.14$, $\pm0.13$,  $\mp0.03$, $\mp0.52$.
 The input length of $\pmb{\delta}$ is zero, therefore any statistical
@@ -1985,19 +2012,10 @@ fluctuation biases the value high.
 
 \begin{figure}[htbp] %  figure placement: here, top, bottom, or page
    \centering
-   \includegraphics[width=5.2in]{output25_sim_null/delta_corner.pdf} 
+   \includegraphics[width=5.2in]{output25_sim/delta_corner.pdf} 
             \caption{Stacked $\pmb{\delta}$ posterior contours for 20 independent simulated data sets with input $\pmb{\delta}=0$.
             \label{simnulldelta:fig}}
 \end{figure}
-
-\begin{figure}[htbp] %  figure placement: here, top, bottom, or page
-   \centering
-   \includegraphics[width=2.9in]{output25_sim_null/pvalues_delta2.pdf} 
-  \includegraphics[width=2.9in]{output25_sim_null/pvalues_relperp.pdf} 
-            \caption{ $\pmb{\delta}^2$ $\delta_\perp^2/\delta^2$ for 20 independent simulated data sets with input $\delta=0$.
-            \label{pvalues_delta2:fig}}
-\end{figure}
-
 We present here the results of one of the validation tests.  The input values of the supernova parameters are the median values from the analysis of real data.
 Ten realizations of simulated data are generated based on the data covariances, and then analyzed separately.   The posteriors of the ten realizations
 are aggregated and shown in Figures~\ref{simglobal1:fig}--\ref{simglobal5:fig}.  The input parameters are recovered with negligible bias
