@@ -140,7 +140,6 @@ plt.savefig(pp,format='pdf')
 plt.clf()
 pp.close()
 
-wfeef
 
 # bins=numpy.arange(0,4,0.1)
 # H,edges  = numpy.histogram(numpy.sum(fit_input['rho1']**2,axis=1),bins=bins)
