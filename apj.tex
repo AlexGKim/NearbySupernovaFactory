@@ -575,29 +575,31 @@ The data are given in \citet{2017Chotard}.
 
 We hypothesize that at peak brightness
 SN~Ia broadband magnitudes and colors are correlated with
-spectral features: equivalent widths and line positions are considered as statistics localized in wavelength whose measurements are insensitive to variations in
-broadband colors.
-These intrinsic spectral  parameters may not deterministically predict magnitudes, but rather do so with some intrinsic dispersion,
-which in this section is not yet associated with a parameter. The intrinsic magnitudes are then
-modified by an extrinsic physical process (i.e.\ dust) to produce apparent magnitudes.  
+spectral features: equivalent widths and line positions are considered in the model because their localization in wavelength
+makes their values insensitive to 
+broadband color variations.
+These intrinsic spectral  parameters may not deterministically predict magnitudes, but rather do so with some intrinsic dispersion.
+The per-supernova intrinsic magnitudes are then
+modified by an extrinsic physical process (i.e.\ dust) to produce apparent magnitudes that are subsequently measured by the observer.
 
 \subsection{Model}
-We assume 
-that  peak intrinsic $UBVRI$ magnitudes are linearly dependent
-on the
+In what is what is referred to as Model~I, we assume 
+that  peak intrinsic $UBVRI$ magnitudes of a supernova are linearly dependent
+on its
  equivalent widths of the CaII H\&K and SiII$\lambda$4141 spectral features
-$EW_{Ca}$, $EW_{Si}$,
-and $\lambda_{Si}$ the wavelength of the minimum of 
-the SiII$\lambda6355$ feature:
+$EW_{Ca}$ and $EW_{Si}$,
+and the wavelength of the minimum of 
+the SiII$\lambda6355$ feature $\lambda_{Si}$:
 these spectral features are associated with SN~Ia  spectroscopic diversity  
 \citep{2006PASP..118..560B, 2008A&A...492..535A, 2009A&A...500L..17B, 2009PASP..121..238B, 2009ApJ...699L.139W, 2011ApJ...729...55F}.
 The explicit omission of light-curve shape in our model is compensated by its proxy,
 $EW_{Si}$, at peak brightness
-\citep{2008A&A...492..535A, 2011A&A...529L...4C}. 
-Residual dispersion is described by a Normal distribution with a parameterized covariance matrix
+\citep{2008A&A...492..535A, 2011A&A...529L...4C}. On top of these feature-dependent magnitudes, intrinsic dispersion
+gives each supernova a magnitude contribution drawn from a Normal distribution with a parameterized covariance matrix
 $C_c$.  A grey magnitude offset, $\Delta$, is included for each supernova
-to capture intrinsic dispersion and peculiar-velocity errors introduced when converting fluxes to luminosity.
-The observed magnitudes are linearly dependent on the
+to capture band-independent intrinsic dispersion, while also absorbing peculiar-velocity errors introduced when converting
+flux data to luminosity.
+The apparent magnitudes are the sum of the intrinsic magnitudes plus additional terms that are linearly dependent on the
 extrinsic-color parameters $k_0$ and $k_1$.  
 The observables
 $U_o, B_o, V_o, R_o, I_o$, $EW_{Ca,o}$, $EW_{Si,o}$, $\lambda_{Si,o}$
@@ -606,10 +608,10 @@ have Gaussian measurement uncertainty with covariance $C$.
 Unlike the parameters associated with
 the spectral measurements, $EW_{Ca}$, $EW_{Si}$ and $\lambda_{Si}$,  the latent
 parameters $k_0$ and $k_1$ are not directly associated
-with observables but are rather drawn from the set of peak magnitudes.
-The model 
-likelihood density
-is written as
+with observables but rather are inferred as part of the analysis.
+The
+likelihood density for the described model
+is
 \begin{equation}
 \begin{pmatrix}
 U\\B\\V\\R\\I
@@ -643,46 +645,65 @@ EW_{Si}\\ EW_{Ca} \\ \lambda_{Si}
 \right).
 \label{dust:eqn}
 \end{equation}
-The global parameters $c_X$, $\alpha_i$, $\beta_i$,  and $\eta_i$,  are the intercepts and slopes of the linear relationships that
+The global parameter vectors
+$\mathbf{c}$ (where $\mathbf{c}=(c_U, c_B, c_V, c_R, c_I) $),
+$\pmb{\alpha}$, $\pmb{\beta}$,  and $\pmb{\eta}$,  are the intercepts and slopes of the linear relationships that
 relate intrinsic magnitudes with the spectral-feature parameters.
-The global parameters $\pmb{\gamma}^0$, $\pmb{\gamma}^1$  are the slopes that connect the extrinsic-color
-parameters to observed magnitudes.  
+The global parameter vectors $\pmb{\gamma}^0$, $\pmb{\gamma}^1$  are the slopes that connect the extrinsic-color
+parameters to apparent magnitudes.  
 
 \color{purple}
-We impose
+The model as written  has degeneracies that need to be constrained.
+The model does not specify the absolute magnitude nor the intrinsic color of a supernova that has no extrinsic color contribution,
+so we fix them to the samples by imposing
 \begin{equation}
 \langle \Delta \rangle=0, \langle k_0 \rangle=0, \langle k_1 \rangle=0.
 \end{equation}
-These conditions specify the definition of absolute magnitude and zero color relative to which the color excess is measured:
-in our linear model these values are otherwise unconstrained.
-The model contains terms like $\pmb{\gamma} k$, which lead to the degeneracy $\pmb{\gamma} \rightarrow a\pmb{\gamma}$, $k \rightarrow a^{-1} k$.
-While the physical results are independent of this scaling, we impose a prior on the rms of $k$ to aid the convergence during model fitting.
-This prior does not specify the sign of $a$, which leaves a degeneracy.  As will be seen, the signal-to-noise in $\pmb{\gamma}$ is sufficiently
-high that our finite MCMC chains do not migrate between the degenerate solutions; for convenience
-we impose 
+The model contains products of latent parameters,
+like $\pmb{\gamma} k$, which lead to the degeneracy $\pmb{\gamma} \rightarrow a\pmb{\gamma}$, $k \rightarrow a^{-1} k$.
+To aid in the convergence of $\pmb{\gamma}$ and $k$ we impose a prior on the rms of $k$, but
+our physical interpretations are independent of this scaling.
+This prior does not specify the sign of $a$, which leaves a parity degeneracy.  As will be seen, the signal-to-noise in $\pmb{\gamma}$ is sufficiently
+high that our finite MCMC chains do not migrate between the degenerate solutions so practically this is not a problem; for convenience
+we thus impose 
 \begin{equation}
 \gamma^0_U > 0, \gamma^1_U < 0.
 \end{equation}
-to exclude degenerate posterior space
-associated
-with the $\pm$ sign.
-
-The combinations $\pmb{\gamma}^0$--$k_0$ and $\pmb{\gamma}^1$--$k_1$ are degenerate with
-each other under exchange of the 0 and 1 indices. For a cleaner presentation of our results, 
+%to exclude degenerate posterior space
+%associated
+%with the $\pm$ sign.
+As  in mixture models, the combinations $\pmb{\gamma}^0 k_0$ and $\pmb{\gamma}^1 k_1$ terms are degenerate under exchange of the 0 and 1 indices. For a cleaner presentation of our results, 
 we break that degeneracy  by setting consistent initial conditions that succeed in keeping indices consistent over all analysis chains.  
 \color{black}
 
-For $N$ supernovae there are $8N$ observables.  For the top-level model parameters, there are $3N$ spectral parameters, $2(N-2)$
-color parameters, $(N-1)$ magnitude offsets,  $5 \times 6$ global coefficients, and $10$ parameters that describe the intrinsic
-$C_c$.  For $N=172$ supernovae, there are 1376 observables and 1067 top-level independent parameters.
+
+There remain degeneracies in the model.  One is illustrated by the  transformations $\Delta \rightarrow \Delta  + \epsilon_\Delta$,
+ $\pmb{\gamma}^0 \rightarrow \pmb{\gamma}^0  + \epsilon_{\gamma^0}$, $\pmb{\gamma}^1 \rightarrow \pmb{\gamma}^1 + \epsilon_{\gamma^1}$
+ under the condition
+$$
+\epsilon_\Delta  +  \epsilon_{\gamma^0} k_0+  \epsilon_{\gamma^1} k_1=0,
+$$
+i.e.\ shifts in the global coefficients $\pmb{\gamma}$ can be compensated by shifts in $\pmb{\Delta}$ for each supernova while maintaining 
+$\langle \Delta \rangle=0$.
+Another degeneracy is illustrated by $k_0 \rightarrow k_0 + (EW_{Ca}-\langle EW_{Ca}\rangle)\epsilon$,
+$\pmb{\alpha} \rightarrow \pmb{\alpha} - \pmb{\gamma} \epsilon$, $\mathbf{c} \rightarrow \mathbf{c} + \langle EW_{Ca}\rangle \epsilon$, i.e. the
+linear external terms can leak into the linear spectral feature corrections.
+These degeneracies are not broken within the model, but rather are constrained by the priors, in which the
+per-supernova parameters
+$\Delta$, $EW$, $\lambda$, $k$ are uncorrelated. 
 
 
-Having the intrinsic dispersion, $C_c$, as fit parameters seemingly introduces degeneracy in the model, as magnitude and color variation
+The parameterized intrinsic dispersion, $C_c$, seemingly introduces degeneracy in the model, as magnitude and color variation
 ascribed to $\Delta$, $\pmb{\gamma}^0 k_0$, and $\pmb{\gamma}^1 k_1$ could also be attributed to intrinsic dispersion.  There are several features of the model
 that drive the assignation of variations away from $C_c$:  Maximizing the posterior disfavors the increase of $\det{(C_c)}$;
 The distributions of $\Delta$, $k_0$, and $k_1$ turn out to
 be non-Gaussian, and so are not well described by the Normal covariance we impose in $C_c$; the grey magnitude offsets, $\Delta$, would appear as a constant
 in all elements of the covariance matrix, which is disfavored for the Bayesian prior selected for $C_c$.
+
+
+For $N$ supernovae there are $8N$ observables.  For the top-level model parameters, there are $3N$ spectral parameters, $2(N-2)$
+color parameters, $(N-1)$ magnitude offsets,  $5 \times 6$ global coefficients, and $10$ parameters that describe the intrinsic
+$C_c$.  For $N=172$ supernovae, there are 1376 observables and 1067 top-level independent parameters.
 
 In a Bayesian analysis such as this the priors must be described.  A flat prior is used for all parameters except
 for the covariance matrix $C_c$, which is constructed from a correlation matrix with  $\nu=4$  LKJ prior\footnote{
@@ -694,24 +715,7 @@ This covariance matrix prior is recommended by STAN \citep{stan}, the Monte Carl
  We find that imposing a stricter assumption of a
  diagonal covariance matrix, with no reference to a correlation matrix with LKJ prior, produces little change in the posteriors of
  the other parameters.
-
-There remain degeneracies in the model.  One is illustrated by the  transformations $\Delta \rightarrow \Delta  + \epsilon_\Delta$,
- $\pmb{\gamma}^0 \rightarrow \pmb{\gamma}^0  + \epsilon_{\pmb{\gamma}^0}$, $\pmb{\gamma}^1 \rightarrow \pmb{\gamma}^1 + \epsilon_{\pmb{\gamma}^1}$under the condition
-$$
-\epsilon_\Delta  +  \epsilon_{\pmb{\gamma}^0} k_0+  \epsilon_{\pmb{\gamma}^1} k_1=0,
-$$
-i.e.\ shifts in the global coefficients $\pmb{\gamma}$ can be compensated by shifts in $\Delta$ for each supernova while maintaining 
-$\langle \Delta \rangle=0$.
-Another degeneracy is illustrated by $k_0 \rightarrow k_0 + (EW_{Ca}-\langle EW_{Ca}\rangle)\epsilon$,
-$\alpha \rightarrow \alpha - \pmb{\gamma} \epsilon$, $c \rightarrow c + \langle EW_{Ca}\rangle \epsilon$, i.e. the
-linear external terms can leak into the linear spectral feature corrections.
-These degeneracies are not broken within the model, but rather are constrained by the priors, in which the
-per-supernova parameters
-$\Delta$, $EW$, $\lambda$, $k$ are uncorrelated.  It is important to emphasize that the latent parameters $k$ and $\Delta$
-are non-trivially specified by these priors.
-
-We refer to this model as Model~I.
-
+ 
 \subsection{Results}
 \label{results:sec}
 The posterior of the model parameters is evaluated using Hamiltonian Monte Carlo as implemented in
@@ -734,39 +738,39 @@ remain consistent.
 \begin{figure}[htbp] %  figure placement: here, top, bottom, or page
    \centering
    \includegraphics[width=5.2in]{output11/coeff0.pdf} 
-            \caption{Model~I posterior contours for $c$, $\alpha$, $\beta$, $\eta$, $\pmb{\gamma}^0$, $\pmb{\gamma}^1$, and $\sigma$ in the $U$ band.
+            \caption{Model~I posterior contours for $\mathbf{c}$, $\pmb{\alpha}$, $\pmb{\beta}$, $\pmb{\eta}$, $\pmb{\gamma}^0$, $\pmb{\gamma}^1$, and $\sigma$ in the $U$ band.
             The contours shown here and in future plots represent 1-$\sigma$ in the parameter distribution (i.e.\ they should be
             projected onto the corresponding 1-d parameter axis), not to 68\%, 95\%, etc.\
-            enclosed probability.  Lines for zero value for $\alpha$, $\beta$, $\eta$, $\pmb{\gamma}^0$, $\pmb{\gamma}^1$, and $\sigma$ are shown for reference --
-            in many cases they are outside the range of the plot.
+            enclosed probability.  Lines for zero value for $\alpha_U$, $\beta_U$, $\eta$, $\gamma_U^0$, $\gamma_U^1$, and $\sigma_U$ are shown for reference --
+            in most cases they are outside the range of the plot.
             \label{global1:fig}}
 \end{figure}
 
 \begin{figure}[htbp] %  figure placement: here, top, bottom, or page
    \centering
    \includegraphics[width=5.2in]{output11/coeff1.pdf} 
-            \caption{Posterior contours for $c$, $\alpha$, $\beta$, $\eta$, $\pmb{\gamma}^0$, $\pmb{\gamma}^1$, and $\sigma$ in the $B$ band, from Model~I.
+            \caption{Model~I posterior contours for $\mathbf{c}$, $\pmb{\alpha}$, $\pmb{\beta}$, $\pmb{\eta}$,  $\pmb{\gamma}^0$, $\pmb{\gamma}^1$, and $\sigma$ in the $B$ band.
  \label{global2:fig}}
 \end{figure}
 
 \begin{figure}[htbp] %  figure placement: here, top, bottom, or page
    \centering
    \includegraphics[width=5.2in]{output11/coeff2.pdf} 
-            \caption{Posterior contours for $c$, $\alpha$, $\beta$, $\eta$, $\pmb{\gamma}^0$, $\pmb{\gamma}^1$, and $\sigma$ in the $V$ band, from Model~I.
+            \caption{Model~I posterior contours for $\mathbf{c}$, $\pmb{\alpha}$, $\pmb{\beta}$, $\pmb{\eta}$, $\pmb{\gamma}^0$, $\pmb{\gamma}^1$, and $\sigma$ in the $V$ band.
  \label{global3:fig}}
 \end{figure}
 
 \begin{figure}[htbp] %  figure placement: here, top, bottom, or page
    \centering
       \includegraphics[width=5.2in]{output11/coeff3.pdf} 
-            \caption{Posterior contours for $c$, $\alpha$, $\beta$, $\eta$, $\pmb{\gamma}^0$, $\pmb{\gamma}^1$, and $\sigma$ in the $R$ band, from Model~I.
+            \caption{Model~I posterior contours for  $\mathbf{c}$, $\pmb{\alpha}$, $\pmb{\beta}$, $\pmb{\eta}$,  $\pmb{\gamma}^0$, $\pmb{\gamma}^1$, and $\sigma$ in the $R$ band.
  \label{global4:fig}}
 \end{figure}
 
 \begin{figure}[htbp] %  figure placement: here, top, bottom, or page
    \centering
          \includegraphics[width=5.2in]{output11/coeff4.pdf} 
-            \caption{Posterior contours for $c$, $\alpha$, $\beta$, $\eta$, $\pmb{\gamma}^0$, $\pmb{\gamma}^1$, and $\sigma$ in the $I$ band, from Model~I.
+            \caption{Model~I posterior contours for  $\mathbf{c}$, $\pmb{\alpha}$, $\pmb{\beta}$, $\pmb{\eta}$, $\pmb{\gamma}^0$, $\pmb{\gamma}^1$, and $\sigma$ in the $I$ band.
  \label{global5:fig}}
 \end{figure}
 
@@ -777,7 +781,7 @@ For four selected colors, a plot of the
 observed versus deduced intrinsic colors and the histogram of their differences
 \color{black}
 are shown in Figure~\ref{residual:fig}. 
-There is no evidence of a catastrophic fit nor of extreme
+There is no evidence of a catastrophically poor model predictions nor of extreme
 outlying data.
 
 \begin{figure}[htbp] %  figure placement: here, top, bottom, or page
@@ -951,7 +955,7 @@ in Table~\ref{global:tab}.
 Values of zero signify no color changes associated with magnitude changes.
 Both $EW_{Ca}$ and $EW_{Si}$ are associated with color changes, though not in $B-V$ specifically.
 We do not detect a significant association between
-$\lambda_{Si}$ and color with this model.
+$\lambda_{Si}$ and color.
 
 \color{purple}
 The fit $\Delta$'s are highly correlated between supernovae.  To aid in visualization, we remove much of this
@@ -976,8 +980,9 @@ Of the three extreme outliers, the supernovae with largest and third largest $\D
    \label{hist:fig}}
 \end{figure}
 
-Non-trivial residual magnitude dispersions are captured in $C_c$.  The diagonal elements are captured by the $\sigma$ parameters;
-the residual intrinsic dispersion ranges from
+Non-trivial residual magnitude dispersions are captured in $C_c$.  The square
+root of the diagonal elements are denoted as $\sigma$, which
+range from
 $\sim 0.01$ to 0.06 mag, significantly smaller
 than the dispersion in $\Delta$.
 \color{purple}
@@ -1074,7 +1079,7 @@ These color variances are smaller than those derived by \citet{2003A&A...404..90
 \color{purple}
 %model11_rubin.py
 Having no intrinsic color dispersion is disfavored, and not allowing for them can have important consequences.  Running an analysis assuming no intrinsic dispersion (replacing the probabilistic intrinsic magnitudes in Eqn.~\ref{ewsiv:eqn}
-with a strict equality), we find significant shifts in the inferred slopes and smaller statistical uncertainties.
+with a strict equality), we find significant shifts in all slope parameters  and smaller statistical uncertainties.
 \color{black}
 
 Each supernova is described by its parameters $EW_{Ca}$, $EW_{Si}$, $\lambda_{Si}$, $E_{\gamma^0}(B-V)=(\gamma^0_B-\gamma^0_V)k_0$, and
@@ -2242,7 +2247,7 @@ regression dilution \citep{spearman04}.
 
 \subsection{Light Curve Shape}
 Our models do not explicitly include light-curve shape, which is known to track SN~Ia diversity.
-We now examine this in more depth using the intrinsic--extrinsic model of \S\ref{model2:sec}.
+We now examine this in more depth using the intrinsic--extrinsic Model~II of \S\ref{model2:sec}.
 The correlation between $EW_{Si}$ and the SALT2 $x_1$ light-curve shape parameter is verified
 for our sample \citep{2017Chotard}.
 On the other hand, there is no such correlation seen between $A_{\delta I} = \delta_I D$ and $x_1$, as shown in Figure~\ref{x1:fig}. 
