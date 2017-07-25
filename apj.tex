@@ -1135,11 +1135,6 @@ is
 $2.5 \log{(50/701)} \sim 0.08$ mags.   The implied span in $U$ magnitude is  0.21~mag, so $\alpha_U$ cannot be completely due to the 
 presence of the line itself.
 
-\color{purple}
-For brevity, we do not present here the analysis of simulated data used to validate and quantify bias in our results.
-The simulation tests in \S\ref{model2:sec} are representative for both Model~1 of this Section and Model~2 of the subsequent section.
-\color{black}
-
 \subsection{The Two Extrinsic Per-Supernova Parameters $k_0$ and $k_1$}
 The two sets of  $\pmb{\gamma}^i$ parameters  are significantly non-zero. 
 None of the 20000 links of 
@@ -1234,36 +1229,38 @@ The 2-parameter linear model
 A_X = a(X)  A_V + b(X) E(B-V)
 \label{f99:eqn}
 \end{equation}
-approximately describes dust models \citep[e.g][]{1989ApJ...345..245C}.
+approximately describes dust models \citep[e.g.][]{1989ApJ...345..245C}.
 For the case of
-$R^F=2.5$ and $A^F_V=0.1$,
-and the measurement of the SALT2
+$R^F=2.5$ and $A^F_V=0.1$ dust attenuating light from the SALT2
 \citet{2007A&A...466...11G} $s=1$, $x_1=0$ SN~Ia template at $B$-band peak, the \citetalias{1999PASP..111...63F} model
 gives
-$a(U,B,V,R,I)=\{0.96,   1.00,   1.00,   0.97,   0.77\}$ and $b(U,B,V,R,I)=\{  1.77,   0.98,   0.12,  -0.50,  -0.53\}$.
-The $F$ superscript is added to distinguish parameters of the \citetalias{1999PASP..111...63F} model.
+$\mathbf{a} = (0.96,   1.00,   1.00,   0.97,   0.77)$ and $\mathbf{b}=(  1.77,   0.98,   0.12,  -0.50,  -0.53)$.
+The $F$ superscript distinguishes parameters of the \citetalias{1999PASP..111...63F} model.
 Over the ranges of
  $R^F$ and $A^F_V$,
 and the wavelengths under consideration,  the values of the elements of $a$ and $b$ change but only by $<5$\%;
 \color{red}
-for $0\le A^F_V\le 1$ and $2 \le R^F \le 3.5$, the largest error amplitude in Eqn.~\ref{f99:eqn} is $<0.008$ mag.
+for $0\le A^F_V\le 1$ and $2 \le R^F \le 3.5$, the largest error in Eqn.~\ref{f99:eqn} has amplitude $<0.008$ mag.
 \color{black}
 
-Our model can be expressed as
+The extrinsic contribution to our model can be re-expressed to have a similar parameterization
 \begin{equation}
-A_X = \frac{\gamma^0_X}{\gamma^0_B-\gamma^0_V}  E_{\gamma^0}(B-V) +  \frac{\gamma^1_X}{\gamma^1_B-\gamma^1_V}  E_{\gamma^1}(B-V).
+A_X = \frac{\gamma^0_X}{\gamma^0_B-\gamma^0_V}  E_{\gamma^0}(B-V) +  \frac{\gamma^1_X}{\gamma^1_B-\gamma^1_V}  E_{\gamma^1}(B-V),
 \end{equation}
-Our median-fit values for the $\pmb{\gamma}$ coefficients,
+where $E_{\gamma^i}(B-V) \equiv  (\gamma^i_B-\gamma^i_V)k_i$.
+Our median-fit values for the $\pmb{\gamma}$ coefficients are
 %---- fitz11.py
-$\frac{\gamma^0_X}{\gamma^0_B-\gamma^0_V}  =\{4.80 ,   3.89,   2.89,   2.22,   1.59\}$ and
-$ \frac{\gamma^1_X}{\gamma^1_B-\gamma^1_V}=\{-3.83 ,  -4.42,  -5.42,  -5.15,  -4.71\}$,
+$\frac{\pmb{\gamma}^0}{\gamma^0_B-\gamma^0_V}  =(4.80 ,   3.89,   2.89,   2.22,   1.59)$ and
+$ \frac{\pmb{\gamma}^1}{\gamma^1_B-\gamma^1_V}=(-3.83 ,  -4.42,  -5.42,  -5.15,  -4.71)$.
 %----
-can be transformed to a basis composed of the $a(X)$ and $b(X)$ vectors plus a residual vector perpendicular to $a$ and $b$.
+
+Our model $\gamma$-based vectors can be written in terms of the 
+dust-based $a(X)$ and $b(X)$ vectors plus a residual vector perpendicular to $\mathbf{a}$ and $\mathbf{b}$.
 The result is
 \begin{equation}
 \begin{pmatrix}
- \frac{\gamma^0_X}{\gamma^0_B-\gamma^0_V} \\
-\frac{\gamma^1_X}{\gamma^1_B-\gamma^1_V} 
+ \frac{\pmb{\gamma}^0}{\gamma^0_B-\gamma^0_V} \\
+\frac{\pmb{\gamma}^1}{\gamma^1_B-\gamma^1_V} 
 \end{pmatrix}=
 \begin{pmatrix}
 \begin{array}{rr}
@@ -1272,37 +1269,38 @@ The result is
 \end{array}
 \end{pmatrix} 
 \begin{pmatrix}
-a(X) \\
-b(X)
+\mathbf{a} \\
+\mathbf{b}
 \end{pmatrix}+
 \begin{pmatrix}
-\vec{\epsilon}_{\gamma^0} \\
-\vec{\epsilon}_{\gamma^1}
+\pmb{\epsilon}_{\gamma^0} \\
+\pmb{\epsilon}_{\gamma^1}
 \end{pmatrix},
 \label{trans_I:eqn}
 \end{equation}
 where the two residual vectors
 \begin{align}
 \begin{split}
-\vec{\epsilon}_{\gamma^0} &=\{0.06, -0.07, -0.07,  0.07, 0.02\}, \\
-\vec{\epsilon}_{\gamma^1} & =\{-0.06, 0.16, -0.22, 0.33, -0.26\}
+\pmb{\epsilon}_{\gamma^0} &=(0.06, -0.07, -0.07,  0.07, 0.02), \\
+\pmb{\epsilon}_{\gamma^1} & =(-0.06, 0.16, -0.22, 0.33, -0.26)
 \end{split}
 \label{res_I:eqn}
 \end{align}
 quadratically contribute  0.03\% and 0.2\% respectively to the total  length of the $\pmb{\gamma}$ vectors.
-
-
 This result indicates that
-the allowed variation in $UBVRI$ allowed by the \citetalias{1999PASP..111...63F} model and our best-fit model are closely aligned.
-That is to say, with no prior assumptions of dust extinction behavior or the distribution of $A_V$, the supernova data themselves exhibit
+the allowed variations in $UBVRI$ allowed by the \citetalias{1999PASP..111...63F} model and our best-fit model are confined to near-parallel 2-dimensional
+planes within
+the 5-dimensional magnitude space.
+Wiith no prior assumptions of dust extinction behavior or the distribution of $A_V$, the supernova data themselves exhibit
 2-dimensional color variations that are closely aligned with the 2-dimensional color variations predicted by the \citetalias{1999PASP..111...63F} dust model.
 
-The above result is visualized in Figure~\ref{plane:fig}, which  shows two perspectives (left and right columns) of $UVI$- (top row) and $BVR$- (bottom row) spaces
-of the vectors corresponding to $\gamma_X/(\gamma_B-\gamma_V)$ of our model (solid lines),
-and $a(X)$, $b(X)$ of the \citetalias{1999PASP..111...63F} model (dashed lines).  All $\pmb{\gamma}$ vectors are chosen to intersect the origin.
+The above result is visualized in Figure~\ref{plane:fig}, which  shows  in the $UVI$-subspace two perspectives (left and right columns)
+of the unit vectors corresponding to $\pmb{\gamma}^0$ and  $\pmb{\gamma}^1$ of our model (solid lines),
+and $\mathbf{a}$, $\mathbf{b}$ of the \citetalias{1999PASP..111...63F} model (dashed lines).  All $\pmb{\gamma}$ vectors are chosen to intersect the origin.
 The two perspectives show that while the four vectors point in different directions for each band combination,
-they are almost coplanar in $UVI$, and close to coplanar in $BVR$.  The $a$ and $b$ vectors and the $\pmb{\gamma}^0$ and $\pmb{\gamma}^1$
-vectors are bases for almost the same plane in the 5-dimensional color space, and can be transformed between themselves through rotation.
+they are almost coplanar in $UVI$ (they are slightly less coplanar in $BVR$).  The $\mathbf{a}$ and $\mathbf{b}$ vectors and the $\pmb{\gamma}^0$ and $\pmb{\gamma}^1$
+vectors span near-parallel planes in the 5-dimensional color space, and hence each pair can be almost entirely expressed in  terms of
+the other pair.
 
 \begin{figure}[htbp] %  figure placement: here, top, bottom, or page
    \centering
@@ -1318,29 +1316,47 @@ vectors are bases for almost the same plane in the 5-dimensional color space, an
    Our model is shown in solid-line unit vectors in the directions of $\pmb{\gamma}^0$ and $\pmb{\gamma}^1$. The only possible magnitudes possible
    are a linear combination of these two vectors, and hence are confined to the plane that contains both.
    The  \citetalias{1999PASP..111...63F} model is shown in dashed-line unit vectors
-   in the directions of  $a(X)$, $b(X)$; the only possible magnitudes possible are confined to the plane that contains both.
+   in the directions of  $\mathbf{a}$, $\mathbf{b}$; the only possible magnitudes possible are confined to the plane that contains both.
    The perspective on the right visually show that all four vectors are nearly coplanar.  
-   The combination $a(X)+b(X)/2.44$ is shown in the dotted red
+   The combination $\mathbf{a}+\mathbf{b}/2.44$ is shown in the dotted red
    line: it is almost perfectly superimposed on $\pmb{\gamma}^0$.
    \label{plane:fig}}
 \end{figure}
 
 
-When fixing the origin of $\pmb{\gamma}$ to zero, the $\pmb{\gamma}$ vectors are found to be coplanar with $a$ and $b$.
-However the linear model does not specify zero dust so the origin of gamma is unspecified.
-The general result is that the magnitude planes of the linear and dust models are parallel.
-Color changes are consistent between the two models but there is no specification of the relation between $k^0$ and $k^1$ with $A_V$ and $E(B-V)$. 
+%When fixing the origin of $\pmb{\gamma}$ to zero, the $\pmb{\gamma}$ vectors are found to be coplanar with $\mathbf{a}$ and $\mathbf{b}$.
+%While the  $\gamma$ vectors define a plane,  is unspecified.
+%The linear model does not specify zero dust so the origin of the $\gamma$'s is unspecified.
+%The general result is that the magnitude planes of the linear and dust models are parallel.
+%Color changes are consistent between the two models but there is no specification of the relation between $k^0$ and $k^1$ with $A_V$ and $E(B-V)$. 
 
+%The dust model expressed in Eqn.~\ref{f99:eqn} can be reparameterized as
+%\begin{equation}
+%A_X = A_V \left(a(X)  +  \frac{b(X)}{R}\right),
+%\label{f99:eqn}
+%\end{equation}
+%where $R=A_V/E(B-V)$.
 
-A prior that $k_0$ and  $k_1$ be uncorrelated was enforced to break degeneracies in our linear models, and determines the choice of directions of
-the vectors $\pmb{\gamma}^0$ and $\pmb{\gamma}^1$.  Suppose that the data were described by a dust model.  Then a \citetalias{1999PASP..111...63F}  dust model 
-can be written as 
+Suppose that the data were due to a dust model with constant $R \equiv A_V/E(B-V)$.
+The  $A_V$ and $E(B-V)$ parameters of the dust model in Eqn.~\ref{f99:eqn} would then be correlated.
+An alternative parameterization 
+\begin{equation}
+A_X = A_V \left(a(X)  +  \frac{b(X)}{R}\right),
+\end{equation}
+
+A prior that $k_0$ and  $k_1$ be uncorrelated was enforced to break degeneracies in our linear models.
+These determine the choice of directions of
+the vectors $\pmb{\gamma}^0$ and $\pmb{\gamma}^1$.
+and so the $\gamma$'s 
+
+   Then a \citetalias{1999PASP..111...63F}  dust model 
+can be written in a new basis
 %To see how this prior would operate on dust models, consider that themodel in Eqn.~\ref{f99:eqn} can
 %be expressed in terms of new basis vectors parametrized by $\kappa$:
 \begin{equation}
 A_X =  (1-\kappa_1 \kappa_2)^{-1} [(A^F_V - \kappa_2 E^F(B-V))\left(a(X)+\kappa_1 b(X) \right) +  (-\kappa_1 A^F_V + E^F(B-V)) (\kappa_2 a(X) + b(X))],
 \end{equation}
-with the parameters $\kappa_1$ and $\kappa_2$ providing freedom in the directions of the two basis vectors.
+with the parameters $\kappa_1$ and $\kappa_2$ parameterizing the directions of the two new basis vectors.
 The vector $a(X)+\kappa_1 b(X)$ represents extinction that can occur with fixed $R^F_0=1/\kappa_1$ and unconstrained $\kappa_2$.
 %While a similar interpretation could be made of $\kappa_2 a(X) + b(X)$, note that to first order the extinction for $\Delta R$
 %perturbations from a fixed $R^F_0$ is
@@ -1941,12 +1957,12 @@ $\Delta$.  All Monte Carlo links are plotted, so that each supernova contributes
 
 \color{red}
 The newly fitted $\pmb{\gamma}$ and  $\pmb{\delta}$ vectors (the latter normalized by $\delta_U$) can be expressed 
-in terms of the $a$ and $b$ vectors that describe the \citetalias{1999PASP..111...63F} dust model
+in terms of the $\mathbf{a}$ and $\mathbf{b}$ vectors that describe the \citetalias{1999PASP..111...63F} dust model
 \color{black}
 \begin{equation}
 \begin{pmatrix}
- \frac{\gamma^0_X}{\gamma^0_B-\gamma^0_V} \\
-\frac{\gamma^1_X}{\gamma^1_B-\gamma^1_V} \\
+ \frac{\pmb{\gamma}^0}{\gamma^0_B-\gamma^0_V} \\
+\frac{\pmb{\gamma}^1}{\gamma^1_B-\gamma^1_V} \\
 \frac{\delta_X}{\delta_U} \\
 \end{pmatrix}=
 \begin{pmatrix}
@@ -1957,33 +1973,33 @@ in terms of the $a$ and $b$ vectors that describe the \citetalias{1999PASP..111.
 \end{array}
 \end{pmatrix} 
 \begin{pmatrix}
-a(X) \\
-b(X)
+\mathbf{a} \\
+\mathbf{b}
 \end{pmatrix}+
 \begin{pmatrix}
-\vec{\epsilon}_{\gamma^0} \\
-\vec{\epsilon}_{\gamma^1} \\
-\vec{\epsilon}_{\delta}
+\pmb{\epsilon}_{\gamma^0} \\
+\pmb{\epsilon}_{\gamma^1} \\
+\pmb{\epsilon}_{\delta}
 \end{pmatrix},
 \label{model2trans:eqn}
 \end{equation}
 where the residual vectors
 \begin{align}
 \begin{split}
-\vec{\epsilon}_{\gamma^0} &=\{0.07, -0.07, -0.07,  0.06,  0.02\},\\
-\vec{\epsilon}_{\gamma^1} &=\{ -0.04, 0.14,  -0.24,  0.32, -0.22\},\\
-\vec{\epsilon}_{\delta} &=\{ -0.05, 0.08,  -0.03,  -0.09, -0.12\}
+\pmb{\epsilon}_{\gamma^0} &=(0.07, -0.07, -0.07,  0.06,  0.02),\\
+\pmb{\epsilon}_{\gamma^1} &=( -0.04, 0.14,  -0.24,  0.32, -0.22),\\
+\pmb{\epsilon}_{\delta} &=(-0.05, 0.08,  -0.03,  -0.09, -0.12)
 \end{split}
 \label{model2res:eqn}
 \end{align}
 are perpendicular to $a$ and $b$.
-The $\pmb{\gamma}$ residuals $\vec{\epsilon}_{\gamma^0}$ and
-$\vec{\epsilon}_{\gamma^1} $
+The $\pmb{\gamma}$ residuals $\pmb{\epsilon}_{\gamma^0}$ and
+$\pmb{\epsilon}_{\gamma^1} $
 quadratically contribute 0.03\% and 0.2\% to the total  lengths of the vectors, meaning that most
 of the $\pmb{\gamma}$'s project onto the plane predicted by the \citetalias{1999PASP..111...63F} dust model.
 \color{red}
  $\pmb{\delta}$ too
-has a significant projection onto the dust plane, as the $\vec{\epsilon}_{\delta}$ residual contributes 2\% of the length of the $\pmb{\delta}$ vector.
+has a significant projection onto the dust plane, as the $\pmb{\epsilon}_{\delta}$ residual contributes 2\% of the length of the $\pmb{\delta}$ vector.
 The transformation yields
 a 68\%-ile  credible interval for $R^F$ of  $2.31$--$2.69$, slightly shifted higher relative to the results of Model~I.
 \color{black}
@@ -2291,33 +2307,33 @@ having neglected light-curve shape.
 Parameters & $X=U$ &$B$&$V$&$R$&$I$\\ \hline
 $\alpha_X$
 &
-$0.0043^{+0.0009}_{-0.0010}$
+$0.0037^{+0.0010}_{-0.0010}$
 &
-$0.0016^{+0.0008}_{-0.0008}$
+$0.0011^{+0.0008}_{-0.0008}$
 &
-$0.0016^{+0.0007}_{-0.0007}$
+$0.0013^{+0.0007}_{-0.0007}$
 &
-$0.0015^{+0.0006}_{-0.0005}$
+$0.0013^{+0.0006}_{-0.0006}$
 &
-$0.0028^{+0.0005}_{-0.0005}$
+$0.0026^{+0.0005}_{-0.0005}$
 \\
 ${\alpha_X/\alpha_V-1}$
 &
-$   1.7^{+   0.9}_{  -0.4}$
+$   1.7^{+   1.3}_{  -0.5}$
 &
-$  -0.0^{+   0.1}_{  -0.2}$
+$  -0.1^{+   0.2}_{  -0.4}$
 &
-$ \ldots$
+$   0.0^{+   0.0}_{   0.0}$
 &
-$  -0.1^{+   0.1}_{  -0.1}$
+$  -0.0^{+   0.2}_{  -0.1}$
 &
-$   0.7^{+   0.7}_{  -0.3}$
+$   1.0^{+   1.2}_{  -0.5}$
 \\
 $\beta_X$
 &
-$ 0.035^{+ 0.005}_{-0.005}$
+$ 0.034^{+ 0.006}_{-0.005}$
 &
-$ 0.026^{+ 0.004}_{-0.004}$
+$ 0.026^{+ 0.005}_{-0.005}$
 &
 $ 0.023^{+ 0.004}_{-0.004}$
 &
@@ -2327,11 +2343,11 @@ $ 0.017^{+ 0.003}_{-0.003}$
 \\
 ${\beta_X/\beta_V-1}$
 &
-$  0.54^{+  0.12}_{ -0.10}$
+$  0.50^{+  0.11}_{ -0.10}$
 &
-$  0.16^{+  0.06}_{ -0.06}$
+$  0.15^{+  0.06}_{ -0.06}$
 &
-$ \ldots$
+$  0.00^{+  0.00}_{  0.00}$
 &
 $ -0.12^{+  0.03}_{ -0.03}$
 &
@@ -2339,33 +2355,33 @@ $ -0.26^{+  0.06}_{ -0.06}$
 \\
 $\eta_X$
 &
-$0.0007^{+0.0012}_{-0.0012}$
+$0.0002^{+0.0011}_{-0.0011}$
 &
-$0.0006^{+0.0010}_{-0.0010}$
+$0.0004^{+0.0009}_{-0.0009}$
 &
-$0.0011^{+0.0008}_{-0.0008}$
+$0.0009^{+0.0008}_{-0.0008}$
 &
-$0.0010^{+0.0007}_{-0.0007}$
+$0.0008^{+0.0007}_{-0.0007}$
 &
-$0.0003^{+0.0006}_{-0.0006}$
+$0.0000^{+0.0006}_{-0.0006}$
 \\
 ${\eta_X/\eta_V-1}$
 &
-$ -0.24^{+  0.47}_{ -0.98}$
+$ -0.47^{+  0.69}_{ -1.37}$
 &
-$ -0.32^{+  0.30}_{ -0.76}$
+$ -0.39^{+  0.41}_{ -0.93}$
 &
-$ \ldots$
+$  0.00^{+  0.00}_{  0.00}$
 &
-$ -0.08^{+  0.20}_{ -0.13}$
+$ -0.12^{+  0.19}_{ -0.16}$
 &
-$ -0.66^{+  0.29}_{ -0.58}$
+$ -0.78^{+  0.42}_{ -0.88}$
 \\
 $\zeta_X$
 &
 $  0.01^{+  0.04}_{ -0.04}$
 &
-$ -0.01^{+  0.03}_{ -0.03}$
+$ -0.00^{+  0.03}_{ -0.03}$
 &
 $ -0.03^{+  0.03}_{ -0.03}$
 &
@@ -2375,99 +2391,99 @@ $ -0.03^{+  0.02}_{ -0.02}$
 \\
 ${\zeta_X/\zeta_V-1}$
 &
-$ -0.91^{+  0.75}_{ -1.78}$
+$ -0.78^{+  1.55}_{ -1.96}$
 &
-$ -0.62^{+  0.46}_{ -1.15}$
+$ -0.62^{+  1.21}_{ -1.33}$
 &
-$ \ldots$
+$  0.00^{+  0.00}_{  0.00}$
 &
-$ -0.50^{+  0.21}_{ -0.53}$
+$ -0.46^{+  0.45}_{ -0.52}$
 &
-$ -0.18^{+  0.41}_{ -0.32}$
+$ -0.14^{+  0.51}_{ -0.42}$
 \\
 $\gamma^0_X$
 &
-$ 62.57^{+  3.71}_{ -3.66}$
+$ 59.51^{+  4.09}_{ -4.09}$
 &
-$ 51.36^{+  3.12}_{ -3.13}$
+$ 49.02^{+  3.32}_{ -3.30}$
 &
-$ 38.26^{+  2.67}_{ -2.69}$
+$ 36.96^{+  2.69}_{ -2.70}$
 &
-$ 29.03^{+  2.36}_{ -2.39}$
+$ 28.37^{+  2.36}_{ -2.36}$
 &
-$ 20.40^{+  2.21}_{ -2.26}$
+$ 20.35^{+  2.16}_{ -2.16}$
 \\
 ${\gamma^0_X/\gamma^0_V-1}$
 &
-$  0.63^{+  0.06}_{ -0.05}$
+$  0.61^{+  0.06}_{ -0.05}$
 &
-$  0.34^{+  0.03}_{ -0.03}$
+$  0.33^{+  0.03}_{ -0.03}$
 &
-$ \ldots$
+$  0.00^{+  0.00}_{  0.00}$
 &
-$ -0.24^{+  0.01}_{ -0.02}$
+$ -0.23^{+  0.01}_{ -0.01}$
 &
-$ -0.47^{+  0.03}_{ -0.03}$
+$ -0.45^{+  0.03}_{ -0.03}$
 \\
 $\gamma^1_X$
 &
-$ -9.27^{+  3.50}_{ -3.75}$
+$ -7.57^{+  3.75}_{ -4.06}$
 &
-$-11.08^{+  2.92}_{ -3.18}$
+$ -9.63^{+  2.90}_{ -3.27}$
 &
-$-14.99^{+  2.38}_{ -2.66}$
+$-13.65^{+  2.36}_{ -2.60}$
 &
-$-14.28^{+  2.05}_{ -2.22}$
+$-12.98^{+  2.08}_{ -2.27}$
 &
-$-13.27^{+  1.91}_{ -2.09}$
+$-12.16^{+  2.08}_{ -2.19}$
 \\
 ${\gamma^1_X/\gamma^1_V-1}$
 &
-$ -0.38^{+  0.15}_{ -0.18}$
+$ -0.44^{+  0.19}_{ -0.24}$
 &
-$ -0.26^{+  0.09}_{ -0.11}$
+$ -0.30^{+  0.11}_{ -0.13}$
 &
-$ \ldots$
+$  0.00^{+  0.00}_{  0.00}$
 &
-$ -0.05^{+  0.04}_{ -0.04}$
+$ -0.05^{+  0.05}_{ -0.05}$
 &
-$ -0.12^{+  0.09}_{ -0.08}$
+$ -0.11^{+  0.11}_{ -0.10}$
 \\
 $\delta_X$
 &
-$  1.98^{+  0.52}_{ -0.50}$
+$  0.14^{+  1.13}_{ -1.41}$
 &
-$ -2.13^{+  0.55}_{ -0.54}$
+$  0.11^{+  0.91}_{ -1.10}$
 &
-$ -1.84^{+  0.51}_{ -0.52}$
+$  0.04^{+  0.56}_{ -0.60}$
 &
-$  0.70^{+  0.33}_{ -0.35}$
+$  0.01^{+  0.43}_{ -0.43}$
 &
-$  1.72^{+  0.75}_{ -0.73}$
+$ -0.02^{+  0.43}_{ -0.41}$
 \\
-${{\delta_X/\delta_I-1}}$
+${{\delta_X/\delta_U-1}}$
 &
-$  0.17^{+  0.50}_{ -0.27}$
+$  0.00^{+  0.00}_{  0.00}$
 &
-$ -2.23^{+  0.30}_{ -0.64}$
+$ -0.22^{+  0.28}_{ -0.21}$
 &
-$ -2.08^{+  0.25}_{ -0.44}$
+$ -0.63^{+  0.33}_{ -0.36}$
 &
-$ -0.60^{+  0.54}_{ -0.24}$
+$ -0.82^{+  0.30}_{ -0.44}$
 &
-$ \ldots$
+$ -1.05^{+  0.35}_{ -0.63}$
 \\
 $\sigma_X$
 &
-$ 0.048^{+ 0.012}_{-0.011}$
+$ 0.053^{+ 0.008}_{-0.011}$
 &
-$ 0.027^{+ 0.007}_{-0.007}$
+$ 0.018^{+ 0.011}_{-0.011}$
 &
-$ 0.014^{+ 0.004}_{-0.005}$
+$ 0.017^{+ 0.004}_{-0.006}$
 &
-$ 0.008^{+ 0.006}_{-0.005}$
+$ 0.010^{+ 0.007}_{-0.007}$
 &
-$ 0.041^{+ 0.005}_{-0.004}$
+$ 0.040^{+ 0.006}_{-0.005}$
 \\
 \hline
 \end{tabular}
