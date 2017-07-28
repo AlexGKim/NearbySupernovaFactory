@@ -76,7 +76,6 @@ wlow = numpy.where(mass < 10)[0]
 wbig = numpy.where(mass >= 10)[0]
 for i in xrange(scaled.shape[0]):
   temp1,temp2= scipy.stats.ks_2samp(scaled[i,wlow],scaled[i,wbig])
-  print temp1,temp2
   ksarr.append(temp1)
   pvarr.append(temp2)
 ksarr=numpy.array(ksarr)
@@ -97,23 +96,24 @@ plt.errorbar(mass,x,xerr=[emass, emass], yerr=[x-xmin,xmax-x],fmt='o')
 plt.ylabel(r'$A_{\delta U}-A_{\delta U}|_0$')
 plt.xlabel(r'$\log{(M_{host}/M_{\odot})}$')
 
-pp = PdfPages("output25/childress.pdf")
-plt.savefig(pp,format='pdf')
-pp.close()
-plt.close()
+# pp = PdfPages("output25/childress.pdf")
+# plt.savefig(pp,format='pdf')
+# pp.close()
+# plt.close()
 
-done
+# done
 
 ux = numpy.array([6,10])
 wm = numpy.where(mass < 10)[0]
 temp = scaled[:,wm].flatten()
 temp=temp[temp !=0]
 (x, xmin, xmax) = numpy.percentile(temp,(50,50-34,50+34))
+dx = (xmax-xmin)/2/numpy.sqrt(len(wm))
 
-print r"${:9.4f}^{{ {:9.4f} }}_{{ {:9.4f} }}$".format(x,xmax-x,x-xmin) 
+print r"${:9.4f} \pm {{ {:9.4f} }}$".format(x,dx) 
 plt.plot(ux, [x,x],color='black')
-plt.plot(ux, [xmax,xmax],color='red')
-plt.plot(ux, [xmin,xmin],color='red')
+plt.plot(ux, [x+dx,x+dx],color='red')
+plt.plot(ux, [x-dx,x-dx],color='red')
 
 
 ux = numpy.array([10,13])
@@ -121,10 +121,11 @@ wm = numpy.where(mass[1:] > 10)[0]
 temp = scaled[:,wm].flatten()
 temp=temp[temp !=0]
 (x, xmin, xmax) = numpy.percentile(temp,(50,50-34,50+34))
-print r"${:9.4f}^{{ {:9.4f} }}_{{ {:9.4f} }}$".format(x,xmax-x,x-xmin) 
+dx = (xmax-xmin)/2/numpy.sqrt(len(wm))
+print r"${:9.4f} \pm {{ {:9.4f} }}$".format(x,dx) 
 plt.plot(ux, [x,x],color='black')
-plt.plot(ux, [xmax,xmax],color='red')
-plt.plot(ux, [xmin,xmin],color='red')
+plt.plot(ux, [x+dx,x+dx],color='red')
+plt.plot(ux, [x-dx,x-dx],color='red')
 
 plt.xlim((6,13))
 # plt.ylim((-0.1,0.1))
@@ -132,6 +133,8 @@ pp = PdfPages("output25/childress.pdf")
 plt.savefig(pp,format='pdf')
 pp.close()
 plt.close()
+
+wefwe
 
 wm = numpy.where(mass[1:] < 10)[0]
 low = (((fit['rho1'][:,0])[:,None])*fit['R'][:,wm]).flatten()
