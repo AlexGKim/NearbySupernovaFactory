@@ -169,7 +169,7 @@ crap = fit['gamma'][:,2][:,None]*fit['k']
 crap = crap-crap[:,0][:,None]
 plt.hist(numpy.median(crap,axis=0),bins,label='median',normed=True,alpha=0.5,width=0.025)
 plt.hist(crap.flatten(),bins,label='ideogram',normed=True,alpha=0.5)
-plt.xlabel(r'$\gamma^0_2 k_0 - \gamma^0_2 k_0|_0\approx A^F_V|_{R^F=2.44}$')
+plt.xlabel(r'$\gamma^0_2 k_0 - \gamma^0_2 k_0|_0\approx A^F_V|_{R^F_{eff}=2.44}$')
 plt.legend()
 plt.tight_layout()
 pp = PdfPages('output11/deltagamma0_med.pdf')
@@ -189,6 +189,22 @@ pp = PdfPages('output11/deltagamma1_med.pdf')
 plt.savefig(pp,format='pdf')
 pp.close()
 plt.close()
+
+# #conversion to Fitzpatrick parameters A and E(B-V)
+# tmat= numpy.array([[2.82,1.15],[-5.27,0.72]])
+# tmat = tmat.T
+# shit=[]
+# for i in xrange(fit['k'].shape[1]):
+#     knorm =  numpy.median(fit['k'][:,i]*(fit['gamma'][:,1]-fit['gamma'][:,2]))
+#     Rnorm = numpy.median(fit['R'][:,i]*(fit['rho1'][:,1]-fit['rho1'][:,2]))
+#     shit.append(numpy.dot(tmat,numpy.array([knorm,Rnorm])))
+# shit=numpy.array(shit)
+# print shit.shape
+# plt.scatter(shit[:,1],shit[:,0])
+# plt.plot([-.1,.5],[-2.44*.1,2.44*.5])
+# plt.show()
+
+# wefwe
 
 bins=numpy.arange(-0.35,0.1,0.02)
 plt.hist(numpy.median((fit['rho1'][:,2])[:,None]*fit['R'],axis=0),bins,label='median',normed=True,alpha=0.5,width=0.01)
@@ -213,6 +229,7 @@ plt.tight_layout()
 plt.savefig(pp,format='pdf')
 pp.close()
 plt.close()
+
 
 (x, xmin, xmax) = numpy.percentile(fit['gamma'][:,2][:,None]*fit['k'],(50,50-34,50+34),axis=0)
 (y, ymin, ymax) = numpy.percentile(fit['rho1'][:,2][:,None]*fit['R'],(50,50-34,50+34),axis=0)
@@ -388,7 +405,6 @@ from matplotlib.ticker import NullFormatter
 cind=[0,1,3,4]
 cname = ['U','B','R','I']
 mpl.rcParams['font.size'] = 14
-
 fig, axes = plt.subplots(nrows=4,ncols=2,gridspec_kw={'width_ratios':[.8,.2]})
 for i in xrange(4):
     (y, ymin, ymax) = numpy.percentile(correction[cind[i],:,:],(50,50-34,50+34),axis=0)
@@ -428,6 +444,84 @@ pp = PdfPages(filename)
 plt.savefig(pp,format='pdf')
 pp.close()
 
+
+
+correction = [fit['Delta']+ fit['c'][:,i][:,None] + fit['alpha'][:,i][:,None]*fit['EW'][:,:, 0] \
+    + fit['beta'][:,i][:,None]*fit['EW'][:,:, 1] + fit['eta'][:,i][:,None]*fit['sivel']
+    for i in xrange(5)]
+
+correction = numpy.array(correction)
+# correction = correction - correction[2,:,:]
+# correction_median = numpy.median(correction,axis=1)
+cind=[0,1,2,3,4]
+cname = ['U','B','V','R','I']
+mpl.rcParams['font.size'] = 14
+import f99_band
+A_X = f99_band.A_X(r_v=2.44,ebv=0.2/2.44)
+A_X26=A_X/(A_X[1]-A_X[2])
+A_X = f99_band.A_X(r_v=2.1,ebv=0.2/2.1)
+A_X21=A_X/(A_X[1]-A_X[2])
+
+fig, axes = plt.subplots(nrows=5)
+for i in xrange(5):
+    (y, ymin, ymax) = numpy.percentile(correction[cind[i],:,:],(50,50-34,50+34),axis=0)
+    err = numpy.sqrt(color_cov[:,1,1] + ((ymax-ymin)/2)**2)
+    #axes[i,0].errorbar(y,y-color_obs[:,i],xerr=[((ymax-ymin)/2),((ymax-ymin)/2)], yerr=[err,err],fmt='.',alpha=0.4)
+    #axes[i,0].errorbar(color_obs[:,i],y-color_obs[:,i],xerr=[numpy.sqrt(color_cov[:,i,i]),numpy.sqrt(color_cov[:,i,i])], yerr=[err,err],fmt='.',alpha=0.4)
+    # axes[i,0].errorbar(color_obs[:,i],y,xerr=[numpy.sqrt(color_cov[:,i,i]),numpy.sqrt(color_cov[:,i,i])], yerr=[((ymax-ymin)/2),((ymax-ymin)/2)],fmt='.',alpha=0.4)
+    axes[i].errorbar(mag_obs[:,1]-mag_obs[:,2],mag_renorm[:,i]-y,yerr=[numpy.sqrt(color_cov[:,1,1]),numpy.sqrt(color_cov[:,1,1])], xerr=[err,err],fmt='.',alpha=0.2)
+    axes[i].scatter(mag_obs[:,1]-mag_obs[:,2],mag_renorm[:,i]-y,alpha=0.8,s=1)
+    axes[i].plot(numpy.array([-0.2,0.5]),A_X26[i]*(numpy.array([-0.2,0.5])+0.025),label=r'$R_V=2.44$')
+    axes[i].plot(numpy.array([-0.2,0.5]),A_X21[i]*(numpy.array([-0.2,0.5])+0.025),label=r'$R_V=2.1$')
+    # axes[i,0].errorbar(y+mag_mn[cind[i]]-mag_mn[2],color_obs[:,i]-y,xerr=[y-ymin,ymax-y], yerr=[err,err],fmt='.',alpha=0.4)
+    # axes[i].errorbar(y+mag_mn[cind[i]]-mag_mn[2],color_obs[:,i]+mag_mn[cind[i]]-mag_mn[2],yerr=[numpy.sqrt(color_cov[:,i,i]),numpy.sqrt(color_cov[:,i,i])], xerr=[(ymax-ymin)/2,(ymax-ymin)/2],fmt='.',alpha=0.5)
+
+ 
+    # axes[i].errorbar(y+mag_mn[cind[i]]-mag_mn[2],color_obs[:,i],xerr=[y-ymin,ymax-y], yerr=[numpy.sqrt(color_cov[:,i,i]),numpy.sqrt(color_cov[:,i,i])],fmt='.',alpha=0.4)
+
+    axes[i].set_xlabel(r'$(B_o-V_o)$')
+    axes[i].set_ylabel(r'${0}_o$'.format(cname[i]))
+    lname = r'$\Delta({0}-V)$'.format(cname[i])
+    axes[i].legend(prop={'size': 8},loc=4)
+
+fig.subplots_adjust(hspace=.4, wspace=.18)
+fig.set_size_inches(8,11)
+# plt.tight_layout()
+filename = 'output11/residual_temp.pdf'
+pp = PdfPages(filename)
+plt.savefig(pp,format='pdf')
+pp.close()
+
+fig, axes = plt.subplots(nrows=5)
+for i in xrange(5):
+    (y, ymin, ymax) = numpy.percentile(correction[cind[i],:,:],(50,50-34,50+34),axis=0)
+    err = numpy.sqrt(color_cov[:,1,1] + ((ymax-ymin)/2)**2)
+    #axes[i,0].errorbar(y,y-color_obs[:,i],xerr=[((ymax-ymin)/2),((ymax-ymin)/2)], yerr=[err,err],fmt='.',alpha=0.4)
+    #axes[i,0].errorbar(color_obs[:,i],y-color_obs[:,i],xerr=[numpy.sqrt(color_cov[:,i,i]),numpy.sqrt(color_cov[:,i,i])], yerr=[err,err],fmt='.',alpha=0.4)
+    # axes[i,0].errorbar(color_obs[:,i],y,xerr=[numpy.sqrt(color_cov[:,i,i]),numpy.sqrt(color_cov[:,i,i])], yerr=[((ymax-ymin)/2),((ymax-ymin)/2)],fmt='.',alpha=0.4)
+    axes[i].errorbar(mag_obs[:,1]-mag_obs[:,2],mag_renorm[:,i],yerr=[numpy.sqrt(color_cov[:,1,1]),numpy.sqrt(color_cov[:,1,1])], xerr=[(ymax-ymin)/2,(ymax-ymin)/2],fmt='.',alpha=0.2)
+    axes[i].scatter(mag_obs[:,1]-mag_obs[:,2],mag_renorm[:,i],alpha=0.8,s=1)
+    axes[i].plot(numpy.array([-0.2,0.5]),A_X26[i]*(numpy.array([-0.2,0.5])+0.025),label=r'$R_V=2.44$')
+    axes[i].plot(numpy.array([-0.2,0.5]),A_X21[i]*(numpy.array([-0.2,0.5])+0.025),label=r'$R_V=2.1$')
+    # axes[i,0].errorbar(y+mag_mn[cind[i]]-mag_mn[2],color_obs[:,i]-y,xerr=[y-ymin,ymax-y], yerr=[err,err],fmt='.',alpha=0.4)
+    # axes[i].errorbar(y+mag_mn[cind[i]]-mag_mn[2],color_obs[:,i]+mag_mn[cind[i]]-mag_mn[2],yerr=[numpy.sqrt(color_cov[:,i,i]),numpy.sqrt(color_cov[:,i,i])], xerr=[(ymax-ymin)/2,(ymax-ymin)/2],fmt='.',alpha=0.5)
+
+ 
+    # axes[i].errorbar(y+mag_mn[cind[i]]-mag_mn[2],color_obs[:,i],xerr=[y-ymin,ymax-y], yerr=[numpy.sqrt(color_cov[:,i,i]),numpy.sqrt(color_cov[:,i,i])],fmt='.',alpha=0.4)
+
+    axes[i].set_xlabel(r'$(B_o-V_o)$')
+    axes[i].set_ylabel(r'${0}_o$'.format(cname[i]))
+    lname = r'$\Delta({0}-V)$'.format(cname[i])
+    axes[i].legend(prop={'size': 8},loc=4)
+
+fig.subplots_adjust(hspace=.4, wspace=.18)
+fig.set_size_inches(8,11)
+# plt.tight_layout()
+filename = 'output11/residual_temp2.pdf'
+pp = PdfPages(filename)
+plt.savefig(pp,format='pdf')
+pp.close()
+wefwe
 
 
 mpl.rcParams['font.size'] = 18
@@ -1078,3 +1172,42 @@ pp.close()
 plt.close()
 
 
+cind=[0,1,2,3,4]
+cname = ['U','B','V','R','I']
+
+correction = [fit['Delta']+ fit['c'][:,i][:,None] + fit['alpha'][:,i][:,None]*fit['EW'][:,:, 0] \
+    + fit['beta'][:,i][:,None]*fit['EW'][:,:, 1] + fit['eta'][:,i][:,None]*fit['sivel']\
+    + fit['gamma'][:,i][:,None]*fit['k']+ fit['rho1'][:,i][:,None]*fit['R'] \
+    for i in xrange(5)]
+
+correction = numpy.array(correction)
+correction  = numpy.median(correction,axis=1)
+correction = numpy.transpose(correction)
+
+fig, axes = plt.subplots(nrows=5)
+(y, ymin, ymax) = numpy.percentile(fit['rho1'][:,2][:,None]*fit['R'],(50,50-34,50+34),axis=0)
+
+for i in xrange(5):
+    print 'in loop'
+    err = numpy.sqrt(mag_cov[:,i,i] + ((ymax-ymin)/2)**2)
+    print y.shape, mag_renorm[:,i].shape, correction[:,i].shape
+    axes[i].errorbar(y,mag_renorm[:,i]-correction[:,i],yerr=[numpy.sqrt(mag_cov[:,i,i]),numpy.sqrt(mag_cov[:,i,i])], xerr=[((ymax-ymin)/2),((ymax-ymin)/2)],fmt='.',alpha=0.2)
+    axes[i].scatter(y,mag_renorm[:,i]-correction[:,i],alpha=0.8,s=1)
+
+    miny = (mag_renorm[:,i]+mag_mn[cind[i]]-mag_mn[2]).min()
+    maxy = (mag_renorm[:,i]+mag_mn[cind[i]]-mag_mn[2]).max()
+    # axes[i].plot([miny,maxy],[miny,maxy])
+
+    axes[i].set_xlabel(r'$\gamma^1_V k_1$'.format(cname[i]))
+    axes[i].set_ylabel(r'$\Delta {0}$'.format(cname[i]))
+    axes[i].set_ylim((-.5,.5))
+    lname = r'${0}$'.format(cname[i])
+    # axes[i,0].set_ylabel(lname)
+    # axes[i,1].hist(y-mag_renorm[:,i], orientation='horizontal')
+fig.subplots_adjust(hspace=.4, wspace=.18)
+fig.set_size_inches(8,11)
+# plt.tight_layout()
+filename = 'output11/residual_fg.pdf'
+pp = PdfPages(filename)
+plt.savefig(pp,format='pdf')
+pp.close()

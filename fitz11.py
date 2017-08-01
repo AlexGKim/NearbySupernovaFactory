@@ -108,7 +108,7 @@ norm_dAdAv = numpy.dot(dAdAv, dAdAv)
 cross = numpy.dot(dAdebv, dAdAv)
 
 a = numpy.array([[norm_dAdAv,cross],[cross,norm_dAdebv]])
-
+a_save = numpy.array(a)
 tmat = []
 res = []
 c_n = []
@@ -464,26 +464,28 @@ for i in xrange(ebv.shape[2]):
 
 # # Transform native parameters onto the Fitzpatrick plane
 
-# # The native E(B-V) parameters
+# The native E(B-V) parameters
 # ebv  = (fit['gamma'][:,1]-fit['gamma'][:,2])[:,None] * fit['k']
 # ebv = numpy.array([ebv,(fit['rho1'][:,1]-fit['rho1'][:,2])[:,None] * fit['R']])
-
-# # For each link recalculate the transformation matrix and get the Fitzpatrick values
-# ebvav=[]
-# for i in xrange(ebv.shape[1]):
-#   tmat_=[]
-#   for s in ['gamma','rho1']:
-#     ga=fit[s][i,:]
-#     y = numpy.array([numpy.dot(ga,dAdebv),numpy.dot(ga,dAdAv)])
-#     ans = numpy.linalg.solve(a,y)
-#     tmat_.append(ans)
-#   tmat_=numpy.array(tmat_)
-#   tmat_ = numpy.transpose(tmat_)
-#   inner = []
-#   for j in xrange(ebv.shape[2]):
-#     inner.append(numpy.dot(tmat_,ebv[:,i,j]))
-#   ebvav.append(inner)
-# ebvav = numpy.array(ebvav)
+ebv  = fit['k']
+ebv = numpy.array([ebv,fit['R']])
+a=a_save
+# For each link recalculate the transformation matrix and get the Fitzpatrick values
+ebvav=[]
+for i in xrange(ebv.shape[1]):
+  tmat_=[]
+  for s in ['gamma','rho1']:
+    ga=fit[s][i,:]
+    y = numpy.array([numpy.dot(ga,dAdAv),numpy.dot(ga,dAdebv)])
+    ans = numpy.linalg.solve(a,y)
+    tmat_.append(ans)
+  tmat_=numpy.array(tmat_)
+  tmat_ = numpy.transpose(tmat_)
+  inner = []
+  for j in xrange(ebv.shape[2]):
+    inner.append(numpy.dot(tmat_,ebv[:,i,j]))
+  ebvav.append(inner)
+ebvav = numpy.array(ebvav)
 
 # # For each link calculate the slope
 # coeffs = []
@@ -492,7 +494,7 @@ for i in xrange(ebv.shape[2]):
 
 # coeffs = numpy.array(coeffs)
 
-# # the monte carlo regions of rv
+# # # the monte carlo regions of rv
 # rbv, mrbv, prbv= numpy.percentile(coeffs,(50,50-34,50+34),axis=0)
 
 # print '$R^F={:6.2f}_{{-{:6.2f}}}^{{+ {:6.2f}}}  $'.format(rbv[0],rbv[0]-mrbv[0],prbv[0]-rbv[0])
@@ -508,19 +510,30 @@ for i in xrange(ebv.shape[2]):
 
 # ebvav_s = numpy.percentile(ebvav,(50,50-34,50+34),axis=2)
 
-# plt.errorbar(ebvav_s[0,:,0], ebvav_s[0,:,1], \
-#  xerr=(ebvav_s[0,:,0]-ebvav_s[1,:,0], ebvav_s[2,:,0]-ebvav_s[0,:,0]),\
-#  yerr=(ebvav_s[0,:,1]-ebvav_s[1,:,1], ebvav_s[2,:,1]-ebvav_s[0,:,1]),fmt='o',alpha=0.4,color='blue')
+pkl_file = open('gege_data.pkl', 'r')
+data = pickle.load(pkl_file)
+pkl_file.close()
 
-# plt.ylabel(r'$A^F_{V,eff}+ const $')
-# plt.xlabel(r'$E^F(B-V)_{eff} + const$')
-# x = numpy.array([-0.15,0.45])
+ebvav_s = numpy.percentile(ebvav,(50,50-34,50+34),axis=0)
+
+w= numpy.logical_or(ebvav_s[0,:,0] < -.5, numpy.logical_and(ebvav_s[0,:,1]>0.05 , ebvav_s[0,:,0] < -0.2))
+print type(data['snlist'])
+print numpy.array(data['snlist'])[w]
+wefwe
+plt.errorbar(ebvav_s[0,:,1], ebvav_s[0,:,0], \
+ xerr=(ebvav_s[0,:,1]-ebvav_s[1,:,1], ebvav_s[2,:,1]-ebvav_s[0,:,1]),\
+ yerr=(ebvav_s[0,:,0]-ebvav_s[1,:,0], ebvav_s[2,:,0]-ebvav_s[0,:,0]),fmt='o',alpha=0.4,color='blue')
+
+plt.ylabel(r'$A^F_{V,eff}+ const $')
+plt.xlabel(r'$E^F(B-V)_{eff} + const$')
+x = numpy.array([-0.09,0.45])
+plt.plot(x,2.44*x,color='black',label="slope = 2.44")
 # plt.plot(x, rbv[1]+rbv[0]*x,label=r'$R^F={:6.2f}_{{-{:6.2f}}}^{{+{:6.2f}}}$'.format(rbv[0],rbv[0]-mrbv[0],prbv[0]-rbv[0]),color='black')
-# plt.legend()
-# pp = PdfPages("output11/avebv_synth.pdf")
-# plt.savefig(pp,format='pdf')
-# pp.close()
-# plt.close()
+plt.legend(loc=4)
+pp = PdfPages("output11/avebv_synth.pdf")
+plt.savefig(pp,format='pdf')
+pp.close()
+plt.close()
 
 
 # # plot Rv versus Av for the best fit
