@@ -1826,19 +1826,21 @@ of the $\pmb{\gamma}$'s project onto the plane predicted by the \citetalias{1999
  $\pmb{\delta}$ too
 has a significant projection onto the dust plane, as the $\pmb{\epsilon}_{\delta}$ residual contributes 2\% of the length of the $\pmb{\delta}$ vector.
 The transformation between the new set of $\pmb{\gamma}$'s and dust parameters yields
-a 68\%-ile  credible interval for $R^F$ of  $2.31$--$2.69$, slightly shifted higher relative to the results of Model~I.
-\color{black}
+a 68\%-ile  credible interval for $R^F$ of  $2.31$--$2.69$, shifted to slightly  higher values relative to the results of Model~I.
 
-
-\color{red}
-The significance of the results is evaluated using simulated datasets.
+The significance of the $\pmb{\delta}$ measurement is evaluated using simulated datasets.
 For one set of tests, we realize 50 random realizations of data with input  parameters equal to the median values of the 
 parameter posteriors found in
-\S\ref{model:sec}, and using the same noise as our data.  The input $\pmb{\delta}$-vector is set to zero.
-Figure~\ref{pvalues_delta2:fig} shows results of fits of these null-realizations in comparison to the results using the real data.
-The influence of the third parameter on magnitudes is measured by the squared amplitude  $\delta^2$.
-Depending on the choice between the  $-1$, 0, or $1$-sigma
-value of  $\delta^2$, the data value is in the largest 90--98\%-ile.  Recall that in the Bayesian posterior
+\S\ref{model:sec}, and using the same noise as our data.  To represent the null hypothesis, the input $\pmb{\delta}$-vector is set to zero.
+Figure~\ref{pvalues_delta2:fig} shows results of fits of these null-realizations next  to the results from the real data.
+One statistic shown is the median and 68\% credible interval of the squared amplitude  $\delta^2$.
+As $\delta^2$ measures the magnitude response due to the third parameter, it is expected to have a small value
+when such a new parameter is not relevant.
+Comparing separately the  $-1$, 0, and $1$-sigma
+values of  the credible interval of our data relative to those from the simulations, we obtain
+three different $p$-values ranging from 0.90--0.98, indicating that the data result is incompatible with the null hypothesis. 
+As a point of comparison, recall that in the Bayesian posterior
+the null result
 $\pmb{\delta}=0$ lies on the 85\%-ile contour.
 
 \begin{figure}[htbp] %  figure placement: here, top, bottom, or page
@@ -1850,20 +1852,26 @@ $\pmb{\delta}=0$ lies on the 85\%-ile contour.
             \label{pvalues_delta2:fig}}
 \end{figure}
 
-Figure~\ref{pvalues_delta2:fig} also shows the 
+An interesting feature of $\pmb{\delta}$ is that its direction lies close to the plane defined by the
+$\pmb{\gamma}$ vectors.
+This leads to the concern that our model and analysis  could spontaneously generate a third
+vector almost degenerate with the others, despite the prior for the independence of $k_0$, $k_1$, and $D$.
+This hypothesis is tested using the 
 relative projection of $\pmb{\delta}$  perpendicular to the plane defined by the $\pmb{\gamma}$'s, $\delta_\perp^2/\delta^2$,
-for the 50 null realizations
-and our data.  The data gives smaller value than all the realizations for $-1$, 0, or $1$-sigma values.  
-Our model and analysis are unlikely to spuriously produce a $\pmb{\delta}$ as closely aligned with the $\pmb{\gamma}$--plane
-as derived from our data, as its small  $\delta_\perp^2/\delta^2$  is not expected from a null signal at $>98$\%.
+for the same 50 null simulations that were just described.
+Figure~\ref{pvalues_delta2:fig} shows  that for none of the simulations does our analysis produce 
+ $\delta_\perp^2/\delta^2$ as low as that from our data.  The $p$-values $>0.98$ indicate that the result from our data
+ is incompatible with the null hypothesis.
 
-Parameter biases that arise as part of our analysis methodology are measured through simulation.
+
+Potential biases in our results are measured through simulation.
 We realize 50 random realizations of data with input  parameters equal to the median values found in
-this Section, except for $\pmb{\delta}$ which is assigned the modes presented earlier, and the same noise as our data.  The posterior for each realization is analyzed individually, and the posteriors of all realizations are stacked.  The stack is sensitive to
+this Section, except for $\pmb{\delta}$ which is assigned the, and the same noise as our data.  The posterior for each realization is analyzed individually, and the posteriors of all realizations are stacked.  The stack is sensitive to
 biases in the best fit value.
-The stack of  $\pmb{\delta}$  is shown in Figure~\ref{simdelta:fig}.  There is a bias in the
-modes from the input  $(-1.12, -0.89, -0.36,  -0.16, 0.21)$ relative to the stacked modes $(-1.10, -0.98, -0.41, -0.09, 0.40)$
-that is smaller than the statistical uncertainty of a single analysis.
+The stack of  $\pmb{\delta}$  is shown in Figure~\ref{simdelta:fig}.  There is a bias between
+the input  $(-1.12, -0.89, -0.36,  -0.16, 0.21)$ and the mode of  the stacks $(-1.06, -0.95, -0.41, -0.11, 0.40)$.
+We do not consider this bias to be an issue in our detection of a third parameter, as the difference is significantly
+smaller than the statistical uncertainty of a single analysis and the length of the vector changes by $< 3\%$.
 The posterior stacks for the other global parameters 
 are shown in Figures~\ref{simglobal1:fig}--\ref{simglobal5:fig}.  The input parameters are recovered with negligible bias
 relative to the statistical uncertainties. 
@@ -1872,12 +1880,11 @@ with the extracted distributions.  Also,
 there is a tendency for the slope parameters associated with the spectral features to be slightly underestimated, which is an expected consequence of 
 the uncertainties in the predictor variable that lead to 
 regression dilution \citep{spearman04}.
-\color{black}
 
 \begin{figure}[htbp] %  figure placement: here, top, bottom, or page
    \centering
    \includegraphics[width=5.2in]{output25_sim/delta_corner.pdf} 
-            \caption{Stacked $\pmb{\delta}$ posterior contours for 50 independent simulated data sets with input $\pmb{\delta}=0$.
+            \caption{Stacked $\pmb{\delta}$ posterior contours for 50 independent simulated data sets.
             The blue crosshairs denote the input $\pmb{\delta}$ used to generate the simulated data.
             \label{simdelta:fig}}
 \end{figure}
@@ -1917,9 +1924,8 @@ regression dilution \citep{spearman04}.
  \label{simglobal5:fig}}
 \end{figure}
 
-\color{purple}
 The Model~II fit of SN~2014J \citet{2014ApJ...788L..21A}  data 
-gives $k_0$ and $k_1$ that qualitatively similar to  those from the fit to Model~I but with much larger uncertainties.
+gives $k_0$ and $k_1$ that are qualitatively similar to  those from the fit to Model~I but with much larger uncertainties.
 These parameters are now highly correlated with $D$, which itself is consistent with zero.  The results resemble those of
 Model~I shown in Figure~\ref{sn2014j:fig}, except for larger error bars for the color excesses projected onto the dust model.
 \color{black}
@@ -1929,12 +1935,12 @@ Model~I shown in Figure~\ref{sn2014j:fig}, except for larger error bars for the 
 \label{discussion:sec}
 
 \subsection{Light Curve Shape}
-The motivation of our analyses was to standardize supernovae based on spectral features and colors around peak brightness.
+The motivation of our analyses was to standardize supernovae based on spectral features and colors at peak brightness.
 As such, our models do not explicitly include light-curve shape, which is known to track SN~Ia diversity.
-We now examine this in more depth using the intrinsic--extrinsic Model~II of \S\ref{model2:sec}.
+We now examine the effect of shape in more depth using the intrinsic--extrinsic Model~II of \S\ref{model2:sec}.
 The connection between the spectrum at peak and the light-curve decline rate, seen through
 the correlation between $EW_{Si}$ and the SALT2 $x_1$ light-curve shape parameter, is verified
-for our sample \citep{2017Chotard}.
+for our sample in \citet{2017Chotard}.
 On the other hand, there is no such correlation seen between $A_{\delta I} = \delta_I D$ and $x_1$, as shown in Figure~\ref{x1:fig}. 
 Our magnitude residuals, $\sigma_X$, are comparable to the residuals after SALT2 training
 \citep{2010A&A...523A...7G}, showing that our model exhibits little loss in its ability to standardize
@@ -1944,13 +1950,14 @@ between $x_1$ and the residuals between observed and model-predicted colors, as 
 Figure~\ref{x1res:fig},
 though there is a hint of nonlinearity in the $B-V$ and $R-V$ colors.
 
-We  run an extension of our model to include light-curve shape by adding a new linear term $\zeta x_1$ to the 
-intrinsic magnitude; the credible intervals
+A direct consideration of light-curve shape is
+performed by explicitly adding to Model~II a new linear term $\zeta x_1$ to the 
+intrinsic magnitude. The credible intervals
 from this analysis are given in Table~\ref{globalx1:tab}; there are no significant changes with respect to the reference model. 
 Light-curve shape is not a strong predictor of supernova magnitude relative to the spectral features: $\zeta_R/\zeta_V$
-has the largest significance at at $1\sigma$.
-The evidence for a non-zero $\pmb{\delta}$ remains as seen in the values of $\delta_X/\delta_I-1$ in Table~\ref{globalx1:tab}, meaning that it is not an artifact of
-having neglected light-curve shape.
+has the largest significance  at $1\sigma$.
+The evidence for the effect of a third parameter persists in the significant  non-zero  $\delta_X/\delta_I-1$ values
+in Table~\ref{globalx1:tab}, reinforcing the evidence that the $D$ of Model~II is not primarily related to light-curve shape.
 
 \begin{figure}[htbp] %  figure placement: here, top, bottom, or page
    \centering
@@ -2199,13 +2206,13 @@ for low- and high-mass hosts respectively.
    \includegraphics[width=2.8in]{output25/childress_pvalue.pdf}
       \caption{Left: Intrinsic parameter $A_{\delta U}=\delta_U D$  versus host galaxy mass. Overplotted are the mean and 1$\sigma$ uncertainty on the mean for supernovae with hosts
       less than and greater than  $\log{(M/M_\sun)}=10$.
-Right: Histogram of the two-tailed p-value from  the Kolmogorov-Smirnov test applied to all links in the Monte Carlo chains.
+Right: Histogram of the two-tailed $p$-value from  the Kolmogorov-Smirnov test applied to all links in the Monte Carlo chains.
    \label{childress:fig}}
 \end{figure}
 
 
 The Kolmogorov-Smirnov test is applied on the distribution of $A_{\delta I}$ of both low- and high-mass samples for
-each Monte Carlo link.  The resulting distribution of the two-tailed p-value (a high value meaning that we cannot
+each Monte Carlo link.  The resulting distribution of the two-tailed $p$-value (a high value meaning that we cannot
 reject the hypothesis of the samples are the same) over all chains is shown in Figure~\ref{childress:fig}. The distribution is broad
 over the range from 0 to 1.  We are thus unable to distinguish the $A_{\delta I}$ distributions from low- and high-mass samples.
 

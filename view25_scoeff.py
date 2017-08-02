@@ -61,7 +61,7 @@ simperc = []
 simmedfrac = []
 simmedabs=[]
 tag="_null"
-# tag=""
+tag=""
 f = open('temp25_sim'+tag+'0.pkl','rb')
 (fit,_) = pickle.load(f)
 
@@ -272,6 +272,16 @@ print delta
 if tag == '_null':
     delta[:]=0
 
+# var = fit['rho1'][:,1:]/fit['rho1'][:,0][:,None]
+# figure = corner.corner(var,labels=[r"${\delta}_B/{\delta}_U$",r"${\delta}_V/{\delta}_U$",r"${\delta}_R/{\delta}_U$",r"${\delta}_I/{\delta}_U$"],truths=delta[1:]/delta[0], \
+#     range=(0.9,0.9,0.9,0.9))
+# pp = PdfPages('output25_sim'+tag+'/deltaratio_corner.pdf')
+# plt.savefig(pp,format='pdf')
+# pp.close()
+
+# wefwe
+
+
 cov = numpy.zeros((5,5))
 for x1, x2 in zip(fit_input['L_Omega'], fit_input['L_sigma']):
     cov= cov+ numpy.dot(x2[:,None],x2[None,:])*numpy.dot(x1,x1.T)
@@ -311,10 +321,12 @@ for index in xrange(5):
 # doublerho = numpy.concatenate((fit['rho1'],-fit['rho1']),axis=0)
 
 
-H,edges  = numpy.histogramdd(numpy.transpose(mega[:,:,6]),bins=30)
+H,edges  = numpy.histogramdd(numpy.transpose(mega[:,:,6]),bins=50)
 w = numpy.argmax(H)
 w = numpy.unravel_index(w,H.shape)
 print numpy.array([edges[0][w[0]],edges[1][w[1]],edges[2][w[2]],edges[3][w[3]],edges[4][w[4]]])
+
+wefwe
 
 perc = []
 for i in xrange(10,25):
