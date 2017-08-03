@@ -10,7 +10,6 @@
 \defcitealias{1999PASP..111...63F}{F99}
 \linenumbers
 
-
 \begin{document}
 
 \title{Evidence for a Color Parameter Unassociated With Dust Within the Type~Ia Supernovae of the Nearby Supernova Factory}
@@ -1935,6 +1934,7 @@ Model~I shown in Figure~\ref{sn2014j:fig}, except for larger error bars for the 
 \label{discussion:sec}
 
 \subsection{Light Curve Shape}
+\label{shape:sec}
 The motivation of our analyses was to standardize supernovae based on spectral features and colors at peak brightness.
 As such, our models do not explicitly include light-curve shape, which is known to track SN~Ia diversity.
 We now examine the effect of shape in more depth using the intrinsic--extrinsic Model~II of \S\ref{model2:sec}.
@@ -2167,8 +2167,9 @@ $ 0.040^{+ 0.006}_{-0.005}$
 \caption{68\% credible intervals for the Global Fit Parameters including the light-curve shape parameter, $x_1$ \label{globalx1:tab}}
 \end{table}
 
-\subsection{SiII Line Velocity}
 
+\subsection{SiII Line Velocity}
+\label{velocity:sec}
 \citet{2009ApJ...699L.139W, 2011ApJ...729...55F} find a connection between $v_{Si}$ and color, and  
 \citet{2015MNRAS.447.1247S} show that $v_{Si}$ is an important spectral classifier within the SNfactory data themselves.
 To first order, the $\lambda_{Si}$ treated in this article varies linearly with $v_{Si}$.
@@ -2180,7 +2181,18 @@ The Ca and Si responsible for the equivalent widths and wavelength of our select
 are expected to be produced together in the thermonuclear burning into intermediate mass elements.
 We conclude that $v_{Si}$ is correlated with color, 
 but this correlation
-is absorbed into the equivalent-width corrections, which give higher likelihood as they give lower residual dispersions $C_c$.
+is absorbed into the equivalent-width corrections.
+
+
+\color{red}
+The results from  \S\ref{shape:sec} and this subsection demonstrate the model handling simultaneous
+magnitude corrections 
+of  correlated observables.  The model prefers corrections that reduce intrinsic dispersion.
+The free parameters that describe the intrinsic dispersion enter the model likelihood through  the term $(\det{C_c})^{-0.5}$, which gives higher likelihood 
+for lower dispersions. This leads to magnitude corrections being preferentially
+attributed to $EW_{Ca}$ over $v_{Si}$, and  $EW_{Si}$ over SALT2 $x_1$.
+\color{black}
+
 
 \subsection{Host-Galaxy Mass}
 A correlation between Hubble residual and host-galaxy mass
@@ -2192,12 +2204,11 @@ To explore whether the Hubble residual may be due to unaccounted color,
 we plot in Figure~\ref{childress:fig} our intrinsic parameter  $A_{\delta I}$  versus host mass 
 \color{purple}
 for the subset of supernovae whose host measurements are given in \citet{2013ApJ...770..108C}.
-The difference between high-mass hosts is
-not significant; we calculate  average
+The average $A_{\delta I}$'s of the two subsamples are
 %---
-$\langle A_{\delta I} \rangle=     -0.0002 \pm    0.0089 $,
-$\langle A_{\delta I} \rangle= 0.0025 \pm   0.0073 $ 
-for low- and high-mass hosts respectively. 
+$\langle A_{\delta I} \rangle=     -0.0002 \pm    0.0089$ mag,
+$\langle A_{\delta I} \rangle= 0.0025 \pm   0.0073 $ mag
+for low- and high-mass hosts respectively: there is no significant difference between them. 
 
 
 \begin{figure}[htbp] %  figure placement: here, top, bottom, or page
@@ -2212,51 +2223,59 @@ Right: Histogram of the two-tailed $p$-value from  the Kolmogorov-Smirnov test a
 
 
 The Kolmogorov-Smirnov test is applied on the distribution of $A_{\delta I}$ of both low- and high-mass samples for
-each Monte Carlo link.  The resulting distribution of the two-tailed $p$-value (a high value meaning that we cannot
-reject the hypothesis of the samples are the same) over all chains is shown in Figure~\ref{childress:fig}. The distribution is broad
-over the range from 0 to 1.  We are thus unable to distinguish the $A_{\delta I}$ distributions from low- and high-mass samples.
+each Monte Carlo link.  The resulting distribution of the two-tailed $p$-value  over all chains spans the possible range from 0 to 1, as shown in Figure~\ref{childress:fig}.  We are unable to perform a constraining test of whether the $A_{\delta I}$ distributions from low- and high-mass samples
+are drawn from a common distribution.
 
-%Using the SNfactory sample,
-%\citet{2013A&A...560A..66R,2017Rigault} find that a step in Hubble residuals is better related to local star formation rate, rather than
-%global host mass.
-\subsection{Physical Motivation}
+A more pertinent test is to see if a host-mass bias persists in Hubble diagram residuals
+derived from a recalibration of SN~Ia absolute magnitudes using the parameters of the current article.
+The calibration of absolute magnitudes goes beyond the design of our model and analysis (see \S\ref{standard:sec}), so this test
+in not presented here.
 
-A straightforward explanation for the third color term $\pmb{\delta} D$ is that it describes the absorption due to some form of dust
-that does not obey the  \citetalias{1999PASP..111...63F} model.
-Supernova light may encounter two
+\subsection{Improving SNe~Ia as Standard Candles}
+\label{standard:sec}
+The approach of our analysis is to mine for new supernova properties based on colors and spectral features.
+Our model and results do carry information on absolute magnitude but are not tailored for its study.
+The grey parameter $\Delta$ with its $0.10$ mag dispersion, while containing information on absolute magnitude, 
+also conflates
+contributions from peculiar velocities and measurement uncertainties.  Studies
+focused on improving SNe~Ia as standard candles should modify  our model to
+distinguish between these sources of greyness and dispersion.
+Our
+mining exercise uses all supernovae that pass quality cuts, the approach taken by previous
+exploratory work.  In contrast, the calibration of SNe~Ia as standard candles needs procedures such
+as cross-validation to avoid overtraining.
+An absolute magnitude calibration using the parameters identified in this analysis is left to future work.
+
+
+\subsection{Physical Interpretation of the Intrinsic Color Parameter}
+
+Based on its direction, a straightforward explanation for the third color term $\pmb{\delta} D$ is that it describes the absorption due to some form of dust
+that does not exactly obey the  \citetalias{1999PASP..111...63F} model.
+In one scenario,
+supernova light can encounter two
 dusts, first a 
-circumstellar dust that can produce lower visual-to-selective extinction
+circumstellar dust that produces relatively low visual-to-selective extinction
 \citep{2008ApJ...686L.103G} and then
 an interstellar form  that resembles the \citetalias{1999PASP..111...63F} model.
-Qualitatively,  the decrease in magnitude change toward redder wavelengths, seen in Figure~\ref{deltaratio:fig}, matches the 
+To first order $\pmb{\delta}$ behaves like standard dust;   $>98$\% of its length projects onto the expectation of  \citetalias{1999PASP..111...63F}
+with constant $R^F$.
+The departure from   \citetalias{1999PASP..111...63F}
+can be seen qualitatively; the decrease in magnitude change toward redder wavelengths, seen in Figure~\ref{deltaratio:fig}, matches the 
 expectation for the circumstellar form of dust.
-The projection of  $\pmb{\delta}$ onto the plane expected by dust is significant at the $>98$\% level.  However, we
+However, we
 lack the signal-to-noise to show consistency with this explanation.
-Our best-fit  $\delta_X$ do not share the same sign, as expected for dust.
+The best-fit elements $\delta_X$ do not all share the same sign, as would have been expected for dust.
 Confining ourselves to the 98\% of   $\pmb{\delta}$ that lies on the dust plane, associating 
 $D$ with $A_V$ would imply an unphysical $R^F=0.5$.
 
-An alternative explanation for the $\pmb{\delta} D$ term is that it captures an intrinsic dust parameter that is independent of $R^F$.
-Supernova light encounters one dust with a degree of freedom beyond that modeled by \citetalias{1999PASP..111...63F}.
+An alternative scenario is that supernova light encounters one dust with a degree of freedom beyond that modeled by \citetalias{1999PASP..111...63F}.
+The $\pmb{\delta} D$ term represents an intrinsic dust parameter that is independent of $R^F$.
 The extra degree-of-freedom could be associated with the skewness in the distribution of dust grains, as an increase of smaller dust grains
 can flatten extinction in the red and enhanced steepness in the UV relative to standard dust models  \citep[Figure~3 in][]{2015ApJ...807L..26G,
 2017ApJ...836...13H}.  Unfortunately, our signal-to-noise for $\pmb{\delta}$ is insufficient to test these physically-motivated
 dust models.
 
-Based on the above models, a dust-based identification and explanation of the extra color parameter would be greatly enhanced with
-extended wavelength coverage into the UV.
 
-\subsection{Improving SNe~Ia as Standard Candles}
-The model and results presented here
-carry information on the calibration of absolute magnitude.  The grey parameter $\Delta$ represents Hubble residuals after
-application of the model, and its  $0.10$ mag dispersion has contributions from intrinsic dispersion, peculiar velocities, and
-measurement uncertainties.
-This analysis was designed to mine information from the SNfactory data set, and so the results presented here
-are specific to it both in terms of its population distribution and potentially noise.  This is the approach taken by previous
-exploratory work.
-A new analysis that explicitly measures out-of-sample performance is required to robustly determine how
-well the addition of third parameter inferred from one data set can be used to measure supernova distances
-of an independent set.
 
 \subsection{Conclusion}
 To summarize, we model SNe~Ia broadband optical peak magnitudes allowing for correlations with spectral features at peak and
@@ -2269,7 +2288,7 @@ distribution of $A_V$.
 \color{purple}
 Nesting this model in an extended model produces a result that 
 \color{black}
-disfavors the original model and gives the first identification of  a new parameter that affects supernova
+gives the first identification of  a new parameter that affects supernova
 colors in a manner that is distinct from the expectations from dust or the spectral features $EW_{Ca}$, $EW_{Si}$, and $\lambda_{Si}$.
 
 \color{purple}
@@ -2278,8 +2297,6 @@ in low- and high-mass host-galaxies.
 Using the SNfactory sample,
 \citet{2013A&A...560A..66R,2017Rigault} find that a step in Hubble residuals is better related to local star formation rate, rather than
 global host mass.  The search for a correlation between our parameter and local star formation rate is planned for future work.
-
-XXX Analysis picks out preferered correlated.
 
 \color{black}
 
