@@ -196,13 +196,11 @@ D-85748 Garching, Germany}
 
 
 \begin{abstract}
-\color{purple}
 Through empirical modeling of its observed signal, the peak absolute magnitude of a Type~Ia supernova (SN~Ia) can be accurately determined,
 making SNe~Ia  excellent distance indicators.  Improved modeling of SN~Ia absolute magnitudes can account for
 further physical
 diversity that is expected but not included
 in current models, and so consequently can lead to more precise per-object distances with smaller systematic uncertainties.  In this article, we present   
-\color{black}
 an empirical model for SN~Ia peak magnitudes with two color parameters and dependence on the equivalent widths of CaII, SiII, and SiII velocity
 as applied to the supernova sample of the Nearby Supernova Factory.  The peak magnitudes in synthetic
 broadband photometry and their colors are found to be 
@@ -290,7 +288,7 @@ find $R_V=2.95 \pm 0.08$ for the highly-extincted SN~2012cu.
 Hierarchical modeling has recently opened
 the study of intrinsic supernova color based on SN~Ia Hubble diagrams. Latent parameters that are not directly tied to observables
 but  influence color can be included in such models.
-\citet{2016arXiv160904470M} take the approach of modeling the distribution of their parameters, to find that
+\citet{2017ApJ...842...93M} take the approach of modeling the distribution of their parameters, to find that
 scatter in the Hubble diagram is better explained by a combination of intrinsic color dispersion and
 $R_V=2.7$ dust, rather than by dust with no color dispersion.
 They draw these conclusions by using only the SALT2 (v2.4) $x_1$ parameter as the summary statistic that describes color.
@@ -652,7 +650,6 @@ relate spectral-feature parameters with intrinsic magnitudes.
 The global parameter vectors $\pmb{\gamma}^0$, $\pmb{\gamma}^1$  are the slopes that relate 
 the latent extrinsic-color parameters with apparent magnitudes.  
 
-\color{purple}
 The model as written has degeneracies that need to be constrained in order for fits to converge.
 The model does not specify the absolute magnitude nor the intrinsic color of a supernova that has no extrinsic color contribution,
 in their place the zeropoints of the per-supernova magnitude and color parameters are set to the sample means
@@ -674,7 +671,6 @@ we impose one of the degenerate solutions
 %with the $\pm$ sign.
 As  in mixture models, the combinations $\pmb{\gamma}^0 k_0$ and $\pmb{\gamma}^1 k_1$ terms are degenerate under exchange of the 0 and 1 indices. For a cleaner presentation of our results, 
 we break that degeneracy  by setting consistent initial conditions that succeed in keeping indices consistent over all analysis chains.  
-\color{black}
 
 
 Another form of degeneracy is illustrated by the  transformations $\Delta \rightarrow \Delta  + \epsilon_\Delta$,
@@ -707,11 +703,9 @@ Visualization of the LKJ correlation distribution can be found in \url{http://ww
 deviations $\sigma_i = \sqrt{C_{c,ii}}$ with a  Cauchy distribution prior with location
  $0.1$ and scale $0.1$ mag restricted to positive values.
 This covariance matrix prior is recommended by STAN \citep{stan}, the Monte Carlo program we use to evaluate the model.
- \color{purple}
  We find that a simpler intrinsic dispersion model with no correlations between bands
  (i.e.\ a  diagonal covariance matrix) produces little change in the posteriors of
  the other parameters.
-\color{black}
 
 For $N$ supernovae there are $8N$ observables.  For the top-level model parameters, there are $3N$ spectral parameters, $2(N-2)$
 color parameters, $(N-1)$ magnitude offsets,  $5 \times 6$ global coefficients, and $10$ parameters that describe the intrinsic
@@ -777,10 +771,8 @@ $N_{eff}$ is an estimate of the number of independent draws. The output for our 
 output also gives  $N_{eff} \gg 100$ for all parameters, indicating that are all densely sampled.
 Empirically, the confidence regions are localized and unimodal as is seen in  Figures~\ref{global1:fig} -- \ref{global5:fig}.  In these tests there is no evidence that
 the Monte Carlo chains have not converged to the stationary posterior distribution.
-\color{purple}
 For four selected colors, a plot of the
 observed versus deduced intrinsic colors and the histogram of their differences
-\color{black}
 are shown in Figure~\ref{residual:fig}. 
 There is no evidence of a catastrophically poor model predictions nor of extreme
 outlying data.
@@ -792,10 +784,8 @@ remain consistent.
    \centering
    \includegraphics[width=5.2in]{output11/residual.pdf} 
             \caption{
-            \color{purple}
             Observed versus deduced intrinsic colors for four selected colors.  Plotted on the right for each color
 is the histogram of the difference between the observed and intrinsic colors.
-\color{black}
             \label{residual:fig}}
 \end{figure}
 
@@ -973,7 +963,6 @@ is
 $2.5 \log{(50/701)} \sim 0.08$ mags.   The implied span in $U$ magnitude is  0.21~mag, so $\alpha_U$ cannot be completely due to the 
 presence of the line itself.
 
-\color{purple}
 The fit $\Delta$'s are highly correlated between supernovae.  To aid in visualization, we remove much of this
 correlation by subtracting out the $\Delta|_0$ of  an arbitrary supernova.
 The histogram of the medians of these relative  grey offsets $\Delta-\Delta|_0$,
@@ -985,14 +974,12 @@ $0.08$
 mag, and a tail in the positive (fainter) direction. 
 Of the three extreme outliers, the supernovae with largest and third largest $\Delta$'s have  heliocentric redshifts of 
  $0.0015$ and $0.0085$ respectively, and so have peculiar velocities that can cause a significant magnitude offset.
-\color{black}
+
 \begin{figure}[htbp] %  figure placement: here, top, bottom, or page
    \centering
    \includegraphics[width=5.2in]{output11/deltaDelta_hist.pdf} 
    \caption{
-   \color{purple}
    Normalized ideogram and histogram of the medians of the grey offset relative to one arbitrary supernova, $\Delta-\Delta|_0$.  
-   \color{black}
    \label{hist:fig}}
 \end{figure}
 
@@ -1001,7 +988,6 @@ root of the diagonal elements are denoted as $\sigma$, which
 range from
 $\sim 0.01$ to 0.06 mag, significantly smaller
 than the dispersion in $\Delta$.
-\color{purple}
 Of particular interest within $C_c$ is intrinsic color dispersion.  The intrinsic dispersions in $V$ and colors with respect to $V$ are
 \begin{multline}
 \sigma(V,U-V,B-V,V-R,V-I)=\\
@@ -1033,14 +1019,11 @@ Cor(V,U-V,B-V,V-R,V-I)=\\
  \end{pmatrix}.
  \label{cor_intrinsic:eqn}
  \end{multline}
-\color{black}
 These color variances are smaller than those derived by \citet{2003A&A...404..901N} or \citet{2007ApJ...659..122J}, for cases where
 a direct comparison can be made.
-\color{purple}
 %model11_rubin.py
 Having no intrinsic color dispersion is disfavored, and not allowing for them can have important consequences.  Running an analysis assuming no intrinsic dispersion (replacing the probabilistic intrinsic magnitudes in Eqn.~\ref{ewsiv:eqn}
 with a strict equality), we find significant shifts in all slope parameters  and smaller statistical uncertainties.
-\color{black}
 
 %Each supernova is described by its parameters $EW_{Ca}$, $EW_{Si}$, $\lambda_{Si}$, $E_{\gamma^0}(B-V)=(\gamma^0_B-\gamma^0_V)k_0$, and
 %$E_{\gamma^1}(B-V)=(\gamma^1_B-\gamma^1_V)k_1$, as well as its grey offset
@@ -1060,7 +1043,6 @@ with a strict equality), we find significant shifts in all slope parameters  and
 
 Each supernova is described by its parameters $\Delta$, $EW_{Ca}$, $EW_{Si}$, $\lambda_{Si}$, $E_{\gamma^0}(B-V)$, and $E_{\gamma^1}(B-V)$.
 Their Pearson correlation coefficients  are given in the matrix
-\color{purple}
 \begin{multline}
 Cor(\Delta, EW_{Ca}, EW_{Si}, \lambda_{Si}, E_{\gamma^0}(B-V), E_{\gamma^1}(B-V)) =\\
 \begin{pmatrix}
@@ -1074,12 +1056,9 @@ Cor(\Delta, EW_{Ca}, EW_{Si}, \lambda_{Si}, E_{\gamma^0}(B-V), E_{\gamma^1}(B-V)
 \end{array}
 \end{pmatrix}.
 \end{multline}
-\color{black}
 
 We find weak correlations between our color-excess parameters and the input features; 
-\color{purple}
 only the $ -0.17 \pm 0.05$ between $E_{\gamma^0}(B-V)$ and $EW_{Si}$ has significance much larger than $1 \sigma$.
-\color{black}
 The feature $EW_{Si}$ is correlated with light-curve shape, which is correlated with host-galaxy (including dust) properties 
 \citep{2000AJ....120.1479H, 2003MNRAS.340.1057S}.
 An extensive discussion of the correlations between the spectral features of the SNfactory data set can be found in \citet{chotard:thesis}
@@ -1109,10 +1088,8 @@ The $F$ superscript is used to distinguish parameters of the \citetalias{1999PAS
 Over the ranges of
  $R^F$ and $A^F_V$,
 and the wavelengths under consideration,  the values of the elements of $a$ and $b$ vary by $<5$\%;
-\color{red}
 for $0\le A^F_V\le 1$ and $2 \le R^F \le 3.5$, the largest error in extinction from the linear approximation of
 Eqn.~\ref{f99:eqn} has amplitude $<0.008$ mag.
-\color{black}
 
 The extrinsic contribution to our model can be re-expressed to have a similar parameterization
 \begin{equation}
@@ -1167,7 +1144,6 @@ the 5-dimensional magnitude space.
 Wiith no prior assumptions of dust extinction behavior or the distribution of $A_V$, the supernova data themselves exhibit
 2-dimensional color variations that are closely aligned with the 2-dimensional color variations predicted by the \citetalias{1999PASP..111...63F} dust model.
 
-\color{purple}
 The above result is visualized in Figure~\ref{plane:fig}, which  shows  in the $UVI$-subspace two perspectives (left and right columns)
 of the unit vectors corresponding to $\pmb{\gamma}^0$ and  $\pmb{\gamma}^1$ of our model (solid lines),
 and $\mathbf{a}$, $\mathbf{b}$ of the \citetalias{1999PASP..111...63F} model (dashed lines).  All  vectors are set to intersect the origin.
@@ -1183,7 +1159,6 @@ the former.
 %   \includegraphics[width=2.95in]{output11/plane0BVR.pdf}
 %   \includegraphics[width=2.95in]{output11/plane1BVR.pdf}
    \caption{
-   \color{purple}
    Visualization of how supernova magnitudes can vary in our model and that of \citetalias{1999PASP..111...63F}.  While the models describe
    magnitudes in 5-bands $UBVRI$ this visualization shows only $UVI$.   The left and right plots show the same information from
    two different perspectives.
@@ -1244,12 +1219,11 @@ for the distribution of dust extinction the SN population is expected to suffer.
    \includegraphics[width=2.8in]{output11/deltagamma0_med.pdf}
    \includegraphics[width=2.8in]{output11/deltagamma1_med.pdf}
       \caption{
-      \color{purple} Normalized ideogram and histogram 
+      Normalized ideogram and histogram 
       of
 median values of $\gamma^0_V k_0-\gamma^0_V k_0|_0$, which are associated with the $A^F_V$ of an $R^F \sim 1/\kappa_1$ dust model
 (left) : $\gamma^1_V k_1-\gamma^1_V k_1|_0$,
 which  is associated with extinction corrections due to deviations away from the canonical $R^F_{eff}$ value (right).
-      \color{black}
    \label{k0_med:fig}}
 \end{figure}
 
@@ -1286,10 +1260,8 @@ no dust, which is unspecified in our model.
    \centering
    \includegraphics[width=5.2in]{output11/avebv_synth.pdf}
       \caption{
-      \color{purple}
       Expected values and 68\% credible intervals of effective $E^F(B-V)$ and $A_V^F$ after transformation from our model $k_0$ and $k_1$ parameters, for the supernova in our sample.
       Overplotted is a line with the slope expected for $R^F=2.44$.
-      \color{black}
    \label{kk:fig}}
 \end{figure}
 
@@ -1313,110 +1285,110 @@ This conclusion is based on the
 near coplanarity of the plane defined by our parameters and the plane of  \citetalias{1999PASP..111...63F}, together with the fact that 
 the distribution of $k_0$ is consistent with the expected distribution of $A^F_V$.
 Nevertheless, there do remain some small inconsistencies between our numbers and expectations from dust models.
-\color{black}
 
-\subsection{SN 2014J in the Context of Our Model}
-\label{sn2014j:sec}
-SN~2014J   is one of several SNe~Ia that exhibit colors that imply a low $R_V<2.0$ \citep{2014ApJ...788L..21A, 2014MNRAS.443.2887F, 
-2014arXiv1411.3332J,
-2014ApJ...795L...4K, 2015ApJ...805...74B}.
-The colors of this supernova can be studied in comparison to SN~2011fe, an object with similar
-spectral evolution that 
-suffers very low galactic and host reddening
-\citep[this technique has been used in][]{2006MNRAS.369.1880E,2007AJ....133...58K,2008MNRAS.384..107E,2010AJ....139..120F, 2014ApJ...788L..21A,
-2017arXiv170101422H}.
-The overall higher photospheric velocities of
-SN~2014J are unimportant  based on the findings of  \S\ref{results:sec}.
-
-Data of SN~2014J are  analyzed using our model and using the parameter values found with the SNfactory sample.
-The data for the color excesses  in $UBRi$  relative to $V$ at peak brightness  are taken from \citet{2014ApJ...788L..21A},
-following their prescription of averaging measurements within 5-days of peak $B$ magnitude.
-Their values 
-$E(U_o-V_o) =   2.23 \pm   0.03$,
-$E(B_o-V_o) =   1.28 \pm   0.04$,
-$E(R_o-V)_o =  -0.47 \pm   0.03$,
-$E(i_o-V_o) =  -0.92 \pm   0.03$
-are plotted in Figure~\ref{sn2014j:fig}, where the subscript $o$ denotes that this is an observed color excess.
-The central wavelengths of the filters are 3660, 4280, 5350, 6310, and 8100 \AA\ respectively, in contrast to the central
-wavelengths 
-3640, 4390, 5290, 6370, 7680 \AA\ of our synthetic bands.  Despite the imperfect correspondence our synthetic passbands
-and those used for the observations,
-these data are fit to our model
-\begin{equation}
-E(X_o-V_o) =  \left(\frac{\gamma^0_X}{\gamma^0_V}-1\right)e_0 +  \left(\frac{\gamma^1_X}{\gamma^1_V}-1\right)e_1,
-\end{equation}
-where we use the median values of the $\pmb{\gamma}$- and $\pmb{\delta}$-terms from Table~\ref{global:tab} and $e_i $ are the fit
-parameters.
-
-\begin{figure}[htbp] %  figure placement: here, top, bottom, or page
-   \centering
-   \includegraphics[width=5.2in]{output11/sn2014j.pdf} 
-   \caption{Top: Measured color excess for SN~2014J and the best-fit predictions from this article.
-   \color{purple}
-   In addition to the prediction
-   of our model, also shown is the prediction from the projection
-   of our results onto the \citetalias{1999PASP..111...63F} extinction model.  Bottom: Residual color excess
-   between the data and models, with a dotted line at zero shown for reference.
-   \color{black}
-   \label{sn2014j:fig}}
-\end{figure}
-
-The best-fit parameters for SN~2014J are 
-%----
-$e_0= 2.60$, $ e_1=-1.89$ with covariance
-%----
-\begin{equation}
-\begin{pmatrix}
-\begin{array}{rr}
-0.050 & 0.058 \\
-0.058 & 0.315
-\end{array}
-\end{pmatrix}.
-\end{equation}
-The predicted values of observed $E(B_o-V_o)$ from the fit are shown in Figure~\ref{sn2014j:fig}, where they are found to
-overlap with the data within the error bars. 
-
-
-
-In the fit to our model, the observed color excess is attributed to 
-%----
-$E_{\gamma^0}(B-V)=  0.90 \pm   0.08$ and  $E_{\gamma^1}(B-V)=  0.34 \pm   0.10$
-%-----
-contributions.
-Among the supernovae in the SNfactory  set used to determine $\pmb{\gamma}^0$ and $\pmb{\gamma}^1$, the
-objects with extreme median MCMC-sample values in $E_{\gamma^0}(B-V)$ have 
-%---
-$-0.07 \pm 0.01$ and  $  0.33 \pm 0.04$, and in $E_{\gamma^1}(B-V)$  have $-0.01 \pm 0.01$  and
-$  0.06 \pm 0.03$. 
-%---
-The deduced parameters for SN~2014J, which are relative to SN~2011fe, live well outside the 
-span of supernovae used to train the coefficients of the model, which is not unexpected if
-attributable to dust. 
-
-\color{purple}
-The  parameters $E_{\gamma^0}(B-V)$ and  $E_{\gamma^1}(B-V)=  0.34$ can be transformed into  the 
-\citetalias{1999PASP..111...63F} parameters using the transpose of the matrix in Eqn.~\ref{trans_I:eqn},
-assuming that  SN~2011fe has zero extinction.  The colors predicted by this \citetalias{1999PASP..111...63F}--component
-of our model are  shown in Figure~\ref{sn2014j:fig}. 
-Significant differences between the projection and the data is apparent
-in the $B-V$ and  $R-V$ colors.
-The data and the full model both have shallower decline in color excess with increasing wavelength.
-The difficulty that  the  \citetalias{1999PASP..111...63F} model has in accounting for SN~2014J colors within the optical range is also evident
-in Figure 3 of  \citet{2014ApJ...788L..21A}, who fit
-UV through NIR data to obtain $R_V^F=1.4$ and $E^F(B-V)=1.37$.
-Notwithstanding their bias respect to the data, we present the transformed dust parameters
-$A^F_V=0.77$ and $E^F(B-V)=1.28$ and covariance
-\begin{equation}
-\begin{pmatrix}
-\begin{array}{rr}
-0.430 & -0.004 \\
--0.004 & 0.007
-\end{array}
-\end{pmatrix},
-\end{equation}
-which together give $R^F= 0.59^{+ 0.53}_{-0.48}$.
-\color{black}
-
+%
+%\subsection{SN 2014J in the Context of Our Model}
+%\label{sn2014j:sec}
+%SN~2014J   is one of several SNe~Ia that exhibit colors that imply a low $R_V<2.0$ \citep{2014ApJ...788L..21A, 2014MNRAS.443.2887F, 
+%2014arXiv1411.3332J,
+%2014ApJ...795L...4K, 2015ApJ...805...74B}.
+%The colors of this supernova can be studied in comparison to SN~2011fe, an object with similar
+%spectral evolution that 
+%suffers very low galactic and host reddening
+%\citep[this technique has been used in][]{2006MNRAS.369.1880E,2007AJ....133...58K,2008MNRAS.384..107E,2010AJ....139..120F, 2014ApJ...788L..21A,
+%2017arXiv170101422H}.
+%The overall higher photospheric velocities of
+%SN~2014J are unimportant  based on the findings of  \S\ref{results:sec}.
+%
+%Data of SN~2014J are  analyzed using our model and using the parameter values found with the SNfactory sample.
+%The data for the color excesses  in $UBRi$  relative to $V$ at peak brightness  are taken from \citet{2014ApJ...788L..21A},
+%following their prescription of averaging measurements within 5-days of peak $B$ magnitude.
+%Their values 
+%$E(U_o-V_o) =   2.23 \pm   0.03$,
+%$E(B_o-V_o) =   1.28 \pm   0.04$,
+%$E(R_o-V)_o =  -0.47 \pm   0.03$,
+%$E(i_o-V_o) =  -0.92 \pm   0.03$
+%are plotted in Figure~\ref{sn2014j:fig}, where the subscript $o$ denotes that this is an observed color excess.
+%The central wavelengths of the filters are 3660, 4280, 5350, 6310, and 8100 \AA\ respectively, in contrast to the central
+%wavelengths 
+%3640, 4390, 5290, 6370, 7680 \AA\ of our synthetic bands.  Despite the imperfect correspondence our synthetic passbands
+%and those used for the observations,
+%these data are fit to our model
+%\begin{equation}
+%E(X_o-V_o) =  \left(\frac{\gamma^0_X}{\gamma^0_V}-1\right)e_0 +  \left(\frac{\gamma^1_X}{\gamma^1_V}-1\right)e_1,
+%\end{equation}
+%where we use the median values of the $\pmb{\gamma}$- and $\pmb{\delta}$-terms from Table~\ref{global:tab} and $e_i $ are the fit
+%parameters.
+%
+%\begin{figure}[htbp] %  figure placement: here, top, bottom, or page
+%   \centering
+%   \includegraphics[width=5.2in]{output11/sn2014j.pdf} 
+%   \caption{Top: Measured color excess for SN~2014J and the best-fit predictions from this article.
+%   \color{purple}
+%   In addition to the prediction
+%   of our model, also shown is the prediction from the projection
+%   of our results onto the \citetalias{1999PASP..111...63F} extinction model.  Bottom: Residual color excess
+%   between the data and models, with a dotted line at zero shown for reference.
+%   \color{black}
+%   \label{sn2014j:fig}}
+%\end{figure}
+%
+%The best-fit parameters for SN~2014J are 
+%%----
+%$e_0= 2.60$, $ e_1=-1.89$ with covariance
+%%----
+%\begin{equation}
+%\begin{pmatrix}
+%\begin{array}{rr}
+%0.050 & 0.058 \\
+%0.058 & 0.315
+%\end{array}
+%\end{pmatrix}.
+%\end{equation}
+%The predicted values of observed $E(B_o-V_o)$ from the fit are shown in Figure~\ref{sn2014j:fig}, where they are found to
+%overlap with the data within the error bars. 
+%
+%
+%
+%In the fit to our model, the observed color excess is attributed to 
+%%----
+%$E_{\gamma^0}(B-V)=  0.90 \pm   0.08$ and  $E_{\gamma^1}(B-V)=  0.34 \pm   0.10$
+%%-----
+%contributions.
+%Among the supernovae in the SNfactory  set used to determine $\pmb{\gamma}^0$ and $\pmb{\gamma}^1$, the
+%objects with extreme median MCMC-sample values in $E_{\gamma^0}(B-V)$ have 
+%%---
+%$-0.07 \pm 0.01$ and  $  0.33 \pm 0.04$, and in $E_{\gamma^1}(B-V)$  have $-0.01 \pm 0.01$  and
+%$  0.06 \pm 0.03$. 
+%%---
+%The deduced parameters for SN~2014J, which are relative to SN~2011fe, live well outside the 
+%span of supernovae used to train the coefficients of the model, which is not unexpected if
+%attributable to dust. 
+%
+%\color{purple}
+%The  parameters $E_{\gamma^0}(B-V)$ and  $E_{\gamma^1}(B-V)=  0.34$ can be transformed into  the 
+%\citetalias{1999PASP..111...63F} parameters using the transpose of the matrix in Eqn.~\ref{trans_I:eqn},
+%assuming that  SN~2011fe has zero extinction.  The colors predicted by this \citetalias{1999PASP..111...63F}--component
+%of our model are  shown in Figure~\ref{sn2014j:fig}. 
+%Significant differences between the projection and the data is apparent
+%in the $B-V$ and  $R-V$ colors.
+%The data and the full model both have shallower decline in color excess with increasing wavelength.
+%The difficulty that  the  \citetalias{1999PASP..111...63F} model has in accounting for SN~2014J colors within the optical range is also evident
+%in Figure 3 of  \citet{2014ApJ...788L..21A}, who fit
+%UV through NIR data to obtain $R_V^F=1.4$ and $E^F(B-V)=1.37$.
+%Notwithstanding their bias respect to the data, we present the transformed dust parameters
+%$A^F_V=0.77$ and $E^F(B-V)=1.28$ and covariance
+%\begin{equation}
+%\begin{pmatrix}
+%\begin{array}{rr}
+%0.430 & -0.004 \\
+%-0.004 & 0.007
+%\end{array}
+%\end{pmatrix},
+%\end{equation}
+%which together give $R^F= 0.59^{+ 0.53}_{-0.48}$.
+%\color{black}
+%
 
 \section{Supernova Model II: Two Extrinsic Parameters, One Intrinsic Parameter}
 \label{model2:sec}
@@ -1477,7 +1449,6 @@ $\pmb{\delta} D$ term from Eq.~\ref{ewsiv2:eqn} to Eq.~\ref{dust2:eqn}, i.e.\ fr
 does not significantly affect the results, meaning that data are not constraining enough
 to identify $\pmb{\delta} D$ as being physically intrinsic or extrinsic.  Nevertheless, $\pmb{\delta} D$ is referred to as ``intrinsic''  for convenience.
 
-\color{red}
 We impose
 $\langle D\rangle=0$
 to specify the zeropoint color.  We assign a prior on the amplitude of the ensemble of $D$ to break the
@@ -1492,7 +1463,6 @@ $\pmb{\gamma}^0$ and $\pmb{\gamma}^1$ were set to be in the neighborhood of the 
 to maintain their correspondence between the two models.
 Our finite MCMC chains do not migrate away from these ranges.
 The initial condition of $\pmb{\delta}$ is set to zero.
-\color{black}
 
 In Model II, for $N$ supernovae there are $8N$ observables.  For the top-level model parameters, there are $3N$ spectral parameters, $3(N-2)$
 color parameters, $(N-1)$ magnitude offsets,  $5 \times 7$ global coefficients, and $10$ parameters that describe the intrinsic
@@ -1502,9 +1472,7 @@ The resulting credible intervals of our parameters are given in Table~\ref{globa
 results of the 2-parameter extrinsic model given in Table~\ref{global:tab} shows that  parameters that are common to both
 are consistent  to well within 1$\sigma$ uncertainties.  The most significant change is in the reduction of the standard
 deviations of the magnitude residuals $\sigma_X$
-\color{red}
 in the $U$ and $B$ bands.
-\color{black}
 
 
 \begin{table}
@@ -1661,7 +1629,6 @@ $ 0.040^{+ 0.006}_{-0.005}$
 \caption{68\% credible intervals for the global fit parameters of the Extrinsic--Intrinsic Model~II in \S\ref{model2:sec}.\label{global2:tab}}
 \end{table}
 
-\color{red}
 
 The posteriors of the $\pmb{\delta}$ parameters are shown  in
 Figure~\ref{deltacorner:fig}.
@@ -1697,7 +1664,6 @@ The values of $\delta_X/\delta_U-1$, which are insensitive to the scaling (inclu
    \label{deltaratio:fig}}
 \end{figure}
 
-\color{black}
 
 
 %The effective total-to-selective extinction for the supernova sample has a slight shift to $R^F_V=2.23 \pm 0.16$.
@@ -1732,7 +1698,6 @@ is drawn from the ensemble of objects.
 Each supernova is described by its parameters
  $\Delta$, $EW_{Ca}$, $EW_{Si}$, $\lambda_{Si}$, $E_{\gamma^0}(B-V)$, $E_{\gamma^1}(B-V)$,  $A_{\delta U}=\delta_U D$.
  Their Pearson correlation coefficients are given in the matrix
-\color{purple}
 \begin{multline}
 Cor(\Delta, EW_{Ca}, EW_{Si}, \lambda_{Si}, E_{\gamma^0}(B-V), E_{\gamma^1}(B-V),  A_{\delta U}) =\\
 \begin{pmatrix}
@@ -1747,7 +1712,6 @@ Cor(\Delta, EW_{Ca}, EW_{Si}, \lambda_{Si}, E_{\gamma^0}(B-V), E_{\gamma^1}(B-V)
 \end{array}
 \end{pmatrix}.
 \end{multline}
-\color{black}
 Their values for all Monte Carlo links for all supernovae are shown in Figure~\ref{perobject2:fig}.
 There is a core concentration in the  parameter-space, with around ten objects that occupy its outskirts.
 Many outliers appear in the red tail of $E_{\gamma^0}(B-V)$, as would be expected for the (infrequent) selection of supernovae
@@ -1760,14 +1724,12 @@ Outliers  are also clearly distinguishable in  $EW_{Ca}$--$\lambda_{Si}$ space.
 
 The correlation coefficients between the ``intrinsic''  ($A_{\delta U}$) and ``extrinsic''
 ($E_{\gamma^0}(B-V)$, $E_{\gamma^1}(B-V)$)  parameters are
-\color{purple}
 directed by the prior and are ultimately consistent with zero.
 Their independence implies that a single physical parameter is not being artificially attributed to two
 model parameters.  One could have expected this to occur since our linear model does not precisely
 describe the non-linearity between broad-band magnitudes and dust parameters. A
 correlation 
 between the parameters despite the prior would of complicated any claims of the detection of a third independent supernova parameter.
-\color{black}
 
 \begin{figure}[htbp] %  figure placement: here, top, bottom, or page
    \centering
@@ -1779,10 +1741,8 @@ $\Delta$.  All Monte Carlo links are plotted, so that each supernova contributes
 \end{figure}
 
 
-\color{red}
 The newly fitted $\pmb{\gamma}$ and  $\pmb{\delta}$ vectors (the latter normalized by $\delta_U$) can be expressed 
 in terms of the $\mathbf{a}$ and $\mathbf{b}$ vectors that describe the \citetalias{1999PASP..111...63F} dust model
-\color{black}
 \begin{equation}
 \begin{pmatrix}
  \frac{\pmb{\gamma}^0}{\gamma^0_B-\gamma^0_V} \\
@@ -1821,7 +1781,6 @@ The $\pmb{\gamma}$ residuals $\pmb{\epsilon}_{\gamma^0}$ and
 $\pmb{\epsilon}_{\gamma^1} $
 quadratically contribute 0.03\% and 0.2\% to the total  lengths of the vectors, meaning that just as in Model~I most
 of the $\pmb{\gamma}$'s project onto the plane predicted by the \citetalias{1999PASP..111...63F} dust model.
-\color{red}
  $\pmb{\delta}$ too
 has a significant projection onto the dust plane, as the $\pmb{\epsilon}_{\delta}$ residual contributes 2\% of the length of the $\pmb{\delta}$ vector.
 The transformation between the new set of $\pmb{\gamma}$'s and dust parameters yields
@@ -1927,7 +1886,6 @@ The Model~II fit of SN~2014J \citet{2014ApJ...788L..21A}  data
 gives $k_0$ and $k_1$ that are qualitatively similar to  those from the fit to Model~I but with much larger uncertainties.
 These parameters are now highly correlated with $D$, which itself is consistent with zero.  The results resemble those of
 Model~I shown in Figure~\ref{sn2014j:fig}, except for larger error bars for the color excesses projected onto the dust model.
-\color{black}
 
 
 \section{Discussion}
@@ -2184,14 +2142,14 @@ but this correlation
 is absorbed into the equivalent-width corrections.
 
 
-\color{red}
+
 The results from  \S\ref{shape:sec} and this subsection demonstrate the model handling simultaneous
 magnitude corrections 
 of  correlated observables.  The model prefers corrections that reduce intrinsic dispersion.
 The free parameters that describe the intrinsic dispersion enter the model likelihood through  the term $(\det{C_c})^{-0.5}$, which gives higher likelihood 
 for lower dispersions. This leads to magnitude corrections being preferentially
 attributed to $EW_{Ca}$ over $v_{Si}$, and  $EW_{Si}$ over SALT2 $x_1$.
-\color{black}
+
 
 
 \subsection{Host-Galaxy Mass}
@@ -2199,10 +2157,9 @@ A correlation between Hubble residual and host-galaxy mass
 was first noted by \citet{2010ApJ...715..743K,2010MNRAS.406..782S}, a signal confirmed to exist in the SNfactory
 sample \citep{2013ApJ...770..108C}.
 This host-mass bias could be the result of a parameter that was not accounted for in the inference of SN~Ia absolute magnitude.
-\citet{2016arXiv160904470M} find that when introducing intrinsic color scatter as a latent parameter, the null mass-step effect falls on the 95\%-level of their posterior.
+\citet{2017ApJ...842...93M} find that when introducing intrinsic color scatter as a latent parameter, the null mass-step effect falls on the 95\%-level of their posterior.
 To explore whether the Hubble residual may be due to unaccounted color,
 we plot in Figure~\ref{childress:fig} our intrinsic parameter  $A_{\delta I}$  versus host mass 
-\color{purple}
 for the subset of supernovae whose host measurements are given in \citet{2013ApJ...770..108C}.
 The average $A_{\delta I}$'s of the two subsamples are
 %---
@@ -2272,9 +2229,11 @@ An alternative scenario is that supernova light encounters one dust with a degre
 The $\pmb{\delta} D$ term represents an intrinsic dust parameter that is independent of $R^F$.
 The extra degree-of-freedom could be associated with the skewness in the distribution of dust grains, as an increase of smaller dust grains
 can flatten extinction in the red and enhanced steepness in the UV relative to standard dust models  \citep[Figure~3 in][]{2015ApJ...807L..26G,
-2017ApJ...836...13H}.  Unfortunately, our signal-to-noise for $\pmb{\delta}$ is insufficient to test these physically-motivated
+2017ApJ...836...13H}.
+Unfortunately, our signal-to-noise for $\pmb{\delta}$ is insufficient to test these physically-motivated
 dust models.
-
+\color{red}
+\color{black}
 
 
 \subsection{Conclusion}
@@ -2285,20 +2244,16 @@ describing SN~2014J, a supernova with extreme colors that was not used in the tr
 This work represents the first determination of the dust extinction curve outside the Local Group
 derived entirely independently of assumptions about the shape of the extinction curve and/or assumptions about the
 distribution of $A_V$.  
-\color{purple}
 Nesting this model in an extended model produces a result that 
-\color{black}
 gives the first identification of  a new parameter that affects supernova
 colors in a manner that is distinct from the expectations from dust or the spectral features $EW_{Ca}$, $EW_{Si}$, and $\lambda_{Si}$.
 
-\color{purple}
 The current data does not show a statistically significant difference in the values of our new parameter for supernovae
 in low- and high-mass host-galaxies.
 Using the SNfactory sample,
 \citet{2013A&A...560A..66R,2017Rigault} find that a step in Hubble residuals is better related to local star formation rate, rather than
 global host mass.  The search for a correlation between our parameter and local star formation rate is planned for future work.
 
-\color{black}
 
 An interesting direction for future work is to use narrower bands for generating synthetic photometry
 from the SNfactory spectrophotometry.  When the bandwidth becomes small enough
