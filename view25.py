@@ -119,6 +119,33 @@ plt.savefig(pp,format='pdf')
 pp.close()
 plt.close()
 
+scorrection = [fit['c'][:,i][:,None] + fit['alpha'][:,i][:,None]*fit['EW'][:,:, 0] \
+    + fit['beta'][:,i][:,None]*fit['EW'][:,:, 1] + fit['eta'][:,i][:,None]*fit['sivel']\
+    for i in xrange(5)]
+plt.clf()
+(y, ymin, ymax) = numpy.percentile(scorrection,(50,50-34,50+34),axis=0)
+
+plt.scatter(color_obs[:,1],mag_obs[:,1]-y[1])
+plt.gca().invert_yaxis()
+
+
+w=numpy.where(color_obs[:,1]<0)
+slope, intercept, r_value, p_value, std_err = scipy.stats.linregress(color_obs[w,1],mag_obs[w,1])
+xtemp = numpy.array([plt.xlim()[0]+0.05,0])
+plt.plot(xtemp,intercept + xtemp*slope,color='black')
+w=numpy.where(color_obs[:,1]>0)
+slope, intercept, r_value, p_value, std_err = scipy.stats.linregress(color_obs[w,1],mag_obs[w,1])
+xtemp = numpy.array([0,plt.xlim()[1]-0.05])
+plt.plot(xtemp,intercept + xtemp*slope,color='black')
+plt.ylabel(r'$B_o-(c_B+\alpha_B EW_{Ca} + \beta_B EW_{Si} + \eta_B \lambda_{Si})$')
+plt.xlabel(r'$B_o-V_o$ + offset')
+pp = PdfPages(dirname+'/speccorr_color.pdf')
+plt.savefig(pp,format='pdf',bbox_inches='tight')
+plt.tight_layout()
+pp.close()
+plt.close()
+
+wef
 
 plt.errorbar(zcmb, y, yerr=[y-ymin,ymax-y],fmt='o')
 plt.xlabel(r'$z_{cmb}$')
@@ -172,6 +199,9 @@ plt.errorbar(x1, y, xerr=[x1_err,x1_err],yerr=[y-ymin,ymax-ymin],fmt='o',alpha=0
 plt.scatter(x1, y,s=1,alpha=0.8)
 plt.xlabel(r'$x_1$')
 plt.ylabel(r'$A_{\delta U}$')
+plt.xlim((-3.2, 2.8))
+plt.ylim((-0.14, 0.15))
+
 plt.tight_layout()
 pp = PdfPages(dirname+"/x1D.pdf")
 plt.savefig(pp,format='pdf')
@@ -277,7 +307,6 @@ filename = dirname+'/residual.pdf'
 pp = PdfPages(filename)
 plt.savefig(pp,format='pdf')
 pp.close()
-
 
 
 # correction_gerard = [fit['c'][:,i][:,None] + fit['alpha'][:,i][:,None]*fit['EW'][:,:, 0] \

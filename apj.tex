@@ -1711,6 +1711,7 @@ Cor(\Delta, EW_{Ca}, EW_{Si}, \lambda_{Si}, E_{\gamma^0}(B-V), E_{\gamma^1}(B-V)
 -0.01^{+0.08}_{-0.08} & -0.00^{+0.08}_{-0.08} & 0.01^{+0.08}_{-0.08} & -0.01^{+0.08}_{-0.08} & -0.01^{+0.07}_{-0.07} & -0.00^{+0.07}_{-0.08} & 1 \\
 \end{array}
 \end{pmatrix}.
+\label{corr2p:eqn}
 \end{multline}
 Their values for all Monte Carlo links for all supernovae are shown in Figure~\ref{perobject2:fig}.
 There is a core concentration in the  parameter-space, with around ten objects that occupy its outskirts.
@@ -2205,17 +2206,49 @@ An absolute magnitude calibration using the parameters identified in this analys
 
 
 \subsection{Physical Interpretation of the Intrinsic Color Parameter}
+\color{red}
+Supernova colors are expected to be affected by interstellar Milky Way-like dust (e.g.\ as modeled by  \citetalias{1999PASP..111...63F})
+and by ``intrinsic'' color variations from the supernova itself and its surrounding circumstellar dust. Physical modeling
+shows that the complexity of interstellar dust shouldn't be expected to be captured by a single parameter \citep{2015ApJ...807L..26G,
+2017ApJ...836...13H}. Supernova models \citep[e.g.][]{2007ApJ...662..487W,2013MNRAS.436..333S,2014MNRAS.441..532D,2015MNRAS.454.2549B,
+2017ApJ...846...58H} and circumstellar dust \citep{2008ApJ...686L.103G} also predict color variations not  captured
+by  \citetalias{1999PASP..111...63F}.
+The $D$ parameter
+can be ascribed to either an increased accuracy in the description of interstellar dust or to a separate intrinsic mechanism.  
 
-Based on its direction, a straightforward explanation for the third color term $\pmb{\delta} D$ is that it describes the absorption due to some form of dust
-that does not exactly obey the  \citetalias{1999PASP..111...63F} model.
-In one scenario,
-supernova light can encounter two
-dusts, first a 
-circumstellar dust that produces relatively low visual-to-selective extinction
-\citep{2008ApJ...686L.103G} and then
-an interstellar form  that resembles the \citetalias{1999PASP..111...63F} model.
+Evidence for the intrinsic origin of $\pmb{\delta}D$ is seen in the relation between observed magnitudes corrected for intrinsic magnitude correlations with
+spectral features (but not for the color parameters)
+and observed  color.  Figure~\ref{speccorr:fig} shows such a plot for corrected observed $B_o$ magnitudes
+as a function observed $B_o-V_o$, in correspondence with Figure~3 of  \citet{2017ApJ...842...93M}.  Supernovae with extreme blue colors exhibit a shallower slope than those
+with extreme red colors.   \citet{2017ApJ...842...93M} have demonstrated that this is the expected behavior for
+dust with constant $\beta$ (the SALT2 equivalent of $R$) with an exponential extinction distribution and an intrinsic source of color variablilty
+with a smaller value of $\beta$.  Without interstellar dust, supernovae are bluer and take the intrinsic $\beta$ slope for the color-magnitude
+relation.  When the intrinsic contribution to color is dwarfed by dust, supernovae are bluer and take the larger dust $\beta$ slope.
+
+
+
+\begin{figure}[htbp] %  figure placement: here, top, bottom, or page
+   \centering
+   \includegraphics[width=5.2in]{output25/speccorr_color.pdf}
+      \caption{
+      \color{red}Observed $B$-band magnitude corrected for intrinsic magnitude correlations with spectral features as a function of observed color $B_o-V_o$.
+      The two solid lines are the linear regressions for points with abscissa values less than and greater than zero.
+	\color{black}
+   \label{speccorr:fig}}
+\end{figure}
+
+
+In contrast, if the colors were due to a single physical dust described by three parameters,
+the observed correlation between the color-magnitude slope and observed color seen in Figure~\ref{speccorr:fig}
+would manifest itself in correlation between the $D$,
+$k_0$ and $k_1$ parameters.  To the contrary,
+the correlations between these parameters  are consistent with zero as given  in Eqn.~\ref{corr2p:eqn}.
+
+If  $\delta D$  is intrinsic, it can be attributed to an intrinsic supernova property  or a dust not described by $\gamma k$.
 To first order $\pmb{\delta}$ behaves like standard dust;   $>98$\% of its length projects onto the expectation of  \citetalias{1999PASP..111...63F}
 with constant $R^F$.
+Therefore, a straightforward explanation is that it describes the absorption due to some form of dust
+that does not exactly obey the  \citetalias{1999PASP..111...63F} model.
 The departure from   \citetalias{1999PASP..111...63F}
 can be seen qualitatively; the decrease in magnitude change toward redder wavelengths, seen in Figure~\ref{deltaratio:fig}, matches the 
 expectation for the circumstellar form of dust.
@@ -2224,16 +2257,10 @@ lack the signal-to-noise to show consistency with this explanation.
 The best-fit elements $\delta_X$ do not all share the same sign, as would have been expected for dust.
 Confining ourselves to the 98\% of   $\pmb{\delta}$ that lies on the dust plane, associating 
 $D$ with $A_V$ would imply an unphysical $R^F=0.5$.
-
-An alternative scenario is that supernova light encounters one dust with a degree of freedom beyond that modeled by \citetalias{1999PASP..111...63F}.
-The $\pmb{\delta} D$ term represents an intrinsic dust parameter that is independent of $R^F$.
-The extra degree-of-freedom could be associated with the skewness in the distribution of dust grains, as an increase of smaller dust grains
-can flatten extinction in the red and enhanced steepness in the UV relative to standard dust models  \citep[Figure~3 in][]{2015ApJ...807L..26G,
-2017ApJ...836...13H}.
-Unfortunately, our signal-to-noise for $\pmb{\delta}$ is insufficient to test these physically-motivated
-dust models.
-\color{red}
+We do not have conclusive evidence that  $\delta$ is being a property of a different form of dust, rather
+than representing intrinsic supernova color variation.
 \color{black}
+
 
 
 \subsection{Conclusion}
