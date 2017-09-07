@@ -214,8 +214,8 @@ total-to-selective extinction parameter $R^F$.  As an ensemble, the supernova sa
 %-----
 $R^F = 2.44$.
 %-----
-Our model
- is able to reproduce the optical colors of the highly reddened SN~2014J better than the \citet{1999PASP..111...63F} dust model.
+%Our model
+% is able to reproduce the optical colors of the highly reddened SN~2014J better than the \citet{1999PASP..111...63F} dust model.
 Inspired that with no conditioning our  two-parameter model produces behavior similar to that expected from Galactic dust,
 we extend  the model to three color parameters.
 In this new case we obtain consistent results for
@@ -229,7 +229,7 @@ this new parameter represents supernova color diversity
 beyond that tracked by the spectral features and two-parameter dust models.
 \end{abstract}
 
-\keywords{supernovae: general; supernovae: SN 2014J}
+\keywords{supernovae: general; supernovae}
 
 \section{Introduction}
 Type~Ia supernovae (SNe~Ia) form a homogenous set of exploding stars and as such were early recognized and utilized as a powerful distance indicator 
@@ -309,8 +309,9 @@ properties.  (We subsequently find that extrinsic and intrinsic properties canno
 The data used in this analysis are described in \S\ref{data:sec}.
 In \S\ref{model:sec} we present a
 first analysis with two extrinsic parameters and omitting the intrinsic parameter.  The properties of the two extrinsic parameters
-are consistent with the expectations of parameterized Milky Way extinction models, and do an excellent job of fitting the data of the out-of-sample
-supernova SN2014J that has an extremely low total-to-selective extinction.
+are consistent with the expectations of parameterized Milky Way extinction models.
+%, and do an excellent job of fitting the data of the out-of-sample
+%supernova SN2014J that has an extremely low total-to-selective extinction.
 In \S\ref{model2:sec} we add the intrinsic parameter in the analysis, and find strong evidence for its influence on observed magnitudes.
 We summarize our findings, and relate our results to light-curve shape, SiII velocity, and the host-galaxy global stellar ``mass step'' in SN~Ia Hubble
 residuals in \S\ref{discussion:sec}.
@@ -1883,10 +1884,10 @@ regression dilution \citep{spearman04}.
  \label{simglobal5:fig}}
 \end{figure}
 
-The Model~II fit of SN~2014J \citet{2014ApJ...788L..21A}  data 
-gives $k_0$ and $k_1$ that are qualitatively similar to  those from the fit to Model~I but with much larger uncertainties.
-These parameters are now highly correlated with $D$, which itself is consistent with zero.  The results resemble those of
-Model~I shown in Figure~\ref{sn2014j:fig}, except for larger error bars for the color excesses projected onto the dust model.
+%The Model~II fit of SN~2014J \citet{2014ApJ...788L..21A}  data 
+%gives $k_0$ and $k_1$ that are qualitatively similar to  those from the fit to Model~I but with much larger uncertainties.
+%These parameters are now highly correlated with $D$, which itself is consistent with zero.  The results resemble those of
+%Model~I shown in Figure~\ref{sn2014j:fig}, except for larger error bars for the color excesses projected onto the dust model.
 
 
 \section{Discussion}
@@ -2216,33 +2217,52 @@ by  \citetalias{1999PASP..111...63F}.
 The $D$ parameter
 can be ascribed to either an increased accuracy in the description of interstellar dust or to a separate intrinsic mechanism.  
 
-Evidence for the intrinsic origin of $\pmb{\delta}D$ is seen in the relation between observed magnitudes corrected for intrinsic magnitude correlations with
-spectral features (but not for the color parameters)
-and observed  color.  Figure~\ref{speccorr:fig} shows such a plot for corrected observed $B_o$ magnitudes
-as a function observed $B_o-V_o$, in correspondence with Figure~3 of  \citet{2017ApJ...842...93M}.  Supernovae with extreme blue colors exhibit a shallower slope than those
-with extreme red colors.   \citet{2017ApJ...842...93M} have demonstrated that this is the expected behavior for
-dust with constant $\beta$ (the SALT2 equivalent of $R$) with an exponential extinction distribution and an intrinsic source of color variablilty
-with a smaller value of $\beta$.  Without interstellar dust, supernovae are bluer and take the intrinsic $\beta$ slope for the color-magnitude
-relation.  When the intrinsic contribution to color is dwarfed by dust, supernovae are bluer and take the larger dust $\beta$ slope.
+Color-based magnitude corrections as a function of color excess provide a clue to ``intrinsic'' and ``dust'' attributions of
+the combined effect of the color terms $k_0$, $k_1$, and $D$.  
+All supernovae experience  intrinsic color variation.
+Only a subset encounter dust:
+geometric projection effects lead to the expectation for a subset of supernovae having zero
+dust column density and the
+complement subset having an approximate exponential distribution \citep{1998ApJ...502..177H}.
+Differences between the expected distributions of
+distinct intrinsic effects and dust lead to the prediction of a non-constant slope for the relationship between
+total (from both intrinsic and dust)  magnitude corrections and color excess.  
 
+\citet{2017ApJ...842...93M} present an instructive simulation, producing magnitudes and colors of a set of
+supernovae 
+with an intrinsic source of color variability having relatively smaller value of $\beta$
+and a realistic distribution of dust extinction having a relatively larger $\beta$ value.  The expectation is for
+supernovae encountering no interstellar dust  to tend to be bluer and exhibit the intrinsic $\beta$ slope for the color-magnitude
+relation.  Supernovae encountering thick dust tend to be redder and exhibit the larger dust $\beta$ slope.
+The expectation is borne out in their Figure 3, which shows 
+observed color versus light-curve shape corrected magnitudes, and is seen in their data Figure 6.
+The distinctive expectations manifest in the plot  for the above model allow
+the authors to use  information inherent in the distributions to make distinct measurements of intrinsic and dust slopes (referred
+therein as $\beta$ using the terminology of SALT2),
+despite being
+restricted to using one color observable that is  affected by two sources of extinction.
 
+Our Model~II has for each supernova three color parameters that can contain information on more
+than one source of color variablility. This allows us to construct from our fit results per-supernova magnitude corrections as a function
+of color, to produce a model-based figure analogous to Figure~3 of \citet{2017ApJ...842...93M}.
+Such a result is shown in Figure~\ref{speccorr:fig}, which plots
+$U$-band magnitude corrections from the three color parameters $\gamma^0_{U} k_0 +\gamma^1_{U} k_1 + \delta_U D$
+as a function of $E_o(B-V)$, where the expected color accounts for spectral-feature corrections.
+The shallower slope at blue color transitioning to a larger slope at red color 
+is correspondence with the expectation of a mixed intrinsic--dust model of the form considered by  \citet{2017ApJ...842...93M}.
 
 \begin{figure}[htbp] %  figure placement: here, top, bottom, or page
    \centering
-   \includegraphics[width=5.2in]{output25/speccorr_color.pdf}
+   \includegraphics[width=2.8in]{output25/ccorr1e.pdf}
+   \includegraphics[width=2.8in]{output25/ccorr2e.pdf}
       \caption{
-      \color{red}Observed $B$-band magnitude corrected for intrinsic magnitude correlations with spectral features as a function of observed color $B_o-V_o$.
-      The two solid lines are the linear regressions for points with abscissa values less than and greater than zero.
+      \color{red}
+      The $U$-band magnitude corrections from the three color parameters $\gamma^0_{U} k_0 +\gamma^1_{U} k_1 + \delta_U D$
+are plotted as a function of $E_o(B-V)$, where the expected color accounts for spectral-feature corrections.  The left plot shows the full
+range of values whereas the right zooms in the upper-left corner of the population.
 	\color{black}
    \label{speccorr:fig}}
 \end{figure}
-
-
-In contrast, if the colors were due to a single physical dust described by three parameters,
-the observed correlation between the color-magnitude slope and observed color seen in Figure~\ref{speccorr:fig}
-would manifest itself in correlation between the $D$,
-$k_0$ and $k_1$ parameters.  To the contrary,
-the correlations between these parameters  are consistent with zero as given  in Eqn.~\ref{corr2p:eqn}.
 
 If  $\delta D$  is intrinsic, it can be attributed to an intrinsic supernova property  or a dust not described by $\gamma k$.
 To first order $\pmb{\delta}$ behaves like standard dust;   $>98$\% of its length projects onto the expectation of  \citetalias{1999PASP..111...63F}
@@ -2257,7 +2277,7 @@ lack the signal-to-noise to show consistency with this explanation.
 The best-fit elements $\delta_X$ do not all share the same sign, as would have been expected for dust.
 Confining ourselves to the 98\% of   $\pmb{\delta}$ that lies on the dust plane, associating 
 $D$ with $A_V$ would imply an unphysical $R^F=0.5$.
-We do not have conclusive evidence that  $\delta$ is being a property of a different form of dust, rather
+We do not have conclusive evidence that  $\delta$ is being a property of dust distinct from that described by $\gamma$, rather
 than representing intrinsic supernova color variation.
 \color{black}
 
@@ -2266,8 +2286,9 @@ than representing intrinsic supernova color variation.
 \subsection{Conclusion}
 To summarize, we model SNe~Ia broadband optical peak magnitudes allowing for correlations with spectral features at peak and
 extrinsic color parameters.  Analyzing SNfactory data with this model, we find significant evidence that the above parameters do
-affect supernova magnitudes and colors.  This model  does an excellent job in
-describing SN~2014J, a supernova with extreme colors that was not used in the training.  
+affect supernova magnitudes and colors.  
+%This model  does an excellent job in
+%describing SN~2014J, a supernova with extreme colors that was not used in the training.  
 This work represents the first determination of the dust extinction curve outside the Local Group
 derived entirely independently of assumptions about the shape of the extinction curve and/or assumptions about the
 distribution of $A_V$.  

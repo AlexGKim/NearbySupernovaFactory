@@ -139,7 +139,67 @@ xtemp = numpy.array([0,plt.xlim()[1]-0.05])
 plt.plot(xtemp,intercept + xtemp*slope,color='black')
 plt.ylabel(r'$B_o-(c_B+\alpha_B EW_{Ca} + \beta_B EW_{Si} + \eta_B \lambda_{Si})$')
 plt.xlabel(r'$B_o-V_o$ + offset')
-pp = PdfPages(dirname+'/speccorr_color.pdf')
+pp = PdfPages(dirname+'/mandelf2.pdf')
+plt.savefig(pp,format='pdf',bbox_inches='tight')
+plt.tight_layout()
+pp.close()
+plt.close()
+
+correction = [fit['gamma'][:,i][:,None]*fit['k'] + fit['gamma1'][:,i][:,None]*fit['k1'] + fit['rho1'][:,i][:,None]*fit['R']\
+    for i in xrange(5)]
+correction = numpy.array(correction)
+
+scorrection = [fit['alpha'][:,i][:,None]*fit['EW'][:,:, 0] \
+    + fit['beta'][:,i][:,None]*fit['EW'][:,:, 1] + fit['eta'][:,i][:,None]*fit['sivel']\
+    for i in xrange(5)]
+scorrection = numpy.array(scorrection)
+
+plt.clf()
+(y, ymin, ymax) = numpy.percentile(correction-correction[:,:,0][:,:,None],(50,50-34,50+34),axis=0)
+(x, xmin, xmax) = numpy.percentile(scorrection[1,:,:]-scorrection[2,:,:],(50,50-34,50+34),axis=0)
+
+ind=0
+plt.errorbar(color_obs[:,1]-x,y[ind],xerr=[numpy.sqrt(color_cov[:,1,1]+(xmax-xmin)**2/4),numpy.sqrt(color_cov[:,1,1]+(xmax-xmin)**2/4)],yerr=[y[ind]-ymin[ind],ymax[ind]-y[ind]],fmt='o')
+plt.gca().invert_yaxis()
+plt.ylabel(r'$\gamma^0_{U} k_0 +\gamma^1_{U} k_1 + \delta_U D$')
+plt.xlabel(r'$E_o(B-V)$ + offset')
+pp = PdfPages(dirname+'/ccorr1e.pdf')
+plt.savefig(pp,format='pdf',bbox_inches='tight')
+plt.tight_layout()
+pp.close()
+
+plt.xlim((-0.17,0.1))
+plt.ylim((-0.4,0.5))
+plt.gca().invert_yaxis()
+pp = PdfPages(dirname+'/ccorr2e.pdf')
+plt.savefig(pp,format='pdf',bbox_inches='tight')
+plt.tight_layout()
+pp.close()
+wefwe
+
+
+
+scorrection = [fit['c'][:,i][:,None] + fit['alpha'][:,i][:,None]*fit['EW'][:,:, 0] \
+    + fit['beta'][:,i][:,None]*fit['EW'][:,:, 1] + fit['eta'][:,i][:,None]*fit['sivel']\
+    for i in xrange(5)]
+plt.clf()
+(y, ymin, ymax) = numpy.percentile(scorrection,(50,50-34,50+34),axis=0)
+
+plt.scatter(color_obs[:,1],mag_obs[:,1]-y[1])
+plt.gca().invert_yaxis()
+
+
+w=numpy.where(color_obs[:,1]<0)
+slope, intercept, r_value, p_value, std_err = scipy.stats.linregress(color_obs[w,1],mag_obs[w,1])
+xtemp = numpy.array([plt.xlim()[0]+0.05,0])
+plt.scatter(xtemp,intercept + xtemp*slope,color='black')
+w=numpy.where(color_obs[:,1]>0)
+slope, intercept, r_value, p_value, std_err = scipy.stats.linregress(color_obs[w,1],mag_obs[w,1])
+xtemp = numpy.array([0,plt.xlim()[1]-0.05])
+plt.plot(xtemp,intercept + xtemp*slope,color='black')
+plt.ylabel(r'$B_o-(c_B+\alpha_B EW_{Ca} + \beta_B EW_{Si} + \eta_B \lambda_{Si})$')
+plt.xlabel(r'$B_o-V_o$ + offset')
+pp = PdfPages(dirname+'/mandelf2.pdf')
 plt.savefig(pp,format='pdf',bbox_inches='tight')
 plt.tight_layout()
 pp.close()
