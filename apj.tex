@@ -1022,6 +1022,9 @@ Cor(V,U-V,B-V,V-R,V-I)=\\
  \end{multline}
 These color variances are smaller than those derived by \citet{2003A&A...404..901N} or \citet{2007ApJ...659..122J}, for cases where
 a direct comparison can be made.
+\color{red}
+\citep{2017ApJ...842...93M}  find an intrinsic dispersion of the SALT2 $c$ parameter (associated with $B-V$) of $\approx 0.07$ mag.
+\color{black}
 %model11_rubin.py
 Having no intrinsic color dispersion is disfavored, and not allowing for them can have important consequences.  Running an analysis assuming no intrinsic dispersion (replacing the probabilistic intrinsic magnitudes in Eqn.~\ref{ewsiv:eqn}
 with a strict equality), we find significant shifts in all slope parameters  and smaller statistical uncertainties.
@@ -2228,28 +2231,37 @@ Differences between the expected distributions of
 distinct intrinsic effects and dust lead to the prediction of a non-constant slope for the relationship between
 total (from both intrinsic and dust)  magnitude corrections and color excess.  
 
-\citet{2017ApJ...842...93M} present an instructive simulation, producing magnitudes and colors of a set of
+\citet{2017ApJ...842...93M} discuss an instructive simulation
+that considers a set of
 supernovae 
-with an intrinsic source of color variability having relatively smaller value of $\beta$
-and a realistic distribution of dust extinction having a relatively larger $\beta$ value.  The expectation is for
-supernovae encountering no interstellar dust  to tend to be bluer and exhibit the intrinsic $\beta$ slope for the color-magnitude
-relation.  Supernovae encountering thick dust tend to be redder and exhibit the larger dust $\beta$ slope.
-The expectation is borne out in their Figure 3, which shows 
-observed color versus light-curve shape corrected magnitudes, and is seen in their data Figure 6.
-The distinctive expectations manifest in the plot  for the above model allow
-the authors to use  information inherent in the distributions to make distinct measurements of intrinsic and dust slopes (referred
-therein as $\beta$ using the terminology of SALT2),
+having an intrinsic linear color-magnitude relationship with slope $\beta$.
+(The absence of an intrinsic color-magnitude relation corresponds to $\beta=0$.)
+Each supernova encounters dust with a relatively larger slope
+for the color-magnitude relationship and
+extinction drawn from a realistic extinction distribution.
+The expectation is for
+supernovae encountering no interstellar dust  to tend to be bluer and
+collectively exhibit the intrinsic $\beta$ slope for the color-magnitude
+relation.  Supernovae encountering thick dust tend to be redder and collectively exhibit the larger dust  slope.
+This expectation is borne out in Figure 3 of \citet{2017ApJ...842...93M}, which
+shows  simulated
+observed color versus light-curve shape corrected magnitudes.
+The distinctive distribution of supernovae in color-magnitude space  allows
+the authors to distinguish intrinsic $\beta$ and the dust slope,
 despite being
 restricted to using one color observable that is  affected by two sources of extinction.
 
-Our Model~II has for each supernova three color parameters that can contain information on more
+In our Model~II, each supernova has three color parameters that can contain information on more
 than one source of color variablility. This allows us to construct from our fit results per-supernova magnitude corrections as a function
 of color, to produce a model-based figure analogous to Figure~3 of \citet{2017ApJ...842...93M}.
 Such a result is shown in Figure~\ref{speccorr:fig}, which plots
 $U$-band magnitude corrections from the three color parameters $\gamma^0_{U} k_0 +\gamma^1_{U} k_1 + \delta_U D$
 as a function of $E_o(B-V)$, where the expected color accounts for spectral-feature corrections.
-The shallower slope at blue color transitioning to a larger slope at red color 
-is correspondence with the expectation of a mixed intrinsic--dust model of the form considered by  \citet{2017ApJ...842...93M}.
+The shallower (but non-zero) slope at blue color transitioning to a larger slope at red color 
+is correspondence with the expectation of a mixed intrinsic--dust model.
+The fact that
+, and is seen in their data Figure 6 of the form considered by  \citet{2017ApJ...842...93M}.
+Slope is not zero.
 
 \begin{figure}[htbp] %  figure placement: here, top, bottom, or page
    \centering
@@ -2264,7 +2276,8 @@ range of values whereas the right zooms in the upper-left corner of the populati
    \label{speccorr:fig}}
 \end{figure}
 
-If  $\delta D$  is intrinsic, it can be attributed to an intrinsic supernova property  or a dust not described by $\gamma k$.
+
+Considering  $\delta D$  to be intrinsic, it can be attributed to an intrinsic supernova property  or a dust not described by $\gamma k$.
 To first order $\pmb{\delta}$ behaves like standard dust;   $>98$\% of its length projects onto the expectation of  \citetalias{1999PASP..111...63F}
 with constant $R^F$.
 Therefore, a straightforward explanation is that it describes the absorption due to some form of dust
