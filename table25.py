@@ -19,8 +19,10 @@ print numpy.std(((fit['gamma'][:,1]-fit['gamma'][:,2])[:,None]*fit['k'] + \
 
 print numpy.std(((fit['rho1'][:,1]-fit['rho1'][:,2])[:,None]*fit['R']).flatten())
 
-
-
+#third parameter RV
+dum =numpy.percentile(fit['rho1'][:,1]/(fit['rho1'][:,1]-fit['rho1'][:,2]),(50,50-34,50+34))
+print '${:6.2f}^{{{:6.2f}}}_{{{:6.2f}}}$'.format(dum[0],dum[2]-dum[0],dum[0]-dum[1])
+wefwe
 # # print 'fit data to Fitzpatrick'
 # gamma =  fit['gamma']
 # gammacov = numpy.cov(gamma,rowvar=False)

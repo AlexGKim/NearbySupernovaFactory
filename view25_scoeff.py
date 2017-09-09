@@ -204,7 +204,7 @@ sivel,sivel_err,x1,x1_err,zcmb,zerr = sivel.sivel(data)
 use = numpy.isfinite(sivel)
 
 
-filts = ['U','B','V','R','I']
+filts = [r'$\hat{U}$',r'$\hat{B}$',r'$\hat{V}$',r'$\hat{R}$',r'$\hat{I}$']
 
 #  The ordering is 'Ca','Si','U','B','V','R','I'
 
@@ -326,8 +326,6 @@ w = numpy.argmax(H)
 w = numpy.unravel_index(w,H.shape)
 print numpy.array([edges[0][w[0]],edges[1][w[1]],edges[2][w[2]],edges[3][w[3]],edges[4][w[4]]])
 
-wefwe
-
 perc = []
 for i in xrange(10,25):
     H,edges  = numpy.histogramdd(numpy.transpose(mega[:,:,6]),bins=i)
@@ -343,7 +341,7 @@ for i in xrange(10,25):
     # print 'confidence non-zero ',1./(H >0).sum(), (H >0).sum()
     perc.append(H[wbig].sum() / H.sum())
 
-figure = corner.corner(numpy.transpose(mega[:,:,6]),labels=[r"${\delta}_U$",r"${\delta}_B$",r"${\delta}_V$",r"${\delta}_R$",r"${\delta}_I$"], \
+figure = corner.corner(numpy.transpose(mega[:,:,6]),labels=[r"${\delta}_{\hat{U}}$",r"${\delta}_{\hat{B}}$",r"${\delta}_{\hat{V}}$",r"${\delta}_{\hat{R}}$",r"${\delta}_{\hat{I}}$"], \
     truths=-delta)
 pp = PdfPages('output25_sim'+tag+'/delta_corner.pdf')
 plt.savefig(pp,format='pdf')

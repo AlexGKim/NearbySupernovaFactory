@@ -93,7 +93,7 @@ plt.close()
 (x, xmin, xmax) = numpy.percentile(scaled,(50,50-34,50+34),axis=0)
 
 plt.errorbar(mass,x,xerr=[emass, emass], yerr=[x-xmin,xmax-x],fmt='o')
-plt.ylabel(r'$A_{\delta U}-A_{\delta U}|_0$')
+plt.ylabel(r'$A_{\delta \hat{U}}-A_{\delta \hat{U}}|_0$')
 plt.xlabel(r'$\log{(M_{host}/M_{\odot})}$')
 
 # pp = PdfPages("output25/childress.pdf")
@@ -134,7 +134,6 @@ plt.savefig(pp,format='pdf')
 pp.close()
 plt.close()
 
-wefwe
 
 wm = numpy.where(mass[1:] < 10)[0]
 low = (((fit['rho1'][:,0])[:,None])*fit['R'][:,wm]).flatten()

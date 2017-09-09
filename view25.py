@@ -161,8 +161,8 @@ plt.clf()
 ind=0
 plt.errorbar(color_obs[:,1]-x,y[ind],xerr=[numpy.sqrt(color_cov[:,1,1]+(xmax-xmin)**2/4),numpy.sqrt(color_cov[:,1,1]+(xmax-xmin)**2/4)],yerr=[y[ind]-ymin[ind],ymax[ind]-y[ind]],fmt='o')
 plt.gca().invert_yaxis()
-plt.ylabel(r'$\gamma^0_{U} k_0 +\gamma^1_{U} k_1 + \delta_U D$')
-plt.xlabel(r'$E_o(B-V)$ + offset')
+plt.ylabel(r'$\gamma^0_{\hat{U}} k_0 +\gamma^1_{\hat{U}} k_1 + \delta_{\hat{U}} D$')
+plt.xlabel(r'$E_o(\hat{B}-\hat{V})$ + offset')
 pp = PdfPages(dirname+'/ccorr1e.pdf')
 plt.savefig(pp,format='pdf',bbox_inches='tight')
 plt.tight_layout()
@@ -175,7 +175,6 @@ pp = PdfPages(dirname+'/ccorr2e.pdf')
 plt.savefig(pp,format='pdf',bbox_inches='tight')
 plt.tight_layout()
 pp.close()
-wefwe
 
 
 
@@ -205,15 +204,14 @@ plt.tight_layout()
 pp.close()
 plt.close()
 
-wef
-
-plt.errorbar(zcmb, y, yerr=[y-ymin,ymax-y],fmt='o')
-plt.xlabel(r'$z_{cmb}$')
-plt.ylabel(r'$\Delta$')
-pp = PdfPages(dirname+'/Deltaz.pdf')
-plt.savefig(pp,format='pdf')
-pp.close()
-plt.close()
+plt.clf()
+# plt.errorbar(zcmb, y, yerr=[y-ymin,ymax-y],fmt='o')
+# plt.xlabel(r'$z_{cmb}$')
+# plt.ylabel(r'$\Delta$')
+# pp = PdfPages(dirname+'/Deltaz.pdf')
+# plt.savefig(pp,format='pdf')
+# pp.close()
+# plt.close()
 
 dmu = numpy.sqrt((5./numpy.log(10)*300./(zcmb*3e5))**2 + ((ymax-ymin)/2)**2)
 smallz = zerr < 0.001
@@ -258,7 +256,7 @@ plt.close()
 plt.errorbar(x1, y, xerr=[x1_err,x1_err],yerr=[y-ymin,ymax-ymin],fmt='o',alpha=0.2)
 plt.scatter(x1, y,s=1,alpha=0.8)
 plt.xlabel(r'$x_1$')
-plt.ylabel(r'$A_{\delta U}$')
+plt.ylabel(r'$A_{\delta \hat{U}}$')
 plt.xlim((-3.2, 2.8))
 plt.ylim((-0.14, 0.15))
 
@@ -422,7 +420,7 @@ for i in xrange(4):
     err = numpy.sqrt(color_cov[:,i,i] + ((ymax-ymin)/2)**2)
     axes[i].errorbar(x1,color_obs[:,i]-y,xerr=[x1_err,x1_err], yerr=[err,err],fmt='.',alpha=0.2)
     axes[i].scatter(x1,color_obs[:,i]-y,s=1,alpha=0.8)
-    lname = r'$\Delta ({0}-V)$'.format(cname[i])
+    lname = r'$\Delta (\hat{{{0}}}-\hat{{V}})$'.format(cname[i])
     axes[i].set_ylabel(lname)
     axes[i].axhline(y=0,linestyle=':')
 
@@ -575,11 +573,11 @@ extebv = (fit['rho1'][:,1]-fit['rho1'][:,2])[:,None]*fit['R']
 dustebv = dustebv-dustebv[:,0][:,None]
 extebv = extebv-extebv[:,0][:,None]
 plt.hist([dustebv, extebv],normed=True,bins=20,
-  label=[r'$E(B-V)$',r'$E_\delta(B-V)$'])
+  label=[r'$E(\hat{B}-\hat{V})$',r'$E_\delta(\hat{B}-\hat{V})$'])
 # plt.hist([(fit['gamma'][:,1]-fit['gamma'][:,2])[:,None]*fit['k'] + 
 #   (fit['gamma1'][:,1]-fit['gamma1'][:,2])[:,None]*fit['k1'], (fit['rho1'][:,1]-fit['rho1'][:,2])[:,None]*fit['R']],normed=True,bins=20,
 #   label=[r'$E(B-V)$',r'$E_\delta(B-V)$'])
-plt.xlabel(r'$E(B-V)-E(B-V)|_0$',fontsize=20)
+plt.xlabel(r'$E(\hat{B}-\hat{V})-E(\hat{B}-\hat{V})|_0$',fontsize=20)
 plt.legend()
 pp = PdfPages(dirname+'/ebv.pdf')
 plt.savefig(pp,format='pdf')
@@ -646,7 +644,7 @@ plt.hist( extebv.flatten(),normed=True,bins=bins,alpha=0.5,
   label='ideogram')
 plt.hist( numpy.median(extebv,axis=0),normed=True,bins=bins,alpha=0.5,width=0.005,
   label='median')
-plt.xlabel(r'$E_\delta(B-V)-E_\delta(B-V)|_0$',fontsize=20)
+plt.xlabel(r'$E_\delta(\hat{B}-\hat{V})-E_\delta(\hat{B}-\hat{V})|_0$',fontsize=20)
 plt.xlim((-.1,.12))
 plt.legend()
 pp = PdfPages(dirname+'/ebv_delta.pdf')
@@ -847,7 +845,7 @@ plt.close()
 # plt.close()
 
 
-figure = corner.corner(fit['rho1'],labels=[r"${\delta}_{U}$",r"${\delta}_{B}$",r"${\delta}_{V}$",r"${\delta}_{R}$",r"${\delta}_{I}$"],\
+figure = corner.corner(fit['rho1'],labels=[r"${\delta}_{\hat{U}}$",r"${\delta}_{\hat{B}}$",r"${\delta}_{\hat{V}}$",r"${\delta}_{\hat{R}}$",r"${\delta}_{\hat{I}}$"],\
   truths=[0,0,0,0,0])
 pp = PdfPages(dirname+'/delta_corner.pdf')
 plt.tight_layout()
@@ -880,7 +878,7 @@ pp.close()
 plt.close()
 
 
-figure = corner.corner(temprho1,labels=[r"${\delta}_{U}$",r"${\delta}_{B}$",r"${\delta}_{V}$",r"${\delta}_{R}$",r"${\delta}_{I}$"],\
+figure = corner.corner(temprho1,labels=[r"${\delta}_{\hat{U}}$",r"${\delta}_{\hat{B}}$",r"${\delta}_{\hat{V}}$",r"${\delta}_{\hat{R}}$",r"${\delta}_{\hat{I}}$"],\
   truths=[0,0,0,0,0])
 pp = PdfPages(dirname+'/delta_corner_flipped.pdf')
 plt.tight_layout()
@@ -1164,7 +1162,7 @@ lambdas = numpy.arange(3000.,9000,100)
 
 
 
-labels = list('UBVRI')
+labels = [r'$\hat{U}$',r'$\hat{B}$',r'$\hat{V}$',r'$\hat{R}$',r'$\hat{I}$']
 from matplotlib.ticker import FuncFormatter, MaxNLocator
 def format_fn2(tick_val, tick_pos):
     if int(tick_val) in numpy.arange(5):
@@ -1180,7 +1178,7 @@ ax.xaxis.set_major_locator(MaxNLocator(integer=True))
 ax.axhline(0,linestyle=':')
 ax.set_xlabel(r'Band $X$')
 ax.set_xlim((-0.5,4.5))
-ax.set_ylabel(r'$\frac{\delta_X}{\delta_U}$')
+ax.set_ylabel(r'$\frac{\delta_X}{\delta_{\hat{U}}}$')
 ax.set_ylim((-1.5,1.2))
 plt.tight_layout()
 pp = PdfPages(dirname+'/deltaratio.pdf')
@@ -1229,7 +1227,7 @@ mega = numpy.array([fit['Delta'].flatten(),fit['EW'][:,:,0].flatten(),fit['EW'][
 mega = numpy.transpose(mega)
 mega=mega[::50,:]
 
-figure = corner.corner(mega,labels=[r"$\Delta$",r"$EW_{Ca}$",r"$EW_{Si}$",r"$\lambda_{Si}$",r"$E_{\gamma^0}(B-V)$",r"$E_{\gamma^1}(B-V)$",r"$E_\delta(B-V)$"], \
+figure = corner.corner(mega,labels=[r"$\Delta$",r"$EW_{Ca}$",r"$EW_{Si}$",r"$\lambda_{Si}$",r"$E_{\gamma^0}(\hat{B}-\hat{V})$",r"$E_{\gamma^1}(\hat{B}-\hat{V})$",r"$E_\delta(\hat{B}-\hat{V})$"], \
     range=numpy.zeros(7)+1.,label_kwargs={'fontsize':22})
 for ax in figure.get_axes():
     for tick in ax.xaxis.get_major_ticks():

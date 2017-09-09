@@ -169,7 +169,7 @@ crap = fit['gamma'][:,2][:,None]*fit['k']
 crap = crap-crap[:,0][:,None]
 plt.hist(numpy.median(crap,axis=0),bins,label='median',normed=True,alpha=0.5,width=0.025)
 plt.hist(crap.flatten(),bins,label='ideogram',normed=True,alpha=0.5)
-plt.xlabel(r'$\gamma^0_2 k_0 - \gamma^0_2 k_0|_0\approx A^F_V|_{R^F_{eff}=2.44}$')
+plt.xlabel(r'$\gamma^0_{\hat{V}} k_0 - \gamma^0_{\hat{V}} k_0|_0\approx A^F_V|_{R^F_{eff}=2.44}$')
 plt.legend()
 plt.tight_layout()
 pp = PdfPages('output11/deltagamma0_med.pdf')
@@ -182,7 +182,7 @@ crap2 = fit['rho1'][:,2][:,None]*fit['R']
 crap2 = crap2-crap2[:,0][:,None]
 plt.hist(numpy.median(crap2,axis=0),bins,label='median',normed=True,alpha=0.5,width=0.01)
 plt.hist(crap2.flatten(),bins,label='ideogram',normed=True,alpha=0.5)
-plt.xlabel(r'$\gamma^1_2 k_1 - \gamma^1_2 k_1|_0$')
+plt.xlabel(r'$\gamma^1_{\hat{V}} k_1 - \gamma^1_{\hat{V}} k_1|_0$')
 plt.legend(loc=2)
 plt.tight_layout()
 pp = PdfPages('output11/deltagamma1_med.pdf')
@@ -424,9 +424,9 @@ for i in xrange(4):
     maxy = (color_obs[:,i]+mag_mn[cind[i]]-mag_mn[2]).max()
     # axes[i].plot([miny,maxy],[miny,maxy])
 
-    axes[i,0].set_xlabel(r'$({0}-V)$'.format(cname[i]))
-    axes[i,0].set_ylabel(r'$({0}_o-V_o)$'.format(cname[i]))
-    lname = r'$\Delta({0}-V)$'.format(cname[i])
+    axes[i,0].set_xlabel(r'$(\hat{{{0}}}-\hat{{V}})$'.format(cname[i]))
+    axes[i,0].set_ylabel(r'$(\hat{{{0}}}_o-\hat{{V}}_o)$'.format(cname[i]))
+    lname = r'$\Delta(\hat{{{0}}}-\hat{{V}})$'.format(cname[i])
     # axes[i,0].set_ylabel(lname)
     # axes[i,1].hist(y-color_obs[:,i], orientation='horizontal')
     axes[i,1].hist(color_obs[:,i]-y,bins=numpy.arange(-.2,.2001,0.02))
@@ -521,7 +521,7 @@ filename = 'output11/residual_temp2.pdf'
 pp = PdfPages(filename)
 plt.savefig(pp,format='pdf')
 pp.close()
-wefwe
+
 
 
 mpl.rcParams['font.size'] = 18
@@ -1041,7 +1041,7 @@ rc('text', usetex=True)
 
 
 
-filts = ['U','B','V','R','I']
+filts = [r'$\hat{U}$',r'$\hat{B}$',r'$\hat{V}$',r'$\hat{R}$',r'$\hat{I}$']
 # lambdas = numpy.arange(3000.,9000,100)
 # rvs=[2.97]
 # avs = [12.25]
@@ -1075,11 +1075,11 @@ mega = numpy.transpose(mega)
 
 
 
-cname=['U','B','V','R','I']
+cname=[r'\hat{U}',r'\hat{B}',r'\hat{V}',r'\hat{R}',r'\hat{I}']
 for index in xrange(5):
-    figure = corner.corner(mega[index,:,:],labels=[r"$c_{}$".format(cname[index]), r"$\alpha_{}$".format(cname[index]),\
-                    r"$\beta_{}$".format(cname[index]),r"$\eta_{}$".format(cname[index]),r"$\gamma^0_{}$".format(cname[index]),\
-                    r"$\gamma^1_{{1{}}}$".format(cname[index]), r"$\sigma_{}$".format(cname[index])],label_kwargs={'fontsize':22},\
+    figure = corner.corner(mega[index,:,:],labels=[r"$c_{{{}}}$".format(cname[index]), r"$\alpha_{{{}}}$".format(cname[index]),\
+                    r"$\beta_{{{}}}$".format(cname[index]),r"$\eta_{{{}}}$".format(cname[index]),r"$\gamma^0_{{{}}}$".format(cname[index]),\
+                    r"$\gamma^1_{{{}}}$".format(cname[index]), r"$\sigma_{{{}}}$".format(cname[index])],label_kwargs={'fontsize':22},\
                     truths=[None,0,0,0,0,0,0])
     figure.suptitle(filts[index],fontsize=28)
 
