@@ -599,8 +599,9 @@ fig, axes = plt.subplots()
 # matplotlib.pyplot.rcdefaults()
 # dmean = fit['Delta'].mean()
 x, xmin, xmax = numpy.percentile(fit['Delta'],(50, 50-34,50+34),axis=0)
-dum = x>0.3
+dum = x>0.2
 print zhelio[dum],x[dum],snname[dum]
+
 plt.errorbar(zhelio,x,yerr=(x-xmin,xmax-x),fmt='o')
 plt.ylabel(r'$\Delta$')
 plt.xlabel(r'$z_{\odot}$')
@@ -655,7 +656,8 @@ plt.close()
 # plt.savefig(pp,format='pdf')
 # pp.close()
 # plt.close()
-
+print numpy.std(numpy.median((fit['Delta']-fit['Delta'][:,0][:,None]),axis=0))
+wefwe
 fig, axes = plt.subplots()
 bins = numpy.arange(-0.2,0.8001,0.02)
 print numpy.median((fit['Delta']-fit['Delta'][:,0][:,None]),axis=0).std()

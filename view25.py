@@ -423,6 +423,7 @@ for i in xrange(4):
     lname = r'$\Delta (\hat{{{0}}}-\hat{{V}})$'.format(cname[i])
     axes[i].set_ylabel(lname)
     axes[i].axhline(y=0,linestyle=':')
+    axes[i].set_xlim((-3,3))
 
 axes[3].set_xlabel(r'$x_1$')
 
