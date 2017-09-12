@@ -250,8 +250,12 @@ The two most commonly used supernova-cosmology light-curve fitters today are SAL
 \citep{2007ApJ...659..122J}.\footnote{Light-curve fitters with more flexible degrees of freedom
 \citep[e.g.][]{2008ApJ...681..482C, 2011AJ....141...19B, 2011ApJ...731..120M} are available and have for
 the most part been used to study SN~Ia heterogeneity.}
-They remain two-parameter models, with one parameter characterizing light-curve shape and the other
- color.
+They remain two-parameter models, with one parameter
+\color{red}
+primarily
+\color{black}
+characterizing light-curve shape and the other
+color.
 In SALT2 the light curve shapes are described by a multiplicative scaling (``stretch'')  of the time evolution,
  whereas MLCS2k2 varies shapes through additive time-dependent magnitude corrections.
 The physical cause of the color diversity is interpreted differently by the two sets of authors: 
@@ -290,7 +294,7 @@ ranges of total-to-selective extinction with average values significantly lower 
 the canonical value for diffuse Milky Way dust.
 They also confirm the \citet{2011ApJ...731..120M, 2011ApJ...729...55F} finding that low $R_V$ is associated with high-extinction supernovae.
 In contrast, \citet{2011A&A...529L...4C} argue that after accounting for the diversity of spectral features,
-the $R_V=3.1$ measured for the diffuse Milky Way dust is recovered on average and \citet{2017arXiv170101422H}
+the $R_V=3.1$ measured for the diffuse Milky Way dust is recovered on average and \citet{2017ApJ...836..157H}
 find $R_V=2.95 \pm 0.08$ for the highly-extincted SN~2012cu.
 
 Hierarchical modeling has recently opened
@@ -595,7 +599,10 @@ SN~Ia broadband magnitudes and colors are
 directly
 \color{black}
 correlated with
-spectral features.
+spectral features
+\color{red}
+at peak.
+\color{black}
 Equivalent widths and line positions are considered in the model because their localization in wavelength
 makes their values insensitive to 
 broadband color variations.
@@ -617,7 +624,10 @@ on its
  equivalent widths of the CaII H\&K and SiII$\lambda$4141 spectral features
 $EW_{Ca}$ and $EW_{Si}$,
 and the wavelength of the minimum of 
-the SiII$\lambda6355$ feature $\lambda_{Si}$:
+the SiII$\lambda6355$ feature $\lambda_{Si}$
+\color{red}
+around $B$-band peak brightness:
+\color{black}
 these spectral features are associated with SN~Ia  spectroscopic diversity  
 \citep{2006PASP..118..560B, 2008A&A...492..535A, 2009A&A...500L..17B, 2009PASP..121..238B, 2009ApJ...699L.139W, 2011ApJ...729...55F}.
 The explicit omission of light-curve shape in our model is compensated by its proxy,
@@ -680,7 +690,7 @@ EW_{Si}\\ EW_{Ca} \\ \lambda_{Si}
 \end{equation}
 The global parameter vectors that describe the SN~Ia population
 $\vec{c}$ (where $\vec{c}=(c_{\hat{U}}, c_{\hat{B}}, c_{\hat{V}}, c_{\hat{R}}, c_{\hat{I}}) $),
-$\vec{\alpha}$, $\vec{\beta}$,  and $\pmb{\eta}$,  are the intercept and slopes of the linear relationships that
+$\vec{\alpha}$, $\vec{\beta}$,  and $\vec{\eta}$,  are the intercept and slopes of the linear relationships that
 relate spectral-feature parameters with intrinsic magnitudes.
 The global parameter vectors $\vec{\gamma}^0$, $\vec{\gamma}^1$  are the slopes that relate 
 the latent extrinsic-color parameters with apparent magnitudes.  
@@ -764,7 +774,7 @@ Contours of the posterior surface for parameter pairs grouped by filter are show
 \begin{figure}[htbp] %  figure placement: here, top, bottom, or page
    \centering
    \includegraphics[width=5.2in]{output11/coeff0.pdf} 
-            \caption{Model~I posterior contours for $\vec{c}$, $\vec{\alpha}$, $\vec{\beta}$, $\pmb{\eta}$, $\vec{\gamma}^0$, $\vec{\gamma}^1$, and $\sigma$ in the ${\hat{U}}$ band.
+            \caption{Model~I posterior contours for $\vec{c}$, $\vec{\alpha}$, $\vec{\beta}$, $\vec{\eta}$, $\vec{\gamma}^0$, $\vec{\gamma}^1$, and $\sigma$ in the ${\hat{U}}$ band.
             The contours shown here and in future plots represent 1-$\sigma$ in the parameter distribution (i.e.\ they should be
             projected onto the corresponding 1-d parameter axis), not to 68\%, 95\%, etc.\
             enclosed probability.  Lines for zero value for $\alpha_{\hat{U}}$, $\beta_{\hat{U}}$, $\eta$, $\gamma_{\hat{U}}^0$, $\gamma_{\hat{U}}^1$, and $\sigma_{\hat{U}}$ are shown for reference --
@@ -775,28 +785,28 @@ Contours of the posterior surface for parameter pairs grouped by filter are show
 \begin{figure}[htbp] %  figure placement: here, top, bottom, or page
    \centering
    \includegraphics[width=5.2in]{output11/coeff1.pdf} 
-            \caption{Model~I posterior contours for $\vec{c}$, $\vec{\alpha}$, $\vec{\beta}$, $\pmb{\eta}$,  $\vec{\gamma}^0$, $\vec{\gamma}^1$, and $\sigma$ in the ${\hat{B}}$ band.
+            \caption{Model~I posterior contours for $\vec{c}$, $\vec{\alpha}$, $\vec{\beta}$, $\vec{\eta}$,  $\vec{\gamma}^0$, $\vec{\gamma}^1$, and $\sigma$ in the ${\hat{B}}$ band.
  \label{global2:fig}}
 \end{figure}
 
 \begin{figure}[htbp] %  figure placement: here, top, bottom, or page
    \centering
    \includegraphics[width=5.2in]{output11/coeff2.pdf} 
-            \caption{Model~I posterior contours for $\vec{c}$, $\vec{\alpha}$, $\vec{\beta}$, $\pmb{\eta}$, $\vec{\gamma}^0$, $\vec{\gamma}^1$, and $\sigma$ in the ${\hat{V}}$ band.
+            \caption{Model~I posterior contours for $\vec{c}$, $\vec{\alpha}$, $\vec{\beta}$, $\vec{\eta}$, $\vec{\gamma}^0$, $\vec{\gamma}^1$, and $\sigma$ in the ${\hat{V}}$ band.
  \label{global3:fig}}
 \end{figure}
 
 \begin{figure}[htbp] %  figure placement: here, top, bottom, or page
    \centering
       \includegraphics[width=5.2in]{output11/coeff3.pdf} 
-            \caption{Model~I posterior contours for  $\vec{c}$, $\vec{\alpha}$, $\vec{\beta}$, $\pmb{\eta}$,  $\vec{\gamma}^0$, $\vec{\gamma}^1$, and $\sigma$ in the ${\hat{R}}$ band.
+            \caption{Model~I posterior contours for  $\vec{c}$, $\vec{\alpha}$, $\vec{\beta}$, $\vec{\eta}$,  $\vec{\gamma}^0$, $\vec{\gamma}^1$, and $\sigma$ in the ${\hat{R}}$ band.
  \label{global4:fig}}
 \end{figure}
 
 \begin{figure}[htbp] %  figure placement: here, top, bottom, or page
    \centering
          \includegraphics[width=5.2in]{output11/coeff4.pdf} 
-            \caption{Model~I posterior contours for  $\vec{c}$, $\vec{\alpha}$, $\vec{\beta}$, $\pmb{\eta}$, $\vec{\gamma}^0$, $\vec{\gamma}^1$, and $\sigma$ in the ${\hat{I}}$ band.
+            \caption{Model~I posterior contours for  $\vec{c}$, $\vec{\alpha}$, $\vec{\beta}$, $\vec{\eta}$, $\vec{\gamma}^0$, $\vec{\gamma}^1$, and $\sigma$ in the ${\hat{I}}$ band.
  \label{global5:fig}}
 \end{figure}
 
@@ -1090,7 +1100,10 @@ artificially
 \color{black}
 smaller statistical uncertainties.
 
-ßEach supernova is described by its parameters $\Delta$, $EW_{Ca}$, $EW_{Si}$, $\lambda_{Si}$, $E_{\gamma^0}({\hat{B}}-{\hat{V}})$, and $E_{\gamma^1}({\hat{B}}-{\hat{V}})$.
+Each supernova is described by its parameters $\Delta$, $EW_{Ca}$, $EW_{Si}$, $\lambda_{Si}$,
+\color{red}
+$E_{\gamma^0}({\hat{B}}-{\hat{V}})=(\gamma^0_{\hat{B}}-\gamma^0_{\hat{V}})k_0$, and $E_{\gamma^1}({\hat{B}}-{\hat{V}})=(\gamma^1_{\hat{B}}-\gamma^1_{\hat{V}})k_1$.
+\color{black}
 Their Pearson correlation coefficients  are given in the matrix
 \begin{multline}
 Cor(\Delta, EW_{Ca}, EW_{Si}, \lambda_{Si}, E_{\gamma^0}({\hat{B}}-{\hat{V}}), E_{\gamma^1}({\hat{B}}-{\hat{V}})) =\\
@@ -1132,7 +1145,7 @@ dust-extinction
 models.
 The 2-parameter linear model
 \begin{equation}
-A_X = a(X)  A_{\hat{V}} + b(X) E({\hat{B}}-{\hat{V}})
+A_X = a(X)  A_{V} + b(X) E(B-V)
 \label{f99:eqn}
 \end{equation}
 approximately describes dust 
@@ -1209,8 +1222,12 @@ the allowed variations in ${\hat{U}}{\hat{B}}{\hat{V}}{\hat{R}}{\hat{I}}$ allowe
 2-dimensional
 planes within
 the 5-dimensional magnitude space.
-Wiith no prior assumptions of dust extinction behavior or the distribution of $A_V$, the supernova data themselves exhibit
+With no prior assumptions of dust extinction behavior or the distribution of $A_V$, the supernova data themselves exhibit
 2-dimensional color variations that are closely aligned with the 2-dimensional color variations predicted by the \citetalias{1999PASP..111...63F} dust model.
+\color{red}
+We show later that our per-supernova fit parameters under transformation are confined to $|A^F_V| < 1$ and $|E^F(B-V)| < 0.5$,
+where deviations of  the \citetalias{1999PASP..111...63F}  dust-extinction model from the plane approximation is less than 0.01 mag.
+\color{black}
 
 The above result is visualized in Figure~\ref{plane:fig}, which  shows  in the ${\hat{U}}{\hat{V}}I$-subspace two perspectives (left and right panels)
 of the unit vectors corresponding to $\vec{\gamma}^0$ and  $\vec{\gamma}^1$ of our model (solid lines),
@@ -1241,9 +1258,13 @@ the former.
 \end{figure}
 
 
+We
+\color{red}
+now turn to
+\color{black}
+ the specific choice of $\vec{\gamma}$  returned by the fit within the context of the \citetalias{1999PASP..111...63F}  dust-extinction model. 
 Our linear model would be satisfied by any two independent vectors  that span
-the plane defined by the $\vec{\gamma}$ vectors.  We begin discussion on the specific choice of $\vec{\gamma}$  returned by the fit within the context of the \citetalias{1999PASP..111...63F}  dust model. 
-While
+the plane defined by the $\vec{\gamma}$ vectors.  While
 Eqn.~\ref{f99:eqn} expresses that model using basis vectors $\vec{a}$ and $\vec{b}$ and
 their corresponding parameters 
 $A_V$ and 
@@ -1283,9 +1304,13 @@ Figure~\ref{plane:fig} visualizes the near-perfect alignment of $\vec{\gamma}^0$
 From the Monte Carlo chains, we find a 68\% credible interval for  $\langle R^F_{eff}\rangle$ of 2.26--2.63.
 
 
-Given the association of  our parameter $\gamma^0_{\hat{V}} k_0$ with changes in $A^F_V$ of an $R^F =\kappa^{-1}_1$ dust-extinction
-model up to an additive offset,
-the former's distribution can be compared to the expectation for the latter.
+Given that
+\color{red}
+$\vec{\gamma_0}$  has nearly the same effect on color as dust extinction with constant $R^F$,
+the distribution of
+our parameter $\gamma^0_{\hat{V}} k_0$ can be compared with the expected distribution
+of $A^F_V$.
+\color{black}
 Figure~\ref{k0_med:fig} shows the histogram of
 median values and the ideogram of $\gamma^0_{\hat{V}} k_0$ 
 relative to that of an arbitrary supernova  $\gamma^0_{\hat{V}} k_0|_0$.
@@ -1322,10 +1347,21 @@ which  is associated with extinction corrections due to deviations away from the
 
 We now consider the direction of $\vec{\gamma}^1$. 
 Different supernovae are expected to encounter dust with different $R^F$;
-having  associated $\vec{\gamma}^0$ with an $\langle R^F_{eff}\rangle$, $\vec{\gamma}^1$ is associated with perturbations
+having  associated $\vec{\gamma}^0$ with
+\color{red}
+the extinction from a single effective
+\color{black}
+$\langle R^F_{eff}\rangle$, $\vec{\gamma}^1$ is associated with perturbations
 away from that effective value.
-Let us introduce a new parameter for each supernova, $\delta R$, such that its $R^F =\langle R^F_{eff}\rangle(1+  \delta R)$.
-Variations in the value of $R^F$ (and hence $\delta R$) with the prior of the non-correlation between $k_0$ and $k_1$ lead 
+Let us introduce a new parameter for each supernova, $\delta R$, such that 
+\color{red}
+$A^F =\langle R^F_{eff}\rangle(1-  \delta R) E^F(B-V)$.
+\color{black} 
+Variations in the value of  $\delta R$, with the prior of the non-correlation between 
+\color{red}
+the coefficients in Eqn.~\ref{newdust:eqn},
+\color{black}
+lead 
 to 
 \begin{equation}
 \kappa_2 =\langle R^F_{eff}\rangle \left(1- \frac{\mbox{Var}(\delta R\, E^F(B-V))}{\mbox{Cov}(\delta R\, E^F(B-V), E^F(B-V))}\right).
@@ -1655,6 +1691,10 @@ two (parity symmetric)
 modes of $\delta_X$ are at $\mp 1.12$, $\mp 0.89$, $\mp 0.36$,  $\mp0.16$, $\pm0.21$~mag
 for $X={\hat{U}}{\hat{B}}{\hat{V}}{\hat{R}}{\hat{I}}$ respectively.
 The values of $\delta_X/\delta_{\hat{U}}-1$, which are insensitive to the scaling (including the sign) degeneracy, are shown in Figure~\ref{deltaratio:fig}.
+\color{red}
+Unlike with $\gamma$, we normalize $\delta$ to $\hat{U}$ because the uncertainty in $\delta_{\hat{B}}-\delta_{\hat{V}}$ is relatively large with
+a credible intervals that easily cross zero. 
+\color{black}
 
 \begin{figure}[htbp] %  figure placement: here, top, bottom, or page
    \centering
@@ -1679,7 +1719,10 @@ The distributions of both sources of color excess $E({\hat{B}}-{\hat{V}})$ and
  $E_\delta({\hat{B}}-{\hat{V}}) \equiv   (\delta_{\hat{B}}-\delta_{\hat{V}})D$ are shown in the ideograms 
  and histogram in Figure~\ref{ebv:fig}.
  (These values are relative those of an arbitrary supernova in order to null out correlated errors.)
-The range of ${\hat{B}}-{\hat{V}}$ colors is $> 5 \times$ larger for the external contribution than for the extrinsic dust
+The range of ${\hat{B}}-{\hat{V}}$ colors is $> 5 \times$ larger for the external contribution than for the
+\color{red}
+intrinsic
+\color{black}
 component.  
 The standard deviations of  the median $E_\gamma({\hat{B}}-{\hat{V}})$ and $E_\delta({\hat{B}}-{\hat{V}})$ are
 %-----
@@ -1731,9 +1774,13 @@ There is a core concentration in the  parameter-space, with around ten objects t
 Many outliers appear in the red tail of $E_{\gamma^0}({\hat{B}}-{\hat{V}})$, as would be expected for the (infrequent) selection of supernovae
 heavily extinguished by host-galaxy dust.
 
-The correlation coefficients between the ``intrinsic''  ($A_{\delta {\hat{U}}}$) and ``extrinsic''
-($E_{\gamma^0}({\hat{B}}-{\hat{V}})$, $E_{\gamma^1}({\hat{B}}-{\hat{V}})$)  parameters are
-directed by the prior and are ultimately consistent with zero.
+\color{red}
+The priors of the correlation coefficients between the ``intrinsic''  ($A_{\delta {\hat{U}}}$) and ``extrinsic''
+($E_{\gamma^0}({\hat{B}}-{\hat{V}})$, $E_{\gamma^1}({\hat{B}}-{\hat{V}})$)  parameters
+\color{red}
+are set for their values to be uncorrelated. The output correlation is
+\color{black}
+consistent with zero.
 Their independence implies that a single physical parameter is not being artificially attributed to two
 model parameters.  One could have
 \color{red}
@@ -1911,8 +1958,12 @@ performed by explicitly adding to Model~II a new linear term $\zeta x_1$ to the
 intrinsic magnitude. The credible intervals
 from this analysis are given in Table~\ref{globalx1:tab}; there are no significant changes with respect to the reference model. 
 Light-curve shape is not a strong predictor of supernova magnitude relative to the spectral features: $\zeta_{\hat{R}}/\zeta_{\hat{V}}$
-has the largest significance  at $1\sigma$.
-The evidence for the effect of a third parameter persists in the significant  non-zero  $\delta_X/\delta_{\hat{I}}-1$ values
+has the largest significance  at 
+\color{red}
+only
+\color{black}
+$1\sigma$.
+The evidence for the effect of a third parameter persists in the significant  non-zero  $\delta_X/\delta_{\hat{U}}-1$ values
 in Table~\ref{globalx1:tab}, reinforcing the evidence that the $D$ of Model~II is not primarily related to light-curve shape.
 
 \begin{figure}[htbp] %  figure placement: here, top, bottom, or page
@@ -2154,12 +2205,24 @@ equivalent-width corrections.
 
 
 
-The results from  \S\ref{shape:sec} and this subsection demonstrate the model handling simultaneous
-magnitude corrections 
-of  correlated observables.  The model prefers corrections that reduce intrinsic dispersion.
-The free parameters that describe the intrinsic dispersion enter the model likelihood through  the term $(\det{C_c})^{-0.5}$, which gives higher likelihood 
-for lower dispersions. This leads to magnitude corrections being preferentially
-attributed to $EW_{Ca}$ over $v_{Si}$, and  $EW_{Si}$ over SALT2 $x_1$.
+The results from  \S\ref{shape:sec} and this subsection 
+\color{red}
+present $EW_{Ca}$ with $v_{Si}$, and  $EW_{Si}$ with SALT2 $x_1$,  each a 
+case of parameter pairs that are correlated with each other, and each known to be related to
+supernova magnitudes.  We find that the simultaneous training of a pair
+preferentially assigns the magnitude correction to one parameter over the other
+without strong correlations between them in the posterior.  The implication is that the information about the correction is degenerately encoded in the two parameters,
+and is more efficiently captured in one.
+\color{black}
+%of  correlated observables.  The model prefers corrections that reduce intrinsic dispersion.
+%The free parameters that describe the intrinsic dispersion enter the model likelihood through  the term $(\det{C_c})^{-0.5}$, which gives higher likelihood 
+%for lower dispersions.
+%\color{red}
+%The fact that the maximum likelihood analysis attributes magnitude corrections to
+%$EW_{Ca}$ over $v_{Si}$, and  $EW_{Si}$ over SALT2 $x_1$  that $EW_{Ca}$  $EW_{Si}$
+%\color{black}
+%This leads to magnitude corrections being preferentially
+%attributed to.
 
 
 
@@ -2170,12 +2233,17 @@ sample \citep{2013ApJ...770..108C}.
 This host-mass bias could be the result of a parameter that was not accounted for in the inference of SN~Ia absolute magnitude.
 \citetalias{2017ApJ...842...93M} find that when introducing intrinsic color scatter as a latent parameter, the null mass-step effect falls on the 95\%-level of their posterior.
 To explore whether the Hubble residual may be due to unaccounted color,
-we plot in Figure~\ref{childress:fig} our intrinsic parameter  $A_{\delta {\hat{U}}}$  versus host mass 
+we plot in Figure~\ref{childress:fig} our intrinsic parameter
+\color{red} mass versus $A_{\delta {\hat{U}}}-A_{\delta {\hat{U}}}|_0$  (subtracting out a random supernova
+to suppress correlated errors)
+\color{black}
 for the subset of supernovae whose host measurements are given in \citet{2013ApJ...770..108C}.
 The average $A_{\delta {\hat{U}}}$'s of the two subsamples are
 %---
-$\langle A_{\delta {\hat{U}}} \rangle=     -0.0002 \pm    0.0089$ mag,
-$\langle A_{\delta {\hat{U}}} \rangle= 0.0025 \pm   0.0073 $ mag
+\color{red}
+$\langle A_{\delta {\hat{U}}} \rangle=   0.000 \pm {    0.011 }$ mag,
+$\langle A_{\delta {\hat{U}}} \rangle= 0.003 \pm {    0.009 }$ mag
+\color{black}
 for low- and high-mass hosts respectively: there is no significant difference in $A_{\delta {\hat{U}}}$ between them. 
 
 
@@ -2299,6 +2367,9 @@ lack the signal-to-noise to show consistency with this explanation.
 The best-fit elements $\delta_X$ do not all share the same sign, as would have been expected for dust.
 Confining ourselves to the 98\% of   $\vec{\delta}$ that lies on the dust plane, associating 
 $D$ with $A_V$ would imply an unphysical $R^F=0.5$.
+\color{red}
+(\citealt{Huang2017} find that in the limit of Rayleigh scattering, $R_V \approx 0.81$.)
+\color{black}
 We do not have conclusive evidence that  $\delta$ is being a property of dust distinct from that described by $\gamma$, rather
 than representing intrinsic supernova color variation.
 \color{black}
@@ -2329,6 +2400,16 @@ we identify a new per-supernova observable parameter that distinguishes intrinsi
 and dust properties.
 \color{black}
 
+\color{red}
+Using different arguments based on expected populations, \citetalias{2017ApJ...842...93M} also infer
+separate intrinsic and dust-based color-magnitude relations based on an independent sample of 248 SNe~Ia
+mainly from the CfA \citep{1999AJ....117..707R, 2006AJ....131..527J, 2009ApJ...700.1097H, 2012ApJS..200...12H}
+and CSP \citep{2010AJ....139..519C, 2011AJ....142..156S} surveys.
+Finding slight color perturbations in the multi-band light curves 
+of those samples that are  consistent with our $\vec{\delta}$ would provide strong evidence for  an
+observational signature of the intrinsic SN color-magnitude relationship.
+\color{black}
+
 The current data does not show a statistically significant difference in the values of our new parameter for supernovae
 in low- and high-mass host-galaxies.
 Using the SNfactory sample,
@@ -2346,7 +2427,6 @@ to resolve spectral features, the analysis would produce a spectroscopic model. 
 the use of a fiducial template necessary to predict broadband fluxes generated by dust models, and also allow direct incorporation
 of dust models into our framework.
 
-Mandel sample.
 
 The approach of our analysis is to mine for new supernova properties based on colors and spectral features.
 Our model and results do carry information on absolute magnitude but are not tailored for its study.
