@@ -777,7 +777,7 @@ Contours of the posterior surface for parameter pairs grouped by filter are show
             \caption{Model~I posterior contours for $\vec{c}$, $\vec{\alpha}$, $\vec{\beta}$, $\vec{\eta}$, $\vec{\gamma}^0$, $\vec{\gamma}^1$, and $\sigma$ in the ${\hat{U}}$ band.
             The contours shown here and in future plots represent 1-$\sigma$ in the parameter distribution (i.e.\ they should be
             projected onto the corresponding 1-d parameter axis), not to 68\%, 95\%, etc.\
-            enclosed probability.  Lines for zero value for $\alpha_{\hat{U}}$, $\beta_{\hat{U}}$, $\eta$, $\gamma_{\hat{U}}^0$, $\gamma_{\hat{U}}^1$, and $\sigma_{\hat{U}}$ are shown for reference --
+            enclosed probability.  Lines for zero value for $\alpha_{\hat{U}}$, $\beta_{\hat{U}}$, $\eta_{\hat{U}}$, $\gamma_{\hat{U}}^0$, $\gamma_{\hat{U}}^1$, and $\sigma_{\hat{U}}$ are shown for reference --
             in most cases they are outside the range of the plot.
             \label{global1:fig}}
 \end{figure}
@@ -814,7 +814,11 @@ Tests have revealed no evidence for the non-convergence of the MCMC run.
 STAN provides output statistics to assess
 the convergence of the output Markov chains.
 The 
-potential scale reduction statistic, $\hat{R}$ (not the passband) \citep{Gelman92}, measures the convergence of the target distribution
+potential scale reduction statistic, $\hat{R}$
+\color{red}
+(in this paragraph not to be confused with the synthetic $R$ magnitude)
+\color{black}
+\citep{Gelman92}, measures the convergence of the target distribution
 in iterative simulations 
 by using multiple independent sequences to estimate how much that distribution would sharpen if the simulations were run longer.
 $N_{eff}$ is an estimate of the number of independent draws. The output for our data and model gives $\hat{R} \sim 1.0$ for all parameters, meaning there is no evidence for non-convergence.  The
@@ -840,7 +844,7 @@ is the histogram of the difference between the observed and intrinsic colors.
 \end{figure}
 
 
-For each of the five filters, the 68\%  equal-tailed credible intervals for the global parameters $\alpha$, $\beta$, $\eta$, $\vec{\gamma}^0$, $\vec{\gamma}^1$, and $\sigma$
+For each of the five filters, the 68\%  equal-tailed credible intervals for the global parameters $\vec{\alpha}$, $\vec{\beta}$, $\eta$, $\vec{\gamma}^0$, $\vec{\gamma}^1$, and $\sigma$
 are given in Table~\ref{global:tab}.
 As the $\vec{\gamma}$ parameters are free up to a multiplicative constant and have non-zero values of $\gamma^i_{\hat{V}}$,
 their results are shown in terms of $\gamma^i_X/\gamma^i_{\hat{V}}-1$.
@@ -1006,17 +1010,25 @@ We do not detect a significant direct connection between
 $\lambda_{Si}$ and color, though their indirect correlation is discussed in \S\ref{velocity:sec}.
 \color{black}
 
-The signal in  $\vec{\alpha}$ and $\vec{\beta}$ cannot be attributed to the equivalent widths themselves.
+The signal in  $\vec{\alpha}$ and $\vec{\beta}$ cannot
+\color{red}
+entirely
+\color{black}
+be attributed to the equivalent widths themselves.
 The range of SiII$\lambda$4130 equivalent widths is $\pm 20$~\AA\ whereas the width of the ${\hat{B}}$-band is 851~\AA, so that its direct affect on magnitude
 is
 $2.5 \log{(20/850)} \sim 0.03$ mag.  
 The implied span in ${\hat{B}}$ magnitude based on $\beta_{\hat{B}}$ is 0.54~mag.  Therefore $\beta_{\hat{B}}$ cannot wholly be attributed to the flux deficit
 from the line itself.
-Similarly, the CaII H\&K equivalent widths have range $\pm 50$~\AA, while the width of the ${\hat{U}}$ band is
+The CaII H\&K equivalent widths have range $\pm 50$~\AA, while the width of the ${\hat{U}}$ band is
 701~\AA, so that its direct affect on magnitude
 is
 $2.5 \log{(50/701)} \sim 0.08$ mags.   The implied span in ${\hat{U}}$ magnitude is  0.21~mag, so $\alpha_{\hat{U}}$ cannot be completely due to the 
 presence of the line itself.
+\color{red}
+More importantly, the spectral features correlate with broadband magnitudes with which they do not overlap in wavelength.
+\color{black}
+
 
 The fit $\Delta$'s are highly correlated between supernovae.  To aid in visualization, we remove much of this
 correlation by subtracting out the $\Delta|_0$ of  an arbitrary supernova.
@@ -1026,9 +1038,11 @@ has a standard deviation of
 %-----
 $0.08$
 %-----
-mag, and a tail in the positive (fainter) direction. 
-Of the three extreme outliers, the supernovae with largest and third largest $\Delta$'s have  heliocentric redshifts of 
- $0.0015$ and $0.0085$ respectively, and so have peculiar velocities that can cause a significant magnitude offset.
+mag, and a tail in the positive (fainter) direction.
+\color{red}
+The supernovae with the highest values of $\Delta$ have, with increasing $\Delta$, heliocentric
+ redshifts of 0.0228, 0.0086, 0.0565, and 0.0015, three of which have peculiar velocities that can cause a significant magnitude offset.
+\color{black}
 
 \begin{figure}[htbp] %  figure placement: here, top, bottom, or page
    \centering
@@ -1036,7 +1050,7 @@ Of the three extreme outliers, the supernovae with largest and third largest $\D
    \caption{
    Normalized ideogram and histogram of the medians of the grey offset relative to one arbitrary supernova, $\Delta-\Delta|_0$.  
    \color{red}
-   The supernovae with the highest values of $\Delta$ have, with increasing $\Delta$, heliocentric
+   The supernovae with the four highest values of $\Delta$ have, with increasing $\Delta$, heliocentric
    redshifts of 0.0228, 0.0086, 0.0565, and 0.0015.
    \color{black}
    \label{hist:fig}}
@@ -1177,6 +1191,10 @@ The extrinsic contribution to our model can be re-expressed to have a similar pa
 A_X = \frac{\gamma^0_X}{\gamma^0_{\hat{B}}-\gamma^0_{\hat{V}}}  E_{\gamma^0}({\hat{B}}-{\hat{V}}) +  \frac{\gamma^1_X}{\gamma^1_{\hat{B}}-\gamma^1_{\hat{V}}}  E_{\gamma^1}({\hat{B}}-{\hat{V}}),
 \end{equation}
 with $E_{\gamma^i}({\hat{B}}-{\hat{V}}) \equiv  (\gamma^i_{\hat{B}}-\gamma^i_{\hat{V}})k_i$ as defined in \S\ref{results:sec}.
+\color{red}
+In this parameterization, the per-supernova parameters represent $\hat{B}-\hat{V}$ color excesses, and thus have a
+more familiar and physical interpretation than the $k$ parameters.
+\color{black}
 Our median-fit values for the $\vec{\gamma}$ coefficients are
 %---- fitz11.py
 $\frac{\vec{\gamma}^0}{\gamma^0_{\hat{B}}-\gamma^0_{\hat{V}}}  =(4.80 ,   3.89,   2.89,   2.22,   1.59)$ and
@@ -1202,16 +1220,16 @@ The result is
 \vec{b}
 \end{pmatrix}+
 \begin{pmatrix}
-\pmb{\epsilon}_{\gamma^0} \\
-\pmb{\epsilon}_{\gamma^1}
+\vec{\epsilon}_{\gamma^0} \\
+\vec{\epsilon}_{\gamma^1}
 \end{pmatrix},
 \label{trans_I:eqn}
 \end{equation}
 where the two residual vectors
 \begin{align}
 \begin{split}
-\pmb{\epsilon}_{\gamma^0} &=(0.06, -0.07, -0.07,  0.07, 0.02), \\
-\pmb{\epsilon}_{\gamma^1} & =(-0.06, 0.16, -0.22, 0.33, -0.26)
+\vec{\epsilon}_{\gamma^0} &=(0.06, -0.07, -0.07,  0.07, 0.02), \\
+\vec{\epsilon}_{\gamma^1} & =(-0.06, 0.16, -0.22, 0.33, -0.26)
 \end{split}
 \label{res_I:eqn}
 \end{align}
@@ -1686,7 +1704,7 @@ despite its relatively strong signal-to-noise, the original posterior for $D$ fo
 resulting in changes in the shape of the $\vec{\delta}$ posteriors when  $D$ to forced to be positive.   
 The 
 \color{red}
-two (parity symmetric)
+two parity-symmetric
 \color{black}
 modes of $\delta_X$ are at $\mp 1.12$, $\mp 0.89$, $\mp 0.36$,  $\mp0.16$, $\pm0.21$~mag
 for $X={\hat{U}}{\hat{B}}{\hat{V}}{\hat{R}}{\hat{I}}$ respectively.
@@ -1821,30 +1839,34 @@ in terms of the $\vec{a}$ and $\vec{b}$ vectors that describe the \citetalias{19
 \vec{b}
 \end{pmatrix}+
 \begin{pmatrix}
-\pmb{\epsilon}_{\gamma^0} \\
-\pmb{\epsilon}_{\gamma^1} \\
-\pmb{\epsilon}_{\delta}
+\vec{\epsilon}_{\gamma^0} \\
+\vec{\epsilon}_{\gamma^1} \\
+\vec{\epsilon}_{\delta}
 \end{pmatrix},
 \label{model2trans:eqn}
 \end{equation}
 where the residual vectors
 \begin{align}
 \begin{split}
-\pmb{\epsilon}_{\gamma^0} &=(0.07, -0.07, -0.07,  0.06,  0.02),\\
-\pmb{\epsilon}_{\gamma^1} &=( -0.04, 0.14,  -0.24,  0.32, -0.22),\\
-\pmb{\epsilon}_{\delta} &=(-0.05, 0.08,  -0.03,  -0.09, -0.12)
+\vec{\epsilon}_{\gamma^0} &=(0.07, -0.07, -0.07,  0.06,  0.02),\\
+\vec{\epsilon}_{\gamma^1} &=( -0.04, 0.14,  -0.24,  0.32, -0.22),\\
+\vec{\epsilon}_{\delta} &=(-0.05, 0.08,  -0.03,  -0.09, -0.12)
 \end{split}
 \label{model2res:eqn}
 \end{align}
 are perpendicular to $\vec{a}$ and $\vec{b}$.
-The $\vec{\gamma}$ residuals $\pmb{\epsilon}_{\gamma^0}$ and
-$\pmb{\epsilon}_{\gamma^1} $
+The $\vec{\gamma}$ residuals $\vec{\epsilon}_{\gamma^0}$ and
+$\vec{\epsilon}_{\gamma^1} $
 quadratically contribute 0.03\% and 0.2\% to the total  lengths of the vectors, meaning that, just as in Model~I, most
 of the $\vec{\gamma}$'s project onto the plane predicted by the \citetalias{1999PASP..111...63F} dust model.
- $\vec{\delta}$ too
-has a significant projection onto the dust plane, as the $\pmb{\epsilon}_{\delta}$ residual contributes 2\% of the length of the $\vec{\delta}$ vector.
+$\vec{\delta}$ too
+has a significant projection onto the dust plane, as the $\vec{\epsilon}_{\delta}$ residual contributes 2\% of the length of the $\vec{\delta}$ vector.
 The transformation between the new set of $\vec{\gamma}$'s and dust parameters yields
 a 68\%-ile  credible interval for $R^F$ of  $2.31$--$2.69$, shifted to slightly  higher values relative to the results of Model~I.
+\color{red}
+As a point of comparison with another standard SN~Ia model, 3\% of the color vector defined by 
+the  SALT2 (v2.4) color parameter, $c$, is  projected perpendicular to the plane defined by the $\vec{\gamma}$'s.
+\color{black}
 
 The significance of the $\vec{\delta}$ measurement is evaluated using simulated datasets.
 For one set of tests, we generate 50 random realizations of data with input  parameters equal to the median values of the 
@@ -2500,34 +2522,34 @@ are much smaller than the per-realization statistical uncertainty.
 \begin{figure}[htbp] %  figure placement: here, top, bottom, or page
    \centering
    \includegraphics[width=5.2in]{output25_sim/coeff0.pdf} 
-            \caption{Aggregated Model~II posterior contours for $c$, $\alpha$, $\beta$, $\eta$, $\vec{\gamma}^0$, $\vec{\gamma}^1$,  $\vec{\delta}$, and $\sigma$ in the ${\hat{U}}$ band of ten independent simulated data sets.  The blue crosshairs denote the input $\vec{\delta}$ used to generate the simulated data.
+            \caption{Aggregated Model~II posterior contours for $\vec{c}$, $\vec{\alpha}$, $\vec{\beta}$, $\vec{\eta}$, $\vec{\gamma}^0$, $\vec{\gamma}^1$,  $\vec{\delta}$, and $\sigma$ in the ${\hat{U}}$ band of ten independent simulated data sets.  The blue crosshairs denote the input $\vec{\delta}$ used to generate the simulated data.
             \label{simglobal1:fig}}
 \end{figure}
 
 \begin{figure}[htbp] %  figure placement: here, top, bottom, or page
    \centering
    \includegraphics[width=5.2in]{output25_sim/coeff1.pdf} 
-            \caption{Aggregated Model~II posterior contours for $c$, $\alpha$, $\beta$, $\eta$, $\vec{\gamma}^0$, $\vec{\gamma}^1$,  $\vec{\delta}$, and $\sigma$ in the ${\hat{B}}$ band of ten independent simulated data sets.  The blue crosshairs denote the input $\vec{\delta}$ used to generate the simulated data.
+            \caption{Aggregated Model~II posterior contours for $\vec{c}$, $\vec{\alpha}$, $\vec{\beta}$, $\vec{\eta}$, $\vec{\gamma}^0$, $\vec{\gamma}^1$,  $\vec{\delta}$, and $\sigma$ in the ${\hat{B}}$ band of ten independent simulated data sets.  The blue crosshairs denote the input $\vec{\delta}$ used to generate the simulated data.
  \label{simglobal2:fig}}
 \end{figure}
 
 \begin{figure}[htbp] %  figure placement: here, top, bottom, or page
    \centering
    \includegraphics[width=5.2in]{output25_sim/coeff2.pdf} 
-            \caption{Aggregated Model~II posterior contours for $c$, $\alpha$, $\beta$, $\eta$, $\vec{\gamma}^0$, $\vec{\gamma}^1$,  $\vec{\delta}$, and $\sigma$ in the ${\hat{V}}$ band of ten independent simulated data sets.   The blue crosshairs denote the input $\vec{\delta}$ used to generate the simulated data. \label{simglobal3:fig}}
+            \caption{Aggregated Model~II posterior contours for $\vec{c}$, $\vec{\alpha}$, $\vec{\beta}$, $\vec{\eta}$, $\vec{\gamma}^0$, $\vec{\gamma}^1$,  $\vec{\delta}$, and $\sigma$ in the ${\hat{V}}$ band of ten independent simulated data sets.   The blue crosshairs denote the input $\vec{\delta}$ used to generate the simulated data. \label{simglobal3:fig}}
 \end{figure}
 
 \begin{figure}[htbp] %  figure placement: here, top, bottom, or page
    \centering
       \includegraphics[width=5.2in]{output25_sim/coeff3.pdf} 
-            \caption{Aggregated Model~II posterior contours for $c$, $\alpha$, $\beta$, $\eta$, $\vec{\gamma}^0$, $\vec{\gamma}^1$,  $\vec{\delta}$, and $\sigma$ in the ${\hat{R}}$ band of ten independent simulated data sets.   The blue crosshairs denote the input $\vec{\delta}$ used to generate the simulated data.
+            \caption{Aggregated Model~II posterior contours for $\vec{c}$, $\vec{\alpha}$, $\vec{\beta}$, $\vec{\eta}$, $\vec{\gamma}^0$, $\vec{\gamma}^1$,  $\vec{\delta}$, and $\sigma$ in the ${\hat{R}}$ band of ten independent simulated data sets.   The blue crosshairs denote the input $\vec{\delta}$ used to generate the simulated data.
 \label{simglobal4:fig}}
 \end{figure}
 
 \begin{figure}[htbp] %  figure placement: here, top, bottom, or page
    \centering
          \includegraphics[width=5.2in]{output25_sim/coeff4.pdf} 
-            \caption{Aggregated Model~II posterior contours for $c$, $\alpha$, $\beta$, $\eta$, $\vec{\gamma}^0$, $\vec{\gamma}^1$,  $\vec{\delta}$, and $\sigma$ in the ${\hat{I}}$ band of ten independent simulated data sets.  The blue crosshairs denote the input $\vec{\delta}$ used to generate the simulated data.
+            \caption{Aggregated Model~II posterior contours for $\vec{c}$, $\alpha$, $\vec{\beta}$, $\vec{\eta}$, $\vec{\gamma}^0$, $\vec{\gamma}^1$,  $\vec{\delta}$, and $\sigma$ in the ${\hat{I}}$ band of ten independent simulated data sets.  The blue crosshairs denote the input $\vec{\delta}$ used to generate the simulated data.
  \label{simglobal5:fig}}
 \end{figure}
 

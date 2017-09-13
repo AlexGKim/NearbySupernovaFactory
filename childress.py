@@ -6,6 +6,10 @@ from matplotlib import rc
 import pickle
 import cPickle
 import scipy.stats
+import matplotlib as mpl
+
+mpl.rcParams['font.size'] = 18
+
 
 f = open('MJC_compile_SNdata.pkl','r')
 gal= pickle.load(f)
@@ -66,8 +70,14 @@ for j in xrange(len(i)):
 mass = numpy.array(mass)
 emass= numpy.array(emass)
 
-# scaled = fit['rho1'][:,0][:,None]*(fit['R']-fit['R'][:,0][:,None])
-scaled = fit['rho1'][:,0][:,None]*fit['R']
+# pick one without mass
+crap = 0
+while crap in inda:
+  crap=crap+1
+print crap
+
+scaled = fit['rho1'][:,0][:,None]*(fit['R']-fit['R'][:,crap][:,None])
+# scaled = fit['rho1'][:,0][:,None]*fit['R']
 scaled = scaled[:,inda]
 
 ksarr=[]
@@ -85,7 +95,7 @@ plt.hist(pvarr)
 plt.xlabel(r'$p$-value')
 
 pp = PdfPages("output25/childress_pvalue.pdf")
-plt.savefig(pp,format='pdf')
+plt.savefig(pp,format='pdf',bbox_inches='tight')
 pp.close()
 plt.close()
 
@@ -106,7 +116,7 @@ plt.xlabel(r'$\log{(M_{host}/M_{\odot})}$')
 ux = numpy.array([6,10])
 wm = numpy.where(mass < 10)[0]
 temp = scaled[:,wm].flatten()
-temp=temp[temp !=0]
+# temp=temp[temp !=0]
 (x, xmin, xmax) = numpy.percentile(temp,(50,50-34,50+34))
 dx = (xmax-xmin)/2/numpy.sqrt(len(wm))
 
@@ -119,7 +129,7 @@ plt.plot(ux, [x-dx,x-dx],color='red')
 ux = numpy.array([10,13])
 wm = numpy.where(mass[1:] > 10)[0]
 temp = scaled[:,wm].flatten()
-temp=temp[temp !=0]
+# temp=temp[temp !=0]
 (x, xmin, xmax) = numpy.percentile(temp,(50,50-34,50+34))
 dx = (xmax-xmin)/2/numpy.sqrt(len(wm))
 print r"${:9.4f} \pm {{ {:9.4f} }}$".format(x,dx) 
@@ -130,13 +140,14 @@ plt.plot(ux, [x-dx,x-dx],color='red')
 plt.xlim((6,13))
 # plt.ylim((-0.1,0.1))
 pp = PdfPages("output25/childress.pdf")
-plt.savefig(pp,format='pdf')
+plt.savefig(pp,format='pdf',bbox_inches='tight')
 pp.close()
 plt.close()
 
+wefwe
 
 wm = numpy.where(mass[1:] < 10)[0]
-low = (((fit['rho1'][:,0])[:,None])*fit['R'][:,wm]).flatten()
+# low = (((fit['rho1'][:,0])[:,None])*fit['R'][:,wm]).flatten()
 lowlim = numpy.percentile(scaled,(50,50-34,50+34),axis=0)
 lowmn = lowlim[2,:]+lowlim[1,:]/2
 lowsig = lowlim[2,:]-lowlim[1,:]/2

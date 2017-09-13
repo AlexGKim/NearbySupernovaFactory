@@ -252,13 +252,15 @@ plt.savefig(pp,format='pdf')
 pp.close()
 plt.close()
 
-(y, ymin, ymax) = numpy.percentile(fit['rho1'][:,0][:,None]*fit['R'],(50,50-34,50+34),axis=0)
+temp = fit['rho1'][:,0][:,None]*fit['R']
+
+(y, ymin, ymax) = numpy.percentile(temp-temp[:,0][:,None],(50,50-34,50+34),axis=0)
 plt.errorbar(x1, y, xerr=[x1_err,x1_err],yerr=[y-ymin,ymax-ymin],fmt='o',alpha=0.2)
 plt.scatter(x1, y,s=1,alpha=0.8)
 plt.xlabel(r'$x_1$')
-plt.ylabel(r'$A_{\delta \hat{U}}$')
+plt.ylabel(r'$A_{\delta \hat{U}} - A_{\delta \hat{U}}|_0$')
 plt.xlim((-3.2, 2.8))
-plt.ylim((-0.14, 0.15))
+# plt.ylim((-0.14, 0.15))
 
 plt.tight_layout()
 pp = PdfPages(dirname+"/x1D.pdf")
@@ -581,7 +583,7 @@ plt.hist([dustebv, extebv],normed=True,bins=20,
 plt.xlabel(r'$E(\hat{B}-\hat{V})-E(\hat{B}-\hat{V})|_0$',fontsize=20)
 plt.legend()
 pp = PdfPages(dirname+'/ebv.pdf')
-plt.savefig(pp,format='pdf')
+plt.savefig(pp,format='pdf',bbox_inches='tight')
 pp.close()
 plt.close()
 
@@ -649,7 +651,7 @@ plt.xlabel(r'$E_\delta(\hat{B}-\hat{V})-E_\delta(\hat{B}-\hat{V})|_0$',fontsize=
 plt.xlim((-.1,.12))
 plt.legend()
 pp = PdfPages(dirname+'/ebv_delta.pdf')
-plt.savefig(pp,format='pdf')
+plt.savefig(pp,format='pdf',bbox_inches='tight')
 pp.close()
 plt.close()
 # print snnames[numpy.argsort(numpy.median(extebv,axis=0))]
