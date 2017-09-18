@@ -253,9 +253,9 @@ pp.close()
 plt.close()
 
 temp = fit['rho1'][:,0][:,None]*fit['R']
-
+print temp.shape
 (y, ymin, ymax) = numpy.percentile(temp-temp[:,0][:,None],(50,50-34,50+34),axis=0)
-plt.errorbar(x1, y, xerr=[x1_err,x1_err],yerr=[y-ymin,ymax-ymin],fmt='o',alpha=0.2)
+plt.errorbar(x1, y, xerr=[x1_err,x1_err],yerr=[y-ymin,ymax-y],fmt='o',alpha=0.2)
 plt.scatter(x1, y,s=1,alpha=0.8)
 plt.xlabel(r'$x_1$')
 plt.ylabel(r'$A_{\delta \hat{U}} - A_{\delta \hat{U}}|_0$')
