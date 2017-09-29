@@ -83,7 +83,7 @@ simmedabs.append(dum[1])
 
 mega = numpy.array([fit['c'],fit['alpha'],fit['beta'],fit['eta'],fit['gamma'],fit['gamma1'],fit['rho1'],fit['L_sigma']])
 
-for index in xrange(1,50):
+for index in xrange(1,100):
     f = open('temp25_sim'+tag+'{}.pkl'.format(index),'rb')
     (fit,_) = pickle.load(f)
 
@@ -128,6 +128,18 @@ plt.clf()
 pp.close()
 
 pp = PdfPages('output25_sim'+tag+'/pvalues_relperp.pdf')
+
+print resort[-1]
+
+asort = numpy.argsort(numpy.append(simperc[:,1],dataperc[1]))
+resort = numpy.argsort(asort)
+print resort[-1]
+
+asort = numpy.argsort(numpy.append(simperc[:,2],dataperc[2]))
+resort = numpy.argsort(asort)
+print resort[-1]
+
+
 asort = numpy.argsort(numpy.append(simmedfrac[:,0],datamedfrac[0]))
 resort = numpy.argsort(asort)
 
@@ -139,6 +151,17 @@ plt.ylabel(r'$\delta_\perp^2 / \delta^2$')
 plt.savefig(pp,format='pdf')
 plt.clf()
 pp.close()
+
+
+print resort[-1]
+
+asort = numpy.argsort(numpy.append(simmedfrac[:,1],datamedfrac[1]))
+resort = numpy.argsort(asort)
+print resort[-1]
+
+asort = numpy.argsort(numpy.append(simmedfrac[:,2],datamedfrac[2]))
+resort = numpy.argsort(asort)
+print resort[-1]
 
 
 # bins=numpy.arange(0,4,0.1)
