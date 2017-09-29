@@ -1908,13 +1908,9 @@ the  SALT2 (v2.4) color parameter, $c$, is  projected perpendicular to the plane
 \color{black}
 
 The significance of the $\vec{\delta}$ measurement is evaluated using simulated datasets.
-For one set of tests, we generate 50 random realizations of data with input  parameters equal to the median values of the 
+For one set of tests, we generate 100 random realizations of data with input  parameters equal to the median values of the 
 parameter posteriors found in
 \S\ref{model:sec}, and using the same noise as our data.  
-\color{red}
-(Given the non-trivial computational time for the Monte Carlo, the 2\% precision from the 
-is deemed sufficient for our purposes.)
-\color{black}
 To represent the null hypothesis, the input $\vec{\delta}$-vector is set to zero.
 Figure~\ref{pvalues_delta2:fig} shows results of fits of these null-realizations next  to the results from the real data.
 One statistic shown is the median and 68\% credible interval of the squared amplitude  $\delta^2$.
@@ -1922,7 +1918,7 @@ As $\delta^2$ measures the magnitude response due to the third parameter, it is 
 when such a new parameter is not relevant.
 Comparing separately the  $-1$, 0, and $1$-sigma
 values of  the credible interval of our data relative to those from the simulations, we obtain
-three different $p$-values ranging from 0.90--0.98, indicating that the
+three different $p$-values ranging from 0.88--0.98, indicating that the
 \color{red}
 null hypothesis is a poor representation of the data.
 \color{black}
@@ -1931,7 +1927,7 @@ null hypothesis is a poor representation of the data.
    \centering
    \includegraphics[width=2.9in]{output25_sim_null/pvalues_delta2.pdf} 
   \includegraphics[width=2.9in]{output25_sim_null/pvalues_relperp.pdf} 
-            \caption{ Left: The squared length, $\delta^2$;  and Right: the relative length perpendicular to the plane defined by $\vec{\gamma}$, $\delta_\perp^2/\delta^2$, for 50 independent simulated data sets with input $\delta=0$.  The fits
+            \caption{ Left: The squared length, $\delta^2$;  and Right: the relative length perpendicular to the plane defined by $\vec{\gamma}$, $\delta_\perp^2/\delta^2$, for 100 independent simulated data sets with input $\delta=0$.  The fits
             are ordered by the median value, the null realizations are shown in blue and the result from our data is shown in red.
             \label{pvalues_delta2:fig}}
 \end{figure}
@@ -1949,16 +1945,20 @@ possibility
 \color{black}
  is tested using the 
 relative projection of $\vec{\delta}$  perpendicular to the plane defined by the $\vec{\gamma}$'s, $\delta_\perp^2/\delta^2$,
-for the same 50 null simulations that were just described.
-Figure~\ref{pvalues_delta2:fig} shows  that for none of the simulations does our analysis produce 
- $\delta_\perp^2/\delta^2$ as low as that from our data.  The $p$-values $>0.98$ indicate that 
+for the same 100 null simulations that were just described.
+Figure~\ref{pvalues_delta2:fig} shows  that for 
+\color{red}
+ $-1$, 0, and $1$-sigma
+values of  the credible interval, only 0--2\% of the simulations have values of  $\delta_\perp^2/\delta^2$ as low as our data.
+\color{black}
+The $p$-values $>0.98$ indicate that 
  \color{red}
  the close alignment of $\vec{\delta}$  with  $\vec{\gamma}$'s is unlikely to be by chance. 
  \color{black}
 
 
 Potential biases in our results are measured through simulation.
-We generate 50 random realizations of data with input  parameters equal to the median values found in
+We generate 100 random realizations of data with input  parameters equal to the median values found in
 this Section, except for $\vec{\delta}$, which is assigned
 \color{red}
 the mode shown in Figure~\ref{deltacorner:fig},
@@ -1966,7 +1966,7 @@ the mode shown in Figure~\ref{deltacorner:fig},
  and the same noise as our data.  The posterior for each realization is analyzed individually, and the posteriors of all realizations are stacked.  The stack is sensitive to
 biases in the best fit value.
 The stack of  $\vec{\delta}$  is shown in Figure~\ref{simdelta:fig}.  There is a bias between
-the input  $(-1.12, -0.89, -0.36,  -0.16, 0.21)$ and the mode of  the stacks $(-1.06, -0.95, -0.41, -0.11, 0.40)$.
+the input  $(-1.12, -0.89, -0.36,  -0.16, 0.21)$ and the mode of  the stacks $(-1.2, -1.06, -0.49, -0.25, 0.21)$.
 We do not consider this bias to be an issue in our detection of a third parameter, as the difference is significantly
 smaller than the statistical uncertainty of a single analysis and the length of the vector changes by $< 3\%$.
 The posterior stacks for the other global parameters 
