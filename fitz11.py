@@ -205,7 +205,7 @@ ax.add_artist(a)
 crap = dAdAv + dAdebv*kappa1
 dum  = numpy.sqrt(crap[0]**2+crap[2]**2+crap[4]**2)
 ax.plot([0,crap[0]/dum],[0,crap[2]/dum],[0,crap[4]/dum],label=r'$a(X)+b(X)/{:4.2f}$'.format(1/kappa1),ls=':',color='black')
-a = Arrow3D([0,crap[0]/dum],[0,crap[2]/dum],[0,crap[4]/dum], mutation_scale=10, ls=':',color='black',
+a = Arrow3D([0,crap[0]/dum],[0,crap[2]/dum],[0,crap[4]/dum], mutation_scale=10, ls=':',color='black', linewidth=3.,
             arrowstyle="-|>")
 ax.add_artist(a)
 
