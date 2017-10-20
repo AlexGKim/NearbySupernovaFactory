@@ -206,7 +206,7 @@ crap = dAdAv + dAdebv*kappa1
 dum  = numpy.sqrt(crap[0]**2+crap[2]**2+crap[4]**2)
 ax.plot([0,crap[0]/dum],[0,crap[2]/dum],[0,crap[4]/dum],label=r'$a(X)+b(X)/{:4.2f}$'.format(1/kappa1),ls=':',color='black')
 a = Arrow3D([0,crap[0]/dum],[0,crap[2]/dum],[0,crap[4]/dum], mutation_scale=10, ls=':',color='black', linewidth=3.,
-            arrowstyle="-|>")
+            arrowstyle="-|>",alpha=0.8)
 ax.add_artist(a)
 
 
@@ -239,23 +239,23 @@ ax.add_artist(a)
 ax.legend(prop={'size':14})
 ax.set_xlabel(r'$\hat{U}$',labelpad=18)
 ax.set_ylabel(r'$\hat{V}$',labelpad=18)
-ax.set_zlabel(r'$\hat{I}$',labelpad=18)
+ax.zaxis.set_rotate_label(False)
+ax.set_zlabel(r'$\hat{I}$',labelpad=9,rotation=0)
 ax.xaxis.set_ticks(numpy.arange(-.5,1.1,.25))
 ax.yaxis.set_ticks(numpy.arange(-.8,.81,.4))
 ax.view_init(elev=2, azim=-114)
 pp = PdfPages("output11/plane0.pdf")
-plt.tight_layout()
-plt.savefig(pp,format='pdf')
+# plt.tight_layout()
+plt.savefig(pp,format='pdf',bbox_inches='tight')
 pp.close()
 ax.view_init(elev=7, azim=-165)
 ax.yaxis.set_ticks(numpy.arange(-.75,.76,.25))
 ax.xaxis.set_ticks(numpy.arange(-.5,.76,.5))
 pp = PdfPages("output11/plane1.pdf")
-plt.tight_layout()
-plt.savefig(pp,format='pdf')
+# plt.tight_layout()
+plt.savefig(pp,format='pdf',bbox_inches='tight')
 pp.close()
 plt.close()
-
 
 # Plot vectors in BVR
 fig = plt.figure()
