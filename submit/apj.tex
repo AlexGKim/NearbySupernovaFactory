@@ -94,8 +94,8 @@
 \affiliation{The Oskar Klein Centre, Department of Physics, AlbaNova, Stockholm University, SE-106 91 Stockholm, Sweden}
 
 \author{     D.~Fouchez}
-\affiliation{    Aix Marseille Univ, CNRS/IN2P3, CPPM, 
-    163 avenue de Luminy - Case 902 - 13288 Marseille Cedex 09, France}
+\affiliation{ Aix Marseille Univ, CNRS/IN2P3, CPPM, Marseille, France
+}
     
 \author{     E.~Gangler}  
 \affiliation{    Clermont Universit\'e, Universit\'e Blaise Pascal, CNRS/IN2P3, Laboratoire de Physique Corpusculaire,
@@ -184,8 +184,8 @@ D-85748 Garching, Germany}
 
 \author{     C.~Tao}
 \affiliation{   Tsinghua Center for Astrophysics, Tsinghua University, Beijing 100084, China }
-\affiliation{     Aix Marseille Univ, CNRS/IN2P3, CPPM, 
-    163 avenue de Luminy - Case 902 - 13288 Marseille Cedex 09, France}
+\affiliation{ Aix Marseille Univ, CNRS/IN2P3, CPPM, Marseille, France
+}
    
 \author{     R.~C.~Thomas}
 \affiliation{    Computational Cosmology Center, Computational Research Division, Lawrence Berkeley National Laboratory, 
@@ -381,7 +381,7 @@ Equivalent widths and the
 Si~II~$\lambda 6355$ wavelength are taken from spectra  within $\pm 2.5$ days from $B$-band maximum;
 the average is used  in cases where there are multiple spectral measurements within that time window.
 \color{red}
-The spectral features are in \AA\ units.
+All the above spectral features have units of \AA ngstroms.
 \color{black}
 
 Our analysis sample is comprised of the
@@ -678,17 +678,17 @@ EW_{Si}\\ EW_{Ca} \\ \lambda_{Si}
 \end{equation}
 The global parameter vectors that describe the SN~Ia population
 $\vec{c}$ (where $\vec{c}=(c_{\hat{U}}, c_{\hat{B}}, c_{\hat{V}}, c_{\hat{R}}, c_{\hat{I}}) $),
-$\vec{\alpha}$, $\vec{\beta}$,  and $\vec{\eta}$,  are the intercept and slopes of the linear relationships that
+$\vec{\alpha}$, $\vec{\beta}$,  and $\vec{\eta}$,  are the intercept
+\color{red}(with units of mag) and slopes (with units mag~\AA$^{-1}$)
+\color{black} of the linear relationships that
 relate spectral-feature parameters with intrinsic magnitudes.
+The global parameter vectors $\vec{\gamma}^0$, $\vec{\gamma}^1$  are the slopes (\color{red}
+with units of mag) \color{black} that relate 
+the latent extrinsic-color parameters with apparent magnitudes.
 \color{red}
-The units of $\vec{c}$ are mag, the units of $\vec{\alpha}$, $\vec{\beta}$,  and $\vec{\eta}$ are mag~\AA$^{-1}$.
-\color{black}
-The global parameter vectors $\vec{\gamma}^0$, $\vec{\gamma}^1$  are the slopes that relate 
-the latent extrinsic-color parameters with apparent magnitudes,
-\color{red}
-and have mag units.
-These global parameters act on each of the five bands; a single component is written with a subscript for the corresponding band, e.g.\  $c_{\hat{U}}$; 
-all components are written as a vector, e.g.\ $\vec{c}$.  This provides a notational distinction between these global parameters and per-supernova parameters.
+These global parameters act on each of the five bands: a single component is written with a subscript for the corresponding band, e.g.\  $c_{\hat{U}}$; 
+the combination of all components are written as a vector, e.g.\ $\vec{c}$.  This distinguishes
+notationally global versus per-supernova parameters.
 \color{black}
 
 
@@ -735,7 +735,7 @@ The parameterized intrinsic dispersion, $C_c$, seemingly introduces degeneracy i
 ascribed to $\Delta$, $\vec{\gamma}^0 k_0$, and $\vec{\gamma}^1 k_1$ could also be attributed to intrinsic dispersion.  There are several features of the model
 that drive the assignation of variations away from $C_c$:  Maximizing the posterior disfavors the increase of $\det{(C_c)}$
 \color{red}
-and hence favors $\gamma$'s that minimize residual dispersion;
+and hence favors solutions of $\gamma$'s that minimize the residual dispersion described by $C_c$;
 \color{black}
 The distributions of $\Delta$, $k_0$, and $k_1$ turn out to
 be non-Gaussian, and so are not well described by the Normal covariance we impose in $C_c$; the grey magnitude offsets, $\Delta$, would appear as a constant
@@ -746,16 +746,16 @@ in all elements of the covariance matrix, which is disfavored for the Bayesian p
 In our Bayesian analysis the priors must be described.  A flat prior is used for all parameters except
 for the covariance matrix $C_c$.
 \color{red}
-This is parameterized by the Choleksy factor of its
+This matrix is parameterized in two parts: by the Choleksy factor of its
 \color{black}
 correlation matrix with a $\nu=4$  LKJ prior\footnote{
 Visualization of the LKJ correlation distribution can be found in \url{http://www.psychstatistics.com/2014/12/27/d-lkj-priors/}.}
-\citep{Lewandowski20091989} and its standard
+\citep{Lewandowski20091989}; its standard
 deviations $\sigma_i = \sqrt{C_{c,ii}}$ with a  Cauchy distribution prior with location
  $0.1$ and scale $0.1$ mag restricted to positive values.
 This covariance matrix prior is recommended by STAN \citep{stan}, the Monte Carlo program we use to evaluate the model.
  We find that a simpler intrinsic dispersion model with no correlations between bands
- (i.e.\ a  diagonal covariance matrix) produces little change in the posteriors of
+ (i.e.\ a  diagonal covariance matrix) produces \color{red} negligible \color{black} change in the posteriors of
  the other parameters.
 
 No informative prior is used for each of the per-supernova parameters $\Delta$, $EW$, $\lambda$, $k_0$, and $k_1$:
@@ -829,10 +829,11 @@ output also gives  $N_{\mathit{eff}} \gg 100$ for all parameters, indicating tha
 Empirically, the confidence regions are localized and unimodal as is seen in  Figures~\ref{global1:fig} -- \ref{global5:fig}.  In these tests there is no evidence that
 the Monte Carlo chains have not converged to the stationary posterior distribution.
 For four selected colors, a plot of the
-deduced colors versus observed colors and the histogram of their differences
-is shown in Figure~\ref{residual:fig}. 
-\color{red} The deduced colors  account for supernova-specific spectral features and $\gamma k$ terms.
+\color{red}
+model-expectation colors (including  supernova-specific spectral features and $\gamma k$ terms)
 \color{black}
+ versus observed colors and the histogram of their differences
+are shown in Figure~\ref{residual:fig}. 
 There is no evidence of catastrophically poor model predictions nor of extreme
 outlying data.
 We have rerun the analysis with a variety of initial conditions, including one with $\vec{\gamma}$ equal to zero, except for a small positive 
@@ -846,15 +847,16 @@ remain consistent.  Note that the MCMC chains do not migrate to the parity-degen
    \centering
    \includegraphics[width=5.2in]{residual.pdf} 
             \caption{
-            Deduced colors versus observed colors, for four selected colors. 
-            \color{red} The deduced colors  account for supernova-specific spectral features and $\gamma k$ terms.
+            \color{red}
+            Model-expectation colors (including  supernova-specific spectral features and $\gamma k$ terms)
+            versus observed colors, for four selected colors. 
             \color{black}
             Plotted on the right for each color
-is the histogram of the difference between the observed and
-\color{red}
- deduced
- \color{black}
- colors.
+is the histogram of the difference between the expected and
+observed
+ colors.            \color{red}
+(Note that the $\Delta$ in the plot signifies the difference in colors, not the per-supernova magnitude offset.)
+            \color{black}
             \label{residual:fig}}
 \end{figure}
 
@@ -1040,10 +1042,10 @@ Nevertheless, the  correlation between spectral features with magnitudes in band
 important signal of importance in this study.
 
 
-The fit $\Delta$'s are highly correlated between supernovae.  To aid in visualization, we remove much of this
+The fit $\Delta$'s are highly correlated between supernovae.  To aid 
+\color{red} visual interpretation, we remove much of this
 correlation by
-\color{red}
-selecting an arbitrary supernova and subtracting out its $\Delta|_0$ from those of all other objects, for each link of the MCMC. \color{black}
+selecting an arbitrary supernova and subtracting out its $\Delta|_0$ from those of all other objects, at the level of each MCMC link. \color{black}
 The histogram of the \color{red} per-supernova \color{black} medians of these relative  grey offsets $\Delta-\Delta|_0$,
 is shown in Figure~\ref{hist:fig}.  The distribution
 has a standard deviation of
@@ -1060,7 +1062,7 @@ The supernovae with the highest values of $\Delta$ have, with increasing $\Delta
    \caption{
    Normalized \color{red} stack of the posteriors of all supernovae \color{black} and histogram of the \color{red} per-supernova \color{black} medians of the grey offset $\Delta$. 
    \color{red}  To help null correlated errors, we select
-    an arbitrary supernova and subtract out its $\Delta|_0$ from those of all other objects, for each link of the MCMC.
+    an arbitrary supernova and subtract out its $\Delta|_0$ from those of all other objects at the level of each MCMC link.
    \color{black}
    The supernovae with the four highest values of $\Delta$ have, with increasing $\Delta$, heliocentric
    redshifts of 0.0228, 0.0086, 0.0565, and 0.0015.
@@ -1113,8 +1115,8 @@ with a strict equality), we find significant shifts in all slope parameters  and
 artificially
 smaller statistical uncertainties.
 \color{red}
-Note that underestimated measurement uncertainties in $C$ could lead to non-intrinsic contributions to
-$C_c$; we do not further examine this systematic error in this article.
+Note that underestimated measurement uncertainties in $C$ could contribute to some of the dispersion in what we have considered as an intrinsic
+$C_c$; we do not explore this source of systematic error in this article.
 \color{black}
 
 Each supernova is described by its parameters $\Delta$, $EW_{Ca}$, $EW_{Si}$, $\lambda_{Si}$,
@@ -1313,9 +1315,12 @@ the distribution of
 our parameter $\gamma^0_{\hat{V}} k_0$ can be compared with the expected distribution
 of $A^F_V$.
 Figure~\ref{k0_med:fig} shows the histogram of
+\color{red}
+per-supernova
+\color{black}
 median values
 from the Monte Carlo chains
-and the  \color{red} stack of the posteriors of all supernovae \color{black}  of $\gamma^0_{\hat{V}} k_0$ 
+and the  \color{red} stack of the posteriors of all supernovae \color{black}  for $\gamma^0_{\hat{V}} k_0$ 
 relative to that of an arbitrary supernova  $\gamma^0_{\hat{V}} k_0|_0$.
 (Subtracting the value of the one supernova suppresses correlated errors in $k_0$ common to all supernovae.)
 The distributions are non-Gaussian, having a sharp rise in the blue and an extended tail in the red.  This is consistent
@@ -1335,10 +1340,10 @@ for the distribution of dust extinction the SN population is expected to suffer.
    \includegraphics[width=2.8in]{deltagamma1_med.pdf}
       \caption{
       Normalized  \color{red} stack of the posteriors of all supernovae \color{black}  and histogram 
-      of $per-supernova$
-median values of $\gamma^0_{\hat{V}} k_0-\gamma^0_{\hat{V}} k_0|_0$, which are associated with the $A^F_V$ of an $R^F \sim 1/\kappa_1$ dust model
-(left) : $\gamma^1_{\hat{V}} k_1-\gamma^1_{\hat{V}} k_1|_0$,
-which  is associated with extinction corrections due to deviations away from the canonical $\langle R^F_{\mathit{eff}}\rangle$ value (right).
+      of \color{red} per-supernova \color{black}
+median values of: (left) $\gamma^0_{\hat{V}} k_0-\gamma^0_{\hat{V}} k_0|_0$, which is associated with the $A^F_V$ of an $R^F \sim 1/\kappa_1$ dust model;
+(right) $\gamma^1_{\hat{V}} k_1-\gamma^1_{\hat{V}} k_1|_0$,
+which  is associated with extinction corrections due to deviations away from the canonical $\langle R^F_{\mathit{eff}}\rangle$ value.
    \label{k0_med:fig}}
 \end{figure}
 
@@ -1360,7 +1365,8 @@ to
 From the matrix elements of Eq.~\ref{trans_I:eqn},  $\kappa_2=-5.27/0.72=-7.31$, so that $\mbox{Var}(\delta R \times E^F(B-V)) = 4.00\times\mbox{Cov}(\delta R \times E^F(B-V), E^F(B-V))$.  This result indicates that there is a small but significant covariance between  extinction contributions due to
 fractional deviations from an effective $R^F$ and
 the color-excess parameter $E^F(B-V)$.
-Figure~\ref{k0_med:fig} shows the histogram of median values
+Figure~\ref{k0_med:fig} shows the histogram of \color{red} per-supernova \color{black}
+median values
 from Monte Carlo chains
 and  \color{red} stack of the posteriors of all supernovae \color{black}  of $\gamma^1_{\hat{V}} k_1$
 relative to that of an arbitrary supernova  $\gamma^1_{\hat{V}} k_1|_0$. 
@@ -1466,7 +1472,7 @@ dimensionless
 $D$ parameter that is linearly related to
 absolute magnitudes through the global coefficients $\vec{\delta}$
 \color{red}
-with dimensions mag. 
+with mag units. 
 \color{black}
 As with $k_0$ and $k_1$,  $D$ is a latent supernova parameter whose existence is inferred from
 its effects on broadband magnitudes.
@@ -1706,8 +1712,8 @@ credible intervals that easily cross zero.
 \end{figure}
 
 The distributions of both sources of color excess $E({\hat{B}}-{\hat{V}})$ and
- $E_\delta({\hat{B}}-{\hat{V}}) \equiv   (\delta_{\hat{B}}-\delta_{\hat{V}})D$ are shown in the  \color{red} stack of the posteriors of all supernovae \color{black}  
- and histogram in Figure~\ref{ebv:fig}.
+ $E_\delta({\hat{B}}-{\hat{V}}) \equiv   (\delta_{\hat{B}}-\delta_{\hat{V}})D$ are shown in Figure~\ref{ebv:fig} as the  \color{red} stack of the posteriors of all supernovae 
+ and the histogram of per-supernova median values. \color{black} 
  (These values are relative
 to
  those of an arbitrary supernova in order to null out correlated errors.)
@@ -1870,7 +1876,7 @@ Figure~\ref{pvalues_delta2:fig} shows  that for
  $-1$, 0, and $1$-sigma
 values of  the credible interval, only 0--2\% of the simulations have values of  $\delta_\perp^2/\delta^2$ as low as our data.
 The $p$-values $>0.98$ indicate that 
- the close alignment of $\vec{\delta}$  with  $\vec{\gamma}$'s is unlikely to be by chance
+ the close alignment of $\vec{\delta}$  with  $\vec{\gamma}$'s is unlikely to be by chance,
 \color{red}
 or due to pathologies in our model or the evaluation of its posterior.
 \color{black}
@@ -1890,8 +1896,8 @@ The posterior stacks for the other global parameters
 are shown in Figures~\ref{simglobal1:fig}--\ref{simglobal5:fig}.  The input parameters are recovered with negligible bias
 relative to the statistical uncertainties. 
 \color{red}
-We also highlight that the standard deviations of $C_c$ are not biased high, which would be a signature of leakage of
-intrinsic color variations $\delta$ into intrinsic dispersion.
+The standard deviations of $C_c$, $\vec{\sigma}$,  are not biased high, which would have been a signature of leakage of
+intrinsic color variations from $\delta$ into intrinsic dispersion.
 \color{black}
 Note that some bias is expected: the priors for the distributions of $\Delta$, $k$, and $D$ are inconsistent
 with the extracted distributions.  Also, 
@@ -1956,9 +1962,8 @@ in Table~\ref{globalx1:tab}, reinforcing the evidence that the $D$ of Model~II i
 \begin{figure}[htbp] %  figure placement: here, top, bottom, or page
    \centering
    \includegraphics[width=5.2in]{residualx1.pdf}
-    \caption{Differences between observed colors and the colors
-    \color{red}
-    deduced \color{black}
+    \caption{Differences between observed colors and the     \color{red}
+    expected \color{black} colors
      from the analysis, as a function
             of the SALT2 light-curve shape parameter $x_1$.  Our model does not explicitly use $x_1$.  For reference a dotted line is plotted at zero difference.
    \label{x1res:fig}}
