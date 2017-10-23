@@ -167,8 +167,8 @@ plt.close()
 bins=numpy.arange(-0.3,1,0.05)
 crap = fit['gamma'][:,2][:,None]*fit['k']
 crap = crap-crap[:,0][:,None]
-plt.hist(numpy.median(crap,axis=0),bins,label='median',normed=True,alpha=0.5,width=0.025)
 plt.hist(crap.flatten(),bins,label='ideogram',normed=True,alpha=0.5)
+plt.hist(numpy.median(crap,axis=0),bins,label='median',normed=True,alpha=0.5,width=0.025)
 plt.xlabel(r'$\gamma^0_{\hat{V}} k_0 - \gamma^0_{\hat{V}} k_0|_0\approx A^F_V|_{R^F_{eff}=2.44}$')
 plt.legend()
 plt.tight_layout()
@@ -180,8 +180,8 @@ plt.close()
 bins=numpy.arange(-0.35,0.1,0.02)
 crap2 = fit['rho1'][:,2][:,None]*fit['R']
 crap2 = crap2-crap2[:,0][:,None]
-plt.hist(numpy.median(crap2,axis=0),bins,label='median',normed=True,alpha=0.5,width=0.01)
 plt.hist(crap2.flatten(),bins,label='ideogram',normed=True,alpha=0.5)
+plt.hist(numpy.median(crap2,axis=0),bins,label='median',normed=True,alpha=0.5,width=0.01)
 plt.xlabel(r'$\gamma^1_{\hat{V}} k_1 - \gamma^1_{\hat{V}} k_1|_0$')
 plt.legend(loc=2)
 plt.tight_layout()
@@ -190,6 +190,8 @@ plt.savefig(pp,format='pdf')
 pp.close()
 plt.close()
 
+
+wefwe
 # #conversion to Fitzpatrick parameters A and E(B-V)
 # tmat= numpy.array([[2.82,1.15],[-5.27,0.72]])
 # tmat = tmat.T
