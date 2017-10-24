@@ -60,6 +60,6 @@ def sivel(data):
    zcmb = numpy.array(zcmb)
    zerr = numpy.array(zerr)
    EWCAIIHK=numpy.array(EWCAIIHK)
-   print EWCAIIHK
+   # print EWCAIIHK
 
    return sivel,sivel_err,x1,x1_err,zcmb,zerr

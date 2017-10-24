@@ -191,7 +191,6 @@ pp.close()
 plt.close()
 
 
-wefwe
 # #conversion to Fitzpatrick parameters A and E(B-V)
 # tmat= numpy.array([[2.82,1.15],[-5.27,0.72]])
 # tmat = tmat.T
@@ -392,7 +391,24 @@ plt.savefig(pp,format='pdf')
 pp.close()
 plt.close()
 
+corrmat = []
+ev = []
+for x1, x2 in zip(fit['L_Omega'], fit['L_sigma']):
+    cormat = numpy.dot(x2[:,None],x2[None,:])*numpy.dot(x1,x1.T)
+    u,s, v  = numpy.linalg.svd(cormat)
+    temp = [s[0:i+1].sum() for i in xrange(5)]
+    temp = numpy.array(temp)
+    temp=temp[:]/temp[-1]
+    ev.append(numpy.array(temp[:-1]))
 
+ev = numpy.array(ev)
+plt.hist(ev, bins=20, label=['1','2','3','4'])
+plt.legend(loc=2)
+plt.xlabel(r'Fractional Variance in $n$ leading $C_c$ Eigenvectors')
+filename = 'output11/ccenergy.pdf'
+pp = PdfPages(filename)
+plt.savefig(pp,format='pdf')
+pp.close()
 
 
 correction = [fit['c'][:,i][:,None] + fit['alpha'][:,i][:,None]*fit['EW'][:,:, 0] \
@@ -426,7 +442,7 @@ for i in xrange(4):
     maxy = (color_obs[:,i]+mag_mn[cind[i]]-mag_mn[2]).max()
     # axes[i].plot([miny,maxy],[miny,maxy])
 
-    axes[i,0].set_xlabel(r'$(\hat{{{0}}}-\hat{{V}})$'.format(cname[i]))
+    axes[i,0].set_xlabel(r'$\hat{{{0}}} +\gamma^0_\hat{{{0}}} k_0+\gamma^1_\hat{{{0}}}  k_1- \hat{{V}} -\gamma^0_\hat{{V}} k_0-\gamma^1_\hat{{V}}  k_1$'.format(cname[i]))
     axes[i,0].set_ylabel(r'$(\hat{{{0}}}_o-\hat{{V}}_o)$'.format(cname[i]))
     lname = r'$\Delta(\hat{{{0}}}-\hat{{V}})$'.format(cname[i])
     # axes[i,0].set_ylabel(lname)
@@ -445,6 +461,8 @@ filename = 'output11/residual.pdf'
 pp = PdfPages(filename)
 plt.savefig(pp,format='pdf')
 pp.close()
+plt.clf()
+
 
 
 
@@ -659,7 +677,7 @@ plt.close()
 # pp.close()
 # plt.close()
 print numpy.std(numpy.median((fit['Delta']-fit['Delta'][:,0][:,None]),axis=0))
-wefwe
+
 fig, axes = plt.subplots()
 bins = numpy.arange(-0.2,0.8001,0.02)
 print numpy.median((fit['Delta']-fit['Delta'][:,0][:,None]),axis=0).std()
