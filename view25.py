@@ -412,7 +412,7 @@ pp.close()
 # pp.close()
 
 # wefwe
-
+mpl.rcParams['font.size'] = 18
 
 cind=[0,1,3,4]
 cname = ['U','B','R','I']
@@ -607,7 +607,69 @@ plt.savefig(pp,format='pdf')
 pp.close()
 plt.close()
 
+corrmat = []
+ev = []
+nev=[]
+for x1, x2 in zip(fit['L_Omega'], fit['L_sigma']):
+    cormat = numpy.dot(x2[:,None],x2[None,:])*numpy.dot(x1,x1.T)
+    u,s, v  = numpy.linalg.svd(cormat)
+    temp = [s[0:i+1].sum() for i in xrange(5)]
+    temp = numpy.array(temp)
+    nev.append(temp)
+    temp=temp[:]/temp[-1]
+    ev.append(numpy.array(temp[:-1]))
 
+ev = numpy.array(ev)
+nev= numpy.array(nev)
+
+f2 = open('temp11.pkl','rb')
+(fit2,_) = pickle.load(f2)
+corrmat = []
+ev2 = []
+nev2 = []
+for x1, x2 in zip(fit2['L_Omega'], fit2['L_sigma']):
+    cormat = numpy.dot(x2[:,None],x2[None,:])*numpy.dot(x1,x1.T)
+    u,s, v  = numpy.linalg.svd(cormat)
+    temp = [s[0:i+1].sum() for i in xrange(5)]
+    temp = numpy.array(temp)
+    nev2.append(temp)
+    temp=temp[:]/temp[-1]
+    ev2.append(numpy.array(temp[:-1]))
+fit2=[]
+ev2 = numpy.array(ev2)
+nev2= numpy.array(nev2)
+
+dum = numpy.percentile(ev,(50,50-34,50+34),axis=0)
+dum2 = numpy.percentile(ev2,(50,50-34,50+34),axis=0)
+for i in xrange(4):
+    print "{:6.2f} _ {:6.2f} ^ {:6.2f}".format(dum[0,i],dum[0,i]-dum[1,i],dum[2,i]-dum[0,i]),
+    print "{:6.2f} _ {:6.2f} ^ {:6.2f}".format(dum2[0,i],dum2[0,i]-dum2[1,i],dum2[2,i]-dum2[0,i])
+
+ev = numpy.array(ev)
+plt.hist(ev, bins=20, label=['1','2','3','4'])
+plt.legend(loc=2)
+plt.xlabel(r'Fractional Variance in $n$ leading $C_c$ Eigenvectors')
+filename = 'output25/ccenergy.pdf'
+pp = PdfPages(filename)
+plt.savefig(pp,format='pdf')
+pp.close()
+plt.clf()
+
+dum = numpy.percentile(nev,(50,50-34,50+34),axis=0)
+dum2 = numpy.percentile(nev2,(50,50-34,50+34),axis=0)
+for i in xrange(4):
+    print "{:8.2e} _ {:8.2e} ^ {:8.2e}".format(dum[0,i],dum[0,i]-dum[1,i],dum[2,i]-dum[0,i]),
+    print "{:8.2e} _ {:8.2e} ^ {:8.2e}".format(dum2[0,i],dum2[0,i]-dum2[1,i],dum2[2,i]-dum2[0,i])
+
+plt.hist([nev2[:,0], nev[:,0]], bins=20, label=['Model I', 'Model II'])
+plt.legend(loc=2,fontsize=14)
+plt.xlabel(r'Variance in first leading $C_c$ Eigenvectors')
+filename = 'output25/ccenergy12.pdf'
+pp = PdfPages(filename)
+plt.savefig(pp,format='pdf')
+pp.close()
+
+wefwe
 
 bins=numpy.arange(-0.3,1,0.05)
 crap = fit['gamma'][:,2][:,None]*fit['k']

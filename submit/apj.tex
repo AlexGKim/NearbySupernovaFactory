@@ -608,6 +608,7 @@ apparent magnitudes and colors
 that are subsequently measured by the observer.
 
 \subsection{Model}
+\label{modelmodel:sec}
 We assume 
 that  peak intrinsic ${\hat{U}}{\hat{B}}\hat{V}\hat{R}\hat{I}$ magnitudes of a supernova are linearly dependent
 on its
@@ -731,15 +732,23 @@ These degeneracies are not broken within the model, but rather are constrained b
 per-supernova parameters
 $\Delta$, $EW$, $\lambda$, $k_0$, and $k_1$ are uncorrelated. 
 
-The parameterized intrinsic dispersion, $C_c$, seemingly introduces degeneracy in the model, as magnitude and color variation
-ascribed to $\Delta$, $\vec{\gamma}^0 k_0$, and $\vec{\gamma}^1 k_1$ could also be attributed to intrinsic dispersion.  There are several features of the model
-that drive the assignation of variations away from $C_c$:  Maximizing the posterior disfavors the increase of $\det{(C_c)}$
-\color{red}
-and hence favors solutions of $\gamma$'s that minimize the residual dispersion described by $C_c$;
+The parameterized intrinsic dispersion, $C_c$,  introduces degeneracy in the model, as magnitude and color variation
+ascribed to $\Delta$, $\vec{\gamma}^0 k_0$, and $\vec{\gamma}^1 k_1$ can  be attributed to intrinsic dispersion
+\color{blue}
+and vice versa.
+In the case where there is independent intrinsic dispersion in all 5 bands, i.e.\  the input $C_c$ has rank-5, there exists degenerate solutions with a $C_c$ of rank 2.  Those identical predictions generally do not yield the same likelihood, as the determinant of $C_c$ varies over those solutions.  In a maximum-likelihood analysis the rank-2 is preferred over the rank-5 solution, resulting in some intrinsic dispersion getting attributed to $\Delta$, $k_0$, and $k_1$.
+In our Bayesian analysis we impose priors on $C_c$, so that a zero-value determinant is disfavored.    
+Thus, leakage from per-supernova intrinsic color parameters to intrinsic dispersion could bias the intrinsic color vectors of the SN Ia family,  or conversely, intrinsic dispersion could be spuriously attributed to an intrinsic color.  We examine this effect in the discussion of the results in \S\ref{model2:sec}.
 \color{black}
-The distributions of $\Delta$, $k_0$, and $k_1$ turn out to
-be non-Gaussian, and so are not well described by the Normal covariance we impose in $C_c$; the grey magnitude offsets, $\Delta$, would appear as a constant
-in all elements of the covariance matrix, which is disfavored for the Bayesian prior selected for $C_c$.
+%
+%There are several features of the model
+%that drive the assignation of variations away from $C_c$:  Maximizing the posterior disfavors the increase of $\det{(C_c)}$
+%\color{red}
+%and hence favors solutions of $\gamma$'s that minimize the residual dispersion described by $C_c$;
+%\color{black}
+%The distributions of $\Delta$, $k_0$, and $k_1$ turn out to
+%be non-Gaussian, and so are not well described by the Normal covariance we impose in $C_c$; the grey magnitude offsets, $\Delta$, would appear as a constant
+%in all elements of the covariance matrix, which is disfavored for the Bayesian prior selected for $C_c$.
 
 
 
@@ -854,9 +863,7 @@ remain consistent.  Note that the MCMC chains do not migrate to the parity-degen
             Plotted on the right for each color
 is the histogram of the difference between the expected and
 observed
- colors.            \color{red}
-(Note that the $\Delta$ in the plot signifies the difference in colors, not the per-supernova magnitude offset.)
-            \color{black}
+ colors. 
             \label{residual:fig}}
 \end{figure}
 
@@ -1114,10 +1121,6 @@ Having no intrinsic color dispersion is disfavored, and not allowing for them ca
 with a strict equality), we find significant shifts in all slope parameters  and 
 artificially
 smaller statistical uncertainties.
-\color{red}
-Note that underestimated measurement uncertainties in $C$ could contribute to some of the dispersion in what we have considered as an intrinsic
-$C_c$; we do not explore this source of systematic error in this article.
-\color{black}
 
 Each supernova is described by its parameters $\Delta$, $EW_{Ca}$, $EW_{Si}$, $\lambda_{Si}$,
 $E_{\gamma^0}({\hat{B}}-{\hat{V}})=(\gamma^0_{\hat{B}}-\gamma^0_{\hat{V}})k_0$, and $E_{\gamma^1}({\hat{B}}-{\hat{V}})=(\gamma^1_{\hat{B}}-\gamma^1_{\hat{V}})k_1$.
@@ -1507,11 +1510,21 @@ for $N$ supernovae there are $8N$ observables.  For the top-level model paramete
 color parameters, $(N-1)$ magnitude offsets,  $5 \times 7$ global coefficients, and $10$ parameters that describe the intrinsic
 $C_c$.  For $N=172$ supernovae, there are 1376 observables and 1242 top-level parameters.
 
-The resulting credible intervals of our parameters are given in Table~\ref{global2:tab}.  Comparison with the
+The resulting credible intervals of our parameters are given in Table~\ref{global2:tab}.  
+\color{blue}
+The $\delta$ parameters are normalized to $\hat{U}$ instead of $\hat{V}$, since the posterior of $\delta_{\hat{V}}$ covers zero.
+\color{black}
+Comparison with the
 results of the 2-parameter extrinsic model given in Table~\ref{global:tab} shows that  parameters that are common to both
 are consistent  to well within 1$\sigma$ uncertainties.  The most significant change is in the reduction of the standard
 deviations of the magnitude residuals $\sigma_X$
 in the ${\hat{U}}$ and ${\hat{B}}$ bands.
+\color{blue}
+The variance captured by the first two eigenvectors of $C_c$ from Model~II is $4.7 \times 10^{-3}$ mag$^2$, as
+compared to  $6.4 \times 10^{-3}$ mag$^2$ from Model~I; this reduction shows the amount of intrinsic dispersion in Model~I
+that  is now attributed to the explicit $\delta D$ term.
+\color{black}
+
 
 
 \begin{table}
@@ -1895,17 +1908,22 @@ smaller than the statistical uncertainty of a single analysis and the length of 
 The posterior stacks for the other global parameters 
 are shown in Figures~\ref{simglobal1:fig}--\ref{simglobal5:fig}.  The input parameters are recovered with negligible bias
 relative to the statistical uncertainties. 
-\color{red}
-The standard deviations of $C_c$, $\vec{\sigma}$,  are not biased high, which would have been a signature of leakage of
-intrinsic color variations from $\delta$ into intrinsic dispersion.
-\color{black}
 Note that some bias is expected: the priors for the distributions of $\Delta$, $k$, and $D$ are inconsistent
 with the extracted distributions.  Also, 
 there is a tendency for the slope parameters associated with the spectral features to be slightly underestimated, which is an expected consequence of 
 the uncertainties in the predictor variable that lead to 
 regression dilution \citep{spearman04}.
 
-
+\color{blue}
+We now return to a degeneracy of our models mentioned in \S\ref{modelmodel:sec}.
+Parameters are susceptible to the misassignment, in either direction, between intrinsic color, $\Delta$, $k$, and $D$, and intrinsic dispersion $C_c$.
+The first two eigenvectors of account for $0.89_{-0.05}^{+0.04}$ of the variance of $C_c$, meaning
+that potential leakage of intrinsic colors can account for less than 10\% of the variance, corresponding to 0.024 mag standard deviation.
+We establish through simulations that the standard deviations of $C_c$, $\vec{\sigma}$,  are not biased high, which would have been a signature of leakage of
+intrinsic color variations from $\delta$ into intrinsic dispersion.
+The simulations of input null intrinsic color terms and input intrinsic dispersion do not produce spurious detections of intrinsic color vectors.  We thus conclude that
+biases induced by this degeneracy are low relative to our statistical uncertainties.
+\color{black}
 
 \section{Discussion}
 \label{discussion:sec}
