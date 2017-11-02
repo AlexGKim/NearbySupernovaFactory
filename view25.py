@@ -625,7 +625,9 @@ ev_cor=[]
 ev_cov=[]
 ev_ncov = []
 
-for x1, x2 in zip(fit['L_Omega'], fit['L_sigma']):
+udotdelta = []
+# dnorm = []
+for x1, x2, x3 in zip(fit['L_Omega'], fit['L_sigma'],fit['rho1']):
     cormat = numpy.dot(x2[:,None],x2[None,:])*numpy.dot(x1,x1.T)
     u,s, v  = numpy.linalg.svd(cormat)
     temp = [s[0:i+1].sum() for i in xrange(5)]
@@ -633,12 +635,37 @@ for x1, x2 in zip(fit['L_Omega'], fit['L_sigma']):
     ev_cov.append(temp)
     ev_ncov.append(temp/temp[-1])
 
+    nx3 = x3/ numpy.linalg.norm(x3)
+    udotdelta.append([numpy.dot(u[:,i], nx3) for i in xrange(5)])
+
+
     cormat = numpy.dot(x1,x1.T)
     u,s, v  = numpy.linalg.svd(cormat)
     temp = [s[0:i+1].sum() for i in xrange(5)]
     temp = numpy.array(temp)
     ev_cor.append(temp)
 
+udotdelta = numpy.array(udotdelta)
+udotdelta = numpy.abs(udotdelta)
+
+temp = numpy.percentile(udotdelta,(50,50-34,50+34),axis=0)
+
+for i in xrange(5):
+    print temp[0,i], temp[0,i]-temp[1,i], temp[2,i]-temp[0,i]
+
+# print numpy.median(dnorm)
+# rc('text', usetex = True)
+# params = {'text.latex.preamble' :[r'\usepackage{amsmath}']}
+# plt.rcParams.update(params)
+# plt.hist(udotdelta,label=['1','2','3','4','5'])
+# plt.xlabel(r'$\lvert \text{eigenvector} n \cdot \delta \lvert$')
+# plt.legend()
+# pp = PdfPages('output25/evecdotdelta.pdf')
+# plt.savefig(pp,format='pdf',bbox_inches='tight')
+# pp.close()
+# udotdelta=[]
+
+wefwe
 ev_cor = numpy.array(ev_cor)
 ev_cov = numpy.array(ev_cov)
 ev_ncov = numpy.array(ev_ncov)
