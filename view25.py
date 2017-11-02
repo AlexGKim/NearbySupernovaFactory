@@ -253,7 +253,6 @@ pp.close()
 plt.close()
 
 temp = fit['rho1'][:,0][:,None]*fit['R']
-print temp.shape
 (y, ymin, ymax) = numpy.percentile(temp-temp[:,0][:,None],(50,50-34,50+34),axis=0)
 plt.errorbar(x1, y, xerr=[x1_err,x1_err],yerr=[y-ymin,ymax-y],fmt='o',alpha=0.2)
 plt.scatter(x1, y,s=1,alpha=0.8)
@@ -411,7 +410,6 @@ pp.close()
 # plt.savefig(pp,format='pdf')
 # pp.close()
 
-# wefwe
 mpl.rcParams['font.size'] = 18
 
 cind=[0,1,3,4]
@@ -607,7 +605,160 @@ plt.savefig(pp,format='pdf')
 pp.close()
 plt.close()
 
-corrmat = []
+plt.clf()
+
+# looking into nature of cc
+# want to get "rank" - best done with correlation matrix
+# want to get "variance capture" - best done with correlation matrix
+
+
+# U-band variances of corrections
+correction = fit['gamma'][:,0][:,None]*fit['k'] + fit['gamma1'][:,0][:,None]*fit['k1'] + fit['rho1'][:,0][:,None]*fit['R']
+print numpy.std(numpy.median(correction,axis=0)) **2
+correction = fit['gamma'][:,0][:,None]*fit['k'] + fit['gamma1'][:,0][:,None]*fit['k1']
+print numpy.std(numpy.median(correction,axis=0)) **2
+correction = fit['rho1'][:,0][:,None]*fit['R']
+print numpy.std(numpy.median(correction,axis=0)) **2
+
+
+ev_cor=[]
+ev_cov=[]
+ev_ncov = []
+
+for x1, x2 in zip(fit['L_Omega'], fit['L_sigma']):
+    cormat = numpy.dot(x2[:,None],x2[None,:])*numpy.dot(x1,x1.T)
+    u,s, v  = numpy.linalg.svd(cormat)
+    temp = [s[0:i+1].sum() for i in xrange(5)]
+    temp = numpy.array(temp)
+    ev_cov.append(temp)
+    ev_ncov.append(temp/temp[-1])
+
+    cormat = numpy.dot(x1,x1.T)
+    u,s, v  = numpy.linalg.svd(cormat)
+    temp = [s[0:i+1].sum() for i in xrange(5)]
+    temp = numpy.array(temp)
+    ev_cor.append(temp)
+
+ev_cor = numpy.array(ev_cor)
+ev_cov = numpy.array(ev_cov)
+ev_ncov = numpy.array(ev_ncov)
+
+cor_ans = numpy.percentile(ev_cor,(50,50-34,50+34),axis=0)
+ncov_ans = numpy.percentile(ev_ncov,(50,50-34,50+34),axis=0)
+cov_ans = numpy.percentile(ev_cov,(50,50-34,50+34),axis=0)
+
+shit = numpy.percentile(ev_cov[:,4]-ev_cov[:,0],(50,50-34,50+34),axis=0)
+print shit[0], shit[0]-shit[1],shit[2]-shit[0]
+
+
+f2 = open('temp11.pkl','rb')
+(fit2,_) = pickle.load(f2)
+
+ev2_cor=[]
+ev2_cov=[]
+ev2_ncov = []
+
+for x1, x2 in zip(fit2['L_Omega'], fit2['L_sigma']):
+    cormat = numpy.dot(x2[:,None],x2[None,:])*numpy.dot(x1,x1.T)
+    u,s, v  = numpy.linalg.svd(cormat)
+    temp = [s[0:i+1].sum() for i in xrange(5)]
+    temp = numpy.array(temp)
+    ev2_cov.append(temp)
+    ev2_ncov.append(temp/temp[-1])
+
+    cormat = numpy.dot(x1,x1.T)
+    u,s, v  = numpy.linalg.svd(cormat)
+    temp = [s[0:i+1].sum() for i in xrange(5)]
+    temp = numpy.array(temp)
+    ev2_cor.append(temp)
+
+ev2_cor = numpy.array(ev2_cor)
+ev2_cov = numpy.array(ev2_cov)
+ev2_ncov = numpy.array(ev2_ncov)
+
+cor2_ans = numpy.percentile(ev2_cor,(50,50-34,50+34),axis=0)
+ncov2_ans = numpy.percentile(ev2_ncov,(50,50-34,50+34),axis=0)
+cov2_ans = numpy.percentile(ev2_cov,(50,50-34,50+34),axis=0)
+
+shit = numpy.percentile(ev2_cov[:,4]-ev2_cov[:,1],(50,50-34,50+34),axis=0)
+print shit[0], shit[0]-shit[1],shit[2]-shit[0]
+
+# total variance from Model I and II
+print cov2_ans[0,4]- cov_ans[0,4]
+
+# evd_cor=[]
+evd_cov=[]
+evd_ncov = []
+f2 = open('temp26.pkl','rb')
+(fit2,_) = pickle.load(f2)
+for x2 in fit2['L_sigma']:
+    s = numpy.sort(x2)
+    s = [s[dum] for dum in xrange(-1,-6,-1)]
+    s = numpy.power(s,2)
+    temp = [s[0:i+1].sum() for i in xrange(5)]
+    temp = numpy.array(temp)
+    evd_cov.append(temp)
+    evd_ncov.append(temp/temp[-1])
+evd_cov = numpy.array(evd_cov)
+evd_ncov = numpy.array(evd_ncov)
+
+# cord_ans = numpy.percentile(ev2_cor,(50,50-34,50+34),axis=0)
+ncovd_ans = numpy.percentile(evd_ncov,(50,50-34,50+34),axis=0)
+covd_ans = numpy.percentile(evd_cov,(50,50-34,50+34),axis=0)
+
+
+plt.errorbar(numpy.arange(1,6)-0.02,ncov2_ans[0,:],yerr=[ncov2_ans[0,:]-ncov2_ans[1,:], ncov2_ans[2,:]-ncov2_ans[0,:]],fmt='o',label='Model I')
+plt.errorbar(numpy.arange(1,6)+0.02,ncov_ans[0,:],yerr=[ncov_ans[0,:]-ncov_ans[1,:], ncov_ans[2,:]-ncov_ans[0,:]],fmt='o',label='Model II')
+# plt.errorbar(numpy.arange(1,6)+0.02,ncovd_ans[0,:],yerr=[ncovd_ans[0,:]-ncovd_ans[1,:], ncovd_ans[2,:]-ncovd_ans[0,:]],fmt='o',label='Model II diag')
+
+plt.xticks(numpy.arange(1,6))
+plt.legend(loc=4)
+plt.ylim((0,1.05))
+plt.xlim((.95,5.05))
+plt.ylabel(r'Fractional Variance in $n$ leading $C_c$ Eigenvectors')
+plt.xlabel(r'$n$')
+pp = PdfPages('output25/ccnvar.pdf')
+plt.savefig(pp,format='pdf',bbox_inches='tight')
+pp.close()
+
+plt.clf()
+plt.errorbar(numpy.arange(1,6)-0.02,cov2_ans[0,:],yerr=[cov2_ans[0,:]-cov2_ans[1,:], cov2_ans[2,:]-cov2_ans[0,:]],fmt='o',label='Model I')
+plt.errorbar(numpy.arange(1,6)+0.02,cov_ans[0,:],yerr=[cov_ans[0,:]-cov_ans[1,:], cov_ans[2,:]-cov_ans[0,:]],fmt='o',label='Model II')
+# plt.errorbar(numpy.arange(1,6)+0.02,cov_ans[0,:],yerr=[covd_ans[0,:]-covd_ans[1,:], covd_ans[2,:]-covd_ans[0,:]],fmt='o',label='Model II')
+
+plt.xticks(numpy.arange(1,6))
+plt.legend(loc=4)
+plt.xlim((.95,5.05))
+plt.ylabel(r'Variance in $n$ leading $C_c$ Eigenvectors')
+plt.xlabel(r'$n$')
+pp = PdfPages('output25/ccvar.pdf')
+plt.savefig(pp,format='pdf',bbox_inches='tight')
+pp.close()
+
+
+wefew
+
+plt.hist(ev_cov, bins=20, label=['1','2','3','4','5'])
+plt.legend(loc=2)
+plt.xlabel(r'Variance in $n$ leading $C_c$ Eigenvectors')
+filename = 'output25/covenergy.pdf'
+pp = PdfPages(filename)
+plt.savefig(pp,format='pdf')
+pp.close()
+plt.clf()
+
+plt.hist(ev_cor, bins=20, label=['1','2','3','4','5'])
+plt.legend(loc=2)
+plt.xlabel(r'Variance in $n$ leading $C_c$ Correlation Eigenvectors')
+filename = 'output25/corenergy.pdf'
+pp = PdfPages(filename)
+plt.savefig(pp,format='pdf')
+pp.close()
+plt.clf()
+
+wefwe
+
+
 ev = []
 nev=[]
 for x1, x2 in zip(fit['L_Omega'], fit['L_sigma']):
@@ -624,7 +775,7 @@ nev= numpy.array(nev)
 
 f2 = open('temp11.pkl','rb')
 (fit2,_) = pickle.load(f2)
-corrmat = []
+
 ev2 = []
 nev2 = []
 for x1, x2 in zip(fit2['L_Omega'], fit2['L_sigma']):
