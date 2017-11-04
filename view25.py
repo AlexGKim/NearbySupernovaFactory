@@ -35,7 +35,7 @@ pkl_file = open('gege_data.pkl', 'r')
 data = pickle.load(pkl_file)
 pkl_file.close()
 
-sivel,sivel_err,x1,x1_err,zcmb,zerr = sivel.sivel(data)
+sivel,sivel_err,x1,x1_err,zcmb,zerr,mwebv = sivel.sivel(data)
 
 
 use = numpy.isfinite(sivel)
@@ -53,6 +53,7 @@ x1=x1[use]
 x1_err = x1_err[use]
 zcmb = zcmb[use]
 zerr = zerr[use]
+mwebv = mwebv[use]
 
 EW_obs=EW_obs[use]
 mag_obs=mag_obs[use]
@@ -117,7 +118,16 @@ plt.ylabel(r'$\Delta$')
 pp = PdfPages(dirname+'/DeltamB.pdf')
 plt.savefig(pp,format='pdf')
 pp.close()
-plt.close()
+plt.clf()
+
+plt.scatter(mwebv, numpy.median(fit['R']-fit['R'][:,0][:,None],axis=0))
+pp = PdfPages(dirname+'/mwebv.pdf')
+plt.ylabel(r'median $D$')
+plt.xlabel(r'Milky Way E(B-V)')
+plt.savefig(pp,format='pdf',bbox_inches='tight')
+pp.close()
+plt.clf()
+wefw
 
 scorrection = [fit['c'][:,i][:,None] + fit['alpha'][:,i][:,None]*fit['EW'][:,:, 0] \
     + fit['beta'][:,i][:,None]*fit['EW'][:,:, 1] + fit['eta'][:,i][:,None]*fit['sivel']\
@@ -665,7 +675,6 @@ for i in xrange(5):
 # pp.close()
 # udotdelta=[]
 
-wefwe
 ev_cor = numpy.array(ev_cor)
 ev_cov = numpy.array(ev_cov)
 ev_ncov = numpy.array(ev_ncov)
@@ -733,7 +742,7 @@ evd_ncov = numpy.array(evd_ncov)
 ncovd_ans = numpy.percentile(evd_ncov,(50,50-34,50+34),axis=0)
 covd_ans = numpy.percentile(evd_cov,(50,50-34,50+34),axis=0)
 
-
+plt.clf()
 plt.errorbar(numpy.arange(1,6)-0.02,ncov2_ans[0,:],yerr=[ncov2_ans[0,:]-ncov2_ans[1,:], ncov2_ans[2,:]-ncov2_ans[0,:]],fmt='o',label='Model I')
 plt.errorbar(numpy.arange(1,6)+0.02,ncov_ans[0,:],yerr=[ncov_ans[0,:]-ncov_ans[1,:], ncov_ans[2,:]-ncov_ans[0,:]],fmt='o',label='Model II')
 # plt.errorbar(numpy.arange(1,6)+0.02,ncovd_ans[0,:],yerr=[ncovd_ans[0,:]-ncovd_ans[1,:], ncovd_ans[2,:]-ncovd_ans[0,:]],fmt='o',label='Model II diag')
@@ -747,7 +756,7 @@ plt.xlabel(r'$n$')
 pp = PdfPages('output25/ccnvar.pdf')
 plt.savefig(pp,format='pdf',bbox_inches='tight')
 pp.close()
-
+wefwe
 plt.clf()
 plt.errorbar(numpy.arange(1,6)-0.02,cov2_ans[0,:],yerr=[cov2_ans[0,:]-cov2_ans[1,:], cov2_ans[2,:]-cov2_ans[0,:]],fmt='o',label='Model I')
 plt.errorbar(numpy.arange(1,6)+0.02,cov_ans[0,:],yerr=[cov_ans[0,:]-cov_ans[1,:], cov_ans[2,:]-cov_ans[0,:]],fmt='o',label='Model II')

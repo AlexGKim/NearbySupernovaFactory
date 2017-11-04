@@ -16,9 +16,11 @@ def sivel(data):
    zcmb = []
    zerr= []
    EWCAIIHK = []
+   mwebv=[]
    for sn in data['snlist']:
       if sn in dic_meta.keys() and sn in dic_phreno.keys():
          meta = dic_meta[sn]
+
          vSiII_6355_lbd=0.
          vSiII_6355_lbd_err=0.
          dum1=0
@@ -43,6 +45,7 @@ def sivel(data):
          x1_err.append(numpy.sqrt(meta['salt2.CovX1X1']))
          zcmb.append(meta['host.zcmb'])
          zerr.append(meta['host.zhelio.err'])
+         mwebv.append(meta['target.mwebv'])
       else:
          sivel.append(float('nan'))
          sivel_err.append(float('nan'))
@@ -52,6 +55,7 @@ def sivel(data):
          zerr.append(float('nan'))
          zerr.append(float('nan'))
          EWCAIIHK.append(float('nan'))
+         mwebv.append(float('nan'))
 
    sivel = numpy.array(sivel)
    sivel_err = numpy.array(sivel_err)
@@ -60,6 +64,8 @@ def sivel(data):
    zcmb = numpy.array(zcmb)
    zerr = numpy.array(zerr)
    EWCAIIHK=numpy.array(EWCAIIHK)
+   mwebv = numpy.array(mwebv)
+
    # print EWCAIIHK
 
-   return sivel,sivel_err,x1,x1_err,zcmb,zerr
+   return sivel,sivel_err,x1,x1_err,zcmb,zerr,mwebv
