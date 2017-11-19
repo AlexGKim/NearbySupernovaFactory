@@ -60,6 +60,12 @@ Delta_simplex = numpy.zeros(nsne-1)
 R_simplex = ((-1.)**numpy.arange(nsne)*.25 + .5)*2./nsne
 R_simplex = R_simplex/R_simplex.sum()
 
+numpy.random.seed(100)
+ruv = []
+for _ in range(8):
+   temp = numpy.random.uniform(-1,1,5)
+   ruv.append(temp/numpy.linalg.norm(temp))
+
 init = [{'EW' : EW_renorm, \
          'sivel': sivel_renorm,\
          'c_raw' : numpy.zeros(5), \
@@ -67,7 +73,7 @@ init = [{'EW' : EW_renorm, \
          'beta_raw' : numpy.zeros(5), \
          'eta_raw' : numpy.zeros(5), \
          'ev_sig': 0.1, \
-         'ev': numpy.array([1.,1,1,1,1])/numpy.sqrt(5),\
+         'ev': ruv[_],\
          # 'L_sigma_raw': numpy.zeros(5)+0.03*100, \
          'gamma01': gamma0[0],\
          'gamma02': gamma0[1],\
