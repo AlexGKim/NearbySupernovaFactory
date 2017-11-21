@@ -12,7 +12,13 @@ data {
   vector[D] sivel_err;
   vector[D] x1_obs;
   vector[D] x1_err;
+
+  // matrix[5,5] rho1in_cov;
+  vector[5] rho1_min;
+  vector[5] rho1_max;
+  matrix[5,5] rho1_ev;
 }
+
 
 parameters {
   vector[5] c_raw;
@@ -31,7 +37,13 @@ parameters {
   real rho12;
   real rho13;
   real rho14;
-  real<upper=0>  rho15;
+  real rho15;
+
+  // real<lower=rho1_min[1], upper=rho1_max[1]> rho11;
+  // real<lower=rho1_min[2], upper=rho1_max[2]> rho12;
+  // real<lower=rho1_min[3], upper=rho1_max[3]> rho13;
+  // real<lower=rho1_min[4], upper=rho1_max[4]> rho14;
+  // real<lower=rho1_min[5], upper=rho1_max[5]> rho15;
 
   real <lower=0> Delta_scale;
 
@@ -83,12 +95,16 @@ transformed parameters {
   gamma[5] = gamma05;
   gamma = gamma*5;
 
-  rho1[1] = rho11;
-  rho1[3] = rho13;
-  rho1[4] = rho14;
-  rho1[5] = rho15;
-  rho1[2] = rho12;
-  rho1 = rho1*5;
+  // rho1[1] = rho11;
+  // rho1[3] = rho13;
+  // rho1[4] = rho14;
+  // rho1[5] = rho15;
+  // rho1[2] = rho12;
+  // rho1 = rho1*5;
+
+  for (d in 1:5){
+    rho1[d]= rho11 * rho1_ev[d,1]  + rho12  * rho1_ev[d,2] + rho13 * rho1_ev[d,3] + rho14  * rho1_ev[d,4] + rho15 * rho1_ev[d,5];
+  }
 
     # non-centered parameterization
   {

@@ -11,6 +11,44 @@ f = open('fix3.pkl','rb')
 
 gamma0 = numpy.median(fit['gamma'],axis=0)
 gamma1 = numpy.median(fit['rho1'],axis=0)
+gamma0_cov = numpy.cov(fit['gamma'],rowvar=False)
+gamma1_cov = numpy.cov(fit['rho1'],rowvar=False)
+
+
+_, gamma0_ev = numpy.linalg.eigh(gamma0_cov)
+
+# print gamma0_ev[:,0]
+
+ev_median = numpy.median(fit['ev']*numpy.sign(fit['ev'][:,4][:,None]),axis=0)
+ev_median = ev_median/numpy.linalg.norm(ev_median)
+
+evsig_median = numpy.median(fit['ev_sig'])
+
+
+gamma0_eval = numpy.array(fit['gamma'])
+for i in xrange(gamma0_eval.shape[0]):
+   for j in xrange(5):
+      gamma0_eval[i,j]=numpy.dot(fit['gamma'][i,:], gamma0_ev[:,j])
+
+# gamma0_min = numpy.min(gamma0_eval,axis=0)-0.05
+# gamma0_max = numpy.max(gamma0_eval,axis=0)+0.05
+
+# for i in xrange(5):
+#    plt.hist(gamma0_eval[:,i])
+#    plt.show()
+
+_, gamma1_ev = numpy.linalg.eigh(gamma1_cov)
+
+gamma1_eval = numpy.array(fit['rho1'])
+for i in xrange(gamma1_eval.shape[0]):
+   for j in xrange(5):
+      gamma1_eval[i,j]=numpy.dot(fit['rho1'][i,:], gamma1_ev[:,j])
+
+gamma0median = numpy.median(gamma0_eval,axis=0)
+gamma1median = numpy.median(gamma1_eval,axis=0)
+
+gamma1_min = (numpy.min(gamma1_eval,axis=0)-gamma1median)*3+gamma1median
+gamma1_max = (numpy.max(gamma1_eval,axis=0)-gamma1median)*3+gamma1median
 
 
 # two color parameter model
@@ -51,7 +89,8 @@ mag_renorm  = mag_obs-mag_mn
 sivel_mn = sivel.mean()
 sivel_renorm = sivel-sivel_mn
 data = {'D': nsne, 'N_mags': 5, 'N_EWs': 2, 'mag_obs': mag_renorm, 'EW_obs': EW_renorm, 'EW_cov': EW_cov, 'mag_cov':mag_cov, \
-   'sivel_obs': sivel_renorm, 'sivel_err': sivel_err,'x1_obs': x1, 'x1_err':x1_err}
+   'sivel_obs': sivel_renorm, 'sivel_err': sivel_err,'x1_obs': x1, 'x1_err':x1_err, \
+   'rho1_ev':gamma1_ev, 'rho1_min':gamma1_min, 'rho1_max': gamma1_max }
 
 # pystan.misc.stan_rdump(data, 'data.R')
 # wefew
@@ -76,8 +115,8 @@ init = [{'EW' : EW_renorm, \
          'beta_raw' : numpy.zeros(5), \
          'eta_raw' : numpy.zeros(5), \
          'zeta' : numpy.zeros(5), \
-         'ev_sig': 0.1, \
-         'ev': ruv[_],\
+         'ev_sig': evsig_median, \
+         'ev': ev_median,\
          # 'L_sigma_raw': numpy.zeros(5)+0.03*100, \
          'gamma01': gamma0[0],\
          'gamma02': gamma0[1],\
@@ -90,11 +129,11 @@ init = [{'EW' : EW_renorm, \
          'Delta_scale': 15./4, \
          'k_unit': R_simplex, \
          'R_unit': R_simplex, \
-         'rho11': gamma1[0],\
-         'rho12': gamma1[1],\
-         'rho13': gamma1[2],\
-         'rho14': gamma1[3],\
-         'rho15': gamma1[4]\
+         'rho11': gamma1median[0],\
+         'rho12': gamma1median[1],\
+         'rho13': gamma1median[2],\
+         'rho14': gamma1median[3],\
+         'rho15': gamma1median[4]\
          } \
         for _ in range(8)]
 
