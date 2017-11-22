@@ -26,7 +26,7 @@ class Arrow3D(FancyArrowPatch):
 mpl.rcParams['font.size'] = 14
 
 # Get the data
-f = open('fix3.pkl','rb')
+f = open('fix3_x1.pkl','rb')
 (fit, _) = pickle.load(f)
 f.close()
 
@@ -110,10 +110,6 @@ cross = numpy.dot(dAdebv, dAdAv)
 a = numpy.array([[norm_dAdAv,cross],[cross,norm_dAdebv]])
 a_save = numpy.array(a)
 
-
-a = numpy.array([[norm_dAdAv,cross],[cross,norm_dAdebv]])
-a_save = numpy.array(a)
-
 # calculate the projection onto the plane
 proj=[]
 kappa=[]
@@ -143,6 +139,7 @@ proj=numpy.array(proj)
 dum1, dumm, dump =  numpy.percentile(proj,(50,50-34,50+34),axis=0)
 print "{:.4f}^{{+{:.4f}}}_{{{:.4f}}}".format(dum1[0],dump[0]-dum1[0],dumm[0]-dum1[0])
 print "{:.4f}^{{+{:.4f}}}_{{{:.4f}}}".format(dum1[1],dump[1]-dum1[1],dumm[1]-dum1[1])
+
 
 tmat = []
 res = []
@@ -279,14 +276,14 @@ ax.set_zlabel(r'$\hat{I}$',labelpad=9,rotation=0)
 ax.xaxis.set_ticks(numpy.arange(-.5,1.1,.25))
 ax.yaxis.set_ticks(numpy.arange(-.8,.81,.4))
 ax.view_init(elev=2, azim=-114)
-pp = PdfPages("output_fix3/plane0.pdf")
+pp = PdfPages("output_fix3_x1/plane0.pdf")
 # plt.tight_layout()
 plt.savefig(pp,format='pdf',bbox_inches='tight')
 pp.close()
 ax.view_init(elev=7, azim=-165)
 ax.yaxis.set_ticks(numpy.arange(-.75,.76,.25))
 ax.xaxis.set_ticks(numpy.arange(-.5,.76,.5))
-pp = PdfPages("output_fix3/plane1.pdf")
+pp = PdfPages("output_fix3_x1/plane1.pdf")
 # plt.tight_layout()
 plt.savefig(pp,format='pdf',bbox_inches='tight')
 pp.close()
@@ -321,14 +318,14 @@ ax.set_zlabel(r'$R$',labelpad=18)
 ax.xaxis.set_ticks(numpy.arange(-.5,1.1,.25))
 ax.yaxis.set_ticks(numpy.arange(-.8,.81,.4))
 ax.view_init(elev=2, azim=-114)
-pp = PdfPages("output_fix3/plane0BVR.pdf")
+pp = PdfPages("output_fix3_x1/plane0BVR.pdf")
 plt.tight_layout()
 plt.savefig(pp,format='pdf')
 pp.close()
 ax.view_init(elev=7, azim=-165)
 ax.yaxis.set_ticks(numpy.arange(-.75,.76,.25))
 ax.xaxis.set_ticks(numpy.arange(-.5,.76,.5))
-pp = PdfPages("output_fix3/plane1BVR.pdf")
+pp = PdfPages("output_fix3_x1/plane1BVR.pdf")
 plt.tight_layout()
 plt.savefig(pp,format='pdf')
 pp.close()
@@ -421,7 +418,7 @@ for i in xrange(ebv.shape[2]):
 # plt.legend(loc=4)
 # plt.xlim((-0.1,0.4))
 # plt.ylim((-0.7,1.2))
-# pp = PdfPages("output_fix3/avebv.pdf")
+# pp = PdfPages("output_fix3_x1/avebv.pdf")
 # plt.savefig(pp,format='pdf')
 # pp.close()
 # plt.close()
@@ -479,7 +476,7 @@ for i in xrange(ebv.shape[2]):
 # plt.xlabel(r'$E^T(B-V)$')
 # plt.ylim((-2,5))
 # plt.legend(loc=4)
-# pp = PdfPages("output_fix3/rv.pdf")
+# pp = PdfPages("output_fix3_x1/rv.pdf")
 # plt.savefig(pp,format='pdf')
 # pp.close()
 # plt.close()
@@ -497,11 +494,11 @@ for i in xrange(ebv.shape[2]):
 # dum2= 1/err[w]**2
 # print '${:6.2f} \pm {:6.2f}$'.format(dum.sum()/dum2.sum(),1./numpy.sqrt(dum2.sum()))
 
-# # Transform native parameters onto the Fitzpatrick plane
+# Transform native parameters onto the Fitzpatrick plane
 
 # The native E(B-V) parameters
-# ebv  = (fit['gamma'][:,1]-fit['gamma'][:,2])[:,None] * fit['k']
-# ebv = numpy.array([ebv,(fit['rho1'][:,1]-fit['rho1'][:,2])[:,None] * fit['R']])
+ebv  = (fit['gamma'][:,1]-fit['gamma'][:,2])[:,None] * fit['k']
+ebv = numpy.array([ebv,(fit['rho1'][:,1]-fit['rho1'][:,2])[:,None] * fit['R']])
 ebv  = fit['k']
 ebv = numpy.array([ebv,fit['R']])
 a=a_save
@@ -543,18 +540,21 @@ ebvav = numpy.array(ebvav)
 
 # ebvav=numpy.array(ebvav)
 
+# print ebvav.shape
+# wwefe
 # ebvav_s = numpy.percentile(ebvav,(50,50-34,50+34),axis=2)
 
-pkl_file = open('gege_data.pkl', 'r')
-data = pickle.load(pkl_file)
-pkl_file.close()
+# pkl_file = open('gege_data.pkl', 'r')
+# data = pickle.load(pkl_file)
+# pkl_file.close()
 
 ebvav_s = numpy.percentile(ebvav,(50,50-34,50+34),axis=0)
 
-w= numpy.logical_or(ebvav_s[0,:,0] < -.5, numpy.logical_and(ebvav_s[0,:,1]>0.05 , ebvav_s[0,:,0] < -0.2))
-print type(data['snlist'])
-print numpy.array(data['snlist'])[w]
-wefwe
+# w= numpy.logical_or(ebvav_s[0,:,0] < -.5, numpy.logical_and(ebvav_s[0,:,1]>0.05 , ebvav_s[0,:,0] < -0.2))
+# print type(data['snlist'])
+# print numpy.array(data['snlist'])[w]
+# wefwe
+
 plt.errorbar(ebvav_s[0,:,1], ebvav_s[0,:,0], \
  xerr=(ebvav_s[0,:,1]-ebvav_s[1,:,1], ebvav_s[2,:,1]-ebvav_s[0,:,1]),\
  yerr=(ebvav_s[0,:,0]-ebvav_s[1,:,0], ebvav_s[2,:,0]-ebvav_s[0,:,0]),fmt='o',alpha=0.4,color='blue')
@@ -562,10 +562,10 @@ plt.errorbar(ebvav_s[0,:,1], ebvav_s[0,:,0], \
 plt.ylabel(r'$A^F_{V,eff}+ const $')
 plt.xlabel(r'$E^F(B-V)_{eff} + const$')
 x = numpy.array([-0.09,0.45])
-plt.plot(x,2.44*x,color='black',label="slope = 2.44")
+plt.plot(x,2.4*x,color='black',label="slope = 2.4")
 # plt.plot(x, rbv[1]+rbv[0]*x,label=r'$R^F={:6.2f}_{{-{:6.2f}}}^{{+{:6.2f}}}$'.format(rbv[0],rbv[0]-mrbv[0],prbv[0]-rbv[0]),color='black')
 plt.legend(loc=4)
-pp = PdfPages("output_fix3/avebv_synth.pdf")
+pp = PdfPages("output_fix3_x1/avebv_synth.pdf")
 plt.savefig(pp,format='pdf')
 pp.close()
 plt.close()
@@ -581,7 +581,7 @@ plt.close()
 # plt.ylabel(r'$R^F_{V,eff} $')
 # plt.xlabel(r'$E^F(B-V)_{eff} + const$')
 # plt.ylim((-1,5))
-# pp = PdfPages("output_fix3/avrv_synth.pdf")
+# pp = PdfPages("output_fix3_x1/avrv_synth.pdf")
 # plt.savefig(pp,format='pdf')
 # pp.close()
 # plt.close()

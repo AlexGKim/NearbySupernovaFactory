@@ -128,12 +128,14 @@ for i in xrange(nsne):
 # intrinsic = numpy.median(correction,axis=1)
 fixev = fit['ev']
 fixev = fixev * numpy.sign(fixev[:,4])[:,None]
-corner.corner(fit['ev_sig'][:,None]*fixev,labels=[r"$\sigma_p \phi_{\hat{U}}$",r"$\sigma_p \phi_{\hat{B}}$",r"$\sigma_p \phi_{\hat{V}}$",r"$\sigma_p \phi_{\hat{R}}$",r"$\sigma_p \phi_{\hat{I}}$"])
+corner.corner(fit['ev_sig'][:,None]*fit['ev'],labels=[r"$\sigma_p \phi_{\hat{U}}$",r"$\sigma_p \phi_{\hat{B}}$",r"$\sigma_p \phi_{\hat{V}}$",r"$\sigma_p \phi_{\hat{R}}$",r"$\sigma_p \phi_{\hat{I}}$"], \
+    truths=[0,0,0,0,0])
 pp = PdfPages('output_fix3/sigev.pdf')
 plt.savefig(pp,format='pdf',bbox_inches='tight')
 pp.close()
 plt.close()
-plt.show()
+
+
 
 # output = open('intrinsic.pkl','wb')
 # print intrinsic.shape, numpy.array(data['snlist'])[use].shape
@@ -179,7 +181,7 @@ crap = fit['gamma'][:,2][:,None]*fit['k']
 crap = crap-crap[:,0][:,None]
 plt.hist(crap.flatten(),bins,label='posterior stack',normed=True,alpha=0.5)
 plt.hist(numpy.median(crap,axis=0),bins,label='median',normed=True,alpha=0.5,width=0.025)
-plt.xlabel(r'$\gamma^0_{\hat{V}} k_0 - \gamma^0_{\hat{V}} k_0|_0$')  #\\ approx A^F_V|_{R^F_{eff}=2.44}$')
+plt.xlabel(r'$\gamma^0_{\hat{V}} g_0 - \gamma^0_{\hat{V}} g_0|_0$')  #\\ approx A^F_V|_{R^F_{eff}=2.44}$')
 plt.legend()
 plt.tight_layout()
 pp = PdfPages('output_fix3/deltagamma0_med.pdf')
@@ -192,7 +194,7 @@ crap2 = fit['rho1'][:,2][:,None]*fit['R']
 crap2 = crap2-crap2[:,0][:,None]
 plt.hist(crap2.flatten(),bins,label='posterior stack',normed=True,alpha=0.5)
 plt.hist(numpy.median(crap2,axis=0),bins,label='median',normed=True,alpha=0.5,width=0.01)
-plt.xlabel(r'$\gamma^1_{\hat{V}} k_1 - \gamma^1_{\hat{V}} k_1|_0$')
+plt.xlabel(r'$\gamma^1_{\hat{V}} g_1 - \gamma^1_{\hat{V}} g_1|_0$')
 plt.legend(loc=2)
 plt.xlim((-0.4,0.2))
 

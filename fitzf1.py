@@ -103,11 +103,12 @@ for i in xrange(fit['gamma'].shape[0]):
 
 kappa = numpy.array(kappa)
 
-print "R1 (1/kappa1) terms"
+print "R1 (1/kappa1) term"
 dum1, dumm, dump =  numpy.percentile(kappa[:,0,0]/kappa[:,0,1],(50,50-34,50+34))
 print "{:.2f}^{{+{:.2f}}}_{{{:.2f}}}".format(dum1,dump-dum1,dumm-dum1)
+print "1/kappa2 term"
 dum1, dumm, dump =  numpy.percentile(kappa[:,1,1]/kappa[:,1,0],(50,50-34,50+34))
-print "{:.4f}^{{+{:.4f}}}_{{{:.4f}}}".format(dum1,dump-dum1,dumm-dum1)
+print "{:.2f}^{{+{:.2f}}}_{{{:.2f}}}".format(dum1,dump-dum1,dumm-dum1)
 
 
 print "projection of gamma0, gamma1 onto Fitzpatrick plane"
@@ -115,8 +116,6 @@ proj=numpy.array(proj)
 dum1, dumm, dump =  numpy.percentile(proj,(50,50-34,50+34),axis=0)
 print "{:.4f}^{{+{:.4f}}}_{{{:.4f}}}".format(dum1[0],dump[0]-dum1[0],dumm[0]-dum1[0])
 print "{:.4f}^{{+{:.4f}}}_{{{:.4f}}}".format(dum1[1],dump[1]-dum1[1],dumm[1]-dum1[1])
-
-wefwe
 
 tmat = []
 res = []
@@ -202,18 +201,18 @@ a = Arrow3D([0,cs[1][0]/dum],[0,cs[1][2]/dum],[0,cs[1][4]/dum], mutation_scale=1
 ax.add_artist(a)
 
 dum  = numpy.sqrt(dAdAv[0]**2+dAdAv[2]**2+dAdAv[4]**2)
-ax.plot([0,dAdAv[0]/dum],[0,dAdAv[2]/dum],[0,dAdAv[4]/dum],label=r'$\hat{a(X)}$',ls='--',color='blue')
+ax.plot([0,dAdAv[0]/dum],[0,dAdAv[2]/dum],[0,dAdAv[4]/dum],label=r'$a_X$',ls='--',color='blue')
 a = Arrow3D([0,dAdAv[0]/dum],[0,dAdAv[2]/dum],[0,dAdAv[4]/dum],ls='--', mutation_scale=10, color='blue',
             arrowstyle="-|>")
 ax.add_artist(a)
 dum  = numpy.sqrt(dAdebv[0]**2+dAdebv[2]**2+dAdebv[4]**2)
-ax.plot([0,dAdebv[0]/dum],[0,dAdebv[2]/dum],[0,dAdebv[4]/dum],label=r'$\hat{b(X)}$',ls='--', color='green')
+ax.plot([0,dAdebv[0]/dum],[0,dAdebv[2]/dum],[0,dAdebv[4]/dum],label=r'$b_X$',ls='--', color='green')
 a = Arrow3D([0,dAdebv[0]/dum],[0,dAdebv[2]/dum],[0,dAdebv[4]/dum],ls='--', mutation_scale=10, color='green',
             arrowstyle="-|>")
 ax.add_artist(a)
 crap = dAdAv + dAdebv*kappa1
 dum  = numpy.sqrt(crap[0]**2+crap[2]**2+crap[4]**2)
-ax.plot([0,crap[0]/dum],[0,crap[2]/dum],[0,crap[4]/dum],label=r'$a(X)+b(X)/{:4.2f}$'.format(1/kappa1),ls=':',color='black')
+ax.plot([0,crap[0]/dum],[0,crap[2]/dum],[0,crap[4]/dum],label=r'$a_X+b_X/{:4.2f}$'.format(1/kappa1),ls=':',color='black')
 a = Arrow3D([0,crap[0]/dum],[0,crap[2]/dum],[0,crap[4]/dum], mutation_scale=10, ls=':',color='black', linewidth=3.,
             arrowstyle="-|>",alpha=0.8)
 ax.add_artist(a)
