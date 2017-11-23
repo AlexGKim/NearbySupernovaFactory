@@ -14,11 +14,11 @@ data = pickle.load(pkl_file)
 pkl_file.close()
 
 
-f = open('temp25.pkl','rb')
+f = open('fix3_x1.pkl','rb')
 (fit,_) = pickle.load(f)
 f.close()
 
-sivel,sivel_err,x1,x1_err,zcmb,zerr = sivel2.sivel(data)
+sivel,sivel_err,x1,x1_err,zcmb,zerr,_ = sivel2.sivel(data)
 
 
 
@@ -37,6 +37,8 @@ EW_obs=EW_obs[use]
 mag_obs=mag_obs[use]
 EW_cov= EW_cov[use]
 mag_cov=mag_cov[use]
+x1=x1[use]
+x1_err=x1_err[use]
 
 nsne, nmags = mag_obs.shape
 
@@ -74,49 +76,44 @@ c = numpy.median(fit['c'],axis=0)
 alpha = numpy.median(fit['alpha'],axis=0)
 beta = numpy.median(fit['beta'],axis=0)
 eta = numpy.median(fit['eta'],axis=0)
+zeta = numpy.median(fit['zeta'],axis=0)
 gamma = numpy.median(fit['gamma'],axis=0)
-gamma1 = numpy.median(fit['gamma1'],axis=0)
-delta = numpy.median(fit['rho1'],axis=0)
+#gamma1 = numpy.median(fit['gamma1'],axis=0)
+gamma1 = numpy.median(fit['rho1'],axis=0)
 
 # EW = numpy.array(EW_renorm)
 # sivel = numpy.array(sivel_renorm)
 EW = numpy.median(fit['EW'],axis=0)
 sivel = numpy.median(fit['sivel'],axis=0)
+x1=numpy.median(fit['x1'],axis=0)
 
 Delta = numpy.median(fit['Delta'],axis=0)
-D = numpy.median(fit['R'],axis=0)
+k1 = numpy.median(fit['R'],axis=0)
 k0 = numpy.median(fit['k'],axis=0)
-k1 = numpy.median(fit['k1'],axis=0)
-
-cov = numpy.zeros((5,5))
-for x1, x2 in zip(fit['L_Omega'], fit['L_sigma']):
-    cov= cov+ numpy.dot(x2[:,None],x2[None,:])*numpy.dot(x1,x1.T)
-
-cov/= len(fit['L_Omega'])
+#k1 = numpy.median(fit['k1'],axis=0)
 
 mn = Delta[:,None] + c[None,:] + alpha[None,:] * EW[:,0][:,None] + \
-   beta[None,:] * EW[:,1][:,None] + eta[None,:]*sivel[:,None]
+   beta[None,:] * EW[:,1][:,None] + eta[None,:]*sivel[:,None]+ zeta[None,:]*x1[:,None]
 
-for seed in xrange(10):
+for seed in xrange(100):
     numpy.random.seed(seed=seed)
 
+    intrinsic = gamma[None,:]*k0[:,None] + gamma1[None,:]*k1[:,None]
 
-    intrinsic=[]
-    for i in xrange(nsne):
-       intrinsic.append(numpy.random.multivariate_normal(mn[i,:],cov))
-
-    intrinsic = intrinsic + gamma[None,:]*k0[:,None] + gamma1[None,:]*k1[:,None]
     mag_obs=[]
     EW_obs=[]
     sivel_obs=[]
+    x1_obs=[]
     for i in xrange(nsne):
        mag_obs.append(numpy.random.multivariate_normal(intrinsic[i,:],mag_cov[i]))
        EW_obs.append(numpy.random.multivariate_normal(EW[i,:],EW_cov[i]))
        sivel_obs.append(numpy.random.normal(sivel[i],sivel_err[i]))
+       x1_obs.append(numpy.random.normal(x1[i],x1_err[i]))
 
     mag_obs=numpy.array(mag_obs)
     EW_obs=numpy.array(EW_obs)
     sivel_obs = numpy.array(sivel_obs)
+    x1_obs = numpy.array(x1_obs)
 
     # # renormalize the data
     EW_mn = EW_obs.mean(axis=0)
@@ -129,7 +126,7 @@ for seed in xrange(10):
     sivel_renorm = sivel-sivel_mn
 
     data = {'D': nsne, 'N_mags': 5, 'N_EWs': 2, 'mag_obs': mag_renorm, 'EW_obs': EW_renorm, 'EW_cov': EW_cov, 'mag_cov':mag_cov, \
-       'sivel_obs': sivel_renorm, 'sivel_err': sivel_err}
+       'sivel_obs': sivel_renorm, 'sivel_err': sivel_err, 'x1_obs': x1, 'x1_err': x1_err}
 
 
     output = open('simdata_null{}.pkl'.format(seed),'wb')
