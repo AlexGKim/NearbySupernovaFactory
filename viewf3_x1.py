@@ -12,7 +12,7 @@ import scipy
 import cPickle
 import matplotlib as mpl
 import sivel
-mpl.rcParams['font.size'] = 16
+mpl.rcParams['font.size'] = 28
 
 f = open('fix3_x1.pkl','rb')
 (fit,_) = pickle.load(f)
@@ -186,8 +186,8 @@ crap = fit['gamma'][:,2][:,None]*fit['k']
 crap = crap-crap[:,0][:,None]
 plt.hist(crap.flatten(),bins,label='posterior stack',normed=True,alpha=0.5)
 plt.hist(numpy.median(crap,axis=0),bins,label='median',normed=True,alpha=0.5,width=0.025)
-plt.xlabel(r'$\gamma^0_{\hat{V}} k_0 - \gamma^0_{\hat{V}} k_0|_0$')  #\\ approx A^F_V|_{R^F_{eff}=2.44}$')
-plt.legend()
+plt.xlabel(r'$\gamma^0_{\hat{V}} g_0 - \gamma^0_{\hat{V}} g_0|_0 \approx A^F_V|_{R^F_{eff}=2.40}$')
+plt.legend(fontsize=20)
 plt.tight_layout()
 pp = PdfPages('output_fix3_x1/deltagamma0_med.pdf')
 plt.savefig(pp,format='pdf')
@@ -199,8 +199,8 @@ crap2 = fit['rho1'][:,2][:,None]*fit['R']
 crap2 = crap2-crap2[:,0][:,None]
 plt.hist(crap2.flatten(),bins,label='posterior stack',normed=True,alpha=0.5)
 plt.hist(numpy.median(crap2,axis=0),bins,label='median',normed=True,alpha=0.5,width=0.01)
-plt.xlabel(r'$\gamma^1_{\hat{V}} k_1 - \gamma^1_{\hat{V}} k_1|_0$')
-plt.legend(loc=2)
+plt.xlabel(r'$\gamma^1_{\hat{V}} g_1 - \gamma^1_{\hat{V}} g_1|_0$')
+plt.legend(loc=2,fontsize=20)
 plt.xlim((-0.4,0.2))
 
 plt.tight_layout()
@@ -605,6 +605,8 @@ plt.clf()
 # print 'k', numpy.median(fit['k'][:,outlier[0]],axis=0)
 # print 'EW0', numpy.median(fit['EW'][:,outlier[0],0],axis=0), EW_renorm[outlier[0],0] 
 # print 'EW1', numpy.median(fit['EW'][:,outlier[0],1],axis=0), EW_renorm[outlier[0],1]
+
+mpl.rcParams['font.size'] = 28
 fig, axes = plt.subplots()
 bins = numpy.arange(-0.2,0.8001,0.02)
 plt.hist(fit['Delta'].flatten(),bins,label='ideogram',normed=True,alpha=0.5)
@@ -676,10 +678,10 @@ fig, axes = plt.subplots()
 bins = numpy.arange(-0.2,0.8001,0.02)
 plt.hist((fit['Delta']-fit['Delta'][:,0][:,None]).flatten(),bins,label='posterior stack',normed=True,alpha=0.5)
 plt.hist(numpy.median((fit['Delta']-fit['Delta'][:,0][:,None]),axis=0),bins,label='median',normed=True,alpha=0.5,width=0.01)
-plt.legend()
+plt.legend(fontsize=20)
 plt.xlabel(r'$\Delta-\Delta|_0$')
 pp = PdfPages('output_fix3_x1/deltaDelta_hist.pdf')
-plt.savefig(pp,format='pdf')
+plt.savefig(pp,format='pdf',bbox_inches='tight')
 pp.close()
 plt.close()
 
@@ -785,15 +787,48 @@ plt.close()
 
 
 
-plt.hist([(fit['gamma'][:,1]-fit['gamma'][:,2])[:,None]*fit['k'], (fit['rho1'][:,1]-fit['rho1'][:,2])[:,None]*fit['R']],normed=True,bins=20,
-    label=[r'$E_\gamma(B-V)$',r'$E_\delta(B-V)$'],range=(-0.1,0.4))
-plt.xlabel(r'$E(B-V)$',fontsize=20)
-plt.legend()
+# plt.hist([(fit['gamma'][:,1]-fit['gamma'][:,2])[:,None]*fit['k'], (fit['rho1'][:,1]-fit['rho1'][:,2])[:,None]*fit['R']],normed=True,bins=20,
+#     label=[r'$E_\gamma(B-V)$',r'$E_\delta(B-V)$'],range=(-0.1,0.4))
+# plt.xlabel(r'$E(B-V)$',fontsize=20)
+# plt.legend()
+# pp = PdfPages('output_fix3_x1/ebv.pdf')
+# plt.savefig(pp,format='pdf')
+# pp.close()
+# plt.close()
+
+dustebv = (fit['gamma'][:,1]-fit['gamma'][:,2])[:,None]*fit['k'] + (fit['rho1'][:,1]-fit['rho1'][:,2])[:,None]*fit['R']
+extebv = (fit['ev_sig']*(fit['ev'][:,1]-fit['ev'][:,2]))[:,None]*fit['mag_int_raw']
+dustebv = dustebv-dustebv[:,0][:,None]
+extebv = extebv-extebv[:,0][:,None]
+print 'extrinsic and intrinsic contributions'
+print dustebv[:,1:].std()
+print extebv[:,1:].std()
+
+
+plt.hist([dustebv, extebv],normed=True,bins=25,
+  label=[r'$E_{\gamma}(\hat{B}-\hat{V})$',r'$E_p(\hat{B}-\hat{V})$'])
+# plt.hist([(fit['gamma'][:,1]-fit['gamma'][:,2])[:,None]*fit['k'] + 
+#   (fit['gamma1'][:,1]-fit['gamma1'][:,2])[:,None]*fit['k1'], (fit['rho1'][:,1]-fit['rho1'][:,2])[:,None]*fit['R']],normed=True,bins=20,
+#   label=[r'$E(B-V)$',r'$E_\delta(B-V)$'])
+plt.xlabel(r'$E(\hat{B}-\hat{V})-E(\hat{B}-\hat{V})|_0$',fontsize=20)
+plt.legend(fontsize=20)
 pp = PdfPages('output_fix3_x1/ebv.pdf')
-plt.savefig(pp,format='pdf')
+plt.savefig(pp,format='pdf',bbox_inches='tight')
 pp.close()
 plt.close()
 
+
+plt.hist( extebv.flatten(),normed=True,bins=bins,alpha=0.5,
+  label='ideogram')
+plt.hist( numpy.median(extebv,axis=0),normed=True,bins=bins,alpha=0.5,width=0.005,
+  label='median')
+plt.xlabel(r'$E_\delta(\hat{B}-\hat{V})-E_\delta(\hat{B}-\hat{V})|_0$',fontsize=20)
+plt.xlim((-.1,.12))
+plt.legend()
+pp = PdfPages('output_fix3_x1/ebv_phi.pdf')
+plt.savefig(pp,format='pdf',bbox_inches='tight')
+pp.close()
+plt.close()
 
 
 # au = fit['gamma'][:,0][:,None]*fit['k'] + fit['rho1'][:,0][:,None]*fit['R']+0.16
@@ -1142,7 +1177,7 @@ def format_fn2(tick_val, tick_pos):
     else:
         return ''
 
-(y, ymin, ymax) = numpy.percentile(fit['ev']/fit['ev'][:,4][:,None],(50,50-34,50+34),axis=0)
+(y, ymin, ymax) = numpy.percentile(fit['ev']/fit['ev'][:,2][:,None],(50,50-34,50+34),axis=0)
 fig = plt.figure()
 ax = fig.add_subplot(111)
 ax.errorbar(numpy.arange(5),y-1,yerr=[y-ymin,ymax-y],fmt='o')
@@ -1151,16 +1186,15 @@ ax.xaxis.set_major_locator(MaxNLocator(integer=True))
 ax.axhline(0,linestyle=':')
 ax.set_xlabel(r'Band $X$')
 ax.set_xlim((-0.5,4.5))
-ax.set_ylabel(r'$\frac{\phi_X}{\phi_{\hat{I}}}-1$')
-# ax.set_ylim((-1.5,1.2))
+ax.set_ylabel(r'$\frac{\phi_X}{\phi_{\hat{V}}}-1$')
+ax.set_ylim((-2.6,0.1))
 pp = PdfPages('output_fix3_x1/phiratio.pdf')
 plt.savefig(pp,format='pdf',bbox_inches='tight')
 pp.close()
 plt.close()
 
-wefwe
 
-mega = numpy.array([fit['Delta'].flatten(),fit['EW'][:,:,0].flatten(),fit['EW'][:,:,1].flatten(),fit['sivel'].flatten(), \
+mega = numpy.array([fit['Delta'].flatten(),fit['EW'][:,:,0].flatten(),fit['EW'][:,:,1].flatten(),fit['sivel'].flatten(), fit['x1'].flatten(),\
     ((fit['gamma'][:,1] - fit['gamma'][:,2])[:,None]*fit['k']).flatten(), \
     ((fit['rho1'][:,1] - fit['rho1'][:,2])[:,None]*fit['R']).flatten(),((fit['ev_sig']*fit['ev'][:,4])[:,None]* fit['mag_int_raw']).flatten()])
 
@@ -1168,7 +1202,7 @@ mega = numpy.array([fit['Delta'].flatten(),fit['EW'][:,:,0].flatten(),fit['EW'][
 mega = numpy.transpose(mega)
 mega=mega[::50,:]
 
-figure = corner.corner(mega,labels=[r"$\Delta$",r"$EW_{Ca}$",r"$EW_{Si}$",r"$\lambda_{Si}$",r"$E_{\gamma^0}(B-V)$",r"$E_{\gamma^1}(B-V)$",r"$p\sigma_p \vec{\phi}_{\hat{I}}$"],range=numpy.zeros(7)+1.,label_kwargs={'fontsize':22})
+figure = corner.corner(mega,labels=[r"$\Delta$",r"$EW_{Ca}$",r"$EW_{Si}$",r"$\lambda_{Si}$",r"$x_1$",r"$E_{\gamma^0}(B-V)$",r"$E_{\gamma^1}(B-V)$",r"$p\sigma_p \phi_{\hat{I}}$"],range=numpy.zeros(8)+.9995,label_kwargs={'fontsize':22})
 for ax in figure.get_axes():
     for tick in ax.xaxis.get_major_ticks():
         tick.label.set_fontsize(14) 
