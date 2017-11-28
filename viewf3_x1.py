@@ -805,7 +805,7 @@ print dustebv[:,1:].std()
 print extebv[:,1:].std()
 
 
-plt.hist([dustebv, extebv],normed=True,bins=25,
+plt.hist([dustebv, extebv],normed=True,bins=50,
   label=[r'$E_{\gamma}(\hat{B}-\hat{V})$',r'$E_p(\hat{B}-\hat{V})$'])
 # plt.hist([(fit['gamma'][:,1]-fit['gamma'][:,2])[:,None]*fit['k'] + 
 #   (fit['gamma1'][:,1]-fit['gamma1'][:,2])[:,None]*fit['k1'], (fit['rho1'][:,1]-fit['rho1'][:,2])[:,None]*fit['R']],normed=True,bins=20,
@@ -1213,6 +1213,39 @@ plt.savefig(pp,format='pdf')
 pp.close()
 plt.close()
 
+
+correction = [fit['gamma'][:,i][:,None]*fit['k'] + fit['rho1'][:,i][:,None]*fit['R'] + (fit['ev_sig']*fit['ev'][:,i])[:,None]*fit['mag_int_raw']\
+    for i in xrange(5)]
+correction = numpy.array(correction)
+
+scorrection = [fit['alpha'][:,i][:,None]*fit['EW'][:,:, 0] \
+    + fit['beta'][:,i][:,None]*fit['EW'][:,:, 1] + fit['eta'][:,i][:,None]*fit['sivel']+ fit['zeta'][:,i][:,None]*fit['x1']\
+    for i in xrange(5)]
+scorrection = numpy.array(scorrection)
+
+plt.clf()
+(y, ymin, ymax) = numpy.percentile(correction-correction[:,:,0][:,:,None],(50,50-34,50+34),axis=1)
+(x, xmin, xmax) = numpy.percentile(scorrection[1,:,:]-scorrection[2,:,:],(50,50-34,50+34),axis=0)
+
+ind=0
+plt.errorbar(color_obs[:,1]-x,y[ind],xerr=[numpy.sqrt(color_cov[:,1,1]+(xmax-xmin)**2/4),numpy.sqrt(color_cov[:,1,1]+(xmax-xmin)**2/4)],yerr=[y[ind]-ymin[ind],ymax[ind]-y[ind]],fmt='o')
+plt.gca().invert_yaxis()
+plt.ylabel(r'$\gamma^0_{\hat{U}} g_0 +\gamma^1_{\hat{U}} g_1 +\sigma_p\phi_{\hat{U}}p$')
+plt.xlabel(r'$E_o(\hat{B}-\hat{V})$ + offset')
+pp = PdfPages('output_fix3_x1/ccorr1e.pdf')
+plt.savefig(pp,format='pdf',bbox_inches='tight')
+plt.tight_layout()
+pp.close()
+
+plt.xlim((-0.17,0.1))
+plt.ylim((-0.4,0.5))
+plt.gca().invert_yaxis()
+pp = PdfPages('output_fix3_x1/ccorr2e.pdf')
+plt.savefig(pp,format='pdf',bbox_inches='tight')
+plt.tight_layout()
+pp.close()
+
+wef
 
 # cind=[0,1,2,3,4]
 # cname = ['U','B','V','R','I']

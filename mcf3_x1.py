@@ -25,9 +25,10 @@ f = open('fix3_x1_sim_null0.pkl','rb')
 
 
 mc.append(numpy.median(fit['ev_sig']))
-for index in xrange(1,4):
+for index in xrange(1,100):
     f = open('fix3_x1_sim_null{}.pkl'.format(index),'rb')
     (fit,_) = pickle.load(f)
     mc.append(numpy.median(fit['ev_sig']))
+mc= numpy.array(mc)
 
-print ref, mc
+print ref, mc.max()

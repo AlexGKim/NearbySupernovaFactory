@@ -37,10 +37,6 @@ av=0.1
 ebv=0.1/2.5
 A1= f99_band.A_X(r_v=av/ebv, ebv=ebv)
 
-# pkl_file = open('fitz.pkl', 'r')
-# a=pickle.load(pkl_file)
-# pkl_file.close()
-
 # AX = a[0]* av + a[1] * av**2 \
 #   + a[2]* ebv+ a[3] * ebv**2 \
 #   + a[4] * av* ebv \
@@ -60,41 +56,17 @@ dAdAv = (A2 - A1)/0.01
 A3= f99_band.A_X(r_v=av/(ebv+0.001), ebv=ebv+0.001)
 dAdebv = (A3 - A1)/0.001
 
+print "Fitzpatrick partial of A with respect to parameters"
 print '{0[0]:6.2f}, {0[1]:6.2f}, {0[2]:6.2f}, {0[3]:6.2f}, {0[4]:6.2f}'.format(dAdAv)
 print '{0[0]:6.2f}, {0[1]:6.2f}, {0[2]:6.2f}, {0[3]:6.2f}, {0[4]:6.2f}'.format(dAdebv)
 
 
 #residual
+print "Extreme residuals of Fitzpatrick with respect to a linear approximation"
 AX = f99_band.A_X(r_v=2.0, ebv=1./2)
 print AX -A1 - dAdAv*(1.-av) - dAdebv*(1./2 - ebv)
 AX = f99_band.A_X(r_v=3.5, ebv=1./3.5)
 print AX -A1 - dAdAv*(1.-av) - dAdebv*(1./3.5 - ebv)
-
-# av=0.1
-# ebv=0.1/3.1
-# A1= f99_band.A_X(r_v=av/ebv, ebv=ebv)
-
-# A2= f99_band.A_X(r_v=(av+0.01)/ebv, ebv=ebv)
-# dAdAv = (A2 - A1)/0.01
-
-# A3= f99_band.A_X(r_v=av/(ebv+0.001), ebv=ebv+0.001)
-# dAdebv = (A3 - A1)/0.001
-
-# print '{0[0]:6.2f}, {0[1]:6.2f}, {0[2]:6.2f}, {0[3]:6.2f}, {0[4]:6.2f}'.format(dAdAv)
-# print '{0[0]:6.2f}, {0[1]:6.2f}, {0[2]:6.2f}, {0[3]:6.2f}, {0[4]:6.2f}'.format(dAdebv)
-
-# av=0.1
-# ebv=0.1/1.9
-# A1= f99_band.A_X(r_v=av/ebv, ebv=ebv)
-
-# A2= f99_band.A_X(r_v=(av+0.01)/ebv, ebv=ebv)
-# dAdAv = (A2 - A1)/0.01
-
-# A3= f99_band.A_X(r_v=av/(ebv+0.001), ebv=ebv+0.001)
-# dAdebv = (A3 - A1)/0.001
-
-# print '{0[0]:6.2f}, {0[1]:6.2f}, {0[2]:6.2f}, {0[3]:6.2f}, {0[4]:6.2f}'.format(dAdAv)
-# print '{0[0]:6.2f}, {0[1]:6.2f}, {0[2]:6.2f}, {0[3]:6.2f}, {0[4]:6.2f}'.format(dAdebv)
 
 # The equation of interest is
 # gammma0 = ans00 F0 + ans01 F1 + res
@@ -165,7 +137,7 @@ for s in ['gamma','rho1']:
 tmat = numpy.array(tmat)
 res= numpy.array(res)
 
-#print the matrix and the residues
+print 'the matrix and the residues'
 print tmat
 print (numpy.linalg.norm(res,axis=1)/numpy.array(c_n))**2
 print res
@@ -225,18 +197,18 @@ a = Arrow3D([0,cs[1][0]/dum],[0,cs[1][2]/dum],[0,cs[1][4]/dum], mutation_scale=1
 ax.add_artist(a)
 
 dum  = numpy.sqrt(dAdAv[0]**2+dAdAv[2]**2+dAdAv[4]**2)
-ax.plot([0,dAdAv[0]/dum],[0,dAdAv[2]/dum],[0,dAdAv[4]/dum],label=r'$\hat{a(X)}$',ls='--',color='blue')
+ax.plot([0,dAdAv[0]/dum],[0,dAdAv[2]/dum],[0,dAdAv[4]/dum],label=r'$\hat{a}$',ls='--',color='blue')
 a = Arrow3D([0,dAdAv[0]/dum],[0,dAdAv[2]/dum],[0,dAdAv[4]/dum],ls='--', mutation_scale=10, color='blue',
             arrowstyle="-|>")
 ax.add_artist(a)
 dum  = numpy.sqrt(dAdebv[0]**2+dAdebv[2]**2+dAdebv[4]**2)
-ax.plot([0,dAdebv[0]/dum],[0,dAdebv[2]/dum],[0,dAdebv[4]/dum],label=r'$\hat{b(X)}$',ls='--', color='green')
+ax.plot([0,dAdebv[0]/dum],[0,dAdebv[2]/dum],[0,dAdebv[4]/dum],label=r'$\hat{b}$',ls='--', color='green')
 a = Arrow3D([0,dAdebv[0]/dum],[0,dAdebv[2]/dum],[0,dAdebv[4]/dum],ls='--', mutation_scale=10, color='green',
             arrowstyle="-|>")
 ax.add_artist(a)
 crap = dAdAv + dAdebv*kappa1
 dum  = numpy.sqrt(crap[0]**2+crap[2]**2+crap[4]**2)
-ax.plot([0,crap[0]/dum],[0,crap[2]/dum],[0,crap[4]/dum],label=r'$a(X)+b(X)/{:4.2f}$'.format(1/kappa1),ls=':',color='black')
+ax.plot([0,crap[0]/dum],[0,crap[2]/dum],[0,crap[4]/dum],label=r'$\vec{{a}}+\vec{{b}}/{:4.2f}$'.format(1/kappa1),ls=':',color='black')
 a = Arrow3D([0,crap[0]/dum],[0,crap[2]/dum],[0,crap[4]/dum], mutation_scale=10, ls=':',color='black', linewidth=3.,
             arrowstyle="-|>",alpha=0.8)
 ax.add_artist(a)
@@ -276,6 +248,12 @@ ax.set_zlabel(r'$\hat{I}$',labelpad=9,rotation=0)
 ax.xaxis.set_ticks(numpy.arange(-.5,1.1,.25))
 ax.yaxis.set_ticks(numpy.arange(-.8,.81,.4))
 ax.view_init(elev=2, azim=-114)
+for tick in ax.xaxis.get_major_ticks():
+    tick.label.set_fontsize(12) 
+for tick in ax.yaxis.get_major_ticks():
+    tick.label.set_fontsize(12)
+for tick in ax.zaxis.get_major_ticks():
+    tick.label.set_fontsize(12)
 pp = PdfPages("output_fix3_x1/plane0.pdf")
 # plt.tight_layout()
 plt.savefig(pp,format='pdf',bbox_inches='tight')
@@ -318,6 +296,7 @@ ax.set_zlabel(r'$R$',labelpad=18)
 ax.xaxis.set_ticks(numpy.arange(-.5,1.1,.25))
 ax.yaxis.set_ticks(numpy.arange(-.8,.81,.4))
 ax.view_init(elev=2, azim=-114)
+
 pp = PdfPages("output_fix3_x1/plane0BVR.pdf")
 plt.tight_layout()
 plt.savefig(pp,format='pdf')

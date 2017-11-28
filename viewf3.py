@@ -12,7 +12,7 @@ import scipy
 import cPickle
 import matplotlib as mpl
 import sivel
-mpl.rcParams['font.size'] = 16
+mpl.rcParams['font.size'] = 28
 
 f = open('fix3.pkl','rb')
 (fit,_) = pickle.load(f)
@@ -128,8 +128,13 @@ for i in xrange(nsne):
 # intrinsic = numpy.median(correction,axis=1)
 fixev = fit['ev']
 fixev = fixev * numpy.sign(fixev[:,4])[:,None]
-corner.corner(fit['ev_sig'][:,None]*fit['ev'],labels=[r"$\sigma_p \phi_{\hat{U}}$",r"$\sigma_p \phi_{\hat{B}}$",r"$\sigma_p \phi_{\hat{V}}$",r"$\sigma_p \phi_{\hat{R}}$",r"$\sigma_p \phi_{\hat{I}}$"], \
+figure=corner.corner(fit['ev_sig'][:,None]*fit['ev'],labels=[r"$\sigma_p \phi_{\hat{U}}$",r"$\sigma_p \phi_{\hat{B}}$",r"$\sigma_p \phi_{\hat{V}}$",r"$\sigma_p \phi_{\hat{R}}$",r"$\sigma_p \phi_{\hat{I}}$"], \
     truths=[0,0,0,0,0])
+for ax in figure.get_axes():
+    for tick in ax.xaxis.get_major_ticks():
+        tick.label.set_fontsize(18) 
+    for tick in ax.yaxis.get_major_ticks():
+        tick.label.set_fontsize(18)
 pp = PdfPages('output_fix3/sigev.pdf')
 plt.savefig(pp,format='pdf',bbox_inches='tight')
 pp.close()
@@ -182,7 +187,7 @@ crap = crap-crap[:,0][:,None]
 plt.hist(crap.flatten(),bins,label='posterior stack',normed=True,alpha=0.5)
 plt.hist(numpy.median(crap,axis=0),bins,label='median',normed=True,alpha=0.5,width=0.025)
 plt.xlabel(r'$\gamma^0_{\hat{V}} g_0 - \gamma^0_{\hat{V}} g_0|_0$')  #\\ approx A^F_V|_{R^F_{eff}=2.44}$')
-plt.legend()
+plt.legend(fontsize=20)
 plt.tight_layout()
 pp = PdfPages('output_fix3/deltagamma0_med.pdf')
 plt.savefig(pp,format='pdf')
@@ -195,7 +200,7 @@ crap2 = crap2-crap2[:,0][:,None]
 plt.hist(crap2.flatten(),bins,label='posterior stack',normed=True,alpha=0.5)
 plt.hist(numpy.median(crap2,axis=0),bins,label='median',normed=True,alpha=0.5,width=0.01)
 plt.xlabel(r'$\gamma^1_{\hat{V}} g_1 - \gamma^1_{\hat{V}} g_1|_0$')
-plt.legend(loc=2)
+plt.legend(loc=2,fontsize=20)
 plt.xlim((-0.4,0.2))
 
 plt.tight_layout()
