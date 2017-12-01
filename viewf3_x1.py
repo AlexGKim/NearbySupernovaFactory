@@ -1196,13 +1196,13 @@ plt.close()
 
 mega = numpy.array([fit['Delta'].flatten(),fit['EW'][:,:,0].flatten(),fit['EW'][:,:,1].flatten(),fit['sivel'].flatten(), fit['x1'].flatten(),\
     ((fit['gamma'][:,1] - fit['gamma'][:,2])[:,None]*fit['k']).flatten(), \
-    ((fit['rho1'][:,1] - fit['rho1'][:,2])[:,None]*fit['R']).flatten(),((fit['ev_sig']*fit['ev'][:,4])[:,None]* fit['mag_int_raw']).flatten()])
+    ((fit['rho1'][:,1] - fit['rho1'][:,2])[:,None]*fit['R']).flatten(),((fit['ev_sig']*fit['ev'][:,2])[:,None]* fit['mag_int_raw']).flatten()])
 
 
 mega = numpy.transpose(mega)
 mega=mega[::50,:]
 
-figure = corner.corner(mega,labels=[r"$\Delta$",r"$EW_{Ca}$",r"$EW_{Si}$",r"$\lambda_{Si}$",r"$x_1$",r"$E_{\gamma^0}(B-V)$",r"$E_{\gamma^1}(B-V)$",r"$p\sigma_p \phi_{\hat{I}}$"],range=numpy.zeros(8)+.9995,label_kwargs={'fontsize':22})
+figure = corner.corner(mega,labels=[r"$\Delta$",r"$EW_{Ca}$",r"$EW_{Si}$",r"$\lambda_{Si}$",r"$x_1$",r"$E_{\gamma^0}(B-V)$",r"$E_{\gamma^1}(B-V)$",r"$A_{p,V}$"],range=numpy.zeros(8)+.9995,label_kwargs={'fontsize':22})
 for ax in figure.get_axes():
     for tick in ax.xaxis.get_major_ticks():
         tick.label.set_fontsize(14) 
@@ -1212,8 +1212,6 @@ pp = PdfPages('output_fix3_x1/perobject_corner.pdf')
 plt.savefig(pp,format='pdf')
 pp.close()
 plt.close()
-
-
 correction = [fit['gamma'][:,i][:,None]*fit['k'] + fit['rho1'][:,i][:,None]*fit['R'] + (fit['ev_sig']*fit['ev'][:,i])[:,None]*fit['mag_int_raw']\
     for i in xrange(5)]
 correction = numpy.array(correction)
@@ -1224,18 +1222,25 @@ scorrection = [fit['alpha'][:,i][:,None]*fit['EW'][:,:, 0] \
 scorrection = numpy.array(scorrection)
 
 plt.clf()
-(y, ymin, ymax) = numpy.percentile(correction-correction[:,:,0][:,:,None],(50,50-34,50+34),axis=1)
-(x, xmin, xmax) = numpy.percentile(scorrection[1,:,:]-scorrection[2,:,:],(50,50-34,50+34),axis=0)
 
+indy=3
 ind=0
-plt.errorbar(color_obs[:,1]-x,y[ind],xerr=[numpy.sqrt(color_cov[:,1,1]+(xmax-xmin)**2/4),numpy.sqrt(color_cov[:,1,1]+(xmax-xmin)**2/4)],yerr=[y[ind]-ymin[ind],ymax[ind]-y[ind]],fmt='o')
+(y, ymin, ymax) = numpy.percentile(correction-correction[:,:,0][:,:,None],(50,50-34,50+34),axis=1)
+(x, xmin, xmax) = numpy.percentile(scorrection[ind,:,:]-scorrection[ind,:,0][:,None]-(scorrection[2,:,:]-scorrection[2,:,0][:,None]),(50,50-34,50+34),axis=0)
+
+
+plt.errorbar(color_obs[:,ind]-x,y[indy], \
+    xerr=[numpy.sqrt(color_cov[:,ind,ind]+(xmax-xmin)**2/4),numpy.sqrt(color_cov[:,ind,ind]+(xmax-xmin)**2/4)], \
+    yerr=[y[indy]-ymin[indy],ymax[indy]-y[indy]],fmt='o')
 plt.gca().invert_yaxis()
-plt.ylabel(r'$\gamma^0_{\hat{U}} g_0 +\gamma^1_{\hat{U}} g_1 +\sigma_p\phi_{\hat{U}}p$')
+plt.ylabel(r'$\gamma^0_{\hat{B}} g_0 +\gamma^1_{\hat{B}} g_1 +\sigma_p\phi_{\hat{B}}p$')
 plt.xlabel(r'$E_o(\hat{B}-\hat{V})$ + offset')
 pp = PdfPages('output_fix3_x1/ccorr1e.pdf')
 plt.savefig(pp,format='pdf',bbox_inches='tight')
 plt.tight_layout()
 pp.close()
+
+fwe
 
 plt.xlim((-0.17,0.1))
 plt.ylim((-0.4,0.5))
@@ -1244,8 +1249,6 @@ pp = PdfPages('output_fix3_x1/ccorr2e.pdf')
 plt.savefig(pp,format='pdf',bbox_inches='tight')
 plt.tight_layout()
 pp.close()
-
-wef
 
 # cind=[0,1,2,3,4]
 # cname = ['U','B','V','R','I']
