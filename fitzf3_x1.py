@@ -85,18 +85,23 @@ a_save = numpy.array(a)
 # calculate the projection onto the plane
 proj=[]
 kappa=[]
+res = []
 for i in xrange(fit['gamma'].shape[0]):
   proj2=[]
   kappa2=[]
+  res2=[]
   for s in ['gamma','rho1']:
     y = numpy.array([numpy.dot(fit[s][i,:],dAdAv), numpy.dot(fit[s][i,:],dAdebv)])
     ans = numpy.linalg.solve(a,y)
     kappa2.append(ans)
     proj2.append((numpy.linalg.norm(ans[1]*dAdebv + ans[0]*dAdAv)/numpy.linalg.norm(fit[s][i,:]))**2)
+    res2.append(fit[s][i,:]-ans[1]*dAdebv - ans[0]*dAdAv)
   kappa.append(kappa2)
   proj.append(proj2)
+  res.append(res2)
 
 kappa = numpy.array(kappa)
+res=numpy.array(res)
 
 print "R1 (1/kappa1) term"
 dum1, dumm, dump =  numpy.percentile(kappa[:,0,0]/kappa[:,0,1],(50,50-34,50+34))
@@ -104,6 +109,27 @@ print "{:.2f}^{{+{:.2f}}}_{{{:.2f}}}".format(dum1,dump-dum1,dumm-dum1)
 print "1/kappa2 term"
 dum1, dumm, dump =  numpy.percentile(kappa[:,1,1]/kappa[:,1,0],(50,50-34,50+34))
 print "{:.2f}^{{+{:.2f}}}_{{{:.2f}}}".format(dum1,dump-dum1,dumm-dum1)
+
+print "Matrix"
+dum1, dumm, dump =  numpy.percentile(kappa,(50,50-34,50+34),axis=0)
+
+for i1 in xrange(2):
+    for i2 in xrange(2):
+        print "{:.1f}^{{+{:.1f}}}_{{{:.1f}}}".format(dum1[i1,i2],dump[i1,i2]-dum1[i1,i2],dumm[i1,i2]-dum1[i1,i2]),
+        if (i2 != 1):
+            print "&",
+
+    print "\\\\" 
+
+print "residuals"
+print res.shape
+for i1 in xrange(2):
+  dum1, dumm, dump =  numpy.percentile(res[:,i1,:],(50,50-34,50+34),axis=0)
+  for i2 in xrange(5):
+      print "{:.1f}^{{+{:.1f}}}_{{{:.1f}}}".format(dum1[i2],dump[i2]-dum1[i2],dumm[i2]-dum1[i2]),
+      if (i2 != 4):
+          print "&",
+  print
 
 
 print "projection of gamma0, gamma1 onto Fitzpatrick plane"
@@ -295,13 +321,13 @@ ax.set_ylabel(r'$V$',labelpad=18)
 ax.set_zlabel(r'$R$',labelpad=18)
 ax.xaxis.set_ticks(numpy.arange(-.5,1.1,.25))
 ax.yaxis.set_ticks(numpy.arange(-.8,.81,.4))
-ax.view_init(elev=2, azim=-114)
+ax.view_init(elev=15, azim=-114)
 
 pp = PdfPages("output_fix3_x1/plane0BVR.pdf")
 plt.tight_layout()
 plt.savefig(pp,format='pdf')
 pp.close()
-ax.view_init(elev=7, azim=-165)
+ax.view_init(elev=15, azim=-165)
 ax.yaxis.set_ticks(numpy.arange(-.75,.76,.25))
 ax.xaxis.set_ticks(numpy.arange(-.5,.76,.5))
 pp = PdfPages("output_fix3_x1/plane1BVR.pdf")

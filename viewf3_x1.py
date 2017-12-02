@@ -423,7 +423,7 @@ from matplotlib.ticker import NullFormatter
 cind=[0,1,3,4]
 cname = ['U','B','R','I']
 mpl.rcParams['font.size'] = 12
-fig, axes = plt.subplots(nrows=4,ncols=2,gridspec_kw={'width_ratios':[.8,.2]})
+fig, axes = plt.subplots(nrows=4,ncols=2,gridspec_kw={'width_ratios':[.75,.25]})
 for i in xrange(4):
     (y, ymin, ymax) = numpy.percentile(correction[cind[i],:,:],(50,50-34,50+34),axis=0)
     err = numpy.sqrt(color_cov[:,i,i] + ((ymax-ymin)/2)**2)
@@ -445,7 +445,7 @@ for i in xrange(4):
     axes[i,0].plot(lims,lims,alpha=0.5)
     axes[i,0].set_xlabel(r'$\hat{{{0}}} - \hat{{V}} +(\gamma^0_\hat{{{0}}}-\gamma^0_\hat{{V}}) g_0+ (\gamma^1_\hat{{{0}}}-\gamma^1_\hat{{V}})  g_1+ (\zeta_\hat{{{0}}}-\zeta_\hat{{V}})x_1+ (\phi_\hat{{{0}}}-\phi_\hat{{V}})p$'.format(cname[i]))
     axes[i,0].set_ylabel(r'$(\hat{{{0}}}_o-\hat{{V}}_o)$'.format(cname[i]))
-    lname = r'$\Delta(\hat{{{0}}}-\hat{{V}})$'.format(cname[i])
+    lname = r'$(\hat{{{0}}}-\hat{{V}})$ Difference'.format(cname[i])
     # axes[i,0].set_ylabel(lname)
     # axes[i,1].hist(y-color_obs[:,i], orientation='horizontal')
     axes[i,1].hist(color_obs[:,i]-y,bins=numpy.arange(-.16,.16001,0.01))
