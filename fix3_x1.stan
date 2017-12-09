@@ -119,7 +119,7 @@ transformed parameters {
 model {
   target += cauchy_lpdf(ev_sig | 0.1,0.1);
   target += normal_lpdf(mag_int_raw| 0, 1);
-  target += - D*ev_sig;
+
   for (d in 1:D) {
     target += multi_normal_lpdf(mag_obs[d] | mag_int[d]+gamma*k[d] + rho1*R[d], mag_cov[d]);
     target += multi_normal_lpdf(EW_obs[d] | EW[d], EW_cov[d]);
