@@ -85,7 +85,8 @@ print "standard deviations of E(B-V)"
 print numpy.std(fit['k']*((fit['gamma'][:,1]-fit['gamma'][:,2]))[:,None])
 print numpy.std(fit['R']*((fit['rho1'][:,1]-fit['rho1'][:,2]))[:,None])
 
-
+print numpy.std((fit['gamma'][:,1]-fit['gamma'][:,2])[:,None]*fit['k'] + (fit['rho1'][:,1]-fit['rho1'][:,2])[:,None]*fit['R'])
+print numpy.std((fit['ev_sig']*(fit['ev'][:,1]-fit['ev'][:,2]))[:,None]*fit['mag_int_raw'])
 
 filts = ['U','B','V','R','I']
 for i in xrange(5):
@@ -179,7 +180,11 @@ print "{:6.2f}_{{{:6.2f}}}^{{+{:6.2f}}}".format(y[wmin],ymin[wmin]-y[wmin],ymax[
 #ratio phi_b/(phi_b - phi_v)
 print 'ratio phi_b/(phi_b - phi_v)'
 (y,ymin,ymax) = numpy.percentile(fit['ev'][:,1]/(fit['ev'][:,1]-fit['ev'][:,2]),(50,50-34,50+34),axis=0)
-print "{:6.2f}_{{{:6.2f}}}^{{+{:6.2f}}}".format(y,ymin-y,ymax-y)
+print "{:6.1f}_{{{:6.1f}}}^{{+{:6.1f}}}".format(y,ymin-y,ymax-y)
+
+print 'ratio phi_b/(phi_b - phi_r)'
+(y,ymin,ymax) = numpy.percentile(fit['ev'][:,1]/(fit['ev'][:,1]-fit['ev'][:,3]),(50,50-34,50+34),axis=0)
+print "{:6.1f}_{{{:6.1f}}}^{{+{:6.1f}}}".format(y,ymin-y,ymax-y)
 
 
 pkl_file = open('gege_data.pkl', 'r')

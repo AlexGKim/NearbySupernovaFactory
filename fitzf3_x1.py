@@ -128,7 +128,7 @@ for i1 in xrange(2):
   for i2 in xrange(5):
       print "{:.1f}^{{+{:.1f}}}_{{{:.1f}}}".format(dum1[i2],dump[i2]-dum1[i2],dumm[i2]-dum1[i2]),
       if (i2 != 4):
-          print "&",
+          print ",",
   print
 
 
@@ -567,7 +567,7 @@ plt.errorbar(ebvav_s[0,:,1], ebvav_s[0,:,0], \
 plt.ylabel(r'$A^F_{V,eff}+ const $')
 plt.xlabel(r'$E^F(B-V)_{eff} + const$')
 x = numpy.array([-0.09,0.45])
-plt.plot(x,2.4*x,color='black',label="slope = 2.4")
+plt.plot(x,2.30*x,color='black',label="slope = 2.39")
 # plt.plot(x, rbv[1]+rbv[0]*x,label=r'$R^F={:6.2f}_{{-{:6.2f}}}^{{+{:6.2f}}}$'.format(rbv[0],rbv[0]-mrbv[0],prbv[0]-rbv[0]),color='black')
 plt.legend(loc=4)
 pp = PdfPages("output_fix3_x1/avebv_synth.pdf")

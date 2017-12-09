@@ -158,6 +158,7 @@ ksarr=numpy.array(ksarr)
 pvarr=numpy.array(pvarr)
 
 (x, xmin, xmax) = numpy.percentile(pvarr,(50,50-34,50+34))
+print "ks test"
 print r"${:9.3f} _ {{ {:9.3f} }} ^{{ {:9.3f} }}$".format(x,x-xmin,xmax-x) 
 
 wefwefe

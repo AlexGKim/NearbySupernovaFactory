@@ -126,7 +126,7 @@ for i in xrange(nsne):
 
 # intrinsic = numpy.median(correction,axis=1)
 fixev = fit['ev']
-fixev = fixev * numpy.sign(fixev[:,4])[:,None]
+fixev = fixev * numpy.sign(fixev[:,2])[:,None]
 corner.corner(fit['ev_sig'][:,None]*fixev,labels=[r"$\sigma_p \phi_{\hat{U}}$",r"$\sigma_p \phi_{\hat{B}}$",r"$\sigma_p \phi_{\hat{V}}$",r"$\sigma_p \phi_{\hat{R}}$",r"$\sigma_p \phi_{\hat{I}}$"])
 pp = PdfPages('output_fix3_x1/sigev.pdf')
 plt.savefig(pp,format='pdf',bbox_inches='tight')
@@ -1187,7 +1187,7 @@ ax.axhline(0,linestyle=':')
 ax.set_xlabel(r'Band $X$')
 ax.set_xlim((-0.5,4.5))
 ax.set_ylabel(r'$\frac{\phi_X}{\phi_{\hat{V}}}-1$')
-ax.set_ylim((-2.6,0.1))
+ax.set_ylim((-3,0.1))
 pp = PdfPages('output_fix3_x1/phiratio.pdf')
 plt.savefig(pp,format='pdf',bbox_inches='tight')
 pp.close()
@@ -1212,43 +1212,42 @@ pp = PdfPages('output_fix3_x1/perobject_corner.pdf')
 plt.savefig(pp,format='pdf')
 pp.close()
 plt.close()
-correction = [fit['gamma'][:,i][:,None]*fit['k'] + fit['rho1'][:,i][:,None]*fit['R'] + (fit['ev_sig']*fit['ev'][:,i])[:,None]*fit['mag_int_raw']\
-    for i in xrange(5)]
-correction = numpy.array(correction)
 
-scorrection = [fit['alpha'][:,i][:,None]*fit['EW'][:,:, 0] \
-    + fit['beta'][:,i][:,None]*fit['EW'][:,:, 1] + fit['eta'][:,i][:,None]*fit['sivel']+ fit['zeta'][:,i][:,None]*fit['x1']\
-    for i in xrange(5)]
-scorrection = numpy.array(scorrection)
+# correction = [fit['gamma'][:,i][:,None]*fit['k'] + fit['rho1'][:,i][:,None]*fit['R'] + (fit['ev_sig']*fit['ev'][:,i])[:,None]*fit['mag_int_raw']\
+#     for i in xrange(5)]
+# correction = numpy.array(correction)
 
-plt.clf()
+# scorrection = [fit['alpha'][:,i][:,None]*fit['EW'][:,:, 0] \
+#     + fit['beta'][:,i][:,None]*fit['EW'][:,:, 1] + fit['eta'][:,i][:,None]*fit['sivel']+ fit['zeta'][:,i][:,None]*fit['x1']\
+#     for i in xrange(5)]
+# scorrection = numpy.array(scorrection)
 
-indy=3
-ind=0
-(y, ymin, ymax) = numpy.percentile(correction-correction[:,:,0][:,:,None],(50,50-34,50+34),axis=1)
-(x, xmin, xmax) = numpy.percentile(scorrection[ind,:,:]-scorrection[ind,:,0][:,None]-(scorrection[2,:,:]-scorrection[2,:,0][:,None]),(50,50-34,50+34),axis=0)
+# plt.clf()
+
+# indy=3
+# ind=0
+# (y, ymin, ymax) = numpy.percentile(correction-correction[:,:,0][:,:,None],(50,50-34,50+34),axis=1)
+# (x, xmin, xmax) = numpy.percentile(scorrection[ind,:,:]-scorrection[ind,:,0][:,None]-(scorrection[2,:,:]-scorrection[2,:,0][:,None]),(50,50-34,50+34),axis=0)
 
 
-plt.errorbar(color_obs[:,ind]-x,y[indy], \
-    xerr=[numpy.sqrt(color_cov[:,ind,ind]+(xmax-xmin)**2/4),numpy.sqrt(color_cov[:,ind,ind]+(xmax-xmin)**2/4)], \
-    yerr=[y[indy]-ymin[indy],ymax[indy]-y[indy]],fmt='o')
-plt.gca().invert_yaxis()
-plt.ylabel(r'$\gamma^0_{\hat{B}} g_0 +\gamma^1_{\hat{B}} g_1 +\sigma_p\phi_{\hat{B}}p$')
-plt.xlabel(r'$E_o(\hat{B}-\hat{V})$ + offset')
-pp = PdfPages('output_fix3_x1/ccorr1e.pdf')
-plt.savefig(pp,format='pdf',bbox_inches='tight')
-plt.tight_layout()
-pp.close()
+# plt.errorbar(color_obs[:,ind]-x,y[indy], \
+#     xerr=[numpy.sqrt(color_cov[:,ind,ind]+(xmax-xmin)**2/4),numpy.sqrt(color_cov[:,ind,ind]+(xmax-xmin)**2/4)], \
+#     yerr=[y[indy]-ymin[indy],ymax[indy]-y[indy]],fmt='o')
+# plt.gca().invert_yaxis()
+# plt.ylabel(r'$\gamma^0_{\hat{B}} g_0 +\gamma^1_{\hat{B}} g_1 +\sigma_p\phi_{\hat{B}}p$')
+# plt.xlabel(r'$E_o(\hat{B}-\hat{V})$ + offset')
+# pp = PdfPages('output_fix3_x1/ccorr1e.pdf')
+# plt.savefig(pp,format='pdf',bbox_inches='tight')
+# plt.tight_layout()
+# pp.close()
 
-fwe
-
-plt.xlim((-0.17,0.1))
-plt.ylim((-0.4,0.5))
-plt.gca().invert_yaxis()
-pp = PdfPages('output_fix3_x1/ccorr2e.pdf')
-plt.savefig(pp,format='pdf',bbox_inches='tight')
-plt.tight_layout()
-pp.close()
+# plt.xlim((-0.17,0.1))
+# plt.ylim((-0.4,0.5))
+# plt.gca().invert_yaxis()
+# pp = PdfPages('output_fix3_x1/ccorr2e.pdf')
+# plt.savefig(pp,format='pdf',bbox_inches='tight')
+# plt.tight_layout()
+# pp.close()
 
 # cind=[0,1,2,3,4]
 # cname = ['U','B','V','R','I']
