@@ -104,8 +104,8 @@ evterm_gal = evterm_gal - (fit['ev_sig']*fit['ev'][:,2])[:,None]*fit['mag_int_ra
 (x, xmin, xmax) = numpy.percentile(evterm_gal,(50,50-34,50+34),axis=0)
 
 plt.errorbar(mass,x,xerr=[emass, emass], yerr=[x-xmin,xmax-x],fmt='o')
-plt.ylabel(r'$ \sigma_p\phi_{\hat{V}}(p-p|_0) $')
-plt.xlabel(r'$\log{(M_{host}/M_{\odot})}$')
+plt.ylabel(r'$ \sigma_p\phi_{\hat{V}}(p-p|_0) $',fontsize=20)
+plt.xlabel(r'$\log{(M_{host}/M_{\odot})}$',fontsize=20)
 plt.axvline(10,linestyle=':')
 # pp = PdfPages("output_fix3_x1/childress.pdf")
 # plt.savefig(pp,format='pdf',bbox_inches='tight')

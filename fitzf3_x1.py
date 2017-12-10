@@ -564,8 +564,8 @@ plt.errorbar(ebvav_s[0,:,1], ebvav_s[0,:,0], \
  xerr=(ebvav_s[0,:,1]-ebvav_s[1,:,1], ebvav_s[2,:,1]-ebvav_s[0,:,1]),\
  yerr=(ebvav_s[0,:,0]-ebvav_s[1,:,0], ebvav_s[2,:,0]-ebvav_s[0,:,0]),fmt='o',alpha=0.4,color='blue')
 
-plt.ylabel(r'$A^F_{V,eff}+ const $')
-plt.xlabel(r'$E^F(B-V)_{eff} + const$')
+plt.ylabel(r'$A^F_{V,eff}+ const $',fontsize=18)
+plt.xlabel(r'$E^F(B-V)_{eff} + const$',fontsize=18)
 x = numpy.array([-0.09,0.45])
 plt.plot(x,2.30*x,color='black',label="slope = 2.39")
 # plt.plot(x, rbv[1]+rbv[0]*x,label=r'$R^F={:6.2f}_{{-{:6.2f}}}^{{+{:6.2f}}}$'.format(rbv[0],rbv[0]-mrbv[0],prbv[0]-rbv[0]),color='black')

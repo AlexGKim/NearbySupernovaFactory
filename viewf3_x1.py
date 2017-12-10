@@ -12,7 +12,10 @@ import scipy
 import cPickle
 import matplotlib as mpl
 import sivel
+from chainconsumer import ChainConsumer
+
 mpl.rcParams['font.size'] = 28
+# rc('text', usetex=True)
 
 f = open('fix3_x1.pkl','rb')
 (fit,_) = pickle.load(f)
@@ -118,20 +121,19 @@ for i in xrange(nsne):
     color_cov[i] = numpy.dot(trans,numpy.dot(mag_cov[i], trans.T))
 
 
-
 # correction = [fit['c'][:,i][:,None] + fit['alpha'][:,i][:,None]*fit['EW'][:,:, 0] \
 #     + fit['beta'][:,i][:,None]*fit['EW'][:,:, 1] + fit['eta'][:,i][:,None]*fit['sivel']\
 #     for i in xrange(5)]
 # correction = numpy.array(correction)
 
 # intrinsic = numpy.median(correction,axis=1)
-fixev = fit['ev']
-fixev = fixev * numpy.sign(fixev[:,2])[:,None]
-corner.corner(fit['ev_sig'][:,None]*fixev,labels=[r"$\sigma_p \phi_{\hat{U}}$",r"$\sigma_p \phi_{\hat{B}}$",r"$\sigma_p \phi_{\hat{V}}$",r"$\sigma_p \phi_{\hat{R}}$",r"$\sigma_p \phi_{\hat{I}}$"])
-pp = PdfPages('output_fix3_x1/sigev.pdf')
-plt.savefig(pp,format='pdf',bbox_inches='tight')
-pp.close()
-plt.close()
+# fixev = fit['ev']
+# fixev = fixev * numpy.sign(fixev[:,2])[:,None]
+# corner.corner(fit['ev_sig'][:,None]*fixev,labels=[r"$\sigma_p \phi_{\hat{U}}$",r"$\sigma_p \phi_{\hat{B}}$",r"$\sigma_p \phi_{\hat{V}}$",r"$\sigma_p \phi_{\hat{R}}$",r"$\sigma_p \phi_{\hat{I}}$"])
+# pp = PdfPages('output_fix3_x1/sigev.pdf')
+# plt.savefig(pp,format='pdf',bbox_inches='tight')
+# pp.close()
+# plt.close()
 
 
 #significance of ev
@@ -147,23 +149,23 @@ plt.close()
 # pickle.dump([intrinsic, numpy.array(data['snlist'])[use]], output, protocol=2)
 # output.close()
 # wefew
-colors = fit['c']+mag_mn[None,:]
-colors  = colors - colors[:,2][:,None]
-colors = numpy.delete(colors, 2,axis=1)
-figure = corner.corner(colors,labels=[r"$U_0-V_0$",r"$B_0-V_0$",r"$R_0-V_0$",r"$I_0-V_0$"])
-pp = PdfPages('output_fix3_x1/col_corner.pdf')
-plt.savefig(pp,format='pdf')
-pp.close()
-plt.close()
+# colors = fit['c']+mag_mn[None,:]
+# colors  = colors - colors[:,2][:,None]
+# colors = numpy.delete(colors, 2,axis=1)
+# figure = corner.corner(colors,labels=[r"$U_0-V_0$",r"$B_0-V_0$",r"$R_0-V_0$",r"$I_0-V_0$"])
+# pp = PdfPages('output_fix3_x1/col_corner.pdf')
+# plt.savefig(pp,format='pdf')
+# pp.close()
+# plt.close()
 
 
-plt.hist(numpy.median((fit['gamma'][:,1]-fit['gamma'][:,2])[:,None]*fit['k'],axis=0),bins=20)
-plt.xlabel(r'$E_{\gamma_0}(B-V)$')
-plt.legend()
-pp = PdfPages('output_fix3_x1/ebv_gamma0.pdf')
-plt.savefig(pp,format='pdf')
-pp.close()
-plt.close()
+# plt.hist(numpy.median((fit['gamma'][:,1]-fit['gamma'][:,2])[:,None]*fit['k'],axis=0),bins=20)
+# plt.xlabel(r'$E_{\gamma_0}(B-V)$')
+# plt.legend()
+# pp = PdfPages('output_fix3_x1/ebv_gamma0.pdf')
+# plt.savefig(pp,format='pdf')
+# pp.close()
+# plt.close()
 
 
 # bins = numpy.arange(-0.2,0.8001,0.02)
@@ -175,12 +177,14 @@ plt.hist(numpy.median((fit['gamma'][:,2])[:,None]*fit['k'],axis=0),bins,label='m
 plt.hist(((fit['gamma'][:,2])[:,None]*fit['k']).flatten(),bins,label='ideogram',normed=True,alpha=0.5)
 plt.xlabel(r'$\gamma^0_2 k_0 \approx A^F_V|_{R^F=2.44}$')
 plt.legend()
+
 plt.tight_layout()
 pp = PdfPages('output_fix3_x1/gamma0_med.pdf')
 plt.savefig(pp,format='pdf')
 pp.close()
 plt.close()
 
+plt.clf()
 bins=numpy.arange(-0.2,1.2,0.05)
 crap = fit['gamma'][:,2][:,None]*fit['k']
 crap = crap-crap[:,0][:,None]
@@ -188,12 +192,15 @@ plt.hist(crap.flatten(),bins,label='posterior stack',normed=True,alpha=0.5)
 plt.hist(numpy.median(crap,axis=0),bins,label='median',normed=True,alpha=0.5,width=0.025)
 plt.xlabel(r'$\gamma^0_{\hat{V}} g_0 - \gamma^0_{\hat{V}} g_0|_0 \approx A^F_V|_{R^F_{eff}=2.40}$')
 plt.legend(fontsize=20)
+plt.xticks(fontsize=18)
+plt.yticks(fontsize=18)
 plt.tight_layout()
 pp = PdfPages('output_fix3_x1/deltagamma0_med.pdf')
 plt.savefig(pp,format='pdf')
 pp.close()
 plt.close()
 
+plt.clf()
 bins=numpy.arange(-0.4,0.2,0.02)
 crap2 = fit['rho1'][:,2][:,None]*fit['R']
 crap2 = crap2-crap2[:,0][:,None]
@@ -202,7 +209,8 @@ plt.hist(numpy.median(crap2,axis=0),bins,label='median',normed=True,alpha=0.5,wi
 plt.xlabel(r'$\gamma^1_{\hat{V}} g_1 - \gamma^1_{\hat{V}} g_1|_0$')
 plt.legend(loc=2,fontsize=20)
 plt.xlim((-0.4,0.2))
-
+plt.xticks(fontsize=18)
+plt.yticks(fontsize=18)
 plt.tight_layout()
 pp = PdfPages('output_fix3_x1/deltagamma1_med.pdf')
 plt.savefig(pp,format='pdf')
@@ -420,6 +428,7 @@ correction = numpy.array(correction)
 correction = correction - correction[2,:,:]
 # correction_median = numpy.median(correction,axis=1)
 from matplotlib.ticker import NullFormatter
+plt.clf()
 cind=[0,1,3,4]
 cname = ['U','B','R','I']
 mpl.rcParams['font.size'] = 12
@@ -445,6 +454,8 @@ for i in xrange(4):
     axes[i,0].plot(lims,lims,alpha=0.5)
     axes[i,0].set_xlabel(r'$\hat{{{0}}} - \hat{{V}} +(\gamma^0_\hat{{{0}}}-\gamma^0_\hat{{V}}) g_0+ (\gamma^1_\hat{{{0}}}-\gamma^1_\hat{{V}})  g_1+ (\zeta_\hat{{{0}}}-\zeta_\hat{{V}})x_1+ (\phi_\hat{{{0}}}-\phi_\hat{{V}})p$'.format(cname[i]))
     axes[i,0].set_ylabel(r'$(\hat{{{0}}}_o-\hat{{V}}_o)$'.format(cname[i]))
+
+    axes[i,0].tick_params(axis='both', which='major', labelsize=9)
     lname = r'$(\hat{{{0}}}-\hat{{V}})$ Difference'.format(cname[i])
     # axes[i,0].set_ylabel(lname)
     # axes[i,1].hist(y-color_obs[:,i], orientation='horizontal')
@@ -454,6 +465,7 @@ for i in xrange(4):
     axes[i,1].set_xlim((-.11,.11))
 
     axes[i,1].xaxis.set_ticks(numpy.arange(-.10,.1001,0.10))
+    axes[i,1].tick_params(axis='both', which='major', labelsize=9)
     # axes[i,1].set_ylim(axes[i,0].get_ylim())
     # axes[i,1].yaxis.set_major_formatter(NullFormatter())
     # axes[i,1].xaxis.set_major_formatter(NullFormatter())
@@ -679,7 +691,9 @@ bins = numpy.arange(-0.2,0.8001,0.02)
 plt.hist((fit['Delta']-fit['Delta'][:,0][:,None]).flatten(),bins,label='posterior stack',normed=True,alpha=0.5)
 plt.hist(numpy.median((fit['Delta']-fit['Delta'][:,0][:,None]),axis=0),bins,label='median',normed=True,alpha=0.5,width=0.01)
 plt.legend(fontsize=20)
-plt.xlabel(r'$\Delta-\Delta|_0$')
+plt.xlabel(r'$\Delta-\Delta|_0$',fontsize=20)
+plt.xticks(fontsize=18)
+plt.yticks(fontsize=18)
 pp = PdfPages('output_fix3_x1/deltaDelta_hist.pdf')
 plt.savefig(pp,format='pdf',bbox_inches='tight')
 pp.close()
@@ -800,9 +814,6 @@ dustebv = (fit['gamma'][:,1]-fit['gamma'][:,2])[:,None]*fit['k'] + (fit['rho1'][
 extebv = (fit['ev_sig']*(fit['ev'][:,1]-fit['ev'][:,2]))[:,None]*fit['mag_int_raw']
 dustebv = dustebv-dustebv[:,0][:,None]
 extebv = extebv-extebv[:,0][:,None]
-print 'extrinsic and intrinsic contributions'
-print dustebv[:,1:].std()
-print extebv[:,1:].std()
 
 
 plt.hist([dustebv, extebv],normed=True,bins=50,
@@ -811,6 +822,8 @@ plt.hist([dustebv, extebv],normed=True,bins=50,
 #   (fit['gamma1'][:,1]-fit['gamma1'][:,2])[:,None]*fit['k1'], (fit['rho1'][:,1]-fit['rho1'][:,2])[:,None]*fit['R']],normed=True,bins=20,
 #   label=[r'$E(B-V)$',r'$E_\delta(B-V)$'])
 plt.xlabel(r'$E(\hat{B}-\hat{V})-E(\hat{B}-\hat{V})|_0$',fontsize=20)
+plt.xticks(fontsize=18)
+plt.yticks(fontsize=18)
 plt.legend(fontsize=20)
 pp = PdfPages('output_fix3_x1/ebv.pdf')
 plt.savefig(pp,format='pdf',bbox_inches='tight')
@@ -1064,110 +1077,10 @@ with PdfPages('output_fix3_x1/multipage_pdf.pdf') as pdf:
 #from manu
 efflam = numpy.array([ 3693.16777627,  4369.37505509,  5287.48667023,  6319.19906153,7610.89305298])
 # [3701, 4601, 5744, 6948, 8403]
-rc('text', usetex=True)
-
 
 
 filts = [r'$\hat{U}$',r'$\hat{B}$',r'$\hat{V}$',r'$\hat{R}$',r'$\hat{I}$']
-# lambdas = numpy.arange(3000.,9000,100)
-# rvs=[2.97]
-# avs = [12.25]
-# for rv,av in zip(rvs,avs):
-#   f99 = sncosmo.F99Dust(r_v =rv)
-#   f99.set(ebv=av)
-#   A_ = f99.propagate(lambdas,1)
-#   A_=-2.5*numpy.log10(A_)
 
-#   # norm = f99.propagate([efflam[1]],1.) / f99.propagate(numpy.array([efflam[2]]),1.)
-#   # norm  = -2.5*numpy.log10(norm)
-#   # A_ = sncosmo._extinction.ccm89(lambdas, 1., rv)
-#   # norm  = sncosmo._extinction.ccm89(numpy.array([efflam[1]]), 1., rv)-sncosmo._extinction.ccm89(numpy.array([efflam[2]]), 1., rv)
-#   # A_ = A_/norm[0]
-#   plt.plot(lambdas,A_,label=r"$R^F_V={:.2f}$".format(rv))
-
-# (y, ymin, ymax) = numpy.percentile(fit['gamma'],(50,50-34,50+34),axis=0)
-# plt.errorbar(efflam,y,yerr=[y-ymin,ymax-y],fmt='o')
-# plt.legend()
-# plt.xlabel(r'Wavelength (\AA)')
-# plt.ylabel(r'$\gamma_X$')
-# pp = PdfPages('output_fix3_x1/fitz.pdf')
-# plt.savefig(pp,format='pdf')
-# pp.close()
-# plt.close()
-
-
-nlinks = fit['gamma'].shape[0]
-mega = numpy.array([fit['c'],fit['alpha'],fit['beta'],fit['eta'],fit['zeta'],fit['gamma'],fit['rho1'],fit['ev_sig'][:,None]*fit['ev']])
-mega = numpy.transpose(mega)
-
-
-
-cname=[r'\hat{U}',r'\hat{B}',r'\hat{V}',r'\hat{R}',r'\hat{I}']
-for index in xrange(5):
-    figure = corner.corner(mega[index,:,:],labels=[r"$c_{{{}}}$".format(cname[index]), r"$\alpha_{{{}}}$".format(cname[index]),\
-                    r"$\beta_{{{}}}$".format(cname[index]),r"$\eta_{{{}}}$".format(cname[index]),r"$\zeta_{{{}}}$".format(cname[index]),r"$\gamma^0_{{{}}}$".format(cname[index]),\
-                    r"$\gamma^1_{{{}}}$".format(cname[index]),r"$\sigma_p \phi_{{{}}}$".format(cname[index])], label_kwargs={'fontsize':22},\
-                    truths=[None,0,0,0,0,0,0,0])
-    figure.suptitle(filts[index],fontsize=28)
-
-    for ax in figure.get_axes():
-        for tick in ax.xaxis.get_major_ticks():
-            tick.label.set_fontsize(14) 
-        for tick in ax.yaxis.get_major_ticks():
-            tick.label.set_fontsize(14) 
-
-    pp = PdfPages('output_fix3_x1/coeff{}.pdf'.format(index))
-    plt.savefig(pp,format='pdf')
-    pp.close()
-    plt.close()
-
-lambdas = numpy.arange(3000.,9000,100)
-# for rv in rvs:
-
-#     f99 = sncosmo.F99Dust(r_v =rv)
-#     f99.set(ebv=1.37)
-#     A_ = f99.propagate(lambdas,1.)
-#     A_=-2.5*numpy.log10(A_)
-
-#     norm = f99.propagate([efflam[1]],1.) / f99.propagate(numpy.array([efflam[2]]),1.)
-#     norm  = -2.5*numpy.log10(norm)
-#     # A_ = sncosmo._extinction.ccm89(lambdas, 1., rv)
-#     # norm  = sncosmo._extinction.ccm89(numpy.array([efflam[1]]), 1., rv)-sncosmo._extinction.ccm89(numpy.array([efflam[2]]), 1., rv)
-#     A_ = A_/norm[0]
-#     plt.plot(lambdas,A_,label=r"$R^F_V={:.2f}$".format(rv))
-
-# (y, ymin, ymax) = numpy.percentile(fit['gamma']/((fit['gamma'][:,1]-fit['gamma'][:,2])[:,None]),(50,50-34,50+34),axis=0)
-# plt.errorbar(efflam,y,yerr=[y-ymin,ymax-y],fmt='o')
-# plt.legend()
-# plt.xlabel(r'Wavelength (\AA)')
-# plt.ylabel(r'$R_X=\frac{\gamma_X}{\gamma_1-\gamma_2}$')
-# pp = PdfPages('output_fix3_x1/ccm.pdf')
-# plt.savefig(pp,format='pdf')
-# pp.close()
-# plt.close()
-
-# for rv in rvs:
-
-#     f99 = sncosmo.F99Dust(r_v =rv)
-#     f99.set(ebv=1.37)
-#     A_ = f99.propagate(lambdas,1.)
-
-#     norm  = f99.propagate(numpy.array([efflam[2]]),1.) 
-#     # A_ = sncosmo._extinction.ccm89(lambdas, 1., rv)
-#     # norm  = sncosmo._extinction.ccm89(numpy.array([efflam[2]]), 1., rv)
-#     # A_ = A_/norm[0]
-#     A_ = numpy.log10(A_)/numpy.log10(norm)
-#     plt.plot(lambdas,A_,label=r"$R^F_V={:.1f}$".format(rv))
-
-# (y, ymin, ymax) = numpy.percentile(fit['gamma']/fit['gamma'][:,2][:,None],(50,50-34,50+34),axis=0)
-# plt.errorbar(efflam,y,yerr=[y-ymin,ymax-y],fmt='o')
-# plt.legend()
-# plt.xlabel(r'Wavelength (\AA)')
-# plt.ylabel(r'$\frac{\gamma_X}{\gamma_2}$')
-# pp = PdfPages('output_fix3_x1/ccm2.pdf')
-# plt.savefig(pp,format='pdf')
-# pp.close()
-# plt.close()
 
 labels = [r'$\hat{U}$',r'$\hat{B}$',r'$\hat{V}$',r'$\hat{R}$',r'$\hat{I}$']
 from matplotlib.ticker import FuncFormatter, MaxNLocator
@@ -1187,7 +1100,7 @@ ax.axhline(0,linestyle=':')
 ax.set_xlabel(r'Band $X$')
 ax.set_xlim((-0.5,4.5))
 ax.set_ylabel(r'$\frac{\phi_X}{\phi_{\hat{V}}}-1$')
-ax.set_ylim((-3,0.1))
+ax.set_ylim((-2.9,0.1))
 pp = PdfPages('output_fix3_x1/phiratio.pdf')
 plt.savefig(pp,format='pdf',bbox_inches='tight')
 pp.close()
@@ -1201,89 +1114,72 @@ mega = numpy.array([fit['Delta'].flatten(),fit['EW'][:,:,0].flatten(),fit['EW'][
 
 mega = numpy.transpose(mega)
 mega=mega[::50,:]
+c=ChainConsumer()
+c.add_chain(mega, \
+    parameters= [r"$\Delta$",r"$EW_{Ca}$",r"$EW_{Si}$",r"$\lambda_{Si}$",r"$x_1$",r"$E_{\gamma^0}(B-V)$",r"$E_{\gamma^1}(B-V)$",r"$A_{p,V}$"])
 
-figure = corner.corner(mega,labels=[r"$\Delta$",r"$EW_{Ca}$",r"$EW_{Si}$",r"$\lambda_{Si}$",r"$x_1$",r"$E_{\gamma^0}(B-V)$",r"$E_{\gamma^1}(B-V)$",r"$A_{p,V}$"],range=numpy.zeros(8)+.9995,label_kwargs={'fontsize':22})
-for ax in figure.get_axes():
-    for tick in ax.xaxis.get_major_ticks():
-        tick.label.set_fontsize(14) 
-    for tick in ax.yaxis.get_major_ticks():
-        tick.label.set_fontsize(14) 
-pp = PdfPages('output_fix3_x1/perobject_corner.pdf')
-plt.savefig(pp,format='pdf')
-pp.close()
-plt.close()
+fig = c.plotter.plot(figsize="column", truth=numpy.zeros(5))
 
-# correction = [fit['gamma'][:,i][:,None]*fit['k'] + fit['rho1'][:,i][:,None]*fit['R'] + (fit['ev_sig']*fit['ev'][:,i])[:,None]*fit['mag_int_raw']\
-#     for i in xrange(5)]
-# correction = numpy.array(correction)
+for ax in fig.axes:
+    ax.xaxis.set_tick_params(labelsize=7)
+    ax.xaxis.label.set_size(7)
+    ax.yaxis.set_tick_params(labelsize=7)
+    ax.yaxis.label.set_size(7)
+fig.savefig('output_fix3_x1/perobject_corner.pdf',bbox_inches='tight')
 
-# scorrection = [fit['alpha'][:,i][:,None]*fit['EW'][:,:, 0] \
-#     + fit['beta'][:,i][:,None]*fit['EW'][:,:, 1] + fit['eta'][:,i][:,None]*fit['sivel']+ fit['zeta'][:,i][:,None]*fit['x1']\
-#     for i in xrange(5)]
-# scorrection = numpy.array(scorrection)
-
-# plt.clf()
-
-# indy=3
-# ind=0
-# (y, ymin, ymax) = numpy.percentile(correction-correction[:,:,0][:,:,None],(50,50-34,50+34),axis=1)
-# (x, xmin, xmax) = numpy.percentile(scorrection[ind,:,:]-scorrection[ind,:,0][:,None]-(scorrection[2,:,:]-scorrection[2,:,0][:,None]),(50,50-34,50+34),axis=0)
-
-
-# plt.errorbar(color_obs[:,ind]-x,y[indy], \
-#     xerr=[numpy.sqrt(color_cov[:,ind,ind]+(xmax-xmin)**2/4),numpy.sqrt(color_cov[:,ind,ind]+(xmax-xmin)**2/4)], \
-#     yerr=[y[indy]-ymin[indy],ymax[indy]-y[indy]],fmt='o')
-# plt.gca().invert_yaxis()
-# plt.ylabel(r'$\gamma^0_{\hat{B}} g_0 +\gamma^1_{\hat{B}} g_1 +\sigma_p\phi_{\hat{B}}p$')
-# plt.xlabel(r'$E_o(\hat{B}-\hat{V})$ + offset')
-# pp = PdfPages('output_fix3_x1/ccorr1e.pdf')
-# plt.savefig(pp,format='pdf',bbox_inches='tight')
-# plt.tight_layout()
-# pp.close()
-
-# plt.xlim((-0.17,0.1))
-# plt.ylim((-0.4,0.5))
-# plt.gca().invert_yaxis()
-# pp = PdfPages('output_fix3_x1/ccorr2e.pdf')
-# plt.savefig(pp,format='pdf',bbox_inches='tight')
-# plt.tight_layout()
-# pp.close()
-
-# cind=[0,1,2,3,4]
-# cname = ['U','B','V','R','I']
-
-# correction = [fit['Delta']+ fit['c'][:,i][:,None] + fit['alpha'][:,i][:,None]*fit['EW'][:,:, 0] \
-#     + fit['beta'][:,i][:,None]*fit['EW'][:,:, 1] + fit['eta'][:,i][:,None]*fit['sivel']\
-#     + fit['gamma'][:,i][:,None]*fit['k']+ fit['rho1'][:,i][:,None]*fit['R'] \
-#     for i in xrange(5)]
-
-# correction = numpy.array(correction)
-# correction  = numpy.median(correction,axis=1)
-# correction = numpy.transpose(correction)
-
-# fig, axes = plt.subplots(nrows=5)
-# (y, ymin, ymax) = numpy.percentile(fit['rho1'][:,2][:,None]*fit['R'],(50,50-34,50+34),axis=0)
-
-# for i in xrange(5):
-#     err = numpy.sqrt(mag_cov[:,i,i] + ((ymax-ymin)/2)**2)
-#     print y.shape, mag_renorm[:,i].shape, correction[:,i].shape
-#     axes[i].errorbar(y,mag_renorm[:,i]-correction[:,i],yerr=[numpy.sqrt(mag_cov[:,i,i]),numpy.sqrt(mag_cov[:,i,i])], xerr=[((ymax-ymin)/2),((ymax-ymin)/2)],fmt='.',alpha=0.2)
-#     axes[i].scatter(y,mag_renorm[:,i]-correction[:,i],alpha=0.8,s=1)
-
-#     miny = (mag_renorm[:,i]+mag_mn[cind[i]]-mag_mn[2]).min()
-#     maxy = (mag_renorm[:,i]+mag_mn[cind[i]]-mag_mn[2]).max()
-#     # axes[i].plot([miny,maxy],[miny,maxy])
-
-#     axes[i].set_xlabel(r'$\gamma^1_V k_1$'.format(cname[i]))
-#     axes[i].set_ylabel(r'$\Delta {0}$'.format(cname[i]))
-#     axes[i].set_ylim((-.5,.5))
-#     lname = r'${0}$'.format(cname[i])
-#     # axes[i,0].set_ylabel(lname)
-#     # axes[i,1].hist(y-mag_renorm[:,i], orientation='horizontal')
-# fig.subplots_adjust(hspace=.4, wspace=.18)
-# fig.set_size_inches(8,11)
-# # plt.tight_layout()
-# filename = 'output_fix3_x1/residual_fg.pdf'
-# pp = PdfPages(filename)
+# figure = corner.corner(mega,labels=[r"$\Delta$",r"$EW_{Ca}$",r"$EW_{Si}$",r"$\lambda_{Si}$",r"$x_1$",r"$E_{\gamma^0}(B-V)$",r"$E_{\gamma^1}(B-V)$",r"$A_{p,V}$"],range=numpy.zeros(8)+.9995,label_kwargs={'fontsize':22})
+# for ax in figure.get_axes():
+#     for tick in ax.xaxis.get_major_ticks():
+#         tick.label.set_fontsize(14) 
+#     for tick in ax.yaxis.get_major_ticks():
+#         tick.label.set_fontsize(14) 
+# pp = PdfPages('output_fix3_x1/perobject_corner.pdf')
 # plt.savefig(pp,format='pdf')
 # pp.close()
+plt.close()
+plt.clf()
+
+
+nlinks = fit['gamma'].shape[0]
+mega = numpy.array([fit['c'],fit['alpha'],fit['beta'],fit['eta'],fit['zeta'],fit['gamma'],fit['rho1'],fit['ev_sig'][:,None]*fit['ev']])
+mega = numpy.transpose(mega)
+
+cname=[r'\hat{U}',r'\hat{B}',r'\hat{V}',r'\hat{R}',r'\hat{I}']
+for index in xrange(5):
+    c=ChainConsumer()
+    c.add_chain(mega[index,:,:],parameters=[r"$c_{{{}}}$".format(cname[index]), r"$\alpha_{{{}}}$".format(cname[index]),\
+                    r"$\beta_{{{}}}$".format(cname[index]),r"$\eta_{{{}}}$".format(cname[index]),r"$\zeta_{{{}}}$".format(cname[index]),r"$\gamma^0_{{{}}}$".format(cname[index]),\
+                    r"$\gamma^1_{{{}}}$".format(cname[index]),r"$\sigma_p \phi_{{{}}}$".format(cname[index])])
+    fig = c.plotter.plot( figsize="column", truth=numpy.zeros(5))
+
+    for ax in fig.axes:
+        ax.xaxis.set_tick_params(labelsize=7)
+        ax.xaxis.label.set_size(9)
+        ax.yaxis.set_tick_params(labelsize=7)
+        ax.yaxis.label.set_size(9)
+    fig.savefig(filename='output_fix3_x1/coeff{}.pdf'.format(index),bbox_inches='tight')
+
+c=ChainConsumer()
+c.add_chain(fit['ev_sig'][:,None]*fit['ev']*numpy.sign(fit['ev'][:,2])[:,None],parameters=[r"$\sigma_p \phi_{\hat{U}}$",r"$\sigma_p \phi_{\hat{B}}$",r"$\sigma_p \phi_{\hat{V}}$",r"$\sigma_p \phi_{\hat{R}}$",r"$\sigma_p \phi_{\hat{I}}$"])
+c.plotter.plot(filename='output_fix3_x1/sigev.pdf',figsize="column", truth=numpy.zeros(5))
+
+
+    # figure = corner.corner(mega[index,:,:],labels=[r"$c_{{{}}}$".format(cname[index]), r"$\alpha_{{{}}}$".format(cname[index]),\
+    #                 r"$\beta_{{{}}}$".format(cname[index]),r"$\eta_{{{}}}$".format(cname[index]),r"$\zeta_{{{}}}$".format(cname[index]),r"$\gamma^0_{{{}}}$".format(cname[index]),\
+    #                 r"$\gamma^1_{{{}}}$".format(cname[index]),r"$\sigma_p \phi_{{{}}}$".format(cname[index])], label_kwargs={'fontsize':22},\
+    #                 truths=[None,0,0,0,0,0,0,0])
+    # figure.suptitle(filts[index],fontsize=28)
+
+    # for ax in figure.get_axes():
+    #     for tick in ax.xaxis.get_major_ticks():
+    #         tick.label.set_fontsize(14) 
+    #     for tick in ax.yaxis.get_major_ticks():
+    #         tick.label.set_fontsize(14) 
+
+    # pp = PdfPages('output_fix3_x1/coeff{}.pdf'.format(index))
+    # plt.savefig(pp,format='pdf')
+    # pp.close()
+    # plt.close()
+
+
+

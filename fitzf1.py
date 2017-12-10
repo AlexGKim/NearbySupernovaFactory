@@ -3,6 +3,7 @@ import pickle
 import numpy
 import sncosmo
 import scipy
+from matplotlib import rc
 from matplotlib.backends.backend_pdf import PdfPages
 import matplotlib.pyplot as plt
 import f99_band
@@ -11,6 +12,7 @@ import matplotlib as mpl
 
 from matplotlib.patches import FancyArrowPatch
 from mpl_toolkits.mplot3d import proj3d
+# rc('text', usetex=True)
 
 class Arrow3D(FancyArrowPatch):
     def __init__(self, xs, ys, zs, *args, **kwargs):

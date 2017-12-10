@@ -12,6 +12,8 @@ import scipy
 import cPickle
 import matplotlib as mpl
 import sivel
+# rc('text', usetex=True)
+rc('text', usetex=False)
 mpl.rcParams['font.size'] = 28
 
 f = open('fix1.pkl','rb')
@@ -130,40 +132,41 @@ for i in xrange(nsne):
 # pickle.dump([intrinsic, numpy.array(data['snlist'])[use]], output, protocol=2)
 # output.close()
 # wefew
-colors = fit['c']+mag_mn[None,:]
-colors  = colors - colors[:,2][:,None]
-colors = numpy.delete(colors, 2,axis=1)
-figure = corner.corner(colors,labels=[r"$U_0-V_0$",r"$B_0-V_0$",r"$R_0-V_0$",r"$I_0-V_0$"])
-pp = PdfPages('output_fix1/col_corner.pdf')
-plt.savefig(pp,format='pdf')
-pp.close()
-plt.close()
+# colors = fit['c']+mag_mn[None,:]
+# colors  = colors - colors[:,2][:,None]
+# colors = numpy.delete(colors, 2,axis=1)
+# figure = corner.corner(colors,labels=[r"$U_0-V_0$",r"$B_0-V_0$",r"$R_0-V_0$",r"$I_0-V_0$"])
+# pp = PdfPages('output_fix1/col_corner.pdf')
+# plt.savefig(pp,format='pdf')
+# pp.close()
+# plt.close()
 
 
-plt.hist(numpy.median((fit['gamma'][:,1]-fit['gamma'][:,2])[:,None]*fit['k'],axis=0),bins=20)
-plt.xlabel(r'$E_{\gamma_0}(B-V)$')
-plt.legend()
-pp = PdfPages('output_fix1/ebv_gamma0.pdf')
-plt.savefig(pp,format='pdf')
-pp.close()
-plt.close()
+# plt.hist(numpy.median((fit['gamma'][:,1]-fit['gamma'][:,2])[:,None]*fit['k'],axis=0),bins=20)
+# plt.xlabel(r'$E_{\gamma_0}(B-V)$')
+# plt.legend()
+# pp = PdfPages('output_fix1/ebv_gamma0.pdf')
+# plt.savefig(pp,format='pdf')
+# pp.close()
+# plt.close()
 
 
 # bins = numpy.arange(-0.2,0.8001,0.02)
 # plt.hist(fit['Delta'].flatten(),bins,label='ideogram',normed=True,alpha=0.5)
 # plt.hist(numpy.median(fit['Delta'],axis=0),bins,label='median',normed=True,alpha=0.5,width=0.01)
 
-bins=numpy.arange(-0.3,1,0.05)
-plt.hist(numpy.median((fit['gamma'][:,2])[:,None]*fit['k'],axis=0),bins,label='median',normed=True,alpha=0.5,width=0.02)
-plt.hist(((fit['gamma'][:,2])[:,None]*fit['k']).flatten(),bins,label='ideogram',normed=True,alpha=0.5)
-plt.xlabel(r'$\gamma^0_2 k_0 \approx A^F_V|_{R^F=2.44}$')
-plt.legend()
-plt.tight_layout()
-pp = PdfPages('output_fix1/gamma0_med.pdf')
-plt.savefig(pp,format='pdf')
-pp.close()
-plt.close()
+# bins=numpy.arange(-0.3,1,0.05)
+# plt.hist(numpy.median((fit['gamma'][:,2])[:,None]*fit['k'],axis=0),bins,label='median',normed=True,alpha=0.5,width=0.02)
+# plt.hist(((fit['gamma'][:,2])[:,None]*fit['k']).flatten(),bins,label='ideogram',normed=True,alpha=0.5)
+# plt.xlabel(r'$\gamma^0_2 k_0 \approx A^F_V|_{R^F=2.44}$')
+# plt.legend()
+# plt.tight_layout()
+# pp = PdfPages('output_fix1/gamma0_med.pdf')
+# plt.savefig(pp,format='pdf')
+# pp.close()
+# plt.close()
 
+plt.clf()
 bins=numpy.arange(-0.2,1.2,0.05)
 crap = fit['gamma'][:,2][:,None]*fit['k']
 crap = crap-crap[:,0][:,None]
@@ -171,12 +174,15 @@ plt.hist(crap.flatten(),bins,label='posterior stack',normed=True,alpha=0.5)
 plt.hist(numpy.median(crap,axis=0),bins,label='median',normed=True,alpha=0.5,width=0.025)
 plt.xlabel(r'$\gamma^0_{\hat{V}} g_0 - \gamma^0_{\hat{V}} g_0|_0$')#\approx A^F_V|_{R^F_{eff}=2.44}$')
 plt.legend(fontsize=20)
+plt.xticks(fontsize=18)
+plt.yticks(fontsize=18)
 plt.tight_layout()
 pp = PdfPages('output_fix1/deltagamma0_med.pdf')
 plt.savefig(pp,format='pdf')
 pp.close()
 plt.close()
 
+plt.clf()
 bins=numpy.arange(-0.4,0.2,0.02)
 crap2 = fit['rho1'][:,2][:,None]*fit['R']
 crap2 = crap2-crap2[:,0][:,None]
@@ -184,6 +190,8 @@ plt.hist(crap2.flatten(),bins,label='posterior stack',normed=True,alpha=0.5)
 plt.hist(numpy.median(crap2,axis=0),bins,label='median',normed=True,alpha=0.5,width=0.01)
 plt.xlabel(r'$\gamma^1_{\hat{V}} g_1 - \gamma^1_{\hat{V}} g_1|_0$')
 plt.legend(loc=2,fontsize=20)
+plt.xticks(fontsize=18)
+plt.yticks(fontsize=18)
 plt.xlim((-0.4,0.2))
 plt.tight_layout()
 pp = PdfPages('output_fix1/deltagamma1_med.pdf')
@@ -191,6 +199,7 @@ plt.savefig(pp,format='pdf')
 pp.close()
 plt.close()
 
+wefwe
 
 # #conversion to Fitzpatrick parameters A and E(B-V)
 # tmat= numpy.array([[2.82,1.15],[-5.27,0.72]])
@@ -991,7 +1000,7 @@ with PdfPages('output_fix1/multipage_pdf.pdf') as pdf:
 #from manu
 efflam = numpy.array([ 3693.16777627,  4369.37505509,  5287.48667023,  6319.19906153,7610.89305298])
 # [3701, 4601, 5744, 6948, 8403]
-rc('text', usetex=True)
+
 
 
 

@@ -12,6 +12,9 @@ import scipy
 import cPickle
 import matplotlib as mpl
 import sivel
+from chainconsumer import ChainConsumer
+# rc('text', usetex=True)
+rc('text', usetex=False)
 mpl.rcParams['font.size'] = 28
 
 f = open('fix3.pkl','rb')
@@ -126,61 +129,59 @@ for i in xrange(nsne):
 # correction = numpy.array(correction)
 
 # intrinsic = numpy.median(correction,axis=1)
-fixev = fit['ev']
-fixev = fixev * numpy.sign(fixev[:,4])[:,None]
-figure=corner.corner(fit['ev_sig'][:,None]*fit['ev'],labels=[r"$\sigma_p \phi_{\hat{U}}$",r"$\sigma_p \phi_{\hat{B}}$",r"$\sigma_p \phi_{\hat{V}}$",r"$\sigma_p \phi_{\hat{R}}$",r"$\sigma_p \phi_{\hat{I}}$"], \
-    truths=[0,0,0,0,0])
-for ax in figure.get_axes():
-    for tick in ax.xaxis.get_major_ticks():
-        tick.label.set_fontsize(18) 
-    for tick in ax.yaxis.get_major_ticks():
-        tick.label.set_fontsize(18)
-pp = PdfPages('output_fix3/sigev.pdf')
-plt.savefig(pp,format='pdf',bbox_inches='tight')
-pp.close()
-plt.close()
-
-
+# figure=corner.corner(fit['ev_sig'][:,None]*fit['ev'],labels=[r"$\sigma_p \phi_{\hat{U}}$",r"$\sigma_p \phi_{\hat{B}}$",r"$\sigma_p \phi_{\hat{V}}$",r"$\sigma_p \phi_{\hat{R}}$",r"$\sigma_p \phi_{\hat{I}}$"], \
+#     truths=[0,0,0,0,0])
+# for ax in figure.get_axes():
+#     for tick in ax.xaxis.get_major_ticks():
+#         tick.label.set_fontsize(18) 
+#     for tick in ax.yaxis.get_major_ticks():
+#         tick.label.set_fontsize(18)
+# pp = PdfPages('output_fix3/sigev.pdf')
+# plt.savefig(pp,format='pdf',bbox_inches='tight')
+# pp.close()
+# plt.close()
 
 # output = open('intrinsic.pkl','wb')
 # print intrinsic.shape, numpy.array(data['snlist'])[use].shape
 # pickle.dump([intrinsic, numpy.array(data['snlist'])[use]], output, protocol=2)
 # output.close()
 # wefew
-colors = fit['c']+mag_mn[None,:]
-colors  = colors - colors[:,2][:,None]
-colors = numpy.delete(colors, 2,axis=1)
-figure = corner.corner(colors,labels=[r"$U_0-V_0$",r"$B_0-V_0$",r"$R_0-V_0$",r"$I_0-V_0$"])
-pp = PdfPages('output_fix3/col_corner.pdf')
-plt.savefig(pp,format='pdf')
-pp.close()
-plt.close()
+
+# colors = fit['c']+mag_mn[None,:]
+# colors  = colors - colors[:,2][:,None]
+# colors = numpy.delete(colors, 2,axis=1)
+# figure = corner.corner(colors,labels=[r"$U_0-V_0$",r"$B_0-V_0$",r"$R_0-V_0$",r"$I_0-V_0$"])
+# pp = PdfPages('output_fix3/col_corner.pdf')
+# plt.savefig(pp,format='pdf')
+# pp.close()
+# plt.close()
 
 
-plt.hist(numpy.median((fit['gamma'][:,1]-fit['gamma'][:,2])[:,None]*fit['k'],axis=0),bins=20)
-plt.xlabel(r'$E_{\gamma_0}(B-V)$')
-plt.legend()
-pp = PdfPages('output_fix3/ebv_gamma0.pdf')
-plt.savefig(pp,format='pdf')
-pp.close()
-plt.close()
+# plt.hist(numpy.median((fit['gamma'][:,1]-fit['gamma'][:,2])[:,None]*fit['k'],axis=0),bins=20)
+# plt.xlabel(r'$E_{\gamma_0}(B-V)$')
+# plt.legend()
+# pp = PdfPages('output_fix3/ebv_gamma0.pdf')
+# plt.savefig(pp,format='pdf')
+# pp.close()
+# plt.close()
 
 
-# bins = numpy.arange(-0.2,0.8001,0.02)
-# plt.hist(fit['Delta'].flatten(),bins,label='ideogram',normed=True,alpha=0.5)
-# plt.hist(numpy.median(fit['Delta'],axis=0),bins,label='median',normed=True,alpha=0.5,width=0.01)
+# # bins = numpy.arange(-0.2,0.8001,0.02)
+# # plt.hist(fit['Delta'].flatten(),bins,label='ideogram',normed=True,alpha=0.5)
+# # plt.hist(numpy.median(fit['Delta'],axis=0),bins,label='median',normed=True,alpha=0.5,width=0.01)
 
-bins=numpy.arange(-0.3,1,0.05)
-plt.hist(numpy.median((fit['gamma'][:,2])[:,None]*fit['k'],axis=0),bins,label='median',normed=True,alpha=0.5,width=0.02)
-plt.hist(((fit['gamma'][:,2])[:,None]*fit['k']).flatten(),bins,label='ideogram',normed=True,alpha=0.5)
-plt.xlabel(r'$\gamma^0_2 k_0 \approx A^F_V|_{R^F=2.44}$')
-plt.legend()
-plt.tight_layout()
-pp = PdfPages('output_fix3/gamma0_med.pdf')
-plt.savefig(pp,format='pdf')
-pp.close()
-plt.close()
+# bins=numpy.arange(-0.3,1,0.05)
+# plt.hist(numpy.median((fit['gamma'][:,2])[:,None]*fit['k'],axis=0),bins,label='median',normed=True,alpha=0.5,width=0.02)
+# plt.hist(((fit['gamma'][:,2])[:,None]*fit['k']).flatten(),bins,label='ideogram',normed=True,alpha=0.5)
+# plt.xlabel(r'$\gamma^0_2 k_0 \approx A^F_V|_{R^F=2.44}$')
+# plt.legend()
+# plt.tight_layout()
+# pp = PdfPages('output_fix3/gamma0_med.pdf')
+# plt.savefig(pp,format='pdf')
+# pp.close()
+# plt.close()
 
+plt.clf()
 bins=numpy.arange(-0.2,1.2,0.05)
 crap = fit['gamma'][:,2][:,None]*fit['k']
 crap = crap-crap[:,0][:,None]
@@ -188,12 +189,15 @@ plt.hist(crap.flatten(),bins,label='posterior stack',normed=True,alpha=0.5)
 plt.hist(numpy.median(crap,axis=0),bins,label='median',normed=True,alpha=0.5,width=0.025)
 plt.xlabel(r'$\gamma^0_{\hat{V}} g_0 - \gamma^0_{\hat{V}} g_0|_0$')  #\\ approx A^F_V|_{R^F_{eff}=2.44}$')
 plt.legend(fontsize=20)
+plt.xticks(fontsize=18)
+plt.yticks(fontsize=18)
 plt.tight_layout()
 pp = PdfPages('output_fix3/deltagamma0_med.pdf')
 plt.savefig(pp,format='pdf')
 pp.close()
 plt.close()
 
+plt.clf()
 bins=numpy.arange(-0.4,0.2,0.02)
 crap2 = fit['rho1'][:,2][:,None]*fit['R']
 crap2 = crap2-crap2[:,0][:,None]
@@ -202,12 +206,14 @@ plt.hist(numpy.median(crap2,axis=0),bins,label='median',normed=True,alpha=0.5,wi
 plt.xlabel(r'$\gamma^1_{\hat{V}} g_1 - \gamma^1_{\hat{V}} g_1|_0$')
 plt.legend(loc=2,fontsize=20)
 plt.xlim((-0.4,0.2))
-
+plt.xticks(fontsize=18)
+plt.yticks(fontsize=18)
 plt.tight_layout()
 pp = PdfPages('output_fix3/deltagamma1_med.pdf')
 plt.savefig(pp,format='pdf')
 pp.close()
 plt.close()
+plt.clf()
 
 
 # #conversion to Fitzpatrick parameters A and E(B-V)
@@ -443,7 +449,8 @@ for i in xrange(4):
     # axes[i].plot([miny,maxy],[miny,maxy])
     lims = [color_obs[:,i].min()-0.02, color_obs[:,i].max()+0.02]
     axes[i,0].plot(lims,lims,alpha=0.5)
-    axes[i,0].set_xlabel(r'$\hat{{{0}}} +\gamma^0_\hat{{{0}}} g_0+\gamma^1_\hat{{{0}}}  g_1+\phi_\hat{{{0}}}  p- \hat{{V}} -\gamma^0_\hat{{V}} g_0-\gamma^1_\hat{{V}}  g_1 -\phi_\hat{{V}}  p $'.format(cname[i]))
+    axes[i,0].set_xlabel( \
+        r'$\hat{{{0}}} - \hat{{V}} +(\gamma^0_\hat{{{0}}}-\gamma^0_\hat{{V}}) g_0+ (\gamma^1_\hat{{{0}}}-\gamma^1_\hat{{V}})  g_1+ (\phi_\hat{{{0}}}-\phi_\hat{{V}})p$'.format(cname[i]))
     axes[i,0].set_ylabel(r'$(\hat{{{0}}}_o-\hat{{V}}_o)$'.format(cname[i]))
     lname = r'$\Delta(\hat{{{0}}}-\hat{{V}})$'.format(cname[i])
     # axes[i,0].set_ylabel(lname)
@@ -1034,7 +1041,6 @@ with PdfPages('output_fix3/multipage_pdf.pdf') as pdf:
 #from manu
 efflam = numpy.array([ 3693.16777627,  4369.37505509,  5287.48667023,  6319.19906153,7610.89305298])
 # [3701, 4601, 5744, 6948, 8403]
-rc('text', usetex=True)
 
 
 
@@ -1168,6 +1174,12 @@ pp = PdfPages('output_fix3/perobject_corner.pdf')
 plt.savefig(pp,format='pdf')
 pp.close()
 plt.close()
+
+c=ChainConsumer()
+c.add_chain(fit['ev_sig'][:,None]*fit['ev'], \
+    parameters= [r"$\sigma_p \phi_{\hat{U}}$",r"$\sigma_p \phi_{\hat{B}}$",r"$\sigma_p \phi_{\hat{V}}$",r"$\sigma_p \phi_{\hat{R}}$",r"$\sigma_p \phi_{\hat{I}}$"])
+c.plotter.plot(filename='output_fix3/sigev.pdf', figsize="column", truth=numpy.zeros(5))
+
 
 
 # cind=[0,1,2,3,4]
