@@ -418,6 +418,93 @@ plt.savefig(pp,format='pdf')
 pp.close()
 plt.close()
 
+
+pp = PdfPages("temp.pdf")
+filts = ['U','B','V','R','I']
+correction = [fit['Delta']+ fit['c'][:,i][:,None] + fit['alpha'][:,i][:,None]*fit['EW'][:,:, 0] \
+    + fit['beta'][:,i][:,None]*fit['EW'][:,:, 1] + fit['eta'][:,i][:,None]*fit['sivel']+ fit['zeta'][:,i][:,None]*fit['x1']\
+    + fit['gamma'][:,i][:,None]*fit['k']+ fit['rho1'][:,i][:,None]*fit['R'] + (fit['ev_sig']*fit['ev'][:,i])[:,None]* fit['mag_int_raw'] \
+    for i in xrange(5)]
+
+correction = numpy.array(correction)
+correction_mn = correction.mean(axis=1)
+correction_std = correction.std(axis=1)
+correction_mn = numpy.swapaxes(correction_mn,0,1)
+correction_std = numpy.swapaxes(correction_std,0,1)
+
+residual = mag_renorm-correction_mn
+residual_std = [numpy.sqrt(correction_std[index,:]**2 + numpy.diag(mag_cov[index])) for index in xrange(nsne)]
+residual_std =  numpy.array(residual_std)
+
+for m0 in xrange(5):
+    for m1 in xrange(m0+1,5):
+        fig, axes = plt.subplots(nrows=5,sharex=True)
+        colorerror = [mag_cov[index,m0,m0]+ mag_cov[index,m1,m1]-2*mag_cov[index,m0,m1] for index in xrange(nsne)]
+        colorerror = numpy.sqrt(colorerror)
+        for i in xrange(5):
+            axes[i].errorbar(mag_obs[:,m0]-mag_obs[:,m1],residual[:,i]/residual_std[:,i], \
+                xerr=[colorerror,colorerror],linestyle='None',alpha=0.5,fmt='o')
+            axes[i].set_ylabel(r"$\hat{{{}}}$ pull".format(filts[i]),fontsize=12)
+            for tick in axes[i].yaxis.get_major_ticks():
+                    tick.label.set_fontsize(8) 
+            # axes[i].set_ylim((-0.15,0.15))            
+        fig.set_size_inches(8,11)
+        axes[4].set_xlabel(r"$\hat{{{}}}_o-\hat{{{}}}_o$".format(filts[m0],filts[m1]),fontsize=12)
+        for tick in axes[4].xaxis.get_major_ticks():
+                tick.label.set_fontsize(8) 
+        axes[m0].set_axis_bgcolor('yellow')
+        axes[m1].set_axis_bgcolor('yellow')
+        plt.savefig(pp,format='pdf',bbox_inches='tight')
+pp.close()
+plt.close()
+
+pp = PdfPages("temp2.pdf")
+for m0 in xrange(5):
+    for m1 in xrange(m0+1,5):
+
+        # observed color on x axis
+        colorerror = [mag_cov[index,m0,m0]+ mag_cov[index,m1,m1]-2*mag_cov[index,m0,m1] for index in xrange(nsne)]
+        colorerror = numpy.sqrt(colorerror)
+
+        fig, axes = plt.subplots(nrows=5, ncols=2,sharex=True)
+        i = 0
+        for m0_ in xrange(5):
+            for m1_ in xrange(m0_+1,5):
+                indeces  = numpy.unravel_index(i,axes.shape)
+                colcorrection_  = correction[m0_,:,:]-correction[m1_,:,:]
+                correction_mn_ = colcorrection_.mean(axis=0)
+                correction_std_ = colcorrection_.std(axis=0)
+
+                colorerror_ = [mag_cov[index,m0_,m0_]+ mag_cov[index,m1_,m1_]-2*mag_cov[index,m0_,m1_] for index in xrange(nsne)]
+                colorerror_ = numpy.array(colorerror_)
+                colorerror_ = numpy.sqrt(correction_std_ **2 + colorerror_)
+
+                residual = mag_renorm[:,m0_] - mag_renorm[:,m1_]-correction_mn_
+
+                axes[indeces[0],indeces[1]].errorbar(mag_obs[:,m0]-mag_obs[:,m1],residual/colorerror_, \
+                    xerr=[colorerror,colorerror],linestyle='None',alpha=0.5,fmt='o')
+                axes[indeces[0],indeces[1]].set_ylabel(r"$\hat{{{}}}-\hat{{{}}}$ pull".format(filts[m0_],filts[m1_]),fontsize=12)
+                for tick in axes[indeces[0],indeces[1]].yaxis.get_major_ticks():
+                        tick.label.set_fontsize(8)
+
+                if m0_==m0 or m0_==m1 or m1_==m0 or m1_==m1:
+                    axes[indeces[0],indeces[1]].set_axis_bgcolor('yellow')
+                i=i+1
+
+            # axes[indeces[0],indeces[1]].set_ylim((-0.15,0.15))            
+        fig.set_size_inches(8,11)
+        axes[4,0].set_xlabel(r"$\hat{{{}}}_o-\hat{{{}}}_o$".format(filts[m0],filts[m1]),fontsize=12)
+        axes[4,1].set_xlabel(r"$\hat{{{}}}_o-\hat{{{}}}_o$".format(filts[m0],filts[m1]),fontsize=12)
+        for tick in axes[4,0].xaxis.get_major_ticks():
+                tick.label.set_fontsize(8) 
+        for tick in axes[4,1].xaxis.get_major_ticks():
+                tick.label.set_fontsize(8) 
+
+        plt.savefig(pp,format='pdf',bbox_inches='tight')
+pp.close()
+plt.close()
+wefwe
+
 correction = [fit['c'][:,i][:,None] + fit['alpha'][:,i][:,None]*fit['EW'][:,:, 0] \
     + fit['beta'][:,i][:,None]*fit['EW'][:,:, 1] + fit['eta'][:,i][:,None]*fit['sivel']+ fit['zeta'][:,i][:,None]*fit['x1']\
     + fit['gamma'][:,i][:,None]*fit['k']+ fit['rho1'][:,i][:,None]*fit['R'] + (fit['ev_sig']*fit['ev'][:,i])[:,None]* fit['mag_int_raw'] \
@@ -480,9 +567,6 @@ pp.close()
 plt.clf()
 
 
-# correction = [fit['Delta']+ fit['c'][:,i][:,None] + fit['alpha'][:,i][:,None]*fit['EW'][:,:, 0] \
-#     + fit['beta'][:,i][:,None]*fit['EW'][:,:, 1] + fit['eta'][:,i][:,None]*fit['sivel']
-#     for i in xrange(5)]
 
 # correction = numpy.array(correction)
 # # correction = correction - correction[2,:,:]
@@ -1163,23 +1247,6 @@ c=ChainConsumer()
 c.add_chain(fit['ev_sig'][:,None]*fit['ev']*numpy.sign(fit['ev'][:,2])[:,None],parameters=[r"$\sigma_p \phi_{\hat{U}}$",r"$\sigma_p \phi_{\hat{B}}$",r"$\sigma_p \phi_{\hat{V}}$",r"$\sigma_p \phi_{\hat{R}}$",r"$\sigma_p \phi_{\hat{I}}$"])
 c.plotter.plot(filename='output_fix3_x1/sigev.pdf',figsize="column", truth=numpy.zeros(5))
 
-
-    # figure = corner.corner(mega[index,:,:],labels=[r"$c_{{{}}}$".format(cname[index]), r"$\alpha_{{{}}}$".format(cname[index]),\
-    #                 r"$\beta_{{{}}}$".format(cname[index]),r"$\eta_{{{}}}$".format(cname[index]),r"$\zeta_{{{}}}$".format(cname[index]),r"$\gamma^0_{{{}}}$".format(cname[index]),\
-    #                 r"$\gamma^1_{{{}}}$".format(cname[index]),r"$\sigma_p \phi_{{{}}}$".format(cname[index])], label_kwargs={'fontsize':22},\
-    #                 truths=[None,0,0,0,0,0,0,0])
-    # figure.suptitle(filts[index],fontsize=28)
-
-    # for ax in figure.get_axes():
-    #     for tick in ax.xaxis.get_major_ticks():
-    #         tick.label.set_fontsize(14) 
-    #     for tick in ax.yaxis.get_major_ticks():
-    #         tick.label.set_fontsize(14) 
-
-    # pp = PdfPages('output_fix3_x1/coeff{}.pdf'.format(index))
-    # plt.savefig(pp,format='pdf')
-    # pp.close()
-    # plt.close()
 
 
 
