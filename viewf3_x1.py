@@ -419,7 +419,7 @@ pp.close()
 plt.close()
 
 
-pp = PdfPages("temp.pdf")
+pp = PdfPages("mpull.pdf")
 filts = ['U','B','V','R','I']
 correction = [fit['Delta']+ fit['c'][:,i][:,None] + fit['alpha'][:,i][:,None]*fit['EW'][:,:, 0] \
     + fit['beta'][:,i][:,None]*fit['EW'][:,:, 1] + fit['eta'][:,i][:,None]*fit['sivel']+ fit['zeta'][:,i][:,None]*fit['x1']\
@@ -455,10 +455,92 @@ for m0 in xrange(5):
         axes[m0].set_axis_bgcolor('yellow')
         axes[m1].set_axis_bgcolor('yellow')
         plt.savefig(pp,format='pdf',bbox_inches='tight')
+
+
+
 pp.close()
 plt.close()
 
-pp = PdfPages("temp2.pdf")
+pp = PdfPages("extrinsic.pdf")
+fig, axes = plt.subplots(nrows=5, ncols=2)
+
+dust= [(fit['ev_sig']*fit['ev'][:,i])[:,None]* fit['mag_int_raw'] for i in xrange(5)]
+dust=numpy.array(dust)
+i=0
+for m0 in xrange(5):
+    for m1 in xrange(m0+1,5):
+        indeces  = numpy.unravel_index(i,axes.shape)
+
+        colcorrection_  = correction[m0,:,:]-correction[m1,:,:]
+        correction_mn_ = colcorrection_.mean(axis=0)
+        correction_std_ = colcorrection_.std(axis=0)
+
+        colorerror_ = [mag_cov[index,m0,m0]+ mag_cov[index,m1,m1]-2*mag_cov[index,m0,m1] for index in xrange(nsne)]
+        colorerror_ = numpy.array(colorerror_)
+        colorerror_ = numpy.sqrt(correction_std_ **2 + colorerror_)
+
+        residual = mag_renorm[:,m0] - mag_renorm[:,m1]-correction_mn_
+
+        axes[indeces[0],indeces[1]].errorbar(numpy.mean(dust[m0,:,:]-dust[m1,:,:],axis=0),residual/colorerror_, \
+            xerr=[numpy.std(dust[m0,:,:]-dust[m1,:,:],axis=0),numpy.std(dust[m0,:,:]-dust[m1,:,:],axis=0)],linestyle='None',alpha=0.5,fmt='o')
+        axes[indeces[0],indeces[1]].set_ylabel(r"Pull $\hat{{{}}}-\hat{{{}}}$".format(filts[m0],filts[m1]),fontsize=12)
+        for tick in axes[indeces[0],indeces[1]].yaxis.get_major_ticks():
+                tick.label.set_fontsize(8) 
+            # axes[i].set_ylim((-0.15,0.15))            
+        fig.set_size_inches(8,11)
+        axes[indeces[0],indeces[1]].set_xlabel(r"Extrinsic $\hat{{{}}}-\hat{{{}}}$".format(filts[m0],filts[m1]),fontsize=12)
+        for tick in axes[indeces[0],indeces[1]].xaxis.get_major_ticks():
+                tick.label.set_fontsize(8) 
+        i=i+1
+fig.subplots_adjust(hspace=.4, wspace=.22)
+plt.savefig(pp,format='pdf',bbox_inches='tight')
+pp.close()
+plt.close()
+
+pp = PdfPages("intrinsic.pdf")
+fig, axes = plt.subplots(nrows=5, ncols=2)
+
+intrinsic= [(fit['ev_sig']*fit['ev'][:,i])[:,None]* fit['mag_int_raw'] \
+    for i in xrange(5)]
+
+
+intrinsic=numpy.array(intrinsic)
+i=0
+for m0 in xrange(5):
+    for m1 in xrange(m0+1,5):
+        indeces  = numpy.unravel_index(i,axes.shape)
+
+        colcorrection_  = correction[m0,:,:]-correction[m1,:,:]
+        correction_mn_ = colcorrection_.mean(axis=0)
+        correction_std_ = colcorrection_.std(axis=0)
+
+        colorerror_ = [mag_cov[index,m0,m0]+ mag_cov[index,m1,m1]-2*mag_cov[index,m0,m1] for index in xrange(nsne)]
+        colorerror_ = numpy.array(colorerror_)
+        colorerror_ = numpy.sqrt(correction_std_ **2 + colorerror_)
+
+        residual = mag_renorm[:,m0] - mag_renorm[:,m1]-correction_mn_
+
+        axes[indeces[0],indeces[1]].errorbar(numpy.mean(intrinsic[m0,:,:]-intrinsic[m1,:,:],axis=0),residual/colorerror_, \
+            xerr=[numpy.std(intrinsic[m0,:,:]-intrinsic[m1,:,:],axis=0),numpy.std(intrinsic[m0,:,:]-intrinsic[m1,:,:],axis=0)],linestyle='None',alpha=0.5,fmt='o')
+        axes[indeces[0],indeces[1]].set_ylabel(r"Pull $\hat{{{}}}-\hat{{{}}}$".format(filts[m0],filts[m1]),fontsize=12)
+        for tick in axes[indeces[0],indeces[1]].yaxis.get_major_ticks():
+                tick.label.set_fontsize(8) 
+            # axes[i].set_ylim((-0.15,0.15))            
+        fig.set_size_inches(8,11)
+        axes[indeces[0],indeces[1]].set_xlabel(r"Intrinsic $\hat{{{}}}-\hat{{{}}}$".format(filts[m0],filts[m1]),fontsize=12)
+        for tick in axes[indeces[0],indeces[1]].xaxis.get_major_ticks():
+                tick.label.set_fontsize(8) 
+        i=i+1
+fig.subplots_adjust(hspace=.4, wspace=.22)
+plt.savefig(pp,format='pdf',bbox_inches='tight')
+pp.close()
+plt.close()
+
+wefwe
+
+pp = PdfPages("cpull.pdf")
+
+
 for m0 in xrange(5):
     for m1 in xrange(m0+1,5):
 
