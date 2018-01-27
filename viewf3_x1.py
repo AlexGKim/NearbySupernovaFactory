@@ -419,7 +419,6 @@ pp.close()
 plt.close()
 
 
-pp = PdfPages("mpull.pdf")
 filts = ['U','B','V','R','I']
 correction = [fit['Delta']+ fit['c'][:,i][:,None] + fit['alpha'][:,i][:,None]*fit['EW'][:,:, 0] \
     + fit['beta'][:,i][:,None]*fit['EW'][:,:, 1] + fit['eta'][:,i][:,None]*fit['sivel']+ fit['zeta'][:,i][:,None]*fit['x1']\
@@ -427,24 +426,61 @@ correction = [fit['Delta']+ fit['c'][:,i][:,None] + fit['alpha'][:,i][:,None]*fi
     for i in xrange(5)]
 
 correction = numpy.array(correction)
-correction_mn = correction.mean(axis=1)
-correction_std = correction.std(axis=1)
-correction_mn = numpy.swapaxes(correction_mn,0,1)
-correction_std = numpy.swapaxes(correction_std,0,1)
 
-residual = mag_renorm-correction_mn
-residual_std = [numpy.sqrt(correction_std[index,:]**2 + numpy.diag(mag_cov[index])) for index in xrange(nsne)]
-residual_std =  numpy.array(residual_std)
+# correction subtracting out the zero
+correction_dot = correction-correction[:,:,0][:,:,None]
+correction_dot = correction_dot[:,:,1:]
+
+correction_dot_mn = correction_dot.mean(axis=1)
+correction_dot_std = correction_dot.std(axis=1)
+correction_dot_mn = numpy.swapaxes(correction_dot_mn,0,1)
+correction_dot_std = numpy.swapaxes(correction_dot_std,0,1)
+
+colcorrection = numpy.zeros((correction.shape[1],correction.shape[2],5,5))
+
+for m0 in xrange(5):
+    for m1 in xrange(m0+1,5):
+        colcorrection[:,:,m0,m1] = correction[m0,:,:] - correction[m1,:,:]
+
+colcorrection_dot = colcorrection[:,:,:,:] - colcorrection[:,0,:,:][:,None,:,:]
+colcorrection_dot = colcorrection_dot[:,1:,:,:]
+colcorrection_dot_mn = colcorrection_dot.mean(axis=0)
+colcorrection_dot_std = colcorrection_dot.std(axis=0)
+
+mag_renorm_dot = mag_renorm[:,:] -mag_renorm[0,:]
+mag_renorm_dot  = mag_renorm_dot[1:,:]
+
+mag_renorm_dot_var = [numpy.diag(mag_cov[index]) for index in xrange(nsne)]
+mag_renorm_dot_var = mag_renorm_dot_var + mag_renorm_dot_var[0]
+mag_renorm_dot_var = mag_renorm_dot_var[1:]
+
+obscolors = numpy.zeros((nsne,5,5))
+obscolors_var = numpy.zeros((nsne,5,5))
+for m0 in xrange(5):
+    for m1 in xrange(m0+1,5):
+        obscolors[:,m0,m1]=mag_renorm[:,m0]-mag_renorm[:,m1]
+        obscolors_var[:,m0,m1]=mag_cov[:,m0,m0]+ mag_cov[:,m1,m1]-2*mag_cov[:,m0,m1]
+obscolors_dot = obscolors[:,:,:] - obscolors[0,:,:]
+obscolors_dot = obscolors[1:,:,:]
+obscolors_dot_var = obscolors_var[:,:,:] + obscolors_var[0,:,:]
+obscolors_dot_var = obscolors_dot_var[1:,:,:]
+
+pp = PdfPages("mpull.pdf")
+magresidual  = mag_renorm_dot - correction_dot_mn
+magresidual_std = numpy.sqrt(correction_dot_std**2 + mag_renorm_dot_var)
+
+colresidual = obscolors_dot - colcorrection_dot_mn
+colresidual_std = numpy.sqrt(colcorrection_dot_std**2 + obscolors_dot_var)
 
 for m0 in xrange(5):
     for m1 in xrange(m0+1,5):
         fig, axes = plt.subplots(nrows=5,sharex=True)
-        colorerror = [mag_cov[index,m0,m0]+ mag_cov[index,m1,m1]-2*mag_cov[index,m0,m1] for index in xrange(nsne)]
-        colorerror = numpy.sqrt(colorerror)
         for i in xrange(5):
-            axes[i].errorbar(mag_obs[:,m0]-mag_obs[:,m1],residual[:,i]/residual_std[:,i], \
-                xerr=[colorerror,colorerror],linestyle='None',alpha=0.5,fmt='o')
-            axes[i].set_ylabel(r"$\hat{{{}}}$ pull".format(filts[i]),fontsize=12)
+            axes[i].errorbar(obscolors_dot[:,m0,m1],magresidual[:,i], \
+                xerr=[numpy.sqrt(obscolors_dot_var[:,m0,m1]),numpy.sqrt(obscolors_dot_var[:,m0,m1])], \
+                yerr=[magresidual_std[:,i],magresidual_std[:,i]],\
+                linestyle='None',alpha=0.5,fmt='o')
+            axes[i].set_ylabel(r"$\hat{{{}}}$".format(filts[i]),fontsize=12)
             for tick in axes[i].yaxis.get_major_ticks():
                     tick.label.set_fontsize(8) 
             # axes[i].set_ylim((-0.15,0.15))            
@@ -455,117 +491,24 @@ for m0 in xrange(5):
         axes[m0].set_axis_bgcolor('yellow')
         axes[m1].set_axis_bgcolor('yellow')
         plt.savefig(pp,format='pdf',bbox_inches='tight')
-
-
-
 pp.close()
 plt.close()
-
-pp = PdfPages("extrinsic.pdf")
-fig, axes = plt.subplots(nrows=5, ncols=2)
-
-dust= [(fit['ev_sig']*fit['ev'][:,i])[:,None]* fit['mag_int_raw'] for i in xrange(5)]
-dust=numpy.array(dust)
-i=0
-for m0 in xrange(5):
-    for m1 in xrange(m0+1,5):
-        indeces  = numpy.unravel_index(i,axes.shape)
-
-        colcorrection_  = correction[m0,:,:]-correction[m1,:,:]
-        correction_mn_ = colcorrection_.mean(axis=0)
-        correction_std_ = colcorrection_.std(axis=0)
-
-        colorerror_ = [mag_cov[index,m0,m0]+ mag_cov[index,m1,m1]-2*mag_cov[index,m0,m1] for index in xrange(nsne)]
-        colorerror_ = numpy.array(colorerror_)
-        colorerror_ = numpy.sqrt(correction_std_ **2 + colorerror_)
-
-        residual = mag_renorm[:,m0] - mag_renorm[:,m1]-correction_mn_
-
-        axes[indeces[0],indeces[1]].errorbar(numpy.mean(dust[m0,:,:]-dust[m1,:,:],axis=0),residual/colorerror_, \
-            xerr=[numpy.std(dust[m0,:,:]-dust[m1,:,:],axis=0),numpy.std(dust[m0,:,:]-dust[m1,:,:],axis=0)],linestyle='None',alpha=0.5,fmt='o')
-        axes[indeces[0],indeces[1]].set_ylabel(r"Pull $\hat{{{}}}-\hat{{{}}}$".format(filts[m0],filts[m1]),fontsize=12)
-        for tick in axes[indeces[0],indeces[1]].yaxis.get_major_ticks():
-                tick.label.set_fontsize(8) 
-            # axes[i].set_ylim((-0.15,0.15))            
-        fig.set_size_inches(8,11)
-        axes[indeces[0],indeces[1]].set_xlabel(r"Extrinsic $\hat{{{}}}-\hat{{{}}}$".format(filts[m0],filts[m1]),fontsize=12)
-        for tick in axes[indeces[0],indeces[1]].xaxis.get_major_ticks():
-                tick.label.set_fontsize(8) 
-        i=i+1
-fig.subplots_adjust(hspace=.4, wspace=.22)
-plt.savefig(pp,format='pdf',bbox_inches='tight')
-pp.close()
-plt.close()
-
-pp = PdfPages("intrinsic.pdf")
-fig, axes = plt.subplots(nrows=5, ncols=2)
-
-intrinsic= [(fit['ev_sig']*fit['ev'][:,i])[:,None]* fit['mag_int_raw'] \
-    for i in xrange(5)]
-
-
-intrinsic=numpy.array(intrinsic)
-i=0
-for m0 in xrange(5):
-    for m1 in xrange(m0+1,5):
-        indeces  = numpy.unravel_index(i,axes.shape)
-
-        colcorrection_  = correction[m0,:,:]-correction[m1,:,:]
-        correction_mn_ = colcorrection_.mean(axis=0)
-        correction_std_ = colcorrection_.std(axis=0)
-
-        colorerror_ = [mag_cov[index,m0,m0]+ mag_cov[index,m1,m1]-2*mag_cov[index,m0,m1] for index in xrange(nsne)]
-        colorerror_ = numpy.array(colorerror_)
-        colorerror_ = numpy.sqrt(correction_std_ **2 + colorerror_)
-
-        residual = mag_renorm[:,m0] - mag_renorm[:,m1]-correction_mn_
-
-        axes[indeces[0],indeces[1]].errorbar(numpy.mean(intrinsic[m0,:,:]-intrinsic[m1,:,:],axis=0),residual/colorerror_, \
-            xerr=[numpy.std(intrinsic[m0,:,:]-intrinsic[m1,:,:],axis=0),numpy.std(intrinsic[m0,:,:]-intrinsic[m1,:,:],axis=0)],linestyle='None',alpha=0.5,fmt='o')
-        axes[indeces[0],indeces[1]].set_ylabel(r"Pull $\hat{{{}}}-\hat{{{}}}$".format(filts[m0],filts[m1]),fontsize=12)
-        for tick in axes[indeces[0],indeces[1]].yaxis.get_major_ticks():
-                tick.label.set_fontsize(8) 
-            # axes[i].set_ylim((-0.15,0.15))            
-        fig.set_size_inches(8,11)
-        axes[indeces[0],indeces[1]].set_xlabel(r"Intrinsic $\hat{{{}}}-\hat{{{}}}$".format(filts[m0],filts[m1]),fontsize=12)
-        for tick in axes[indeces[0],indeces[1]].xaxis.get_major_ticks():
-                tick.label.set_fontsize(8) 
-        i=i+1
-fig.subplots_adjust(hspace=.4, wspace=.22)
-plt.savefig(pp,format='pdf',bbox_inches='tight')
-pp.close()
-plt.close()
-
-wefwe
 
 pp = PdfPages("cpull.pdf")
 
-
 for m0 in xrange(5):
     for m1 in xrange(m0+1,5):
-
-        # observed color on x axis
-        colorerror = [mag_cov[index,m0,m0]+ mag_cov[index,m1,m1]-2*mag_cov[index,m0,m1] for index in xrange(nsne)]
-        colorerror = numpy.sqrt(colorerror)
-
         fig, axes = plt.subplots(nrows=5, ncols=2,sharex=True)
         i = 0
         for m0_ in xrange(5):
             for m1_ in xrange(m0_+1,5):
                 indeces  = numpy.unravel_index(i,axes.shape)
-                colcorrection_  = correction[m0_,:,:]-correction[m1_,:,:]
-                correction_mn_ = colcorrection_.mean(axis=0)
-                correction_std_ = colcorrection_.std(axis=0)
-
-                colorerror_ = [mag_cov[index,m0_,m0_]+ mag_cov[index,m1_,m1_]-2*mag_cov[index,m0_,m1_] for index in xrange(nsne)]
-                colorerror_ = numpy.array(colorerror_)
-                colorerror_ = numpy.sqrt(correction_std_ **2 + colorerror_)
-
-                residual = mag_renorm[:,m0_] - mag_renorm[:,m1_]-correction_mn_
-
-                axes[indeces[0],indeces[1]].errorbar(mag_obs[:,m0]-mag_obs[:,m1],residual/colorerror_, \
-                    xerr=[colorerror,colorerror],linestyle='None',alpha=0.5,fmt='o')
-                axes[indeces[0],indeces[1]].set_ylabel(r"$\hat{{{}}}-\hat{{{}}}$ pull".format(filts[m0_],filts[m1_]),fontsize=12)
+                axes[indeces[0],indeces[1]].errorbar(obscolors_dot[:,m0,m1], \
+                    colresidual[:,m0_,m1_], \
+                    xerr=[numpy.sqrt(obscolors_dot_var[:,m0,m1]),numpy.sqrt(obscolors_dot_var[:,m0,m1])], \
+                    yerr=[colresidual_std[:,m0_,m1_],colresidual_std[:,m0_,m1_]], \
+                    linestyle='None',alpha=0.5,fmt='o')
+                axes[indeces[0],indeces[1]].set_ylabel(r"$\hat{{{}}}-\hat{{{}}}$".format(filts[m0_],filts[m1_]),fontsize=12)
                 for tick in axes[indeces[0],indeces[1]].yaxis.get_major_ticks():
                         tick.label.set_fontsize(8)
 
@@ -585,7 +528,101 @@ for m0 in xrange(5):
         plt.savefig(pp,format='pdf',bbox_inches='tight')
 pp.close()
 plt.close()
-wefwe
+
+
+pp = PdfPages("extrinsic.pdf")
+fig, axes = plt.subplots(nrows=5, ncols=2)
+
+dust= [fit['gamma'][:,i][:,None]*fit['k']+ fit['rho1'][:,i][:,None]*fit['R'] for i in xrange(5)]
+dust=numpy.array(dust)
+
+dustcorrection  = numpy.zeros((dust.shape[1],dust.shape[2],5,5))
+
+for m0 in xrange(5):
+    for m1 in xrange(m0+1,5):
+        dustcorrection[:,:,m0,m1] = dust[m0,:,:] - dust[m1,:,:]
+
+dustcorrection_dot = dustcorrection[:,:,:,:] - dustcorrection[:,0,:,:][:,None,:,:]
+dustcorrection_dot = dustcorrection_dot[:,1:,:,:]
+dustcorrection_dot_mn = dustcorrection_dot.mean(axis=0)
+dustcorrection_dot_std = dustcorrection_dot.std(axis=0)
+i=0
+for m0 in xrange(5):
+    for m1 in xrange(m0+1,5):
+        indeces  = numpy.unravel_index(i,axes.shape)
+
+        # pfit, V  = numpy.polyfit(numpy.mean(dust[m0,:,:]-dust[m1,:,:],axis=0), residual/colorerror_,1,cov=True)
+        axes[indeces[0],indeces[1]].errorbar(dustcorrection_dot_mn[:,m0,m1],colresidual[:,m0,m1], \
+            yerr=[colresidual_std[:,m0,m1],colresidual_std[:,m0,m1]],\
+            xerr=[dustcorrection_dot_std[:,m0,m1],dustcorrection_dot_std[:,m0,m1]],linestyle='None',alpha=0.5,fmt='o')
+
+        # axes[indeces[0],indeces[1]].plot(axes[indeces[0],indeces[1]].get_xlim(),numpy.array(axes[indeces[0],indeces[1]].get_xlim())*pfit[0]+pfit[1])
+        axes[indeces[0],indeces[1]].set_ylabel(r"$\hat{{{}}}-\hat{{{}}}$".format(filts[m0],filts[m1]),fontsize=12)
+        for tick in axes[indeces[0],indeces[1]].yaxis.get_major_ticks():
+                tick.label.set_fontsize(8) 
+            # axes[i].set_ylim((-0.15,0.15))            
+        fig.set_size_inches(8,11)
+        axes[indeces[0],indeces[1]].set_xlabel(r"Extrinsic $\hat{{{}}}-\hat{{{}}}$".format(filts[m0],filts[m1]),fontsize=12)
+        for tick in axes[indeces[0],indeces[1]].xaxis.get_major_ticks():
+                tick.label.set_fontsize(8)
+        # axes[indeces[0],indeces[1]].text(0.05, 0.9, \
+        #     "RMS: Pull {:5.2f} Color {:6.3f}".format(numpy.std(residual/colorerror_),numpy.std(residual)), horizontalalignment='left', verticalalignment='center', \
+        #     transform=axes[indeces[0],indeces[1]].transAxes,fontsize=8)
+        # axes[indeces[0],indeces[1]].text(0.05, 0.8, \
+        #     r"slope {:5.2f} $\pm$ {:6.3f}".format(pfit[0],numpy.sqrt(V[0,0])), horizontalalignment='left', verticalalignment='center', \
+        #     transform=axes[indeces[0],indeces[1]].transAxes,fontsize=8)
+        i=i+1
+fig.subplots_adjust(hspace=.4, wspace=.22)
+plt.savefig(pp,format='pdf',bbox_inches='tight')
+pp.close()
+plt.close()
+
+pp = PdfPages("intrinsic.pdf")
+fig, axes = plt.subplots(nrows=5, ncols=2)
+
+
+
+intrinsic= [(fit['ev_sig']*fit['ev'][:,i])[:,None]* fit['mag_int_raw'] for i in xrange(5)]
+intrinsic=numpy.array(intrinsic)
+
+intrinsiccorrection  = numpy.zeros((intrinsic.shape[1],intrinsic.shape[2],5,5))
+
+for m0 in xrange(5):
+    for m1 in xrange(m0+1,5):
+        intrinsiccorrection[:,:,m0,m1] = intrinsic[m0,:,:] - intrinsic[m1,:,:]
+
+intrinsiccorrection_dot = intrinsiccorrection[:,:,:,:] - intrinsiccorrection[:,0,:,:][:,None,:,:]
+intrinsiccorrection_dot = intrinsiccorrection_dot[:,1:,:,:]
+intrinsiccorrection_dot_mn = intrinsiccorrection_dot.mean(axis=0)
+intrinsiccorrection_dot_std = intrinsiccorrection_dot.std(axis=0)
+
+
+i=0
+for m0 in xrange(5):
+    for m1 in xrange(m0+1,5):
+        indeces  = numpy.unravel_index(i,axes.shape)
+        axes[indeces[0],indeces[1]].errorbar(intrinsiccorrection_dot_mn[:,m0,m1],colresidual[:,m0,m1], \
+            yerr=[colresidual_std[:,m0,m1],colresidual_std[:,m0,m1]],\
+            xerr=[intrinsiccorrection_dot_std[:,m0,m1],intrinsiccorrection_dot_std[:,m0,m1]],linestyle='None',alpha=0.5,fmt='o')
+        axes[indeces[0],indeces[1]].set_ylabel(r"$\hat{{{}}}-\hat{{{}}}$".format(filts[m0],filts[m1]),fontsize=12)
+        for tick in axes[indeces[0],indeces[1]].yaxis.get_major_ticks():
+                tick.label.set_fontsize(8) 
+            # axes[i].set_ylim((-0.15,0.15))            
+        fig.set_size_inches(8,11)
+        axes[indeces[0],indeces[1]].set_xlabel(r"Intrinsic $\hat{{{}}}-\hat{{{}}}$".format(filts[m0],filts[m1]),fontsize=12)
+        for tick in axes[indeces[0],indeces[1]].xaxis.get_major_ticks():
+                tick.label.set_fontsize(8)
+        # axes[indeces[0],indeces[1]].text(0.05, 0.9, \
+        #     "RMS: Pull {:5.2f} Color {:6.3f}".format(numpy.std(residual/colorerror_),numpy.std(residual)), horizontalalignment='left', verticalalignment='center', \
+        #     transform=axes[indeces[0],indeces[1]].transAxes,fontsize=8)
+        i=i+1
+fig.subplots_adjust(hspace=.4, wspace=.22)
+plt.savefig(pp,format='pdf',bbox_inches='tight')
+pp.close()
+plt.close()
+
+
+wefwefwe
 
 correction = [fit['c'][:,i][:,None] + fit['alpha'][:,i][:,None]*fit['EW'][:,:, 0] \
     + fit['beta'][:,i][:,None]*fit['EW'][:,:, 1] + fit['eta'][:,i][:,None]*fit['sivel']+ fit['zeta'][:,i][:,None]*fit['x1']\
