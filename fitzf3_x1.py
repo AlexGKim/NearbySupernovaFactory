@@ -26,7 +26,7 @@ class Arrow3D(FancyArrowPatch):
 mpl.rcParams['font.size'] = 14
 
 # Get the data
-f = open('fix3_x1.pkl','rb')
+f = open('fixf3_x1.pkl','rb')
 (fit, _) = pickle.load(f)
 f.close()
 
@@ -86,19 +86,25 @@ a_save = numpy.array(a)
 proj=[]
 kappa=[]
 res = []
+magres = []
 for i in xrange(fit['gamma'].shape[0]):
   proj2=[]
   kappa2=[]
   res2=[]
-  for s in ['gamma','rho1']:
+  dum=0
+  mnk = numpy.array([numpy.std(fit['k'][i,:]), numpy.std(fit['R'][i,:])])
+  for ind, s in enumerate(['gamma','rho1']):
     y = numpy.array([numpy.dot(fit[s][i,:],dAdAv), numpy.dot(fit[s][i,:],dAdebv)])
     ans = numpy.linalg.solve(a,y)
     kappa2.append(ans)
     proj2.append((numpy.linalg.norm(ans[1]*dAdebv + ans[0]*dAdAv)/numpy.linalg.norm(fit[s][i,:]))**2)
     res2.append(fit[s][i,:]-ans[1]*dAdebv - ans[0]*dAdAv)
+    dum = dum + res2[-1]*mnk[ind]
+    crap = ans[1]*dAdebv + ans[0]*dAdAv
   kappa.append(kappa2)
   proj.append(proj2)
   res.append(res2)
+  magres.append(dum)
 
 kappa = numpy.array(kappa)
 res=numpy.array(res)
@@ -131,6 +137,13 @@ for i1 in xrange(2):
           print ",",
   print
 
+print "typical size of magnitude residuals"
+magres = numpy.array(magres)
+dum1, dumm, dump =  numpy.percentile(magres,(50,50-34,50+34),axis=0)
+for i2 in xrange(5):
+  print "{:.3f}^{{+{:.3f}}}_{{{:.3f}}}".format(dum1[i2],dump[i2]-dum1[i2],dumm[i2]-dum1[i2]),
+print
+wefwe
 
 print "projection of gamma0, gamma1 onto Fitzpatrick plane"
 proj=numpy.array(proj)
@@ -138,6 +151,7 @@ dum1, dumm, dump =  numpy.percentile(proj,(50,50-34,50+34),axis=0)
 print "{:.4f}^{{+{:.4f}}}_{{{:.4f}}}".format(dum1[0],dump[0]-dum1[0],dumm[0]-dum1[0])
 print "{:.4f}^{{+{:.4f}}}_{{{:.4f}}}".format(dum1[1],dump[1]-dum1[1],dumm[1]-dum1[1])
 
+wfwe
 
 tmat = []
 res = []
