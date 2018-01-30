@@ -468,9 +468,14 @@ obscolors_dot_var = obscolors_dot_var[1:,:,:]
 pp = PdfPages("mpull.pdf")
 magresidual  = mag_renorm_dot - correction_dot_mn
 magresidual_std = numpy.sqrt(correction_dot_std**2 + mag_renorm_dot_var)
+magresidual_mn = numpy.sum(magresidual/magresidual_std**2,axis=0)/ numpy.sum(1/magresidual_std**2,axis=0)
+
+magresidual_pull = (magresidual- magresidual_mn[None,:])/magresidual_std
 
 colresidual = obscolors_dot - colcorrection_dot_mn
 colresidual_std = numpy.sqrt(colcorrection_dot_std**2 + obscolors_dot_var)
+colresidual_mn = numpy.sum(colresidual/colresidual_std**2,axis=0)/ numpy.sum(1/colresidual_std**2,axis=0)
+colresidual_pull = (colresidual- colresidual_mn[None,:])/colresidual_std
 
 for m0 in xrange(5):
     for m1 in xrange(m0+1,5):
@@ -482,8 +487,12 @@ for m0 in xrange(5):
                 linestyle='None',alpha=0.5,fmt='o')
             axes[i].set_ylabel(r"$\hat{{{}}}$".format(filts[i]),fontsize=12)
             for tick in axes[i].yaxis.get_major_ticks():
-                    tick.label.set_fontsize(8) 
-            # axes[i].set_ylim((-0.15,0.15))            
+                    tick.label.set_fontsize(8)
+            axes[i].set_ylim((-0.2,0.2))
+            # axes[i].text(0.05, 0.9, \
+            #     "RMS: Pull {:5.2f} Mag {:6.3f}".format(numpy.std(magresidual_pull[:,i]),numpy.std(magresidual[:,i])), \
+            #     horizontalalignment='left', verticalalignment='center', \
+            #     transform=axes[i].transAxes,fontsize=8)           
         fig.set_size_inches(8,11)
         axes[4].set_xlabel(r"$\hat{{{}}}_o-\hat{{{}}}_o$".format(filts[m0],filts[m1]),fontsize=12)
         for tick in axes[4].xaxis.get_major_ticks():
@@ -511,12 +520,12 @@ for m0 in xrange(5):
                 axes[indeces[0],indeces[1]].set_ylabel(r"$\hat{{{}}}-\hat{{{}}}$".format(filts[m0_],filts[m1_]),fontsize=12)
                 for tick in axes[indeces[0],indeces[1]].yaxis.get_major_ticks():
                         tick.label.set_fontsize(8)
-
                 if m0_==m0 or m0_==m1 or m1_==m0 or m1_==m1:
                     axes[indeces[0],indeces[1]].set_axis_bgcolor('yellow')
-                i=i+1
-
-            # axes[indeces[0],indeces[1]].set_ylim((-0.15,0.15))            
+                # axes[indeces[0],indeces[1]].text(0.05, 0.9, \
+                #     "RMS: Pull {:5.2f} Color {:6.3f}".format(numpy.std(colresidual_pull[:,m0,m1]),numpy.std(colresidual[:,m0,m1])), horizontalalignment='left', verticalalignment='center', \
+                #     transform=axes[indeces[0],indeces[1]].transAxes,fontsize=8)
+                i=i+1        
         fig.set_size_inches(8,11)
         axes[4,0].set_xlabel(r"$\hat{{{}}}_o-\hat{{{}}}_o$".format(filts[m0],filts[m1]),fontsize=12)
         axes[4,1].set_xlabel(r"$\hat{{{}}}_o-\hat{{{}}}_o$".format(filts[m0],filts[m1]),fontsize=12)
@@ -565,12 +574,7 @@ for m0 in xrange(5):
         axes[indeces[0],indeces[1]].set_xlabel(r"Extrinsic $\hat{{{}}}-\hat{{{}}}$".format(filts[m0],filts[m1]),fontsize=12)
         for tick in axes[indeces[0],indeces[1]].xaxis.get_major_ticks():
                 tick.label.set_fontsize(8)
-        # axes[indeces[0],indeces[1]].text(0.05, 0.9, \
-        #     "RMS: Pull {:5.2f} Color {:6.3f}".format(numpy.std(residual/colorerror_),numpy.std(residual)), horizontalalignment='left', verticalalignment='center', \
-        #     transform=axes[indeces[0],indeces[1]].transAxes,fontsize=8)
-        # axes[indeces[0],indeces[1]].text(0.05, 0.8, \
-        #     r"slope {:5.2f} $\pm$ {:6.3f}".format(pfit[0],numpy.sqrt(V[0,0])), horizontalalignment='left', verticalalignment='center', \
-        #     transform=axes[indeces[0],indeces[1]].transAxes,fontsize=8)
+
         i=i+1
 fig.subplots_adjust(hspace=.4, wspace=.22)
 plt.savefig(pp,format='pdf',bbox_inches='tight')
@@ -621,8 +625,6 @@ plt.savefig(pp,format='pdf',bbox_inches='tight')
 pp.close()
 plt.close()
 
-
-wefwefwe
 
 correction = [fit['c'][:,i][:,None] + fit['alpha'][:,i][:,None]*fit['EW'][:,:, 0] \
     + fit['beta'][:,i][:,None]*fit['EW'][:,:, 1] + fit['eta'][:,i][:,None]*fit['sivel']+ fit['zeta'][:,i][:,None]*fit['x1']\
@@ -1019,6 +1021,8 @@ dustebv = dustebv-dustebv[:,0][:,None]
 extebv = extebv-extebv[:,0][:,None]
 
 
+plt.clf()
+plt.figure(figsize=(8.0, 6.0))
 plt.hist([dustebv, extebv],normed=True,bins=50,
   label=[r'$E_{\gamma}(\hat{B}-\hat{V})$',r'$E_p(\hat{B}-\hat{V})$'])
 # plt.hist([(fit['gamma'][:,1]-fit['gamma'][:,2])[:,None]*fit['k'] + 
@@ -1028,6 +1032,7 @@ plt.xlabel(r'$E(\hat{B}-\hat{V})-E(\hat{B}-\hat{V})|_0$',fontsize=20)
 plt.xticks(fontsize=18)
 plt.yticks(fontsize=18)
 plt.legend(fontsize=20)
+
 pp = PdfPages('output_fix3_x1/ebv.pdf')
 plt.savefig(pp,format='pdf',bbox_inches='tight')
 pp.close()
