@@ -14,8 +14,8 @@ mpl.rcParams['font.size'] = 18
 f = open('MJC_compile_SNdata.pkl','r')
 gal= pickle.load(f)
 
-f = open('fix3_x1.pkl','rb')
-(fit, _) = pickle.load(f)
+f = open('fix3_x1_decorr.pkl','rb')
+fit = pickle.load(f)
 f.close()
 
 pkl_file = open('gege_data.pkl', 'r')
@@ -121,6 +121,7 @@ temp = evterm_gal[:,wm].flatten()
 (x, xmin, xmax) = numpy.percentile(temp,(50,50-34,50+34))
 dx = (xmax-xmin)/2/numpy.sqrt(len(wm))
 temp1 = (x,dx)
+print 'low-mass'
 print r"${:9.3f} \pm {{ {:9.3f} }}$".format(x,dx) 
 plt.plot(ux, [x,x],color='black')
 plt.plot(ux, [x+dx,x+dx],color='red')
@@ -133,7 +134,9 @@ temp = evterm_gal[:,wm].flatten()
 # temp=temp[temp !=0]
 (x, xmin, xmax) = numpy.percentile(temp,(50,50-34,50+34))
 dx = (xmax-xmin)/2/numpy.sqrt(len(wm))
+print 'high-mass'
 print r"${:9.3f} \pm {{ {:9.3f} }}$".format(x,dx) 
+print 'difference'
 print r"${:9.3f} \pm {{ {:9.3f} }}$".format(x-temp1[0],numpy.sqrt(dx**2+temp1[1]**2))
 plt.plot(ux, [x,x],color='black')
 plt.plot(ux, [x+dx,x+dx],color='red')

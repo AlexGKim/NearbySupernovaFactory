@@ -7,8 +7,9 @@ import sivel
 import sncosmo
 import fitz_band
 
-f = open('fix3_x1.pkl','rb')
-(fit, _) = pickle.load(f)
+f = open('fix3_x1_decorr.pkl','rb')
+# (fit, _) = pickle.load(f)
+fit = pickle.load(f)
 f.close()
 
 for key in fit.keys():
@@ -21,14 +22,14 @@ fixev = fit['ev']
 fixev = -fixev * numpy.sign(fixev[:,2])[:,None]
 
 
-print "projection of ev in gamma plane"
+print "projection of ev out of gamma plane"
 proj = []
 for ev, evorig, g1, g2 in zip(fixev, fit['ev'], fit['gamma'], fit['rho1']):
     y=numpy.array([numpy.dot(evorig,g1), numpy.dot(evorig,g2)])
     M = numpy.array([[numpy.dot(g1,g1), numpy.dot(g1,g2)], \
         [numpy.dot(g2,g1), numpy.dot(g2,g2)]])
     com = numpy.dot(numpy.linalg.inv(M),y)
-    proj.append(numpy.linalg.norm(com[0]*g1+com[1]*g2)**2 / numpy.linalg.norm(evorig)**2)
+    proj.append(1-numpy.linalg.norm(com[0]*g1+com[1]*g2)**2 / numpy.linalg.norm(evorig)**2)
 dum1, dumm, dump =  numpy.percentile(proj,(50,50-34,50+34),axis=0)
 print "${:.3f}^{{+{:.3f}}}_{{{:.3f}}}$".format(dum1,dump-dum1,dumm-dum1)
 
@@ -39,8 +40,8 @@ print "{:.3f}^{{+{:.3f}}}_{{{:.3f}}}".format(dum1,dump-dum1,dumm-dum1)
 print "the table"
 
 pars = ['alpha','alpha','beta','beta','eta','eta','zeta','zeta','gamma','gamma','rho1','rho1']
-pars_n = ['\\alpha_X','{\\alpha_X/\\alpha_{\hat{V}}-1}','\\beta_X','{\\beta_X/\\beta_{\hat{V}}-1}',\
-  '\\eta_X','{\\eta_X/\\eta_{\\hat{V}}-1}', '\\zeta_X','{\\zeta_X/\\zeta_{\\hat{V}}-1}','\\gamma^0_X', '{\\gamma^0_X/\gamma^0_{\\hat{V}}-1}', '\\gamma^1_X','{\\gamma^1_X/\\gamma^1_{\\hat{V}}-1}']
+pars_n = ['\\alpha_X','{\\alpha_X}/\\alpha_{\hat{V}}-1','\\beta_X','{\\beta_X}/\\beta_{\hat{V}}-1',\
+  '\\eta_X','{\\eta_X}/\\eta_{\\hat{V}}-1', '\\zeta_X','{\\zeta_X}/\\zeta_{\\hat{V}}-1','\\gamma^0_X', '{\\gamma^0_X}/\gamma^0_{\\hat{V}}-1', '\\gamma^1_X','{\\gamma^1_X}/\\gamma^1_{\\hat{V}}-1']
 sigfig = [4,1,3,2,4,2,2,2,2,2,2,2,3]
 for p,pn, s in zip(pars,pars_n,sigfig):
     print '${}$'.format(pn)
@@ -76,7 +77,6 @@ print "ev_sig min"
 print  fit['ev_sig'].min()
 
 print "standard deviation of delta"
-print (fit['Delta']-fit['Delta'][:,0][:,None])[:,1:].std()
 print fit['Delta'].std()
 
 

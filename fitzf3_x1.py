@@ -26,8 +26,9 @@ class Arrow3D(FancyArrowPatch):
 mpl.rcParams['font.size'] = 14
 
 # Get the data
-f = open('fixf3_x1.pkl','rb')
-(fit, _) = pickle.load(f)
+f = open('fix3_x1_decorr.pkl','rb')
+# (fit, _) = pickle.load(f)
+fit = pickle.load(f)
 f.close()
 
 # Determine the plane approximaion for Fitzpatrick
@@ -143,7 +144,6 @@ dum1, dumm, dump =  numpy.percentile(magres,(50,50-34,50+34),axis=0)
 for i2 in xrange(5):
   print "{:.3f}^{{+{:.3f}}}_{{{:.3f}}}".format(dum1[i2],dump[i2]-dum1[i2],dumm[i2]-dum1[i2]),
 print
-wefwe
 
 print "projection of gamma0, gamma1 onto Fitzpatrick plane"
 proj=numpy.array(proj)
@@ -151,7 +151,6 @@ dum1, dumm, dump =  numpy.percentile(proj,(50,50-34,50+34),axis=0)
 print "{:.4f}^{{+{:.4f}}}_{{{:.4f}}}".format(dum1[0],dump[0]-dum1[0],dumm[0]-dum1[0])
 print "{:.4f}^{{+{:.4f}}}_{{{:.4f}}}".format(dum1[1],dump[1]-dum1[1],dumm[1]-dum1[1])
 
-wfwe
 
 tmat = []
 res = []
@@ -349,8 +348,6 @@ plt.tight_layout()
 plt.savefig(pp,format='pdf')
 pp.close()
 plt.close()
-
-
 
 
 
@@ -580,8 +577,8 @@ plt.errorbar(ebvav_s[0,:,1], ebvav_s[0,:,0], \
 
 plt.ylabel(r'$A^F_{V,eff}+ const $',fontsize=18)
 plt.xlabel(r'$E^F(B-V)_{eff} + const$',fontsize=18)
-x = numpy.array([-0.09,0.45])
-plt.plot(x,2.30*x,color='black',label="slope = 2.39")
+x = numpy.array([-0.12,0.4])
+plt.plot(x,2.43*x,color='black',label="slope = 2.43")
 # plt.plot(x, rbv[1]+rbv[0]*x,label=r'$R^F={:6.2f}_{{-{:6.2f}}}^{{+{:6.2f}}}$'.format(rbv[0],rbv[0]-mrbv[0],prbv[0]-rbv[0]),color='black')
 plt.legend(loc=4)
 pp = PdfPages("output_fix3_x1/avebv_synth.pdf")

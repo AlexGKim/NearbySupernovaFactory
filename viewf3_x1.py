@@ -17,8 +17,9 @@ from chainconsumer import ChainConsumer
 mpl.rcParams['font.size'] = 28
 # rc('text', usetex=True)
 
-f = open('fix3_x1.pkl','rb')
-(fit,_) = pickle.load(f)
+f = open('fix3_x1_decorr.pkl','rb')
+# (fit,_) = pickle.load(f)
+fit = pickle.load(f)
 
 # for key in fit.keys():
 #     print key, fit[key].min(), fit[key].max()
@@ -208,7 +209,7 @@ plt.hist(crap2.flatten(),bins,label='posterior stack',normed=True,alpha=0.5)
 plt.hist(numpy.median(crap2,axis=0),bins,label='median',normed=True,alpha=0.5,width=0.01)
 plt.xlabel(r'$\gamma^1_{\hat{V}} g_1 - \gamma^1_{\hat{V}} g_1|_0$')
 plt.legend(loc=2,fontsize=20)
-plt.xlim((-0.4,0.2))
+plt.xlim((-0.3,0.1))
 plt.xticks(fontsize=18)
 plt.yticks(fontsize=18)
 plt.tight_layout()
@@ -517,7 +518,7 @@ for m0 in xrange(5):
                     xerr=[numpy.sqrt(obscolors_dot_var[:,m0,m1]),numpy.sqrt(obscolors_dot_var[:,m0,m1])], \
                     yerr=[colresidual_std[:,m0_,m1_],colresidual_std[:,m0_,m1_]], \
                     linestyle='None',alpha=0.5,fmt='o')
-                axes[indeces[0],indeces[1]].set_ylabel(r"$\hat{{{}}}-\hat{{{}}}$".format(filts[m0_],filts[m1_]),fontsize=12)
+                axes[indeces[0],indeces[1]].set_ylabel(r"$\hat{{{}}}-\hat{{{}}}$ residual".format(filts[m0_],filts[m1_]),fontsize=12)
                 for tick in axes[indeces[0],indeces[1]].yaxis.get_major_ticks():
                         tick.label.set_fontsize(8)
                 if m0_==m0 or m0_==m1 or m1_==m0 or m1_==m1:
@@ -533,7 +534,7 @@ for m0 in xrange(5):
                 tick.label.set_fontsize(8) 
         for tick in axes[4,1].xaxis.get_major_ticks():
                 tick.label.set_fontsize(8) 
-
+        fig.subplots_adjust(hspace=.1, wspace=.27)
         plt.savefig(pp,format='pdf',bbox_inches='tight')
 pp.close()
 plt.close()
@@ -1308,7 +1309,7 @@ ax.axhline(0,linestyle=':')
 ax.set_xlabel(r'Band $X$')
 ax.set_xlim((-0.5,4.5))
 ax.set_ylabel(r'$\frac{\phi_X}{\phi_{\hat{V}}}-1$')
-ax.set_ylim((-2.9,0.1))
+ax.set_ylim((-1.6,0.1))
 pp = PdfPages('output_fix3_x1/phiratio.pdf')
 plt.savefig(pp,format='pdf',bbox_inches='tight')
 pp.close()
@@ -1329,10 +1330,10 @@ c.add_chain(mega, \
 fig = c.plotter.plot(figsize="column", truth=numpy.zeros(5))
 
 for ax in fig.axes:
-    ax.xaxis.set_tick_params(labelsize=7)
-    ax.xaxis.label.set_size(7)
-    ax.yaxis.set_tick_params(labelsize=7)
-    ax.yaxis.label.set_size(7)
+    ax.xaxis.set_tick_params(labelsize=6)
+    ax.xaxis.label.set_size(6)
+    ax.yaxis.set_tick_params(labelsize=6)
+    ax.yaxis.label.set_size(6)
 fig.savefig('output_fix3_x1/perobject_corner.pdf',bbox_inches='tight')
 
 # figure = corner.corner(mega,labels=[r"$\Delta$",r"$EW_{Ca}$",r"$EW_{Si}$",r"$\lambda_{Si}$",r"$x_1$",r"$E_{\gamma^0}(B-V)$",r"$E_{\gamma^1}(B-V)$",r"$A_{p,V}$"],range=numpy.zeros(8)+.9995,label_kwargs={'fontsize':22})

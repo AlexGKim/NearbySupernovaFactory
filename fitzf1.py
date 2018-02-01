@@ -28,8 +28,8 @@ class Arrow3D(FancyArrowPatch):
 mpl.rcParams['font.size'] = 14
 
 # Get the data
-f = open('fix1.pkl','rb')
-(fit, _) = pickle.load(f)
+f = open('fix1_decorr.pkl','rb')
+fit = pickle.load(f)
 f.close()
 
 # Determine the plane approximaion for Fitzpatrick
@@ -84,21 +84,33 @@ cross = numpy.dot(dAdebv, dAdAv)
 a = numpy.array([[norm_dAdAv,cross],[cross,norm_dAdebv]])
 a_save = numpy.array(a)
 
+
 # calculate the projection onto the plane
 proj=[]
 kappa=[]
+res = []
+magres = []
 for i in xrange(fit['gamma'].shape[0]):
   proj2=[]
   kappa2=[]
-  for s in ['gamma','rho1']:
+  res2=[]
+  dum=0
+  mnk = numpy.array([numpy.std(fit['k'][i,:]), numpy.std(fit['R'][i,:])])
+  for ind, s in enumerate(['gamma','rho1']):
     y = numpy.array([numpy.dot(fit[s][i,:],dAdAv), numpy.dot(fit[s][i,:],dAdebv)])
     ans = numpy.linalg.solve(a,y)
     kappa2.append(ans)
     proj2.append((numpy.linalg.norm(ans[1]*dAdebv + ans[0]*dAdAv)/numpy.linalg.norm(fit[s][i,:]))**2)
+    res2.append(fit[s][i,:]-ans[1]*dAdebv - ans[0]*dAdAv)
+    dum = dum + res2[-1]*mnk[ind]
+    crap = ans[1]*dAdebv + ans[0]*dAdAv
   kappa.append(kappa2)
   proj.append(proj2)
+  res.append(res2)
+  magres.append(dum)
 
 kappa = numpy.array(kappa)
+res=numpy.array(res)
 
 print "R1 (1/kappa1) term"
 dum1, dumm, dump =  numpy.percentile(kappa[:,0,0]/kappa[:,0,1],(50,50-34,50+34))
@@ -107,12 +119,72 @@ print "1/kappa2 term"
 dum1, dumm, dump =  numpy.percentile(kappa[:,1,1]/kappa[:,1,0],(50,50-34,50+34))
 print "{:.2f}^{{+{:.2f}}}_{{{:.2f}}}".format(dum1,dump-dum1,dumm-dum1)
 
+print "Matrix"
+dum1, dumm, dump =  numpy.percentile(kappa,(50,50-34,50+34),axis=0)
+
+for i1 in xrange(2):
+    for i2 in xrange(2):
+        print "{:.1f}^{{+{:.1f}}}_{{{:.1f}}}".format(dum1[i1,i2],dump[i1,i2]-dum1[i1,i2],dumm[i1,i2]-dum1[i1,i2]),
+        if (i2 != 1):
+            print "&",
+
+    print "\\\\" 
+
+print "residuals"
+print res.shape
+for i1 in xrange(2):
+  dum1, dumm, dump =  numpy.percentile(res[:,i1,:],(50,50-34,50+34),axis=0)
+  for i2 in xrange(5):
+      print "{:.1f}^{{+{:.1f}}}_{{{:.1f}}}".format(dum1[i2],dump[i2]-dum1[i2],dumm[i2]-dum1[i2]),
+      if (i2 != 4):
+          print ",",
+  print
+
+print "typical size of magnitude residuals"
+magres = numpy.array(magres)
+dum1, dumm, dump =  numpy.percentile(magres,(50,50-34,50+34),axis=0)
+for i2 in xrange(5):
+  print "{:.3f}^{{+{:.3f}}}_{{{:.3f}}}".format(dum1[i2],dump[i2]-dum1[i2],dumm[i2]-dum1[i2]),
+print
 
 print "projection of gamma0, gamma1 onto Fitzpatrick plane"
 proj=numpy.array(proj)
 dum1, dumm, dump =  numpy.percentile(proj,(50,50-34,50+34),axis=0)
 print "{:.4f}^{{+{:.4f}}}_{{{:.4f}}}".format(dum1[0],dump[0]-dum1[0],dumm[0]-dum1[0])
 print "{:.4f}^{{+{:.4f}}}_{{{:.4f}}}".format(dum1[1],dump[1]-dum1[1],dumm[1]-dum1[1])
+
+
+wefwe
+
+# # calculate the projection onto the plane
+# proj=[]
+# kappa=[]
+# for i in xrange(fit['gamma'].shape[0]):
+#   proj2=[]
+#   kappa2=[]
+#   for s in ['gamma','rho1']:
+#     y = numpy.array([numpy.dot(fit[s][i,:],dAdAv), numpy.dot(fit[s][i,:],dAdebv)])
+#     ans = numpy.linalg.solve(a,y)
+#     kappa2.append(ans)
+#     proj2.append((numpy.linalg.norm(ans[1]*dAdebv + ans[0]*dAdAv)/numpy.linalg.norm(fit[s][i,:]))**2)
+#   kappa.append(kappa2)
+#   proj.append(proj2)
+
+# kappa = numpy.array(kappa)
+
+# print "R1 (1/kappa1) term"
+# dum1, dumm, dump =  numpy.percentile(kappa[:,0,0]/kappa[:,0,1],(50,50-34,50+34))
+# print "{:.2f}^{{+{:.2f}}}_{{{:.2f}}}".format(dum1,dump-dum1,dumm-dum1)
+# print "1/kappa2 term"
+# dum1, dumm, dump =  numpy.percentile(kappa[:,1,1]/kappa[:,1,0],(50,50-34,50+34))
+# print "{:.2f}^{{+{:.2f}}}_{{{:.2f}}}".format(dum1,dump-dum1,dumm-dum1)
+
+
+# print "projection of gamma0, gamma1 onto Fitzpatrick plane"
+# proj=numpy.array(proj)
+# dum1, dumm, dump =  numpy.percentile(proj,(50,50-34,50+34),axis=0)
+# print "{:.4f}^{{+{:.4f}}}_{{{:.4f}}}".format(dum1[0],dump[0]-dum1[0],dumm[0]-dum1[0])
+# print "{:.4f}^{{+{:.4f}}}_{{{:.4f}}}".format(dum1[1],dump[1]-dum1[1],dumm[1]-dum1[1])
 
 tmat = []
 res = []

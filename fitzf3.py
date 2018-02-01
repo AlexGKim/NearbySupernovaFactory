@@ -26,8 +26,8 @@ class Arrow3D(FancyArrowPatch):
 mpl.rcParams['font.size'] = 14
 
 # Get the data
-f = open('fix3.pkl','rb')
-(fit, _) = pickle.load(f)
+f = open('fix3_decorr.pkl','rb')
+fit = pickle.load(f)
 f.close()
 
 # Determine the plane approximaion for Fitzpatrick

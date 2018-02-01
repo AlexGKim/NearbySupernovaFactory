@@ -7,8 +7,8 @@ import sivel
 import sncosmo
 import fitz_band
 
-f = open('fix3.pkl','rb')
-(fit, _) = pickle.load(f)
+f = open('fix3_decorr.pkl','rb')
+fit = pickle.load(f)
 f.close()
 
 for key in fit.keys():
@@ -21,16 +21,16 @@ fixev = fit['ev']
 fixev = fixev * numpy.sign(fixev[:,4])[:,None]
 
 
-print "projection of ev in gamma plane"
+print "projection of ev outside of gamma plane"
 proj = []
 for ev, evorig, g1, g2 in zip(fixev, fit['ev'], fit['gamma'], fit['rho1']):
     y=numpy.array([numpy.dot(evorig,g1), numpy.dot(evorig,g2)])
     M = numpy.array([[numpy.dot(g1,g1), numpy.dot(g1,g2)], \
         [numpy.dot(g2,g1), numpy.dot(g2,g2)]])
     com = numpy.dot(numpy.linalg.inv(M),y)
-    proj.append(numpy.linalg.norm(com[0]*g1+com[1]*g2)**2 / numpy.linalg.norm(evorig)**2)
+    proj.append(1-numpy.linalg.norm(com[0]*g1+com[1]*g2)**2 / numpy.linalg.norm(evorig)**2)
 dum1, dumm, dump =  numpy.percentile(proj,(50,50-34,50+34),axis=0)
-print "${:.3f}^{{+{:.3f}}}_{{{:.3f}}}$".format(dum1,dump-dum1,dumm-dum1)
+print "${:.2f}^{{+{:.2f}}}_{{{:.2f}}}$".format(dum1,dump-dum1,dumm-dum1)
 
 print "ev_sig size"
 dum1, dumm, dump =  numpy.percentile(fit['ev_sig'],(50,50-34,50+34),axis=0)
@@ -39,8 +39,8 @@ print "{:.3f}^{{+{:.3f}}}_{{{:.3f}}}".format(dum1,dump-dum1,dumm-dum1)
 print "the table"
 
 pars = ['alpha','alpha','beta','beta','eta','eta','gamma','gamma','rho1','rho1']
-pars_n = ['\\alpha_X','{\\alpha_X/\\alpha_{\\hat{V}-1}','\\beta_X','{\\beta_X/\\beta_{\\hat{V}-1}',\
-  '\\eta_X','{\\eta_X/\\eta_{\\hat{V}-1}', '\\gamma^0_X', '{\\gamma^0_X/\gamma^0_{\\hat{V}-1}', '\\gamma^1_X','{\\gamma^1_X/\\gamma^1_{\\hat{V}-1}']
+pars_n = ['\\alpha_X','{\\alpha_X}/\\alpha_{\\hat{V}-1}','\\beta_X','{\\beta_X}/\\beta_{\\hat{V}-1}',\
+  '\\eta_X','{\\eta_X}/\\eta_{\\hat{V}-1}', '\\gamma^0_X', '{\\gamma^0_X}/\gamma^0_{\\hat{V}-1}', '\\gamma^1_X','{\\gamma^1_X}/\\gamma^1_{\\hat{V}-1}']
 sigfig = [4,1,3,2,4,2,2,2,2,2,3]
 for p,pn, s in zip(pars,pars_n,sigfig):
     print '${}$'.format(pn)
@@ -54,16 +54,17 @@ for p,pn, s in zip(pars,pars_n,sigfig):
             dum = numpy.percentile(fit[p][:,i],(50,50-34,50+34))            
         print  '${1:6.{0}f}^{{+{2:6.{0}f}}}_{{{3:6.{0}f}}}$'.format(s,dum[0], dum[2]-dum[0],dum[1]-dum[0] )
     print '\\\\'
+
 print '$\sigma_p \phi_X$'
 for i in xrange(5):
     print '&',
     dum = numpy.percentile(fit['ev_sig']*fixev[:,i],(50,50-34,50+34))
     print  '${1:6.{0}f}^{{+{2:6.{0}f}}}_{{{3:6.{0}f}}}$'.format(3,dum[0], dum[2]-dum[0],dum[1]-dum[0] )
 print '\\\\'
-print '${\\phi_X/\\phi_{\\hat{I}}-1}$'
+print '${\\phi_X/\\phi_{\\hat{V}}-1}$'
 for i in xrange(5):
     print '&',
-    dum = numpy.percentile(fit['ev'][:,i]/fit['ev'][:,4]-1,(50,50-34,50+34))
+    dum = numpy.percentile(fit['ev'][:,i]/fit['ev'][:,2]-1,(50,50-34,50+34))
     print  '${1:6.{0}f}^{{+{2:6.{0}f}}}_{{{3:6.{0}f}}}$'.format(3,dum[0], dum[2]-dum[0],dum[1]-dum[0] )
 print '\\\\'
 wefwe

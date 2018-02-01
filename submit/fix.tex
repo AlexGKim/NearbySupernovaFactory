@@ -207,7 +207,7 @@ This model is applied to the supernova sample of the Nearby Supernova Factory.  
 broadband photometry and their colors are found to be 
 dependent on the observable features and on the three color parameters.
 The color changes allowed by two of the color parameters are similar to those allowed by the extinction model of  \citet{1999PASP..111...63F}. 
-Correspondingly the sample has an effective value of $\langle R^F_{\mathit{eff}}\rangle \sim 2.39$, though with a broad distribution of 
+Correspondingly the sample has an effective value of $\langle R^F_{\mathit{eff}}\rangle \sim 2.43$, though with a broad distribution of 
 total-to-selective extinctions. 
 We detect the influence on color by a third parameter at
 %--- table.py
@@ -216,6 +216,9 @@ $> 99\%$
 confidence.
 The third parameter has  unique color characteristics that distinguish it from 
 those already  tracked by the spectral features, light-curve shape, and two-parameter dust models.
+\added{
+The existence of the third color parameter has implications on the accuracy of SN~Ia distance determinations.
+}
 \end{abstract}
 
 \keywords{supernovae: general; supernovae}
@@ -256,7 +259,7 @@ of colors seen in the SN~Ia population.  One approach to look for color diversit
 \citet{2009ApJ...699L.139W, 2011ApJ...729...55F} find two subpopulations distinguished
 by Si~II velocity that exhibit differing $B_{\mathit{\mathit{max}}}-V_{\mathit{max}}$; this color correlation, in addition to one with $B-R$, is confirmed by
 \citet{2014ApJ...797...75M}.
-\citet{2015MNRAS.451.1973S}
+\citet{2009ApJ...699L.139W,2015MNRAS.451.1973S}
 find that high-velocity Si~II~$\lambda$6355 is found in objects that have red ultraviolet/optical colors near maximum brightness.
 \citet{2011MNRAS.413.3075M} show evidence that supernova asymmetry and viewing angle,
 traced by wavelength shifts in nebular emission lines, is an important determinant in controlling supernova color; such correlations are also seen by \citet{2011A&A...534L..15C}.
@@ -273,7 +276,7 @@ Measurements of color ratios are being advanced with the development of flexible
 \citet{2014ApJ...789...32B, 2015MNRAS.453.3300A} find wide
 ranges of total-to-selective extinction with average values significantly lower than $R_V = 3.1$,
 the canonical value for diffuse Milky Way dust.
-They also confirm the \citet{2011ApJ...731..120M, 2011ApJ...729...55F} finding that low $R_V$ is associated with high-extinction supernovae.
+They also confirm the \citet{2006MNRAS.369.1880E,, 2011ApJ...731..120M} finding that low $R_V$ is associated with high-extinction supernovae.
 In contrast, \citet{2011A&A...529L...4C} argue that after accounting for the diversity of spectral features,
 the $R_V=3.1$ measured for the diffuse Milky Way dust is recovered on average and \citet{2017ApJ...836..157H}
 find $R_V=2.95 \pm 0.08$ for the highly-extincted SN~2012cu.
@@ -287,7 +290,10 @@ shows that the complexity of interstellar dust shouldn't be expected to be captu
 parameter is therefore expected.
 
 Hierarchical modeling has recently enabled
-the study of intrinsic supernova color based on SN~Ia Hubble diagrams. Latent parameters that are not directly tied to observables
+the study of intrinsic supernova color based on SN~Ia Hubble diagrams
+\added{by allowing the addition of a supernova population model as an extra level within in the larger model.
+}
+Latent parameters that are not directly tied to observables
 but  influence color can be included in such models.
 \citet{2017ApJ...842...93M} \citepalias[henceforth referred to as][]{2017ApJ...842...93M}) take the approach of modeling the distribution of their parameters to find that
 scatter in the Hubble diagram is better explained by a combination of 
@@ -316,7 +322,7 @@ two are assigned as extrinsic processes attributed to dust, and one is attribute
 properties.}
 The data used in this analysis are described in \S\ref{data:sec}.
 The analysis itself is presented as a series of three models of increasing complexity.
-\S\ref{modelI:sec}  and  \S\ref{modelII:sec} present the first two models, providing a soft introduction to
+\S\ref{modelI:sec}  and  \S\ref{modelII:sec} present the first two models, providing an introduction to
 our methodology and yielding results to be compared with those from the third model.
 That ultimate model and its results are discussed in detail in \S\ref{modelIII:sec}. 
 In \S\ref{modelI:sec} we present Model~I, 
@@ -335,7 +341,7 @@ Spectrograph \citep[SNIFS,][]{2002SPIE.4836...61A, 2004SPIE.5249..146L}.  SNIFS 
 instrument optimized for automated observation of point sources on a
 structured background over the full ground-based optical window at
 moderate spectral resolution ($R \sim 500$).  It consists of a
-high-throughput wide-band lenslet integral field spectrograph, a mult-band
+high-throughput wide-band lenslet integral field spectrograph, a multi-band
 imager that covers the field in the vicinity of
 the IFS for atmospheric transmission monitoring simultaneous with
 spectroscopy, and an acquisition/guiding channel.  The IFS possesses a
@@ -591,7 +597,10 @@ in \citet{2017Chotard}.
 \label{modelI:sec}
 We begin by considering Model~I, in which supernova magnitudes  have linear dependence on spectral parameters
 and two \deleted{extrinsic} color parameters. The purpose of this section is to introduce some basic concepts of our models,
-to show how the two  color terms can be associated with existing dust-extinction models, and to give Model~I results on dust extinction. 
+to show how the two  color terms can be associated with existing dust-extinction models, and to give Model~I results on dust extinction.
+\added{
+Deficiencies in this model are addressed in the subsequent models presented in the article.
+}
 To avoid repetitiveness,
 we refrain from going into full detail on the results of Model~I in deference to Model~III, which is presented in Section~\ref{modelIII:sec}.
 
@@ -708,7 +717,10 @@ The model contains the product of latent parameters
 $\vec{\gamma} g$, which leads to the degeneracy $\vec{\gamma} \rightarrow a\vec{\gamma}$, $g \rightarrow a^{-1} g$.
 To aid in the convergence of $\vec{\gamma}$ and $g$ we impose a prior on the rms of $g$, though
 our physical interpretations are ultimately independent of this scaling.
-This prior does not specify the sign of $a$, which leaves a parity degeneracy.  As will be seen, the signal-to-noise in $\vec{\gamma}$ is sufficiently
+This prior does not specify the sign of $a$, which leaves a parity degeneracy. 
+\added{In the presentation of our results $\vec{\gamma}g$ is shown, never $g$ alone.
+}
+As will be seen, the signal-to-noise in $\vec{\gamma}$ is sufficiently
 high that our finite MCMC chains do not migrate between the degenerate solutions; to simplify the merging of multiple chains
 we impose one of the degenerate solutions
 \begin{equation}
@@ -717,23 +729,26 @@ we impose one of the degenerate solutions
 As  in mixture models, the combinations $\vec{\gamma}^0 g_0$ and $\vec{\gamma}^1 g_1$ terms are degenerate under exchange of the 0 and 1 indices. For a cleaner presentation of our results, 
 we break that degeneracy  by setting consistent initial conditions that succeed in keeping indices consistent over all analysis chains.  
 
-
-Another form of degeneracy is illustrated by the  transformations $\Delta \rightarrow \Delta  + \epsilon_\Delta$,
- $\vec{\gamma}^0 \rightarrow \vec{\gamma}^0  + \epsilon_{\gamma^0}$, $\vec{\gamma}^1 \rightarrow \vec{\gamma}^1 + \epsilon_{\gamma^1}$
- under the condition
+\added{
+Each of the multiplicative cofactors has a degeneracy with the zeropoint.  Consider
+$\vec{\alpha} \rightarrow \vec{\alpha} +   \epsilon_{\alpha}$,
+$\vec{\beta} \rightarrow \vec{\beta} +   \epsilon_{\beta}$,
+$\vec{\eta} \rightarrow \vec{\eta} +   \epsilon_{\eta}$,
+$\vec{\gamma}^0 \rightarrow \vec{\gamma}^0 +   \epsilon_{\gamma^0}$,
+$\vec{\gamma}^1 \rightarrow \vec{\gamma}^1 +   \epsilon_{\gamma^1}$.
+Then
+each supernova's magnitude can shift as
+$\Delta \rightarrow \Delta  + \epsilon_\Delta$
+under the condition 
 $$
-\epsilon_\Delta  +  \epsilon_{\gamma^0} g_0+  \epsilon_{\gamma^1} g_1=0,
+\epsilon_\Delta  = -  \epsilon_{\alpha} (EW_{\text{Ca}}-\langle EW_{\text{Ca}}\rangle)- 
+ \epsilon_{\beta} (EW_{\text{Si}}-\langle EW_{\text{Si}}\rangle) -  \epsilon_{\eta} (\lambda_{\text{Si}}-\langle \lambda_{\text{Si}}\rangle)
+- \epsilon_{\gamma^0}g_0 -  \epsilon_{\gamma^1}g_1.
 $$
-i.e.\ shifts in the global coefficients $\vec{\gamma}$ can be compensated by shifts in 
-$\Delta$
-for each supernova while maintaining 
-$\langle \Delta \rangle=0$.
-Another degeneracy is illustrated by $g_0 \rightarrow g_0 + (EW_{Ca}-\langle EW_{Ca}\rangle)\epsilon$,
-$\vec{\alpha} \rightarrow \vec{\alpha} - \vec{\gamma} \epsilon$, $\vec{c} \rightarrow \vec{c} + \langle EW_{Ca}\rangle \epsilon$, i.e. the
-linear external terms can leak into the linear spectral feature corrections.
-These degeneracies are not broken within the model, but rather are constrained by the priors in which the
-per-supernova parameters
-$\Delta$, $EW$, $\lambda$, $g_0$, and $g_1$ are uncorrelated. 
+We break this degeneracy by fixing the values of $\epsilon$ such that $\Delta$ is
+uncorrelated with  $EW_{\text{Ca}}$, $EW_{\text{Si}}$, $\lambda_{\text{Ca}}$,
+$g_0$, and $g_1$.
+Our preference is for feature affects to be confined to the cofactors and not the grey magnitude offsets.}
 
 All parameters not  otherwise noted above have flat priors.
 
@@ -744,6 +759,11 @@ For $N=172$ supernovae, there are 1376 observables and 1064  parameters.
 
 \subsection{Results for the Latent Parameter Cofactors  $\vec{\gamma}^0$ and $\vec{\gamma}^1$  }
 \label{results1:sec}
+\added{
+Recall that the purpose of this section is to introduce concepts rather than emphasize the specific results,
+which for this simple model is expected to have systematic biases.
+}
+
 In this subsection we concentrate on the results for $\vec{\gamma}^0$ and $\vec{\gamma}^1$.
 In our model, $g_0$ and $g_1$ are introduced as latent parameters that are related to linear shifts in band magnitudes through
 the  coefficients $\vec{\gamma}^0$ and
@@ -811,9 +831,32 @@ M
 \end{pmatrix}.
 \label{trans_I:eqn}
 \end{equation}
-The $\vec{\gamma}$'s derived from our analysis are almost entirely captured by the first term;
-a quadratic fraction of $0.9993^{+0.0002}_{-0.0002}$ of $\vec{\gamma}^0$ and
-$0.959^{+0.013}_{-0.024}$ of $\vec{\gamma}^1$ project onto the $\vec{a}$--$\vec{b}$ plane.
+The $\vec{\gamma}$'s derived from our analysis are almost entirely captured by the first term.
+\added{
+The credible interval for $\vec{\gamma}$'s and other parameters are presented in Table~\ref{global1:tab}.
+We find
+\begin{equation}
+M=
+\begin{pmatrix}
+\begin{array}{rr}
+43.7^{+2.3}_{-2.1} & 19.4^{+0.5}_{-0.5} \\
+-18.7^{+3.0}_{-3.1} & -0.8^{+0.9}_{-1.0} \\
+\end{array}
+\end{pmatrix} 
+\end{equation}
+and
+\begin{align}
+\begin{split}
+\vec{\epsilon}_{\gamma^0} &=\left(1.5^{+0.3}_{-0.3} , -1.4^{+0.3}_{-0.3} , -1.8^{+0.4}_{-0.3} , 1.4^{+0.1}_{-0.1} , 0.5^{+0.4}_{-0.5} \right), \\
+\vec{\epsilon}_{\gamma^1} & =\left(4.8^{+0.3}_{-0.3} , -4.3^{+0.3}_{-0.3} , -5.7^{+0.4}_{-0.4} , 0.1^{+0.2}_{-0.2} , 6.8^{+0.5}_{-0.5}\right),
+\end{split}
+\label{res_1:eqn}
+\end{align}
+which correspond to
+a quadratic fraction of $0.9993^{+0.0002}_{-0.0003}$ of $\vec{\gamma}^0$ and
+$0.9303^{+0.0210}_{-0.0341}$ of $\vec{\gamma}^1$ project onto the $\vec{a}$--$\vec{b}$ plane.
+For the standard deviation values of $g_0$ and $g_1$ of the supernovae in our sample, the amplitude of the magnitude residuals from $\vec{\epsilon}$ are 
+$\left(0.025, 0.023,0.029, 0.008, 0.027\right)$.}
 The allowed color
 variations in ${\hat{U}}{\hat{B}}{\hat{V}}{\hat{R}}{\hat{I}}$ allowed by the \citetalias{1999PASP..111...63F} model and our best-fit model are confined to almost identical
 2-dimensional
@@ -846,7 +889,7 @@ the former.
    The  \citetalias{1999PASP..111...63F} model is shown in dashed-line unit vectors
    in the directions of  $\vec{a}$, $\vec{b}$; the only possible magnitudes are confined to the plane that contains both.
    The perspective on the right visually shows that all four vectors are nearly coplanar.  
-   The combination $\vec{a}+\vec{b}/2.18$ is shown in the dotted red
+   The combination $\vec{a}+\vec{b}/2.25$ is shown in the dotted red
    line: it is almost perfectly superimposed on $\vec{\gamma}^0$.
    \label{plane:fig}}
 \end{figure}
@@ -882,8 +925,8 @@ All color changes would then be confined to the $a_X+\kappa_1 b_X$ direction. Th
 the
 ensemble mean
 effective total-to-selective extinction of our sample.
-The posterior yields $\langle R^F_{\mathit{eff}}\rangle =2.18^{+0.14}_{-0.16}$.
-Figure~\ref{plane:fig} visualizes the near-perfect alignment of $\vec{\gamma}^0$ and  $\vec{a}+\vec{b}/2.18$.
+The posterior yields $\langle R^F_{\mathit{eff}}\rangle =2.25^{+0.11}_{-0.10}$.
+Figure~\ref{plane:fig} visualizes the near-perfect alignment of $\vec{\gamma}^0$ and  $\vec{a}+\vec{b}/2.25$.
 
 The direction of the $\vec{\gamma}^1$ vector is described by $\kappa_2$.
 The prior that $g_0$ and  $g_1$ are uncorrelated leads  to  $\kappa_2$ being determined
@@ -929,7 +972,8 @@ That we recover a physically-motivated  result lends confidence in the modeling 
 those from two-parameter dust extinction contribute to those two parameters.  The derived effective dust-parameter $R^F$ 
 is susceptible to leakage from intrinsic colors unassociated with dust.
 }
-{Dust extinction is not the only effect that can contribute to $g_0$ and $g_1$.}  \end{itemize}
+{Dust extinction is not the only effect that can contribute to $g_0$ and $g_1$ so interpreting
+them as pure dust parameters is subject to systematic errors.}  \end{itemize}
 
 \section{Model~II: Three Color Parameters}
 \label{modelII:sec}
@@ -985,7 +1029,10 @@ The model contains the product
 $\vec{\phi} p$, which has the degeneracy $\vec{\phi} \rightarrow -\vec{\phi}$, $p \rightarrow -p$.
 No conditions are added to break this degeneracy to leave open the possibility that
 $\sigma_p\vec{\phi}$ is consistent with zero.  The degeneracy
-in $\vec{\phi}$ is apparent later in the article, but it does not affect the magnitude predictions.
+in $\vec{\phi}$ is apparent later in the article, but it does not affect the magnitude predictions. 
+\added{
+As in \S\ref{modelI:sec}, the degeneracy between $\vec{\phi}$ and $\Delta$ is fixed by enforcing zero correlation between $\Delta$ and $p$.
+}
 
 For $N$ supernovae there are $8N$ observables.  There are $3N$ spectral parameters, each of
 $\Delta$, $g_0$, $g_1$ contributes $N-1$ parameters while $p$  contributes $N$ parameters,  and  there are $5 \times 7$ global coefficients.
@@ -1000,10 +1047,17 @@ The 68\% credible interval for $\sigma_p$ is $0.051^{+0.005}_{-0.004}$~mag, high
 The posterior for $\sigma_p \vec{\phi}$ is shown in Figure~\ref{M1ev:fig}.  
 The two maxima are due to the sign degeneracy for $\vec{\phi}$, each of the MCMC chains converges to one of the solutions and does
 not migrate between them.
+\replaced{
 The direction of $\vec{\phi}$ is not aligned with the plane defined by
 the $\vec{\gamma}$ vectors; only a quadratic fraction of
  $0.09^{+0.12}_{-0.06}$ of 
- $\vec{\phi}$ lies in the $\vec{\gamma}_0$--$\vec{\gamma}_1$ plane.
+ $\vec{\phi}$ lies in the $\vec{\gamma}_0$--$\vec{\gamma}_1$ plane.}
+ {
+ The new parameter does affect colors in a distinct manner from $g_0$ and $g_1$.
+A quadratic fraction of
+$0.48^{+0.25}_{-0.17}$ of 
+ $\vec{\phi}$ lies perpendicular to the $\vec{\gamma}_0$--$\vec{\gamma}_1$ plane.
+ }
 
 \begin{figure}[htbp] %  figure placement: here, top, bottom, or page
    \centering
@@ -1040,7 +1094,9 @@ Top: Model~I. Bottom: Model~II.
 The $\vec{\gamma}$ vectors, like those from Model~I, are almost entirely projected
 onto the plane defined by
 $\vec{a}$ and $\vec{b}$ of the \citetalias{1999PASP..111...63F} model.
-The direction of the  $\vec{\gamma}^0$ vector corresponds to an effective $\langle R^F_{\mathit{eff}}\rangle = 2.54^{+0.20}_{-0.20}$.
+The direction of the  $\vec{\gamma}^0$ vector corresponds to an effective
+\replaced{$\langle R^F_{\mathit{eff}}\rangle = 2.54^{+0.20}_{-0.20}$}
+{$\langle R^F_{\mathit{eff}}\rangle = 2.54^{+0.13}_{-0.12}$}.
 The change of $\langle R^F_{\mathit{eff}}\rangle$ from Model~I to II is anticipated by the change in the distribution of $g_1$,
 whose connection with $R^F$ is shown in \S\ref{g0g1:sec}.
 
@@ -1117,7 +1173,9 @@ EW_{Si}\\ EW_{Ca} \\ \lambda_{Si} \\ x_1
 }
 The changes from Model~II are the addition of the $\vec{\zeta} x_1$ terms in Eq.~\ref{ewsiv3:eqn}, and
 the addition of the shape measurement and uncertainty (implicit in the covariance matrix $C$) and $x_1$   in Eq.~\ref{dust3:eqn}.
-
+\added{
+As in \S\ref{modelI:sec}, the degeneracy between $\vec{\phi}$ and $\Delta$ is fixed by enforcing zero correlation between $\Delta$ and $x_1$.
+}
 For $N$ supernovae there are $9N$ observables.  There are $4N$ spectral and light-curve shape parameters, each of
 $\Delta$, $g_0$, $g_1$ contributes $N-1$ parameters while $p$  contributes $N$ parameters,  and there are $5 \times 8$ global coefficients.
 For $N=172$ supernovae, this makes 1548 observables and 1413  parameters.
@@ -1149,26 +1207,25 @@ As will be seen in  \S\ref{results3global:sec}, the posterior derived from the a
 peak showing no indication that the MCMC has failed to converge.
 
 The model provides a fair representation of the data as seen in the residual differences between the data and the model prediction.
-Figure~\ref{residual:fig} shows plots of the observed  versus
-model-expectation colors (differences between band magnitudes in the mean of the Normal distribution of Eq.~\ref{dust3:eqn}) for four selected colors,
-and the histogram of the residuals.  The residuals have compact Gaussian-like appearance with
-no catastrophically poor color predictions.  There are no apparent trends between residuals and observed
-color.  
+Figure~\ref{residual:fig} shows plots of 
+\added{residuals between measured and model-expectation colors as a function of observed $\hat{B}_o-\hat{V}_o$.
+This and similar plots for the other permutations of observed colors show  no apparent trend between residuals and observed
+color nor of extreme catastrophic outliers.
+}
 
 \begin{figure}[htbp] %  figure placement: here, top, bottom, or page
    \centering
-   \includegraphics[width=4in]{../output_fix3_x1/residual.pdf} 
-            \caption{Observed  versus
-            Model~III-expectation colors (including  contributions related to spectral features, light-curve shape, $\vec{\gamma} g$, and $\vec{\phi} p$  terms)
-for four selected colors. 
-            Plotted on the right for each color
-is the histogram of the difference between the expected and
-observed
- colors. 
+%   \includegraphics[width=4in]{../output_fix3_x1/residual.pdf} 
+   \includegraphics[width=4in]{../output_fix3_x1/cpull.pdf} 
+               \caption{
+               \added{Residuals between measured and model-expectation colors as a function of observed $\hat{B}_o-\hat{V}_o$.  Plots that show
+               residual
+               colors containing $\hat{B}_o$ or $\hat{V}_o$ are shaded. to highlight that these residuals are highly correlated with the measurements. }
             \label{residual:fig}}
 \end{figure}
 
 This suite of tests lend confidence in our model and the validity of the derived posterior.
+
 
 \subsubsection{Global Parameter Posterior Results}
 \label{results3global:sec}
@@ -1241,102 +1298,102 @@ $R_V^{-1}=A_B/A_V-1$ as an observational descriptor of dust properties.
 \hline
 Parameters& $X={\hat{U}}$ &${\hat{B}}$&${\hat{V}}$&${\hat{R}}$&${\hat{I}}$\\ \hline
 $\alpha_X$
-& $0.0059^{+0.0007}_{-0.0008}$
-& $0.0032^{+0.0006}_{-0.0007}$
-& $0.0029^{+0.0006}_{-0.0006}$
-& $0.0026^{+0.0005}_{-0.0005}$
-& $0.0041^{+0.0004}_{-0.0004}$
+& $0.0051^{+0.0007}_{-0.0008}$
+& $0.0025^{+0.0006}_{-0.0007}$
+& $0.0022^{+0.0005}_{-0.0005}$
+& $0.0019^{+0.0004}_{-0.0004}$
+& $0.0034^{+0.0003}_{-0.0004}$
 \\
-${\alpha_X/\alpha_{\hat{V}}-1}$
-& $   1.0^{+   0.2}_{  -0.2}$
+${\alpha_X}/\alpha_{\hat{V}}-1$
+& $   1.3^{+   0.4}_{  -0.2}$
 & $   0.1^{+   0.1}_{  -0.1}$
-& \dots
+& \ldots
 & $  -0.1^{+   0.0}_{  -0.0}$
-& $   0.4^{+   0.2}_{  -0.1}$
+& $   0.5^{+   0.3}_{  -0.2}$
 \\
 $\beta_X$
-& $ 0.032^{+ 0.006}_{-0.006}$
-& $ 0.021^{+ 0.005}_{-0.005}$
-& $ 0.018^{+ 0.005}_{-0.005}$
-& $ 0.016^{+ 0.004}_{-0.004}$
-& $ 0.007^{+ 0.004}_{-0.004}$
+& $ 0.035^{+ 0.005}_{-0.005}$
+& $ 0.024^{+ 0.004}_{-0.004}$
+& $ 0.021^{+ 0.004}_{-0.004}$
+& $ 0.019^{+ 0.003}_{-0.003}$
+& $ 0.010^{+ 0.003}_{-0.003}$
 \\
-${\beta_X/\beta_{\hat{V}}-1}$
-& $  0.80^{+  0.29}_{ -0.19}$
-& $  0.17^{+  0.11}_{ -0.08}$
-& \dots
-& $ -0.13^{+  0.04}_{ -0.04}$
-& $ -0.59^{+  0.12}_{ -0.18}$
+${\beta_X}/\beta_{\hat{V}}-1$
+& $  0.68^{+  0.16}_{ -0.13}$
+& $  0.14^{+  0.07}_{ -0.07}$
+&\ldots
+& $ -0.11^{+  0.03}_{ -0.02}$
+& $ -0.50^{+  0.06}_{ -0.07}$
 \\
 $\eta_X$
-& $0.0021^{+0.0011}_{-0.0012}$
-& $0.0023^{+0.0009}_{-0.0010}$
-& $0.0026^{+0.0008}_{-0.0008}$
-& $0.0025^{+0.0007}_{-0.0007}$
-& $0.0018^{+0.0006}_{-0.0006}$
+& $0.0003^{+0.0011}_{-0.0011}$
+& $0.0005^{+0.0009}_{-0.0009}$
+& $0.0008^{+0.0007}_{-0.0007}$
+& $0.0007^{+0.0006}_{-0.0006}$
+& $-0.0000^{+0.0005}_{-0.0005}$
 \\
-${\eta_X/\eta_{\hat{V}}-1}$
-& $ -0.22^{+  0.19}_{ -0.33}$
-& $ -0.13^{+  0.10}_{ -0.17}$
-& \dots
-& $ -0.06^{+  0.07}_{ -0.05}$
-& $ -0.32^{+  0.10}_{ -0.11}$
+${\eta_X}/\eta_{\hat{V}}-1$
+& $ -0.39^{+  0.64}_{ -1.36}$
+& $ -0.26^{+  0.35}_{ -0.77}$
+&\ldots
+& $ -0.19^{+  0.12}_{ -0.11}$
+& $ -0.86^{+  0.33}_{ -0.71}$
 \\
 $\zeta_X$
-& $ -0.06^{+  0.05}_{ -0.04}$
-& $ -0.08^{+  0.04}_{ -0.04}$
-& $ -0.11^{+  0.04}_{ -0.04}$
-& $ -0.09^{+  0.04}_{ -0.03}$
-& $ -0.14^{+  0.03}_{ -0.03}$
+& $ -0.00^{+  0.04}_{ -0.04}$
+& $ -0.02^{+  0.03}_{ -0.03}$
+& $ -0.05^{+  0.03}_{ -0.03}$
+& $ -0.03^{+  0.02}_{ -0.02}$
+& $ -0.08^{+  0.02}_{ -0.02}$
 \\
-${\zeta_X/\zeta_{\hat{V}}-1}$
-& $ -0.47^{+  0.20}_{ -0.35}$
-& $ -0.27^{+  0.11}_{ -0.19}$
-& \dots
-& $ -0.20^{+  0.05}_{ -0.07}$
-& $  0.24^{+  0.25}_{ -0.14}$
+${\zeta_X}/\zeta_{\hat{V}}-1$
+& $ -0.94^{+  0.48}_{ -1.15}$
+& $ -0.54^{+  0.28}_{ -0.65}$
+& \ldots
+& $ -0.42^{+  0.09}_{ -0.21}$
+& $  0.47^{+  0.83}_{ -0.32}$
 \\
 $\gamma^0_X$
-& $ 68.30^{+  2.98}_{ -2.99}$
-& $ 54.82^{+  2.57}_{ -2.64}$
-& $ 40.81^{+  2.45}_{ -2.56}$
-& $ 30.89^{+  2.19}_{ -2.28}$
-& $ 22.34^{+  2.11}_{ -2.17}$
+& $ 68.91^{+  2.62}_{ -2.56}$
+& $ 55.44^{+  2.22}_{ -2.25}$
+& $ 41.41^{+  1.98}_{ -1.98}$
+& $ 31.49^{+  1.61}_{ -1.62}$
+& $ 22.92^{+  1.35}_{ -1.30}$
 \\
-${\gamma^0_X/\gamma^0_{\hat{V}}-1}$
-& $  0.68^{+  0.05}_{ -0.05}$
-& $  0.34^{+  0.03}_{ -0.03}$
-& \dots
+${\gamma^0_X}/\gamma^0_{\hat{V}}-1$
+& $  0.67^{+  0.04}_{ -0.04}$
+& $  0.34^{+  0.02}_{ -0.02}$
+&\ldots
 & $ -0.24^{+  0.01}_{ -0.01}$
-& $ -0.45^{+  0.03}_{ -0.03}$
+& $ -0.45^{+  0.02}_{ -0.02}$
 \\
 $\gamma^1_X$
-& $ -9.92^{+  4.29}_{ -4.39}$
-& $ -6.59^{+  3.87}_{ -3.90}$
-& $-14.86^{+  3.51}_{ -3.43}$
-& $-14.70^{+  3.03}_{ -3.00}$
-& $-15.74^{+  2.82}_{ -2.80}$
+& $ -1.85^{+  4.11}_{ -4.05}$
+& $  1.47^{+  3.74}_{ -3.58}$
+& $ -6.75^{+  3.21}_{ -3.15}$
+& $ -6.60^{+  2.71}_{ -2.65}$
+& $ -7.65^{+  2.33}_{ -2.24}$
 \\
-${\gamma^1_X/\gamma^1_{\hat{V}}-1}$
-& $ -0.33^{+  0.16}_{ -0.21}$
-& $ -0.56^{+  0.14}_{ -0.21}$
-& \dots
-& $ -0.01^{+  0.06}_{ -0.04}$
-& $  0.06^{+  0.15}_{ -0.11}$
+${\gamma^1_X}/\gamma^1_{\hat{V}}-1$
+& $ -0.70^{+  0.38}_{ -0.76}$
+& $ -1.18^{+  0.43}_{ -1.08}$
+& \ldots
+& $ -0.03^{+  0.14}_{ -0.08}$
+& $  0.12^{+  0.45}_{ -0.22}$
 \\
 $\sigma_p \phi_X$
-& $ 0.020^{+ 0.014}_{-0.016}$
-& $-0.022^{+ 0.012}_{-0.013}$
-& $-0.031^{+ 0.010}_{-0.012}$
-& $-0.014^{+ 0.009}_{-0.010}$
-& $ 0.020^{+ 0.009}_{-0.010}$
+& $ 0.002^{+ 0.016}_{-0.017}$
+& $-0.041^{+ 0.013}_{-0.014}$
+& $-0.050^{+ 0.011}_{-0.012}$
+& $-0.032^{+ 0.009}_{-0.010}$
+& $ 0.002^{+ 0.008}_{-0.008}$
 \\
 ${\phi_X/\phi_{\hat{V}}-1}$
-& $-1.658^{+ 0.559}_{-0.960}$
-& $-0.278^{+ 0.168}_{-0.245}$
-& \dots
-& $-0.555^{+ 0.123}_{-0.219}$
-& $-1.654^{+ 0.394}_{-0.701}$
+& $-1.034^{+ 0.291}_{-0.409}$
+& $-0.174^{+ 0.103}_{-0.134}$
+& \ldots
+& $-0.347^{+ 0.042}_{-0.060}$
+& $-1.032^{+ 0.141}_{-0.208}$
 \\
 \hline
 \end{tabular}
@@ -1367,7 +1424,7 @@ a difference attributed to a better treatment of uncertainties and host-galaxy d
 \citet{2013ApJ...773...53F} find no significant relation.
 Our result for $\eta_{\hat{B}}/\eta_{\hat{V}}-1$ also gives no significant relation. 
 
-The non-zero values for $\vec{\zeta}$ demonstrate that light-curve shape $x_1$ is  an indicator
+The non-zero values for $\vec{\zeta}$ \added{and their effect on color $\vec{\zeta}-\zeta_{\hat{V}}$}  demonstrate that light-curve shape $x_1$ is  an indicator
 of broadband colors, in the sense that SNe~Ia with broader light curves are bluer in all colors.
 This is as expected based on the results of \citet{2007A&A...466...11G, 2007ApJ...659..122J}.
 
@@ -1413,20 +1470,21 @@ The direction of the vector in the ${\hat{U}}{\hat{V}}{\hat{I}}$-subspace is sho
 
 The transformation between the $\vec{\gamma}$  vectors and the   \citetalias{1999PASP..111...63F} vector given in
 Eq.~\ref{trans_I:eqn}, is satisfied by the transformation matrix
+\added{
 \begin{equation}
 M=
 \begin{pmatrix}
 \begin{array}{rr}
-39.7^{+2.4}_{-2.5} & 16.6^{+0.7}_{-0.6} \\
--14.5^{+3.4}_{-3.4} & 3.7^{+1.0}_{-1.0}
+40.3^{+1.8}_{-1.8} & 16.6^{+0.6}_{-0.6} \\
+-5.8^{+3.1}_{-3.0} & 3.4^{+1.0}_{-0.9}
 \end{array}
 \end{pmatrix} 
 \end{equation}
 and the two residual vectors
 \begin{align}
 \begin{split}
-\vec{\epsilon}_{\gamma^0} &=\left(1.1^{+0.4}_{-0.4} , -1.2^{+0.4}_{-0.4} , -0.8^{+0.4}_{-0.4} , 0.7^{+0.2}_{-0.2} , 0.4^{+0.6}_{-0.6}\right), \\
-\vec{\epsilon}_{\gamma^1} & =\left(-2.8^{+0.6}_{-0.6} , 4.3^{+0.6}_{-0.6} , -0.8^{+0.6}_{-0.6} , 1.2^{+0.3}_{-0.3} , -2.6^{+0.9}_{-0.9}\right).
+\vec{\epsilon}_{\gamma^0} &=\left(1.1^{+0.4}_{-0.4} , -1.2^{+0.4}_{-0.4} , -0.9^{+0.4}_{-0.4} , 0.7^{+0.2}_{-0.2} , 0.5^{+0.6}_{-0.5}\right), \\
+\vec{\epsilon}_{\gamma^1} & =\left(-2.3^{+0.6}_{-0.5} , 4.0^{+0.6}_{-0.6} , -1.3^{+0.6}_{-0.6} , 0.7^{+0.3}_{-0.3} , -1.4^{+0.8}_{-0.8}\right).
 \end{split}
 \label{res_3:eqn}
 \end{align}
@@ -1435,8 +1493,12 @@ color changes allowed by the \citetalias{1999PASP..111...63F} dust-extinction mo
 as described by
 $\vec{a}$ and $\vec{b}$. The quadratic fraction of $\vec{\gamma}^1$ projected
 onto this plane is
-$0.959^{+0.015}_{-0.029}$.
-The   $\vec{\gamma}^0$  vector points in the $\langle R^F_{\mathit{eff}}\rangle=2.39^{+0.15}_{-0.16}$ dust-extinction direction.
+$0.8426^{+0.0780}_{-0.1236}$.
+\added{For the standard deviation values of $g_0$ and $g_1$ of the supernovae in our sample, the amplitude of the magnitude residuals from $\vec{\epsilon}$ are 
+$\left(0.005, 0.012,0.011, 0.007, 0.004 \right)$.
+}
+The   $\vec{\gamma}^0$  vector points in the $\langle R^F_{\mathit{eff}}\rangle=2.43^{+0.10}_{-0.10}$ dust-extinction direction.
+}
 This value is consistent with the $R_V=2.5$ found in the supernova samples of \citet{2011ApJ...729...55F}, and the
 center  of the range of per-supernova $R^F$ values found in the samples of \citet{2014ApJ...789...32B, 2015MNRAS.453.3300A}.
 \deleted{Based on these facts, the supernova ``extrinsic'' colors $\vec{\gamma}^0 g_0 + \vec{\gamma}^1 g_1$  of our model are attributed to dust extinction.
@@ -1449,7 +1511,7 @@ This association is further discussed when $g_0$ and $g_1$ are considered in \S\
    \caption{
    Visualization of how supernova magnitudes can vary in Model~III and the dust extinction of \citetalias{1999PASP..111...63F}.
    See Figure~\ref{plane:fig}.
-   The combination $\vec{a}+\vec{b}/2.39$ is shown in the dotted red
+   The combination $\vec{a}+\vec{b}/2.43$ is shown in the dotted red
    line: it is almost perfectly superimposed on $\vec{\gamma}^0$.
    \label{plane3:fig}}
 \end{figure}
@@ -1466,9 +1528,8 @@ high as that of the data, so we assign a $>99$\% confidence in the detection of 
 
 The direction of $\vec{\phi}$ is not aligned with the plane defined by
 the $\vec{\gamma}$ vectors (nor of the  \citetalias{1999PASP..111...63F} dust-extinction model); a quadratic fraction of
-$0.130^{+0.262}_{-0.104}$ of  %new
- $\vec{\phi}$ lies in the $\vec{\gamma}^0$--$\vec{\gamma}^1$ plane.
-
+\added{
+$0.49^{+0.27}_{-0.19}$ of  $\vec{\phi}$ lies perpendicular to the $\vec{\gamma}^0$--$\vec{\gamma}^1$ plane.}
 
 The values of $\vec{\phi}$ does not change  monotonically with wavelength, as is apparent  in 
 the combination $\phi_X/\phi_{\hat{V}}-1$ shown in Figure~\ref{phiratio:fig}.  An object that has fainter  $\hat{U}$$\hat{I}$-band peak magnitudes
@@ -1522,22 +1583,23 @@ Many outliers appear in the red tail of $E_{\gamma^0}({\hat{B}}-{\hat{V}})$, as 
 heavily extinguished by host-galaxy dust.
 
 The Pearson correlation coefficients of the per-supernova parameters are given in the matrix
+\added{
 \begin{multline}
-Cor(\Delta, EW_{Ca}, EW_{Si}, \lambda_{Si}, x_1, E_{\gamma^0}({\hat{B}}-{\hat{V}}), E_{\gamma^1}({\hat{B}}-{\hat{V}}), A_{p,V}) =\\
+Cor(EW_{Ca}, EW_{Si}, \lambda_{Si}, x_1, E_{\gamma^0}({\hat{B}}-{\hat{V}}), E_{\gamma^1}({\hat{B}}-{\hat{V}}), A_{p,V}) =\\
 \begin{pmatrix}
-\begin{array}{rrrrrrrr}
-\Delta& -0.08^{+0.06}_{-0.06} & -0.11^{+0.08}_{-0.07} & -0.17^{+0.06}_{-0.06} & 0.19^{+0.08}_{-0.09} & 0.07^{+0.07}_{-0.06} & 0.23^{+0.08}_{-0.08} & 0.12^{+0.06}_{-0.06} \\
-\ldots  & EW_{Ca} & 0.10^{+0.03}_{-0.03} & -0.25^{+0.03}_{-0.03} & 0.07^{+0.03}_{-0.03} & -0.10^{+0.05}_{-0.05} & -0.18^{+0.06}_{-0.06} & 0.00^{+0.08}_{-0.08} \\
-\ldots & \ldots &EW_{Si}  & -0.12^{+0.03}_{-0.03} & -0.84^{+0.01}_{-0.01} & -0.13^{+0.04}_{-0.04} & 0.27^{+0.08}_{-0.09} & -0.00^{+0.08}_{-0.07} \\
-\ldots  & \ldots  & \ldots  &  \lambda_{Si}& 0.14^{+0.03}_{-0.03} & 0.01^{+0.06}_{-0.05} & 0.00^{+0.06}_{-0.06} & -0.00^{+0.08}_{-0.08} \\
-\ldots  &\ldots  &\ldots & \ldots & x_1 & 0.13^{+0.04}_{-0.04} & -0.20^{+0.09}_{-0.09} & -0.00^{+0.08}_{-0.08} \\
-\ldots  &\ldots  & \ldots  &\ldots  & \ldots  & E_{\gamma^0}({\hat{B}}-{\hat{V}})& 0.04^{+0.06}_{-0.06} & 0.00^{+0.08}_{-0.08} \\
-\ldots  & \ldots &\ldots  & \ldots  & \ldots & \ldots  &E_{\gamma^1}({\hat{B}}-{\hat{V}})  & -0.00^{+0.08}_{-0.08} \\
-\ldots  & \ldots & \ldots & \ldots  & \ldots  & \ldots  &\ldots  & A_{p,V} \\
+\begin{array}{rrrrrrr}
+EW_{Ca} & 0.10^{+0.03}_{-0.03} & -0.25^{+0.03}_{-0.03} & 0.07^{+0.03}_{-0.03} & -0.10^{+0.05}_{-0.05} & -0.18^{+0.06}_{-0.06} & 0.00^{+0.08}_{-0.08} \\
+\ldots &EW_{Si} & -0.12^{+0.03}_{-0.03} & -0.84^{+0.01}_{-0.01} & -0.13^{+0.04}_{-0.04} & 0.27^{+0.08}_{-0.09} & -0.00^{+0.08}_{-0.08} \\
+\ldots & \ldots& \lambda_{Si} & 0.14^{+0.03}_{-0.03} & 0.01^{+0.06}_{-0.05} & 0.00^{+0.06}_{-0.06} & -0.00^{+0.08}_{-0.08} \\
+\ldots& \ldots& \ldots& x_1 & 0.13^{+0.04}_{-0.04} & -0.20^{+0.09}_{-0.09} & -0.00^{+0.08}_{-0.08} \\
+\ldots& \ldots& \ldots & \ldots& E_{\gamma^0}({\hat{B}}-{\hat{V}})& 0.04^{+0.06}_{-0.06} & 0.00^{+0.08}_{-0.08} \\
+\ldots & \ldots & \ldots& \ldots&\ldots & E_{\gamma^1}({\hat{B}}-{\hat{V}})  & 0.00^{+0.08}_{-0.08} \\
+\ldots & \ldots & \ldots&\ldots &\ldots &\ldots &  A_{p,V} \\
 \end{array}
 \end{pmatrix}.
 \label{corr:eqn}
 \end{multline}
+Recall that the $\Delta$-cofactor degeneracy is broken by assigning zero correlation between $\Delta$ and the features.}
 To aid readability, only the upper triangular part of the otherwise symmetric matrix is shown and the corresponding feature label is given on
 the diagonal.
 
@@ -1558,10 +1620,10 @@ to in \S\ref{results3global:sec} when interpreting the correlation between the c
 \subsubsection{Results for the Latent  Parameters $g_0$, $g_1$}
 \label{g0g1:sec}
 The vector
-$\vec{\gamma}^0$ describes color changes for an effective $\langle R^F_{\mathit{eff}}\rangle=2.39$ dust, as shown 
+$\vec{\gamma}^0$ describes color changes for an effective $\langle R^F_{\mathit{eff}}\rangle=2.43$ dust, as shown 
 in  \S\ref{results3gamma:sec}.
 Hence, the per-supernova parameter $\gamma^0_{\hat{V}} g_0$ is associated with the $\hat{V}$-band
-extinction for a constant $R^F=2.39$.
+extinction for a constant $R^F=2.43$.
 Figure~\ref{k0_med:fig} shows the histogram of
 per-supernova
 median values
@@ -1586,7 +1648,7 @@ for the distribution of dust extinction the SN population is expected to suffer.
       \caption{
       Normalized stack of the posteriors of all supernovae  and histogram 
       of  per-supernova 
-median values of: (left) $\gamma^0_{\hat{V}} g_0-\gamma^0_{\hat{V}} g_0|_0$, which is associated with the $A^F_V$ of an $\langle R^F_{\mathit{eff}}\rangle \sim 2.39$ dust model;
+median values of: (left) $\gamma^0_{\hat{V}} g_0-\gamma^0_{\hat{V}} g_0|_0$, which is associated with the $A^F_V$ of an $\langle R^F_{\mathit{eff}}\rangle \sim 2.43$ dust model;
 (right) $\gamma^1_{\hat{V}} g_1-\gamma^1_{\hat{V}} g_1|_0$,
 which  is associated with extinction corrections due to deviations away from the canonical $\langle R^F_{\mathit{eff}}\rangle$ value.
    \label{k0_med:fig}}
@@ -1598,7 +1660,7 @@ matrix $M$ in  Eq.~\ref{trans_I:eqn}.
 A plot showing the expected values and 68\% credible intervals of these parameters
 for our supernova
 sample is shown in Figure~\ref{kk:fig}. 
-For reference, a line that represents $\langle R^F_{\mathit{eff}}\rangle=2.39$ is overplotted; points above
+For reference, a line that represents $\langle R^F_{\mathit{eff}}\rangle=2.43$ is overplotted; points above
 the line have larger $R^F$, points below have smaller $R^F$.  The majority of supernovae lie within a narrow range above the line,
 while the remaining fraction fall in a broader range below the line.
 Comparison with  $\gamma^1_{\hat{V}} g_1-\gamma^1_{\hat{V}} g_1|_0$ of the right plot of Figure~\ref{k0_med:fig}
@@ -1615,7 +1677,7 @@ without further assumptions.
    \includegraphics[width=4in]{../output_fix3_x1/avebv_synth.pdf}
       \caption{
       Expected values and 68\% credible intervals of effective $E^F(B-V)$ and $A_V^F$ after transformation from our model $g_0$ and $g_1$ parameters, for the supernova in our sample.
-      Overplotted is a line with the slope expected for $R^F=2.39$.
+      Overplotted is a line with the slope expected for $R^F=2.43$.
    \label{kk:fig}}
 \end{figure}
 
@@ -1690,9 +1752,10 @@ While we also claim a detection of an intrinsic color parameter, }
 the differences between our models make it
 difficult to determine whether the results are consistent.   Our results show effects on color that are not monotonic
 with wavelength.  For example, we find that the statistic that nominally best corresponds to  $\beta_{\mathit{int}}$
-to be $\phi_{\hat{B}}/(\phi_{\hat{B}}-\phi_{\hat{V}}) = -2.4_{  -4.1}^{+   1.6}$, which appears to be inconsistent with  \citetalias{2017ApJ...842...93M}.  
+to be
+\replaced{ $\phi_{\hat{B}}/(\phi_{\hat{B}}-\phi_{\hat{V}}) = -2.4_{  -4.1}^{+   1.6}$}{$\phi_{\hat{B}}/(\phi_{\hat{B}}-\phi_{\hat{V}}) =-4.4_{  -6.4}^{+   2.4}$}, which appears to be inconsistent with  \citetalias{2017ApJ...842...93M}.  
 However a change of the color baseline gives a significantly different
-$\phi_{\hat{B}}/(\phi_{\hat{B}}-\phi_{\hat{R}}) =2.4_{  -1.2}^{+   2.1}$.  Our results indicate that  $\beta_{\mathit{int}}$ %new
+$\phi_{\hat{B}}/(\phi_{\hat{B}}-\phi_{\hat{R}}) =4.3_{  -1.4}^{+   3.8}$.  Our results indicate that  $\beta_{\mathit{int}}$ %new
 is sensitive to the color that $c$ corresponds to.  Although SALT2 $c$ is calibrated to correspond with $B-V$, it is
 determined using data from all bands with the wavelength extremes  typically providing the strongest leverage.
 The $c$ parameter is thus an  amalgamation of all input colors.
@@ -1710,16 +1773,16 @@ reduces the strength of  this bias.
 
 It is possible that the  $p$ parameter is a supernova-tracer of a population that to date has only been identified through host-galaxy tracers.
 We plot in Figure~\ref{childress3:fig} our parameter
- $\sigma_p\phi_{\hat{I}}(p-p|_0) $  (subtracting out a random supernova
+ $\sigma_p\phi_{\hat{V}}(p-p|_0) $  (subtracting out a random supernova
 to suppress correlated errors) versus host mass
 for the subset of supernovae whose host measurements are given in \citet{2013ApJ...770..108C}.
 Low- and high-mass galaxies, divided by $\log{(M/M_\sun)}=10$, have high probability of hosting supernovae with different $p$ distributions, as
 the Kolmogorov-Smirnov test gives a two-tailed $p$-value of $  0.016 _ {     0.011 } ^{     0.044 }$. %fix
 The median and median uncertainties of the two subsamples are
 %---
-$\langle \sigma_p\phi_{\hat{V}}(p-p|_0) \rangle=  0.024 \pm {     0.005 }$ mag, %new
-$\langle \sigma_p\phi_{\hat{V}}(p-p|_0)  \rangle=0.038 \pm {     0.005 }$ mag
-for low- and high-mass hosts respectively, with a difference of $ 0.015 \pm {     0.006 }$~mag that is significant at $>2 \sigma$.
+$\langle \sigma_p\phi_{\hat{V}}(p-p|_0) \rangle=  0.041 \pm {     0.007 }$ mag, %new
+$\langle \sigma_p\phi_{\hat{V}}(p-p|_0)  \rangle=0.065 \pm {     0.007 }$ mag
+for low- and high-mass hosts respectively, with a difference of $ 0.024 \pm {     0.010 }$~mag that is significant at $>2 \sigma$.
 
 In this article we do not associate $p$ directly with Hubble residuals.  However,
 we briefly  preview the discussion in \S\ref{Delta:sec} by mentioning that there is room for $p$-based magnitude corrections
@@ -1743,7 +1806,7 @@ The histogram of the per-supernova  medians of these relative  grey offsets $\De
 is shown in Figure~\ref{hist:fig}.  The distribution
 has a standard deviation of
 %-----
-$0.15$
+\replaced{$0.15$}{$0.13$}
 %-----
 mag, and a tail in the positive (fainter) direction.
 Supernova peculiar velocities contribute to the standard deviation; of the four
@@ -1783,7 +1846,7 @@ derived entirely independently of assumptions about the shape of the extinction 
 distribution of $A_V$.  
 We find a broad distribution for total-to-selective extinction
 with an effective
-$\langle R^F_{\mathit{eff}}\rangle \sim 2.39$ and an asymmetric tail extending toward lower values.
+$\langle R^F_{\mathit{eff}}\rangle \sim 2.43$ and an asymmetric tail extending toward lower values.
 We identify a new
 parameter that affects supernova
 colors in a manner that is distinct from the expectations for dust
@@ -1891,46 +1954,46 @@ $\vec{\phi} = \text{sign}(\phi_{\hat{I}}) \vec{\phi}$.
 \hline
 Parameters& $X={\hat{U}}$ &${\hat{B}}$&${\hat{V}}$&${\hat{R}}$&${\hat{I}}$\\ \hline
 $\alpha_X$
-& $0.0063^{+0.0006}_{-0.0006}$
-& $0.0029^{+0.0005}_{-0.0005}$
-& $0.0026^{+0.0005}_{-0.0005}$
-& $0.0026^{+0.0004}_{-0.0004}$
-& $0.0038^{+0.0004}_{-0.0004}$
+& $0.0037^{+0.0003}_{-0.0004}$
+& $0.0011^{+0.0003}_{-0.0003}$
+& $0.0012^{+0.0003}_{-0.0003}$
+& $0.0013^{+0.0003}_{-0.0003}$
+& $0.0026^{+0.0002}_{-0.0003}$
 \\
 ${\alpha_X/\alpha_V-1}$
-& $   1.5^{+   0.3}_{  -0.2}$
-& $   0.1^{+   0.0}_{  -0.0}$
+& $   2.0^{+   0.5}_{  -0.3}$
+& $  -0.1^{+   0.1}_{  -0.1}$
 & \ldots
-& $  -0.0^{+   0.0}_{  -0.0}$
-& $   0.5^{+   0.2}_{  -0.1}$
+& $   0.1^{+   0.1}_{  -0.0}$
+& $   1.1^{+   0.4}_{  -0.2}$
 \\
 $\beta_X$
-& $ 0.039^{+ 0.003}_{-0.003}$
-& $ 0.031^{+ 0.003}_{-0.003}$
-& $ 0.033^{+ 0.003}_{-0.003}$
-& $ 0.027^{+ 0.003}_{-0.003}$
 & $ 0.026^{+ 0.002}_{-0.002}$
+& $ 0.019^{+ 0.001}_{-0.001}$
+& $ 0.022^{+ 0.001}_{-0.001}$
+& $ 0.018^{+ 0.001}_{-0.001}$
+& $ 0.018^{+ 0.001}_{-0.001}$
 \\
 ${\beta_X/\beta_V-1}$
-& $  0.18^{+  0.04}_{ -0.03}$
-& $ -0.05^{+  0.01}_{ -0.01}$
+& $  0.17^{+  0.02}_{ -0.02}$
+& $ -0.14^{+  0.02}_{ -0.02}$
 & \ldots
-& $ -0.17^{+  0.01}_{ -0.01}$
-& $ -0.21^{+  0.03}_{ -0.02}$
+& $ -0.18^{+  0.01}_{ -0.01}$
+& $ -0.16^{+  0.01}_{ -0.01}$
 \\
 $\eta_X$
-& $0.0018^{+0.0009}_{-0.0010}$
-& $0.0016^{+0.0009}_{-0.0010}$
-& $0.0022^{+0.0008}_{-0.0009}$
-& $0.0021^{+0.0007}_{-0.0007}$
-& $0.0010^{+0.0006}_{-0.0006}$
+& $-0.0006^{+0.0005}_{-0.0005}$
+& $-0.0007^{+0.0004}_{-0.0004}$
+& \ldots
+& $0.0002^{+0.0003}_{-0.0004}$
+& $-0.0007^{+0.0003}_{-0.0003}$
 \\
 ${\eta_X/\eta_V-1}$
-& $ -0.18^{+  0.17}_{ -0.25}$
-& $ -0.25^{+  0.11}_{ -0.24}$
+& $ -0.30^{+  4.06}_{ -3.18}$
+& $ -0.73^{+  5.16}_{ -3.69}$
 & \ldots
-& $ -0.03^{+  0.11}_{ -0.06}$
-& $ -0.55^{+  0.13}_{ -0.18}$
+& $ -0.02^{+  0.81}_{ -0.97}$
+& $ -1.03^{+  5.25}_{ -3.77}$
 \\
 $\gamma^0_X$
 & $ 76.37^{+  3.19}_{ -3.23}$
@@ -1942,7 +2005,7 @@ $\gamma^0_X$
 ${\gamma^0_X/\gamma^0_V-1}$
 & $  0.78^{+  0.06}_{ -0.06}$
 & $  0.40^{+  0.03}_{ -0.03}$
-&\ldots
+& \ldots
 & $ -0.24^{+  0.01}_{ -0.01}$
 & $ -0.47^{+  0.02}_{ -0.03}$
 \\
@@ -1956,7 +2019,7 @@ $\gamma^1_X$
 ${\gamma^1_X/\gamma^1_V-1}$
 & $ -0.35^{+  0.08}_{ -0.10}$
 & $ -0.02^{+  0.03}_{ -0.03}$
-&\ldots
+& \ldots
 & $ -0.24^{+  0.02}_{ -0.03}$
 & $ -0.60^{+  0.06}_{ -0.08}$
 \\
@@ -1972,90 +2035,89 @@ ${\gamma^1_X/\gamma^1_V-1}$
 \hline
 Parameters& $X={\hat{U}}$ &${\hat{B}}$&${\hat{V}}$&${\hat{R}}$&${\hat{I}}$\\ \hline
 $\alpha_X$
-& $0.0048^{+0.0010}_{-0.0012}$
-& $0.0019^{+0.0009}_{-0.0010}$
-& $0.0018^{+0.0007}_{-0.0008}$
-& $0.0017^{+0.0006}_{-0.0006}$
-& $0.0027^{+0.0005}_{-0.0005}$
+& $0.0048^{+0.0010}_{-0.0011}$
+& $0.0019^{+0.0008}_{-0.0009}$
+& $0.0018^{+0.0007}_{-0.0007}$
+& $0.0017^{+0.0005}_{-0.0005}$
+& $0.0027^{+0.0004}_{-0.0004}$
 \\
-${\alpha_X/\alpha_V-1}$
-& $   1.7^{+   1.0}_{  -0.4}$
+${\alpha_X}/\alpha_{\hat{V}-1}$
+& $   1.7^{+   0.8}_{  -0.4}$
 & $   0.1^{+   0.1}_{  -0.1}$
 & \ldots
 & $  -0.0^{+   0.1}_{  -0.1}$
-& $   0.5^{+   0.7}_{  -0.3}$
+& $   0.5^{+   0.6}_{  -0.3}$
 \\
 $\beta_X$
-& $ 0.040^{+ 0.003}_{-0.003}$
-& $ 0.031^{+ 0.002}_{-0.002}$
-& $ 0.033^{+ 0.002}_{-0.002}$
+& $ 0.035^{+ 0.002}_{-0.003}$
+& $ 0.026^{+ 0.002}_{-0.002}$
 & $ 0.027^{+ 0.002}_{-0.002}$
-& $ 0.027^{+ 0.002}_{-0.002}$
+& $ 0.022^{+ 0.001}_{-0.001}$
+& $ 0.021^{+ 0.001}_{-0.001}$
 \\
-${\beta_X/\beta_V-1}$
-& $  0.23^{+  0.04}_{ -0.04}$
-& $ -0.04^{+  0.02}_{ -0.02}$
-&\ldots
-& $ -0.16^{+  0.01}_{ -0.01}$
-& $ -0.18^{+  0.03}_{ -0.03}$
+${\beta_X}/\beta_{\hat{V}-1}$
+& $  0.27^{+  0.04}_{ -0.04}$
+& $ -0.05^{+  0.02}_{ -0.02}$
+&  \ldots
+& $ -0.19^{+  0.01}_{ -0.01}$
+& $ -0.22^{+  0.03}_{ -0.02}$
 \\
 $\eta_X$
-& $0.0020^{+0.0010}_{-0.0009}$
-& $0.0022^{+0.0009}_{-0.0008}$
-& $0.0031^{+0.0008}_{-0.0008}$
-& $0.0031^{+0.0007}_{-0.0007}$
-& $0.0025^{+0.0007}_{-0.0007}$
+& $-0.0005^{+0.0008}_{-0.0008}$
+& $-0.0003^{+0.0007}_{-0.0007}$
+& $0.0006^{+0.0006}_{-0.0006}$
+& $0.0006^{+0.0005}_{-0.0005}$
+& $0.0000^{+0.0004}_{-0.0004}$
 \\
-${\eta_X/\eta_V-1}$
-& $ -0.35^{+  0.17}_{ -0.22}$
-& $ -0.29^{+  0.10}_{ -0.14}$
-& \ldots
-& $  0.01^{+  0.06}_{ -0.04}$
-& $ -0.19^{+  0.10}_{ -0.09}$
+${\eta_X}/\eta_{\hat{V}-1}$
+& $ -1.17^{+  1.20}_{ -2.44}$
+& $ -1.01^{+  0.76}_{ -1.89}$
+&  \ldots
+& $ -0.03^{+  0.33}_{ -0.19}$
+& $ -0.78^{+  0.51}_{ -0.78}$
 \\
 $\gamma^0_X$
-& $ 71.32^{+  3.40}_{ -3.24}$
-& $ 58.31^{+  3.03}_{ -2.93}$
-& $ 43.90^{+  2.76}_{ -2.73}$
-& $ 33.23^{+  2.40}_{ -2.43}$
-& $ 24.74^{+  2.42}_{ -2.52}$
+& $ 71.40^{+  3.29}_{ -3.14}$
+& $ 58.39^{+  2.79}_{ -2.62}$
+& $ 43.99^{+  2.27}_{ -2.12}$
+& $ 33.29^{+  1.87}_{ -1.72}$
+& $ 24.81^{+  1.64}_{ -1.53}$
 \\
-${\gamma^0_X/\gamma^0_V-1}$
-& $  0.62^{+  0.06}_{ -0.05}$
-& $  0.33^{+  0.03}_{ -0.03}$
+${\gamma^0_X}/\gamma^0_{\hat{V}-1}$
+& $  0.62^{+  0.04}_{ -0.04}$
+& $  0.33^{+  0.02}_{ -0.02}$
 & \ldots
 & $ -0.24^{+  0.01}_{ -0.01}$
-& $ -0.44^{+  0.03}_{ -0.03}$
+& $ -0.44^{+  0.02}_{ -0.02}$
 \\
 $\gamma^1_X$
-& $ -0.29^{+  5.63}_{ -5.29}$
-& $ -7.82^{+  4.70}_{ -4.52}$
-& $-14.71^{+  3.79}_{ -3.78}$
-& $-12.48^{+  3.21}_{ -3.23}$
-& $-15.79^{+  2.98}_{ -2.99}$
+& $  9.83^{+  5.44}_{ -4.90}$
+& $  2.34^{+  4.44}_{ -4.18}$
+& $ -4.58^{+  3.40}_{ -3.32}$
+& $ -2.41^{+  2.72}_{ -2.63}$
+& $ -5.77^{+  2.22}_{ -2.15}$
 \\
-${\gamma^1_X/\gamma^1_V-1}$
-& $ -0.98^{+  0.29}_{ -0.50}$
-& $ -0.47^{+  0.15}_{ -0.25}$
+${\gamma^1_X}/\gamma^1_{\hat{V}-1}$
+& $ -2.62^{+  1.37}_{ -4.02}$
+& $ -1.25^{+  0.68}_{ -1.99}$
 & \ldots
-& $ -0.15^{+  0.04}_{ -0.04}$
-& $  0.07^{+  0.18}_{ -0.12}$
+& $ -0.43^{+  0.12}_{ -0.32}$
+& $  0.15^{+  0.88}_{ -0.37}$
 \\
 $\sigma_p \phi_X$
-& $ 0.010^{+ 0.009}_{-0.009}$
-& $-0.021^{+ 0.007}_{-0.007}$
-& $-0.021^{+ 0.006}_{-0.007}$
-& $-0.008^{+ 0.006}_{-0.006}$
-& $ 0.036^{+ 0.007}_{-0.007}$
+& $-0.007^{+ 0.012}_{-0.012}$
+& $-0.039^{+ 0.010}_{-0.010}$
+& $-0.039^{+ 0.009}_{-0.008}$
+& $-0.026^{+ 0.007}_{-0.007}$
+& $ 0.018^{+ 0.007}_{-0.007}$
 \\
-${\phi_X/\phi_{\hat{I}}-1}$
-& $-0.718^{+ 0.244}_{-0.254}$
-& $-1.574^{+ 0.233}_{-0.319}$
-& $-1.584^{+ 0.234}_{-0.342}$
-& $-1.230^{+ 0.170}_{-0.246}$
+${\phi_X/\phi_{\hat{V}}-1}$
+& $-0.804^{+ 0.245}_{-0.342}$
+& $-0.009^{+ 0.095}_{-0.109}$
 & \ldots
-\\
-\hline
+& $-0.328^{+ 0.047}_{-0.066}$
+& $-1.465^{+ 0.220}_{-0.349}$
+\\\hline
 \end{tabular}
 \caption{68\% credible intervals for the global fit parameters of the Three Color Parameter Model~II in \S\ref{modelII:sec}.\label{global2:tab}}
 \end{table}
