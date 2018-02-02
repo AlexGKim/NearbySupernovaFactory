@@ -1330,10 +1330,10 @@ c.add_chain(mega, \
 fig = c.plotter.plot(figsize="column", truth=numpy.zeros(5))
 
 for ax in fig.axes:
-    ax.xaxis.set_tick_params(labelsize=6)
-    ax.xaxis.label.set_size(6)
-    ax.yaxis.set_tick_params(labelsize=6)
-    ax.yaxis.label.set_size(6)
+    ax.xaxis.set_tick_params(labelsize=4)
+    ax.xaxis.label.set_size(5)
+    ax.yaxis.set_tick_params(labelsize=4)
+    ax.yaxis.label.set_size(5)
 fig.savefig('output_fix3_x1/perobject_corner.pdf',bbox_inches='tight')
 
 # figure = corner.corner(mega,labels=[r"$\Delta$",r"$EW_{Ca}$",r"$EW_{Si}$",r"$\lambda_{Si}$",r"$x_1$",r"$E_{\gamma^0}(B-V)$",r"$E_{\gamma^1}(B-V)$",r"$A_{p,V}$"],range=numpy.zeros(8)+.9995,label_kwargs={'fontsize':22})
@@ -1359,7 +1359,7 @@ for index in xrange(5):
     c.add_chain(mega[index,:,:],parameters=[r"$c_{{{}}}$".format(cname[index]), r"$\alpha_{{{}}}$".format(cname[index]),\
                     r"$\beta_{{{}}}$".format(cname[index]),r"$\eta_{{{}}}$".format(cname[index]),r"$\zeta_{{{}}}$".format(cname[index]),r"$\gamma^0_{{{}}}$".format(cname[index]),\
                     r"$\gamma^1_{{{}}}$".format(cname[index]),r"$\sigma_p \phi_{{{}}}$".format(cname[index])])
-    fig = c.plotter.plot( figsize="column", truth=numpy.zeros(5))
+    fig = c.plotter.plot( figsize="column", truth=[None,0,0,0,0,0,0,0])
 
     for ax in fig.axes:
         ax.xaxis.set_tick_params(labelsize=7)

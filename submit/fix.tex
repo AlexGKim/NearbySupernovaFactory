@@ -742,11 +742,11 @@ $\Delta \rightarrow \Delta  + \epsilon_\Delta$
 under the condition 
 $$
 \epsilon_\Delta  = -  \epsilon_{\alpha} (EW_{\text{Ca}}-\langle EW_{\text{Ca}}\rangle)- 
- \epsilon_{\beta} (EW_{\text{Si}}-\langle EW_{\text{Si}}\rangle) -  \epsilon_{\eta} (\lambda_{\text{Si}}-\langle \lambda_{\text{Si}}\rangle)
+ \epsilon_{\beta} (EW_{Si}-\langle EW_{Si}\rangle) -  \epsilon_{\eta} (\lambda_{Si}-\langle \lambda_{Si}\rangle)
 - \epsilon_{\gamma^0}g_0 -  \epsilon_{\gamma^1}g_1.
 $$
 We break this degeneracy by fixing the values of $\epsilon$ such that $\Delta$ is
-uncorrelated with  $EW_{\text{Ca}}$, $EW_{\text{Si}}$, $\lambda_{\text{Ca}}$,
+uncorrelated with  $EW_{\text{Ca}}$, $EW_{Si}$, $\lambda_{\text{Ca}}$,
 $g_0$, and $g_1$.
 Our preference is for feature affects to be confined to the cofactors and not the grey magnitude offsets.}
 
@@ -959,7 +959,7 @@ $\vec{\gamma}^1$ but will later focus on the distribution of the per-supernova $
 %(also seen visually in Figure~\ref{plane:fig}.)
 %That is,   $\vec{\gamma}^1$  captures magnitude variations that occur given fixed $E^F(B-V)$.
 
-\subsection{Remarks}
+\subsection{Model~I Summary}
 There are two points to highlight from the analysis of
 Model~I.
 \begin{itemize}
@@ -1013,10 +1013,11 @@ c_{\hat{B}}+\alpha_{\hat{B}} EW_{Ca} + \beta_{\hat{B}} EW_{Si} + \eta_{\hat{B}} 
 c_{\hat{V}}+\alpha_{\hat{V}} EW_{Ca} + \beta_{\hat{V}} EW_{Si} + \eta_{\hat{V}} \lambda_{Si} +\gamma^0_{{\hat{V}}} g_0 +\gamma^1_{{\hat{V}}} g_1 + \sigma_p\phi_{\hat{V}}  p\\
 c_{\hat{R}}+\alpha_{\hat{R}} EW_{Ca} + \beta_{\hat{R}} EW_{Si} + \eta_{\hat{R}} \lambda_{Si} +\gamma^0_{{\hat{R}}} g_0 +\gamma^1_{{\hat{R}}} g_1 + \sigma_p\phi_{\hat{R}} p\\
 c_{\hat{I}}+\alpha_{\hat{I}} EW_{Ca} + \beta_{\hat{I}} EW_{Si}+ \eta_{\hat{I}} \lambda_{Si}+\gamma^0_{{\hat{I}}} g_0 +\gamma^1_{{\hat{I}}} g_1 + \sigma_p\phi_{\hat{I}}  p
-\end{pmatrix}
+\end{pmatrix}.
 \label{ewsiv2:eqn}
 \end{equation}
-}
+
+The Cauchy prior is commonly used to concentrate probability around a specific value while having fat tails with infinite variance.}
 
 \deleted{
 The new term is placed in Eq.~\ref{ewsiv2:eqn} as an intrinsic supernova property.  It is mathematically equivalent to
@@ -1101,7 +1102,7 @@ The change of $\langle R^F_{\mathit{eff}}\rangle$ from Model~I to II is anticipa
 whose connection with $R^F$ is shown in \S\ref{g0g1:sec}.
 
 
-\subsection{Remarks}
+\subsection{Model~II Summary}
 The inclusion of a third color term beyond the two of Model~I has important consequences.
 
 \begin{itemize}
@@ -1210,7 +1211,7 @@ The model provides a fair representation of the data as seen in the residual dif
 Figure~\ref{residual:fig} shows plots of 
 \added{residuals between measured and model-expectation colors as a function of observed $\hat{B}_o-\hat{V}_o$.
 This and similar plots for the other permutations of observed colors show  no apparent trend between residuals and observed
-color nor of extreme catastrophic outliers.
+color nor any catastrophic outliers.
 }
 
 \begin{figure}[htbp] %  figure placement: here, top, bottom, or page
@@ -1289,7 +1290,7 @@ The effect of spectral parameters on color (as opposed to magnitude)
 is shown in the rows of $\alpha_X/\alpha_{\hat{V}}-1$,  $\beta_X/\beta_{\hat{V}}-1$, and  $\eta_X/\eta_{\hat{V}}-1$.
 The normalization freedom of $\vec{\gamma}$ is nulled out in the statistic
  $\gamma_X/\gamma_{\hat{V}}-1$.
-Note the analogy between these color statistics and the common use of
+ \added{These statistics give the change in $X-\hat{V}$ color normalized to the change in $\hat{V}$ magnitude, and are analogous to}
 $R_V^{-1}=A_B/A_V-1$ as an observational descriptor of dust properties.
 
 \begin{table}
@@ -1411,13 +1412,13 @@ where previous studies have focused, only $\vec{\beta}$ has a strong $>2\sigma$ 
 dependence (consistent with the positive sign
 of $\beta_{\hat{B}}/\beta_{\hat{V}}-1$)
 of $B-V$ on the pseudo-equivalent width of Si~II~$\lambda$4130 has previously been reported by
-\citet{2013ApJ...773...53F}.
+\citet{2011ApJ...734...42N, 2013ApJ...773...53F}.
 The insignificance of  our $\alpha_{\hat{B}}/\alpha_{\hat{V}}-1$ is consistent with the
 lack of correlation between the  pseudo-equivalent width of Ca~II~H\&K measurements and
 intrinsic color reported by \citet{2011ApJ...742...89F}.
 
 The story on Si~II~$\lambda$6355 is not as clear.
- \citet{2011ApJ...742...89F, 2012ApJ...748..127F} find that
+ \citet{2009ApJ...699L.139W,2011ApJ...742...89F, 2012ApJ...748..127F} find that
 higher-velocity SNe~Ia tend to be redder than those with lower velocity. \citet{2012AJ....143..126B} find a
 weaker relation than that reported by \citet{2011ApJ...742...89F},
 a difference attributed to a better treatment of uncertainties and host-galaxy dust. In contrast,
@@ -1689,9 +1690,11 @@ $EW_{Si}$, and $x_1$.
 Given the association
 of  $g$ with dust-extinction parameters, this implies that the host environment and the input features are connected.
 The correlations between $EW_{Si}$ and  $EW_{Ca}$  with host have already been noted \citep{2011ApJ...734...42N, 2015MNRAS.451.1973S}.
-There is a lack of correlation between  $g_0$, $g_1$ and  our velocity parameter $\lambda_{Si}$.
+There is a lack of correlation between  $g_0$, $g_1$ and  our velocity parameter $\lambda_{Si}$
+\added{(measured at peak brightness)}.
 This contrasts with the subset of supernovae identified by their high-velocity features (HVF) in
-Si~II~$\lambda$6355, who are found to be distinguished by their host galaxy properties
+Si~II~$\lambda$6355
+\added{(typically detected pre-maximum)}, who are found to be distinguished by their host galaxy properties
 \citep[e.g.][]{2014MNRAS.444.3258M, 2015MNRAS.446..354P, 2015ApJS..220...20Z}.
 The population and properties of HVF SNe within the SNfactory sample will be presented in \citet{2018lin}.
 The correlation of $x_1$ with  host-galaxy (including dust) properties is  well established 
@@ -1701,7 +1704,7 @@ The correlation of $x_1$ with  host-galaxy (including dust) properties is  well 
 \subsubsection{Results for the Parameter $p$}
 \label{p:sec}
 The model assumes that $p$ has a Normal distribution, which is shown in Figure~\ref{ebv3:fig} as the 
-stack of the posteriors of all supernovae of the external color-excess $E_{\gamma}({\hat{B}}-{\hat{V}})$.
+stack of the posteriors of all supernovae of the color-excess $E_p({\hat{B}}-{\hat{V}})$.
 Also shown for comparison is the distribution of
 the   color-excess $E_\gamma({\hat{B}}-{\hat{V}}) \equiv (\gamma^0_{\hat{B}} -\gamma^0_{\hat{V}}) g_0
 + (\gamma^1_{\hat{B}} -\gamma^1_{\hat{V}}) g_1$.
@@ -1751,7 +1754,7 @@ While we also claim a detection of an intrinsic color parameter, }
 {While we claim the detection of a color parameter incompatible with dust,}
 the differences between our models make it
 difficult to determine whether the results are consistent.   Our results show effects on color that are not monotonic
-with wavelength.  For example, we find that the statistic that nominally best corresponds to  $\beta_{\mathit{int}}$
+with wavelength.  \deleted{For example,} We find that the statistic that nominally best corresponds to  $\beta_{\mathit{int}}$
 to be
 \replaced{ $\phi_{\hat{B}}/(\phi_{\hat{B}}-\phi_{\hat{V}}) = -2.4_{  -4.1}^{+   1.6}$}{$\phi_{\hat{B}}/(\phi_{\hat{B}}-\phi_{\hat{V}}) =-4.4_{  -6.4}^{+   2.4}$}, which appears to be inconsistent with  \citetalias{2017ApJ...842...93M}.  
 However a change of the color baseline gives a significantly different
@@ -1784,9 +1787,10 @@ $\langle \sigma_p\phi_{\hat{V}}(p-p|_0) \rangle=  0.041 \pm {     0.007 }$ mag, 
 $\langle \sigma_p\phi_{\hat{V}}(p-p|_0)  \rangle=0.065 \pm {     0.007 }$ mag
 for low- and high-mass hosts respectively, with a difference of $ 0.024 \pm {     0.010 }$~mag that is significant at $>2 \sigma$.
 
-In this article we do not associate $p$ directly with Hubble residuals.  However,
+In this article we do not associate $p$ directly with Hubble residuals. 
+\deleted{However,
 we briefly  preview the discussion in \S\ref{Delta:sec} by mentioning that there is room for $p$-based magnitude corrections
-given the correlation between $\Delta$ and $\sigma_p\phi_{\hat{V}}p$ in Eq.~\ref{corr:eqn}.
+given the correlation between $\Delta$ and $\sigma_p\phi_{\hat{V}}p$ in Eq.~\ref{corr:eqn}.}
 
 \begin{figure}[htbp] %  figure placement: here, top, bottom, or page
    \centering
@@ -1907,6 +1911,16 @@ exploratory work.  In contrast, the calibration of SNe~Ia as standard candles ne
 as cross-validation to avoid overtraining.
 An absolute magnitude calibration using the parameters identified in this analysis is left to future work.
 
+\added{
+The existence of three color parameters  has important implications when SNe~Ia are used as distance indicators.
+Measurements in at least four bands are necessary to obtain three colors.  
+Supernova distance determinations that do not account for three color parameters are susceptible to 
+systematic errors.  
+Parameter populations evolving with redshift would result in errors in
+Hubble diagrams.
+The use of  correlators with the SN parameters, such as host-galaxy properties,
+can mitigate such errors.
+}
 
 \acknowledgments
 We thank the STAN team for providing the statistical tool without which this analysis would not have been possible,
