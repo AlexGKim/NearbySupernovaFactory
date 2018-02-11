@@ -141,7 +141,6 @@ c.add_chain(fit['phi'])
 
 fig = c.plotter.plot(figsize="column", truth=numpy.zeros(5))
 fig.savefig('temp/phi.pdf',bbox_inches='tight')
-wefwe
 
 
 #significance of ev
