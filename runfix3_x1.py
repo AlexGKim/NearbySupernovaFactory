@@ -100,12 +100,19 @@ Delta_simplex = numpy.zeros(nsne-1)
 # k_simplex = numpy.zeros(nsne)
 R_simplex = ((-1.)**numpy.arange(nsne)*.25 + .5)*2./nsne
 R_simplex = R_simplex/R_simplex.sum()
+simplex = numpy.random.uniform(0,1,nsne)
+simplex = simplex/simplex.sum()
+
+simplex2 = numpy.random.uniform(0,1,nsne)
+simplex2 = simplex2/simplex2.sum()
 
 numpy.random.seed(100)
 ruv = []
 for _ in range(8):
    temp = numpy.random.uniform(-1,1,5)
    ruv.append(temp/numpy.linalg.norm(temp))
+
+nchains = 8
 
 init = [{'EW' : EW_renorm, \
          'sivel': sivel_renorm,\
@@ -127,23 +134,24 @@ init = [{'EW' : EW_renorm, \
          # 'L_Omega': numpy.identity(5), \
          'Delta_unit':R_simplex, \
          'Delta_scale': 15./4, \
-         'k_unit': R_simplex, \
-         'R_unit': R_simplex, \
+         'k_unit': simplex, \
+         'R_unit': simplex2, \
          'rho11': gamma1median[0],\
          'rho12': gamma1median[1],\
          'rho13': gamma1median[2],\
          'rho14': gamma1median[3],\
-         'rho15': gamma1median[4]\
+         'rho15': gamma1median[4],\
+         'dbreakers': numpy.zeros(7)\
          } \
-        for _ in range(8)]
+        for _ in range(nchains)]
 
 
 sm = pystan.StanModel(file='fix3_x1.stan')
 control = {'stepsize':1}
-fit = sm.sampling(data=data, iter=5000, chains=8,control=control,init=init, thin=1)
+fit = sm.sampling(data=data, iter=2000, chains=nchains,control=control,init=init, thin=1)
 
 
-output = open('fix3_x1.pkl','wb')
+output = open('fix3_x1_break.pkl','wb')
 pickle.dump((fit.extract(),fit.get_sampler_params()), output, protocol=2)
 output.close()
 print fit

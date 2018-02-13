@@ -14,6 +14,13 @@ import matplotlib as mpl
 import sivel
 from chainconsumer import ChainConsumer
 
+from matplotlib.ticker import FuncFormatter, MaxNLocator
+def format_fn2(tick_val, tick_pos):
+    if int(tick_val) in numpy.arange(5):
+        return labels[int(tick_val)]
+    else:
+        return ''
+
 mpl.rcParams['font.size'] = 28
 # rc('text', usetex=True)
 
@@ -136,11 +143,30 @@ for i in xrange(nsne):
 # pp.close()
 # plt.close()
 
+filts = [r'$\hat{U}$',r'$\hat{B}$',r'$\hat{V}$',r'$\hat{R}$',r'$\hat{I}$']
+labels = [r'$\hat{U}$',r'$\hat{B}$',r'$\hat{V}$',r'$\hat{R}$',r'$\hat{I}$']
+
 c=ChainConsumer()
 c.add_chain(fit['phi'])
 
 fig = c.plotter.plot(figsize="column", truth=numpy.zeros(5))
 fig.savefig('temp/phi.pdf',bbox_inches='tight')
+
+(y, ymin, ymax) = numpy.percentile(fit['phi']/fit['phi'][:,2][:,None],(50,50-34,50+34),axis=0)
+fig = plt.figure()
+ax = fig.add_subplot(111)
+ax.errorbar(numpy.arange(5),y-1,yerr=[y-ymin,ymax-y],fmt='o')
+ax.xaxis.set_major_formatter(FuncFormatter(format_fn2))
+ax.xaxis.set_major_locator(MaxNLocator(integer=True))
+ax.axhline(0,linestyle=':')
+ax.set_xlabel(r'Band $X$')
+ax.set_xlim((-0.5,4.5))
+ax.set_ylabel(r'$\frac{\phi_X}{\phi_{\hat{V}}}-1$')
+ax.set_ylim((-1.6,0.1))
+pp = PdfPages('temp/phiratio.pdf')
+plt.savefig(pp,format='pdf',bbox_inches='tight')
+pp.close()
+plt.close()
 
 
 #significance of ev
@@ -504,8 +530,8 @@ for m0 in xrange(5):
         axes[4].set_xlabel(r"$\hat{{{}}}_o-\hat{{{}}}_o$".format(filts[m0],filts[m1]),fontsize=12)
         for tick in axes[4].xaxis.get_major_ticks():
                 tick.label.set_fontsize(8) 
-        axes[m0].set_axis_bgcolor('yellow')
-        axes[m1].set_axis_bgcolor('yellow')
+        axes[m0].set_axis_bgcolor('grey')
+        axes[m1].set_axis_bgcolor('grey')
         plt.savefig(pp,format='pdf',bbox_inches='tight')
 pp.close()
 plt.close()
@@ -528,7 +554,7 @@ for m0 in xrange(5):
                 for tick in axes[indeces[0],indeces[1]].yaxis.get_major_ticks():
                         tick.label.set_fontsize(8)
                 if m0_==m0 or m0_==m1 or m1_==m0 or m1_==m1:
-                    axes[indeces[0],indeces[1]].set_axis_bgcolor('yellow')
+                    axes[indeces[0],indeces[1]].set_axis_bgcolor('grey')
                 # axes[indeces[0],indeces[1]].text(0.05, 0.9, \
                 #     "RMS: Pull {:5.2f} Color {:6.3f}".format(numpy.std(colresidual_pull[:,m0,m1]),numpy.std(colresidual[:,m0,m1])), horizontalalignment='left', verticalalignment='center', \
                 #     transform=axes[indeces[0],indeces[1]].transAxes,fontsize=8)
@@ -667,7 +693,9 @@ for i in xrange(4):
     # axes[i].plot([miny,maxy],[miny,maxy])
     lims = [color_obs[:,i].min()-0.02, color_obs[:,i].max()+0.02]
     axes[i,0].plot(lims,lims,alpha=0.5)
-    axes[i,0].set_xlabel(r'$\hat{{{0}}} - \hat{{V}} +(\gamma^0_\hat{{{0}}}-\gamma^0_\hat{{V}}) g_0+ (\gamma^1_\hat{{{0}}}-\gamma^1_\hat{{V}})  g_1+ (\zeta_\hat{{{0}}}-\zeta_\hat{{V}})x_1+ (\phi_\hat{{{0}}}-\phi_\hat{{V}})p$'.format(cname[i]))
+    axes[i,0].set_xlabel( \
+        r'$\hat{{{0}}} - \hat{{V}} +(\gamma^0_{{\hat{{{0}}}}}-\gamma^0_{{\hat{{V}}}}) g_0+ (\gamma^1_{{\hat{{{0}}}}}-\gamma^1_{{\hat{{V}}}})  g_1+ (\zeta_{{\hat{{{0}}}}}-\zeta_{{\hat{{V}}}})x_1+ (\phi_{{\hat{{{0}}}}}-\phi_{{\hat{{V}}}})p$'.format(cname[i]))
+
     axes[i,0].set_ylabel(r'$(\hat{{{0}}}_o-\hat{{V}}_o)$'.format(cname[i]))
 
     axes[i,0].tick_params(axis='both', which='major', labelsize=9)
@@ -1294,32 +1322,8 @@ efflam = numpy.array([ 3693.16777627,  4369.37505509,  5287.48667023,  6319.1990
 # [3701, 4601, 5744, 6948, 8403]
 
 
-filts = [r'$\hat{U}$',r'$\hat{B}$',r'$\hat{V}$',r'$\hat{R}$',r'$\hat{I}$']
 
 
-labels = [r'$\hat{U}$',r'$\hat{B}$',r'$\hat{V}$',r'$\hat{R}$',r'$\hat{I}$']
-from matplotlib.ticker import FuncFormatter, MaxNLocator
-def format_fn2(tick_val, tick_pos):
-    if int(tick_val) in numpy.arange(5):
-        return labels[int(tick_val)]
-    else:
-        return ''
-
-(y, ymin, ymax) = numpy.percentile(fit['ev']/fit['ev'][:,2][:,None],(50,50-34,50+34),axis=0)
-fig = plt.figure()
-ax = fig.add_subplot(111)
-ax.errorbar(numpy.arange(5),y-1,yerr=[y-ymin,ymax-y],fmt='o')
-ax.xaxis.set_major_formatter(FuncFormatter(format_fn2))
-ax.xaxis.set_major_locator(MaxNLocator(integer=True))
-ax.axhline(0,linestyle=':')
-ax.set_xlabel(r'Band $X$')
-ax.set_xlim((-0.5,4.5))
-ax.set_ylabel(r'$\frac{\phi_X}{\phi_{\hat{V}}}-1$')
-ax.set_ylim((-1.6,0.1))
-pp = PdfPages('temp/phiratio.pdf')
-plt.savefig(pp,format='pdf',bbox_inches='tight')
-pp.close()
-plt.close()
 
 
 mega = numpy.array([fit['Delta'].flatten(),fit['EW1'][:,:].flatten(),fit['EW2'][:,:].flatten(),fit['sivel'].flatten(), fit['x1'].flatten(),\
