@@ -118,6 +118,10 @@ print "{:.2f}^{{+{:.2f}}}_{{{:.2f}}}".format(dum1,dump-dum1,dumm-dum1)
 print "1/kappa2 term"
 dum1, dumm, dump =  numpy.percentile(kappa[:,1,1]/kappa[:,1,0],(50,50-34,50+34))
 print "{:.2f}^{{+{:.2f}}}_{{{:.2f}}}".format(dum1,dump-dum1,dumm-dum1)
+print "kappa2 term"
+dum1, dumm, dump =  numpy.percentile(kappa[:,1,0]/kappa[:,1,1],(50,50-34,50+34))
+print "{:.2f}^{{+{:.2f}}}_{{{:.2f}}}".format(dum1,dump-dum1,dumm-dum1)
+wefwe
 
 print "Matrix"
 dum1, dumm, dump =  numpy.percentile(kappa,(50,50-34,50+34),axis=0)

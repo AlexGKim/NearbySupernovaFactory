@@ -7,9 +7,9 @@ import sivel
 import sncosmo
 import fitz_band
 
-f = open('fix3_x1_decorr.pkl','rb')
-# (fit, _) = pickle.load(f)
-fit = pickle.load(f)
+f = open('fix3_x1_break.pkl','rb')
+(fit, _) = pickle.load(f)
+# fit = pickle.load(f)
 f.close()
 
 for key in fit.keys():
