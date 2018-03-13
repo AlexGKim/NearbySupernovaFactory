@@ -1176,11 +1176,11 @@ pp.close()
 plt.close()
 
 c=ChainConsumer()
-c.add_chain(fit['ev_sig'][:,None]*fit['ev'], \
+c.add_chain(numpy.sign(fit['ev'][:,4])[:,None]*fit['ev_sig'][:,None]*fit['ev'], \
     parameters= [r"$\sigma_p \phi_{\hat{U}}$",r"$\sigma_p \phi_{\hat{B}}$",r"$\sigma_p \phi_{\hat{V}}$",r"$\sigma_p \phi_{\hat{R}}$",r"$\sigma_p \phi_{\hat{I}}$"])
 c.plotter.plot(filename='output_fix3/sigev.pdf', figsize="column", truth=numpy.zeros(5))
 
-
+wefwe
 
 # cind=[0,1,2,3,4]
 # cname = ['U','B','V','R','I']
