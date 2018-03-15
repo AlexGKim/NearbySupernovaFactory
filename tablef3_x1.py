@@ -191,7 +191,8 @@ pkl_file = open('gege_data.pkl', 'r')
 data = pickle.load(pkl_file)
 pkl_file.close()
 
-sivel, sivel_err, _, _, _,_,_ = sivel.sivel(data)
+sivel, sivel_err, _,_,_,_,_,EWFe4800 = sivel.sivel(data)
+
 
 use = numpy.isfinite(sivel)
 
@@ -204,6 +205,7 @@ mag_cov = data['cov'][:,2:,2:]
 
 sivel=sivel[use]
 sivel_err = sivel_err[use]
+EWFe4800=EWFe4800[use]
 EW_obs=EW_obs[use]
 mag_obs=mag_obs[use]
 EW_cov= EW_cov[use]
@@ -213,6 +215,14 @@ shit = []
 for m in mag_cov:
     shit.append(numpy.sqrt(numpy.diag(m)))
 print numpy.median(shit)
+
+shit=[]
+for i in xrange(fit['mag_int_raw'].shape[0]):
+    shit.append(numpy.corrcoef(numpy.array([EWFe4800, fit['mag_int_raw'][i,:]]))[0,1])
+(y,ymin,ymax) = numpy.percentile(shit,(50,50-34,50+34),axis=0)
+print y, y-ymin,ymax-y
+
+wefwe
 
 trans = [[1.,0,-1,0,0],[0.,1,-1,0,0],[0.,0,1,-1,0],[0.,0,1,0,-1]]
 trans = numpy.array(trans)
@@ -225,7 +235,6 @@ for i in xrange(nsne):
 print numpy.max(shit)
 print numpy.median(shit)
 
-wefwe
 # ebvdelta  = (fit['rho1'][:,1]-fit['rho1'][:,2])[:,None] * fit['R']
 # ebvgamma  = (fit['gamma'][:,1]-fit['gamma'][:,2])[:,None] * fit['k']
 
