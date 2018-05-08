@@ -12,6 +12,7 @@ f = open('fix3_x1_decorr.pkl','rb')
 fit = pickle.load(f)
 f.close()
 
+
 for key in fit.keys():
     print key, fit[key].min(), fit[key].max()
 
@@ -191,7 +192,7 @@ pkl_file = open('gege_data.pkl', 'r')
 data = pickle.load(pkl_file)
 pkl_file.close()
 
-sivel, sivel_err, _,_,_,_,_,EWFe4800 = sivel.sivel(data)
+sivel, sivel_err,x1,x1_err,_,_,_,EWFe4800 = sivel.sivel(data)
 
 
 use = numpy.isfinite(sivel)
@@ -205,6 +206,8 @@ mag_cov = data['cov'][:,2:,2:]
 
 sivel=sivel[use]
 sivel_err = sivel_err[use]
+x1 = x1[use]
+x1_err = x1_err[use]
 EWFe4800=EWFe4800[use]
 EW_obs=EW_obs[use]
 mag_obs=mag_obs[use]
@@ -221,8 +224,6 @@ for i in xrange(fit['mag_int_raw'].shape[0]):
     shit.append(numpy.corrcoef(numpy.array([EWFe4800, fit['mag_int_raw'][i,:]]))[0,1])
 (y,ymin,ymax) = numpy.percentile(shit,(50,50-34,50+34),axis=0)
 print y, y-ymin,ymax-y
-
-wefwe
 
 trans = [[1.,0,-1,0,0],[0.,1,-1,0,0],[0.,0,1,-1,0],[0.,0,1,0,-1]]
 trans = numpy.array(trans)
@@ -244,7 +245,31 @@ print numpy.median(shit)
 
 snname=numpy.array(data['snlist'])[use]
 
+print 'outputs'
+
+EW_mn = EW_obs.mean(axis=0)
+sivel_mn = sivel.mean()
 for i in xrange(len(sivel)):
-    print '{0} & ${1:5.1f} \pm {2:3.1f}$ & ${3:5.1f} \pm {4:3.1f}$& ${7:5.0f} \pm {8:3.0f}$ & ${5[0]:6.2f} \pm {6[0]:6.2f}$ & ${5[1]:6.2f} \pm {6[1]:6.2f}$& ${5[2]:6.2f} \pm {6[2]:6.2f}$& ${5[3]:6.2f} \pm {6[3]:6.2f}$& ${5[4]:6.2f} \pm {6[4]:6.2f}$ \\\\'.format(snname[i], EW_obs[i,0], numpy.sqrt(EW_cov[i,0,0]),
-        EW_obs[i,1], numpy.sqrt(EW_cov[i,1,1]), mag_obs[i,:], numpy.sqrt(numpy.diagonal(mag_cov[i,:,:])),sivel[i],sivel_err[i])
+    (y0,ymin0,ymax0) = numpy.percentile(fit['EW'][:,i,0],(50,50-34,50+34),axis=0)
+    (y1,ymin1,ymax1) = numpy.percentile(fit['EW'][:,i,1],(50,50-34,50+34),axis=0)
+    (y2,ymin2,ymax2) = numpy.percentile(fit['sivel'][:,i],(50,50-34,50+34),axis=0)
+    (y3,ymin3,ymax3) = numpy.percentile(fit['x1'][:,i],(50,50-34,50+34),axis=0)
+    (y4,ymin4,ymax4) = numpy.percentile(fit['Delta'][:,i],(50,50-34,50+34),axis=0)
+    (y5,ymin5,ymax5) = numpy.percentile((fit['gamma'][:,1]-fit['gamma'][:,2])*fit['k'][:,i],(50,50-34,50+34),axis=0)
+    (y6,ymin6,ymax6) = numpy.percentile((fit['rho1'][:,1]-fit['rho1'][:,2])*fit['R'][:,i],(50,50-34,50+34),axis=0)
+    (y7,ymin7,ymax7) = numpy.percentile(fit['ev_sig']*fit['ev'][:,2]*fit['mag_int_raw'][:,i],(50,50-34,50+34),axis=0)
+    print '{0} & ${1:5.1f}^{{+{2:3.1f}}}_{{-{3:3.1f}}}$ & ${4:5.1f}^{{+{5:3.1f}}}_{{-{6:3.1f}}}$ & ${7:5.0f}^{{+{8:3.0f}}}_{{-{9:3.0f}}}$ & ${10:6.2f}^{{+{11:6.2f}}}_{{-{12:6.2f}}}$ & ${13:5.3f}^{{+{14:5.3f}}}_{{-{15:5.3f}}}$  & ${16:5.3f}^{{+{17:5.3f}}}_{{-{18:5.3f}}}$ & ${19:5.3f}^{{+{20:5.3f}}}_{{-{21:5.3f}}}$ & ${19:5.3f}^{{+{20:5.3f}}}_{{-{21:5.3f}}}$\\\\'.format(\
+        snname[i], EW_mn[0]+y0,ymax0-y0, y0-ymin0, EW_mn[1]+y1,ymax1-y1, y1-ymin1,
+        sivel_mn+ y2, ymax2-y2, y2-ymin2,y3, ymax3-y3, y3-ymin3,y4, ymax4-y4, y4-ymin4,
+        y5, ymax5-y5, y5-ymin5, y6, ymax6-y6, y6-ymin6, y7, ymax7-y7, y7-ymin7
+        )
+    #, numpy.sqrt(EW_cov[i,0,0]),
+     #   EW_obs[i,1], numpy.sqrt(EW_cov[i,1,1]), mag_obs[i,:], numpy.sqrt(numpy.diagonal(mag_cov[i,:,:])),sivel[i],sivel_err[i], x1[i], x1_err[i])
+# ${5[0]:6.2f} \pm {6[0]:6.2f}$ & ${5[1]:6.2f} \pm {6[1]:6.2f}$& ${5[2]:6.2f} \pm {6[2]:6.2f}$& ${5[3]:6.2f} \pm {6[3]:6.2f}$& ${5[4]:6.2f} \pm {6[4]:6.2f}$ & ${9:6.2f} \pm {10:6.2f}$
+werfwe
+
+print 'inputs'
+for i in xrange(len(sivel)):
+    print '{0} & ${1:5.1f} \pm {2:3.1f}$ & ${3:5.1f} \pm {4:3.1f}$& ${7:5.0f} \pm {8:3.0f}$ & ${5[0]:6.2f} \pm {6[0]:6.2f}$ & ${5[1]:6.2f} \pm {6[1]:6.2f}$& ${5[2]:6.2f} \pm {6[2]:6.2f}$& ${5[3]:6.2f} \pm {6[3]:6.2f}$& ${5[4]:6.2f} \pm {6[4]:6.2f}$ & ${9:6.2f} \pm {10:6.2f}$\\\\'.format(snname[i], EW_obs[i,0], numpy.sqrt(EW_cov[i,0,0]),
+        EW_obs[i,1], numpy.sqrt(EW_cov[i,1,1]), mag_obs[i,:], numpy.sqrt(numpy.diagonal(mag_cov[i,:,:])),sivel[i],sivel_err[i], x1[i], x1_err[i])
 

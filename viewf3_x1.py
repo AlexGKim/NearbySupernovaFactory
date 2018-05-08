@@ -32,41 +32,8 @@ pkl_file.close()
 
 # dic_meta=cPickle.load(open("META.pkl"))
 
-# sivel=[]
-# sivel_err=[]
-# x1 = []
-# x1_err = []
-# for sn in data['snlist']:
-#    if sn in dic_meta.keys() and sn in dic_phreno.keys():
-#       meta = dic_meta[sn]
-#       vSiII_6355_lbd=0.
-#       vSiII_6355_lbd_err=0.
-#       counter  = 0
-#       for sp in dic_phreno[sn]["spectra"]:
-#          if sp in meta['spectra'].keys() and  numpy.abs(meta['spectra'][sp]['salt2.phase']) < 2.5  and numpy.isfinite(dic_phreno[sn]["spectra"][sp]["phrenology.vSiII_6355_lbd"]):
-#             vSiII_6355_lbd += dic_phreno[sn]["spectra"][sp]["phrenology.vSiII_6355_lbd"]/dic_phreno[sn]['spectra'][sp]["phrenology.vSiII_6355_lbd.err"]**2
-#             vSiII_6355_lbd_err += 1/dic_phreno[sn]['spectra'][sp]["phrenology.vSiII_6355_lbd.err"]**2
-#             counter +=1
-#       if counter !=0:
-#          sivel.append(vSiII_6355_lbd / vSiII_6355_lbd_err)
-#          sivel_err.append(1./numpy.sqrt(vSiII_6355_lbd_err))
-#       else:
-#          sivel.append(float('nan'))
-#          sivel_err.append(float('nan'))
-#       x1.append(meta['salt2.X1'])
-#       x1_err.append(numpy.sqrt(meta['salt2.CovX1X1']))
-#    else:
-#       sivel.append(float('nan'))
-#       sivel_err.append(float('nan'))
-#       x1.append(float('nan'))
-#       x1_err.append(float('nan'))
 
-# sivel = numpy.array(sivel)
-# sivel_err = numpy.array(sivel_err)
-# x1 = numpy.array(x1)
-# x1_err = numpy.array(x1_err)
-
-sivel,sivel_err,x1,x1_err, zcmb, _, _ = sivel.sivel(data)
+sivel,sivel_err,x1,x1_err, zcmb, _, _, _, c = sivel.sivel(data)
 use = numpy.isfinite(sivel)
 
 #  The ordering is 'Ca','Si','U','B','V','R','I'
@@ -191,7 +158,7 @@ crap = fit['gamma'][:,2][:,None]*fit['k']
 crap = crap-crap[:,0][:,None]
 plt.hist(crap.flatten(),bins,label='posterior stack',normed=True,alpha=0.5)
 plt.hist(numpy.median(crap,axis=0),bins,label='median',normed=True,alpha=0.5,width=0.025)
-plt.xlabel(r'$\gamma^0_{\hat{V}} g_0 - \gamma^0_{\hat{V}} g_0|_0 \approx A^F_V|_{R^F_{eff}=2.40}$')
+plt.xlabel(r'$\gamma^0_{\hat{V}} g_0 - \gamma^0_{\hat{V}} g_0|_0 \approx A^F_V|_{\langle R^F_{eff}\rangle=2.43}$')
 plt.legend(fontsize=20)
 plt.xticks(fontsize=18)
 plt.yticks(fontsize=18)
@@ -498,8 +465,8 @@ for m0 in xrange(5):
         axes[4].set_xlabel(r"$\hat{{{}}}_o-\hat{{{}}}_o$".format(filts[m0],filts[m1]),fontsize=12)
         for tick in axes[4].xaxis.get_major_ticks():
                 tick.label.set_fontsize(8) 
-        axes[m0].set_axis_bgcolor('yellow')
-        axes[m1].set_axis_bgcolor('yellow')
+        axes[m0].set_axis_bgcolor('0.8')
+        axes[m1].set_axis_bgcolor('0.8')
         plt.savefig(pp,format='pdf',bbox_inches='tight')
 pp.close()
 plt.close()
@@ -522,7 +489,7 @@ for m0 in xrange(5):
                 for tick in axes[indeces[0],indeces[1]].yaxis.get_major_ticks():
                         tick.label.set_fontsize(8)
                 if m0_==m0 or m0_==m1 or m1_==m0 or m1_==m1:
-                    axes[indeces[0],indeces[1]].set_axis_bgcolor('yellow')
+                    axes[indeces[0],indeces[1]].set_axis_bgcolor('0.8')
                 # axes[indeces[0],indeces[1]].text(0.05, 0.9, \
                 #     "RMS: Pull {:5.2f} Color {:6.3f}".format(numpy.std(colresidual_pull[:,m0,m1]),numpy.std(colresidual[:,m0,m1])), horizontalalignment='left', verticalalignment='center', \
                 #     transform=axes[indeces[0],indeces[1]].transAxes,fontsize=8)
@@ -1315,6 +1282,35 @@ plt.savefig(pp,format='pdf',bbox_inches='tight')
 pp.close()
 plt.close()
 
+
+mega = numpy.array([EW_obs[:,0],EW_obs[:,0],sivel, x1,c ])
+
+
+mega = numpy.transpose(mega)
+c=ChainConsumer()
+c.add_chain(mega, \
+    parameters= [r"$EW_{Ca}$",r"$EW_{Si}$",r"$\lambda_{Si}$",r"$x_1$",r"$C$"],name='Sample')
+d= [x.split() for x in open("/Users/akim/project/Pantheon/data_fitres/Ancillary_C11.FITRES").readlines()]
+panth = []
+for dl in d[69:]:
+    panth.append([float(dl[7]), float(dl[20]), float(dl[22])])
+
+panth=numpy.array(panth)
+goodz  = numpy.logical_and(panth[:,0] > 0.03, panth[:,0] < 0.08)
+c.add_chain(panth[goodz,1:],parameters= [r"$x_1$",r"$C$"],name='Pantheon')
+c.configure(bins=10)
+
+fig = c.plotter.plot(figsize="column", truth=numpy.zeros(5))
+# fig = c.plotter.plot_distributions()
+
+for ax in fig.axes:
+    ax.xaxis.set_tick_params(labelsize=4)
+    ax.xaxis.label.set_size(5)
+    ax.yaxis.set_tick_params(labelsize=4)
+    ax.yaxis.label.set_size(5)
+fig.savefig('output_fix3_x1/perobject_input.pdf',bbox_inches='tight')
+
+wefe
 
 mega = numpy.array([fit['Delta'].flatten(),fit['EW'][:,:,0].flatten(),fit['EW'][:,:,1].flatten(),fit['sivel'].flatten(), fit['x1'].flatten(),\
     ((fit['gamma'][:,1] - fit['gamma'][:,2])[:,None]*fit['k']).flatten(), \

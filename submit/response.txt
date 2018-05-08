@@ -1,0 +1,14 @@
+Comment 1:While much of the narrative within the paper is compelling, it is currently unverifiable. Despite the SNFactory project starting 2 decades ago, that most of the data for this paper were taken >1 decade ago, and the data being used in many publications, the spectrophotometric series critical for this analysis (except for perhaps 3 SNe: SNe 2006D, 2011fe, 2012cg) have never been published. there isn't even a table listing the SNe used.
+It is impossible to verify any claims without making these data public, andI cannot accept this paper until the data are released publicly.Response 1:
+
+We have added two tables to the article.Comment 2:Beyond the basic critical idea of providing sufficient data to verify the results, a fundamental aspect of scientific inquiry, the authors do not satisfactory describe their sample. They simply state that the sample of 172 SNe have been processed and have sufficient data to provide some parameters. Does this mean that peculiar SNe Ia are included? Was it harder to reduce the data for some SNe than others (highly embedded SNe)? Presumably there are different selection effects, but none are listed. Without this basic information, it is impossible to fully evaluate this work.The authors do not discuss if their sample is representative of the broader SN Ia sample or the cosmology samples. In fact, the demographics and parameters are not discussed at all, deferring to Chotard et al. Before any referee can properly review this paper (and in addition to the data being released publicly), Chotard et al. must be submitted to a journal and provided to the referee of this paper.
+
+Response 2:
+Comment 3:1. It would be useful to show the covariance matrices for all models and discuss how necessary each measurement is. For instance, the Si EW and x1 are highly correlated, and perhaps only one measurement is required.
+
+Response 3:
+
+
+Comment 4:
+
+2. Although there is some discussion about the host mass step, it seems like the authors should have a model with this parameter. That is, the mass step is already used for cosmological analyses and it seems prudent to determine if the new parameter is truly a new color parameter or if it is simply the mass step repackaged.3. Section 5.2.9 says that the correlation between Delta and the other parameters is shown in Eq. 20. But Delta isn't included there.
