@@ -381,6 +381,13 @@ Si~II~$\lambda 6355$ wavelength are taken from spectra  within $\pm 2.5$ days fr
 the average is used  in cases where there are multiple spectral measurements within that time window.
 All the above spectral features have units of \AA ngstroms.
 
+\added{
+SNfactory observed supernovae in the redshift range $z \lesssim 0.09$, with a preference for $0.03 < z < 0.08$,
+whose first SNIFS observation was projected to be $\lesssim -5$ days before $B$-band peak brightness.
+Telescope availability and observing conditions dictated which supernovae eventually would accumulate multiple observations 
+over the course of their light curves that would give constraining light curve (e.g.\ SALT2) fits.  At an occurence of $< 10\%$ individual spectral extractions 
+}
+
 Our analysis sample is comprised of the
 172
 supernovae that have been fully processed and have the data coverage to 
@@ -389,7 +396,7 @@ The
 spectroscopic-feature measurements, SALT2 light-curve shape parameters  $x_1$,
 and their uncertainties
 are presented
-in \replaced{\citet{2017Chotard}}{Table~\ref{data:tab}.   
+in \replaced{\citet{2017Chotard}}{Table~\ref{data:tab}. 
 For the subset supernovae for whom it is available, we use the host-galaxy mass given in \citep{2013ApJ...770..108C}.
 
 \startlongtable
@@ -398,7 +405,7 @@ For the subset supernovae for whom it is available, we use the host-galaxy mass 
 \tablecaption{Supernova Spectral-Feature and Peak-Magnitude Data
 \label{data:tab}}
 \tablehead{
-\colhead{Name} & \colhead{$EW_{Ca}$ (\AA)} & \colhead{$EW_{Si}$ (\AA)} & \colhead{$\lambda_{Si}$ (\AA)} & \colhead{$U$} & \colhead{$B$} & \colhead{$V$} & \colhead{$R$} & \colhead{$I$} & \colhead{$x_1$}
+\colhead{Name} & \colhead{$EW_{\mathrm{Ca}}$ (\AA)} & \colhead{$EW_{\mathrm{Si}}$ (\AA)} & \colhead{$\lambda_{\mathrm{Si}}$ (\AA)} & \colhead{$U$} & \colhead{$B$} & \colhead{$V$} & \colhead{$R$} & \colhead{$I$} & \colhead{$x_1$}
 }
 \startdata
 SN2007bd & $109.7 \pm 5.9$ & $ 17.5 \pm 0.7$& $ 6101 \pm   3$ & $-29.31 \pm   0.01$ & $-29.12 \pm   0.01$& $-28.60 \pm   0.01$& $-28.35 \pm   0.01$& $-27.60 \pm   0.01$ & $ -0.85 \pm   0.34$\\
@@ -575,6 +582,21 @@ SNF20080510-001 & $118.8 \pm 2.1$ & $ 15.3 \pm 1.3$& $ 6115 \pm   4$ & $-29.35 \
 SNF20070712-003 & $108.8 \pm 2.7$ & $ 13.5 \pm 0.9$& $ 6155 \pm   6$ & $-29.44 \pm   0.02$ & $-29.19 \pm   0.01$& $-28.74 \pm   0.01$& $-28.42 \pm   0.01$& $-27.78 \pm   0.01$ & $  0.42 \pm   0.18$\\
 \enddata
 \end{deluxetable}
+
+The distributions of the central values of the inputs  $EW_{\mathrm{Ca}}$, $EW_{\mathrm{Si}}$,
+$\lambda_{\mathrm{Si}}$ , $x_1$, and the SALT2 color parameter $C$ are shown in Table~\ref{input:fig}.
+For reference, the $x_1$ and $C$ distributions of the $0.03<z< 0.08$ Pantheon sample,
+predominantly supernovae from CFA3 \citep{2009ApJ...700..331H}, CFA4 \citep{2012ApJS..200...12H}, and CSP
+\citep{2010AJ....139..519C, 2011AJ....142..156S}, that were used as part of the low-redshift anchor in the recent cosmology analysis of \citet{2017arXiv171000845S}.
+
+\begin{figure}[htbp] %  figure placement: here, top, bottom, or page
+   \centering
+   \includegraphics[width=4in]{perobject_input.pdf}
+   \caption{Distributions of the central values of the inputs  $EW_{\mathrm{Ca}}$, $EW_{\mathrm{Si}}$,
+$\lambda_{\mathrm{Si}}$ , $x_1$, and $C$ of the sample used in this article, and
+the $x_1$ and $C$ distributions of the $0.03<z< 0.08$ Pantheon sample,
+   \label{input:fig}}
+\end{figure}
 }
 
 \section{Model~I: Two Color Parameters}
@@ -593,18 +615,18 @@ underlying
  ${\hat{U}}{\hat{B}}\hat{V}\hat{R}\hat{I}$ magnitudes of a supernova  with effects from  astrophysical foregrounds are linearly dependent
 on its
  equivalent widths of the Ca~II H\&K and Si~II~$\lambda$4141 spectral features
-$EW_{Ca}$ and $EW_{Si}$,
+$EW_{\mathrm{Ca}}$ and $EW_{\mathrm{Si}}$,
 and the wavelength of the minimum of 
-the Si~II~$\lambda6355$ feature $\lambda_{Si}$
+the Si~II~$\lambda6355$ feature $\lambda_{\mathrm{Si}}$
 around $B$-band peak brightness:
 these spectral features are associated with SN~Ia  spectroscopic diversity  
 \citep{2005ApJ...623.1011B, 2006PASP..118..560B, 2008A&A...492..535A, 2009A&A...500L..17B, 2009PASP..121..238B, 2009ApJ...699L.139W, 2011ApJ...729...55F,2012AJ....143..126B}.
 The explicit omission of light-curve shape in our model is compensated by its proxy,
-$EW_{Si}$, at peak brightness
+$EW_{\mathrm{Si}}$, at peak brightness
 \citep{2008A&A...492..535A, 2011A&A...529L...4C}. 
 The underlying magnitudes are also linearly dependent on the per-supernova latent parameters $g_0$ and $g_1$.
 Unlike
-the spectral parameters ($EW_{Ca}$, $EW_{Si}$ and $\lambda_{Si}$),  $g_0$ and $g_1$ are not directly associated
+the spectral parameters ($EW_{\mathrm{Ca}}$, $EW_{\mathrm{Si}}$ and $\lambda_{\mathrm{Si}}$),  $g_0$ and $g_1$ are not directly associated
 with observables but rather are inferred as part of the analysis.
 A grey magnitude offset, $\Delta$, is included for each supernova
 to capture 
@@ -620,11 +642,11 @@ The underlying magnitudes are
 =
 \Delta \vec{1} +
 \begin{pmatrix}
-c_{\hat{U}}+\alpha_{\hat{U}} EW_{Ca} + \beta_{\hat{U}} EW_{Si} + \eta_{\hat{U}} \lambda_{Si}  +\gamma^0_{{\hat{U}}} g_0 +\gamma^1_{{\hat{U}}} g_1 \\
-c_{\hat{B}}+\alpha_{\hat{B}} EW_{Ca} + \beta_{\hat{B}} EW_{Si} + \eta_{\hat{B}} \lambda_{Si}  +\gamma^0_{{\hat{B}}} g_0 +\gamma^1_{{\hat{B}}} g_1 \\
-c_{\hat{V}}+\alpha_{\hat{V}} EW_{Ca} + \beta_{\hat{V}} EW_{Si} + \eta_{\hat{V}} \lambda_{Si} +\gamma^0_{{\hat{V}}} g_0 +\gamma^1_{{\hat{V}}} g_1 \\
-c_{\hat{R}}+\alpha_{\hat{R}} EW_{Ca} + \beta_{\hat{R}} EW_{Si} + \eta_{\hat{R}} \lambda_{Si}  +\gamma^0_{{\hat{R}}} g_0 +\gamma^1_{{\hat{R}}} g_1 \\
-c_{\hat{I}}+\alpha_{\hat{I}} EW_{Ca} + \beta_{\hat{I}} EW_{Si}+ \eta_{\hat{I}} \lambda_{Si}  +\gamma^0_{{\hat{I}}} g_0 +\gamma^1_{{\hat{I}}} g_1
+c_{\hat{U}}+\alpha_{\hat{U}} EW_{\mathrm{Ca}} + \beta_{\hat{U}} EW_{\mathrm{Si}} + \eta_{\hat{U}} \lambda_{\mathrm{Si}}  +\gamma^0_{{\hat{U}}} g_0 +\gamma^1_{{\hat{U}}} g_1 \\
+c_{\hat{B}}+\alpha_{\hat{B}} EW_{\mathrm{Ca}} + \beta_{\hat{B}} EW_{\mathrm{Si}} + \eta_{\hat{B}} \lambda_{\mathrm{Si}}  +\gamma^0_{{\hat{B}}} g_0 +\gamma^1_{{\hat{B}}} g_1 \\
+c_{\hat{V}}+\alpha_{\hat{V}} EW_{\mathrm{Ca}} + \beta_{\hat{V}} EW_{\mathrm{Si}} + \eta_{\hat{V}} \lambda_{\mathrm{Si}} +\gamma^0_{{\hat{V}}} g_0 +\gamma^1_{{\hat{V}}} g_1 \\
+c_{\hat{R}}+\alpha_{\hat{R}} EW_{\mathrm{Ca}} + \beta_{\hat{R}} EW_{\mathrm{Si}} + \eta_{\hat{R}} \lambda_{\mathrm{Si}}  +\gamma^0_{{\hat{R}}} g_0 +\gamma^1_{{\hat{R}}} g_1 \\
+c_{\hat{I}}+\alpha_{\hat{I}} EW_{\mathrm{Ca}} + \beta_{\hat{I}} EW_{\mathrm{Si}}+ \eta_{\hat{I}} \lambda_{\mathrm{Si}}  +\gamma^0_{{\hat{I}}} g_0 +\gamma^1_{{\hat{I}}} g_1
 \end{pmatrix}.
 \label{ewsiv:eqn}
 \end{equation}
@@ -663,7 +685,7 @@ corresponds to the probability distribution function described by
 \begin{pmatrix}
 {\hat{U}}  \\{\hat{B}}  \\
 {\hat{V}}\\{\hat{R}}\\{\hat{I}}\\
-EW_{Si}\\ EW_{Ca} \\ \lambda_{Si}
+EW_{\mathrm{Si}}\\ EW_{\mathrm{Ca}} \\ \lambda_{\mathrm{Si}}
 \end{pmatrix}
 ,C
 \right).
@@ -706,11 +728,11 @@ $\Delta \rightarrow \Delta  + \epsilon_\Delta$
 with
 $$
 \epsilon_\Delta  = -  \epsilon_{\alpha} (EW_{\text{Ca}}-\langle EW_{\text{Ca}}\rangle)- 
- \epsilon_{\beta} (EW_{Si}-\langle EW_{Si}\rangle) -  \epsilon_{\eta} (\lambda_{Si}-\langle \lambda_{Si}\rangle)
+ \epsilon_{\beta} (EW_{\mathrm{Si}}-\langle EW_{\mathrm{Si}}\rangle) -  \epsilon_{\eta} (\lambda_{\mathrm{Si}}-\langle \lambda_{\mathrm{Si}}\rangle)
 - \epsilon_{\gamma^0}g_0 -  \epsilon_{\gamma^1}g_1.
 $$
 We break this degeneracy by fixing the values of $\epsilon$ such that $\Delta$ is
-uncorrelated with  $EW_{\text{Ca}}$, $EW_{Si}$, $\lambda_{\text{Ca}}$,
+uncorrelated with  $EW_{\text{Ca}}$, $EW_{\mathrm{Si}}$, $\lambda_{\text{Ca}}$,
 $g_0$, and $g_1$ reflecting
 our preference for feature affects to be confined to the cofactors and not the grey magnitude offsets.
 
@@ -898,7 +920,7 @@ them as pure dust parameters is subject to systematic errors.
 \item We have defined an effective parameter $\langle R^F\rangle$ whose value may be compared with dust models.
 Such comparisons must be taken with a grain of salt,
 as this value is not fundamentally constrained by the model but is fixed by the added condition that $\Delta$ is
-uncorrelated with  $EW_{\text{Ca}}$, $EW_{Si}$, $\lambda_{\text{Ca}}$,
+uncorrelated with  $EW_{\text{Ca}}$, $EW_{\mathrm{Si}}$, $\lambda_{\text{Ca}}$,
 $g_0$, and $g_1$.  The value of  $\langle R^F\rangle$ changes given different ansatzes  for breaking the $\Delta$--cofactor degeneracy 
 \end{itemize}
 
@@ -931,11 +953,11 @@ p  \sim \mathcal{N}(0,1 ),
 =
 \Delta  \vec{1} +
 \begin{pmatrix}
-c_{\hat{U}}+\alpha_{\hat{U}} EW_{Ca} + \beta_{\hat{U}} EW_{Si} + \eta_{\hat{U}} \lambda_{Si}+\gamma^0_{{\hat{U}}} g_0 +\gamma^1_{{\hat{U}}} g_1  + \sigma_p\phi_{\hat{U}} p\\
-c_{\hat{B}}+\alpha_{\hat{B}} EW_{Ca} + \beta_{\hat{B}} EW_{Si} + \eta_{\hat{B}} \lambda_{Si} +\gamma^0_{{\hat{B}}} g_0 +\gamma^1_{{\hat{B}}} g_1  + \sigma_p\phi_{\hat{B}} p\\
-c_{\hat{V}}+\alpha_{\hat{V}} EW_{Ca} + \beta_{\hat{V}} EW_{Si} + \eta_{\hat{V}} \lambda_{Si} +\gamma^0_{{\hat{V}}} g_0 +\gamma^1_{{\hat{V}}} g_1 + \sigma_p\phi_{\hat{V}}  p\\
-c_{\hat{R}}+\alpha_{\hat{R}} EW_{Ca} + \beta_{\hat{R}} EW_{Si} + \eta_{\hat{R}} \lambda_{Si} +\gamma^0_{{\hat{R}}} g_0 +\gamma^1_{{\hat{R}}} g_1 + \sigma_p\phi_{\hat{R}} p\\
-c_{\hat{I}}+\alpha_{\hat{I}} EW_{Ca} + \beta_{\hat{I}} EW_{Si}+ \eta_{\hat{I}} \lambda_{Si}+\gamma^0_{{\hat{I}}} g_0 +\gamma^1_{{\hat{I}}} g_1 + \sigma_p\phi_{\hat{I}}  p
+c_{\hat{U}}+\alpha_{\hat{U}} EW_{\mathrm{Ca}} + \beta_{\hat{U}} EW_{\mathrm{Si}} + \eta_{\hat{U}} \lambda_{\mathrm{Si}}+\gamma^0_{{\hat{U}}} g_0 +\gamma^1_{{\hat{U}}} g_1  + \sigma_p\phi_{\hat{U}} p\\
+c_{\hat{B}}+\alpha_{\hat{B}} EW_{\mathrm{Ca}} + \beta_{\hat{B}} EW_{\mathrm{Si}} + \eta_{\hat{B}} \lambda_{\mathrm{Si}} +\gamma^0_{{\hat{B}}} g_0 +\gamma^1_{{\hat{B}}} g_1  + \sigma_p\phi_{\hat{B}} p\\
+c_{\hat{V}}+\alpha_{\hat{V}} EW_{\mathrm{Ca}} + \beta_{\hat{V}} EW_{\mathrm{Si}} + \eta_{\hat{V}} \lambda_{\mathrm{Si}} +\gamma^0_{{\hat{V}}} g_0 +\gamma^1_{{\hat{V}}} g_1 + \sigma_p\phi_{\hat{V}}  p\\
+c_{\hat{R}}+\alpha_{\hat{R}} EW_{\mathrm{Ca}} + \beta_{\hat{R}} EW_{\mathrm{Si}} + \eta_{\hat{R}} \lambda_{\mathrm{Si}} +\gamma^0_{{\hat{R}}} g_0 +\gamma^1_{{\hat{R}}} g_1 + \sigma_p\phi_{\hat{R}} p\\
+c_{\hat{I}}+\alpha_{\hat{I}} EW_{\mathrm{Ca}} + \beta_{\hat{I}} EW_{\mathrm{Si}}+ \eta_{\hat{I}} \lambda_{\mathrm{Si}}+\gamma^0_{{\hat{I}}} g_0 +\gamma^1_{{\hat{I}}} g_1 + \sigma_p\phi_{\hat{I}}  p
 \end{pmatrix}.
 \label{ewsiv2:eqn}
 \end{equation}
@@ -1056,11 +1078,11 @@ p  \sim \mathcal{N}(0,1 ),
 =
 \Delta  \vec{1} +
 \begin{pmatrix}
-c_{\hat{U}}+\alpha_{\hat{U}} EW_{Ca} + \beta_{\hat{U}} EW_{Si} + \eta_{\hat{U}} \lambda_{Si} +\zeta_{\hat{U}} x_1 +\gamma^0_{{\hat{U}}} g_0 +\gamma^1_{{\hat{U}}} g_1 + \sigma_p\phi_{\hat{U}} p\\
-c_{\hat{B}}+\alpha_{\hat{B}} EW_{Ca} + \beta_{\hat{B}} EW_{Si} + \eta_{\hat{B}} \lambda_{Si} +\zeta_{\hat{B}} x_1 +\gamma^0_{{\hat{B}}} g_0 +\gamma^1_{{\hat{B}}} g_1 + \sigma_p\phi_{\hat{B}} p\\
-c_{\hat{V}}+\alpha_{\hat{V}} EW_{Ca} + \beta_{\hat{V}} EW_{Si} + \eta_{\hat{V}} \lambda_{Si} +\zeta_{\hat{V}} x_1+\gamma^0_{{\hat{V}}} g_0 +\gamma^1_{{\hat{V}}} g_1 + \sigma_p\phi_{\hat{V}}  p\\
-c_{\hat{R}}+\alpha_{\hat{R}} EW_{Ca} + \beta_{\hat{R}} EW_{Si} + \eta_{\hat{R}} \lambda_{Si} +\zeta_{\hat{R}} x_1+\gamma^0_{{\hat{R}}} g_0 +\gamma^1_{{\hat{R}}} g_1 + \sigma_p\phi_{\hat{R}} p\\
-c_{\hat{I}}+\alpha_{\hat{I}} EW_{Ca} + \beta_{\hat{I}} EW_{Si}+ \eta_{\hat{I}} \lambda_{Si}+\zeta_{\hat{I}} x_1+\gamma^0_{{\hat{I}}} g_0 +\gamma^1_{{\hat{I}}} g_1 + \sigma_p\phi_{\hat{I}}  p
+c_{\hat{U}}+\alpha_{\hat{U}} EW_{\mathrm{Ca}} + \beta_{\hat{U}} EW_{\mathrm{Si}} + \eta_{\hat{U}} \lambda_{\mathrm{Si}} +\zeta_{\hat{U}} x_1 +\gamma^0_{{\hat{U}}} g_0 +\gamma^1_{{\hat{U}}} g_1 + \sigma_p\phi_{\hat{U}} p\\
+c_{\hat{B}}+\alpha_{\hat{B}} EW_{\mathrm{Ca}} + \beta_{\hat{B}} EW_{\mathrm{Si}} + \eta_{\hat{B}} \lambda_{\mathrm{Si}} +\zeta_{\hat{B}} x_1 +\gamma^0_{{\hat{B}}} g_0 +\gamma^1_{{\hat{B}}} g_1 + \sigma_p\phi_{\hat{B}} p\\
+c_{\hat{V}}+\alpha_{\hat{V}} EW_{\mathrm{Ca}} + \beta_{\hat{V}} EW_{\mathrm{Si}} + \eta_{\hat{V}} \lambda_{\mathrm{Si}} +\zeta_{\hat{V}} x_1+\gamma^0_{{\hat{V}}} g_0 +\gamma^1_{{\hat{V}}} g_1 + \sigma_p\phi_{\hat{V}}  p\\
+c_{\hat{R}}+\alpha_{\hat{R}} EW_{\mathrm{Ca}} + \beta_{\hat{R}} EW_{\mathrm{Si}} + \eta_{\hat{R}} \lambda_{\mathrm{Si}} +\zeta_{\hat{R}} x_1+\gamma^0_{{\hat{R}}} g_0 +\gamma^1_{{\hat{R}}} g_1 + \sigma_p\phi_{\hat{R}} p\\
+c_{\hat{I}}+\alpha_{\hat{I}} EW_{\mathrm{Ca}} + \beta_{\hat{I}} EW_{\mathrm{Si}}+ \eta_{\hat{I}} \lambda_{\mathrm{Si}}+\zeta_{\hat{I}} x_1+\gamma^0_{{\hat{I}}} g_0 +\gamma^1_{{\hat{I}}} g_1 + \sigma_p\phi_{\hat{I}}  p
 \end{pmatrix},
 \label{ewsiv3:eqn}
 \end{equation}
@@ -1074,7 +1096,7 @@ c_{\hat{I}}+\alpha_{\hat{I}} EW_{Ca} + \beta_{\hat{I}} EW_{Si}+ \eta_{\hat{I}} \
 \begin{pmatrix}
 {\hat{U}}  \\{\hat{B}}  \\
 {\hat{V}}\\{\hat{R}}\\{\hat{I}}\\
-EW_{Si}\\ EW_{Ca} \\ \lambda_{Si} \\ x_1
+EW_{\mathrm{Si}}\\ EW_{\mathrm{Ca}} \\ \lambda_{\mathrm{Si}} \\ x_1
 \end{pmatrix}
 ,C
 \right).
@@ -1311,7 +1333,7 @@ ${\phi_X/\phi_{\hat{V}}-1}$
 \subsubsection{Results for the Observables Cofactors $\vec{\alpha}$, $\vec{\beta}$, $\vec{\eta}$,  $\vec{\zeta}$}
 
 The cofactors  $\vec{\alpha}$, $\vec{\beta}$, and $\vec{\eta}$ have  significant non-zero values,  meaning that
-$EW_{Ca}$, $EW_{Si}$, and $\lambda_{Si}$ are indicators of broadband
+$EW_{\mathrm{Ca}}$, $EW_{\mathrm{Si}}$, and $\lambda_{\mathrm{Si}}$ are indicators of broadband
 colors at peak.  The significance of their influence varies between  colors; in $\hat{B}-\hat{V}$, roughly the color
 where previous studies have focused, only $\vec{\beta}$ has a strong $>2\sigma$ correlation.  A positive
 dependence (consistent with the positive sign
@@ -1360,8 +1382,8 @@ signal detected in the analysis.
 The posterior visualized in
 Figures~\ref{global1:fig} -- \ref{global5:fig} shows
  that $\vec{\zeta}$, the magnitude vector associated with $x_1$, is highly correlated with $\vec{\beta}$, the vector
- associated with  $EW_{Si}$.
-The direct correlation between  $x_1$ and $EW_{Si}$ has already been established
+ associated with  $EW_{\mathrm{Si}}$.
+The direct correlation between  $x_1$ and $EW_{\mathrm{Si}}$ has already been established
 \citep{2008A&A...492..535A, 2011A&A...529L...4C}
 and exists
 in our sample as is shown later in \S\ref{results3per:sec}.  
@@ -1457,7 +1479,7 @@ The physical interpretation of this color should be tempered with caution.
 
 \subsubsection{Results for the Per-Supernova Parameters}
 \label{results3per:sec}
-Each supernova is described by its parameters $\Delta$, $EW_{Ca}$, $EW_{Si}$, $\lambda_{Si}$, $x_1$,
+Each supernova is described by its parameters $\Delta$, $EW_{\mathrm{Ca}}$, $EW_{\mathrm{Si}}$, $\lambda_{\mathrm{Si}}$, $x_1$,
 $E_{\gamma^0}({\hat{B}}-{\hat{V}})=(\gamma^0_{\hat{B}}-\gamma^0_{\hat{V}})g_0$, $E_{\gamma^1}({\hat{B}}-{\hat{V}})=(\gamma^1_{\hat{B}}-\gamma^1_{\hat{V}})g_1$, and $A_{p,V} =  \sigma_p\phi_{\hat{V}}p$.  (The  three latent parameters are cast as physically meaning
 quantities by multiplying them by select cofactors.)
 \added{The 68\% credible intervals for these parameters for all supernovae are given in Table~\ref{results:tab}.
@@ -1467,7 +1489,7 @@ quantities by multiplying them by select cofactors.)
 \tablecaption{Supernova Parameter Credible Intervals
 \label{results:tab}}
 \tablehead{
-\colhead{Name} & \colhead{$EW_{Ca}$ (\AA)} & \colhead{$EW_{Si}$ (\AA)} & \colhead{$\lambda_{Si}$ (\AA)} & \colhead{$x_1$} & \colhead{$\Delta$}
+\colhead{Name} & \colhead{$EW_{\mathrm{Ca}}$ (\AA)} & \colhead{$EW_{\mathrm{Si}}$ (\AA)} & \colhead{$\lambda_{\mathrm{Si}}$ (\AA)} & \colhead{$x_1$} & \colhead{$\Delta$}
 & \colhead{$E_{\gamma^0}({\hat{B}}-{\hat{V}})$} & \colhead{$E_{\gamma^1}({\hat{B}}-{\hat{V}})$} & \colhead{$A_{p,V} $}
 }
 \startdata
@@ -1658,12 +1680,12 @@ heavily extinguished by host-galaxy dust.
 
 The Pearson correlation coefficients of the per-supernova parameters are given in the matrix
 \begin{multline}
-Cor(EW_{Ca}, EW_{Si}, \lambda_{Si}, x_1, E_{\gamma^0}({\hat{B}}-{\hat{V}}), E_{\gamma^1}({\hat{B}}-{\hat{V}}), A_{p,V}) =\\
+Cor(EW_{\mathrm{Ca}}, EW_{\mathrm{Si}}, \lambda_{\mathrm{Si}}, x_1, E_{\gamma^0}({\hat{B}}-{\hat{V}}), E_{\gamma^1}({\hat{B}}-{\hat{V}}), A_{p,V}) =\\
 \begin{pmatrix}
 \begin{array}{rrrrrrr}
-EW_{Ca} & 0.10^{+0.03}_{-0.03} & -0.25^{+0.03}_{-0.03} & 0.07^{+0.03}_{-0.03} & -0.10^{+0.05}_{-0.05} & -0.18^{+0.06}_{-0.06} & 0.00^{+0.08}_{-0.08} \\
-\ldots &EW_{Si} & -0.12^{+0.03}_{-0.03} & -0.84^{+0.01}_{-0.01} & -0.13^{+0.04}_{-0.04} & 0.27^{+0.08}_{-0.09} & -0.00^{+0.08}_{-0.08} \\
-\ldots & \ldots& \lambda_{Si} & 0.14^{+0.03}_{-0.03} & 0.01^{+0.06}_{-0.05} & 0.00^{+0.06}_{-0.06} & -0.00^{+0.08}_{-0.08} \\
+EW_{\mathrm{Ca}} & 0.10^{+0.03}_{-0.03} & -0.25^{+0.03}_{-0.03} & 0.07^{+0.03}_{-0.03} & -0.10^{+0.05}_{-0.05} & -0.18^{+0.06}_{-0.06} & 0.00^{+0.08}_{-0.08} \\
+\ldots &EW_{\mathrm{Si}} & -0.12^{+0.03}_{-0.03} & -0.84^{+0.01}_{-0.01} & -0.13^{+0.04}_{-0.04} & 0.27^{+0.08}_{-0.09} & -0.00^{+0.08}_{-0.08} \\
+\ldots & \ldots& \lambda_{\mathrm{Si}} & 0.14^{+0.03}_{-0.03} & 0.01^{+0.06}_{-0.05} & 0.00^{+0.06}_{-0.06} & -0.00^{+0.08}_{-0.08} \\
 \ldots& \ldots& \ldots& x_1 & 0.13^{+0.04}_{-0.04} & -0.20^{+0.09}_{-0.09} & -0.00^{+0.08}_{-0.08} \\
 \ldots& \ldots& \ldots & \ldots& E_{\gamma^0}({\hat{B}}-{\hat{V}})& 0.04^{+0.06}_{-0.06} & 0.00^{+0.08}_{-0.08} \\
 \ldots & \ldots & \ldots& \ldots&\ldots & E_{\gamma^1}({\hat{B}}-{\hat{V}})  & 0.00^{+0.08}_{-0.08} \\
@@ -1680,14 +1702,14 @@ the diagonal.
    \centering
    \includegraphics[width=5.2in]{perobject_corner.pdf} 
    \caption{
-   Distributions for the supernova parameters $\Delta$, $EW_{Ca}$, $EW_{Si}$, $\lambda_{Si}$, $x_1$, $E_{\gamma^0}({\hat{B}}-{\hat{V}})$,  $E_{\gamma^1}({\hat{B}}-{\hat{V}})$,  and  $A_{p,V}$, as well as the grey offset
+   Distributions for the supernova parameters $\Delta$, $EW_{\mathrm{Ca}}$, $EW_{\mathrm{Si}}$, $\lambda_{\mathrm{Si}}$, $x_1$, $E_{\gamma^0}({\hat{B}}-{\hat{V}})$,  $E_{\gamma^1}({\hat{B}}-{\hat{V}})$,  and  $A_{p,V}$, as well as the grey offset
 $\Delta$.  All Monte Carlo links are plotted, so that each supernova contributes a cloud of points.
    \label{perobject3:fig}}
 \end{figure}
 
 An extensive discussion of the correlations between the spectral features  and light-curve parameters of the SNfactory data
 set can be found in \citet{chotard:thesis, leget:thesis, 2017Chotard}. 
-We here confine ourselves to noting the strong anti-correlation between $EW_{Si}$ and $x_1$, which was alluded
+We here confine ourselves to noting the strong anti-correlation between $EW_{\mathrm{Si}}$ and $x_1$, which was alluded
 to in \S\ref{results3global:sec} when interpreting the correlation between the cofactors $\vec{\beta}$ and $\vec{\zeta}$ that connect them with magnitudes.
 
 The $\Delta$ parameter will be discussed in its own subsection \S\ref{Delta:sec}.
@@ -1760,12 +1782,12 @@ without further assumptions.
 
 
 There are $>2 \sigma$ correlations between our  color-excess parameters $g_0$, $g_1$
-and the input features  $EW_{Ca}$,
-$EW_{Si}$, and $x_1$. 
+and the input features  $EW_{\mathrm{Ca}}$,
+$EW_{\mathrm{Si}}$, and $x_1$. 
 Given the association
 of  $g$ with dust-extinction parameters, this implies that the host environment and the input features are connected.
-The correlations between $EW_{Si}$ and  $EW_{Ca}$  with host have already been noted \citep{2011ApJ...734...42N, 2015MNRAS.451.1973S}.
-There is a lack of correlation between  $g_0$, $g_1$ and  our velocity parameter $\lambda_{Si}$
+The correlations between $EW_{\mathrm{Si}}$ and  $EW_{\mathrm{Ca}}$  with host have already been noted \citep{2011ApJ...734...42N, 2015MNRAS.451.1973S}.
+There is a lack of correlation between  $g_0$, $g_1$ and  our velocity parameter $\lambda_{\mathrm{Si}}$
 (measured at peak brightness).
 This contrasts with the subset of supernovae identified by their high-velocity features (HVF) in
 Si~II~$\lambda$6355
@@ -1884,9 +1906,13 @@ Supernova peculiar velocities contribute to the standard deviation; of the four
 supernovae with the highest values of $\Delta$, two have 
 heliocentric
 redshifts of 0.0015 and 0.0086. 
-Eq.~\ref{corr:eqn} shows $>2 \sigma$ correlations between $\Delta$ and each of $\lambda_{Si}$, $x_1$, $E_{\gamma^1}({\hat{B}}-{\hat{V}})$, and
+\replaced{
+Eq.~\ref{corr:eqn} shows $>2 \sigma$ correlations between $\Delta$ and each of $\lambda_{\mathrm{Si}}$, $x_1$, $E_{\gamma^1}({\hat{B}}-{\hat{V}})$, and
 $\sigma_p\phi_{\hat{V}}p$, showing that in addition to standardizing colors, these features can also be used to standardize
-absolute magnitudes.   
+absolute magnitudes.  }{Recall that model degeneracy between $\Delta$ and the cofactors such as $\alpha$, $\beta$ is removed by enforcing
+zero correlation between $\Delta$ and the per-supernova parameters such as $EW_{\mathrm{Ca}}$,  $EW_{\mathrm{Si}}$.
+An alternative method to break the degeneracy is to minimize the dispersion in $\Delta$.
+}
 The focus of this article is color standardization so we defer consideration of absolute-magnitude standardization to future work.
  
 \begin{figure}[htbp] %  figure placement: here, top, bottom, or page
@@ -2198,7 +2224,49 @@ ${\phi_X/\phi_{\hat{V}}-1}$
 \caption{68\% credible intervals for the global fit parameters of the Three Color Parameter Model~II in \S\ref{modelII:sec}.\label{global2:tab}}
 \end{table}
 
-%\bibliographystyle{aasjournal}
-%\bibliography{alex}
-\input{fix.bbl}
+\section{Covariance Matrix for Model~III Global Parameters}
+\setcounter{MaxMatrixCols}{40}
+\begin{equation}
+\tiny
+\begin{bmatrix}
+5.48e-07 & -1.77e-06 & 3.87e-07 & -1.63e-05 & 2.14e-04 & -2.59e-04 & 3.59e-06 & 4.51e-07 & -1.46e-06 & 3.12e-07 & -1.32e-05 & 2.60e-04 & -1.34e-04 & 2.78e-06 & 3.58e-07 & -1.16e-06 & 2.40e-07 & -1.04e-05 & 1.90e-04 & -5.51e-05 & 1.70e-06 & 2.87e-07 & -9.20e-07 & 1.88e-07 & -8.14e-06 & 1.09e-04 & -1.66e-05 & 1.05e-06 & 2.24e-07 & -7.21e-07 & 1.43e-07 & -6.30e-06 & -3.58e-05 & -6.71e-06 & 4.73e-07 \\
+-1.77e-06 & 2.70e-05 & -2.60e-06 & 1.85e-04 & -4.04e-03 & -3.01e-03 & -1.78e-05 & -1.45e-06 & 2.18e-05 & -2.12e-06 & 1.49e-04 & -3.25e-03 & -2.66e-03 & -1.43e-05 & -1.14e-06 & 1.72e-05 & -1.59e-06 & 1.17e-04 & -2.58e-03 & -2.14e-03 & -1.00e-05 & -9.23e-07 & 1.40e-05 & -1.22e-06 & 9.43e-05 & -2.01e-03 & -1.63e-03 & -7.87e-06 & -7.31e-07 & 1.14e-05 & -8.85e-07 & 7.62e-05 & -1.09e-03 & -1.17e-03 & -5.25e-06 \\
+3.87e-07 & -2.60e-06 & 1.26e-06 & -2.22e-05 & 3.88e-04 & 1.66e-03 & 1.04e-05 & 3.23e-07 & -2.15e-06 & 1.02e-06 & -1.82e-05 & 4.99e-04 & 1.38e-03 & 8.28e-06 & 2.38e-07 & -1.47e-06 & 7.79e-07 & -1.31e-05 & 5.44e-04 & 1.02e-03 & 6.05e-06 & 1.86e-07 & -1.12e-06 & 6.13e-07 & -1.01e-05 & 4.13e-04 & 8.00e-04 & 4.56e-06 & 1.39e-07 & -8.12e-07 & 4.67e-07 & -7.36e-06 & 1.56e-04 & 5.93e-04 & 3.15e-06 \\
+-1.63e-05 & 1.85e-04 & -2.22e-05 & 1.57e-03 & -2.93e-02 & -1.45e-02 & -2.66e-04 & -1.33e-05 & 1.50e-04 & -1.80e-05 & 1.27e-03 & -2.77e-02 & -1.31e-02 & -2.13e-04 & -1.04e-05 & 1.17e-04 & -1.36e-05 & 9.90e-04 & -2.33e-02 & -1.02e-02 & -1.52e-04 & -8.29e-06 & 9.49e-05 & -1.05e-05 & 7.94e-04 & -1.77e-02 & -7.72e-03 & -1.16e-04 & -6.36e-06 & 7.71e-05 & -7.70e-06 & 6.34e-04 & -8.10e-03 & -4.86e-03 & -7.93e-05 \\
+2.14e-04 & -4.04e-03 & 3.88e-04 & -2.93e-02 & 6.88e+00 & 1.25e+00 & 6.67e-03 & 1.42e-04 & -2.96e-03 & 3.19e-04 & -2.17e-02 & 5.55e+00 & 1.07e+00 & 5.15e-03 & 9.62e-05 & -2.17e-03 & 2.27e-04 & -1.62e-02 & 4.46e+00 & 9.67e-01 & 3.67e-03 & 6.03e-05 & -1.67e-03 & 1.74e-04 & -1.27e-02 & 3.66e+00 & 8.52e-01 & 3.02e-03 & 3.86e-05 & -1.42e-03 & 1.29e-04 & -1.09e-02 & 2.89e+00 & 6.67e-01 & 2.09e-03 \\
+-2.59e-04 & -3.01e-03 & 1.66e-03 & -1.45e-02 & 1.25e+00 & 1.73e+01 & 8.74e-03 & -1.90e-04 & -2.82e-03 & 1.32e-03 & -1.33e-02 & 1.09e+00 & 1.44e+01 & 7.09e-03 & -1.66e-04 & -1.50e-03 & 9.73e-04 & -6.78e-03 & 1.84e+00 & 1.15e+01 & 4.92e-03 & -1.22e-04 & -1.02e-03 & 7.56e-04 & -4.36e-03 & 1.63e+00 & 9.61e+00 & 3.16e-03 & -9.95e-05 & -3.83e-04 & 5.60e-04 & -7.65e-04 & 1.36e+00 & 7.93e+00 & 1.78e-03 \\
+3.59e-06 & -1.78e-05 & 1.04e-05 & -2.66e-04 & 6.67e-03 & 8.74e-03 & 2.83e-04 & 2.89e-06 & -1.38e-05 & 8.38e-06 & -2.14e-04 & 1.06e-02 & 6.79e-03 & 2.29e-04 & 1.97e-06 & -9.39e-06 & 6.36e-06 & -1.60e-04 & 1.09e-02 & 4.07e-03 & 1.76e-04 & 1.38e-06 & -7.40e-06 & 4.92e-06 & -1.23e-04 & 7.97e-03 & 3.03e-03 & 1.41e-04 & 9.17e-07 & -7.22e-06 & 3.61e-06 & -9.91e-05 & 2.61e-03 & 2.30e-03 & 1.08e-04 \\
+4.51e-07 & -1.45e-06 & 3.23e-07 & -1.33e-05 & 1.42e-04 & -1.90e-04 & 2.89e-06 & 3.98e-07 & -1.28e-06 & 2.69e-07 & -1.13e-05 & 1.97e-04 & -2.55e-05 & 2.25e-06 & 3.23e-07 & -1.04e-06 & 2.11e-07 & -9.09e-06 & 1.44e-04 & 4.26e-05 & 1.25e-06 & 2.58e-07 & -8.18e-07 & 1.66e-07 & -7.11e-06 & 7.38e-05 & 5.08e-05 & 6.94e-07 & 1.88e-07 & -6.00e-07 & 1.23e-07 & -5.27e-06 & -5.22e-05 & 9.50e-06 & 2.40e-07 \\
+-1.46e-06 & 2.18e-05 & -2.15e-06 & 1.50e-04 & -2.96e-03 & -2.82e-03 & -1.38e-05 & -1.28e-06 & 1.93e-05 & -1.77e-06 & 1.30e-04 & -2.43e-03 & -2.99e-03 & -1.18e-05 & -1.04e-06 & 1.56e-05 & -1.35e-06 & 1.05e-04 & -1.96e-03 & -2.59e-03 & -7.61e-06 & -8.41e-07 & 1.25e-05 & -1.05e-06 & 8.38e-05 & -1.49e-03 & -1.96e-03 & -5.57e-06 & -6.24e-07 & 9.33e-06 & -7.68e-07 & 6.29e-05 & -7.66e-04 & -1.11e-03 & -4.00e-06 \\
+3.12e-07 & -2.12e-06 & 1.02e-06 & -1.80e-05 & 3.19e-04 & 1.32e-03 & 8.38e-06 & 2.69e-07 & -1.77e-06 & 8.55e-07 & -1.50e-05 & 4.09e-04 & 1.11e-03 & 6.69e-06 & 2.02e-07 & -1.23e-06 & 6.67e-07 & -1.10e-05 & 4.43e-04 & 8.16e-04 & 4.94e-06 & 1.57e-07 & -9.42e-07 & 5.21e-07 & -8.46e-06 & 3.37e-04 & 6.40e-04 & 3.75e-06 & 1.14e-07 & -6.87e-07 & 3.81e-07 & -6.16e-06 & 1.31e-04 & 4.77e-04 & 2.65e-06 \\
+-1.32e-05 & 1.49e-04 & -1.82e-05 & 1.27e-03 & -2.17e-02 & -1.33e-02 & -2.14e-04 & -1.13e-05 & 1.30e-04 & -1.50e-05 & 1.10e-03 & -2.15e-02 & -1.35e-02 & -1.75e-04 & -9.01e-06 & 1.04e-04 & -1.15e-05 & 8.72e-04 & -1.85e-02 & -1.11e-02 & -1.24e-04 & -7.18e-06 & 8.32e-05 & -8.95e-06 & 6.92e-04 & -1.39e-02 & -8.33e-03 & -9.24e-05 & -5.25e-06 & 6.25e-05 & -6.56e-06 & 5.15e-04 & -5.96e-03 & -4.09e-03 & -6.74e-05 \\
+2.60e-04 & -3.25e-03 & 4.99e-04 & -2.77e-02 & 5.55e+00 & 1.09e+00 & 1.06e-02 & 1.97e-04 & -2.43e-03 & 4.09e-04 & -2.15e-02 & 5.14e+00 & 9.38e-01 & 8.36e-03 & 1.44e-04 & -1.81e-03 & 3.04e-04 & -1.65e-02 & 4.30e+00 & 8.58e-01 & 5.98e-03 & 9.79e-05 & -1.38e-03 & 2.32e-04 & -1.28e-02 & 3.43e+00 & 7.80e-01 & 4.61e-03 & 5.79e-05 & -1.14e-03 & 1.72e-04 & -1.02e-02 & 2.35e+00 & 6.50e-01 & 3.24e-03 \\
+-1.34e-04 & -2.66e-03 & 1.38e-03 & -1.31e-02 & 1.07e+00 & 1.44e+01 & 6.79e-03 & -2.55e-05 & -2.99e-03 & 1.11e-03 & -1.35e-02 & 9.38e-01 & 1.37e+01 & 6.42e-03 & 1.80e-05 & -2.22e-03 & 8.57e-04 & -1.08e-02 & 1.49e+00 & 1.16e+01 & 1.63e-03 & 1.96e-05 & -1.57e-03 & 6.72e-04 & -7.66e-03 & 1.31e+00 & 9.54e+00 & 3.93e-06 & -2.30e-05 & -5.99e-04 & 5.06e-04 & -3.06e-03 & 1.08e+00 & 7.15e+00 & -1.30e-03 \\
+2.78e-06 & -1.43e-05 & 8.28e-06 & -2.13e-04 & 5.15e-03 & 7.09e-03 & 2.29e-04 & 2.25e-06 & -1.18e-05 & 6.69e-06 & -1.75e-04 & 8.36e-03 & 6.42e-03 & 1.94e-04 & 1.57e-06 & -8.81e-06 & 5.16e-06 & -1.35e-04 & 8.63e-03 & 4.45e-03 & 1.50e-04 & 1.09e-06 & -6.98e-06 & 4.01e-06 & -1.05e-04 & 6.28e-03 & 3.21e-03 & 1.19e-04 & 6.68e-07 & -6.26e-06 & 2.97e-06 & -8.31e-05 & 2.07e-03 & 1.95e-03 & 8.89e-05 \\
+3.58e-07 & -1.14e-06 & 2.38e-07 & -1.04e-05 & 9.62e-05 & -1.66e-04 & 1.97e-06 & 3.23e-07 & -1.04e-06 & 2.02e-07 & -9.01e-06 & 1.44e-04 & 1.80e-05 & 1.57e-06 & 2.82e-07 & -9.34e-07 & 1.66e-07 & -7.83e-06 & 9.39e-05 & 1.01e-04 & 6.81e-07 & 2.27e-07 & -7.44e-07 & 1.30e-07 & -6.18e-06 & 3.58e-05 & 8.41e-05 & 2.43e-07 & 1.67e-07 & -5.47e-07 & 9.84e-08 & -4.62e-06 & -6.31e-05 & 3.16e-05 & -5.49e-08 \\
+-1.16e-06 & 1.72e-05 & -1.47e-06 & 1.17e-04 & -2.17e-03 & -1.50e-03 & -9.39e-06 & -1.04e-06 & 1.56e-05 & -1.23e-06 & 1.04e-04 & -1.81e-03 & -2.22e-03 & -8.81e-06 & -9.34e-07 & 1.41e-05 & -9.72e-07 & 9.37e-05 & -1.32e-03 & -2.18e-03 & -5.00e-06 & -7.59e-07 & 1.15e-05 & -7.50e-07 & 7.59e-05 & -9.56e-04 & -1.55e-03 & -3.43e-06 & -5.69e-07 & 8.69e-06 & -5.57e-07 & 5.80e-05 & -4.18e-04 & -8.99e-04 & -2.79e-06 \\
+2.40e-07 & -1.59e-06 & 7.79e-07 & -1.36e-05 & 2.27e-04 & 9.73e-04 & 6.36e-06 & 2.11e-07 & -1.35e-06 & 6.67e-07 & -1.15e-05 & 3.04e-04 & 8.57e-04 & 5.16e-06 & 1.66e-07 & -9.72e-07 & 5.47e-07 & -8.75e-06 & 3.25e-04 & 6.57e-04 & 3.71e-06 & 1.30e-07 & -7.44e-07 & 4.31e-07 & -6.79e-06 & 2.47e-04 & 5.11e-04 & 2.81e-06 & 9.40e-08 & -5.37e-07 & 3.18e-07 & -4.97e-06 & 9.24e-05 & 3.58e-04 & 1.99e-06 \\
+-1.04e-05 & 1.17e-04 & -1.31e-05 & 9.90e-04 & -1.62e-02 & -6.78e-03 & -1.60e-04 & -9.09e-06 & 1.05e-04 & -1.10e-05 & 8.72e-04 & -1.65e-02 & -1.08e-02 & -1.35e-04 & -7.83e-06 & 9.37e-05 & -8.75e-06 & 7.76e-04 & -1.38e-02 & -1.03e-02 & -9.19e-05 & -6.28e-06 & 7.58e-05 & -6.80e-06 & 6.24e-04 & -1.01e-02 & -7.01e-03 & -6.68e-05 & -4.66e-06 & 5.77e-05 & -5.07e-06 & 4.74e-04 & -4.00e-03 & -3.86e-03 & -5.10e-05 \\
+1.90e-04 & -2.58e-03 & 5.44e-04 & -2.33e-02 & 4.46e+00 & 1.84e+00 & 1.09e-02 & 1.44e-04 & -1.96e-03 & 4.43e-04 & -1.85e-02 & 4.30e+00 & 1.49e+00 & 8.63e-03 & 9.39e-05 & -1.32e-03 & 3.25e-04 & -1.38e-02 & 3.99e+00 & 1.20e+00 & 6.47e-03 & 5.76e-05 & -9.90e-04 & 2.49e-04 & -1.06e-02 & 3.20e+00 & 1.04e+00 & 4.99e-03 & 2.60e-05 & -7.80e-04 & 1.84e-04 & -8.18e-03 & 2.21e+00 & 8.94e-01 & 3.63e-03 \\
+-5.51e-05 & -2.14e-03 & 1.02e-03 & -1.02e-02 & 9.67e-01 & 1.15e+01 & 4.07e-03 & 4.26e-05 & -2.59e-03 & 8.16e-04 & -1.11e-02 & 8.58e-01 & 1.16e+01 & 4.45e-03 & 1.01e-04 & -2.18e-03 & 6.57e-04 & -1.03e-02 & 1.20e+00 & 1.04e+01 & -3.81e-04 & 8.39e-05 & -1.55e-03 & 5.18e-04 & -7.33e-03 & 1.05e+00 & 8.61e+00 & -1.61e-03 & 2.13e-05 & -6.03e-04 & 3.97e-04 & -3.07e-03 & 8.81e-01 & 6.41e+00 & -2.52e-03 \\
+1.70e-06 & -1.00e-05 & 6.05e-06 & -1.52e-04 & 3.67e-03 & 4.92e-03 & 1.76e-04 & 1.25e-06 & -7.61e-06 & 4.94e-06 & -1.24e-04 & 5.98e-03 & 1.63e-03 & 1.50e-04 & 6.81e-07 & -5.00e-06 & 3.71e-06 & -9.19e-05 & 6.47e-03 & -3.81e-04 & 1.30e-04 & 3.89e-07 & -4.13e-06 & 2.87e-06 & -7.16e-05 & 4.86e-03 & -3.90e-04 & 1.06e-04 & 2.10e-07 & -4.36e-06 & 2.13e-06 & -5.81e-05 & 1.91e-03 & 6.81e-04 & 8.25e-05 \\
+2.87e-07 & -9.23e-07 & 1.86e-07 & -8.29e-06 & 6.03e-05 & -1.22e-04 & 1.38e-06 & 2.58e-07 & -8.41e-07 & 1.57e-07 & -7.18e-06 & 9.79e-05 & 1.96e-05 & 1.09e-06 & 2.27e-07 & -7.59e-07 & 1.30e-07 & -6.28e-06 & 5.76e-05 & 8.39e-05 & 3.89e-07 & 1.87e-07 & -6.16e-07 & 1.04e-07 & -5.04e-06 & 1.24e-05 & 7.22e-05 & 4.62e-08 & 1.42e-07 & -4.64e-07 & 8.05e-08 & -3.85e-06 & -6.45e-05 & 3.01e-05 & -1.89e-07 \\
+-9.20e-07 & 1.40e-05 & -1.12e-06 & 9.49e-05 & -1.67e-03 & -1.02e-03 & -7.40e-06 & -8.18e-07 & 1.25e-05 & -9.42e-07 & 8.32e-05 & -1.38e-03 & -1.57e-03 & -6.98e-06 & -7.44e-07 & 1.15e-05 & -7.44e-07 & 7.58e-05 & -9.90e-04 & -1.55e-03 & -4.13e-06 & -6.16e-07 & 9.55e-06 & -5.79e-07 & 6.29e-05 & -7.12e-04 & -1.09e-03 & -2.97e-06 & -4.78e-07 & 7.52e-06 & -4.35e-07 & 4.98e-05 & -3.00e-04 & -6.51e-04 & -2.44e-06 \\
+1.88e-07 & -1.22e-06 & 6.13e-07 & -1.05e-05 & 1.74e-04 & 7.56e-04 & 4.92e-06 & 1.66e-07 & -1.05e-06 & 5.21e-07 & -8.95e-06 & 2.32e-04 & 6.72e-04 & 4.01e-06 & 1.30e-07 & -7.50e-07 & 4.31e-07 & -6.80e-06 & 2.49e-04 & 5.18e-04 & 2.87e-06 & 1.04e-07 & -5.79e-07 & 3.46e-07 & -5.33e-06 & 1.90e-04 & 4.07e-04 & 2.19e-06 & 7.71e-08 & -4.22e-07 & 2.62e-07 & -3.96e-06 & 7.30e-05 & 2.81e-04 & 1.55e-06 \\
+-8.14e-06 & 9.43e-05 & -1.01e-05 & 7.94e-04 & -1.27e-02 & -4.36e-03 & -1.23e-04 & -7.11e-06 & 8.38e-05 & -8.46e-06 & 6.92e-04 & -1.28e-02 & -7.66e-03 & -1.05e-04 & -6.18e-06 & 7.59e-05 & -6.79e-06 & 6.24e-04 & -1.06e-02 & -7.33e-03 & -7.16e-05 & -5.04e-06 & 6.29e-05 & -5.33e-06 & 5.12e-04 & -7.82e-03 & -4.81e-03 & -5.28e-05 & -3.85e-06 & 4.96e-05 & -4.02e-06 & 4.02e-04 & -3.20e-03 & -2.62e-03 & -4.03e-05 \\
+1.09e-04 & -2.01e-03 & 4.13e-04 & -1.77e-02 & 3.66e+00 & 1.63e+00 & 7.97e-03 & 7.38e-05 & -1.49e-03 & 3.37e-04 & -1.39e-02 & 3.43e+00 & 1.31e+00 & 6.28e-03 & 3.58e-05 & -9.56e-04 & 2.47e-04 & -1.01e-02 & 3.20e+00 & 1.05e+00 & 4.86e-03 & 1.24e-05 & -7.12e-04 & 1.90e-04 & -7.82e-03 & 2.65e+00 & 9.25e-01 & 3.86e-03 & -6.02e-06 & -5.70e-04 & 1.41e-04 & -6.16e-03 & 1.94e+00 & 8.11e-01 & 2.87e-03 \\
+-1.66e-05 & -1.63e-03 & 8.00e-04 & -7.72e-03 & 8.52e-01 & 9.61e+00 & 3.03e-03 & 5.08e-05 & -1.96e-03 & 6.40e-04 & -8.33e-03 & 7.80e-01 & 9.54e+00 & 3.21e-03 & 8.41e-05 & -1.55e-03 & 5.11e-04 & -7.01e-03 & 1.04e+00 & 8.61e+00 & -3.90e-04 & 7.22e-05 & -1.09e-03 & 4.07e-04 & -4.81e-03 & 9.25e-01 & 7.33e+00 & -1.38e-03 & 2.35e-05 & -3.85e-04 & 3.14e-04 & -1.61e-03 & 7.80e-01 & 5.67e+00 & -2.14e-03 \\
+1.05e-06 & -7.87e-06 & 4.56e-06 & -1.16e-04 & 3.02e-03 & 3.16e-03 & 1.41e-04 & 6.94e-07 & -5.57e-06 & 3.75e-06 & -9.24e-05 & 4.61e-03 & 3.93e-06 & 1.19e-04 & 2.43e-07 & -3.43e-06 & 2.81e-06 & -6.68e-05 & 4.99e-03 & -1.61e-03 & 1.06e-04 & 4.62e-08 & -2.97e-06 & 2.19e-06 & -5.28e-05 & 3.86e-03 & -1.38e-03 & 8.88e-05 & -3.18e-08 & -3.62e-06 & 1.63e-06 & -4.51e-05 & 1.72e-03 & -4.81e-05 & 7.16e-05 \\
+2.24e-07 & -7.31e-07 & 1.39e-07 & -6.36e-06 & 3.86e-05 & -9.95e-05 & 9.17e-07 & 1.88e-07 & -6.24e-07 & 1.14e-07 & -5.25e-06 & 5.79e-05 & -2.30e-05 & 6.68e-07 & 1.67e-07 & -5.69e-07 & 9.40e-08 & -4.66e-06 & 2.60e-05 & 2.13e-05 & 2.10e-07 & 1.42e-07 & -4.78e-07 & 7.71e-08 & -3.85e-06 & -6.02e-06 & 2.35e-05 & -3.18e-08 & 1.26e-07 & -4.21e-07 & 6.61e-08 & -3.34e-06 & -5.81e-05 & 3.45e-05 & -2.39e-07 \\
+-7.21e-07 & 1.14e-05 & -8.12e-07 & 7.71e-05 & -1.42e-03 & -3.83e-04 & -7.22e-06 & -6.00e-07 & 9.33e-06 & -6.87e-07 & 6.25e-05 & -1.14e-03 & -5.99e-04 & -6.26e-06 & -5.47e-07 & 8.69e-06 & -5.37e-07 & 5.77e-05 & -7.80e-04 & -6.03e-04 & -4.36e-06 & -4.64e-07 & 7.52e-06 & -4.22e-07 & 4.96e-05 & -5.70e-04 & -3.85e-04 & -3.62e-06 & -4.21e-07 & 7.00e-06 & -3.26e-07 & 4.58e-05 & -2.70e-04 & -3.78e-04 & -2.81e-06 \\
+1.43e-07 & -8.85e-07 & 4.67e-07 & -7.70e-06 & 1.29e-04 & 5.60e-04 & 3.61e-06 & 1.23e-07 & -7.68e-07 & 3.81e-07 & -6.56e-06 & 1.72e-04 & 5.06e-04 & 2.97e-06 & 9.84e-08 & -5.57e-07 & 3.18e-07 & -5.07e-06 & 1.84e-04 & 3.97e-04 & 2.13e-06 & 8.05e-08 & -4.35e-07 & 2.62e-07 & -4.02e-06 & 1.41e-04 & 3.14e-04 & 1.63e-06 & 6.61e-08 & -3.26e-07 & 2.25e-07 & -3.16e-06 & 5.74e-05 & 2.22e-04 & 1.20e-06 \\
+-6.30e-06 & 7.62e-05 & -7.36e-06 & 6.34e-04 & -1.09e-02 & -7.65e-04 & -9.91e-05 & -5.27e-06 & 6.29e-05 & -6.16e-06 & 5.15e-04 & -1.02e-02 & -3.06e-03 & -8.31e-05 & -4.62e-06 & 5.80e-05 & -4.97e-06 & 4.74e-04 & -8.18e-03 & -3.07e-03 & -5.81e-05 & -3.85e-06 & 4.98e-05 & -3.96e-06 & 4.02e-04 & -6.16e-03 & -1.61e-03 & -4.51e-05 & -3.34e-06 & 4.58e-05 & -3.16e-06 & 3.66e-04 & -2.98e-03 & -1.23e-03 & -3.34e-05 \\
+-3.58e-05 & -1.09e-03 & 1.56e-04 & -8.10e-03 & 2.89e+00 & 1.36e+00 & 2.61e-03 & -5.22e-05 & -7.66e-04 & 1.31e-04 & -5.96e-03 & 2.35e+00 & 1.08e+00 & 2.07e-03 & -6.31e-05 & -4.18e-04 & 9.24e-05 & -4.00e-03 & 2.21e+00 & 8.81e-01 & 1.91e-03 & -6.45e-05 & -3.00e-04 & 7.30e-05 & -3.20e-03 & 1.94e+00 & 7.80e-01 & 1.72e-03 & -5.81e-05 & -2.70e-04 & 5.74e-05 & -2.98e-03 & 1.80e+00 & 6.92e-01 & 1.55e-03 \\
+-6.71e-06 & -1.17e-03 & 5.93e-04 & -4.86e-03 & 6.67e-01 & 7.93e+00 & 2.30e-03 & 9.50e-06 & -1.11e-03 & 4.77e-04 & -4.09e-03 & 6.50e-01 & 7.15e+00 & 1.95e-03 & 3.16e-05 & -8.99e-04 & 3.58e-04 & -3.86e-03 & 8.94e-01 & 6.41e+00 & 6.81e-04 & 3.01e-05 & -6.51e-04 & 2.81e-04 & -2.62e-03 & 8.11e-01 & 5.67e+00 & -4.81e-05 & 3.45e-05 & -3.78e-04 & 2.22e-04 & -1.23e-03 & 6.92e-01 & 5.36e+00 & -6.37e-04 \\
+4.73e-07 & -5.25e-06 & 3.15e-06 & -7.93e-05 & 2.09e-03 & 1.78e-03 & 1.08e-04 & 2.40e-07 & -4.00e-06 & 2.65e-06 & -6.74e-05 & 3.24e-03 & -1.30e-03 & 8.89e-05 & -5.49e-08 & -2.79e-06 & 1.99e-06 & -5.10e-05 & 3.63e-03 & -2.52e-03 & 8.25e-05 & -1.89e-07 & -2.44e-06 & 1.55e-06 & -4.03e-05 & 2.87e-03 & -2.14e-03 & 7.16e-05 & -2.39e-07 & -2.81e-06 & 1.20e-06 & -3.34e-05 & 1.55e-03 & -6.37e-04 & 6.60e-05 
+\end{bmatrix}
+\end{equation}
+\bibliographystyle{aasjournal}
+\bibliography{alex}
+%\input{fix.bbl}
 \end{document} 

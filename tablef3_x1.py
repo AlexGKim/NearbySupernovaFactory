@@ -38,6 +38,30 @@ print "ev_sig size"
 dum1, dumm, dump =  numpy.percentile(fit['ev_sig'],(50,50-34,50+34),axis=0)
 print "{:.3f}^{{+{:.3f}}}_{{{:.3f}}}".format(dum1,dump-dum1,dumm-dum1)
 
+print "global parameter covariance matrix"
+nlinks = fit['gamma'].shape[0]
+mega = [] 
+for i in xrange(5):
+    mega.append([fit['alpha'][:,i],fit['beta'][:,i],fit['eta'][:,i],\
+        fit['zeta'][:,i],fit['gamma'][:,i],fit['rho1'][:,i],fit['ev_sig'][:]*fit['ev'][:,i]])
+mega = numpy.array(mega)
+mega = numpy.reshape(mega, (35,nlinks))
+print mega.shape
+ans = numpy.cov(mega)
+def frexp10(x):
+    exp = int(numpy.floor(numpy.log10(abs(x))))
+    return x / 10**exp, exp
+
+for i1 in xrange(35):
+    for i2 in xrange(35):
+        print "{0}^{{{1:+03}}}".format(*frexp10(ans[i1,i2])),
+        if (i2 != 34):
+            print "&",
+    print "\\\\" 
+wefew
+
+
+
 print "the table"
 
 pars = ['alpha','alpha','beta','beta','eta','eta','zeta','zeta','gamma','gamma','rho1','rho1']
