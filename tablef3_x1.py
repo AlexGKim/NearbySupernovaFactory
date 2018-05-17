@@ -118,7 +118,7 @@ for i in xrange(5):
             numpy.std((fit['gamma'][:,i]-fit['gamma'][:,j])[:,None]*fit['k']),numpy.std((fit['rho1'][:,i]-fit['rho1'][:,j])[:,None]*fit['R']))
 
 
-mega = numpy.array([fit['Delta'],fit['EW'][:,:,0],fit['EW'][:,:,1],fit['sivel'], fit['x1'],\
+mega = numpy.array([fit['EW'][:,:,0],fit['EW'][:,:,1],fit['sivel'], fit['x1'],\
     ((fit['gamma'][:,1] - fit['gamma'][:,2])[:,None]*fit['k']),((fit['rho1'][:,1] - fit['rho1'][:,2])[:,None]*fit['R']), fit['mag_int_raw']*(fit['ev_sig']*fit['ev'][:,2])[:,None]])
 
 # mega = numpy.array([fit['Delta'].flatten(),fit['EW'][:,:,0].flatten(),fit['EW'][:,:,1].flatten(),fit['sivel'].flatten(), \
@@ -139,10 +139,10 @@ print "observable correlation coefficients"
 # mega = numpy.array([fit['Delta'],fit['EW'][:,:,0],fit['EW'][:,:,1],fit['sivel'], fit['x1'],\
 #     ((fit['gamma'][:,1] - fit['gamma'][:,2])[:,None]*fit['k']),((fit['rho1'][:,1] - fit['rho1'][:,2])[:,None]*fit['R']), fit['mag_int_raw']*(fit['ev_sig']*fit['ev'][:,2])[:,None]])
 # dum=numpy.zeros((6,18))
-for i1 in xrange(8):
-    for i2 in xrange(8):
+for i1 in xrange(7):
+    for i2 in xrange(7):
         print "{:.2f}^{{+{:.2f}}}_{{{:.2f}}}".format(dum1[i1,i2],dump[i1,i2]-dum1[i1,i2],dumm[i1,i2]-dum1[i1,i2]),
-        if (i2 != 7):
+        if (i2 != 6):
             print "&",
 
     print "\\\\" 
@@ -157,6 +157,7 @@ for i in xrange(mega.shape[1]):
     eshit  = numpy.array(shit)
     eshit[:] = 0
     for i1 in xrange(7):
+        eshit[i1,i1]=numpy.sqrt(shit[i1,i1])
         for i2 in xrange(i1+1,7):
             temp  = numpy.array([[shit[i1,i1],shit[i1,i2]],[shit[i2,i1],shit[i2,i2]]])
             tempans  = ellipse_perp.ellipse_perp(temp)
@@ -171,12 +172,9 @@ ans = numpy.mean(covarray,axis=0)
 dum1 = numpy.std(covarray,axis=0)
 for i1 in xrange(7):
     for i2 in xrange(7):
-        if i1 == i2:
-            print "\\ldots", 
-        else:
-            s1, s2 = frexp10(ans[i1,i2])
-            s3 = dum1[i1,i2]/10**s2
-            print "{0:3.1f}  \\pm {2:3.1f} \\times 10^{{{1:2}}}".format(s1, s2, s3),
+        s1, s2 = frexp10(ans[i1,i2])
+        s3 = dum1[i1,i2]/10**s2
+        print "{0:3.2f}  \\pm {2:3.2f} \\times 10^{{{1:2}}}".format(s1, s2, s3),
 
         # print "{:.2f}^{{+{:.2f}}}_{{{:.2f}}}".format(dum1[i1,i2],dump[i1,i2]-dum1[i1,i2],dumm[i1,i2]-dum1[i1,i2]),
         if (i2 != 6):

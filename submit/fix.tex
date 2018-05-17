@@ -1708,21 +1708,31 @@ $\Delta$.  All Monte Carlo links are plotted, so that each supernova contributes
 \end{figure}
 
 \added{
+The correlation matrix in Eq.~\ref{corr:eqn} is not close to being singular, meaning that the each of the features conveys
+independent supernova variability.  Nevertheless, a strong correlation between two features means that the determination
+of one would reduce the residual dispersion in the other.  This information is conveyed in the matrix
 \begin{equation}
+M =
 \begin{pmatrix}
-\small
+\tiny
 \begin{array}{rrrrrrr}
-EW_{\mathrm{Ca}} & 7.0  \pm 0.5 \times 10^{ 2} & 6.7  \pm 0.3 \times 10^{ 2} & 3.7  \pm 1.1 \times 10^{ 2} & 3.3  \pm 6.2 \times 10^{ 1} & 7.7  \pm 17.0 \times 10^{ 0} & 6.3  \pm 11.2 \times 10^{ 1} \\
-5.0  \pm 0.2 \times 10^{ 1} & EW_{\mathrm{Si}} & 4.9  \pm 0.2 \times 10^{ 1} & 2.5  \pm 0.2 \times 10^{ 0} & 4.7  \pm 3.3 \times 10^{ 0} & 1.2  \pm 1.5 \times 10^{ 0} & 1.1  \pm 1.2 \times 10^{ 1} \\
-3.8  \pm 0.2 \times 10^{ 2} & 3.9  \pm 0.2 \times 10^{ 2} & \lambda_{\mathrm{Si}} & 1.4  \pm 0.3 \times 10^{ 2} & 7.4  \pm 8.8 \times 10^{ 1} & 4.3  \pm 6.8 \times 10^{ 1} & 4.5  \pm 7.0 \times 10^{ 1} \\
-9.9  \pm 0.4 \times 10^{-1} & 2.9  \pm 0.2 \times 10^{-1} & 9.7  \pm 0.4 \times 10^{-1} & x_1 & 5.2  \pm 1.4 \times 10^{-1} & 2.3  \pm 1.6 \times 10^{-1} & 6.7  \pm 2.3 \times 10^{-1} \\
-5.4  \pm 0.5 \times 10^{-3} & 5.4  \pm 0.5 \times 10^{-3} & 5.4  \pm 0.5 \times 10^{-3} & 5.4  \pm 0.5 \times 10^{-3} & E_{\gamma^0}({\hat{B}}-{\hat{V}})& 5.4  \pm 0.5 \times 10^{-3} & 5.4  \pm 0.5 \times 10^{-3} \\
-1.5  \pm 0.3 \times 10^{-3} & 1.4  \pm 0.3 \times 10^{-3} & 1.5  \pm 0.3 \times 10^{-3} & 1.5  \pm 0.3 \times 10^{-3} & 1.5  \pm 0.3 \times 10^{-3} &  E_{\gamma^1}({\hat{B}}-{\hat{V}}) & 1.5  \pm 0.3 \times 10^{-3} \\
-2.6  \pm 1.1 \times 10^{-3} & 2.6  \pm 1.1 \times 10^{-3} & 2.6  \pm 1.1 \times 10^{-3} & 2.6  \pm 1.1 \times 10^{-3} & 2.6  \pm 1.1 \times 10^{-3} & 2.6  \pm 1.1 \times 10^{-3} & A_{p,V} \\
-\end{array}
+2.76  \pm 0.06 \times 10^{ 1} & 2.75  \pm 0.06 \times 10^{ 1} & 2.67  \pm 0.06 \times 10^{ 1} & 2.75  \pm 0.05 \times 10^{ 1} & 2.74  \pm 0.06 \times 10^{ 1} & 2.71  \pm 0.06 \times 10^{ 1} & 2.75  \pm 0.06 \times 10^{ 1} \\
+7.04  \pm 0.16 \times 10^{ 0} & 7.08  \pm 0.16 \times 10^{ 0} & 7.02  \pm 0.16 \times 10^{ 0} & 3.86  \pm 0.19 \times 10^{ 0} & 7.01  \pm 0.16 \times 10^{ 0} & 6.79  \pm 0.21 \times 10^{ 0} & 7.06  \pm 0.16 \times 10^{ 0} \\
+1.98  \pm 0.04 \times 10^{ 1} & 2.03  \pm 0.05 \times 10^{ 1} & 2.05  \pm 0.05 \times 10^{ 1} & 2.03  \pm 0.05 \times 10^{ 1} & 2.04  \pm 0.05 \times 10^{ 1} & 2.04  \pm 0.05 \times 10^{ 1} & 2.04  \pm 0.05 \times 10^{ 1} \\
+9.92  \pm 0.18 \times 10^{-1} & 5.43  \pm 0.23 \times 10^{-1} & 9.86  \pm 0.19 \times 10^{-1} & 9.95  \pm 0.18 \times 10^{-1} & 9.86  \pm 0.19 \times 10^{-1} & 9.71  \pm 0.26 \times 10^{-1} & 9.92  \pm 0.19 \times 10^{-1} \\
+7.33  \pm 0.31 \times 10^{-2} & 7.32  \pm 0.32 \times 10^{-2} & 7.37  \pm 0.32 \times 10^{-2} & 7.32  \pm 0.32 \times 10^{-2} & 7.38  \pm 0.32 \times 10^{-2} & 7.36  \pm 0.33 \times 10^{-2} & 7.36  \pm 0.32 \times 10^{-2} \\
+3.82  \pm 0.42 \times 10^{-2} & 3.73  \pm 0.41 \times 10^{-2} & 3.88  \pm 0.43 \times 10^{-2} & 3.79  \pm 0.42 \times 10^{-2} & 3.88  \pm 0.44 \times 10^{-2} & 3.89  \pm 0.44 \times 10^{-2} & 3.88  \pm 0.44 \times 10^{-2} \\
+4.95  \pm 1.09 \times 10^{-2} & 4.95  \pm 1.09 \times 10^{-2} & 4.95  \pm 1.09 \times 10^{-2} & 4.95  \pm 1.09 \times 10^{-2} & 4.95  \pm 1.09 \times 10^{-2} & 4.95  \pm 1.09 \times 10^{-2} & 4.97  \pm 1.10 \times 10^{-2} 
+\\\end{array}
 \end{pmatrix}.
 \label{ellipse:eqn}
 \end{equation}
+For indeces $i, j \in \{EW_{\mathrm{Ca}}, EW_{\mathrm{Si}}, \lambda_{\mathrm{Si}}, x_1, E_{\gamma^0}({\hat{B}}-{\hat{V}}), E_{\gamma^1}({\hat{B}}-{\hat{V}}), A_{p,V}\}$, $M_{ii}$ is the standard deviation in the distribution of parameter $i$, and for $i \ne j$ $M_{ij}$ is the standard deviation in parameter $i$
+if parameter $j$ were known perfectly.  For example, for $i= EW_{\mathrm{Si}}$ the standard deviation is 7.08 but when $j=x_1$
+is fixed its
+standard deviation drops to 3.86.  Therefore, an analysis that considers $x_1$ but not $EW_{\mathrm{Si}}$ would not account for
+$3.86\vec{\beta}=\{0.14 ,  0.09,  0.08,  0.07,  0.04 \}$ ${\hat{U}}{\hat{B}}{\hat{V}}{\hat{R}}{\hat{I}}$ magnitude dispersions
+that are not intrinsically random.
 }
 
 An extensive discussion of the correlations between the spectral features  and light-curve parameters of the SNfactory data
