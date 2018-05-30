@@ -349,6 +349,47 @@ The flux calibration is presented in \citet{2013A&A...549A...8B}.
 A detailed
 description of host-galaxy subtraction is given in \citet{2011MNRAS.418..258B}.
 
+\added{The current SNfactory sample consists of 198 SNe~Ia
+having fully-processed spectrophotometric lightcurve data, including
+observations on at least two photometric nights, final references, and a
+host spectroscopic redshift. 
+These all have at least 5 spectra while the SN is
+active, and pass the quality cuts suggested by \citet{2010A&A...523A...7G}.
+More than 80\% of our SNe are from searches where there was no
+pre-selection based on host galaxy properties (those
+whose names start with ``SNF'', ``LSQ'', or ``PTF'' in Table~\ref{data:tab}).
+
+From that sample, we further require at least one spectrum with $\pm 2.5$ days of B-band peak brightness.
+We exclude six SNe~Ia in the
+SN~1991T, SN~1991bg and SN~2002cx subclasses, two objects 
+SNF20080905-005 and SNNGC7589 described in \citet{leget:thesis} as
+being spectroscopically peculiar, and two objects SN2012cu and SNF20061108-001 whose SALT2
+fits are peculiar.
+
+For the purposes of this article, it is not important whether the population in our sample is representative
+of the underlying distribution, either at low- or high-redshift.  This article considers
+underlying parameters that
+affect SN~Ia colors; such parameters found in a subsample are still
+relevant parameters when dealing with the population as a whole.
+
+There is a fraction of SNfactory-observed supernovae that do have the
+observations to satisfy the selection criteria, but are excluded due to some observations
+having not completed full processing.  Incomplete processing can occur for data taken during poor
+observing conditions, when there are instrumental artifacts, and when the supernova is late in its
+light-curve and its signal-to-noise and contrast are low.  The sample-selection exclusion of these supernovae are not related,
+at least directly, to the observables used in this analysis.  Our results are insensitive to potential sample-selection
+bias due to stochasticity in the measurements.
+
+??
+The sample selection is insensitive to the above measurements of the spectral features of the spectra that are
+closest to maximum light nor of the  peak magnitudes in synthetic
+bands interpolated from multiple spectra.
+Therefore the results are insensitive
+biased due to stochastic measurement uncertainty.
+
+}
+
+
 A recent description of the data is presented in \citet{2015ApJ...815...58F}.
 We provide a brief summary of the points important for this analysis.
 The spectral time-series  are corrected for Milky Way dust
@@ -380,13 +421,6 @@ Equivalent widths and the
 Si~II~$\lambda 6355$ wavelength are taken from spectra  within $\pm 2.5$ days from $B$-band maximum;
 the average is used  in cases where there are multiple spectral measurements within that time window.
 All the above spectral features have units of \AA ngstroms.
-
-\added{
-SNfactory observed supernovae in the redshift range $z \lesssim 0.09$, with a preference for $0.03 < z < 0.08$,
-whose first SNIFS observation was projected to be $\lesssim -5$ days before $B$-band peak brightness.
-Telescope availability and observing conditions dictated which supernovae eventually would accumulate multiple observations 
-over the course of their light curves that would give constraining light curve (e.g.\ SALT2) fits.  At an occurence of $< 10\%$ individual spectral extractions 
-}
 
 Our analysis sample is comprised of the
 172
@@ -592,9 +626,9 @@ predominantly supernovae from CFA3 \citep{2009ApJ...700..331H}, CFA4 \citep{2012
 \begin{figure}[htbp] %  figure placement: here, top, bottom, or page
    \centering
    \includegraphics[width=4in]{perobject_input.pdf}
-   \caption{Distributions of the central values of the inputs  $EW_{\mathrm{Ca}}$, $EW_{\mathrm{Si}}$,
+   \caption{\added{Distributions of the central values of the inputs  $EW_{\mathrm{Ca}}$, $EW_{\mathrm{Si}}$,
 $\lambda_{\mathrm{Si}}$ , $x_1$, and $C$ of the sample used in this article, and
-the $x_1$ and $C$ distributions of the $0.03<z< 0.08$ Pantheon sample,
+the $x_1$ and $C$ distributions of the $0.03<z< 0.08$ Pantheon sample.}
    \label{input:fig}}
 \end{figure}
 }
@@ -650,7 +684,6 @@ c_{\hat{I}}+\alpha_{\hat{I}} EW_{\mathrm{Ca}} + \beta_{\hat{I}} EW_{\mathrm{Si}}
 \end{pmatrix}.
 \label{ewsiv:eqn}
 \end{equation}
-
 $\vec{1}$ is the Identity vector.
 The global parameter vectors\footnote{Global parameters act on each of the five bands: a single component is written with a subscript for the corresponding band, e.g.\  $c_{\hat{U}}$; 
 the combination of all components are written as a vector, e.g.\ $\vec{c}=(c_{\hat{U}}, c_{\hat{B}}, c_{\hat{V}}, c_{\hat{R}}, c_{\hat{I}}) $.  The
@@ -742,6 +775,9 @@ For $N$ supernovae there are $8N$ observables.  There are $3N$ spectral paramete
 $\Delta$, $g_0$, $g_1$ contributes $N-1$ parameters
 (recall the constraint in Eq.~\ref{zero:eqn}),  and there are $5 \times 7$ global coefficients.
 For $N=172$ supernovae, there are 1376 observables and 1064  parameters.
+
+\added{This model is applied to our supernova sample and so the ensuing results describe the the SN~Ia population
+weighted by our sample selection.}
 
 \subsection{Results for the Latent Parameter Cofactors  $\vec{\gamma}^0$ and $\vec{\gamma}^1$  }
 \label{results1:sec}
@@ -1154,7 +1190,6 @@ color nor any catastrophic outliers.
 \end{figure}
 
 This suite of tests lend confidence in our model and the validity of the derived posterior.
-
 
 \subsubsection{Global Parameter Posterior Results}
 \label{results3global:sec}
