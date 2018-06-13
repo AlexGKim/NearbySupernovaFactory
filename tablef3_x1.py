@@ -14,6 +14,7 @@ fit = pickle.load(f)
 f.close()
 
 
+
 for key in fit.keys():
     print key, fit[key].min(), fit[key].max()
 
@@ -182,7 +183,6 @@ for i1 in xrange(7):
 
     print "\\\\" 
 
-wefwefwe
 
 # Effecrive RB and other numbers
 print "Effecrive RB and other numbers"
@@ -252,7 +252,7 @@ pkl_file = open('gege_data.pkl', 'r')
 data = pickle.load(pkl_file)
 pkl_file.close()
 
-sivel, sivel_err,x1,x1_err,_,_,_,EWFe4800 = sivel.sivel(data)
+sivel, sivel_err,x1,x1_err,_,_,_,EWFe4800,_ = sivel.sivel(data)
 
 
 use = numpy.isfinite(sivel)
@@ -309,6 +309,35 @@ print 'outputs'
 
 EW_mn = EW_obs.mean(axis=0)
 sivel_mn = sivel.mean()
+import json, codecs
+def convert(fit,EW_mn,sivel_mn):
+    rm = ['c_raw','alpha_raw','beta_raw','eta_raw','gamma01','gamma02','gamma03','gamma04','gamma05','k_unit','lp__', \
+        'Delta_scale','Delta_unit','R_unit','rho11','rho12','rho13','rho14','rho15','EW','sivel','gamma','rho1','k','R', \
+        'ev_sig','ev','mag_int_raw','mag_int']
+
+    use = dict(fit)
+    use['EWCa'] = use['EW'][:,:,0]+EW_mn[0]
+    use['EWSi'] = use['EW'][:,:,1]+EW_mn[1]
+    use['lSi']=use['sivel'] + sivel_mn
+    use['gamma0']=use['gamma']
+    use['gamma1']=use['rho1']
+    use['g0'] = use['k']
+    use['g1'] = use['R']
+    use['sigmap']=use['ev_sig']
+    use['phi']=use['ev']
+    use['p'] = use['mag_int_raw']
+    for r in rm:
+        del use[r]
+
+    for key in use.keys():
+        use[key] = use[key].tolist()
+
+    json.dump(use, codecs.open('chain.json', 'w', encoding='utf-8'), separators=(',', ':'), sort_keys=True, indent=4) ### this saves the array in .json format
+convert(fit, EW_mn, sivel_mn)
+
+# chains = convert(fit, EW_mn, sivel_mn)
+# pickle.dump(chains, open('chains.pkl', 'wb'))
+
 for i in xrange(len(sivel)):
     (y0,ymin0,ymax0) = numpy.percentile(fit['EW'][:,i,0],(50,50-34,50+34),axis=0)
     (y1,ymin1,ymax1) = numpy.percentile(fit['EW'][:,i,1],(50,50-34,50+34),axis=0)
@@ -326,10 +355,10 @@ for i in xrange(len(sivel)):
     #, numpy.sqrt(EW_cov[i,0,0]),
      #   EW_obs[i,1], numpy.sqrt(EW_cov[i,1,1]), mag_obs[i,:], numpy.sqrt(numpy.diagonal(mag_cov[i,:,:])),sivel[i],sivel_err[i], x1[i], x1_err[i])
 # ${5[0]:6.2f} \pm {6[0]:6.2f}$ & ${5[1]:6.2f} \pm {6[1]:6.2f}$& ${5[2]:6.2f} \pm {6[2]:6.2f}$& ${5[3]:6.2f} \pm {6[3]:6.2f}$& ${5[4]:6.2f} \pm {6[4]:6.2f}$ & ${9:6.2f} \pm {10:6.2f}$
-werfwe
 
 print 'inputs'
 for i in xrange(len(sivel)):
     print '{0} & ${1:5.1f} \pm {2:3.1f}$ & ${3:5.1f} \pm {4:3.1f}$& ${7:5.0f} \pm {8:3.0f}$ & ${5[0]:6.2f} \pm {6[0]:6.2f}$ & ${5[1]:6.2f} \pm {6[1]:6.2f}$& ${5[2]:6.2f} \pm {6[2]:6.2f}$& ${5[3]:6.2f} \pm {6[3]:6.2f}$& ${5[4]:6.2f} \pm {6[4]:6.2f}$ & ${9:6.2f} \pm {10:6.2f}$\\\\'.format(snname[i], EW_obs[i,0], numpy.sqrt(EW_cov[i,0,0]),
         EW_obs[i,1], numpy.sqrt(EW_cov[i,1,1]), mag_obs[i,:], numpy.sqrt(numpy.diagonal(mag_cov[i,:,:])),sivel[i],sivel_err[i], x1[i], x1_err[i])
+
 

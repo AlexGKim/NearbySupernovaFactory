@@ -353,17 +353,33 @@ description of host-galaxy subtraction is given in \citet{2011MNRAS.418..258B}.
 having fully-processed spectrophotometric lightcurve data, including
 observations on at least two photometric nights, final references, and a
 host spectroscopic redshift. 
-These all have at least 5 spectra while the SN is
-active, and pass the quality cuts suggested by \citet{2010A&A...523A...7G}.
+These supernovae have well-sampled lightcurves, as defined by having
+at minimum 5 spectra while still active, with at least four within
+epochs  $[-10, 35]$ days, at least one within $[-10, 7]$ days, at least one within $[7, 20]$ days,
+and at least one color (?) within $[-8, 10]$ days of peak $B$ brightness.
+Synthetic-photometric lightcurves derived from the spectra are fit to the SALT2~(v2.4)
+model; we require that supernovae have no more than 20\% points that are
+$>0.2$ mag from the best-fit model, and require an Normalized Median Absolute Deviation (nMAD) of residuals
+to be  $< 0.12$ mag.
+%These all have at least 5 spectra while the SN is
+%active, and pass the quality cuts suggested by \citet{2010A&A...523A...7G}.
 More than 80\% of our SNe are from searches where there was no
 pre-selection based on host galaxy properties (those
 whose names start with ``SNF'', ``LSQ'', or ``PTF'' in Table~\ref{data:tab}).
+
+
+
+%Quality criteria for a 'good' lightcurve are the following: At least 5 nights of observation%No more than 20\% of rejection (after outlier cut>0.2mag) nMAD of residuals < 0.12 mag%Phase coverage (4 epochs in [-10 < p < +35] days, 1 epochs in [-10 < p < +7] days, 1 epochs in [+7 < p < +20] days,1 color in [-8 < p < +10] days)
 
 From that sample, we further require at least one spectrum with $\pm 2.5$ days of B-band peak brightness.
 We exclude six SNe~Ia in the
 SN~1991T, SN~1991bg and SN~2002cx subclasses, two objects 
 SNF20080905-005 and SNNGC7589 described in \citet{leget:thesis} as
-being spectroscopically peculiar, and two objects SN2012cu and SNF20061108-001 whose SALT2
+being spectroscopically peculiar
+(For SNNGC7589 this is wrong, because it does not appear in the table 5.1 of my Ph.D. I rejected it because it was took after 2010..
+), and two objects SN2012cu
+\citep[which is highly reddened][]{2017ApJ...836..157H}
+and SNF20061108-001 whose SALT2
 fits are peculiar.
 
 For the purposes of this article, it is not important whether the population in our sample is representative
