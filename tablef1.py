@@ -126,7 +126,7 @@ pkl_file = open('gege_data.pkl', 'r')
 data = pickle.load(pkl_file)
 pkl_file.close()
 
-sivel, sivel_err, _, _, _ = sivel.sivel(data)
+sivel, sivel_err,x1,x1_err,_,_,_,EWFe4800,_ = sivel.sivel(data)
 
 use = numpy.isfinite(sivel)
 
@@ -158,3 +158,28 @@ for i in xrange(len(sivel)):
     print '{0} & ${1:5.1f} \pm {2:3.1f}$ & ${3:5.1f} \pm {4:3.1f}$& ${7:5.0f} \pm {8:3.0f}$ & ${5[0]:6.2f} \pm {6[0]:6.2f}$ & ${5[1]:6.2f} \pm {6[1]:6.2f}$& ${5[2]:6.2f} \pm {6[2]:6.2f}$& ${5[3]:6.2f} \pm {6[3]:6.2f}$& ${5[4]:6.2f} \pm {6[4]:6.2f}$ \\\\'.format(snname[i], EW_obs[i,0], numpy.sqrt(EW_cov[i,0,0]),
         EW_obs[i,1], numpy.sqrt(EW_cov[i,1,1]), mag_obs[i,:], numpy.sqrt(numpy.diagonal(mag_cov[i,:,:])),sivel[i],sivel_err[i])
 
+
+
+import json, codecs
+EW_mn = EW_obs.mean(axis=0)
+sivel_mn = sivel.mean()
+def convert(fit,EW_mn,sivel_mn):
+    rm = ['c_raw','alpha_raw','beta_raw','eta_raw','gamma01','gamma02','gamma03','gamma04','gamma05','k_unit','lp__', \
+        'Delta_scale','Delta_unit','R_unit','rho11','rho12','rho13','rho14','rho15','EW','sivel','gamma','rho1','k','R', 'mag_int']
+    use = dict(fit)
+
+    use['EWCa'] = use['EW'][:,:,0]+EW_mn[0]
+    use['EWSi'] = use['EW'][:,:,1]+EW_mn[1]
+    use['lSi']=use['sivel'] + sivel_mn
+    use['gamma0']=use['gamma']
+    use['gamma1']=use['rho1']
+    use['g0'] = use['k']
+    use['g1'] = use['R']
+    for r in rm:
+        del use[r]
+
+    for key in use.keys():
+        use[key] = use[key].tolist()
+
+    json.dump(use, codecs.open('mIchain.json', 'w', encoding='utf-8'), separators=(',', ':'), sort_keys=True, indent=4) ### this saves the array in .json format
+convert(fit, EW_mn, sivel_mn)

@@ -14,6 +14,7 @@ f.close()
 for key in fit.keys():
     print key, fit[key].min(), fit[key].max()
 
+
 #special variables
 
 # ev flipped
@@ -67,7 +68,6 @@ for i in xrange(5):
     dum = numpy.percentile(fit['ev'][:,i]/fit['ev'][:,2]-1,(50,50-34,50+34))
     print  '${1:6.{0}f}^{{+{2:6.{0}f}}}_{{{3:6.{0}f}}}$'.format(3,dum[0], dum[2]-dum[0],dum[1]-dum[0] )
 print '\\\\'
-wefwe
 
 
 
@@ -76,42 +76,42 @@ print (fit['Delta']-fit['Delta'][:,0][:,None])[:,1:].shape
 print (fit['Delta']-fit['Delta'][:,0][:,None])[:,1:].std()
 print fit['Delta'].std()
 
-trans = [[0,0,1.,0,0],[1.,0,-1,0,0],[0.,1,-1,0,0],[0.,0,1,-1,0],[0.,0,1,0,-1]]
-trans = numpy.array(trans)
-si=[]
-cmat = []
-for x1, x2 in zip(fit['L_Omega'], fit['L_sigma']):
-    covmat = numpy.dot(trans,numpy.dot(numpy.dot(x2[:,None],x2[None,:])*numpy.dot(x1,x1.T),trans.T))
-    D = numpy.sqrt(numpy.diag(covmat))
+# trans = [[0,0,1.,0,0],[1.,0,-1,0,0],[0.,1,-1,0,0],[0.,0,1,-1,0],[0.,0,1,0,-1]]
+# trans = numpy.array(trans)
+# si=[]
+# cmat = []
+# for x1, x2 in zip(fit['L_Omega'], fit['L_sigma']):
+#     covmat = numpy.dot(trans,numpy.dot(numpy.dot(x2[:,None],x2[None,:])*numpy.dot(x1,x1.T),trans.T))
+#     D = numpy.sqrt(numpy.diag(covmat))
 
-    R = covmat/numpy.outer(D,D)
+#     R = covmat/numpy.outer(D,D)
 
-    si.append(D)
-    cmat.append(R)
+#     si.append(D)
+#     cmat.append(R)
 
-si = numpy.array(si)
-cmat = numpy.array(cmat)
-
-
-dum1, dumm, dump =  numpy.percentile(si,(50,50-34,50+34),axis=0)
-for i2 in xrange(5):
-    print "{:.3f}^{{+{:.3f}}}_{{{:.3f}}}".format(dum1[i2],dump[i2]-dum1[i2],dumm[i2]-dum1[i2])
+# si = numpy.array(si)
+# cmat = numpy.array(cmat)
 
 
+# dum1, dumm, dump =  numpy.percentile(si,(50,50-34,50+34),axis=0)
+# for i2 in xrange(5):
+#     print "{:.3f}^{{+{:.3f}}}_{{{:.3f}}}".format(dum1[i2],dump[i2]-dum1[i2],dumm[i2]-dum1[i2])
 
-dum1, dumm, dump = numpy.percentile(cmat,(50,50-34,50+34),axis=0)
 
-# dum = numpy.zeros()
-# dum = numpy.corrcoef(mega)
-print "intrinsic correlation coefficients"
-# dum=numpy.zeros((6,18))
-for i1 in xrange(5):
-    for i2 in xrange(5):
-        print "{:.2f}^{{+{:.2f}}}_{{{:.2f}}}".format(dum1[i1,i2],dump[i1,i2]-dum1[i1,i2],dumm[i1,i2]-dum1[i1,i2]),
-        if (i2 != 4):
-            print "&",
 
-    print "\\\\" 
+# dum1, dumm, dump = numpy.percentile(cmat,(50,50-34,50+34),axis=0)
+
+# # dum = numpy.zeros()
+# # dum = numpy.corrcoef(mega)
+# print "intrinsic correlation coefficients"
+# # dum=numpy.zeros((6,18))
+# for i1 in xrange(5):
+#     for i2 in xrange(5):
+#         print "{:.2f}^{{+{:.2f}}}_{{{:.2f}}}".format(dum1[i1,i2],dump[i1,i2]-dum1[i1,i2],dumm[i1,i2]-dum1[i1,i2]),
+#         if (i2 != 4):
+#             print "&",
+
+#     print "\\\\" 
 
 
 
@@ -243,7 +243,7 @@ pkl_file = open('gege_data.pkl', 'r')
 data = pickle.load(pkl_file)
 pkl_file.close()
 
-sivel, sivel_err, _, _, _ = sivel.sivel(data)
+sivel, sivel_err,x1,x1_err,_,_,_,EWFe4800,_ = sivel.sivel(data)
 
 use = numpy.isfinite(sivel)
 
@@ -275,3 +275,33 @@ for i in xrange(len(sivel)):
     print '{0} & ${1:5.1f} \pm {2:3.1f}$ & ${3:5.1f} \pm {4:3.1f}$& ${7:5.0f} \pm {8:3.0f}$ & ${5[0]:6.2f} \pm {6[0]:6.2f}$ & ${5[1]:6.2f} \pm {6[1]:6.2f}$& ${5[2]:6.2f} \pm {6[2]:6.2f}$& ${5[3]:6.2f} \pm {6[3]:6.2f}$& ${5[4]:6.2f} \pm {6[4]:6.2f}$ \\\\'.format(snname[i], EW_obs[i,0], numpy.sqrt(EW_cov[i,0,0]),
         EW_obs[i,1], numpy.sqrt(EW_cov[i,1,1]), mag_obs[i,:], numpy.sqrt(numpy.diagonal(mag_cov[i,:,:])),sivel[i],sivel_err[i])
 
+
+
+import json, codecs
+EW_mn = EW_obs.mean(axis=0)
+sivel_mn = sivel.mean()
+def convert(fit,EW_mn,sivel_mn):
+    rm = ['c_raw','alpha_raw','beta_raw','eta_raw','gamma01','gamma02','gamma03','gamma04','gamma05','k_unit','lp__', \
+        'Delta_scale','Delta_unit','R_unit','rho11','rho12','rho13','rho14','rho15','EW','sivel','gamma','rho1','k','R', \
+        'ev_sig','ev','mag_int_raw','mag_int']
+    use = dict(fit)
+
+    use['EWCa'] = use['EW'][:,:,0]+EW_mn[0]
+    use['EWSi'] = use['EW'][:,:,1]+EW_mn[1]
+    use['lSi']=use['sivel'] + sivel_mn
+    use['gamma0']=use['gamma']
+    use['gamma1']=use['rho1']
+    use['g0'] = use['k']
+    use['g1'] = use['R']
+    use['sigmap']=use['ev_sig']
+    use['phi']=use['ev']
+    use['p'] = use['mag_int_raw']
+    for r in rm:
+        del use[r]
+
+    for key in use.keys():
+        use[key] = use[key].tolist()
+
+    json.dump(use, codecs.open('mIIchain.json', 'w', encoding='utf-8'), separators=(',', ':'), sort_keys=True, indent=4) ### this saves the array in .json format
+convert(fit, EW_mn, sivel_mn)
+wefwe
