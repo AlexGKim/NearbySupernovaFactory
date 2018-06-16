@@ -13,6 +13,7 @@ def sivel(data):
    sivel_err=[]
    x1 = []
    x1_err = []
+   c = []
    zcmb = []
    zerr= []
    EWCAIIHK = []
@@ -54,6 +55,7 @@ def sivel(data):
             EWFe4800_err.append(float('nan'))
          x1.append(meta['salt2.X1'])
          x1_err.append(numpy.sqrt(meta['salt2.CovX1X1']))
+         c.append(meta['salt2.Color'])
          zcmb.append(meta['host.zcmb'])
          zerr.append(meta['host.zhelio.err'])
          mwebv.append(meta['target.mwebv'])
@@ -61,7 +63,8 @@ def sivel(data):
          sivel.append(float('nan'))
          sivel_err.append(float('nan'))
          x1.append(float('nan'))
-         x1_err.append(float('nan')) 
+         x1_err.append(float('nan'))
+         c.append(float('nan')) 
          zcmb.append(float('nan'))
          zerr.append(float('nan'))
          zerr.append(float('nan'))
@@ -74,6 +77,7 @@ def sivel(data):
    sivel_err = numpy.array(sivel_err)
    x1 = numpy.array(x1)
    x1_err = numpy.array(x1_err)
+   c = numpy.array(c)
    zcmb = numpy.array(zcmb)
    zerr = numpy.array(zerr)
    EWCAIIHK=numpy.array(EWCAIIHK)
@@ -83,4 +87,4 @@ def sivel(data):
 
    # print EWCAIIHK
 
-   return sivel,sivel_err,x1,x1_err,zcmb,zerr,mwebv,EWFe4800
+   return sivel,sivel_err,x1,x1_err,zcmb,zerr,mwebv,EWFe4800,c
