@@ -349,10 +349,10 @@ The flux calibration is presented in \citet{2013A&A...549A...8B}.
 A detailed
 description of host-galaxy subtraction is given in \citet{2011MNRAS.418..258B}.
 
-\added{The current SNfactory sample consists of 198 SNe~Ia
+\added{The SNfactory sample used here consists of 198 SNe~Ia
 having fully-processed spectrophotometric lightcurve data, including
 observations on at least two photometric nights, final references, and a
-host spectroscopic redshift. 
+host spectroscopic redshift.   This sample was defined for use in \citet{leget:thesis}.
 These supernovae have well-sampled lightcurves as defined by having
 at minimum 5 spectra while still active, with at least four within
 epochs  $[-10, 35]$ days, at least one within $[-10, 7]$ days, at least one within $[7, 20]$ days,
@@ -360,17 +360,24 @@ and at least one color (Anyone know what this means? See slide 3 of
 \url{https://snf-doc.lbl.gov/twiki/pub/Conf/VideoConf20160317/IDR_03-17-2016.pdf}) within $[-8, 10]$ days of peak $B$ brightness.
 Synthetic-photometric lightcurves derived from the spectra are fit to the SALT2~(v2.4)
 model; we require that supernovae have no more than 20\% points that are
-$>0.2$ mag from the best-fit model, and require a Normalized Median Absolute Deviation (nMAD) of residuals
-of  $< 0.12$ mag.
+$>0.2$ mag from the best-fit SALT2 model, and require a Normalized Median Absolute Deviation (nMAD) of residuals
+of  $< 0.12$ mag relative to this model.  \citep[It is known that more flexibility than available to SALT2 is required to capture
+the full range of observed SN~Ia behavior, e.g.\ ][]{2011AJ....141...19B, 2011ApJ...731..120M}.
 %These all have at least 5 spectra while the SN is
 %active, and pass the quality cuts suggested by \citet{2010A&A...523A...7G}.
 More than 80\% of our SNe are from searches where there was no
 pre-selection based on host galaxy properties (those
 whose names start with ``SNF'', ``LSQ'', or ``PTF'' in Table~\ref{data:tab}).
 
+\citet{2013ApJ...770..108C}  present the distribution of host-galaxy parameters for a subset of the  above sample.
+\citet{2015MNRAS.447.1247S} show scatter plots of the peak Si~II~$\lambda 5972$ and
+Si~II~$\lambda 6355$ velocities and pseudo-equivalent
+widths, absolute $B$ and $V$ magnitudes, $B-V$, SALTII $c$ and $x_1$ parameters, and $\Delta m_{15}$ for 
+an preceding sample of 151 SNe.   
 
-
-%Quality criteria for a 'good' lightcurve are the following: At least 5 nights of observation%No more than 20\% of rejection (after outlier cut>0.2mag) nMAD of residuals < 0.12 mag%Phase coverage (4 epochs in [-10 < p < +35] days, 1 epochs in [-10 < p < +7] days, 1 epochs in [+7 < p < +20] days,1 color in [-8 < p < +10] days)
+%Quality criteria for a 'good' lightcurve are the following: At least 5 nights of observation
+%No more than 20\% of rejection (after outlier cut>0.2mag) nMAD of residuals < 0.12 mag
+%Phase coverage (4 epochs in [-10 < p < +35] days, 1 epochs in [-10 < p < +7] days, 1 epochs in [+7 < p < +20] days,1 color in [-8 < p < +10] days)
 
 From that sample, we further require at least one spectrum with $\pm 2.5$ days of B-band peak brightness.
 We exclude six SNe~Ia in the
@@ -386,7 +393,7 @@ Nevertheless, this  article seeks
 underlying parameters that significantly
 affect SN~Ia colors; any such parameters found in a subsample are still
 relevant parameters when dealing with the population as a whole.
-Within this context, it is not important whether our sample population is representative
+Within this context, it is not so important whether our sample population is representative
 of the underlying population.
 
 There is a fraction of SNfactory-observed supernovae that do have the
@@ -436,10 +443,16 @@ Our analysis sample is comprised of the
 supernovae that have been fully processed and have the data coverage to 
 give photometric and spectroscopic statistics described above.
 The 
-spectroscopic-feature measurements, SALT2 light-curve shape parameters  $x_1$,
+spectroscopic-feature measurements, 
+\replaced{SALT2 light-curve shape parameters  $x_1$,
 and their uncertainties
 are presented
-in \replaced{\citet{2017Chotard}}{Table~\ref{data:tab}. 
+in \citet{2017Chotard}}{
+synthetic magnitudes (plus a constant offset), SALT2 light-curve shape parameters  $x_1$,
+and their uncertainties
+are presented
+in 
+Table~\ref{data:tab}. 
 For the subset supernovae for whom it is available, we use the host-galaxy mass given in \citet{2013ApJ...770..108C}.
 
 \startlongtable
@@ -448,7 +461,7 @@ For the subset supernovae for whom it is available, we use the host-galaxy mass 
 \tablecaption{Supernova Spectral-Feature and Peak-Magnitude Data
 \label{data:tab}}
 \tablehead{
-\colhead{Name} & \colhead{$EW_{\mathrm{Ca}}$ (\AA)} & \colhead{$EW_{\mathrm{Si}}$ (\AA)} & \colhead{$\lambda_{\mathrm{Si}}$ (\AA)} & \colhead{$U$} & \colhead{$B$} & \colhead{$V$} & \colhead{$R$} & \colhead{$I$} & \colhead{$x_1$}
+\colhead{Name} & \colhead{$EW_{\mathrm{Ca}}$ (\AA)} & \colhead{$EW_{\mathrm{Si}}$ (\AA)} & \colhead{$\lambda_{\mathrm{Si}}$ (\AA)} & \colhead{$U$+offset} & \colhead{$B$+offset} & \colhead{$V$+offset} & \colhead{$R$+offset} & \colhead{$I$+offset} & \colhead{$x_1$}
 }
 \startdata
 SN2007bd & $109.7 \pm 5.9$ & $ 17.5 \pm 0.7$& $ 6101 \pm   3$ & $-29.31 \pm   0.01$ & $-29.12 \pm   0.01$& $-28.60 \pm   0.01$& $-28.35 \pm   0.01$& $-27.60 \pm   0.01$ & $ -0.85 \pm   0.34$\\
@@ -652,7 +665,7 @@ To avoid repetitiveness,
 we refrain from going into full detail on the results of Model~I in deference to Model~III, which is presented in Section~\ref{modelIII:sec}.
 
 \added{It is important to note that the model and those in subsequent sections are applied to our supernova sample;
-the ensuing results thus describe our SN~Ia sample's underlying population. }
+the ensuing results thus correspond to our SN~Ia sample's underlying population. }
 
 \subsection{Model}
 We assume 
@@ -791,7 +804,10 @@ For $N=172$ supernovae, there are 1376 observables and 1064  parameters.
 
 \subsection{Results for the Latent Parameter Cofactors  $\vec{\gamma}^0$ and $\vec{\gamma}^1$  }
 \label{results1:sec}
-\added{The MCMC chain for all parameters are accessible from a DOI link \citep{colordata}.}
+\added{The MCMC chains for all parameters from this and subsequent sections are accessible from the SNfactory website\footnote{For the referee the parameters
+are available at \url{https://drive.google.com/open?id=1d52nxfF7eS3HblfbmT3fxgiZod_Z-Gjg}. Concurrent with publication the chain will be
+made available
+at \url{https://snfactory.lbl.gov/snf/data/index.html}.}.}
 In this subsection we concentrate on the results for $\vec{\gamma}^0$ and $\vec{\gamma}^1$.
 In our model, $g_0$ and $g_1$ are introduced as latent parameters that are related to linear shifts in band magnitudes through
 the  coefficients $\vec{\gamma}^0$ and
@@ -1025,7 +1041,6 @@ For $N=172$ supernovae, there are 1376 observables and 1236  parameters.
 
 \subsection{Results for the Latent Parameter Cofactor $\sigma_p \vec{\phi}$}
 \label{results2:sec}
-\added{The MCMC chain for all parameters are accessible from a DOI link \citep{colordata}.}
 The credible intervals of all Model~II global parameters are given in  \S\ref{m12results:sec}.
 In this subsection we focus on the effect of adding the third color term  $\sigma_p \vec{\phi}$.
 There is strong evidence for a third color parameter.
@@ -1159,8 +1174,6 @@ For $N=172$ supernovae, this makes 1548 observables and 1413  parameters.
 
 
 \subsection{Results}
-\added{The MCMC chain for all parameters are accessible from a DOI link \citep{colordata}.}
-
 \subsubsection{Analysis Method and Validation}
 
 In the analysis of this and previous sections of this article,
@@ -1761,26 +1774,28 @@ The correlation matrix in Eq.~\ref{corr:eqn} is not close to being singular, mea
 independent supernova variability.  Nevertheless, a strong correlation between two features means that the determination
 of one would reduce the residual dispersion in the other.  The amount of residual dispersion is conveyed in the matrix
 \begin{equation}
-M =
+Z =
 \begin{pmatrix}
-\tiny
+\scriptsize
 \begin{array}{rrrrrrr}
-2.76  \pm 0.06 \times 10^{ 1} & 2.75  \pm 0.06 \times 10^{ 1} & 2.67  \pm 0.06 \times 10^{ 1} & 2.75  \pm 0.05 \times 10^{ 1} & 2.74  \pm 0.06 \times 10^{ 1} & 2.71  \pm 0.06 \times 10^{ 1} & 2.75  \pm 0.06 \times 10^{ 1} \\
-7.04  \pm 0.16 \times 10^{ 0} & 7.08  \pm 0.16 \times 10^{ 0} & 7.02  \pm 0.16 \times 10^{ 0} & 3.86  \pm 0.19 \times 10^{ 0} & 7.01  \pm 0.16 \times 10^{ 0} & 6.79  \pm 0.21 \times 10^{ 0} & 7.06  \pm 0.16 \times 10^{ 0} \\
-1.98  \pm 0.04 \times 10^{ 1} & 2.03  \pm 0.05 \times 10^{ 1} & 2.05  \pm 0.05 \times 10^{ 1} & 2.03  \pm 0.05 \times 10^{ 1} & 2.04  \pm 0.05 \times 10^{ 1} & 2.04  \pm 0.05 \times 10^{ 1} & 2.04  \pm 0.05 \times 10^{ 1} \\
-9.92  \pm 0.18 \times 10^{-1} & 5.43  \pm 0.23 \times 10^{-1} & 9.86  \pm 0.19 \times 10^{-1} & 9.95  \pm 0.18 \times 10^{-1} & 9.86  \pm 0.19 \times 10^{-1} & 9.71  \pm 0.26 \times 10^{-1} & 9.92  \pm 0.19 \times 10^{-1} \\
-7.33  \pm 0.31 \times 10^{-2} & 7.32  \pm 0.32 \times 10^{-2} & 7.37  \pm 0.32 \times 10^{-2} & 7.32  \pm 0.32 \times 10^{-2} & 7.38  \pm 0.32 \times 10^{-2} & 7.36  \pm 0.33 \times 10^{-2} & 7.36  \pm 0.32 \times 10^{-2} \\
-3.82  \pm 0.42 \times 10^{-2} & 3.73  \pm 0.41 \times 10^{-2} & 3.88  \pm 0.43 \times 10^{-2} & 3.79  \pm 0.42 \times 10^{-2} & 3.88  \pm 0.44 \times 10^{-2} & 3.89  \pm 0.44 \times 10^{-2} & 3.88  \pm 0.44 \times 10^{-2} \\
-4.95  \pm 1.09 \times 10^{-2} & 4.95  \pm 1.09 \times 10^{-2} & 4.95  \pm 1.09 \times 10^{-2} & 4.95  \pm 1.09 \times 10^{-2} & 4.95  \pm 1.09 \times 10^{-2} & 4.95  \pm 1.09 \times 10^{-2} & 4.97  \pm 1.10 \times 10^{-2} 
+27.589  \pm 0.554 & 27.451  \pm 0.572 & 26.668  \pm 0.589 & 27.509  \pm 0.542 & 27.408  \pm 0.563 & 27.099  \pm 0.640 & 27.506  \pm 0.562 \\
+7.041  \pm 0.160 & 7.076  \pm 0.157 & 7.019  \pm 0.165 & 3.860  \pm 0.186 & 7.011  \pm 0.158 & 6.790  \pm 0.206 & 7.056  \pm 0.159 \\
+19.779  \pm 0.449 & 20.295  \pm 0.458 & 20.463  \pm 0.460 & 20.267  \pm 0.456 & 20.430  \pm 0.461 & 20.423  \pm 0.462 & 20.404  \pm 0.465 \\
+0.992  \pm 0.018 & 0.543  \pm 0.023 & 0.986  \pm 0.019 & 0.995  \pm 0.018 & 0.986  \pm 0.019 & 0.971  \pm 0.026 & 0.992  \pm 0.019 \\
+0.073  \pm 0.003 & 0.073  \pm 0.003 & 0.074  \pm 0.003 & 0.073  \pm 0.003 & 0.074  \pm 0.003 & 0.074  \pm 0.003 & 0.074  \pm 0.003 \\
+0.038  \pm 0.004 & 0.037  \pm 0.004 & 0.039  \pm 0.004 & 0.038  \pm 0.004 & 0.039  \pm 0.004 & 0.039  \pm 0.004 & 0.039  \pm 0.004 \\
+0.050  \pm 0.011 & 0.050  \pm 0.011 & 0.050  \pm 0.011 & 0.050  \pm 0.011 & 0.050  \pm 0.011 & 0.050  \pm 0.011 & 0.050  \pm 0.011 
 \\\end{array}
-\end{pmatrix}.
+\end{pmatrix},
 \label{ellipse:eqn}
 \end{equation}
-For indeces $i, j \in \{EW_{\mathrm{Ca}}, EW_{\mathrm{Si}}, \lambda_{\mathrm{Si}}, x_1, E_{\gamma^0}({\hat{B}}-{\hat{V}}), E_{\gamma^1}({\hat{B}}-{\hat{V}}), A_{p,V}\}$, $M_{ii}$ is the standard deviation of the parameter $i$ distribution, and for $i \ne j$ $M_{ij}$ is the standard deviation in parameter $i$
-if parameter $j$ were known perfectly.  For example, for $i= EW_{\mathrm{Si}}$ the standard deviation is 7.08 but when $j=x_1$
+where the associated units are [\AA, \AA, \AA, 1, mag, mag, mag]$\cdot$[\AA, \AA, \AA, 1, mag, mag, mag]$^{T}$.
+
+For indices $i, j \in \{EW_{\mathrm{Ca}}, EW_{\mathrm{Si}}, \lambda_{\mathrm{Si}}, x_1, E_{\gamma^0}({\hat{B}}-{\hat{V}}), E_{\gamma^1}({\hat{B}}-{\hat{V}}), A_{p,V}\}$, $M_{ii}$ is the standard deviation of the parameter $i$ distribution, and for $i \ne j$ $Z_{ij}$ is the standard deviation in parameter $i$
+if parameter $j$ were known perfectly.  For example, for $i=EW_{\mathrm{Si}}$ the standard deviation is 7.08\AA\ but when $j=x_1$
 is fixed its
-standard deviation drops to 3.86.  Therefore, an analysis that considers $x_1$ but not $EW_{\mathrm{Si}}$ would not account for
-$3.86\vec{\beta}=\{0.14 ,  0.09,  0.08,  0.07,  0.04 \}$ ${\hat{U}}{\hat{B}}{\hat{V}}{\hat{R}}{\hat{I}}$ magnitude dispersions
+standard deviation drops to 3.86\AA.  Therefore, an analysis that considers $x_1$ but not $EW_{\mathrm{Si}}$ would not account for
+3.86\AA$\vec{\beta}=\{0.14 ,  0.09,  0.08,  0.07,  0.04 \}$~mag ${\hat{U}}{\hat{B}}{\hat{V}}{\hat{R}}{\hat{I}}$ magnitude dispersions
 that are not intrinsically random.
 }
 

@@ -5,11 +5,14 @@ Comment 1:While much of the narrative within the paper is compelling, it is cu
 
 The data that we use as features are now included in the article.  These are in a new table containing a list of the supernovae, their feature measurements, and uncertainties.
 
-The referee correctly points out that the spectrophotometric time series from which these features are extracted are not yet public. Nevertheless, there is a history in astrophysics for results that could stimulate public interest and activity (e.g. verification of identified trends using independent data sets) to be published before all antecedent data products are made public. We believe that the article fits that category. On the point of making all the spectroscopy public before publication of this article, we defer to the Journal’s editorial policies.
+The referee correctly points out that the spectrophotometric time series from which these features are extracted are not yet public. Nevertheless, there is a history in astrophysics for results that could stimulate public interest and activity (e.g. verification of identified trends using independent data sets) to be published before all antecedent data products are made public. We believe that the article fits that category. We believe that the condition of making all the spectroscopy public before publication of this article should be adjudicated by the editor, based on the precedents and standards of ApJ.
 Comment 2:Beyond the basic critical idea of providing sufficient data to verify the results, a fundamental aspect of scientific inquiry, the authors do not satisfactory describe their sample. They simply state that the sample of 172 SNe have been processed and have sufficient data to provide some parameters. Does this mean that peculiar SNe Ia are included? Was it harder to reduce the data for some SNe than others (highly embedded SNe)? Presumably there are different selection effects, but none are listed. Without this basic information, it is impossible to fully evaluate this work.The authors do not discuss if their sample is representative of the broader SN Ia sample or the cosmology samples. In fact, the demographics and parameters are not discussed at all, deferring to Chotard et al. Before any referee can properly review this paper (and in addition to the data being released publicly), Chotard et al. must be submitted to a journal and provided to the referee of this paper.
 
 Response 2:
 We have added paragraphs in the Data section that describe the selection of our sample.  To address the referees’s specific questions, supernovae of the SN 1991T, SN 1991bg and SN 2002cx subclasses are excluded, one object SN2012c with an SALT2 C parameter much larger than the rest of the sample is excluded, one object whose spectral features make it a $>3\sigma$ outlier in the sample population as described in Leget (2016) is excluded.  The host-galaxy contrast is not found to affect spectral-extraction success when the supernova is at peak brightness.
+
+We refer to previously published articles showing distributions of spectral,
+light-curve, and host-galaxy properties of a large subset of our sample.
 
 A new Figure has been added to show the distributions of the observables in our sample, and the distributions the SALT2 light—curve observables x1 and C of the Pantheon sample as a point of reference.
 
@@ -21,7 +24,7 @@ Response 3:
 We added a table listing the supernovae and the credible intervals of their parameters.
 
 Note that the correlation/covariance between a subset of parameters are already in the article.  For example the correlation matrix of the per-supernova parameters is given and there is a figure of their distribution.  However, there are so many parameters that presenting their covariance matrix within the article is unwieldy.
-For example, we did try to insert the 35x35 covariance matrix of the global parameters, but it did not come close to fitting neatly into a manuscript page. We suggest as an alternative that we provide the Monte Carlo chains in the tar archive from which the covariance of any possible parameter pair can be determined.  The chains from the three runs are now available at https://drive.google.com/drive/folders/1d52nxfF7eS3HblfbmT3fxgiZod Z-Gjg?usp=sharing.  If this is acceptable to the referee and editor, we will get a DOI number for the page and add it to the manuscript.
+For example, we did try to insert the 35x35 covariance matrix of the global parameters, but it did not come close to fitting neatly into a manuscript page. We suggest as an alternative that we provide the Monte Carlo chains in the tar archive from which the covariance of any possible parameter pair can be determined.  The chains from the three runs are now available at https://drive.google.com/open?id=1d52nxfF7eS3HblfbmT3fxgiZod_Z-Gjg for the referee’s perusal.  If this is acceptable to the referee and editor, we will move these data products onto SNfactory’s webpage.  We will get a DOI number for this page and include it to the manuscript.
 
 We add, in Section 5.2.6. the determination of how much dispersion remains in an individual parameter assuming that a second (correlated) parameter is perfectly measured.  The case of Si EW and x1 is singled out as an example in the text.
 
@@ -30,7 +33,7 @@ Comment 4:
 
 2. Although there is some discussion about the host mass step, it seems like the authors should have a model with this parameter. That is, the mass step is already used for cosmological analyses and it seems prudent to determine if the new parameter is truly a new color parameter or if it is simply the mass step repackaged.Response 4:
 
-The purpose of this article is to model supernova colors based on properties directly linked to the supernova.  We then check whether the mass-step is could be due to our newly-discovered parameter.  So we do the check but in the opposite (but equivalent) sense that the referee suggests.
+The purpose of this article is to model supernova colors based on properties directly linked to the supernova.  We then check whether the mass-step could be related to our newly-discovered parameter.  So we do the check but in the opposite (but equivalent) sense that the referee suggests.
 
 A proper association of the mass step and our parameter is better left to a different model that accounts for absolute magnitude.  (Our model does not account for absolute magnitudes.)  This is because the effect of the mass step is attached to absolute magnitude.
 

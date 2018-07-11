@@ -173,9 +173,13 @@ ans = numpy.mean(covarray,axis=0)
 dum1 = numpy.std(covarray,axis=0)
 for i1 in xrange(7):
     for i2 in xrange(7):
+        # s1, s2 = frexp10(ans[i1,i2])
+        # s3 = dum1[i1,i2]/10**s2
+        # print "{0:3.2f}  \\pm {2:3.2f} \\times 10^{{{1:2}}}".format(s1, s2, s3),
+
         s1, s2 = frexp10(ans[i1,i2])
         s3 = dum1[i1,i2]/10**s2
-        print "{0:3.2f}  \\pm {2:3.2f} \\times 10^{{{1:2}}}".format(s1, s2, s3),
+        print "{0:4.3f}  \\pm {1:4.3f}".format(ans[i1,i2], dum1[i1,i2]),
 
         # print "{:.2f}^{{+{:.2f}}}_{{{:.2f}}}".format(dum1[i1,i2],dump[i1,i2]-dum1[i1,i2],dumm[i1,i2]-dum1[i1,i2]),
         if (i2 != 6):
@@ -183,6 +187,8 @@ for i1 in xrange(7):
 
     print "\\\\" 
 
+
+wefwe
 
 # Effecrive RB and other numbers
 print "Effecrive RB and other numbers"
@@ -309,31 +315,31 @@ print 'outputs'
 
 EW_mn = EW_obs.mean(axis=0)
 sivel_mn = sivel.mean()
-import json, codecs
-def convert(fit,EW_mn,sivel_mn):
-    rm = ['c_raw','alpha_raw','beta_raw','eta_raw','gamma01','gamma02','gamma03','gamma04','gamma05','k_unit','lp__', \
-        'Delta_scale','Delta_unit','R_unit','rho11','rho12','rho13','rho14','rho15','EW','sivel','gamma','rho1','k','R', \
-        'ev_sig','ev','mag_int_raw','mag_int']
+# import json, codecs
+# def convert(fit,EW_mn,sivel_mn):
+#     rm = ['c_raw','alpha_raw','beta_raw','eta_raw','gamma01','gamma02','gamma03','gamma04','gamma05','k_unit','lp__', \
+#         'Delta_scale','Delta_unit','R_unit','rho11','rho12','rho13','rho14','rho15','EW','sivel','gamma','rho1','k','R', \
+#         'ev_sig','ev','mag_int_raw','mag_int']
 
-    use = dict(fit)
-    use['EWCa'] = use['EW'][:,:,0]+EW_mn[0]
-    use['EWSi'] = use['EW'][:,:,1]+EW_mn[1]
-    use['lSi']=use['sivel'] + sivel_mn
-    use['gamma0']=use['gamma']
-    use['gamma1']=use['rho1']
-    use['g0'] = use['k']
-    use['g1'] = use['R']
-    use['sigmap']=use['ev_sig']
-    use['phi']=use['ev']
-    use['p'] = use['mag_int_raw']
-    for r in rm:
-        del use[r]
+#     use = dict(fit)
+#     use['EWCa'] = use['EW'][:,:,0]+EW_mn[0]
+#     use['EWSi'] = use['EW'][:,:,1]+EW_mn[1]
+#     use['lSi']=use['sivel'] + sivel_mn
+#     use['gamma0']=use['gamma']
+#     use['gamma1']=use['rho1']
+#     use['g0'] = use['k']
+#     use['g1'] = use['R']
+#     use['sigmap']=use['ev_sig']
+#     use['phi']=use['ev']
+#     use['p'] = use['mag_int_raw']
+#     for r in rm:
+#         del use[r]
 
-    for key in use.keys():
-        use[key] = use[key].tolist()
+#     for key in use.keys():
+#         use[key] = use[key].tolist()
 
-    json.dump(use, codecs.open('chain.json', 'w', encoding='utf-8'), separators=(',', ':'), sort_keys=True, indent=4) ### this saves the array in .json format
-convert(fit, EW_mn, sivel_mn)
+#     json.dump(use, codecs.open('chain.json', 'w', encoding='utf-8'), separators=(',', ':'), sort_keys=True, indent=4) ### this saves the array in .json format
+# convert(fit, EW_mn, sivel_mn)
 
 # chains = convert(fit, EW_mn, sivel_mn)
 # pickle.dump(chains, open('chains.pkl', 'wb'))
