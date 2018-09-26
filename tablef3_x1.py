@@ -309,6 +309,11 @@ print numpy.median(shit)
 
 snname=numpy.array(data['snlist'])[use]
 
+rename = {"SNIC3573":     "SN2013be","SNNGC0927":    "TBD","SNNGC2691":    "SN2011hr","SNNGC4076":    "SN2011bc","SNNGC4424":    "SN2012cg","SNNGC6343":    "SN2013bs","SNPGC027923":  "SN2011ia","SNPGC51271":   "SN2003bt","SNhunt46":     "SN2011be","SNhunt89":     "SN2011ho"}
+for old in rename.keys():
+    w = (snname == old)
+    snname[w]=rename[old]
+
 print 'outputs'
 
 EW_mn = EW_obs.mean(axis=0)
