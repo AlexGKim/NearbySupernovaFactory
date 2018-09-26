@@ -1,4 +1,4 @@
-#!/bin/env python
+#!/usr/bin/env python
 
 # code to read and shape data for Gerard's like analysis.
 
@@ -6,7 +6,7 @@ import numpy as N
 import matplotlib as plt
 import pylab as P
 from scipy import stats
-from ToolBox.Astro import Extinction
+# from ToolBox.Astro import Extinction:q
 import scipy as S
 
 # get ubvri at max for good SN
@@ -89,16 +89,18 @@ def center_and_condition(obs, covs):
     transcov = covs/N.outer(scale,scale)
     return center, scale, transobs, transcov
 
-if __name__ == "__main__2":
+if __name__ == "__main__":
 
     import cPickle
-    ubvri = cPickle.load(open('ubvri.pkl'))
+    ubvri = cPickle.load(open('UBVRI.pkl'))
     phreno = cPickle.load(open('phrenology_2016_12_01_CABALLOv1.pkl'))
     meta=cPickle.load(open('SNF-0203-CABALLO2/META.pkl'))
 
     snlist,obs,cov=build_ubvri_phreno(meta,ubvri,phreno)
+
     obs=N.array(obs)
     cov=N.array(cov)
     center,scale,tobs,tcov=center_and_condition(obs,cov)
     tweight=N.array([N.linalg.inv(t) for t in tcov])
-
+    for x1, x2 in zip(snlist,obs):
+        print x1, x2

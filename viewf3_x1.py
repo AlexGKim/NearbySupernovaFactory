@@ -54,6 +54,15 @@ EW_cov= EW_cov[use]
 mag_cov=mag_cov[use]
 snname=numpy.array(data['snlist'])[use]
 
+dum = [[snnm,z_] for snnm,z_ in zip(snname, zcmb) if (z_ < 0.025 or z_ > 0.085)]
+dum = numpy.array(dum)
+inde = numpy.argsort(dum[:,1])
+for i in inde:
+    print dum[i,0], dum[i,1]
+
+print len(x1)
+wefe
+
 dic_meta=cPickle.load(open("META.pkl"))
 dic_meta['PTF12efn']={'host.zhelio':0.06194}
 # dic_meta['PTF12efn']['host.zhelio']=0.06194
@@ -1289,7 +1298,7 @@ mega = numpy.array([EW_obs[:,0],EW_obs[:,0],sivel, x1,c ])
 mega = numpy.transpose(mega)
 c=ChainConsumer()
 c.add_chain(mega, \
-    parameters= [r"$EW_{Ca}$",r"$EW_{Si}$",r"$\lambda_{Si}$",r"$x_1$",r"$C$"],name='Sample')
+    parameters= [r"$EW_{Ca}$",r"$EW_{Si}$",r"$\lambda_{Si}$",r"$x_1$",r"$C$"],name='This Article')
 d= [x.split() for x in open("/Users/akim/project/Pantheon/data_fitres/Ancillary_C11.FITRES").readlines()]
 panth = []
 for dl in d[69:]:
@@ -1297,17 +1306,17 @@ for dl in d[69:]:
 
 panth=numpy.array(panth)
 goodz  = numpy.logical_and(panth[:,0] > 0.03, panth[:,0] < 0.08)
-c.add_chain(panth[goodz,1:],parameters= [r"$x_1$",r"$C$"],name='Pantheon')
+c.add_chain(panth[goodz,1:],parameters= [r"$x_1$",r"$C$"],name=r"Pantheon $0.03<z<0.08$")
 c.configure(bins=10)
 
 fig = c.plotter.plot(figsize="column", truth=numpy.zeros(5))
 # fig = c.plotter.plot_distributions()
 
 for ax in fig.axes:
-    ax.xaxis.set_tick_params(labelsize=4)
-    ax.xaxis.label.set_size(5)
-    ax.yaxis.set_tick_params(labelsize=4)
-    ax.yaxis.label.set_size(5)
+    ax.xaxis.set_tick_params(labelsize=6)
+    ax.xaxis.label.set_size(7)
+    ax.yaxis.set_tick_params(labelsize=6)
+    ax.yaxis.label.set_size(7)
 fig.savefig('output_fix3_x1/perobject_input.pdf',bbox_inches='tight')
 
 wefe
