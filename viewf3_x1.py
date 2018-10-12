@@ -54,14 +54,13 @@ EW_cov= EW_cov[use]
 mag_cov=mag_cov[use]
 snname=numpy.array(data['snlist'])[use]
 
-dum = [[snnm,z_] for snnm,z_ in zip(snname, zcmb) if (z_ < 0.025 or z_ > 0.085)]
-dum = numpy.array(dum)
-inde = numpy.argsort(dum[:,1])
-for i in inde:
-    print dum[i,0], dum[i,1]
+# dum = [[snnm,z_] for snnm,z_ in zip(snname, zcmb) if (z_ < 0.025 or z_ > 0.085)]
+# dum = numpy.array(dum)
+# inde = numpy.argsort(dum[:,1])
+# for i in inde:
+#     print dum[i,0], dum[i,1]
 
-print len(x1)
-wefe
+
 
 dic_meta=cPickle.load(open("META.pkl"))
 dic_meta['PTF12efn']={'host.zhelio':0.06194}
@@ -1319,7 +1318,6 @@ for ax in fig.axes:
     ax.yaxis.label.set_size(7)
 fig.savefig('output_fix3_x1/perobject_input.pdf',bbox_inches='tight')
 
-wefe
 
 mega = numpy.array([fit['Delta'].flatten(),fit['EW'][:,:,0].flatten(),fit['EW'][:,:,1].flatten(),fit['sivel'].flatten(), fit['x1'].flatten(),\
     ((fit['gamma'][:,1] - fit['gamma'][:,2])[:,None]*fit['k']).flatten(), \
@@ -1328,6 +1326,12 @@ mega = numpy.array([fit['Delta'].flatten(),fit['EW'][:,:,0].flatten(),fit['EW'][
 
 mega = numpy.transpose(mega)
 mega=mega[::50,:]
+mega[:,1] = mega[:,1]+EW_mn[0]
+mega[:,2] = mega[:,2]+EW_mn[1]
+mega[:,3] = mega[:,3]+sivel_mn
+
+
+
 c=ChainConsumer()
 c.add_chain(mega, \
     parameters= [r"$\Delta$",r"$EW_{Ca}$",r"$EW_{Si}$",r"$\lambda_{Si}$",r"$x_1$",r"$E_{\gamma^0}(B-V)$",r"$E_{\gamma^1}(B-V)$",r"$A_{p,V}$"])
@@ -1340,6 +1344,8 @@ for ax in fig.axes:
     ax.yaxis.set_tick_params(labelsize=4)
     ax.yaxis.label.set_size(5)
 fig.savefig('output_fix3_x1/perobject_corner.pdf',bbox_inches='tight')
+
+cornered
 
 # figure = corner.corner(mega,labels=[r"$\Delta$",r"$EW_{Ca}$",r"$EW_{Si}$",r"$\lambda_{Si}$",r"$x_1$",r"$E_{\gamma^0}(B-V)$",r"$E_{\gamma^1}(B-V)$",r"$A_{p,V}$"],range=numpy.zeros(8)+.9995,label_kwargs={'fontsize':22})
 # for ax in figure.get_axes():
