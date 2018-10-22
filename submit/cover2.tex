@@ -1,0 +1,32 @@
+\documentclass[a4paper,12pt]{letter}
+
+% Some of the article customisations are relevant for this class
+
+\name{Alex Kim} % To be used for the return address on the envelope
+\signature{Alex Kim} % Goes after the closing (ie at the end of the letter, with space for a signature)
+\address{1 Cyclotron Road, MS: 50R6048 \\ Berkeley, CA 94720-8164}
+% Alternatively, these may be set on an individual basis within each letter environment.
+
+\makelabels % this command prints envelope labels on the final page of the document
+
+\begin{document}
+\begin{letter}{The Editors\\AAS Publishing}
+
+\opening{Hello.} % eg Hello.
+
+This cover letter accompanies the resubmission 
+{\bf Evidence for a Third Color  Parameter Within the Type~Ia Supernovae of the Nearby Supernova Factory} authored by myself on behalf
+of the Nearby Supernova Factory Collaboration.  It presents a novel analysis, a first detection of a  color parameter within Type~Ia supernovae,
+and analyzes timely data.  As such we believe that  it is appropriate for the Astrophysical Journal.
+
+Also included is our response to the referees comments.  Changes to the text are included using the aastex ``trackchanges'' calls.
+
+
+\closing{Regards,} % eg Regards,
+
+%\cc{} % people this letter is cc-ed to
+%\encl{} % list of anything enclosed
+%\ps{} % any post scriptums. ``PS'' labels must be put in manually
+
+\end{letter}
+\end{document}
